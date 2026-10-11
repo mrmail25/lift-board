@@ -588,7 +588,16 @@
    ],
    "match": "name"
   },
-  "cable-hip-abduction": null,
+  "cable-hip-abduction": {
+   "source_id": "Cable_Hip_Adduction",
+   "source_name": "Cable Hip Adduction",
+   "images": [
+    "img/ex/cable-hip-abduction-0.jpg",
+    "img/ex/cable-hip-abduction-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Same standing cable setup; leg moves outward instead of inward."
+  },
   "side-lying-hip-abduction": {
    "source_id": "Side_Leg_Raises",
    "source_name": "Side Leg Raises",
