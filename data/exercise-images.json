@@ -589,14 +589,14 @@
    "match": "name"
   },
   "cable-hip-abduction": {
-   "source_id": "Cable_Hip_Adduction",
-   "source_name": "Cable Hip Adduction",
+   "source_id": "Thigh_Abductor",
+   "source_name": "Thigh Abductor",
    "images": [
     "img/ex/cable-hip-abduction-0.jpg",
     "img/ex/cable-hip-abduction-1.jpg"
    ],
    "match": "approximate",
-   "approxNote": "Same standing cable setup; leg moves outward instead of inward."
+   "approxNote": "Shows the hip abduction machine; same outward leg movement."
   },
   "side-lying-hip-abduction": {
    "source_id": "Side_Leg_Raises",
