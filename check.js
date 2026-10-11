@@ -30,7 +30,7 @@ f.meta={week,push,pull};return f}
 const DN={mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday',sun:'Sunday'};
 function fmsg(fl){const r=RU.rules.find(x=>x.id==fl.id);const nm=id=>(EX[id]||{name:id}).name;
 const V={day:DN[fl.day],day1:DN[fl.day1],day2:DN[fl.day2],n:fl.n,muscle:fl.muscle&&cap(lab(fl.muscle)),sets:fl.sets,exercise:fl.exercise&&nm(fl.exercise),pattern:fl.pattern&&lab(fl.pattern),ratio:fl.ratio,min:fl.min,max:fl.max,examples:fl.examples&&fl.examples.map(nm).join(' or ').toLowerCase()};
-return ((x.id=='low_frequency'&&x.n==0&&r.message_indirect_only)?r.message_indirect_only:r.message).replace(/\{(\w+)\}/g,(_,k)=>V[k]!=null?V[k]:k)}
+return ((fl.id=='low_frequency'&&fl.n==0&&r.message_indirect_only)?r.message_indirect_only:r.message).replace(/\{(\w+)\}/g,(_,k)=>V[k]!=null?V[k]:k)}
 function boardDays(){return state.days.map((c,i)=>({day:ORD[i],tiles:c.filter(t=>EX[t.id]).map(t=>({id:t.id,sets:t.sets})),reason:(state.reasons||[])[i]||''})).filter(d=>d.tiles.length)}
 function pcheck(){const el=document.getElementById('chk');if(!el||!RU||!MUS.length)return;const d=boardDays();
 if(!d.length){el.innerHTML='<div class="ck-empty">Add exercises to the board to check the program.</div>';return}

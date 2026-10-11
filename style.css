@@ -65,3 +65,7 @@ body.isdrag{cursor:grabbing;user-select:none;-webkit-user-select:none}
 .cf-hint{color:#99a;font-size:11px;margin:2px 0}.cf-err{color:#ff8a8a;font-size:12px;min-height:14px}.cf-btns{display:flex;flex-wrap:wrap;gap:6px}.cf-btns button{margin:0}
 .pri{background:#2a7de1}.dng{background:#a33}.hatchsw{background:repeating-linear-gradient(45deg,#9a7fe0 0 3px,#fff 3px 6px)!important}
 .sets{flex-wrap:wrap}.col{min-width:0}
+/* v13 */
+.gleg{flex-basis:100%;margin:2px 4px 14px}.gbar{height:10px;border-radius:5px}.gtk{position:relative;height:12px;font-size:10px;color:#ccd}
+.gtk span{position:absolute;top:2px;transform:translateX(-50%);white-space:nowrap}.gtk span:first-child{transform:none}.gtk span:last-child{transform:translateX(-100%)}
+.gtk span::before{content:'';position:absolute;left:50%;top:-6px;width:1px;height:5px;background:#ccd}.gtk span:first-child::before{left:0}.gtk span:last-child::before{left:100%}
