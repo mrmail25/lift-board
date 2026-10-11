@@ -36,9 +36,9 @@ function rtot(day){const t={};(window.REG||[]).forEach(r=>t[r]=0);(day==null?sta
 const hex=c=>'#'+c.map(v=>Math.round(v).toString(16).padStart(2,'0')).join('');
 function heat(){const el=document.getElementById('heat');if(!el||!MUS.length||!window.REG)return;const d=window.HD;
 const t=totals(d==null?null:d),rt=rtot(d==null?null:d);const MAXV=Math.max(1e-9,...Object.values(rt),...(MMJ?[].concat(...['front','back'].map(f=>MMJ[f].muscles.filter(m=>m.region&&m.region.startsWith('g:')).map(m=>t[m.region.slice(2)]||0))):[]));
-const col=r=>{const grp=r.startsWith('g:'),g=grp?r.slice(2):RG[r],v=grp?t[g]:rt[r];if(!v)return'#ffffff';if(d==null){const base=ST[status(t[g],TG[g])],f=Math.min(1,v/Math.max(1,TG[g].max)),k=.5*(1-f);return hex(base.map(c=>c+(255-c)*k))}
+const col=r=>{const grp=r.startsWith('g:'),g=grp?r.slice(2):RG[r],v=grp?t[g]:rt[r];if(!v)return'#ffffff';if(d==null){const base=ST[status(t[g],tgt(g))],f=Math.min(1,v/Math.max(1,TG[g].max)),k=.5*(1-f);return hex(base.map(c=>c+(255-c)*k))}
 const s=SESS[g]||{light:2,solid:4,heavy:8};const x=DMODE=='rel'?v/MAXV:Math.min(1,v/s.heavy);return shade(x)};
-const info=r=>{if(!r)return'Tap or hover a muscle.';const grp=r.startsWith('g:'),g=grp?r.slice(2):RG[r],nm=grp?cap(lab(g)):rname(r);if(grp)rt[r]=t[g];if(d==null){const T=TG[g];return`${nm}: ${rt[r]} sets this week. ${cap(lab(g))} group: ${t[g]} of ${T.min}–${T.max}.`}
+const info=r=>{if(!r)return'Tap or hover a muscle.';const grp=r.startsWith('g:'),g=grp?r.slice(2):RG[r],nm=grp?cap(lab(g)):rname(r);if(grp)rt[r]=t[g];if(d==null){const T=tgt(g);return`${nm}: ${rt[r]} sets this week. ${cap(lab(g))} group: ${t[g]} of ${T.min}–${T.max} (${sel.level} minimum).`}
 const s=SESS[g]||{};if(DMODE=='rel')return`${nm}: ${rt[r]} effective sets on ${DAYS[d]}, ${Math.round(rt[r]/MAXV*100)}% of the day's most-hit muscle`;return`${nm}: ${rt[r]} sets on ${DAYS[d]} (${cap(lab(g))} anchors: light ${s.light}, solid ${s.solid}, heavy ${s.heavy})`};
 const sw=c=>`<i style="background:${hex(c)}"></i>`;
 const lg=d==null?`<span>${sw(ST.green)}In range</span><span>${sw(ST.amber)}Near edge</span><span>${sw(ST.red)}Far off</span><span><i style="background:#fff"></i>None (no tint)</span><span style="flex-basis:100%;color:#99a">Lighter shade = that region got less of its group's work.</span>`
@@ -72,4 +72,4 @@ let MMJ=null;fetch('img/mm/musclemap.json').then(r=>r.json()).then(j=>{MMJ=j;hea
 function fig(f,col){if(!MMJ)return'';const d=MMJ[f];
 const ps=d.muscles.map(m=>{if(!m.region)return'';const c=col(m.region),z=c=='#ffffff',sel=HSEL==m.region;
 return`<path class="mm${sel?' sel':''}" data-r="${m.region}" d="${m.d}" fill="${z?'transparent':c}" fill-opacity="${z?0:(window.HD==null?.55:.85)}" stroke="${OUTL||sel?'#111':'none'}" stroke-width="${sel?5:2.2}" stroke-opacity="${sel?1:.7}"/>`}).join('');
-return`<svg viewBox="230 150 564 1300"><clipPath id="cl-${f}">${d.outline.map(o=>`<path d="${o}"/>`).join('')}</clipPath><image clip-path="url(#cl-${f})" href="${d.img}" width="1024" height="1536" style="filter:grayscale(1) contrast(1.05)"/>${ps}</svg>`}
+return`<svg viewBox="230 150 564 1300"><clipPath id="cl-${f}">${d.outline.map(o=>`<path d="${o}"/>`).join('')}</clipPath><image clip-path="url(#cl-${f})" href="${d.img.replace('.webp','-grey.jpg')}" width="1024" height="1536"/>${ps}</svg>`}

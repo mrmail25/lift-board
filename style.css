@@ -44,3 +44,12 @@ aside{width:300px;display:flex;flex-direction:column;gap:10px}
 .figs{background:radial-gradient(ellipse at 50% 45%,#3a3f46,#1d2023 75%)!important}.figs svg{isolation:isolate}.figs .m{mix-blend-mode:normal;fill-opacity:1}.figs .tint{mix-blend-mode:multiply;opacity:.72}
 .figs canvas{width:48%;max-width:170px;height:auto}
 .figs svg{width:48%;max-width:180px;height:auto}.mm{cursor:pointer}.mm:hover{stroke:#000;stroke-opacity:1}
+/* v11 */
+.col{display:flex;flex-direction:column}.col-body{flex:1}
+.ph{border:0;height:4px;border-radius:2px;background:#e0a100;box-shadow:0 0 0 2px rgba(224,161,0,.35);margin:-1px 0}
+.tile{touch-action:pan-y;-webkit-touch-callout:none;-webkit-user-select:none;padding-left:22px}
+.grip{position:absolute;left:0;top:0;bottom:0;width:20px;display:flex;align-items:center;justify-content:center;color:#888;font-size:13px;letter-spacing:-3px;cursor:grab;touch-action:none;background:rgba(0,0,0,.04);border-radius:4px 0 0 4px}
+body.isdrag{cursor:grabbing;user-select:none;-webkit-user-select:none}
+#tray{padding-right:24px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:flex;flex-direction:column;gap:6px}
+.ck{font-size:12px;padding:6px 8px;border-radius:6px;margin:4px 0;line-height:1.35}.ck.warn{background:#3a2a1a;border-left:3px solid #f0a830}.ck.info{background:#1f2a36;border-left:3px solid #5a9be0}
+.ck-ok{font-size:13px;padding:7px 8px;border-radius:6px;background:#173323;color:#7be0a5;border-left:3px solid #3cb371}.ck-sub,.ck-empty{font-size:11px;color:#99a;margin-top:4px}

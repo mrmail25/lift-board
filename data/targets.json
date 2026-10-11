@@ -1,5 +1,5 @@
 {
- "version": 2,
+ "version": 3,
  "counting": {
   "method": "fractional",
   "description": "Each working set adds the exercise's muscle rating (0-1) to that muscle. Ratings below 0.25 count as 0 (noise). Weekly total = sum over all tiles of sets x rating.",
@@ -19,15 +19,15 @@
    "max": 20
   },
   "front_delts": {
-   "min": 6,
+   "min": 4,
    "max": 16
   },
   "side_delts": {
-   "min": 10,
+   "min": 8,
    "max": 22
   },
   "rear_delts": {
-   "min": 8,
+   "min": 6,
    "max": 18
   },
   "lats": {
@@ -39,7 +39,7 @@
    "max": 20
   },
   "traps": {
-   "min": 6,
+   "min": 4,
    "max": 16
   },
   "biceps": {
@@ -51,11 +51,11 @@
    "max": 18
   },
   "forearms": {
-   "min": 4,
+   "min": 2,
    "max": 12
   },
   "abs": {
-   "min": 6,
+   "min": 4,
    "max": 16
   },
   "quads": {
@@ -71,15 +71,15 @@
    "max": 16
   },
   "calves": {
-   "min": 8,
+   "min": 6,
    "max": 16
   },
   "adductors": {
-   "min": 4,
+   "min": 3,
    "max": 12
   },
   "lower_back": {
-   "min": 4,
+   "min": 3,
    "max": 10
   },
   "obliques": {
@@ -87,7 +87,7 @@
    "max": 12
   },
   "abductors": {
-   "min": 4,
+   "min": 3,
    "max": 12
   }
  },
@@ -200,5 +200,11 @@
  },
  "heads": {
   "description": "Head ratings in exercises.json (heads) drive map shading only. Weekly targets and the volume panel stay at the muscle-group level using muscles ratings. Day-mode head shading uses the parent group session anchors."
+ },
+ "levelMinFactor": {
+  "beginner": 0.6,
+  "intermediate": 0.8,
+  "advanced": 1.0,
+  "note": "Multiply each muscle min by this for the selected level (round to 0.5). Max is unchanged. Beginners grow on lower weekly volume, so a 10-set floor would push them toward junk volume."
  }
 }

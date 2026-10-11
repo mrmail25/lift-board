@@ -1,0 +1,120 @@
+{
+ "version": 1,
+ "description": "Rules for user-created exercises. A custom exercise copies a library exercise (the base template), then the user changes ratings with the level picker, modifiers and feel feedback. All values are clamped to 0..1. Group ratings in muscles[] are recomputed as the max of their heads (regionGroup) after every change. Custom exercises are always marked estimated: true.",
+ "id_format": "custom-<slug of name>-<6 random base36 chars>. Each machine or gym variant gets its own id so history stays machine-specific. Duplicating makes a new id.",
+ "rating_levels": {"primary": 1.0, "secondary": 0.5, "minor": 0.25, "none": 0},
+ "rating_levels_note": "Show the picker per head region. When a template value is between levels, preselect the nearest level, but keep the exact number until the user changes it. Advanced field: exact 0 to 1, step 0.05.",
+ "templates": {
+  "chest_press": ["barbell-bench-press","dumbbell-bench-press","machine-chest-press","incline-barbell-bench-press","incline-dumbbell-press","weighted-dip","push-up"],
+  "chest_fly": ["cable-fly","pec-deck","dumbbell-fly"],
+  "shoulder_press": ["overhead-press","seated-dumbbell-shoulder-press","machine-shoulder-press"],
+  "lateral_raise": ["dumbbell-lateral-raise","cable-lateral-raise"],
+  "rear_delt": ["reverse-pec-deck","face-pull","dumbbell-rear-delt-fly"],
+  "vertical_pull": ["pull-up","lat-pulldown","close-grip-pulldown"],
+  "row": ["barbell-row","chest-supported-row","seated-cable-row","one-arm-dumbbell-row","t-bar-row"],
+  "pullover": ["straight-arm-pulldown"],
+  "shrug": ["barbell-shrug","dumbbell-shrug"],
+  "curl": ["barbell-curl","dumbbell-curl","incline-dumbbell-curl","preacher-curl","cable-curl","hammer-curl"],
+  "triceps": ["triceps-pushdown","overhead-cable-triceps-extension","skull-crusher","close-grip-bench-press"],
+  "squat_press": ["back-squat","front-squat","hack-squat","leg-press"],
+  "lunge": ["bulgarian-split-squat","walking-lunge","dumbbell-step-up"],
+  "hinge": ["romanian-deadlift","stiff-leg-dumbbell-deadlift","deadlift","back-extension","hip-thrust"],
+  "knee_extension": ["leg-extension"],
+  "leg_curl": ["seated-leg-curl","lying-leg-curl"],
+  "calf": ["standing-calf-raise","seated-calf-raise"],
+  "hip": ["hip-adduction-machine","hip-abduction-machine","cable-hip-abduction"],
+  "core": ["cable-crunch","hanging-leg-raise","ab-wheel-rollout"]
+ },
+ "modifiers": {
+  "resistance_curve": {
+   "applies_to": "all",
+   "label": "Where is it hardest?",
+   "options": {
+    "stretch": {"label": "Hardest when the muscle is stretched", "primary_delta": 0.0, "note": "Sets stretch_biased: true, which counts toward the missing-stretch check. Ratings aren't changed, because stretch loading affects how much the muscle grows, not which muscle does the work."},
+    "mid": {"label": "Even, or hardest mid-range", "primary_delta": 0.0},
+    "top": {"label": "Hardest at the top (squeezed)", "primary_delta": -0.1, "note": "Lower growth stimulus per set. Subtract 0.1 from every head rated 0.75 or higher."}
+   },
+   "default_from_template": true
+  },
+  "position": {
+   "squat_press": {"label": "Foot position", "options": {
+     "standard": {},
+     "high": {"glutes": 0.2, "hamstrings": 0.15, "quads_rf": -0.1, "quads_vasti": -0.1},
+     "low": {"quads_vasti": 0.1, "quads_rf": 0.05, "glutes": -0.15},
+     "wide": {"adductors": 0.2, "glutes": 0.05},
+     "narrow": {"quads_vasti": 0.05, "adductors": -0.15}}},
+   "lunge": {"label": "Stride", "options": {
+     "standard": {},
+     "long stride, lean forward": {"glutes": 0.15, "hamstrings": 0.1, "quads_vasti": -0.1},
+     "short stride, upright": {"quads_vasti": 0.1, "quads_rf": 0.05, "glutes": -0.1}}},
+   "vertical_pull": {"label": "Grip", "options": {
+     "standard": {},
+     "wide overhand": {"upper_back": 0.1, "biceps": -0.1},
+     "close neutral": {"lats": 0.05, "biceps": 0.1},
+     "underhand": {"biceps": 0.2, "lats": 0.0}}},
+   "row": {"label": "Elbow path", "options": {
+     "standard": {},
+     "elbows flared (high)": {"upper_back": 0.15, "rear_delts": 0.2, "traps_mid_lower": 0.1, "lats": -0.15},
+     "elbows tucked (low)": {"lats": 0.15, "upper_back": -0.1, "rear_delts": -0.1}}},
+   "chest_press": {"label": "Bench angle and grip", "options": {
+     "standard": {},
+     "low incline (15-30°)": {"chest_upper": 0.15, "chest_lower": -0.1, "front_delts": 0.1},
+     "steep incline (45°+)": {"chest_upper": 0.05, "chest_lower": -0.3, "front_delts": 0.25},
+     "decline": {"chest_lower": 0.05, "chest_upper": -0.2, "front_delts": -0.1},
+     "close grip": {"triceps_short": 0.2, "triceps_long": 0.1, "chest_lower": -0.15},
+     "wide grip": {"chest_lower": 0.05, "triceps_short": -0.1}}},
+   "chest_fly": {"label": "Cable or handle height", "options": {
+     "standard": {},
+     "low to high": {"chest_upper": 0.2, "chest_lower": -0.2},
+     "high to low": {"chest_lower": 0.1, "chest_upper": -0.2}}},
+   "shoulder_press": {"label": "Grip", "options": {
+     "standard": {},
+     "neutral grip": {"front_delts": 0.0, "triceps_short": 0.05}}},
+   "triceps": {"label": "Arm position", "options": {
+     "standard": {},
+     "overhead (arms up)": {"triceps_long": 0.2},
+     "arms at sides": {"triceps_long": -0.1, "triceps_short": 0.05}}},
+   "curl": {"label": "Arm position and grip", "options": {
+     "standard": {},
+     "arms behind body": {"biceps": 0.0, "stretch_biased": true},
+     "arms in front (preacher)": {"biceps": 0.0},
+     "neutral or hammer grip": {"biceps": -0.2, "forearms": 0.3}}},
+   "leg_curl": {"label": "Hip angle", "options": {
+     "standard": {},
+     "seated (hips bent)": {"hamstrings": 0.05, "stretch_biased": true},
+     "lying (hips straight)": {"calves_gastroc": 0.1}}},
+   "calf": {"label": "Knee angle", "options": {
+     "standard": {},
+     "knees straight": {"calves_gastroc": 0.1, "calves_soleus": -0.1},
+     "knees bent": {"calves_soleus": 0.3, "calves_gastroc": -0.5}}},
+   "hinge": {"label": "Knee bend", "options": {
+     "standard": {},
+     "straighter legs": {"hamstrings": 0.1, "glutes": -0.1, "stretch_biased": true},
+     "more knee bend": {"glutes": 0.1, "quads_vasti": 0.1, "hamstrings": -0.1}}}
+  },
+  "apply_order": "template ratings, then the position delta, then the resistance curve, then feel nudges. Clamp each head to 0..1, then recompute groups."
+ },
+ "feel_feedback": {
+  "prompt": "Where did you feel it?",
+  "choices": {"most": 0.05, "some": 0.0, "barely": -0.05, "not at all": -0.1},
+  "per_session_cap": 0.1,
+  "total_drift_cap": 0.2,
+  "rules": [
+   "Nudges only touch heads the user taps. Each nudge moves at most per_session_cap per session, and a head never drifts more than total_drift_cap from its value after modifiers.",
+   "A head that starts at 0 can be nudged up to 0.25 at most (minor). That keeps a pump from inventing a primary mover.",
+   "Feel feedback only works on custom exercises. Library exercises stay fixed.",
+   "Store nudges separately as feelOffsets so 'Reset feel adjustments' restores the post-modifier values exactly."
+  ]
+ },
+ "estimated": {
+  "flag": "estimated: true on every custom exercise",
+  "tile_badge": "est.",
+  "map_style": "lighter tint with diagonal hatching on regions where that day's or week's load comes mostly (over 50%) from estimated exercises",
+  "readout_note": "Includes estimated ratings from custom exercises."
+ },
+ "validation": [
+  "The name is required and must be unique among custom exercises.",
+  "At least one head must be at minor or higher.",
+  "Warn, but allow it, if more than 4 heads are primary. That usually means the ratings are overestimated."
+ ]
+}
