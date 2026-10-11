@@ -1,5 +1,5 @@
 {
- "version": 5,
+ "version": 6,
  "counting": {
   "method": "fractional",
   "description": "Each working set adds the exercise's muscle rating (0-1) to that muscle. Ratings below 0.25 count as 0 (noise). Weekly total = sum over all tiles of sets x rating.",
@@ -215,7 +215,9 @@
    "solid": "#2f9e72",
    "dark": "#11603f",
    "amber": "#f0a830",
-   "red": "#d93b30"
+   "red": "#d93b30",
+   "under_pale": "#cfe3f7",
+   "under_strong": "#3f7fc4"
   },
   "week": {
    "basis": "weekly effective sets vs that muscle's targets (min scaled by levelMinFactor)",
@@ -226,27 +228,28 @@
     },
     {
      "at": ">0",
-     "color": "light"
+     "color": "under_pale"
+    },
+    {
+     "at": "<min",
+     "color": "under_strong",
+     "note": "hard switch to green at min, no blend between blue and green"
     },
     {
      "at": "min",
-     "color": "solid",
-     "note": "reaching the minimum looks clearly worked"
+     "color": "light"
     },
     {
      "at": "max",
-     "color": "dark",
-     "note": "top of the productive range is the darkest healthy shade"
+     "color": "dark"
     },
     {
      "at": "max*1.1",
-     "color": "amber",
-     "note": "amber starts right at max, and is fully amber 10% over"
+     "color": "amber"
     },
     {
      "at": "max*1.3",
-     "color": "red",
-     "note": "fully red 30% over max"
+     "color": "red"
     }
    ],
    "amber_start": "max",
@@ -263,11 +266,15 @@
     },
     {
      "at": ">0",
-     "color": "light"
+     "color": "under_pale"
+    },
+    {
+     "at": "<solid",
+     "color": "under_strong"
     },
     {
      "at": "solid",
-     "color": "solid"
+     "color": "light"
     },
     {
      "at": "heavy",
@@ -294,13 +301,13 @@
   },
   "legend": {
    "labels": [
-    "light work",
-    "solid",
-    "max",
+    "under",
+    "min / solid",
+    "max / heavy",
     "over",
     "way over"
    ],
-   "note": "Draw one continuous bar using the active view's stops, with ticks at min/solid, max/heavy and red_full."
+   "note": "Blue segment up to the min/solid tick, then a hard step to light green, green to dark at max/heavy, then amber and red."
   },
   "estimated": "Custom-exercise loads keep the hatch overlay on top of this fill."
  },
@@ -327,14 +334,15 @@
    "sleep_under_6h": 1.15,
    "age_40_49": 1.05,
    "age_50_plus": 1.1,
-   "training_age": "covered by level"
+   "training_age": "covered by level",
+   "baseline": "baseline stores modifiers as saved; current modifiers apply to the current week only"
   },
   "note": "Rough estimate. Adjust to how you actually recover."
  },
  "analytics": {
   "frequency_min_effective": 2,
   "stretch_share_flag_below": 0.25,
-  "spf": "rating/fatigue per muscle; suggest swap when another exercise rates >= rating-0.1 for that muscle with higher spf",
+  "spf": "rating/fatigue per muscle; suggest swap when another exercise rates >= rating-0.1 for that muscle with higher spf; only within the same movement pattern (rules.json patterns), never compound to isolation",
   "session_length": {
    "warmup_min": 10,
    "work_sec_per_set": 45,
