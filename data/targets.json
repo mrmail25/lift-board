@@ -1,5 +1,5 @@
 {
- "version": 4,
+ "version": 5,
  "counting": {
   "method": "fractional",
   "description": "Each working set adds the exercise's muscle rating (0-1) to that muscle. Ratings below 0.25 count as 0 (noise). Weekly total = sum over all tiles of sets x rating.",
@@ -303,5 +303,50 @@
    "note": "Draw one continuous bar using the active view's stops, with ticks at min/solid, max/heavy and red_full."
   },
   "estimated": "Custom-exercise loads keep the hatch overlay on top of this fill."
+ },
+ "curve": {
+  "model": "S(x)=1-exp(-x/k), x = weekly effective sets after session discount; output is relative stimulus 0-1, a model not a measurement",
+  "k": {
+   "beginner": 6,
+   "intermediate": 8,
+   "advanced": 10
+  },
+  "session_discount": {
+   "cap": 10,
+   "factor": 0.5,
+   "note": "effective sets past 10 for a muscle in one session count at 50%"
+  },
+  "marginal": "S(x+1)-S(x), shown as % of max"
+ },
+ "recovery": {
+  "fatigue_field": "exercises[].fatigue (1.5 heavy axial compound, 1.2 other compound, 0.8 isolation)",
+  "session_cost": "sum(sets*fatigue)",
+  "week_cost": "sum of sessions; show as % of user's saved baseline week (first saved week if none set)",
+  "modifiers": {
+   "default_off": true,
+   "sleep_under_6h": 1.15,
+   "age_40_49": 1.05,
+   "age_50_plus": 1.1,
+   "training_age": "covered by level"
+  },
+  "note": "Rough estimate. Adjust to how you actually recover."
+ },
+ "analytics": {
+  "frequency_min_effective": 2,
+  "stretch_share_flag_below": 0.25,
+  "spf": "rating/fatigue per muscle; suggest swap when another exercise rates >= rating-0.1 for that muscle with higher spf",
+  "session_length": {
+   "warmup_min": 10,
+   "work_sec_per_set": 45,
+   "rest_min": {
+    "compound": 2.5,
+    "isolation": 1.5
+   },
+   "compound_types": [
+    "primary",
+    "accessory"
+   ]
+  },
+  "disclaimer": "Model for comparing plans, not a measurement of growth or recovery."
  }
 }

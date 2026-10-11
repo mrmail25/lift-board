@@ -82,7 +82,8 @@
     "Press back up and slightly back toward your face until your arms are straight."
    ],
    "tip": "Keep your shoulder blades pinned and your butt on the bench the whole time.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "incline-barbell-bench-press",
@@ -144,7 +145,8 @@
     "Press up until your arms are straight over your shoulders."
    ],
    "tip": "A lower incline (around 30\u00b0) keeps more of the work on the chest instead of the shoulders.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "dumbbell-bench-press",
@@ -206,7 +208,8 @@
     "Lower slowly until you feel a stretch across your chest."
    ],
    "tip": "Use the full range. The deep stretch at the bottom is the main reason to choose dumbbells.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "incline-dumbbell-press",
@@ -268,7 +271,8 @@
     "Lower slowly until your elbows are a little below the bench."
    ],
    "tip": "Keep your wrists stacked over your elbows.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "machine-chest-press",
@@ -330,7 +334,8 @@
     "Return slowly until you feel a stretch in your chest."
    ],
    "tip": "Don't let your shoulders roll forward at the end of the press.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "weighted-dip",
@@ -392,7 +397,8 @@
     "Press back up to straight arms."
    ],
    "tip": "Stop the descent at a depth your shoulders handle comfortably, and add depth over time.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "push-up",
@@ -454,7 +460,8 @@
     "Push back up to straight arms."
    ],
    "tip": "Keep your hips level, not sagging or piked up.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "cable-fly",
@@ -516,7 +523,8 @@
     "Open back out slowly until you feel a stretch in your chest."
    ],
    "tip": "Keep the elbow bend fixed. This is a hug, not a press.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "pec-deck",
@@ -578,7 +586,8 @@
     "Let them open slowly until you feel a stretch in your chest."
    ],
    "tip": "Don't let your shoulders shrug forward as the handles meet.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "dumbbell-fly",
@@ -640,7 +649,8 @@
     "Bring them back up along the same arc."
    ],
    "tip": "Go lighter than you think. The stretch at the bottom is where your shoulders are most exposed.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "overhead-press",
@@ -702,7 +712,8 @@
     "Lower under control back to your shoulders."
    ],
    "tip": "Squeeze your glutes so you don't lean back into the lift.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "seated-dumbbell-shoulder-press",
@@ -764,7 +775,8 @@
     "Lower to about ear level or a little below."
    ],
    "tip": "Keep your forearms vertical under the weights.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "machine-shoulder-press",
@@ -826,7 +838,8 @@
     "Lower slowly to the start position."
    ],
    "tip": "Don't arch your lower back off the pad.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "dumbbell-lateral-raise",
@@ -888,7 +901,8 @@
     "Lower slowly."
    ],
    "tip": "Think 'push the weights out' rather than 'up' so your traps stay out of it.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "cable-lateral-raise",
@@ -950,7 +964,8 @@
     "Lower slowly back across your body."
    ],
    "tip": "Standing a little in front of the pulley gives a longer stretch.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "upright-row",
@@ -1012,7 +1027,8 @@
     "Lower under control."
    ],
    "tip": "A wider grip and stopping at shoulder height are usually easiest on the shoulders.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "reverse-pec-deck",
@@ -1074,7 +1090,8 @@
     "Return slowly."
    ],
    "tip": "Move at the shoulder and don't squeeze your shoulder blades too hard, to keep the work on the rear delts.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "face-pull",
@@ -1136,7 +1153,8 @@
     "Return slowly."
    ],
    "tip": "Finish with your hands beside your ears and your elbows out.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "dumbbell-rear-delt-fly",
@@ -1198,7 +1216,8 @@
     "Lower slowly."
    ],
    "tip": "Use light weights and keep your shoulders away from your ears.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "front-raise",
@@ -1260,7 +1279,8 @@
     "Lower slowly."
    ],
    "tip": "Most pressing already works the front delts, so treat this as optional.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "pull-up",
@@ -1322,7 +1342,8 @@
     "Lower all the way to a full hang."
    ],
    "tip": "Use the full range. The dead hang at the bottom is the stretch that builds the lats.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "chin-up",
@@ -1384,7 +1405,8 @@
     "Lower all the way to a full hang."
    ],
    "tip": "Avoid kicking or swinging. Keep it a strict pull.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "lat-pulldown",
@@ -1446,7 +1468,8 @@
     "Let it rise slowly until your arms are straight and your lats stretch."
    ],
    "tip": "Don't yank with your lower back. Pull from your elbows.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "close-grip-pulldown",
@@ -1508,7 +1531,8 @@
     "Return until your arms are straight."
    ],
    "tip": "Let your shoulders rise at the top to get the full stretch.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "barbell-row",
@@ -1570,7 +1594,8 @@
     "Lower it under control without standing up."
    ],
    "tip": "Keep your torso angle the same on every rep. If it changes, the weight is too heavy.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.5
   },
   {
    "id": "pendlay-row",
@@ -1632,7 +1657,8 @@
     "Set it back on the floor and reset before the next rep."
    ],
    "tip": "Don't let your back round as you pull.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.5
   },
   {
    "id": "one-arm-dumbbell-row",
@@ -1694,7 +1720,8 @@
     "Lower slowly back to the full stretch."
    ],
    "tip": "Pull toward your hip, not your armpit, to keep the work on the lats.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "chest-supported-row",
@@ -1756,7 +1783,8 @@
     "Lower slowly."
    ],
    "tip": "Keep your chest on the pad. Lifting off turns it into a cheat row.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "seated-cable-row",
@@ -1818,7 +1846,8 @@
     "Return slowly until your arms are straight."
    ],
    "tip": "Keep your torso nearly still, with only a small lean, and let your arms do the moving.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "t-bar-row",
@@ -1880,7 +1909,8 @@
     "Lower under control."
    ],
    "tip": "Hold your hip hinge. Don't let your torso stand up as you pull.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "straight-arm-pulldown",
@@ -1942,7 +1972,8 @@
     "Let them rise slowly until your lats stretch."
    ],
    "tip": "Think about pulling with your armpits, not your hands.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "barbell-shrug",
@@ -2004,7 +2035,8 @@
     "Lower all the way down."
    ],
    "tip": "Go straight up and down. There's no need to roll your shoulders.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "dumbbell-shrug",
@@ -2066,7 +2098,8 @@
     "Lower until you feel a stretch."
    ],
    "tip": "Use straps if your grip gives out before your traps.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "barbell-curl",
@@ -2128,7 +2161,8 @@
     "Lower slowly until your arms are straight."
    ],
    "tip": "Don't swing. If your hips move, the weight is too heavy.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "dumbbell-curl",
@@ -2190,7 +2224,8 @@
     "Lower slowly until your arms are straight."
    ],
    "tip": "Rotate your pinky up slightly at the top for a harder biceps contraction.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "hammer-curl",
@@ -2252,7 +2287,8 @@
     "Lower slowly."
    ],
    "tip": "Keep your wrists straight and in line with your forearms.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "incline-dumbbell-curl",
@@ -2314,7 +2350,8 @@
     "Lower all the way until your arms are fully straight."
    ],
    "tip": "Let your arms hang behind your body. That stretch is what makes this curl work.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "preacher-curl",
@@ -2376,7 +2413,8 @@
     "Lower slowly to almost straight."
    ],
    "tip": "Control the bottom of each rep. Don't drop into it.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "cable-curl",
@@ -2438,7 +2476,8 @@
     "Lower slowly."
    ],
    "tip": "Step back a little so the cable pulls through the whole rep.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "close-grip-bench-press",
@@ -2500,7 +2539,8 @@
     "Press until your arms are straight."
    ],
    "tip": "Shoulder width is close enough. A grip that's too narrow just strains your wrists.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "skull-crusher",
@@ -2562,7 +2602,8 @@
     "Straighten your arms back to the start."
    ],
    "tip": "Lowering behind your head gives the long head more stretch.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "triceps-pushdown",
@@ -2624,7 +2665,8 @@
     "Let it rise slowly until your forearms pass parallel to the floor."
    ],
    "tip": "Keep your elbows still. Only your forearms should move.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "overhead-cable-triceps-extension",
@@ -2686,7 +2728,8 @@
     "Let the rope come back slowly behind your head."
    ],
    "tip": "Get a deep stretch at the bottom of every rep.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "wrist-curl",
@@ -2748,7 +2791,8 @@
     "Lower slowly."
    ],
    "tip": "Use high reps and a full range.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "back-squat",
@@ -2810,7 +2854,8 @@
     "Drive back up through your mid-foot."
    ],
    "tip": "Depth matters. Deep squats build more quad and glute than half reps.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.5
   },
   {
    "id": "front-squat",
@@ -2872,7 +2917,8 @@
     "Stand back up, leading with your elbows."
    ],
    "tip": "If your elbows drop, the bar will roll forward.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.5
   },
   {
    "id": "hack-squat",
@@ -2934,7 +2980,8 @@
     "Press back up without locking out hard."
    ],
    "tip": "Lower foot placement works the quads more. Higher placement works the glutes more.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "leg-press",
@@ -2996,7 +3043,8 @@
     "Press back up."
    ],
    "tip": "Stop the descent before your hips curl up off the seat.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "bulgarian-split-squat",
@@ -3058,7 +3106,8 @@
     "Drive up through your front foot."
    ],
    "tip": "A longer stride and leaning forward work the glutes more. A shorter stride and staying upright work the quads more.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "walking-lunge",
@@ -3120,7 +3169,8 @@
     "Keep your torso tall."
    ],
    "tip": "Take controlled steps. Don't let your front knee cave inward.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "leg-extension",
@@ -3182,7 +3232,8 @@
     "Lower slowly until your knees are bent past 90\u00b0."
    ],
    "tip": "Leaning back slightly stretches the rectus femoris more.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "deadlift",
@@ -3244,7 +3295,8 @@
     "Lower it back down the same way."
    ],
    "tip": "Keep the bar touching your legs the whole time.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.5
   },
   {
    "id": "romanian-deadlift",
@@ -3306,7 +3358,8 @@
     "Drive your hips forward to stand back up."
    ],
    "tip": "The movement is hips back, not bending down. Your knee angle barely changes.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.5
   },
   {
    "id": "stiff-leg-dumbbell-deadlift",
@@ -3368,7 +3421,8 @@
     "Squeeze your glutes and stand up."
    ],
    "tip": "Keep your back flat. Only go as low as your hamstrings allow.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "hip-thrust",
@@ -3430,7 +3484,8 @@
     "Lower under control."
    ],
    "tip": "Tuck your chin and ribs down so your lower back doesn't arch at the top.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "lying-leg-curl",
@@ -3492,7 +3547,8 @@
     "Lower slowly until your legs are straight."
    ],
    "tip": "Keep your hips pressed down into the pad.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "seated-leg-curl",
@@ -3554,7 +3610,8 @@
     "Return slowly until your legs are straight."
    ],
    "tip": "Leaning forward adds stretch. Research suggests seated curls build more than lying curls.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "back-extension",
@@ -3616,7 +3673,8 @@
     "Lower slowly."
    ],
    "tip": "Round your upper back slightly to work the glutes more, or keep it flat to work the lower back.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   },
   {
    "id": "hip-adduction-machine",
@@ -3678,7 +3736,8 @@
     "Open back out slowly."
    ],
    "tip": "Leaning forward slightly lets the adductors work through a longer range.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "standing-calf-raise",
@@ -3740,7 +3799,8 @@
     "Lower slowly back to the stretch."
    ],
    "tip": "Pause in the bottom stretch for a second. Bouncing skips most of the benefit.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "seated-calf-raise",
@@ -3802,7 +3862,8 @@
     "Lower slowly."
    ],
    "tip": "Use a full range and steady reps, without bouncing.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "hanging-leg-raise",
@@ -3864,7 +3925,8 @@
     "Lower slowly without swinging."
    ],
    "tip": "Curling your pelvis up is what works the abs. Just lifting your legs mostly works the hip flexors.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "cable-crunch",
@@ -3926,7 +3988,8 @@
     "Return slowly to a stretch."
    ],
    "tip": "Move your spine, not your hips. Your butt shouldn't sit back.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "ab-wheel-rollout",
@@ -3988,7 +4051,8 @@
     "Pull back to the start using your abs."
    ],
    "tip": "Start with short rollouts and lengthen them over time.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "hip-abduction-machine",
@@ -4050,7 +4114,8 @@
     "Return slowly."
    ],
    "tip": "Leaning forward slightly works the glute medius more.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "cable-hip-abduction",
@@ -4112,7 +4177,8 @@
     "Lower slowly."
    ],
    "tip": "Keep your toes pointing forward. Rotating them up shifts the work to the hip flexors.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "side-lying-hip-abduction",
@@ -4174,7 +4240,8 @@
     "Lower slowly."
    ],
    "tip": "Keep your hips stacked. Don't roll back.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "banded-lateral-walk",
@@ -4236,7 +4303,8 @@
     "Take the same number of steps in each direction."
    ],
    "tip": "Stay low and keep your knees pushed out the whole time.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 0.8
   },
   {
    "id": "dumbbell-step-up",
@@ -4298,7 +4366,8 @@
     "Step down slowly."
    ],
    "tip": "Let the top leg do the work, not a bounce off the floor.",
-   "youtube": ""
+   "youtube": "",
+   "fatigue": 1.2
   }
  ],
  "regions": [
