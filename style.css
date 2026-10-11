@@ -53,3 +53,15 @@ body.isdrag{cursor:grabbing;user-select:none;-webkit-user-select:none}
 #tray{padding-right:24px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:flex;flex-direction:column;gap:6px}
 .ck{font-size:12px;padding:6px 8px;border-radius:6px;margin:4px 0;line-height:1.35}.ck.warn{background:#3a2a1a;border-left:3px solid #f0a830}.ck.info{background:#1f2a36;border-left:3px solid #5a9be0}
 .ck-ok{font-size:13px;padding:7px 8px;border-radius:6px;background:#173323;color:#7be0a5;border-left:3px solid #3cb371}.ck-sub,.ck-empty{font-size:11px;color:#99a;margin-top:4px}
+/* v12 */
+.addex{width:100%;margin:0 0 6px;background:#2a7de1}.est{font-style:normal;font-size:9px;font-weight:700;background:#ffe9a8;color:#7a5500;border-radius:4px;padding:0 4px;margin-left:4px;vertical-align:middle}
+.cedit{position:absolute;top:2px;right:4px;margin:0;padding:0 4px;background:none;color:#2a7de1;font-size:14px}.feel{margin:0 0 0 4px!important;background:#ffe9a8!important;font-size:10px}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:16px 8px}
+.mbox{background:#1d2023;border-radius:10px;padding:14px;width:min(560px,100%);display:flex;flex-direction:column;gap:8px;font-size:13px}.mbox h3{margin:0 0 4px}
+.mbox label{display:flex;flex-direction:column;gap:3px;color:#ccd}.mbox input,.mbox select{padding:7px;border-radius:6px;border:0;font-size:14px}
+.cf-musc{display:flex;flex-direction:column;gap:3px;max-height:46vh;overflow:auto;padding-right:6px}.cf-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cf-rn{flex:1 1 140px;font-size:12px}.cf-seg button{padding:4px 7px;font-size:11px}.cf-row input{width:64px;padding:4px}.cf-fin{font-size:11px;color:#f5c060;font-style:normal;min-width:34px}
+.cf-mh{display:flex;justify-content:space-between;align-items:center}.cf-adv{flex-direction:row!important;align-items:center;font-size:12px}
+.cf-hint{color:#99a;font-size:11px;margin:2px 0}.cf-err{color:#ff8a8a;font-size:12px;min-height:14px}.cf-btns{display:flex;flex-wrap:wrap;gap:6px}.cf-btns button{margin:0}
+.pri{background:#2a7de1}.dng{background:#a33}.hatchsw{background:repeating-linear-gradient(45deg,#9a7fe0 0 3px,#fff 3px 6px)!important}
+.sets{flex-wrap:wrap}.col{min-width:0}

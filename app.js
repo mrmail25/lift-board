@@ -2,15 +2,17 @@ const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],ICON={primary:'★',acces
 let SP=null,sel={level:'beginner',days:3,split:null};let F={types:[],mus:[],eq:[],minor:false};let EX={},MUS=[],TG={},LMF={beginner:.6,intermediate:.8,advanced:1},RULE={min_rating_to_count:.25,round_to:.5},state={days:DAYS.map(()=>[])};
 const lab=m=>m.replace(/_/g,' ');
 async function init(){try{const[e,t]=await Promise.all([fetch('data/exercises.json').then(r=>r.json()),fetch('data/targets.json').then(r=>r.json())]);
-MUS=e.muscles;window.REG=e.regions;window.RG=e.regionGroup;e.exercises.forEach(x=>EX[x.id]=x);TG=t.targets;if(t.levelMinFactor)LMF=t.levelMinFactor;try{SP=await fetch('data/splits.json').then(r=>r.json())}catch{}Object.assign(RULE,t.counting||{});}catch(err){alert('Could not load data files. Serve this folder over http.');}
+MUS=e.muscles;window.REG=e.regions;window.RG=e.regionGroup;e.exercises.forEach(x=>EX[x.id]=x);TG=t.targets;if(t.levelMinFactor)LMF=t.levelMinFactor;try{SP=await fetch('data/splits.json').then(r=>r.json())}catch{}Object.assign(RULE,t.counting||{});if(window.loadCustom)await loadCustom();}catch(err){alert('Could not load data files. Serve this folder over http.');}
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.days){state=s;if(s.sel)sel={...sel,...s.sel}}}catch{}filt();render();bar()}
 const snap=()=>JSON.stringify(state.days);const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
 function tile(x,item){const d=document.createElement('div');d.className='tile '+x.type;
 const tags=Object.entries(x.muscles).filter(([,v])=>v>=RULE.min_rating_to_count).sort((a,b)=>b[1]-a[1]).map(([m,v])=>`<span>${lab(m)}${v<1?' '+v:''}</span>`).join('');
-d.innerHTML=`<span class="grip" title="Drag">⋮⋮</span><div class="n"><span class="ic">${ICON[x.type]}</span>${x.name}</div><div class="tags">${tags}</div>`;
-if(item){d.innerHTML+=`<div class="sets"><button data-a="-">−</button><input type="number" min="0" value="${item.sets}"><button data-a="+">+</button> sets</div><button class="del">✕</button>`;
+d.innerHTML=`<span class="grip" title="Drag">⋮⋮</span><div class="n"><span class="ic">${ICON[x.type]}</span>${x.name}${x.estimated?' <em class="est" title="Estimated ratings (custom exercise)">est.</em>':''}</div><div class="tags">${tags}</div>${x.custom&&!item?'<button class="cedit" title="Edit, duplicate or delete">✎</button>':''}`;
+if(x.custom&&!item)d.querySelector('.cedit').onclick=()=>openForm(x.id);
+if(item){d.innerHTML+=`<div class="sets"><button data-a="-">−</button><input type="number" min="0" value="${item.sets}"><button data-a="+">+</button> sets${x.custom?'<button class="feel" title="Where did you feel it?">Feel?</button>':''}</div><button class="del">✕</button>`;
+if(x.custom)d.querySelector('.feel').onclick=()=>openFeel(x.id);
 const inp=d.querySelector('input');inp.onchange=()=>{item.sets=Math.max(0,+inp.value||0);upd()};
-d.querySelectorAll('.sets button').forEach(b=>b.onclick=()=>{item.sets=Math.max(0,item.sets+(b.dataset.a=='+'?1:-1));upd()});
+d.querySelectorAll('.sets button[data-a]').forEach(b=>b.onclick=()=>{item.sets=Math.max(0,item.sets+(b.dataset.a=='+'?1:-1));upd()});
 d.querySelector('.del').onclick=()=>{state.days.forEach(c=>{const i=c.indexOf(item);if(i>=0)c.splice(i,1)});upd()};}
 d.addEventListener('pointerdown',ev=>{if(ev.target.closest('button,input,select'))return;if(ev.target.closest('.grip')){startDrag(ev,d,x.id,item);return}
 const sx=ev.clientX,sy=ev.clientY;let lp=setTimeout(()=>{lp=null;cleanup();if(navigator.vibrate)try{navigator.vibrate(15)}catch{};startDrag(ev,d,x.id,item)},250);
@@ -73,8 +75,8 @@ const days=DAYS.map(()=>[]),labels=DAYS.map(()=>''),reasons=DAYS.map(()=>'');
 sp.levels[sel.level][sel.days].forEach(d=>{const i=WD.indexOf(d.day);labels[i]=d.label;reasons[i]=d.reason||'';d.tiles.forEach(t=>EX[t.id]&&days[i].push({id:t.id,sets:t.sets}))});
 state={days,labels,reasons,sel:{...sel}};state.applied=snap();upd()}
 document.getElementById('apply').onclick=()=>applySplit();
-document.getElementById('exp').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({app:'lift-board',version:1,...state},null,1)],{type:'application/json'}));a.download='lift-board-week.json';a.click()};
-document.getElementById('imp').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(s=>{const d=JSON.parse(s);if(!Array.isArray(d.days)||d.days.length!=7)throw 0;state={labels:d.labels,days:d.days.map(c=>c.filter(i=>EX[i.id]).map(i=>({id:i.id,sets:+i.sets||0})))};upd()}).catch(()=>alert('Not a valid Lift Board file.'));e.target.value=''};
+document.getElementById('exp').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({app:'lift-board',version:2,...state,customExercises:typeof CUS!='undefined'?CUS:[]},null,1)],{type:'application/json'}));a.download='lift-board-week.json';a.click()};
+document.getElementById('imp').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(s=>{const d=JSON.parse(s);if(!Array.isArray(d.days)||d.days.length!=7)throw 0;if(Array.isArray(d.customExercises)&&window.syncCustom){d.customExercises.forEach(c=>{if(c&&c.id&&c.ratings&&String(c.id).startsWith('custom-')){const i=CUS.findIndex(x=>x.id==c.id);i<0?CUS.push(c):CUS[i]=c}});syncCustom()}state={labels:d.labels,days:d.days.map(c=>c.filter(i=>EX[i.id]).map(i=>({id:i.id,sets:+i.sets||0})))};upd()}).catch(()=>alert('Not a valid Lift Board file.'));e.target.value=''};
 init();
 // test hook: #fill=level,days,splitId
 addEventListener('load',()=>setTimeout(()=>{const m=location.hash.match(/fill=(\w+),(\d),([\w-]+)/);if(m&&SP){sel={level:m[1],days:+m[2],split:m[3]};bar();applySplit(true)}},500));
