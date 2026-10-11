@@ -26,7 +26,7 @@ for(const m in R.stretch_biased)if(!all.some(x=>stretchHits(x,m)))f.push({sev:'i
 if(days.length>=2)R.frequency_muscles.forEach(m=>{if(freq[m]<2)f.push({sev:'info',id:'low_frequency',muscle:m,n:freq[m]})});
 const LF=(typeof LMF!='undefined'&&LMF[level])||1;
 for(const m in week){const x=week[m],a=Math.round(T[m].min*LF*2)/2,b=T[m].max;const ok=(a<=x&&x<=b)||(a-2<=x&&x<a)||(b<x&&x<=b*1.25);if(!ok)f.push({sev:'warn',id:'weekly_volume',muscle:m,sets:Math.round(x*10)/10,min:a,max:b})}
-return f}
+f.meta={week,push,pull};return f}
 const DN={mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday',sun:'Sunday'};
 function fmsg(fl){const r=RU.rules.find(x=>x.id==fl.id);const nm=id=>(EX[id]||{name:id}).name;
 const V={day:DN[fl.day],day1:DN[fl.day1],day2:DN[fl.day2],n:fl.n,muscle:fl.muscle&&cap(lab(fl.muscle)),sets:fl.sets,exercise:fl.exercise&&nm(fl.exercise),pattern:fl.pattern&&lab(fl.pattern),ratio:fl.ratio,min:fl.min,max:fl.max,examples:fl.examples&&fl.examples.map(nm).join(' or ').toLowerCase()};
@@ -34,6 +34,15 @@ return r.message.replace(/\{(\w+)\}/g,(_,k)=>V[k]!=null?V[k]:k)}
 function boardDays(){return state.days.map((c,i)=>({day:ORD[i],tiles:c.filter(t=>EX[t.id]).map(t=>({id:t.id,sets:t.sets})),reason:(state.reasons||[])[i]||''})).filter(d=>d.tiles.length)}
 function pcheck(){const el=document.getElementById('chk');if(!el||!RU||!MUS.length)return;const d=boardDays();
 if(!d.length){el.innerHTML='<div class="ck-empty">Add exercises to the board to check the program.</div>';return}
-const f=checkProgram(d,sel.level),w=f.filter(x=>x.sev=='warn'),i=f.filter(x=>x.sev=='info');
-el.innerHTML=(w.length?'':`<div class="ck-ok">✓ All clear: no programming errors found for this ${sel.level} program.</div>`)+
-f.sort((a,b)=>(a.sev=='warn'?0:1)-(b.sev=='warn'?0:1)).map(x=>`<div class="ck ${x.sev}"><b>${x.sev=='warn'?'⚠':'ℹ'}</b> ${fmsg(x)}</div>`).join('')+(i.length&&!w.length?'<div class="ck-sub">Notes above are suggestions, not errors.</div>':'')}
+let f=checkProgram(d,sel.level);const M=f.meta,P=x=>lab(x);
+const un=Object.keys(M.week).filter(m=>M.week[m]<=0);const isUn=x=>x.muscle&&un.includes(x.muscle)&&['weekly_volume','missing_stretch','low_frequency'].includes(x.id);
+f=f.filter(x=>!isUn(x)&&x.id!='push_pull_imbalance');const extra=[];
+if(M.push>=1&&M.pull>=1){const r=M.pull/M.push,pp=RU.rules.find(x=>x.id=='push_pull_imbalance')||{};if(r<(pp.min_ratio||.75)||r>(pp.max_ratio||2))f.push({sev:'warn',id:'push_pull_imbalance',ratio:Math.round(r*100)/100})}
+else if(M.push>0&&!M.pull)extra.push({sev:'warn',txt:'No pulling yet this week. Add rows or pulldowns to balance your pressing.'});
+else if(M.pull>0&&!M.push)extra.push({sev:'warn',txt:'No pushing yet this week. Add presses to balance your pulling.'});
+const SS={'bro-split':0,'ppl':3,'pplu':0,'arnold':3},ss=state.sel||{};
+if(state.applied&&state.applied==snap()&&ss.split in SS&&(!SS[ss.split]||ss.days==SS[ss.split])){const lf=f.filter(x=>x.id=='low_frequency');if(lf.length){f=f.filter(x=>x.id!='low_frequency');
+const sp=SP.splits.find(x=>x.id==ss.split);extra.push({sev:'info',txt:`Trained once a week (expected for ${sp?sp.name:ss.split}): ${lf.map(x=>P(x.muscle)).join(', ')}.`})}}
+if(un.length)extra.push({sev:'info',txt:'Not trained yet: '+un.map(P).join(', ')+'.'});
+const all=[...f.map(x=>({sev:x.sev,txt:fmsg(x)})),...extra].sort((a,b)=>(a.sev=='warn'?0:1)-(b.sev=='warn'?0:1)),w=all.filter(x=>x.sev=='warn');
+el.innerHTML=(w.length?'':`<div class="ck-ok">✓ All clear: no programming errors found for this ${sel.level} program.</div>`)+all.map(x=>`<div class="ck ${x.sev}"><b>${x.sev=='warn'?'⚠':'ℹ'}</b> ${x.txt}</div>`).join('')+(all.length>w.length&&!w.length?'<div class="ck-sub">Notes above are suggestions, not errors.</div>':'')}
