@@ -1,0 +1,42 @@
+{
+ "source": "@musclemap/assets 1.1.0 (MIT), male-front / male-back",
+ "note": "Path index refers to the order in each body's muscles array. Region names are from regions.md. 'group' means shade the whole muscle group at group level because the head split has no separate path.",
+ "front": {
+  "TRAPEZIUS_*": "traps_upper",
+  "CHEST_*": {"group": "chest", "missing_split": "chest_upper / chest_lower"},
+  "SHOULDER_FRONT_*": "front_delts",
+  "SHOULDER_SIDE_*": "side_delts",
+  "BICEPS_*": "biceps",
+  "TRICEPS_*": {"group": "triceps"},
+  "FOREARM_*": "forearms",
+  "CORE_*": "abs",
+  "OBLIQUE_*": "obliques",
+  "QUADRICEPS_*": "quads_rf",
+  "ABDUCTOR_* (outer thigh strip, idx 18/21)": "quads_vasti",
+  "QUADS center paths above the knee (idx 22/23)": "quads_vasti",
+  "ADDUCTOR_*": "adductors",
+  "CALVES_*": {"group": "calves", "missing_split": "calves_gastroc / calves_soleus"}
+ },
+ "back": {
+  "TRAPEZIUS_* idx 0/1 (neck to shoulder)": "traps_upper",
+  "TRAPEZIUS_* idx 11/12 (between the shoulder blades)": "traps_mid_lower",
+  "SHOULDER_REAR_*": "rear_delts",
+  "SHOULDER_SIDE_*": "side_delts",
+  "TRICEPS_*": {"group": "triceps", "missing_split": "triceps_long / triceps_short"},
+  "FOREARM_*": "forearms",
+  "RHOMBOID_*": "upper_back",
+  "LATISSIMUS_*": "lats",
+  "LOWER_BACK_*": "lower_back",
+  "OBLIQUE_*": "obliques",
+  "GLUTEUS_*": "glutes",
+  "ABDUCTOR_* (outer thigh strip, idx 22/23)": "untinted (IT band, not a tracked muscle)",
+  "ADDUCTOR_*": "adductors",
+  "HAMSTRINGS_*": "hamstrings",
+  "CALVES_*": {"group": "calves"}
+ },
+ "missing": {
+  "abductors": "MuscleMap labels the outer-thigh strip as ABDUCTORS, but that strip is the vastus lateralis / IT band. It has no glute med or TFL path. Add two small custom paths: glute med on the back (upper-outer hip, above GLUTEUS, up to the iliac crest) and TFL on the front (front-outer hip, above the top of QUADRICEPS / ABDUCTOR). Fallback if not drawn: abductors has no map region, but it stays in the volume panel.",
+  "upper_back_infraspinatus_teres": "MuscleMap's BACK_UPPER group has no traced path. RHOMBOID covers upper_back on the map.",
+  "splits_without_paths": ["chest upper/lower", "triceps long/short", "calves gastroc/soleus"]
+ }
+}
