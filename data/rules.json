@@ -219,7 +219,9 @@
    "scope": "week",
    "threshold": 2,
    "min_effective_to_count": 2,
-   "message": "{muscle} is trained meaningfully on only {n} day(s) this week. Twice a week usually grows muscle better for the same total sets."
+   "message": "{muscle} is trained meaningfully on only {n} day this week. Twice a week usually grows muscle better for the same total sets.",
+   "message_indirect_only": "Only indirect work so far. Add a direct exercise for {muscle}.",
+   "message_note": "Use message_indirect_only when the muscle has weekly sets > 0 but no single day reaches min_effective_to_count; otherwise use message."
   },
   {
    "id": "redundant_pattern",
