@@ -2,12 +2,21 @@
 let IMG={map:{}},YT={};try{YT=JSON.parse(localStorage.getItem('liftboard.youtube'))||{}}catch{}window.YT=YT;
 fetch('data/exercise-images.json').then(r=>r.json()).then(j=>IMG=j).catch(()=>{});
 const E=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-// ---- 1) floating magnet
-window.FLOAT=null;
-function floatAdd(id){FLOAT=id;let f=document.querySelector('.floatmag');if(!f){f=document.createElement('div');f.className='floatmag';document.body.appendChild(f)}
-f.innerHTML='<div class="fm-hint">Drag onto a day, or tap a day name</div><button class="fm-x" aria-label="Dismiss">✕</button>';f.insertBefore(tile(EX[id]),f.lastChild);f.querySelector('.fm-x').onclick=clearFloat}
-function clearFloat(){FLOAT=null;const f=document.querySelector('.floatmag');if(f)f.remove()}
-function placeFloat(i){const id=FLOAT;clearFloat();if(EX[id]){state.days[i].push({id,sets:3});upd()}}
+// ---- 1) staging strip (multi-select), persisted
+let STG=[];try{STG=(JSON.parse(localStorage.getItem('liftboard.staged'))||[]).filter(i=>typeof i=='string')}catch{}window.STG=STG;window.FLOAT=STG.length?STG:null;
+const saveStg=()=>{if(Object.keys(EX).length)STG=STG.filter(i=>EX[i]);window.STG=STG;window.FLOAT=STG.length?STG:null;localStorage.setItem('liftboard.staged',JSON.stringify(STG))};
+function renderStrip(){let f=document.querySelector('.floatmag');if(!STG.length){if(f)f.remove();return}
+if(!f){f=document.createElement('div');f.className='floatmag';document.body.appendChild(f)}
+f.innerHTML=`<div class="fm-head"><b>${STG.length} staged</b><span>Drag one onto a day, or tap a day name to drop all</span><button class="fm-x" aria-label="Clear all staged">✕</button></div><div class="fm-row"></div>`;
+const row=f.querySelector('.fm-row');STG.forEach(id=>{const w=document.createElement('div');w.className='fm-item';w.dataset.id=id;const t=tile(EX[id]);t.classList.remove('staged');w.appendChild(t);
+w.insertAdjacentHTML('beforeend','<button class="fm-rm" aria-label="Remove">✕</button>');w.querySelector('.fm-rm').onclick=()=>unstage(id);row.appendChild(w)});f.querySelector('.fm-x').onclick=clearFloat}
+function markTray(){if(STG.length&&!document.querySelector('.floatmag')&&Object.keys(EX).length){saveStg();renderStrip()}document.querySelectorAll('#tray .tile').forEach(t=>t.classList.toggle('staged',!!t.dataset.id&&STG.includes(t.dataset.id)))}
+function floatAdd(id){const i=STG.indexOf(id);i<0?STG.push(id):STG.splice(i,1);saveStg();renderStrip();markTray()}
+function unstage(id){STG=STG.filter(x=>x!=id);saveStg();renderStrip();markTray()}
+function clearFloat(){STG=[];saveStg();renderStrip();markTray()}
+const TORD={primary:0,accessory:1,isolation:2};
+function placeFloat(i){const ids=STG.filter(id=>EX[id]).map((id,k)=>[id,k]).sort((a,b)=>(TORD[EX[a[0]].type]??3)-(TORD[EX[b[0]].type]??3)||a[1]-b[1]).map(x=>x[0]);
+STG=[];saveStg();renderStrip();ids.forEach(id=>state.days[i].push({id,sets:3}));upd()}
 // ---- 2) saved splits
 const MKEY='liftboard.mysplits';let MYS=[];try{MYS=JSON.parse(localStorage.getItem(MKEY))||[]}catch{}
 const mySplits=window.mySplits=()=>MYS,saveMy=()=>localStorage.setItem(MKEY,JSON.stringify(MYS));
@@ -70,3 +79,4 @@ const a=document.querySelector('header .actions');a.insertAdjacentHTML('beforeen
 <p>Exercise pictures: <a href="https://github.com/yuhonas/free-exercise-db" target="_blank" rel="noopener">free-exercise-db</a> by yuhonas, released into the public domain under <a href="https://unlicense.org/" target="_blank" rel="noopener">The Unlicense</a>. Some pictures show the closest available variant.</p>
 <p>Body map: <a href="https://github.com/Jsplice/MuscleMap" target="_blank" rel="noopener">MuscleMap</a> (@musclemap/assets 1.1.0), MIT License, © 2026 Jsplice / MuscleMap contributors. <a href="img/mm/LICENSE-MuscleMap.txt" target="_blank">License</a></p>
 <p class="cf-hint">Your board, custom exercises, photos, saved splits and video links are stored only in this browser. Use Export to back them up.</p><div class="cf-btns"><button id="ab-x">Close</button></div>`);document.getElementById('ab-x').onclick=closeModal}})();
+

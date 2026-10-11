@@ -80,3 +80,9 @@ body.isdrag{cursor:grabbing;user-select:none;-webkit-user-select:none}
 #mpop{position:fixed;z-index:180;background:#fff;color:#222;border-radius:10px;padding:10px 12px;box-shadow:0 8px 28px rgba(0,0,0,.5);font-size:12px;max-height:60vh;overflow:auto}
 #mpop table{width:100%;border-collapse:collapse;margin-top:4px}#mpop td{padding:3px 2px;border-top:1px solid #eee}#mpop td:nth-child(n+2){text-align:right;white-space:nowrap;padding-left:8px}
 .mp-x{position:absolute;top:4px;right:4px;margin:0;padding:1px 6px;background:#eee;color:#333}.mp-sc{color:#777}.mp-tot{color:#555;margin-top:2px}#vol .row{cursor:pointer}
+/* v14.1 staging strip */
+.floatmag{width:min(560px,96vw);padding:6px 8px 8px}.fm-head{display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:5px;padding-right:34px}.fm-head b{color:#e0a100;white-space:nowrap}.fm-head span{color:#aab;font-size:11px}
+.fm-row{display:flex;gap:6px;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding-bottom:4px;touch-action:pan-x}
+.fm-item{position:relative;flex:0 0 170px}.fm-item .tile{height:100%;touch-action:pan-x}.fm-item .tile .info{display:none}
+.fm-rm{position:absolute;top:-4px;right:-4px;margin:0;width:20px;height:20px;padding:0;border-radius:50%;background:#a33;font-size:10px;z-index:2}
+#tray .tile.staged{outline:3px solid #e0a100;outline-offset:-1px;background:#fff7dc}

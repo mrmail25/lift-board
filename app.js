@@ -5,7 +5,7 @@ async function init(){try{const[e,t]=await Promise.all([fetch('data/exercises.js
 MUS=e.muscles;window.REG=e.regions;window.RG=e.regionGroup;e.exercises.forEach(x=>EX[x.id]=x);TG=t.targets;if(t.levelMinFactor)LMF=t.levelMinFactor;try{SP=await fetch('data/splits.json').then(r=>r.json())}catch{}Object.assign(RULE,t.counting||{});if(window.loadCustom)await loadCustom();}catch(err){alert('Could not load data files. Serve this folder over http.');}
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.days){state=s;if(s.sel)sel={...sel,...s.sel}}}catch{}filt();render();bar()}
 const snap=()=>JSON.stringify(state.days);const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
-function tile(x,item){const d=document.createElement('div');d.className='tile '+x.type;
+function tile(x,item){const d=document.createElement('div');d.className='tile '+x.type;d.dataset.id=x.id;
 const tags=Object.entries(x.muscles).filter(([,v])=>v>=RULE.min_rating_to_count).sort((a,b)=>b[1]-a[1]).map(([m,v])=>`<span>${lab(m)}${v<1?' '+v:''}</span>`).join('');
 d.innerHTML=`<span class="grip" title="Drag">⋮⋮</span><div class="n"><span class="ic">${ICON[x.type]}</span>${x.name}${x.estimated?' <em class="est" title="Estimated ratings (custom exercise)">est.</em>':''}</div><div class="tags">${tags}</div>${x.custom&&!item?'<button class="cedit" title="Edit, duplicate or delete">✎</button>':''}`;
 if(x.custom&&!item)d.querySelector('.cedit').onclick=()=>openForm(x.id);
@@ -23,7 +23,7 @@ function render(){const b=document.getElementById('board');b.innerHTML='';
 DAYS.forEach((n,i)=>{const c=document.createElement('div');c.className='col'+(window.HD===i?' daysel':'');c.innerHTML=`<h3>${n}<small>${(state.labels||[])[i]||''}</small></h3>`;const body=document.createElement('div');body.className='col-body';body.dataset.day=i;
 state.days[i].forEach(it=>EX[it.id]&&body.appendChild(tile(EX[it.id],it)));c.querySelector('h3').onclick=()=>{if(window.FLOAT){placeFloat(i);return}window.HD=window.HD===i?null:i;render()};c.appendChild(body);b.appendChild(c)});
 const q=document.getElementById('q').value.toLowerCase(),tr=document.getElementById('tray');tr.innerHTML='';
-Object.values(EX).filter(x=>pass(x,q)).forEach(x=>tr.appendChild(tile(x)));const fc=document.getElementById('fcount');if(fc)fc.textContent=tr.children.length+' shown';vol();if(window.pcheck)pcheck();if(window.heat)heat()}
+Object.values(EX).filter(x=>pass(x,q)).forEach(x=>tr.appendChild(tile(x)));const fc=document.getElementById('fcount');if(fc)fc.textContent=tr.children.length+' shown';vol();if(window.markTray)markTray();if(window.pcheck)pcheck();if(window.heat)heat()}
 function pass(x,q){if(q&&!(x.name.toLowerCase().includes(q)||Object.keys(x.muscles).some(m=>x.muscles[m]>=.5&&lab(m).includes(q))))return false;
 if(F.types.length&&!F.types.includes(x.type))return false;if(F.eq.length&&!F.eq.includes(x.equipment))return false;
 const th=F.minor?RULE.min_rating_to_count:.5;if(F.mus.length&&!F.mus.some(m=>(x.muscles[m]||0)>=th))return false;return true}
@@ -51,13 +51,13 @@ function startDrag(ev,el,id,item){ev.preventDefault();const r=el.getBoundingClie
 const ph=document.createElement('div');ph.className='ph';drag={id,item,g,ph,dx:ev.clientX-r.left,dy:ev.clientY-r.top,src:el};if(item)el.style.display='none';
 document.body.classList.add('isdrag');move(ev);addEventListener('pointermove',move);addEventListener('pointerup',end,{once:true});addEventListener('pointercancel',end,{once:true})}
 function move(ev){if(!drag)return;drag.g.style.left=ev.clientX-drag.dx+'px';drag.g.style.top=ev.clientY-drag.dy+'px';
-const t=document.elementFromPoint(ev.clientX,ev.clientY),cc=t&&t.closest('.col'),col=cc&&cc.querySelector('.col-body[data-day]');if(!col){drag.ph.remove();return}
+const cc=document.elementsFromPoint(ev.clientX,ev.clientY).map(e=>e.closest&&e.closest('.col')).find(Boolean),col=cc&&cc.querySelector('.col-body[data-day]');if(!col){drag.ph.remove();return}
 const after=[...col.querySelectorAll('.tile')].filter(x=>x.style.display!='none').find(x=>{const b=x.getBoundingClientRect();return ev.clientY<b.top+b.height/2});
 after?col.insertBefore(drag.ph,after):col.appendChild(drag.ph)}
 function end(){if(!drag)return;removeEventListener('pointermove',move);removeEventListener('pointerup',end);removeEventListener('pointercancel',end);document.body.classList.remove('isdrag');const{ph,item,id,g}=drag;g.remove();const _fl=ph.parentNode&&drag.src.closest('.floatmag');
 if(ph.parentNode){const col=ph.parentNode,day=+col.dataset.day;const idx=[...col.children].filter(x=>x===ph||x.style.display!='none').indexOf(ph);
 const it=item||{id,sets:3};state.days.forEach(c=>{const i=c.indexOf(it);if(i>=0)c.splice(i,1)});state.days[day].splice(idx,0,it);ph.remove()}
-const fl=_fl;window._dragEnd=Date.now();drag=null;if(fl&&window.clearFloat)clearFloat();upd()}
+const fl=_fl;window._dragEnd=Date.now();drag=null;if(fl&&window.unstage)unstage(id);upd()}
 document.getElementById('q').oninput=render;
 document.getElementById('clr').onclick=()=>{if(confirm('Clear the whole week?')){state={days:DAYS.map(()=>[])};upd()}};
 const WD=['mon','tue','wed','thu','fri','sat','sun'];
