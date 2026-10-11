@@ -1,5 +1,5 @@
 {
- "version": 2,
+ "version": 3,
  "muscles": [
   "chest",
   "front_delts",
@@ -56,7 +56,7 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.25,
@@ -64,16 +64,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A flat barbell press for the chest, front delts and triceps, and the main upper-body strength lift.",
+   "howTo": [
+    "Lie with your eyes under the bar and your feet flat. Pull your shoulder blades back and down.",
+    "Grip a little wider than your shoulders and unrack the bar over your shoulders.",
+    "Lower it under control to your mid-chest, with your elbows about 45\u201370\u00b0 from your body.",
+    "Press back up and slightly back toward your face until your arms are straight."
+   ],
+   "tip": "Keep your shoulder blades pinned and your butt on the bench the whole time.",
+   "youtube": ""
   },
   {
    "id": "incline-barbell-bench-press",
@@ -109,7 +118,7 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.25,
@@ -117,16 +126,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A barbell press on a 30\u201345\u00b0 bench that shifts work toward the upper chest.",
+   "howTo": [
+    "Set the bench at 30\u201345\u00b0 and sit with your eyes just in front of the bar.",
+    "Pull your shoulder blades back and grip a little wider than your shoulders.",
+    "Lower the bar to your upper chest, just below your collarbones.",
+    "Press up until your arms are straight over your shoulders."
+   ],
+   "tip": "A lower incline (around 30\u00b0) keeps more of the work on the chest instead of the shoulders.",
+   "youtube": ""
   },
   {
    "id": "dumbbell-bench-press",
@@ -162,7 +180,7 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.2,
@@ -170,16 +188,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A flat press with dumbbells that gives a deeper chest stretch than a barbell.",
+   "howTo": [
+    "Sit with the dumbbells on your thighs, then lie back and bring them to your chest.",
+    "Pull your shoulder blades back and plant your feet.",
+    "Press up and slightly in until your arms are straight, without banging the dumbbells together.",
+    "Lower slowly until you feel a stretch across your chest."
+   ],
+   "tip": "Use the full range. The deep stretch at the bottom is the main reason to choose dumbbells.",
+   "youtube": ""
   },
   {
    "id": "incline-dumbbell-press",
@@ -215,7 +242,7 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.2,
@@ -223,16 +250,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A dumbbell press on a 30\u201345\u00b0 bench for the upper chest, with a long stretch at the bottom.",
+   "howTo": [
+    "Set the bench at 30\u201345\u00b0 and kick the dumbbells up to your shoulders as you lie back.",
+    "Pull your shoulder blades back and keep your chest up.",
+    "Press up until your arms are straight above your upper chest.",
+    "Lower slowly until your elbows are a little below the bench."
+   ],
+   "tip": "Keep your wrists stacked over your elbows.",
+   "youtube": ""
   },
   {
    "id": "machine-chest-press",
@@ -268,7 +304,7 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.2,
@@ -276,16 +312,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A seated machine press that lets you push your chest hard without having to balance a weight.",
+   "howTo": [
+    "Set the seat so the handles line up with your mid-chest.",
+    "Pull your shoulder blades back against the pad and grip the handles.",
+    "Press forward until your arms are almost straight.",
+    "Return slowly until you feel a stretch in your chest."
+   ],
+   "tip": "Don't let your shoulders roll forward at the end of the press.",
+   "youtube": ""
   },
   {
    "id": "weighted-dip",
@@ -321,7 +366,7 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.4,
@@ -329,16 +374,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A bodyweight press on parallel bars, adding weight once bodyweight reps get easy, for the lower chest and triceps.",
+   "howTo": [
+    "Support yourself on the bars with your arms straight, adding a belt or dumbbell if needed.",
+    "Lean your torso forward slightly to work the chest more.",
+    "Lower until your shoulders are a little below your elbows, or as low as feels comfortable.",
+    "Press back up to straight arms."
+   ],
+   "tip": "Stop the descent at a depth your shoulders handle comfortably, and add depth over time.",
+   "youtube": ""
   },
   {
    "id": "push-up",
@@ -374,7 +428,7 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.25,
@@ -382,16 +436,25 @@
     "forearms": 0,
     "abs": 0.2,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A bodyweight press from the floor for the chest, front delts and triceps, with some core work.",
+   "howTo": [
+    "Put your hands a little wider than your shoulders and make a straight line from head to heels.",
+    "Brace your core and glutes.",
+    "Lower your chest to just above the floor, with your elbows about 45\u00b0 from your body.",
+    "Push back up to straight arms."
+   ],
+   "tip": "Keep your hips level, not sagging or piked up.",
+   "youtube": ""
   },
   {
    "id": "cable-fly",
@@ -427,24 +490,33 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A cable fly that keeps tension on the chest through a big stretch.",
+   "howTo": [
+    "Set the pulleys at chest height or a little higher and take one handle in each hand.",
+    "Step forward into a staggered stance, with a slight bend in your elbows.",
+    "Bring your hands together in front of your chest in a wide hugging arc.",
+    "Open back out slowly until you feel a stretch in your chest."
+   ],
+   "tip": "Keep the elbow bend fixed. This is a hug, not a press.",
+   "youtube": ""
   },
   {
    "id": "pec-deck",
@@ -480,24 +552,33 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A machine fly for the chest that's easy to control and push close to failure.",
+   "howTo": [
+    "Set the seat so the handles are at chest height when you hold them.",
+    "Sit tall with your shoulder blades back.",
+    "Bring the handles together in front of you.",
+    "Let them open slowly until you feel a stretch in your chest."
+   ],
+   "tip": "Don't let your shoulders shrug forward as the handles meet.",
+   "youtube": ""
   },
   {
    "id": "dumbbell-fly",
@@ -533,24 +614,33 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A fly with dumbbells on a flat bench that stretches the chest hard at the bottom.",
+   "howTo": [
+    "Lie on a bench with the dumbbells over your chest and your palms facing each other.",
+    "Keep a slight bend in your elbows and lower the weights out to the sides in an arc.",
+    "Stop when you feel a strong chest stretch, usually with your upper arms about level with the bench.",
+    "Bring them back up along the same arc."
+   ],
+   "tip": "Go lighter than you think. The stretch at the bottom is where your shoulders are most exposed.",
+   "youtube": ""
   },
   {
    "id": "overhead-press",
@@ -579,7 +669,7 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 1,
     "side_delts": 0.5,
@@ -594,16 +684,25 @@
     "forearms": 0,
     "abs": 0.2,
     "obliques": 0.15,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A standing barbell press overhead for the front delts and triceps, with core and upper-trap work.",
+   "howTo": [
+    "Start with the bar on your front shoulders, your hands just outside shoulder width, and your glutes and abs tight.",
+    "Press straight up, moving your head back slightly so the bar can pass.",
+    "Finish with the bar over your mid-foot and your head through between your arms.",
+    "Lower under control back to your shoulders."
+   ],
+   "tip": "Squeeze your glutes so you don't lean back into the lift.",
+   "youtube": ""
   },
   {
    "id": "seated-dumbbell-shoulder-press",
@@ -632,14 +731,14 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 1,
     "side_delts": 0.5,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.25,
@@ -647,16 +746,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A seated dumbbell press for the front and side delts, with back support.",
+   "howTo": [
+    "Set the bench upright or nearly upright and bring the dumbbells to shoulder height.",
+    "Keep your back against the pad and your feet planted.",
+    "Press up until your arms are straight, without letting the weights touch.",
+    "Lower to about ear level or a little below."
+   ],
+   "tip": "Keep your forearms vertical under the weights.",
+   "youtube": ""
   },
   {
    "id": "machine-shoulder-press",
@@ -685,14 +793,14 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 1,
     "side_delts": 0.4,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.25,
@@ -700,16 +808,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A machine overhead press that loads the delts without having to balance a weight.",
+   "howTo": [
+    "Adjust the seat so the handles start at about shoulder height.",
+    "Sit back against the pad and grip the handles.",
+    "Press up until your arms are almost straight.",
+    "Lower slowly to the start position."
+   ],
+   "tip": "Don't arch your lower back off the pad.",
+   "youtube": ""
   },
   {
    "id": "dumbbell-lateral-raise",
@@ -738,7 +855,7 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 1,
@@ -748,21 +865,30 @@
     "traps_upper": 0.21,
     "traps_mid_lower": 0.3,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A side raise with dumbbells, the go-to exercise for the side delts.",
+   "howTo": [
+    "Stand with the dumbbells at your sides and a slight bend in your elbows.",
+    "Lean a little forward and raise your arms out to the sides.",
+    "Stop at about shoulder height, leading with your elbows.",
+    "Lower slowly."
+   ],
+   "tip": "Think 'push the weights out' rather than 'up' so your traps stay out of it.",
+   "youtube": ""
   },
   {
    "id": "cable-lateral-raise",
@@ -791,7 +917,7 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 1,
@@ -801,21 +927,30 @@
     "traps_upper": 0.21,
     "traps_mid_lower": 0.3,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A one-arm cable side raise that keeps the side delt loaded at the bottom, where dumbbells go slack.",
+   "howTo": [
+    "Set the pulley low and stand side-on to it, holding the handle with your far hand.",
+    "Let the cable pull your hand across your body slightly.",
+    "Raise your arm out to the side to about shoulder height.",
+    "Lower slowly back across your body."
+   ],
+   "tip": "Standing a little in front of the pulley gives a longer stretch.",
+   "youtube": ""
   },
   {
    "id": "upright-row",
@@ -844,7 +979,7 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0.8,
@@ -854,21 +989,30 @@
     "traps_upper": 0.8,
     "traps_mid_lower": 0.32,
     "biceps": 0.3,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A barbell or cable pull up the front of the body for the side delts and upper traps.",
+   "howTo": [
+    "Hold the bar with your hands about shoulder width apart, or wider.",
+    "Pull it up close to your body, leading with your elbows.",
+    "Stop when your elbows are about shoulder height.",
+    "Lower under control."
+   ],
+   "tip": "A wider grip and stopping at shoulder height are usually easiest on the shoulders.",
+   "youtube": ""
   },
   {
    "id": "reverse-pec-deck",
@@ -882,7 +1026,7 @@
     "rear_delts": 1,
     "lats": 0,
     "upper_back": 0.5,
-    "traps": 0,
+    "traps": 0.4,
     "biceps": 0,
     "triceps": 0,
     "forearms": 0,
@@ -897,31 +1041,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 1,
     "lats": 0,
     "upper_back": 0.5,
-    "traps_upper": 0.0,
-    "traps_mid_lower": 0,
+    "traps_upper": 0.16,
+    "traps_mid_lower": 0.4,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A machine reverse fly for the rear delts and mid upper back.",
+   "howTo": [
+    "Sit facing the pad with the handles at shoulder height.",
+    "Hold the handles with a slight bend in your elbows.",
+    "Sweep your arms back and out until they're in line with your body.",
+    "Return slowly."
+   ],
+   "tip": "Move at the shoulder and don't squeeze your shoulder blades too hard, to keep the work on the rear delts.",
+   "youtube": ""
   },
   {
    "id": "face-pull",
@@ -935,7 +1088,7 @@
     "rear_delts": 1,
     "lats": 0,
     "upper_back": 0.5,
-    "traps": 0.3,
+    "traps": 0.5,
     "biceps": 0,
     "triceps": 0,
     "forearms": 0,
@@ -950,31 +1103,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 1,
     "lats": 0,
     "upper_back": 0.5,
-    "traps_upper": 0.12,
-    "traps_mid_lower": 0.3,
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.5,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A rope cable pull to the face for the rear delts and mid traps.",
+   "howTo": [
+    "Set the pulley at upper-chest to face height and grip the rope.",
+    "Step back until the cable is tight.",
+    "Pull the rope toward your face and split the ends apart, with your elbows high.",
+    "Return slowly."
+   ],
+   "tip": "Finish with your hands beside your ears and your elbows out.",
+   "youtube": ""
   },
   {
    "id": "dumbbell-rear-delt-fly",
@@ -988,7 +1150,7 @@
     "rear_delts": 1,
     "lats": 0,
     "upper_back": 0.4,
-    "traps": 0,
+    "traps": 0.4,
     "biceps": 0,
     "triceps": 0,
     "forearms": 0,
@@ -1003,31 +1165,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 1,
     "lats": 0,
     "upper_back": 0.4,
-    "traps_upper": 0.0,
-    "traps_mid_lower": 0,
+    "traps_upper": 0.16,
+    "traps_mid_lower": 0.4,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A bent-over reverse fly with dumbbells for the rear delts.",
+   "howTo": [
+    "Hinge forward at the hips until your torso is nearly parallel to the floor, with the dumbbells hanging down.",
+    "Keep a slight bend in your elbows.",
+    "Raise your arms out to the sides until they're about level with your back.",
+    "Lower slowly."
+   ],
+   "tip": "Use light weights and keep your shoulders away from your ears.",
+   "youtube": ""
   },
   {
    "id": "front-raise",
@@ -1063,24 +1234,33 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A forward raise with a dumbbell or plate for the front delts.",
+   "howTo": [
+    "Stand with the weights in front of your thighs.",
+    "Raise your arms forward to about shoulder height.",
+    "Pause briefly.",
+    "Lower slowly."
+   ],
+   "tip": "Most pressing already works the front delts, so treat this as optional.",
+   "youtube": ""
   },
   {
    "id": "pull-up",
@@ -1109,31 +1289,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0.3,
     "lats": 1,
     "upper_back": 0.5,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0.6,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.3,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A bodyweight pull-up with an overhand grip, the main lift for the lats.",
+   "howTo": [
+    "Hang from the bar with your hands a little wider than your shoulders and your palms facing away.",
+    "Pull your shoulders down, then drive your elbows toward your hips.",
+    "Pull until your chin clears the bar.",
+    "Lower all the way to a full hang."
+   ],
+   "tip": "Use the full range. The dead hang at the bottom is the stretch that builds the lats.",
+   "youtube": ""
   },
   {
    "id": "chin-up",
@@ -1162,31 +1351,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 1,
     "upper_back": 0.4,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0.8,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.3,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "An underhand pull-up that uses more biceps.",
+   "howTo": [
+    "Hang with your palms facing you, about shoulder width apart.",
+    "Pull your shoulders down and drive your elbows down to your sides.",
+    "Pull until your chin clears the bar.",
+    "Lower all the way to a full hang."
+   ],
+   "tip": "Avoid kicking or swinging. Keep it a strict pull.",
+   "youtube": ""
   },
   {
    "id": "lat-pulldown",
@@ -1215,31 +1413,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0.3,
     "lats": 1,
     "upper_back": 0.4,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0.5,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A cable pulldown that works like a pull-up with adjustable weight.",
+   "howTo": [
+    "Set the thigh pad snug and grip the bar a little wider than your shoulders.",
+    "Lean back slightly with your chest up.",
+    "Pull the bar to your upper chest, driving your elbows down.",
+    "Let it rise slowly until your arms are straight and your lats stretch."
+   ],
+   "tip": "Don't yank with your lower back. Pull from your elbows.",
+   "youtube": ""
   },
   {
    "id": "close-grip-pulldown",
@@ -1268,31 +1475,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 1,
     "upper_back": 0.3,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0.6,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A pulldown with a narrow, palms-facing grip that gives a long lat stretch and works the biceps more.",
+   "howTo": [
+    "Attach a close-grip handle and sit with your thighs locked under the pad.",
+    "Lean back slightly.",
+    "Pull the handle to your upper chest, keeping your elbows close to your sides.",
+    "Return until your arms are straight."
+   ],
+   "tip": "Let your shoulders rise at the top to get the full stretch.",
+   "youtube": ""
   },
   {
    "id": "barbell-row",
@@ -1306,7 +1522,7 @@
     "rear_delts": 0.5,
     "lats": 0.8,
     "upper_back": 1,
-    "traps": 0.4,
+    "traps": 0.5,
     "biceps": 0.5,
     "triceps": 0,
     "forearms": 0,
@@ -1321,31 +1537,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0.5,
     "lats": 0.8,
     "upper_back": 1,
-    "traps_upper": 0.16,
-    "traps_mid_lower": 0.4,
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.5,
     "biceps": 0.5,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0.5,
     "abductors": 0
-   }
+   },
+   "description": "A bent-over barbell row for the upper back and lats, which also makes the lower back work to hold the position.",
+   "howTo": [
+    "Hinge forward to about 30\u201345\u00b0 from the floor, holding the bar at arm's length.",
+    "Brace your core and keep your back flat.",
+    "Row the bar to your lower ribs.",
+    "Lower it under control without standing up."
+   ],
+   "tip": "Keep your torso angle the same on every rep. If it changes, the weight is too heavy.",
+   "youtube": ""
   },
   {
    "id": "pendlay-row",
@@ -1359,7 +1584,7 @@
     "rear_delts": 0.5,
     "lats": 0.8,
     "upper_back": 1,
-    "traps": 0,
+    "traps": 0.5,
     "biceps": 0.4,
     "triceps": 0,
     "forearms": 0,
@@ -1374,31 +1599,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0.5,
     "lats": 0.8,
     "upper_back": 1,
-    "traps_upper": 0.0,
-    "traps_mid_lower": 0,
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.5,
     "biceps": 0.4,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0.5,
     "abductors": 0
-   }
+   },
+   "description": "A strict barbell row from the floor, with the torso close to parallel, for the upper back and lats.",
+   "howTo": [
+    "Set up with your torso nearly parallel to the floor and the bar on the ground.",
+    "Grip slightly wider than your shoulders and brace.",
+    "Pull the bar explosively to your lower chest.",
+    "Set it back on the floor and reset before the next rep."
+   ],
+   "tip": "Don't let your back round as you pull.",
+   "youtube": ""
   },
   {
    "id": "one-arm-dumbbell-row",
@@ -1412,7 +1646,7 @@
     "rear_delts": 0.4,
     "lats": 1,
     "upper_back": 0.8,
-    "traps": 0,
+    "traps": 0.3,
     "biceps": 0.5,
     "triceps": 0,
     "forearms": 0,
@@ -1427,31 +1661,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0.4,
     "lats": 1,
     "upper_back": 0.8,
-    "traps_upper": 0.0,
-    "traps_mid_lower": 0,
+    "traps_upper": 0.12,
+    "traps_mid_lower": 0.3,
     "biceps": 0.5,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A one-arm dumbbell row with a hand on a bench for support, which allows a long stretch for the lats.",
+   "howTo": [
+    "Put one hand and knee on a bench, with the dumbbell in your other hand.",
+    "Let the weight hang so your shoulder stretches forward.",
+    "Row it toward your hip, keeping your elbow close.",
+    "Lower slowly back to the full stretch."
+   ],
+   "tip": "Pull toward your hip, not your armpit, to keep the work on the lats.",
+   "youtube": ""
   },
   {
    "id": "chest-supported-row",
@@ -1465,7 +1708,7 @@
     "rear_delts": 0.6,
     "lats": 0.7,
     "upper_back": 1,
-    "traps": 0,
+    "traps": 0.5,
     "biceps": 0.4,
     "triceps": 0,
     "forearms": 0,
@@ -1480,31 +1723,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0.6,
     "lats": 0.7,
     "upper_back": 1,
-    "traps_upper": 0.0,
-    "traps_mid_lower": 0,
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.5,
     "biceps": 0.4,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A row with your chest on a pad, so your lower back stays out of it and the upper back does the work.",
+   "howTo": [
+    "Lie face-down on an incline bench or row machine pad.",
+    "Let the weights or handles hang at arm's length.",
+    "Row your elbows back until your upper arms are level with your torso.",
+    "Lower slowly."
+   ],
+   "tip": "Keep your chest on the pad. Lifting off turns it into a cheat row.",
+   "youtube": ""
   },
   {
    "id": "seated-cable-row",
@@ -1518,7 +1770,7 @@
     "rear_delts": 0.4,
     "lats": 0.8,
     "upper_back": 1,
-    "traps": 0,
+    "traps": 0.5,
     "biceps": 0.5,
     "triceps": 0,
     "forearms": 0,
@@ -1533,31 +1785,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0.4,
     "lats": 0.8,
     "upper_back": 1,
-    "traps_upper": 0.0,
-    "traps_mid_lower": 0,
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.5,
     "biceps": 0.5,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A seated cable row for the upper back and lats.",
+   "howTo": [
+    "Sit with your feet on the platform and your knees slightly bent, holding the handle.",
+    "Sit tall and let your arms stretch forward.",
+    "Pull the handle to your stomach, bringing your shoulder blades back.",
+    "Return slowly until your arms are straight."
+   ],
+   "tip": "Keep your torso nearly still, with only a small lean, and let your arms do the moving.",
+   "youtube": ""
   },
   {
    "id": "t-bar-row",
@@ -1571,7 +1832,7 @@
     "rear_delts": 0.4,
     "lats": 0.8,
     "upper_back": 1,
-    "traps": 0,
+    "traps": 0.5,
     "biceps": 0.4,
     "triceps": 0,
     "forearms": 0,
@@ -1586,31 +1847,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0.4,
     "lats": 0.8,
     "upper_back": 1,
-    "traps_upper": 0.0,
-    "traps_mid_lower": 0,
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.5,
     "biceps": 0.4,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0.4,
     "abductors": 0
-   }
+   },
+   "description": "A landmine or machine row, done hinged over with a handle, for upper-back thickness.",
+   "howTo": [
+    "Stand over the bar with your hips hinged and your back flat, gripping the handle.",
+    "Brace your core.",
+    "Row the handle toward your chest.",
+    "Lower under control."
+   ],
+   "tip": "Hold your hip hinge. Don't let your torso stand up as you pull.",
+   "youtube": ""
   },
   {
    "id": "straight-arm-pulldown",
@@ -1639,14 +1909,14 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 1,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.2,
@@ -1654,16 +1924,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A cable pulldown with straight arms, so the lats work without the biceps.",
+   "howTo": [
+    "Face a high pulley holding a bar or rope, with your arms straight.",
+    "Hinge slightly at the hips.",
+    "Sweep your arms down to your thighs, keeping your elbows nearly locked.",
+    "Let them rise slowly until your lats stretch."
+   ],
+   "tip": "Think about pulling with your armpits, not your hands.",
+   "youtube": ""
   },
   {
    "id": "barbell-shrug",
@@ -1692,7 +1971,7 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
@@ -1702,21 +1981,30 @@
     "traps_upper": 1,
     "traps_mid_lower": 0.4,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.3,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A barbell shrug for the upper traps.",
+   "howTo": [
+    "Hold the bar at arm's length in front of your thighs.",
+    "Lift your shoulders straight up toward your ears.",
+    "Pause at the top.",
+    "Lower all the way down."
+   ],
+   "tip": "Go straight up and down. There's no need to roll your shoulders.",
+   "youtube": ""
   },
   {
    "id": "dumbbell-shrug",
@@ -1745,7 +2033,7 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
@@ -1755,21 +2043,30 @@
     "traps_upper": 1,
     "traps_mid_lower": 0.4,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.3,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A dumbbell shrug for the upper traps, with your hands at your sides.",
+   "howTo": [
+    "Hold the dumbbells at your sides.",
+    "Lift your shoulders straight up.",
+    "Pause at the top.",
+    "Lower until you feel a stretch."
+   ],
+   "tip": "Use straps if your grip gives out before your traps.",
+   "youtube": ""
   },
   {
    "id": "barbell-curl",
@@ -1798,31 +2095,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 1,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.4,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A standing barbell curl for the biceps.",
+   "howTo": [
+    "Hold the bar with an underhand, shoulder-width grip.",
+    "Keep your elbows at your sides.",
+    "Curl the bar up to shoulder height.",
+    "Lower slowly until your arms are straight."
+   ],
+   "tip": "Don't swing. If your hips move, the weight is too heavy.",
+   "youtube": ""
   },
   {
    "id": "dumbbell-curl",
@@ -1851,31 +2157,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 1,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.4,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A standing or seated dumbbell curl for the biceps.",
+   "howTo": [
+    "Hold the dumbbells at your sides with your palms forward.",
+    "Keep your elbows fixed and curl the weights up.",
+    "Squeeze at the top.",
+    "Lower slowly until your arms are straight."
+   ],
+   "tip": "Rotate your pinky up slightly at the top for a harder biceps contraction.",
+   "youtube": ""
   },
   {
    "id": "hammer-curl",
@@ -1904,31 +2219,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0.8,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.8,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A curl with your palms facing each other, for the brachialis, the forearm and the biceps.",
+   "howTo": [
+    "Hold the dumbbells at your sides with your palms facing in.",
+    "Keep your elbows at your sides.",
+    "Curl the weights up, keeping the neutral grip.",
+    "Lower slowly."
+   ],
+   "tip": "Keep your wrists straight and in line with your forearms.",
+   "youtube": ""
   },
   {
    "id": "incline-dumbbell-curl",
@@ -1957,31 +2281,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 1,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.3,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A curl lying back on an incline bench so the biceps work from a long stretch.",
+   "howTo": [
+    "Set the bench at 45\u201360\u00b0 and lie back with your arms hanging straight down.",
+    "Keep your upper arms still, pointing at the floor.",
+    "Curl the dumbbells up.",
+    "Lower all the way until your arms are fully straight."
+   ],
+   "tip": "Let your arms hang behind your body. That stretch is what makes this curl work.",
+   "youtube": ""
   },
   {
    "id": "preacher-curl",
@@ -2010,31 +2343,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 1,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.3,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A curl with your upper arms resting on an angled pad, which removes all body swing.",
+   "howTo": [
+    "Sit at the preacher bench with your armpits snug against the pad.",
+    "Hold an EZ bar or dumbbells with your arms almost straight.",
+    "Curl up until your forearms are near vertical.",
+    "Lower slowly to almost straight."
+   ],
+   "tip": "Control the bottom of each rep. Don't drop into it.",
+   "youtube": ""
   },
   {
    "id": "cable-curl",
@@ -2063,31 +2405,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 1,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.3,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A cable curl that keeps the biceps under steady tension.",
+   "howTo": [
+    "Face a low pulley holding a straight bar or rope.",
+    "Keep your elbows at your sides.",
+    "Curl up to your shoulders.",
+    "Lower slowly."
+   ],
+   "tip": "Step back a little so the cable pulls through the whole rep.",
+   "youtube": ""
   },
   {
    "id": "close-grip-bench-press",
@@ -2123,7 +2474,7 @@
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.5,
@@ -2131,16 +2482,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A bench press with a narrower grip that works the triceps harder.",
+   "howTo": [
+    "Lie on the bench and grip the bar about shoulder width apart.",
+    "Pull your shoulder blades back.",
+    "Lower the bar to your lower chest, keeping your elbows close to your sides.",
+    "Press until your arms are straight."
+   ],
+   "tip": "Shoulder width is close enough. A grip that's too narrow just strains your wrists.",
+   "youtube": ""
   },
   {
    "id": "skull-crusher",
@@ -2169,31 +2529,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.9,
-    "triceps_short": 0.9,
+    "triceps_short": 1,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A lying triceps extension with an EZ bar or dumbbells.",
+   "howTo": [
+    "Lie on a bench holding the weight over your shoulders.",
+    "Tilt your upper arms back slightly toward your head.",
+    "Bend your elbows to lower the weight behind your head or to your forehead.",
+    "Straighten your arms back to the start."
+   ],
+   "tip": "Lowering behind your head gives the long head more stretch.",
+   "youtube": ""
   },
   {
    "id": "triceps-pushdown",
@@ -2222,14 +2591,14 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 0.6,
@@ -2237,16 +2606,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A cable pushdown for the triceps.",
+   "howTo": [
+    "Face a high pulley holding a bar or rope.",
+    "Pin your elbows to your sides.",
+    "Push down until your arms are straight.",
+    "Let it rise slowly until your forearms pass parallel to the floor."
+   ],
+   "tip": "Keep your elbows still. Only your forearms should move.",
+   "youtube": ""
   },
   {
    "id": "overhead-cable-triceps-extension",
@@ -2275,14 +2653,14 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
     "triceps_long": 1,
@@ -2290,16 +2668,25 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A cable triceps extension with your arms overhead, which loads the long head at a stretch.",
+   "howTo": [
+    "Face away from a pulley, holding a rope behind your head with your arms overhead.",
+    "Stagger your stance and brace your core.",
+    "Straighten your arms forward and up.",
+    "Let the rope come back slowly behind your head."
+   ],
+   "tip": "Get a deep stretch at the bottom of every rep.",
+   "youtube": ""
   },
   {
    "id": "wrist-curl",
@@ -2328,31 +2715,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 1,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A forearm curl for the wrist flexors.",
+   "howTo": [
+    "Rest your forearms on a bench or your thighs, with your palms up and your wrists past the edge.",
+    "Let the weight roll down to your fingers.",
+    "Curl your wrists up as far as they go.",
+    "Lower slowly."
+   ],
+   "tip": "Use high reps and a full range.",
+   "youtube": ""
   },
   {
    "id": "back-squat",
@@ -2381,17 +2777,17 @@
     "abductors": 0.25
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0.15,
@@ -2402,10 +2798,19 @@
     "glutes": 0.7,
     "adductors": 0.6,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0.4,
     "abductors": 0.25
-   }
+   },
+   "description": "A barbell back squat for the quads, glutes and adductors, and the main lower-body strength lift.",
+   "howTo": [
+    "Set the bar on your upper back, step out and stand with your feet about shoulder width apart and your toes slightly out.",
+    "Brace your core and sit down between your hips, with your knees tracking over your toes.",
+    "Go as deep as you can while keeping your back neutral, ideally with your hip crease below your knee.",
+    "Drive back up through your mid-foot."
+   ],
+   "tip": "Depth matters. Deep squats build more quad and glute than half reps.",
+   "youtube": ""
   },
   {
    "id": "front-squat",
@@ -2434,17 +2839,17 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0.4,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0.2,
@@ -2455,10 +2860,19 @@
     "glutes": 0.5,
     "adductors": 0.5,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A barbell squat with the bar on the front of the shoulders, so your torso stays upright and the quads do more.",
+   "howTo": [
+    "Rest the bar on your front shoulders, with your elbows high in a clean grip or with crossed arms.",
+    "Brace hard and keep your chest up.",
+    "Squat down as deep as you can while staying upright.",
+    "Stand back up, leading with your elbows."
+   ],
+   "tip": "If your elbows drop, the bar will roll forward.",
+   "youtube": ""
   },
   {
    "id": "hack-squat",
@@ -2487,17 +2901,17 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
@@ -2508,10 +2922,19 @@
     "glutes": 0.5,
     "adductors": 0.4,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A machine squat on an angled sled, for the quads, with your back supported.",
+   "howTo": [
+    "Put your back against the pad and your feet at mid-platform, about shoulder width apart.",
+    "Release the safeties.",
+    "Lower until your knees are deeply bent.",
+    "Press back up without locking out hard."
+   ],
+   "tip": "Lower foot placement works the quads more. Higher placement works the glutes more.",
+   "youtube": ""
   },
   {
    "id": "leg-press",
@@ -2540,17 +2963,17 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
@@ -2561,10 +2984,19 @@
     "glutes": 0.6,
     "adductors": 0.5,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A machine press for the quads and glutes, with no balance or lower-back demand.",
+   "howTo": [
+    "Sit with your back flat against the pad and your feet about shoulder width apart on the platform.",
+    "Release the safeties.",
+    "Lower until your knees are deeply bent, without letting your lower back peel off the pad.",
+    "Press back up."
+   ],
+   "tip": "Stop the descent before your hips curl up off the seat.",
+   "youtube": ""
   },
   {
    "id": "bulgarian-split-squat",
@@ -2593,17 +3025,17 @@
     "abductors": 0.5
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
@@ -2614,10 +3046,19 @@
     "glutes": 0.8,
     "adductors": 0.5,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0.5
-   }
+   },
+   "description": "A one-leg squat with your rear foot up on a bench, for the quads and glutes.",
+   "howTo": [
+    "Stand in front of a bench with the top of your rear foot resting on it.",
+    "Lower straight down until your rear knee nearly touches the floor.",
+    "Keep your front foot flat and your knee tracking over your toes.",
+    "Drive up through your front foot."
+   ],
+   "tip": "A longer stride and leaning forward work the glutes more. A shorter stride and staying upright work the quads more.",
+   "youtube": ""
   },
   {
    "id": "walking-lunge",
@@ -2646,17 +3087,17 @@
     "abductors": 0.5
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
@@ -2667,10 +3108,19 @@
     "glutes": 0.8,
     "adductors": 0.5,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0.5
-   }
+   },
+   "description": "Alternating forward lunges as you walk, for the quads and glutes.",
+   "howTo": [
+    "Hold dumbbells at your sides and step forward into a long stride.",
+    "Lower until your back knee nearly touches the floor.",
+    "Push through your front foot and step straight into the next lunge.",
+    "Keep your torso tall."
+   ],
+   "tip": "Take controlled steps. Don't let your front knee cave inward.",
+   "youtube": ""
   },
   {
    "id": "leg-extension",
@@ -2699,17 +3149,17 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
@@ -2720,10 +3170,19 @@
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A machine knee extension, the best exercise for isolating the quads, including the rectus femoris.",
+   "howTo": [
+    "Adjust the seat so your knees line up with the machine's pivot point.",
+    "Hook the pad just above your ankles.",
+    "Straighten your legs fully.",
+    "Lower slowly until your knees are bent past 90\u00b0."
+   ],
+   "tip": "Leaning back slightly stretches the rectus femoris more.",
+   "youtube": ""
   },
   {
    "id": "deadlift",
@@ -2742,17 +3201,17 @@
     "triceps": 0,
     "forearms": 0.6,
     "abs": 0,
-    "quads": 0.4,
+    "quads": 0.5,
     "hamstrings": 0.7,
     "glutes": 0.8,
     "calves": 0,
     "adductors": 0.4,
-    "lower_back": 1,
+    "lower_back": 0.9,
     "obliques": 0.15,
     "abductors": 0.25
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
@@ -2762,21 +3221,30 @@
     "traps_upper": 0.6,
     "traps_mid_lower": 0.42,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.6,
     "abs": 0,
     "obliques": 0.15,
-    "quads_rf": 0.16,
-    "quads_vasti": 0.4,
+    "quads_rf": 0.2,
+    "quads_vasti": 0.5,
     "hamstrings": 0.7,
     "glutes": 0.8,
     "adductors": 0.4,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
-    "lower_back": 1,
+    "calves_soleus": 0,
+    "lower_back": 0.9,
     "abductors": 0.25
-   }
+   },
+   "description": "A conventional deadlift from the floor, a full-body pull for the posterior chain, meaning the hamstrings, glutes and back.",
+   "howTo": [
+    "Stand with the bar over your mid-foot and your feet about hip width apart.",
+    "Hinge down and grip the bar just outside your legs, with your back flat and your shoulders over the bar.",
+    "Push the floor away and stand up with the bar sliding up your legs.",
+    "Lower it back down the same way."
+   ],
+   "tip": "Keep the bar touching your legs the whole time.",
+   "youtube": ""
   },
   {
    "id": "romanian-deadlift",
@@ -2788,48 +3256,57 @@
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
-    "lats": 0,
-    "upper_back": 0,
-    "traps": 0,
+    "lats": 0.25,
+    "upper_back": 0.25,
+    "traps": 0.3,
     "biceps": 0,
     "triceps": 0,
-    "forearms": 0.4,
+    "forearms": 0.5,
     "abs": 0,
     "quads": 0,
     "hamstrings": 1,
-    "glutes": 0.8,
+    "glutes": 0.7,
     "calves": 0,
     "adductors": 0.4,
-    "lower_back": 0.6,
+    "lower_back": 0.7,
     "obliques": 0,
     "abductors": 0.25
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
-    "lats": 0,
-    "upper_back": 0,
-    "traps_upper": 0.0,
-    "traps_mid_lower": 0,
+    "lats": 0.25,
+    "upper_back": 0.25,
+    "traps_upper": 0.3,
+    "traps_mid_lower": 0.2,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
-    "forearms": 0.4,
+    "forearms": 0.5,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 1,
-    "glutes": 0.8,
+    "glutes": 0.7,
     "adductors": 0.4,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
-    "lower_back": 0.6,
+    "calves_soleus": 0,
+    "lower_back": 0.7,
     "abductors": 0.25
-   }
+   },
+   "description": "A hip hinge that lowers the bar down your legs with soft knees, putting a long stretch on the hamstrings.",
+   "howTo": [
+    "Stand tall holding the bar at your hips, with your knees slightly bent.",
+    "Push your hips back and let the bar slide down your thighs, keeping your back flat.",
+    "Go down until you feel a strong hamstring stretch, usually around mid-shin.",
+    "Drive your hips forward to stand back up."
+   ],
+   "tip": "The movement is hips back, not bending down. Your knee angle barely changes.",
+   "youtube": ""
   },
   {
    "id": "stiff-leg-dumbbell-deadlift",
@@ -2846,19 +3323,19 @@
     "traps": 0,
     "biceps": 0,
     "triceps": 0,
-    "forearms": 0,
+    "forearms": 0.3,
     "abs": 0,
     "quads": 0,
     "hamstrings": 1,
-    "glutes": 0.7,
+    "glutes": 0.6,
     "calves": 0,
-    "adductors": 0,
-    "lower_back": 0.5,
+    "adductors": 0.3,
+    "lower_back": 0.6,
     "obliques": 0,
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
@@ -2866,23 +3343,32 @@
     "lats": 0,
     "upper_back": 0,
     "traps_upper": 0,
-    "traps_mid_lower": 0.0,
+    "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
-    "forearms": 0,
+    "forearms": 0.3,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 1,
-    "glutes": 0.7,
-    "adductors": 0,
+    "glutes": 0.6,
+    "adductors": 0.3,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
-    "lower_back": 0.5,
+    "calves_soleus": 0,
+    "lower_back": 0.6,
     "abductors": 0
-   }
+   },
+   "description": "A dumbbell hinge with straighter legs, for the hamstrings.",
+   "howTo": [
+    "Hold the dumbbells in front of your thighs.",
+    "Keep your legs nearly straight and push your hips back.",
+    "Lower the weights along your legs until your hamstrings are stretched.",
+    "Squeeze your glutes and stand up."
+   ],
+   "tip": "Keep your back flat. Only go as low as your hamstrings allow.",
+   "youtube": ""
   },
   {
    "id": "hip-thrust",
@@ -2911,17 +3397,17 @@
     "abductors": 0.3
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
@@ -2932,10 +3418,19 @@
     "glutes": 1,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0.3
-   }
+   },
+   "description": "A barbell hip thrust with your upper back on a bench, for the glutes.",
+   "howTo": [
+    "Sit with your upper back against a bench and a padded bar across your hips.",
+    "Plant your feet so your shins are vertical at the top.",
+    "Drive through your heels and lift your hips until your body is flat from shoulders to knees.",
+    "Lower under control."
+   ],
+   "tip": "Tuck your chin and ribs down so your lower back doesn't arch at the top.",
+   "youtube": ""
   },
   {
    "id": "lying-leg-curl",
@@ -2964,22 +3459,22 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 1,
     "glutes": 0,
@@ -2988,7 +3483,16 @@
     "calves_soleus": 0.0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A machine leg curl lying face-down, for the hamstrings.",
+   "howTo": [
+    "Lie face-down with the pad just above your heels and your knees just off the bench edge.",
+    "Curl your heels toward your glutes.",
+    "Squeeze at the top.",
+    "Lower slowly until your legs are straight."
+   ],
+   "tip": "Keep your hips pressed down into the pad.",
+   "youtube": ""
   },
   {
    "id": "seated-leg-curl",
@@ -3017,22 +3521,22 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 1,
     "glutes": 0,
@@ -3041,7 +3545,16 @@
     "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A seated machine leg curl. Your hips are bent, so the hamstrings work from a longer stretch.",
+   "howTo": [
+    "Sit with your knees lined up with the pivot, the pad behind your lower legs, and the thigh pad snug.",
+    "Lean your torso forward slightly.",
+    "Curl your heels down and back.",
+    "Return slowly until your legs are straight."
+   ],
+   "tip": "Leaning forward adds stretch. Research suggests seated curls build more than lying curls.",
+   "youtube": ""
   },
   {
    "id": "back-extension",
@@ -3070,31 +3583,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0.6,
     "glutes": 0.7,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0.8,
     "abductors": 0
-   }
+   },
+   "description": "A hip extension on a 45\u00b0 or horizontal bench, for the lower back, glutes and hamstrings.",
+   "howTo": [
+    "Set the pad just below your hip bones and lock your heels in.",
+    "Lower your torso forward.",
+    "Raise up until your body is in a straight line.",
+    "Lower slowly."
+   ],
+   "tip": "Round your upper back slightly to work the glutes more, or keep it flat to work the lower back.",
+   "youtube": ""
   },
   {
    "id": "hip-adduction-machine",
@@ -3123,31 +3645,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 1,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A seated machine that squeezes the legs together, for the inner-thigh adductors.",
+   "howTo": [
+    "Sit with the pads on the inside of your knees and set the start width so you feel a stretch.",
+    "Squeeze your legs together.",
+    "Pause briefly.",
+    "Open back out slowly."
+   ],
+   "tip": "Leaning forward slightly lets the adductors work through a longer range.",
+   "youtube": ""
   },
   {
    "id": "standing-calf-raise",
@@ -3176,22 +3707,22 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
@@ -3200,7 +3731,16 @@
     "calves_soleus": 0.7,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A calf raise with straight knees, for the gastrocnemius.",
+   "howTo": [
+    "Stand on a step or calf machine with the balls of your feet on the edge.",
+    "Let your heels drop for a deep stretch and pause there.",
+    "Rise up as high as you can.",
+    "Lower slowly back to the stretch."
+   ],
+   "tip": "Pause in the bottom stretch for a second. Bouncing skips most of the benefit.",
+   "youtube": ""
   },
   {
    "id": "seated-calf-raise",
@@ -3229,22 +3769,22 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
@@ -3253,7 +3793,16 @@
     "calves_soleus": 1,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A calf raise with bent knees, which shifts work to the soleus.",
+   "howTo": [
+    "Sit with the pad on your lower thighs and the balls of your feet on the platform.",
+    "Drop your heels into a deep stretch.",
+    "Raise your heels as high as you can.",
+    "Lower slowly."
+   ],
+   "tip": "Use a full range and steady reps, without bouncing.",
+   "youtube": ""
   },
   {
    "id": "hanging-leg-raise",
@@ -3282,31 +3831,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0.3,
     "abs": 1,
     "obliques": 0.5,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A hanging raise of the legs or knees for the abs.",
+   "howTo": [
+    "Hang from a bar with your arms straight.",
+    "Tilt your pelvis back and raise your knees or straight legs.",
+    "Curl your hips up toward your chest.",
+    "Lower slowly without swinging."
+   ],
+   "tip": "Curling your pelvis up is what works the abs. Just lifting your legs mostly works the hip flexors.",
+   "youtube": ""
   },
   {
    "id": "cable-crunch",
@@ -3335,31 +3893,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 1,
     "obliques": 0.4,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0,
     "abductors": 0
-   }
+   },
+   "description": "A kneeling crunch against a cable, for the abs.",
+   "howTo": [
+    "Kneel facing a high pulley, holding a rope beside your head.",
+    "Keep your hips still.",
+    "Curl your ribs toward your pelvis, rounding your spine.",
+    "Return slowly to a stretch."
+   ],
+   "tip": "Move your spine, not your hips. Your butt shouldn't sit back.",
+   "youtube": ""
   },
   {
    "id": "ab-wheel-rollout",
@@ -3388,31 +3955,40 @@
     "abductors": 0
    },
    "heads": {
-    "chest_upper": 0.0,
+    "chest_upper": 0,
     "chest_lower": 0,
     "front_delts": 0,
     "side_delts": 0,
     "rear_delts": 0,
     "lats": 0.2,
     "upper_back": 0,
-    "traps_upper": 0.0,
+    "traps_upper": 0,
     "traps_mid_lower": 0,
     "biceps": 0,
-    "triceps_long": 0.0,
+    "triceps_long": 0,
     "triceps_short": 0,
     "forearms": 0,
     "abs": 1,
     "obliques": 0.6,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
     "adductors": 0,
     "calves_gastroc": 0,
-    "calves_soleus": 0.0,
+    "calves_soleus": 0,
     "lower_back": 0.2,
     "abductors": 0
-   }
+   },
+   "description": "A rollout on an ab wheel that makes the abs resist arching, with a big stretch.",
+   "howTo": [
+    "Kneel holding the wheel under your shoulders.",
+    "Brace your core and tuck your pelvis slightly.",
+    "Roll forward as far as you can without your lower back sagging.",
+    "Pull back to the start using your abs."
+   ],
+   "tip": "Start with short rollouts and lengthen them over time.",
+   "youtube": ""
   },
   {
    "id": "hip-abduction-machine",
@@ -3456,7 +4032,7 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0.3,
@@ -3465,7 +4041,16 @@
     "calves_gastroc": 0,
     "calves_soleus": 0,
     "lower_back": 0
-   }
+   },
+   "description": "A seated machine that pushes the legs apart, for the glute medius, glute minimus and TFL.",
+   "howTo": [
+    "Sit with the pads on the outside of your knees.",
+    "Push your knees out as far as you can.",
+    "Pause briefly.",
+    "Return slowly."
+   ],
+   "tip": "Leaning forward slightly works the glute medius more.",
+   "youtube": ""
   },
   {
    "id": "cable-hip-abduction",
@@ -3509,7 +4094,7 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0.3,
@@ -3518,7 +4103,16 @@
     "calves_gastroc": 0,
     "calves_soleus": 0,
     "lower_back": 0
-   }
+   },
+   "description": "A standing cable leg raise out to the side, for the glute medius.",
+   "howTo": [
+    "Attach an ankle cuff on a low pulley and stand side-on with the cuffed leg away from the machine.",
+    "Hold the machine for balance.",
+    "Raise your leg out to the side without leaning.",
+    "Lower slowly."
+   ],
+   "tip": "Keep your toes pointing forward. Rotating them up shifts the work to the hip flexors.",
+   "youtube": ""
   },
   {
    "id": "side-lying-hip-abduction",
@@ -3562,7 +4156,7 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0.25,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0,
@@ -3571,7 +4165,16 @@
     "calves_gastroc": 0,
     "calves_soleus": 0,
     "lower_back": 0
-   }
+   },
+   "description": "A side-lying leg raise for the glute medius. It needs no equipment.",
+   "howTo": [
+    "Lie on your side with your legs stacked and straight.",
+    "Rotate your top leg's toes slightly down.",
+    "Raise your top leg to about 30\u201345\u00b0.",
+    "Lower slowly."
+   ],
+   "tip": "Keep your hips stacked. Don't roll back.",
+   "youtube": ""
   },
   {
    "id": "banded-lateral-walk",
@@ -3615,7 +4218,7 @@
     "forearms": 0,
     "abs": 0,
     "obliques": 0,
-    "quads_rf": 0.0,
+    "quads_rf": 0,
     "quads_vasti": 0,
     "hamstrings": 0,
     "glutes": 0.3,
@@ -3624,7 +4227,16 @@
     "calves_gastroc": 0,
     "calves_soleus": 0,
     "lower_back": 0
-   }
+   },
+   "description": "Side steps with a resistance band around the legs, for the glute medius.",
+   "howTo": [
+    "Put a band above your knees or around your ankles and sink into a quarter squat.",
+    "Step sideways, keeping tension on the band.",
+    "Bring your trailing foot in without letting your feet touch.",
+    "Take the same number of steps in each direction."
+   ],
+   "tip": "Stay low and keep your knees pushed out the whole time.",
+   "youtube": ""
   },
   {
    "id": "dumbbell-step-up",
@@ -3677,7 +4289,16 @@
     "calves_gastroc": 0,
     "calves_soleus": 0,
     "lower_back": 0
-   }
+   },
+   "description": "A one-leg step up onto a box or bench, for the quads and glutes.",
+   "howTo": [
+    "Hold dumbbells and put one foot flat on a knee-height box.",
+    "Lean forward slightly and drive through the top foot.",
+    "Stand fully on the box without pushing off your back foot.",
+    "Step down slowly."
+   ],
+   "tip": "Let the top leg do the work, not a bounce off the floor.",
+   "youtube": ""
   }
  ],
  "regions": [

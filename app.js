@@ -17,10 +17,11 @@ d.querySelector('.del').onclick=()=>{state.days.forEach(c=>{const i=c.indexOf(it
 d.addEventListener('pointerdown',ev=>{if(ev.target.closest('button,input,select'))return;if(ev.target.closest('.grip')){startDrag(ev,d,x.id,item);return}
 const sx=ev.clientX,sy=ev.clientY;let lp=setTimeout(()=>{lp=null;cleanup();if(navigator.vibrate)try{navigator.vibrate(15)}catch{};startDrag(ev,d,x.id,item)},250);
 const mv=e=>{if(Math.hypot(e.clientX-sx,e.clientY-sy)>8)cleanup()},cleanup=()=>{if(lp)clearTimeout(lp);lp=null;removeEventListener('pointermove',mv);removeEventListener('pointerup',cleanup);removeEventListener('pointercancel',cleanup)};
-addEventListener('pointermove',mv);addEventListener('pointerup',cleanup);addEventListener('pointercancel',cleanup)});return d}
+addEventListener('pointermove',mv);addEventListener('pointerup',cleanup);addEventListener('pointercancel',cleanup)});if(!item)d.insertAdjacentHTML('beforeend','<button class="info" title="Details" aria-label="Details">i</button>');const ib=d.querySelector('.info');if(ib)ib.onclick=()=>openDetail(x.id);
+d.addEventListener('click',ev=>{if(ev.target.closest('button,input,select')||Date.now()-(window._dragEnd||0)<400)return;if(item)openDetail(x.id);else if(!d.closest('.floatmag'))floatAdd(x.id)});return d}
 function render(){const b=document.getElementById('board');b.innerHTML='';
 DAYS.forEach((n,i)=>{const c=document.createElement('div');c.className='col'+(window.HD===i?' daysel':'');c.innerHTML=`<h3>${n}<small>${(state.labels||[])[i]||''}</small></h3>`;const body=document.createElement('div');body.className='col-body';body.dataset.day=i;
-state.days[i].forEach(it=>EX[it.id]&&body.appendChild(tile(EX[it.id],it)));c.querySelector('h3').onclick=()=>{window.HD=window.HD===i?null:i;render()};c.appendChild(body);b.appendChild(c)});
+state.days[i].forEach(it=>EX[it.id]&&body.appendChild(tile(EX[it.id],it)));c.querySelector('h3').onclick=()=>{if(window.FLOAT){placeFloat(i);return}window.HD=window.HD===i?null:i;render()};c.appendChild(body);b.appendChild(c)});
 const q=document.getElementById('q').value.toLowerCase(),tr=document.getElementById('tray');tr.innerHTML='';
 Object.values(EX).filter(x=>pass(x,q)).forEach(x=>tr.appendChild(tile(x)));const fc=document.getElementById('fcount');if(fc)fc.textContent=tr.children.length+' shown';vol();if(window.pcheck)pcheck();if(window.heat)heat()}
 function pass(x,q){if(q&&!(x.name.toLowerCase().includes(q)||Object.keys(x.muscles).some(m=>x.muscles[m]>=.5&&lab(m).includes(q))))return false;
@@ -44,7 +45,7 @@ for(const m in t)t[m]=Math.round(t[m]/RULE.round_to)*RULE.round_to;return t}
 const tgt=m=>{const g=TG[m]||{min:0,max:10};return{min:Math.round(g.min*(LMF[sel.level]||1)*2)/2,max:g.max}};
 function status(v,{min,max}){if(v<min-2||v>max*1.25)return'red';if(v<min||v>max)return'amber';return'green'}
 function vol(){const t=totals(),el=document.getElementById('vol');el.innerHTML=MUS.map(m=>{const g=tgt(m),s=status(t[m],g),p=Math.min(100,t[m]/(g.max*1.25)*100);
-return`<div class="row ${s}"><span>${cap(lab(m))}</span><div class="bar"><i style="width:${p}%"></i></div><b>${t[m]} / ${g.min}-${g.max}</b></div>`}).join('')}
+return`<div class="row ${s}" data-m="${m}"><span>${cap(lab(m))}</span><div class="bar"><i style="width:${p}%"></i></div><b>${t[m]} / ${g.min}-${g.max}</b></div>`}).join('');el.querySelectorAll('.row').forEach(r=>r.onclick=e=>window.musclePop&&musclePop('g:'+r.dataset.m,e.clientX,e.clientY))}
 let drag=null;document.addEventListener('touchmove',e=>{if(drag)e.preventDefault()},{passive:false});
 function startDrag(ev,el,id,item){ev.preventDefault();const r=el.getBoundingClientRect(),g=el.cloneNode(true);g.classList.add('dragging');document.body.appendChild(g);
 const ph=document.createElement('div');ph.className='ph';drag={id,item,g,ph,dx:ev.clientX-r.left,dy:ev.clientY-r.top,src:el};if(item)el.style.display='none';
@@ -53,10 +54,10 @@ function move(ev){if(!drag)return;drag.g.style.left=ev.clientX-drag.dx+'px';drag
 const t=document.elementFromPoint(ev.clientX,ev.clientY),cc=t&&t.closest('.col'),col=cc&&cc.querySelector('.col-body[data-day]');if(!col){drag.ph.remove();return}
 const after=[...col.querySelectorAll('.tile')].filter(x=>x.style.display!='none').find(x=>{const b=x.getBoundingClientRect();return ev.clientY<b.top+b.height/2});
 after?col.insertBefore(drag.ph,after):col.appendChild(drag.ph)}
-function end(){if(!drag)return;removeEventListener('pointermove',move);removeEventListener('pointerup',end);removeEventListener('pointercancel',end);document.body.classList.remove('isdrag');const{ph,item,id,g}=drag;g.remove();
+function end(){if(!drag)return;removeEventListener('pointermove',move);removeEventListener('pointerup',end);removeEventListener('pointercancel',end);document.body.classList.remove('isdrag');const{ph,item,id,g}=drag;g.remove();const _fl=ph.parentNode&&drag.src.closest('.floatmag');
 if(ph.parentNode){const col=ph.parentNode,day=+col.dataset.day;const idx=[...col.children].filter(x=>x===ph||x.style.display!='none').indexOf(ph);
 const it=item||{id,sets:3};state.days.forEach(c=>{const i=c.indexOf(it);if(i>=0)c.splice(i,1)});state.days[day].splice(idx,0,it);ph.remove()}
-drag=null;upd()}
+const fl=_fl;window._dragEnd=Date.now();drag=null;if(fl&&window.clearFloat)clearFloat();upd()}
 document.getElementById('q').oninput=render;
 document.getElementById('clr').onclick=()=>{if(confirm('Clear the whole week?')){state={days:DAYS.map(()=>[])};upd()}};
 const WD=['mon','tue','wed','thu','fri','sat','sun'];
@@ -64,19 +65,19 @@ function bar(){if(!SP)return;const L=document.getElementById('lvl'),D=document.g
 L.innerHTML=['beginner','intermediate','advanced'].map(l=>`<button data-v="${l}" class="${sel.level==l?'on':''}">${l[0].toUpperCase()+l.slice(1)}</button>`).join('');
 D.innerHTML=[2,3,4,5,6].map(d=>`<button data-v="${d}" class="${sel.days==d?'on':''}">${d} days</button>`).join('');
 const ok=SP.splits.filter(x=>(x.levelDayCounts?(x.levelDayCounts[sel.level]||[]).includes(sel.days):x.dayCounts.includes(sel.days))&&x.levels[sel.level]&&x.levels[sel.level][sel.days]);
-if(!ok.find(x=>x.id==sel.split))sel.split=ok[0]&&ok[0].id;
-S.innerHTML=ok.map(x=>`<option value="${x.id}" ${x.id==sel.split?'selected':''}>${x.name}</option>`).join('');
+const MY=window.mySplits?mySplits():[];if(!ok.find(x=>x.id==sel.split)&&!MY.find(x=>'my:'+x.id==sel.split))sel.split=ok[0]&&ok[0].id;
+S.innerHTML=`<optgroup label="Presets">`+ok.map(x=>`<option value="${x.id}" ${x.id==sel.split?'selected':''}>${x.name}</option>`).join('')+'</optgroup>'+(MY.length?`<optgroup label="My splits">${MY.map(x=>`<option value="my:${x.id}" ${'my:'+x.id==sel.split?'selected':''}>${x.name.replace(/</g,'&lt;')}</option>`).join('')}</optgroup>`:'');
 L.querySelectorAll('button').forEach(b=>b.onclick=()=>{sel.level=b.dataset.v;state.sel={...sel};save();bar();render()});
 D.querySelectorAll('button').forEach(b=>b.onclick=()=>{sel.days=+b.dataset.v;state.sel={...sel};save();bar()});S.onchange=()=>{sel.split=S.value}}
-function applySplit(force){const sp=SP.splits.find(x=>x.id==sel.split);if(!sp)return;
+function applySplit(force){if(String(sel.split).startsWith('my:'))return applyMy(sel.split.slice(3),force);const sp=SP.splits.find(x=>x.id==sel.split);if(!sp)return;
 const empty=state.days.every(c=>!c.length),untouched=state.applied&&state.applied==snap();
 if(!force&&!empty&&!untouched&&!confirm('Your week has edits. Replace it with '+sp.name+'?'))return;
 const days=DAYS.map(()=>[]),labels=DAYS.map(()=>''),reasons=DAYS.map(()=>'');
 sp.levels[sel.level][sel.days].forEach(d=>{const i=WD.indexOf(d.day);labels[i]=d.label;reasons[i]=d.reason||'';d.tiles.forEach(t=>EX[t.id]&&days[i].push({id:t.id,sets:t.sets}))});
 state={days,labels,reasons,sel:{...sel}};state.applied=snap();upd()}
 document.getElementById('apply').onclick=()=>applySplit();
-document.getElementById('exp').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({app:'lift-board',version:2,...state,customExercises:typeof CUS!='undefined'?CUS:[]},null,1)],{type:'application/json'}));a.download='lift-board-week.json';a.click()};
-document.getElementById('imp').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(s=>{const d=JSON.parse(s);if(!Array.isArray(d.days)||d.days.length!=7)throw 0;if(Array.isArray(d.customExercises)&&window.syncCustom){d.customExercises.forEach(c=>{if(c&&c.id&&c.ratings&&String(c.id).startsWith('custom-')){const i=CUS.findIndex(x=>x.id==c.id);i<0?CUS.push(c):CUS[i]=c}});syncCustom()}state={labels:d.labels,days:d.days.map(c=>c.filter(i=>EX[i.id]).map(i=>({id:i.id,sets:+i.sets||0})))};upd()}).catch(()=>alert('Not a valid Lift Board file.'));e.target.value=''};
+document.getElementById('exp').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({app:'lift-board',version:2,...state,customExercises:typeof CUS!='undefined'?CUS:[],mySplits:window.mySplits?mySplits():[],youtube:window.YT||{}},null,1)],{type:'application/json'}));a.download='lift-board-week.json';a.click()};
+document.getElementById('imp').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(s=>{const d=JSON.parse(s);if(!Array.isArray(d.days)||d.days.length!=7)throw 0;if(Array.isArray(d.customExercises)&&window.syncCustom){d.customExercises.forEach(c=>{if(c&&c.id&&c.ratings&&String(c.id).startsWith('custom-')){const i=CUS.findIndex(x=>x.id==c.id);i<0?CUS.push(c):CUS[i]=c}});syncCustom()}if(window.importV14)importV14(d);state={labels:d.labels,days:d.days.map(c=>c.filter(i=>EX[i.id]).map(i=>({id:i.id,sets:+i.sets||0})))};upd()}).catch(()=>alert('Not a valid Lift Board file.'));e.target.value=''};
 init();
 // test hook: #fill=level,days,splitId
 addEventListener('load',()=>setTimeout(()=>{const m=location.hash.match(/fill=(\w+),(\d),([\w-]+)/);if(m&&SP){sel={level:m[1],days:+m[2],split:m[3]};bar();applySplit(true)}},500));

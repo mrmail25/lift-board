@@ -679,7 +679,7 @@
         },
         {
          "id": "cable-lateral-raise",
-         "sets": 4
+         "sets": 3
         },
         {
          "id": "incline-dumbbell-curl",
@@ -702,7 +702,7 @@
        "tiles": [
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "dumbbell-bench-press",
@@ -727,13 +727,8 @@
         {
          "id": "standing-calf-raise",
          "sets": 4
-        },
-        {
-         "id": "straight-arm-pulldown",
-         "sets": 2
         }
-       ],
-       "reason": "Two-day plan: an eighth exercise is needed to reach the weekly minimum for every muscle."
+       ]
       }
      ],
      "3": [
@@ -979,23 +974,6 @@
       }
      ]
     }
-   },
-   "levelDayCounts": {
-    "beginner": [
-     2,
-     3,
-     4
-    ],
-    "intermediate": [
-     2,
-     3,
-     4
-    ],
-    "advanced": [
-     2,
-     3,
-     4
-    ]
    }
   },
   {
@@ -1216,7 +1194,7 @@
         },
         {
          "id": "pull-up",
-         "sets": 4
+         "sets": 3
         },
         {
          "id": "overhead-press",
@@ -1246,7 +1224,7 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "romanian-deadlift",
@@ -1550,19 +1528,6 @@
       }
      ]
     }
-   },
-   "levelDayCounts": {
-    "beginner": [
-     2,
-     4
-    ],
-    "intermediate": [
-     2,
-     4
-    ],
-    "advanced": [
-     4
-    ]
    }
   },
   {
@@ -2445,20 +2410,6 @@
       }
      ]
     }
-   },
-   "levelDayCounts": {
-    "beginner": [
-     3,
-     6
-    ],
-    "intermediate": [
-     3,
-     6
-    ],
-    "advanced": [
-     3,
-     6
-    ]
    }
   },
   {
@@ -2902,17 +2853,6 @@
       }
      ]
     }
-   },
-   "levelDayCounts": {
-    "beginner": [
-     5
-    ],
-    "intermediate": [
-     5
-    ],
-    "advanced": [
-     5
-    ]
    }
   },
   {
@@ -3330,17 +3270,6 @@
       }
      ]
     }
-   },
-   "levelDayCounts": {
-    "beginner": [
-     4
-    ],
-    "intermediate": [
-     4
-    ],
-    "advanced": [
-     4
-    ]
    }
   },
   {
@@ -3856,17 +3785,6 @@
       }
      ]
     }
-   },
-   "levelDayCounts": {
-    "beginner": [
-     5
-    ],
-    "intermediate": [
-     5
-    ],
-    "advanced": [
-     5
-    ]
    }
   },
   {
@@ -4733,20 +4651,6 @@
       }
      ]
     }
-   },
-   "levelDayCounts": {
-    "beginner": [
-     3,
-     6
-    ],
-    "intermediate": [
-     3,
-     6
-    ],
-    "advanced": [
-     3,
-     6
-    ]
    }
   },
   {
@@ -5319,19 +5223,6 @@
       }
      ]
     }
-   },
-   "levelDayCounts": {
-    "beginner": [
-     2,
-     4
-    ],
-    "intermediate": [
-     2,
-     4
-    ],
-    "advanced": [
-     4
-    ]
    }
   },
   {
@@ -5733,17 +5624,6 @@
       }
      ]
     }
-   },
-   "levelDayCounts": {
-    "beginner": [
-     4
-    ],
-    "intermediate": [
-     4
-    ],
-    "advanced": [
-     4
-    ]
    }
   },
   {
@@ -6059,17 +5939,6 @@
       }
      ]
     }
-   },
-   "levelDayCounts": {
-    "beginner": [
-     3
-    ],
-    "intermediate": [
-     3
-    ],
-    "advanced": [
-     3
-    ]
    }
   }
  ]

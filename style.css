@@ -69,3 +69,14 @@ body.isdrag{cursor:grabbing;user-select:none;-webkit-user-select:none}
 .gleg{flex-basis:100%;margin:2px 4px 14px}.gbar{height:10px;border-radius:5px}.gtk{position:relative;height:12px;font-size:10px;color:#ccd}
 .gtk span{position:absolute;top:2px;transform:translateX(-50%);white-space:nowrap}.gtk span:first-child{transform:none}.gtk span:last-child{transform:translateX(-100%)}
 .gtk span::before{content:'';position:absolute;left:50%;top:-6px;width:1px;height:5px;background:#ccd}.gtk span:first-child::before{left:0}.gtk span:last-child::before{left:100%}
+/* v14 */
+.floatmag{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:150;background:#1d2023;border:2px solid #e0a100;border-radius:10px;padding:6px 30px 8px 8px;width:min(300px,92vw);box-shadow:0 8px 24px rgba(0,0,0,.55)}
+.floatmag .fm-hint{font-size:11px;color:#f5c060;margin:0 0 4px}.fm-x{position:absolute;top:4px;right:4px;margin:0;padding:2px 7px;background:#454b52}
+.tile .info{position:absolute;right:4px;bottom:4px;margin:0;width:20px;height:20px;padding:0;border-radius:50%;background:#e2e6ea;color:#2a7de1;font:italic 700 12px Georgia,serif}
+.tile{cursor:pointer}.dt-img{display:flex;gap:6px;background:#fff;border-radius:8px;padding:4px;justify-content:center}.dt-img img{max-width:49%;max-height:220px;object-fit:contain;border-radius:6px}
+.dt-ph{color:#888;padding:30px;font-size:12px}.dt-how{margin:4px 0;padding-left:20px;line-height:1.4}.dt-tip{background:#2a2f1a;border-radius:6px;padding:6px}.dt-ytlink{color:#7fb6ff}.mbox a{color:#7fb6ff}
+.dt-ph-ctl{display:flex;flex-direction:column;gap:6px}.dt-ph-ctl .btn{text-align:center;margin:0}
+.ms-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:6px 0;border-bottom:1px solid #333}.ms-row button{margin:0;padding:5px 9px;font-size:12px}.ms-name{flex:1 1 150px}.ms-name small{display:block;color:#99a}
+#mpop{position:fixed;z-index:180;background:#fff;color:#222;border-radius:10px;padding:10px 12px;box-shadow:0 8px 28px rgba(0,0,0,.5);font-size:12px;max-height:60vh;overflow:auto}
+#mpop table{width:100%;border-collapse:collapse;margin-top:4px}#mpop td{padding:3px 2px;border-top:1px solid #eee}#mpop td:nth-child(n+2){text-align:right;white-space:nowrap;padding-left:8px}
+.mp-x{position:absolute;top:4px;right:4px;margin:0;padding:1px 6px;background:#eee;color:#333}.mp-sc{color:#777}.mp-tot{color:#555;margin-top:2px}#vol .row{cursor:pointer}
