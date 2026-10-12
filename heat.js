@@ -1,4 +1,4 @@
-let SESS={},GR={colors:{under_pale:'#cfe3f7',under_strong:'#3f7fc4',light:'#bfe6d6',solid:'#2f9e72',dark:'#11603f',amber:'#f0a830',red:'#d93b30'}};fetch('data/targets.json').then(r=>r.json()).then(t=>{SESS=(t.session||{}).muscles||{};if(t.gradient)GR=t.gradient;heat()});
+let SESS={},GR={colors:{under_pale:'#cfe3f7',under_strong:'#3f7fc4',light:'#5cc48c',solid:'#2f9e72',dark:'#0f5a3a',amber:'#f0a830',red:'#d93b30'}};fetch('data/targets.json').then(r=>r.json()).then(t=>{SESS=(t.session||{}).muscles||{};if(t.gradient)GR=t.gradient;heat()});
 const h2c=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
 // stops: [[value,colorName],...]; linear RGB interpolation, clamps past the last stop
 function grad(v,st){const C=GR.colors;if(st.length&&v<=st[0][0])return C[st[0][1]];for(let i=1;i<st.length;i++){if(v<=st[i][0]){const[a,ca]=st[i-1],[b,cb]=st[i],k=b>a?(v-a)/(b-a):1,A=h2c(C[ca]),B=h2c(C[cb]);return hex(A.map((c,j)=>c+(B[j]-c)*k))}}return C[st[st.length-1][1]]}

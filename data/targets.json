@@ -211,9 +211,9 @@
   "description": "Body map load shading, used in both Week and Day views. The fill goes untrained grey, then light to dark in the base hue as load climbs to the 'full' point, then shifts toward amber and on to red past the overload point. Interpolate in a perceptual space (OKLCH), or linearly between the stops.",
   "colors": {
    "untrained": "#8a8f98",
-   "light": "#bfe6d6",
+   "light": "#5cc48c",
    "solid": "#2f9e72",
-   "dark": "#11603f",
+   "dark": "#0f5a3a",
    "amber": "#f0a830",
    "red": "#d93b30",
    "under_pale": "#cfe3f7",
