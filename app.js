@@ -25,7 +25,7 @@ state.days[i].forEach(it=>EX[it.id]&&body.appendChild(tile(EX[it.id],it)));c.que
 const q=document.getElementById('q').value.toLowerCase(),tr=document.getElementById('tray');tr.innerHTML='';
 Object.values(EX).filter(x=>pass(x,q)).forEach(x=>tr.appendChild(tile(x)));const fc=document.getElementById('fcount');if(fc)fc.textContent=tr.children.length+' shown';vol();if(window.markTray)markTray();if(window.pcheck)pcheck();if(window.anUpdate)anUpdate();if(window.heat)heat()}
 function pass(x,q){if(q&&!(x.name.toLowerCase().includes(q)||Object.keys(x.muscles).some(m=>x.muscles[m]>=.5&&lab(m).includes(q))))return false;
-if(F.types.length&&!F.types.includes(x.type))return false;if(F.eq.length&&!F.eq.includes(x.equipment))return false;
+if(F.types.length&&!F.types.includes(x.type))return false;if(F.eq.length&&!F.eq.some(q=>q==x.equipment||(q=='machine'&&/^(plate-loaded|selectorized) machine$/.test(x.equipment))))return false;
 const th=F.minor?RULE.min_rating_to_count:.5;if(F.mus.length&&!F.mus.some(m=>(x.muscles[m]||0)>=th))return false;return true}
 function filt(){const el=document.getElementById('filt'),eqs=[...new Set(Object.values(EX).map(x=>x.equipment))].sort();
 const ch=(k,v,t)=>`<button class="chip ${F[k].includes(v)?'on':''}" data-k="${k}" data-v="${v}">${t}</button>`;
