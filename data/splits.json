@@ -66,7 +66,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 5
         },
         {
          "id": "overhead-cable-triceps-extension",
@@ -136,7 +136,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "overhead-cable-triceps-extension",
@@ -174,6 +174,10 @@
         },
         {
          "id": "incline-dumbbell-curl",
+         "sets": 2
+        },
+        {
+         "id": "dumbbell-lateral-raise",
          "sets": 2
         }
        ]
@@ -232,7 +236,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "overhead-cable-triceps-extension",
@@ -270,6 +274,10 @@
         },
         {
          "id": "incline-dumbbell-curl",
+         "sets": 2
+        },
+        {
+         "id": "dumbbell-lateral-raise",
          "sets": 2
         }
        ]
@@ -360,7 +368,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "incline-dumbbell-curl",
@@ -435,7 +443,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "incline-dumbbell-curl",
@@ -679,7 +687,7 @@
         },
         {
          "id": "cable-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "incline-dumbbell-curl",
@@ -718,7 +726,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "reverse-pec-deck",
@@ -754,7 +762,7 @@
         },
         {
          "id": "cable-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "incline-dumbbell-curl",
@@ -788,7 +796,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "reverse-pec-deck",
@@ -1008,7 +1016,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "incline-dumbbell-curl",
@@ -1206,7 +1214,7 @@
         },
         {
          "id": "cable-lateral-raise",
-         "sets": 3
+         "sets": 5
         },
         {
          "id": "incline-dumbbell-curl",
@@ -1558,7 +1566,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "overhead-cable-triceps-extension",
@@ -1822,7 +1830,7 @@
         },
         {
          "id": "cable-lateral-raise",
-         "sets": 3
+         "sets": 5
         },
         {
          "id": "overhead-cable-triceps-extension",
@@ -2122,14 +2130,14 @@
         },
         {
          "id": "cable-lateral-raise",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "overhead-cable-triceps-extension",
          "sets": 3
         },
         {
-         "id": "skull-crusher",
+         "id": "dumbbell-lateral-raise",
          "sets": 2
         }
        ]
@@ -3833,7 +3841,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "face-pull",
@@ -4071,6 +4079,10 @@
         },
         {
          "id": "lat-pulldown",
+         "sets": 2
+        },
+        {
+         "id": "dumbbell-lateral-raise",
          "sets": 2
         }
        ]
@@ -4385,7 +4397,7 @@
         },
         {
          "id": "cable-lateral-raise",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "reverse-pec-deck",
@@ -4404,7 +4416,7 @@
          "sets": 2
         },
         {
-         "id": "skull-crusher",
+         "id": "dumbbell-lateral-raise",
          "sets": 2
         }
        ]
@@ -4685,7 +4697,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "face-pull",
@@ -4938,7 +4950,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 2
+         "sets": 3
         }
        ],
        "reason": "Two-day plan: an eighth exercise is needed to reach the weekly minimum for every muscle."
@@ -4967,7 +4979,7 @@
         },
         {
          "id": "cable-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "reverse-pec-deck",
@@ -5175,7 +5187,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "face-pull",
@@ -5389,6 +5401,10 @@
         {
          "id": "barbell-curl",
          "sets": 2
+        },
+        {
+         "id": "dumbbell-lateral-raise",
+         "sets": 2
         }
        ]
       },
@@ -5520,6 +5536,10 @@
         },
         {
          "id": "barbell-curl",
+         "sets": 2
+        },
+        {
+         "id": "dumbbell-lateral-raise",
          "sets": 2
         }
        ]
@@ -5657,7 +5677,7 @@
         },
         {
          "id": "dumbbell-lateral-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "incline-dumbbell-curl",
