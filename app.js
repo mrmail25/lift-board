@@ -26,12 +26,12 @@ const q=document.getElementById('q').value.toLowerCase(),tr=document.getElementB
 Object.values(EX).filter(x=>pass(x,q)).forEach(x=>tr.appendChild(tile(x)));const fc=document.getElementById('fcount');if(fc)fc.textContent=tr.children.length+' shown';vol();if(window.markTray)markTray();if(window.pcheck)pcheck();if(window.anUpdate)anUpdate();if(window.heat)heat()}
 function pass(x,q){if(q&&!(x.name.toLowerCase().includes(q)||Object.keys(x.muscles).some(m=>x.muscles[m]>=.5&&lab(m).includes(q))))return false;
 if(F.types.length&&!F.types.includes(x.type))return false;if(F.eq.length&&!F.eq.some(q=>q==x.equipment||(q=='machine'&&/^(plate-loaded|selectorized) machine$/.test(x.equipment))))return false;
-const th=F.minor?RULE.min_rating_to_count:.5;if(F.mus.length&&!F.mus.some(m=>(x.muscles[m]||0)>=th))return false;return true}
+const th=F.minor?RULE.min_rating_to_count:.5;if(F.mus.length&&!F.mus.some(m=>(m=='back'?['lats','upper_back']:[m]).some(k=>(x.muscles[k]||0)>=th)))return false;return true}
 function filt(){const el=document.getElementById('filt'),eqs=[...new Set(Object.values(EX).map(x=>x.equipment))].sort();
 const ch=(k,v,t)=>`<button class="chip ${F[k].includes(v)?'on':''}" data-k="${k}" data-v="${v}">${t}</button>`;
 const nAct=F.types.length+F.mus.length+F.eq.length+(F.minor?1:0);let op=localStorage.getItem('liftboard.filtOpen');op=op==null?innerWidth>800:op=='1';
 el.innerHTML=`<button id="ftog" class="ftog">${op?'▾':'▸'} Filters (${nAct} active)</button><div id="fbody" style="display:${op?'flex':'none'}"><div class="fl">Type</div><div class="chips">${['primary','accessory','isolation'].map(t=>ch('types',t,ICON[t]+' '+t)).join('')}</div>
-<div class="fl">Muscles</div><div class="chips">${MUS.map(m=>ch('mus',m,cap(lab(m)))).join('')}</div>
+<div class="fl">Muscles</div><div class="chips">${[ch('mus','back','Back (all)')].concat(MUS.map(m=>ch('mus',m,cap(lab(m))))).join('')}</div>
 <label><input type="checkbox" id="minor" ${F.minor?'checked':''}> Include minor hits (0.25+)</label>
 <div class="fl">Equipment</div><div class="chips">${eqs.map(e=>ch('eq',e,cap(e))).join('')}</div>
 <div><button id="fclr" class="chip">Clear filters</button> <span id="fcount"></span></div></div>`;el.querySelector('#ftog').onclick=()=>{localStorage.setItem('liftboard.filtOpen',op?'0':'1');filt()};
