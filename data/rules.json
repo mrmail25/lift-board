@@ -1,5 +1,5 @@
 {
- "version": 1,
+ "version": 2,
  "description": "Program-check rules. Effective sets use the same fractional counting as the volume panel (rating >= 0.25). Severity: warn = worth fixing, info = judgment call.",
  "patterns": {
   "horizontal_press": [
@@ -355,12 +355,53 @@
  ],
  "rules": [
   {
-   "id": "too_many_exercises",
+   "id": "many_small_entries",
+   "severity": "info",
+   "scope": "session",
+   "min_tiles": 10,
+   "max_avg_sets": 2,
+   "message": "{day} has {n} exercises averaging under 2 sets each. That's a lot of setup for little work. Merge some into fewer exercises with 3 sets."
+  },
+  {
+   "id": "session_hard_sets",
    "severity": "warn",
    "scope": "session",
-   "threshold": 7,
-   "hard_max": 8,
-   "message": "{day} has {n} exercises. Past 7, later exercises are done tired and add little. Cut or move the lowest-priority isolation."
+   "warn_above": {
+    "beginner": 20,
+    "intermediate": 24,
+    "advanced": 28
+   },
+   "info_band": 4,
+   "message": "{day} has {sets} hard sets, above the {max} cap for your level. Move some sets to another day.",
+   "message_info": "{day} has {sets} hard sets, close to the {max} cap for your level."
+  },
+  {
+   "id": "session_length",
+   "severity": "warn",
+   "scope": "session",
+   "uses": "targets.analytics.session_length",
+   "info_min": 75,
+   "warn_min": 90,
+   "message": "{day} runs about {min} minutes. Past 90, focus and output drop. Cut sets or split the day.",
+   "message_info": "{day} runs about {min} minutes. That's long, so make sure the big lifts come first."
+  },
+  {
+   "id": "spinal_load",
+   "severity": "warn",
+   "scope": "session+week",
+   "counts": "sets of heavy_squats + heavy_hinges",
+   "session_warn_above": {
+    "beginner": 6,
+    "intermediate": 8,
+    "advanced": 8
+   },
+   "week_warn_above": {
+    "beginner": 10,
+    "intermediate": 14,
+    "advanced": 18
+   },
+   "message": "{day} has {sets} heavy squat and deadlift sets, above {max}. Move some to another day or swap in a machine variant.",
+   "message_week": "{sets} heavy squat and deadlift sets this week, above {max}. Swap some for machine or supported variants."
   },
   {
    "id": "junk_volume_session",
@@ -390,8 +431,9 @@
    "id": "redundant_pattern",
    "severity": "warn",
    "scope": "session",
-   "threshold": 2,
-   "message": "{day} has {n} {pattern} exercises. Two of the same movement pattern in one session is plenty. Swap one for a different angle or a stretch-biased option."
+   "threshold": 10,
+   "message": "The {pattern} exercises on {day} add up to {sets} effective sets for {muscle}, past about 10 in one session. Cut sets or move one to another day.",
+   "note": "Any number of exercises from the same pattern is fine. This only fires when the pattern's exercises together push one muscle over the per-session cap."
   },
   {
    "id": "push_pull_imbalance",
@@ -435,6 +477,15 @@
    "scope": "week",
    "uses": "targets",
    "message": "{muscle} is at {sets} weekly sets, outside the {min} to {max} target."
+  },
+  {
+   "id": "recovery_vs_baseline",
+   "severity": "info",
+   "scope": "week",
+   "uses": "targets.recovery",
+   "app_only": true,
+   "message": "This week's recovery cost is {pct}% of your saved normal week. Expect more fatigue than usual.",
+   "note": "App-side only. Compares this week's recovery cost with the saved baseline week. The reference checker skips it because it has no baseline."
   }
  ]
 }

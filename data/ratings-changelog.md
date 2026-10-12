@@ -63,3 +63,19 @@ All 184 exercises now follow one type rule. The backup is `exercises.pre-types.j
 - **Judgment calls:** the glute-ham raise and JM press stay accessory, since both are partly multi-joint and neither is in the primary list. The rotary torso machine is now accessory, under the rotation group.
 - **Totals:** 42 primary, 60 accessory and 82 isolation.
 - **Presets:** `splits.json` is unchanged. The program check has no exercise-order rule, it shows zero warnings, and no preset needed reordering.
+
+## Session rules v2 (2026-10-11, revised)
+`rules.json` is now v2, and `tools/check_program.py` matches it. Backups are in `*.pre-rules2.*`.
+- **too_many_exercises** is replaced by the info rule **many_small_entries**: more than 10 tiles in a day and an average under 2 sets per tile.
+- **session_hard_sets:** total sets in a session. It warns above 20 for beginners, 24 for intermediates and 28 for advanced lifters, and gives an info within 4 below that (above 16, 20 and 24).
+- **session_length:** 10 minutes of warm-up, plus 45 seconds of work per set, plus rest of 2.5 minutes per set for primary and accessory exercises or 1.5 minutes for isolation. Info at 75 minutes or more, warn at 90 or more.
+- **spinal_load:** counts sets from `heavy_squats` and `heavy_hinges`. Per session it warns above 6 for beginners and above 8 for intermediate and advanced. Per week it warns above 10, 14 and 18.
+- **redundant_pattern:** any number of exercises from the same pattern is allowed. It only warns when that pattern's tiles together give one muscle more than 10 effective sets in a session.
+- **recovery_vs_baseline:** documented as an app-only info rule, compared against the saved baseline week. The reference checker skips it.
+- **Other rules:** everything else is unchanged.
+- **Presets:** rebuilt from `splits.pre-rules2.json` with additive changes only (`tools/reopt3.py`).
+  - Changes were extra sets on existing tiles, or 2-set split-volume tiles from a pattern the preset already uses, mainly a seated calf raise beside the standing one.
+  - No tiles were removed, nothing went below 2 sets, there are no 1-set tiles, and the order is unchanged.
+  - Sets were trimmed only where a new cap warned, from isolation tiles first. Compounds were trimmed only after every isolation in that day was already at 2.
+- **Result:** zero warnings. Every preset with 3 or more days reaches every level-scaled minimum.
+- **2-day plans:** the gaps that remain are mostly small muscles. Under the caps, the fewest sets that can reach every minimum (33.5, 44.5 and 55.2) is still more than two sessions allow. The one big-muscle gap is quads: 8 of 10 on Full Body 2-day advanced, and 7 of 8 and 5 of 6 on Torso/Limbs 2-day intermediate and beginner.
