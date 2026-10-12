@@ -1,6 +1,6 @@
 // Program check: JS port of tools/check_program.py using data/rules.json thresholds.
 let RU=null,SESSM={},SLEN={warmup_min:10,work_sec_per_set:45,rest_min:{compound:2.5,isolation:1.5},compound_types:['primary','accessory']};
-Promise.all([fetch('data/rules.json').then(r=>r.json()),fetch('data/targets.json').then(r=>r.json())]).then(([r,t])=>{RU=r;SESSM=(t.session||{}).muscles||{};if(window.migratePat)migratePat();if(t.analytics&&t.analytics.session_length)SLEN=t.analytics.session_length;pcheck()});
+Promise.all([fetch('data/rules.json').then(r=>r.json()),fetch('data/targets.json').then(r=>r.json())]).then(([r,t])=>{RU=r;SESSM=(t.session||{}).muscles||{};if(window.migratePat)migratePat();pcheck()});
 const RECOV_INFO_ABOVE=110;// rules.json gives no threshold; note only when clearly above the saved normal week
 // Python-style round (ties to even) so messages match tools/check_program.py exactly
 const pyR=(x,nd=1)=>{const e=Math.abs(x).toFixed(nd+40),i=e.indexOf('.')+nd+1;if(/^50*$/.test(e.slice(i))){const k=10**nd,f=Math.floor(x*k);return(f%2==0?f:f+1)/k}return +x.toFixed(nd)};
@@ -9,7 +9,7 @@ function patOf(id){const x=EX[id],b=(x&&x.base)||id;for(const p in RU.patterns)i
 const baseId=id=>(EX[id]&&EX[id].base)||id;
 function effc(tiles){const v={};for(const m in TG)v[m]=0;tiles.forEach(t=>{const x=EX[t.id];if(!x)return;for(const m in x.muscles){const r=x.muscles[m];if(r>=.25&&m in v)v[m]+=t.sets*r}});return v}
 function stretchHits(x,m){if(!x)return false;if(x.custom)return !!x.stretch_biased&&(x.muscles[m]||0)>=.5;return(RU.stretch_biased[m]||[]).includes(x.id)}
-function sessionMinutes(tiles){let m=SLEN.warmup_min;tiles.forEach(t=>{const x=EX[t.id];if(!x)return;const rest=SLEN.compound_types.includes(x.type)?SLEN.rest_min.compound:SLEN.rest_min.isolation;m+=t.sets*(SLEN.work_sec_per_set/60+rest)});return m}
+function sessionMinutes(tiles){const sl=((RU&&RU.rules)||[]).find(r=>r.id=='session_length')||{},R=sl.rest_min_by_type||{primary:3,accessory:2,isolation:1.5,warmup:1},W=sl.work_min_per_set??.75;let m=sl.warmup_min??10;tiles.forEach(t=>{const x=EX[t.id];if(!x)return;m+=t.sets*(W+(R[x.type]??R.isolation))});return m}
 // days: [{day:'mon',tiles:[{id,sets}],reason}], same shape as splits.json; returns flags like tools/check_program.py (rules v2)
 function checkProgram(days,level){const R=RU,f=[],RL={};R.rules.forEach(r=>RL[r.id]=r);const T=TG;
 const week={},freq={};for(const m in T){week[m]=0;freq[m]=0}let push=0,pull=0,spw=0;const byday={};days.forEach(d=>byday[d.day]=d);

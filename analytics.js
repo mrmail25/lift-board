@@ -13,7 +13,7 @@ const r1=v=>Math.round(v*10)/10,pc=v=>Math.round(v*100)+'%';
 const dayCost=i=>state.days[i].reduce((a,it)=>a+it.sets*fat(EX[it.id]),0);
 const modF=()=>{const M=ANC.recovery.modifiers;return(AN.sleep?M.sleep_under_6h:1)*(AN.age=='40'?M.age_40_49:AN.age=='50'?M.age_50_plus:1)};
 const baseline=()=>AN.baselines.length?(AN.baselines.find(b=>b.id==AN.normal)||AN.baselines[0]):null;
-function sessMin(i){const L=ANC.analytics.session_length,c=state.days[i];if(!c.length)return 0;return L.warmup_min+c.reduce((a,it)=>{const x=EX[it.id];if(!x)return a;const comp=L.compound_types.includes(x.type);return a+it.sets*(L.work_sec_per_set/60+(comp?L.rest_min.compound:L.rest_min.isolation))},0)}
+function sessMin(i){const c=state.days[i];if(!c.length)return 0;return sessionMinutes(c)}
 function stretchHit(x,m){if(!x)return false;if(x.custom)return !!x.stretch_biased;return typeof RU!='undefined'&&RU&&(RU.stretch_biased[m]||[]).includes(x.id)}
 function band(m,X,px,H,W){if(typeof weekColor!='function')return'';const st=[];for(let i=0;i<=120;i++){const v=i/120*X;st.push(`<stop offset="${(i/120*100).toFixed(2)}%" stop-color="${grad(v,wkStops(m))}"/>`)}
 const raw=(typeof totals=='function'?totals(null)[m]:0)||0,mc=weekColor(m,raw),y=H-14,id='anb-'+m;

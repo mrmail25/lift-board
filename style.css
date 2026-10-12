@@ -124,3 +124,7 @@ body.isdrag{cursor:grabbing;user-select:none;-webkit-user-select:none}
 #mpop{max-height:75vh;overflow:auto}.mp-ev{margin-top:8px;border-top:1px solid #ddd;padding-top:6px;font-size:12px}.mp-ev h5{margin:0 0 4px;font-size:13px}.mp-ev p{margin:0 0 4px}.mp-ev ol{margin:0;padding-left:18px}.mp-ev li{margin:4px 0}.mp-ev span{color:#555}.mp-ev a{word-break:break-all}
 .sg-item{margin:6px 0;font-size:12px}.sg-item .fx{margin-top:4px}.an-swap.sg-item .fx{margin:0}
 .mp-band{margin-top:8px;border-top:1px solid #ddd;padding-top:6px;font-size:12px}.mp-band h5{margin:0 0 4px;font-size:13px}.mp-band .fx-row{background:#f2f4f7}.mp-band .fx-row span{color:#222}
+#sp-st{display:inline-flex;align-items:center;gap:6px;font-size:13px}#sp-st .sp-name{font-weight:600;max-width:12em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#e8a33a}
+#sp-upd{padding:4px 10px}.bk-hint{flex-basis:100%;margin:2px 0 0;font-size:11px;opacity:.7;text-align:right}
+#ms-e #ms-rep{margin-left:6px}

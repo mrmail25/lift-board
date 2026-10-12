@@ -1,5 +1,5 @@
 {
- "version": 4,
+ "version": 5,
  "description": "Program-check rules. Effective sets use the same fractional counting as the volume panel (rating >= 0.25). Severity: warn = worth fixing, info = judgment call.",
  "patterns": {
   "horizontal_press": [
@@ -464,7 +464,14 @@
    "id": "session_length",
    "severity": "warn",
    "scope": "session",
-   "uses": "targets.analytics.session_length",
+   "warmup_min": 10,
+   "work_min_per_set": 0.75,
+   "rest_min_by_type": {
+    "primary": 3.0,
+    "accessory": 2.0,
+    "isolation": 1.5,
+    "warmup": 1.0
+   },
    "info_min": 75,
    "warn_min": 90,
    "message": "{day} runs about {min} minutes. Past 90, focus and output drop. Cut sets or split the day.",

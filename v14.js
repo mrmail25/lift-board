@@ -22,21 +22,27 @@ const MKEY='liftboard.mysplits';let MYS=[];try{MYS=JSON.parse(localStorage.getIt
 const mySplits=window.mySplits=()=>MYS,saveMy=()=>localStorage.setItem(MKEY,JSON.stringify(MYS));
 function applyMy(id,force){const m=MYS.find(x=>x.id==id);if(!m)return;const empty=state.days.every(c=>!c.length),untouched=state.applied&&state.applied==snap();
 if(!force&&!empty&&!untouched&&!confirm('Your week has edits. Replace it with '+m.name+'?'))return;
-state={days:m.days.map(c=>c.filter(t=>EX[t.id]).map(t=>({id:t.id,sets:t.sets}))),labels:[...(m.labels||[])],reasons:[],sel:{...sel}};state.applied=snap();upd()}
+state={days:m.days.map(c=>c.filter(t=>EX[t.id]).map(t=>({id:t.id,sets:t.sets}))),labels:[...(m.labels||[])],reasons:[],sel:{...sel},loaded:'my:'+m.id};state.applied=snap();upd()}
 function saveAsSplit(){if(state.days.every(c=>!c.length)){alert('Put some exercises on the board first.');return}
 modal(`<h3>Save as split</h3><label>Name<input id="ms-n" placeholder="e.g. My 4-day upper/lower"></label><div class="cf-err" id="ms-e"></div><div class="cf-btns"><button class="pri" id="ms-ok">Save</button><button id="ms-x">Cancel</button></div>`);
 const o=document.getElementById('modal');o.querySelector('#ms-n').focus();o.querySelector('#ms-x').onclick=closeModal;
 o.querySelector('#ms-ok').onclick=()=>{const n=o.querySelector('#ms-n').value.trim();if(!n){o.querySelector('#ms-e').textContent='Give it a name.';return}
-if(MYS.some(x=>x.name.toLowerCase()==n.toLowerCase())){o.querySelector('#ms-e').textContent='You already have a split with that name.';return}
+const dup=MYS.find(x=>x.name.toLowerCase()==n.toLowerCase());if(dup){o.querySelector('#ms-e').innerHTML=`You already have a split called "${E(dup.name)}". <button id="ms-rep" class="dng">Replace</button>`;o.querySelector('#ms-rep').onclick=()=>{writeSplit(dup);sel.split='my:'+dup.id;state.loaded='my:'+dup.id;state.applied=snap();save();closeModal();bar();render();toast&&toast(`Replaced "${dup.name}"`)};return}
 const m={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:n,days:state.days.map(c=>c.map(t=>({id:t.id,sets:t.sets}))),labels:[...(state.labels||[])],saved:new Date().toISOString()};
-MYS.push(m);saveMy();sel.split='my:'+m.id;state.applied=snap();save();closeModal();bar();manageSplits()}}
+MYS.push(m);saveMy();sel.split='my:'+m.id;state.loaded='my:'+m.id;state.applied=snap();save();render();closeModal();bar();manageSplits()}}
+// v23: overwrite a saved split's days + labels from the board; never touches recovery baselines (AN)
+const boardDaysCopy=()=>state.days.map(c=>c.map(t=>({id:t.id,sets:t.sets}))),boardLabels=()=>DAYS.map((_,i)=>String((state.labels||[])[i]||''));
+function writeSplit(m){m.days=boardDaysCopy();m.labels=boardLabels();m.saved=new Date().toISOString();saveMy()}
+function loadedSplit(){const L=state.loaded;return L&&String(L).startsWith('my:')?MYS.find(x=>x.id==L.slice(3))||null:null}
+function splitDirty(m){const n=c=>c.filter(t=>EX[t.id]).map(t=>[t.id,+t.sets]);return JSON.stringify(m.days.map(n))!==JSON.stringify(state.days.map(n))||JSON.stringify(DAYS.map((_,i)=>String((m.labels||[])[i]||'')))!==JSON.stringify(boardLabels())}
+window.loadedSplit=loadedSplit;window.splitDirty=splitDirty;window.writeSplit=writeSplit;
 function manageSplits(){const days=m=>m.days.filter(c=>c.length).length;
 modal(`<h3>My splits</h3>${MYS.length?'':'<p class="cf-hint">No saved splits yet. Build a week on the board and press "Save as split".</p>'}<div class="ms-list">${MYS.map(m=>`<div class="ms-row" data-id="${m.id}"><span class="ms-name">${E(m.name)}<small>${days(m)} training days · ${m.days.flat().length} exercises</small></span><button data-a="load">Load</button><button data-a="ren">Rename</button><button data-a="del" class="dng">Delete</button></div>`).join('')}</div><div class="cf-btns"><button id="ms-close">Close</button></div>`);
 const o=document.getElementById('modal');o.querySelector('#ms-close').onclick=closeModal;
 o.querySelectorAll('.ms-row button').forEach(b=>b.onclick=()=>{const id=b.closest('.ms-row').dataset.id,m=MYS.find(x=>x.id==id);
 if(b.dataset.a=='load'){sel.split='my:'+id;closeModal();bar();applyMy(id)}
-if(b.dataset.a=='ren'){const n=prompt('New name',m.name);if(n&&n.trim()){m.name=n.trim();saveMy();bar();manageSplits()}}
-if(b.dataset.a=='del'&&confirm(`Delete "${m.name}"?`)){MYS=MYS.filter(x=>x.id!=id);saveMy();bar();manageSplits()}})}
+if(b.dataset.a=='ren'){const n=prompt('New name',m.name);if(n&&n.trim()){m.name=n.trim();saveMy();bar();render();manageSplits()}}
+if(b.dataset.a=='del'&&confirm(`Delete "${m.name}"?`)){MYS=MYS.filter(x=>x.id!=id);saveMy();bar();render();manageSplits()}})}
 function importV14(d){if(Array.isArray(d.mySplits))d.mySplits.forEach(m=>{if(m&&m.id&&m.name&&Array.isArray(m.days)&&m.days.length==7){const i=MYS.findIndex(x=>x.id==m.id);i<0?MYS.push(m):MYS[i]=m}});saveMy();
 if(d.youtube&&typeof d.youtube=='object'){for(const k in d.youtube)if(/^https?:\/\//.test(d.youtube[k]))YT[k]=d.youtube[k];localStorage.setItem('liftboard.youtube',JSON.stringify(YT))}setTimeout(bar,0)}
 // ---- 3/4) detail sheet
@@ -78,7 +84,7 @@ document.getElementById('savesp').onclick=saveAsSplit;document.getElementById('m
 const a=document.querySelector('header .actions');a.insertAdjacentHTML('beforeend','<button id="about">About</button>');document.getElementById('about').onclick=()=>{modal(`<h3>About Lift Board</h3>
 <p>Exercise pictures: <a href="https://github.com/yuhonas/free-exercise-db" target="_blank" rel="noopener">free-exercise-db</a> by yuhonas, released into the public domain under <a href="https://unlicense.org/" target="_blank" rel="noopener">The Unlicense</a>. Some pictures show the closest available variant.</p>
 <p>Body map: <a href="https://github.com/Jsplice/MuscleMap" target="_blank" rel="noopener">MuscleMap</a> (@musclemap/assets 1.1.0), MIT License, © 2026 Jsplice / MuscleMap contributors. <a href="img/mm/LICENSE-MuscleMap.txt" target="_blank">License</a></p>
-<p class="cf-hint">Your board, custom exercises, photos, saved splits and video links are stored only in this browser. Use Export to back them up.</p><div class="cf-btns"><button id="ab-x">Close</button></div>`);document.getElementById('ab-x').onclick=closeModal}})();
+<p class="cf-hint">Your board, custom exercises, photos, saved splits and video links are stored only in this browser. Use Backup to save them to a file, and Restore to load that file back (it only works in Lift Board).</p><div class="cf-btns"><button id="ab-x">Close</button></div>`);document.getElementById('ab-x').onclick=closeModal}})();
 
 
 function evSec(g){const e=window.evOf&&evOf(g);if(!e)return'';const D=evDefs(),d=D[e.tag]||[e.tag,''],H=x=>String(x).replace(/[&<>"]/g,c=>'&#'+c.charCodeAt(0)+';'),okU=u=>/^https:\/\//.test(u||'');

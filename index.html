@@ -1,8 +1,8 @@
 <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Lift Board</title><link rel="stylesheet" href="style.css"></head><body>
-<header><h1>Lift Board</h1><div class="actions"><button id="exp">Export</button><label class="btn">Import<input type="file" id="imp" accept=".json" hidden></label><button id="clr">Clear week</button></div></header>
+<header><h1>Lift Board</h1><div class="actions"><button id="exp" title="Save your board, splits and settings to a file">Backup</button><label class="btn" title="Load a Lift Board backup file">Restore<input type="file" id="imp" accept=".json" hidden></label><button id="clr">Clear week</button></div><p class="bk-hint">Backup saves a file that only works in Lift Board; use Restore to load it back.</p></header>
 <nav id="bar"><div class="seg" id="lvl"></div><div class="seg" id="dc"></div><select id="split"></select><button id="apply">Fill board</button></nav>
 <main><section id="board"></section>
 <aside><div class="panel"><h2>Exercise tray</h2><input id="q" placeholder="Search…"><div id="filt"></div><div id="tray" class="col-body"></div></div>
 <div class="panel"><h2>Body map</h2><div id="heat"></div></div><div class="panel"><h2>Weekly volume</h2><div id="vol"></div></div><div class="panel"><h2>Program check</h2><div id="chk"></div></div></aside></main>
-<script src="app.js"></script><script src="heat.js"></script><script src="check.js"></script><script src="fixes.js"></script><script src="suggest.js"></script><script src="custom.js"></script><script src="v14.js"></script><script src="analytics.js"></script></body></html>
+<script src="app.js"></script><script src="heat.js"></script><script src="check.js"></script><script src="fixes.js"></script><script src="suggest.js"></script><script src="custom.js"></script><script src="v14.js"></script><script src="analytics.js"></script><script src="v23.js"></script></body></html>

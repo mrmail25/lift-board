@@ -691,7 +691,7 @@
         },
         {
          "id": "seated-leg-curl",
-         "sets": 4
+         "sets": 2
         },
         {
          "id": "cable-lateral-raise",
@@ -707,7 +707,7 @@
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 3
+         "sets": 2
         }
        ],
        "reason": "Two-day plan: an eighth exercise is needed to reach the weekly minimum for every muscle."
@@ -2222,7 +2222,7 @@
         },
         {
          "id": "leg-extension",
-         "sets": 5
+         "sets": 4
         },
         {
          "id": "seated-leg-curl",
@@ -3278,7 +3278,7 @@
         },
         {
          "id": "leg-extension",
-         "sets": 5
+         "sets": 4
         },
         {
          "id": "seated-leg-curl",
@@ -4499,7 +4499,7 @@
         },
         {
          "id": "leg-extension",
-         "sets": 5
+         "sets": 4
         },
         {
          "id": "seated-leg-curl",
