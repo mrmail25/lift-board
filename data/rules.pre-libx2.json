@@ -1,0 +1,407 @@
+{
+ "version": 1,
+ "description": "Program-check rules. Effective sets use the same fractional counting as the volume panel (rating >= 0.25). Severity: warn = worth fixing, info = judgment call.",
+ "patterns": {
+  "horizontal_press": [
+   "barbell-bench-press",
+   "dumbbell-bench-press",
+   "machine-chest-press",
+   "push-up",
+   "close-grip-bench-press",
+   "smith-bench-press",
+   "plate-loaded-chest-press",
+   "decline-machine-press",
+   "iso-lateral-chest-press",
+   "decline-bench-press",
+   "deficit-push-up"
+  ],
+  "incline_press": [
+   "incline-barbell-bench-press",
+   "incline-dumbbell-press",
+   "smith-incline-press",
+   "landmine-press-one-arm",
+   "landmine-press-two-arm",
+   "incline-machine-press"
+  ],
+  "vertical_press": [
+   "overhead-press",
+   "seated-dumbbell-shoulder-press",
+   "machine-shoulder-press",
+   "smith-overhead-press",
+   "viking-press",
+   "iso-lateral-shoulder-press",
+   "arnold-press",
+   "pike-push-up"
+  ],
+  "dip": [
+   "weighted-dip",
+   "dip-machine",
+   "assisted-dip"
+  ],
+  "chest_fly": [
+   "cable-fly",
+   "pec-deck",
+   "dumbbell-fly",
+   "cable-crossover-low-to-high",
+   "cable-crossover-high-to-low",
+   "incline-dumbbell-fly"
+  ],
+  "vertical_pull": [
+   "pull-up",
+   "chin-up",
+   "lat-pulldown",
+   "close-grip-pulldown",
+   "high-row-machine",
+   "wide-grip-lat-pulldown",
+   "neutral-grip-lat-pulldown",
+   "single-arm-lat-pulldown",
+   "assisted-pull-up"
+  ],
+  "horizontal_row": [
+   "barbell-row",
+   "pendlay-row",
+   "one-arm-dumbbell-row",
+   "chest-supported-row",
+   "seated-cable-row",
+   "t-bar-row",
+   "smith-row",
+   "landmine-t-bar-row",
+   "meadows-row",
+   "low-row-machine",
+   "iso-lateral-row",
+   "single-arm-cable-row",
+   "wide-grip-cable-row",
+   "inverted-row"
+  ],
+  "lat_isolation": [
+   "straight-arm-pulldown"
+  ],
+  "rear_delt": [
+   "reverse-pec-deck",
+   "face-pull",
+   "dumbbell-rear-delt-fly",
+   "dumbbell-incline-y-raise",
+   "cable-rear-delt-fly"
+  ],
+  "lateral_raise": [
+   "dumbbell-lateral-raise",
+   "cable-lateral-raise",
+   "upright-row",
+   "lateral-raise-machine",
+   "cable-y-raise",
+   "seated-dumbbell-lateral-raise"
+  ],
+  "front_raise": [
+   "front-raise"
+  ],
+  "shrug": [
+   "barbell-shrug",
+   "dumbbell-shrug",
+   "smith-shrug",
+   "shrug-machine"
+  ],
+  "curl": [
+   "barbell-curl",
+   "dumbbell-curl",
+   "hammer-curl",
+   "incline-dumbbell-curl",
+   "preacher-curl",
+   "cable-curl",
+   "machine-preacher-curl",
+   "seated-machine-curl",
+   "cable-rope-hammer-curl",
+   "bayesian-cable-curl",
+   "high-cable-curl",
+   "concentration-curl",
+   "ez-bar-curl",
+   "spider-curl",
+   "cable-preacher-curl"
+  ],
+  "triceps_extension": [
+   "skull-crusher",
+   "triceps-pushdown",
+   "overhead-cable-triceps-extension",
+   "machine-triceps-extension",
+   "overhead-triceps-machine",
+   "dumbbell-kickback",
+   "jm-press",
+   "cable-overhead-rope-extension"
+  ],
+  "squat": [
+   "back-squat",
+   "front-squat",
+   "hack-squat",
+   "leg-press",
+   "smith-squat",
+   "landmine-squat",
+   "pendulum-squat",
+   "belt-squat",
+   "v-squat",
+   "single-leg-press",
+   "high-foot-leg-press",
+   "goblet-squat"
+  ],
+  "lunge": [
+   "bulgarian-split-squat",
+   "walking-lunge",
+   "dumbbell-step-up",
+   "smith-split-squat",
+   "dumbbell-reverse-lunge"
+  ],
+  "hinge": [
+   "deadlift",
+   "romanian-deadlift",
+   "stiff-leg-dumbbell-deadlift",
+   "smith-rdl",
+   "landmine-rdl",
+   "dumbbell-rdl",
+   "good-morning"
+  ],
+  "hip_extension": [
+   "hip-thrust",
+   "back-extension",
+   "smith-hip-thrust",
+   "glute-kickback-machine",
+   "hip-thrust-machine",
+   "45-degree-hyperextension",
+   "reverse-hyper",
+   "cable-kickback",
+   "barbell-glute-bridge"
+  ],
+  "knee_extension": [
+   "leg-extension",
+   "sissy-squat"
+  ],
+  "knee_flexion": [
+   "lying-leg-curl",
+   "seated-leg-curl",
+   "nordic-curl",
+   "standing-leg-curl",
+   "glute-ham-raise"
+  ],
+  "calf_raise": [
+   "standing-calf-raise",
+   "seated-calf-raise",
+   "smith-calf-raise",
+   "leg-press-calf-raise"
+  ],
+  "core": [
+   "hanging-leg-raise",
+   "cable-crunch",
+   "ab-wheel-rollout",
+   "ab-crunch-machine",
+   "weighted-decline-crunch",
+   "standing-cable-crunch"
+  ],
+  "hip_adduction": [
+   "hip-adduction-machine"
+  ],
+  "hip_abduction": [
+   "hip-abduction-machine",
+   "cable-hip-abduction",
+   "side-lying-hip-abduction",
+   "banded-lateral-walk"
+  ],
+  "forearm": [
+   "wrist-curl",
+   "reverse-curl"
+  ],
+  "pullover": [
+   "incline-cable-pullover",
+   "dumbbell-pullover",
+   "pullover-machine"
+  ],
+  "rotation": [
+   "landmine-rotation",
+   "cable-woodchop",
+   "pallof-press"
+  ]
+ },
+ "push_patterns": [
+  "horizontal_press",
+  "incline_press",
+  "vertical_press",
+  "dip",
+  "chest_fly"
+ ],
+ "pull_patterns": [
+  "vertical_pull",
+  "horizontal_row",
+  "rear_delt",
+  "lat_isolation",
+  "pullover"
+ ],
+ "heavy_squats": [
+  "back-squat",
+  "front-squat"
+ ],
+ "heavy_hinges": [
+  "deadlift"
+ ],
+ "stretch_biased": {
+  "chest": [
+   "dumbbell-fly",
+   "cable-fly",
+   "dumbbell-bench-press",
+   "incline-dumbbell-press",
+   "weighted-dip",
+   "iso-lateral-chest-press",
+   "assisted-dip",
+   "cable-crossover-high-to-low",
+   "incline-dumbbell-fly",
+   "deficit-push-up"
+  ],
+  "biceps": [
+   "incline-dumbbell-curl",
+   "machine-preacher-curl",
+   "bayesian-cable-curl",
+   "cable-preacher-curl"
+  ],
+  "triceps": [
+   "overhead-cable-triceps-extension",
+   "skull-crusher",
+   "overhead-triceps-machine",
+   "cable-overhead-rope-extension"
+  ],
+  "hamstrings": [
+   "romanian-deadlift",
+   "stiff-leg-dumbbell-deadlift",
+   "seated-leg-curl",
+   "smith-rdl",
+   "landmine-rdl",
+   "nordic-curl",
+   "dumbbell-rdl",
+   "glute-ham-raise",
+   "good-morning"
+  ],
+  "quads": [
+   "back-squat",
+   "front-squat",
+   "hack-squat",
+   "bulgarian-split-squat",
+   "pendulum-squat",
+   "belt-squat",
+   "v-squat",
+   "sissy-squat"
+  ],
+  "calves": [
+   "standing-calf-raise",
+   "smith-calf-raise",
+   "leg-press-calf-raise"
+  ],
+  "lats": [
+   "pull-up",
+   "chin-up",
+   "lat-pulldown",
+   "straight-arm-pulldown",
+   "incline-cable-pullover",
+   "dumbbell-pullover",
+   "pullover-machine",
+   "meadows-row",
+   "wide-grip-lat-pulldown",
+   "neutral-grip-lat-pulldown",
+   "single-arm-lat-pulldown",
+   "assisted-pull-up",
+   "single-arm-cable-row"
+  ],
+  "glutes": [
+   "high-foot-leg-press"
+  ]
+ },
+ "frequency_muscles": [
+  "chest",
+  "lats",
+  "upper_back",
+  "side_delts",
+  "quads",
+  "hamstrings",
+  "glutes",
+  "biceps",
+  "triceps",
+  "calves"
+ ],
+ "rules": [
+  {
+   "id": "too_many_exercises",
+   "severity": "warn",
+   "scope": "session",
+   "threshold": 7,
+   "hard_max": 8,
+   "message": "{day} has {n} exercises. Past 7, later exercises are done tired and add little. Cut or move the lowest-priority isolation."
+  },
+  {
+   "id": "junk_volume_session",
+   "severity": "warn",
+   "scope": "session",
+   "threshold": 10,
+   "message": "{muscle} gets {sets} effective sets on {day}. Past about 10 in one session, extra sets mostly add fatigue. Move some to another day."
+  },
+  {
+   "id": "sets_per_exercise",
+   "severity": "warn",
+   "scope": "exercise",
+   "threshold": 5,
+   "message": "{exercise} on {day} has {sets} sets. More than 5 sets of one exercise gives diminishing returns. Use 2 to 4 sets, or split it across two exercises."
+  },
+  {
+   "id": "low_frequency",
+   "severity": "info",
+   "scope": "week",
+   "threshold": 2,
+   "min_effective_to_count": 2,
+   "message": "{muscle} is trained meaningfully on only {n} day this week. Twice a week usually grows muscle better for the same total sets.",
+   "message_indirect_only": "Only indirect work so far. Add a direct exercise for {muscle}.",
+   "message_note": "Use message_indirect_only when the muscle has weekly sets > 0 but no single day reaches min_effective_to_count; otherwise use message."
+  },
+  {
+   "id": "redundant_pattern",
+   "severity": "warn",
+   "scope": "session",
+   "threshold": 2,
+   "message": "{day} has {n} {pattern} exercises. Two of the same movement pattern in one session is plenty. Swap one for a different angle or a stretch-biased option."
+  },
+  {
+   "id": "push_pull_imbalance",
+   "severity": "warn",
+   "scope": "week",
+   "min_ratio": 0.75,
+   "max_ratio": 2.0,
+   "message": "Pull-to-push sets are {ratio}:1 this week. Keep pulling at least about 75% of pushing, and no more than 2x, to protect the shoulders and balance the upper body."
+  },
+  {
+   "id": "missing_stretch",
+   "severity": "info",
+   "scope": "week",
+   "message": "No stretch-biased exercise for {muscle} this week. Add one, like {examples}. Training at long muscle lengths tends to build more muscle."
+  },
+  {
+   "id": "hinge_before_squat",
+   "severity": "warn",
+   "scope": "week",
+   "message": "A heavy deadlift on {day1} is followed by heavy squats on {day2}. The lower back and hips won't have recovered. Put at least a day between them."
+  },
+  {
+   "id": "consecutive_high_volume",
+   "severity": "warn",
+   "scope": "week",
+   "uses": "session.solid",
+   "message": "{muscle} gets a solid session on both {day1} and {day2}. Give a muscle at least 48 hours between hard sessions."
+  },
+  {
+   "id": "beginner_squat_and_deadlift",
+   "severity": "warn",
+   "scope": "session",
+   "levels": [
+    "beginner"
+   ],
+   "message": "{day} has both heavy squats and heavy deadlifts. For a beginner, that's too much lower-back fatigue in one day. Split them onto different days."
+  },
+  {
+   "id": "weekly_volume",
+   "severity": "warn",
+   "scope": "week",
+   "uses": "targets",
+   "message": "{muscle} is at {sets} weekly sets, outside the {min} to {max} target."
+  }
+ ]
+}

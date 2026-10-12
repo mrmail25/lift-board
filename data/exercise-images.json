@@ -1417,6 +1417,239 @@
    ],
    "match": "approximate",
    "approxNote": "Shows a floor push-up; put your hands on plates or handles for extra depth."
+  },
+  "seated-row-machine": {
+   "source_id": "Seated_Cable_Rows",
+   "source_name": "Seated Cable Rows",
+   "images": [
+    "img/ex/seated-row-machine-0.jpg",
+    "img/ex/seated-row-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a seated cable row; the machine uses a chest pad and fixed handles."
+  },
+  "high-to-low-row-machine": {
+   "source_id": "Leverage_High_Row",
+   "source_name": "Leverage High Row",
+   "images": [
+    "img/ex/high-to-low-row-machine-0.jpg",
+    "img/ex/high-to-low-row-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the lever high row; this one pulls on a lower diagonal toward the waist."
+  },
+  "arc-lat-pulldown": {
+   "source_id": "Wide-Grip_Lat_Pulldown",
+   "source_name": "Wide-Grip Lat Pulldown",
+   "images": [
+    "img/ex/arc-lat-pulldown-0.jpg",
+    "img/ex/arc-lat-pulldown-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a cable pulldown; the plate-loaded arc version has independent arms that converge."
+  },
+  "standing-lateral-raise-machine": {
+   "source_id": "Side_Lateral_Raise",
+   "source_name": "Side Lateral Raise",
+   "images": [
+    "img/ex/standing-lateral-raise-machine-0.jpg",
+    "img/ex/standing-lateral-raise-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a dumbbell lateral raise; the machine works the same way on a fixed path with handles."
+  },
+  "converging-smith-bench-press": {
+   "source_id": "Smith_Machine_Bench_Press",
+   "source_name": "Smith Machine Bench Press",
+   "images": [
+    "img/ex/converging-smith-bench-press-0.jpg",
+    "img/ex/converging-smith-bench-press-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a standard Smith bench; converging models angle the bar path in toward the top."
+  },
+  "converging-smith-incline-press": {
+   "source_id": "Smith_Machine_Incline_Bench_Press",
+   "source_name": "Smith Machine Incline Bench Press",
+   "images": [
+    "img/ex/converging-smith-incline-press-0.jpg",
+    "img/ex/converging-smith-incline-press-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a standard Smith incline; converging models angle the bar path in toward the top."
+  },
+  "converging-smith-shoulder-press": {
+   "source_id": "Smith_Machine_Overhead_Shoulder_Press",
+   "source_name": "Smith Machine Overhead Shoulder Press",
+   "images": [
+    "img/ex/converging-smith-shoulder-press-0.jpg",
+    "img/ex/converging-smith-shoulder-press-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a standard Smith overhead press; converging models angle the bar path."
+  },
+  "selectorized-pulldown-machine": {
+   "source_id": "Wide-Grip_Lat_Pulldown",
+   "source_name": "Wide-Grip Lat Pulldown",
+   "images": [
+    "img/ex/selectorized-pulldown-machine-0.jpg",
+    "img/ex/selectorized-pulldown-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a cable pulldown; the machine has fixed lever handles."
+  },
+  "plate-loaded-chest-supported-row": {
+   "source_id": "Lying_T-Bar_Row",
+   "source_name": "Lying T-Bar Row",
+   "images": [
+    "img/ex/plate-loaded-chest-supported-row-0.jpg",
+    "img/ex/plate-loaded-chest-supported-row-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a lying T-bar row, the closest chest-supported lever row."
+  },
+  "rotary-torso-machine": {
+   "source_id": "Torso_Rotation",
+   "source_name": "Torso Rotation",
+   "images": [
+    "img/ex/rotary-torso-machine-0.jpg",
+    "img/ex/rotary-torso-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a ball torso rotation; the machine is seated with a pad."
+  },
+  "standing-cable-adduction": {
+   "source_id": "Cable_Hip_Adduction",
+   "source_name": "Cable Hip Adduction",
+   "images": [
+    "img/ex/standing-cable-adduction-0.jpg",
+    "img/ex/standing-cable-adduction-1.jpg"
+   ],
+   "match": "name"
+  },
+  "horizontal-leg-press": {
+   "source_id": "Leg_Press",
+   "source_name": "Leg Press",
+   "images": [
+    "img/ex/horizontal-leg-press-0.jpg",
+    "img/ex/horizontal-leg-press-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a 45-degree sled; the horizontal version is seated and pushes straight out."
+  },
+  "reverse-hack-squat": {
+   "source_id": "Narrow_Stance_Hack_Squats",
+   "source_name": "Narrow Stance Hack Squats",
+   "images": [
+    "img/ex/reverse-hack-squat-0.jpg",
+    "img/ex/reverse-hack-squat-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a regular hack squat; for the reverse version, face the pad."
+  },
+  "kneeling-leg-curl": {
+   "source_id": "Standing_Leg_Curl",
+   "source_name": "Standing Leg Curl",
+   "images": [
+    "img/ex/kneeling-leg-curl-0.jpg",
+    "img/ex/kneeling-leg-curl-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a standing one-leg curl; the kneeling version supports the body on a knee pad."
+  },
+  "smith-squat-feet-forward": {
+   "source_id": "Smith_Machine_Squat",
+   "source_name": "Smith Machine Squat",
+   "images": [
+    "img/ex/smith-squat-feet-forward-0.jpg",
+    "img/ex/smith-squat-feet-forward-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a standard Smith squat; place the feet ahead of the bar."
+  },
+  "chest-supported-dumbbell-row": {
+   "source_id": "Dumbbell_Incline_Row",
+   "source_name": "Dumbbell Incline Row",
+   "images": [
+    "img/ex/chest-supported-dumbbell-row-0.jpg",
+    "img/ex/chest-supported-dumbbell-row-1.jpg"
+   ],
+   "match": "name"
+  },
+  "seal-row": {
+   "source_id": "Lying_Cambered_Barbell_Row",
+   "source_name": "Lying Cambered Barbell Row",
+   "images": [
+    "img/ex/seal-row-0.jpg",
+    "img/ex/seal-row-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a lying cambered-bar row on a bench, which is the same setup."
+  },
+  "yates-row": {
+   "source_id": "Reverse_Grip_Bent-Over_Rows",
+   "source_name": "Reverse Grip Bent-Over Rows",
+   "images": [
+    "img/ex/yates-row-0.jpg",
+    "img/ex/yates-row-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows an underhand bent-over row; the Yates row stands more upright."
+  },
+  "rack-pull": {
+   "source_id": "Rack_Pulls",
+   "source_name": "Rack Pulls",
+   "images": [
+    "img/ex/rack-pull-0.jpg",
+    "img/ex/rack-pull-1.jpg"
+   ],
+   "match": "name"
+  },
+  "trap-bar-deadlift": {
+   "source_id": "Trap_Bar_Deadlift",
+   "source_name": "Trap Bar Deadlift",
+   "images": [
+    "img/ex/trap-bar-deadlift-0.jpg",
+    "img/ex/trap-bar-deadlift-1.jpg"
+   ],
+   "match": "name"
+  },
+  "captains-chair-knee-raise": {
+   "source_id": "Knee_Hip_Raise_On_Parallel_Bars",
+   "source_name": "Knee/Hip Raise On Parallel Bars",
+   "images": [
+    "img/ex/captains-chair-knee-raise-0.jpg",
+    "img/ex/captains-chair-knee-raise-1.jpg"
+   ],
+   "match": "name"
+  },
+  "back-extension-machine": {
+   "source_id": "Superman",
+   "source_name": "Superman",
+   "images": [
+    "img/ex/back-extension-machine-0.jpg",
+    "img/ex/back-extension-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "No machine image exists; shows a bodyweight back extension instead."
+  },
+  "reverse-wrist-curl": {
+   "source_id": "Palms-Down_Dumbbell_Wrist_Curl_Over_A_Bench",
+   "source_name": "Palms-Down Dumbbell Wrist Curl Over A Bench",
+   "images": [
+    "img/ex/reverse-wrist-curl-0.jpg",
+    "img/ex/reverse-wrist-curl-1.jpg"
+   ],
+   "match": "name"
+  },
+  "farmer-carry": {
+   "source_id": "Farmers_Walk",
+   "source_name": "Farmer's Walk",
+   "images": [
+    "img/ex/farmer-carry-0.jpg",
+    "img/ex/farmer-carry-1.jpg"
+   ],
+   "match": "name"
   }
  }
 }

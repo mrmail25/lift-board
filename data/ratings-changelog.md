@@ -38,3 +38,18 @@ I added 81 exercises, taking the library from 79 to 160. Backups are in `*.pre-l
 - **Stretch-biased:** I added the pullovers and lat pulldown variants (lats), Bayesian, machine preacher and cable preacher curls (biceps), overhead triceps machine and low-cable overhead rope (triceps), pendulum, belt, V-squat and sissy squat (quads), Nordic, glute-ham raise, dumbbell and landmine RDL and good morning (hamstrings), leg press calf raise (calves), plus iso-lateral press, high-to-low fly, incline dumbbell fly, deficit push-up and assisted dip (chest). The high-foot leg press starts a glutes list.
 - **Images:** mapped from free-exercise-db: exact name match where one exists, otherwise the closest variant marked approximate with a note, otherwise none.
 - **Presets:** unchanged. The program check still shows zero warnings across all 46 presets.
+
+## Library round 2 (2026-10-11)
+I added 24 exercises, taking the library from 160 to 184. Backups are in `*.pre-libx2.json`. No existing id changed.
+- **Rename:** `lateral-raise-machine` keeps its id and is now "Seated Lateral Raise Machine (Elbow Pads)". The side delts stay at 1.0, the traps drop to 0.15 (upper 0.15, mid/lower 0.05), and the front delts drop to 0.15, because the elbow pads take your grip and shrug out of it. The new Standing Lateral Raise Machine, which uses handles, keeps more of the traps (0.35) and front delts (0.25), the same as a dumbbell raise.
+- **Distinct machine ratings:**
+  - The selectorized seated row is mostly mid-back. The high-to-low row is biased toward the lats and stretch-biased. The plate-loaded chest-supported row has the most mid-trap and rear-delt work, because it loads hardest at full contraction.
+  - The converging arc pulldown has lats at 1.0, less upper back than a cable bar, and is stretch-biased. The selectorized pulldown sits between the two.
+  - The converging Smith presses rate chest slightly higher and front delts slightly lower than the straight-path Smith versions.
+  - The reverse hack squat favours glutes and hamstrings over quads. The horizontal leg press is a little lower on glutes than the 45-degree sled. The feet-forward Smith squat moves some quad work to the glutes.
+- **New equipment string:** `trap bar`.
+- **New pattern:** `carry`, for the farmer carry.
+- **Fatigue:** trap-bar deadlift and rack pull are 1.5.
+- **heavy_hinges:** I added `trap-bar-deadlift` and `rack-pull`. No preset uses them, so the program check still shows zero warnings.
+- **Skipped as duplicates:** seated chest fly (`pec-deck`), machine reverse fly (`reverse-pec-deck`), seated and standing calf machines, cable crossover (`cable-fly` plus the low-to-high and high-to-low flies), triceps press machine (`dip-machine`), seated hip thrust machine (`hip-thrust-machine`), seated cable row with rope or wide bar (`wide-grip-cable-row`), spider curl machine (`machine-preacher-curl` and `spider-curl`), and Bulgarian split squat, step-up, walking lunge, hanging leg raise, ab wheel and wrist curl, which all already exist.
+- **Presets:** unchanged, with zero warnings across all 46.

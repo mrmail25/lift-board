@@ -13,7 +13,8 @@
    "decline-machine-press",
    "iso-lateral-chest-press",
    "decline-bench-press",
-   "deficit-push-up"
+   "deficit-push-up",
+   "converging-smith-bench-press"
   ],
   "incline_press": [
    "incline-barbell-bench-press",
@@ -21,7 +22,8 @@
    "smith-incline-press",
    "landmine-press-one-arm",
    "landmine-press-two-arm",
-   "incline-machine-press"
+   "incline-machine-press",
+   "converging-smith-incline-press"
   ],
   "vertical_press": [
    "overhead-press",
@@ -31,7 +33,8 @@
    "viking-press",
    "iso-lateral-shoulder-press",
    "arnold-press",
-   "pike-push-up"
+   "pike-push-up",
+   "converging-smith-shoulder-press"
   ],
   "dip": [
    "weighted-dip",
@@ -55,7 +58,9 @@
    "wide-grip-lat-pulldown",
    "neutral-grip-lat-pulldown",
    "single-arm-lat-pulldown",
-   "assisted-pull-up"
+   "assisted-pull-up",
+   "arc-lat-pulldown",
+   "selectorized-pulldown-machine"
   ],
   "horizontal_row": [
    "barbell-row",
@@ -71,7 +76,13 @@
    "iso-lateral-row",
    "single-arm-cable-row",
    "wide-grip-cable-row",
-   "inverted-row"
+   "inverted-row",
+   "seated-row-machine",
+   "high-to-low-row-machine",
+   "plate-loaded-chest-supported-row",
+   "chest-supported-dumbbell-row",
+   "seal-row",
+   "yates-row"
   ],
   "lat_isolation": [
    "straight-arm-pulldown"
@@ -89,7 +100,8 @@
    "upright-row",
    "lateral-raise-machine",
    "cable-y-raise",
-   "seated-dumbbell-lateral-raise"
+   "seated-dumbbell-lateral-raise",
+   "standing-lateral-raise-machine"
   ],
   "front_raise": [
    "front-raise"
@@ -139,7 +151,10 @@
    "v-squat",
    "single-leg-press",
    "high-foot-leg-press",
-   "goblet-squat"
+   "goblet-squat",
+   "horizontal-leg-press",
+   "reverse-hack-squat",
+   "smith-squat-feet-forward"
   ],
   "lunge": [
    "bulgarian-split-squat",
@@ -155,7 +170,9 @@
    "smith-rdl",
    "landmine-rdl",
    "dumbbell-rdl",
-   "good-morning"
+   "good-morning",
+   "rack-pull",
+   "trap-bar-deadlift"
   ],
   "hip_extension": [
    "hip-thrust",
@@ -166,7 +183,8 @@
    "45-degree-hyperextension",
    "reverse-hyper",
    "cable-kickback",
-   "barbell-glute-bridge"
+   "barbell-glute-bridge",
+   "back-extension-machine"
   ],
   "knee_extension": [
    "leg-extension",
@@ -177,7 +195,8 @@
    "seated-leg-curl",
    "nordic-curl",
    "standing-leg-curl",
-   "glute-ham-raise"
+   "glute-ham-raise",
+   "kneeling-leg-curl"
   ],
   "calf_raise": [
    "standing-calf-raise",
@@ -191,10 +210,12 @@
    "ab-wheel-rollout",
    "ab-crunch-machine",
    "weighted-decline-crunch",
-   "standing-cable-crunch"
+   "standing-cable-crunch",
+   "captains-chair-knee-raise"
   ],
   "hip_adduction": [
-   "hip-adduction-machine"
+   "hip-adduction-machine",
+   "standing-cable-adduction"
   ],
   "hip_abduction": [
    "hip-abduction-machine",
@@ -204,7 +225,8 @@
   ],
   "forearm": [
    "wrist-curl",
-   "reverse-curl"
+   "reverse-curl",
+   "reverse-wrist-curl"
   ],
   "pullover": [
    "incline-cable-pullover",
@@ -214,7 +236,11 @@
   "rotation": [
    "landmine-rotation",
    "cable-woodchop",
-   "pallof-press"
+   "pallof-press",
+   "rotary-torso-machine"
+  ],
+  "carry": [
+   "farmer-carry"
   ]
  },
  "push_patterns": [
@@ -236,7 +262,9 @@
   "front-squat"
  ],
  "heavy_hinges": [
-  "deadlift"
+  "deadlift",
+  "trap-bar-deadlift",
+  "rack-pull"
  ],
  "stretch_biased": {
   "chest": [
@@ -302,10 +330,15 @@
    "neutral-grip-lat-pulldown",
    "single-arm-lat-pulldown",
    "assisted-pull-up",
-   "single-arm-cable-row"
+   "single-arm-cable-row",
+   "high-to-low-row-machine",
+   "arc-lat-pulldown",
+   "selectorized-pulldown-machine",
+   "yates-row"
   ],
   "glutes": [
-   "high-foot-leg-press"
+   "high-foot-leg-press",
+   "reverse-hack-squat"
   ]
  },
  "frequency_muscles": [
