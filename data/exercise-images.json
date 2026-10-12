@@ -1650,6 +1650,421 @@
     "img/ex/farmer-carry-1.jpg"
    ],
    "match": "name"
+  },
+  "ring-dip": {
+   "source_id": "Ring_Dips",
+   "source_name": "Ring Dips",
+   "images": [
+    "img/ex/ring-dip-0.jpg",
+    "img/ex/ring-dip-1.jpg"
+   ],
+   "match": "name"
+  },
+  "ring-push-up": {
+   "source_id": "Suspended_Push-Up",
+   "source_name": "Suspended Push-Up",
+   "images": [
+    "img/ex/ring-push-up-0.jpg",
+    "img/ex/ring-push-up-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a suspension-strap push-up; rings work the same way."
+  },
+  "ring-row": {
+   "source_id": "Inverted_Row_with_Straps",
+   "source_name": "Inverted Row with Straps",
+   "images": [
+    "img/ex/ring-row-0.jpg",
+    "img/ex/ring-row-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a strap row; rings work the same way."
+  },
+  "ring-pull-up": {
+   "source_id": "Pullups",
+   "source_name": "Pullups",
+   "images": [
+    "img/ex/ring-pull-up-0.jpg",
+    "img/ex/ring-pull-up-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a bar pull-up; on rings the grip turns from overhand to neutral as you pull."
+  },
+  "ring-fly": {
+   "source_id": "Suspended_Push-Up",
+   "source_name": "Suspended Push-Up",
+   "images": [
+    "img/ex/ring-fly-0.jpg",
+    "img/ex/ring-fly-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a suspension push-up position; the fly opens the arms wide instead."
+  },
+  "ring-face-pull": {
+   "source_id": "Inverted_Row_with_Straps",
+   "source_name": "Inverted Row with Straps",
+   "images": [
+    "img/ex/ring-face-pull-0.jpg",
+    "img/ex/ring-face-pull-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a strap row; for a face pull, pull the hands toward the forehead with elbows high."
+  },
+  "ring-biceps-curl": null,
+  "ring-triceps-extension": null,
+  "ring-l-sit": null,
+  "trx-row": {
+   "source_id": "Suspended_Row",
+   "source_name": "Suspended Row",
+   "images": [
+    "img/ex/trx-row-0.jpg",
+    "img/ex/trx-row-1.jpg"
+   ],
+   "match": "name"
+  },
+  "trx-push-up": {
+   "source_id": "Suspended_Push-Up",
+   "source_name": "Suspended Push-Up",
+   "images": [
+    "img/ex/trx-push-up-0.jpg",
+    "img/ex/trx-push-up-1.jpg"
+   ],
+   "match": "name"
+  },
+  "trx-y-t-raise": null,
+  "trx-biceps-curl": null,
+  "trx-triceps-extension": null,
+  "trx-assisted-pistol": {
+   "source_id": "Kettlebell_Pistol_Squat",
+   "source_name": "Kettlebell Pistol Squat",
+   "images": [
+    "img/ex/trx-assisted-pistol-0.jpg",
+    "img/ex/trx-assisted-pistol-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a kettlebell pistol; holding straps reduces the balance demand."
+  },
+  "trx-hamstring-curl": {
+   "source_id": "Ball_Leg_Curl",
+   "source_name": "Ball Leg Curl",
+   "images": [
+    "img/ex/trx-hamstring-curl-0.jpg",
+    "img/ex/trx-hamstring-curl-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a stability-ball leg curl; straps work the same way."
+  },
+  "trx-fallout": {
+   "source_id": "Suspended_Fallout",
+   "source_name": "Suspended Fallout",
+   "images": [
+    "img/ex/trx-fallout-0.jpg",
+    "img/ex/trx-fallout-1.jpg"
+   ],
+   "match": "name"
+  },
+  "trx-pike": {
+   "source_id": "Hanging_Pike",
+   "source_name": "Hanging Pike",
+   "images": [
+    "img/ex/trx-pike-0.jpg",
+    "img/ex/trx-pike-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a hanging pike; the strap version starts in a plank with feet in the straps."
+  },
+  "kettlebell-swing": {
+   "source_id": "One-Arm_Kettlebell_Swings",
+   "source_name": "One-Arm Kettlebell Swings",
+   "images": [
+    "img/ex/kettlebell-swing-0.jpg",
+    "img/ex/kettlebell-swing-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a one-arm swing; the two-hand swing uses the same hinge."
+  },
+  "kettlebell-front-squat": {
+   "source_id": "Front_Squats_With_Two_Kettlebells",
+   "source_name": "Front Squats With Two Kettlebells",
+   "images": [
+    "img/ex/kettlebell-front-squat-0.jpg",
+    "img/ex/kettlebell-front-squat-1.jpg"
+   ],
+   "match": "name"
+  },
+  "kettlebell-clean": {
+   "source_id": "One-Arm_Kettlebell_Clean",
+   "source_name": "One-Arm Kettlebell Clean",
+   "images": [
+    "img/ex/kettlebell-clean-0.jpg",
+    "img/ex/kettlebell-clean-1.jpg"
+   ],
+   "match": "name"
+  },
+  "kettlebell-press": {
+   "source_id": "One-Arm_Kettlebell_Military_Press_To_The_Side",
+   "source_name": "One-Arm Kettlebell Military Press To The Side",
+   "images": [
+    "img/ex/kettlebell-press-0.jpg",
+    "img/ex/kettlebell-press-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a one-arm kettlebell press with a slight lean to the side."
+  },
+  "kettlebell-push-press": {
+   "source_id": "One-Arm_Kettlebell_Push_Press",
+   "source_name": "One-Arm Kettlebell Push Press",
+   "images": [
+    "img/ex/kettlebell-push-press-0.jpg",
+    "img/ex/kettlebell-push-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "kettlebell-snatch": {
+   "source_id": "One-Arm_Kettlebell_Snatch",
+   "source_name": "One-Arm Kettlebell Snatch",
+   "images": [
+    "img/ex/kettlebell-snatch-0.jpg",
+    "img/ex/kettlebell-snatch-1.jpg"
+   ],
+   "match": "name"
+  },
+  "turkish-get-up": {
+   "source_id": "Kettlebell_Turkish_Get-Up_Squat_style",
+   "source_name": "Kettlebell Turkish Get-Up (Squat style)",
+   "images": [
+    "img/ex/turkish-get-up-0.jpg",
+    "img/ex/turkish-get-up-1.jpg"
+   ],
+   "match": "name"
+  },
+  "kettlebell-single-leg-rdl": {
+   "source_id": "Kettlebell_One-Legged_Deadlift",
+   "source_name": "Kettlebell One-Legged Deadlift",
+   "images": [
+    "img/ex/kettlebell-single-leg-rdl-0.jpg",
+    "img/ex/kettlebell-single-leg-rdl-1.jpg"
+   ],
+   "match": "name"
+  },
+  "kettlebell-row": {
+   "source_id": "One-Arm_Kettlebell_Row",
+   "source_name": "One-Arm Kettlebell Row",
+   "images": [
+    "img/ex/kettlebell-row-0.jpg",
+    "img/ex/kettlebell-row-1.jpg"
+   ],
+   "match": "name"
+  },
+  "kettlebell-windmill": {
+   "source_id": "Kettlebell_Windmill",
+   "source_name": "Kettlebell Windmill",
+   "images": [
+    "img/ex/kettlebell-windmill-0.jpg",
+    "img/ex/kettlebell-windmill-1.jpg"
+   ],
+   "match": "name"
+  },
+  "suitcase-carry": {
+   "source_id": "Farmers_Walk",
+   "source_name": "Farmer's Walk",
+   "images": [
+    "img/ex/suitcase-carry-0.jpg",
+    "img/ex/suitcase-carry-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a two-hand farmer's walk; the suitcase carry uses one hand."
+  },
+  "kettlebell-halo": {
+   "source_id": "Kettlebell_Halo",
+   "source_name": "Kettlebell Halo",
+   "images": [],
+   "match": "name"
+  },
+  "muscle-up": {
+   "source_id": "Muscle_Up",
+   "source_name": "Muscle Up",
+   "images": [
+    "img/ex/muscle-up-0.jpg",
+    "img/ex/muscle-up-1.jpg"
+   ],
+   "match": "name"
+  },
+  "archer-push-up": {
+   "source_id": "Pushups",
+   "source_name": "Pushups",
+   "images": [
+    "img/ex/archer-push-up-0.jpg",
+    "img/ex/archer-push-up-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a standard push-up; the archer version shifts to one side with the other arm straight."
+  },
+  "pseudo-planche-push-up": {
+   "source_id": "Pushups",
+   "source_name": "Pushups",
+   "images": [
+    "img/ex/pseudo-planche-push-up-0.jpg",
+    "img/ex/pseudo-planche-push-up-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a standard push-up; lean forward with hands by the hips."
+  },
+  "wall-handstand-push-up": {
+   "source_id": "Handstand_Push-Ups",
+   "source_name": "Handstand Push-Ups",
+   "images": [
+    "img/ex/wall-handstand-push-up-0.jpg",
+    "img/ex/wall-handstand-push-up-1.jpg"
+   ],
+   "match": "name"
+  },
+  "pistol-squat": {
+   "source_id": "Kettlebell_Pistol_Squat",
+   "source_name": "Kettlebell Pistol Squat",
+   "images": [
+    "img/ex/pistol-squat-0.jpg",
+    "img/ex/pistol-squat-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a kettlebell pistol; the bodyweight version is the same movement."
+  },
+  "shrimp-squat": null,
+  "front-lever-row": null,
+  "tuck-front-lever": null,
+  "dragon-flag": null,
+  "hollow-body-hold": null,
+  "l-sit": null,
+  "box-jump": {
+   "source_id": "Front_Box_Jump",
+   "source_name": "Front Box Jump",
+   "images": [
+    "img/ex/box-jump-0.jpg",
+    "img/ex/box-jump-1.jpg"
+   ],
+   "match": "name"
+  },
+  "broad-jump": {
+   "source_id": "Standing_Long_Jump",
+   "source_name": "Standing Long Jump",
+   "images": [
+    "img/ex/broad-jump-0.jpg",
+    "img/ex/broad-jump-1.jpg"
+   ],
+   "match": "name"
+  },
+  "depth-jump": {
+   "source_id": "Linear_Depth_Jump",
+   "source_name": "Linear Depth Jump",
+   "images": [
+    "img/ex/depth-jump-0.jpg",
+    "img/ex/depth-jump-1.jpg"
+   ],
+   "match": "name"
+  },
+  "jump-squat": {
+   "source_id": "Freehand_Jump_Squat",
+   "source_name": "Freehand Jump Squat",
+   "images": [
+    "img/ex/jump-squat-0.jpg",
+    "img/ex/jump-squat-1.jpg"
+   ],
+   "match": "name"
+  },
+  "bounding": {
+   "source_id": "Alternate_Leg_Diagonal_Bound",
+   "source_name": "Alternate Leg Diagonal Bound",
+   "images": [
+    "img/ex/bounding-0.jpg",
+    "img/ex/bounding-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows diagonal bounds; straight-line bounding is the same idea."
+  },
+  "plyo-push-up": {
+   "source_id": "Plyo_Push-up",
+   "source_name": "Plyo Push-up",
+   "images": [
+    "img/ex/plyo-push-up-0.jpg",
+    "img/ex/plyo-push-up-1.jpg"
+   ],
+   "match": "name"
+  },
+  "med-ball-slam": {
+   "source_id": "Overhead_Slam",
+   "source_name": "Overhead Slam",
+   "images": [
+    "img/ex/med-ball-slam-0.jpg",
+    "img/ex/med-ball-slam-1.jpg"
+   ],
+   "match": "name"
+  },
+  "med-ball-chest-pass": {
+   "source_id": "Medicine_Ball_Chest_Pass",
+   "source_name": "Medicine Ball Chest Pass",
+   "images": [
+    "img/ex/med-ball-chest-pass-0.jpg",
+    "img/ex/med-ball-chest-pass-1.jpg"
+   ],
+   "match": "name"
+  },
+  "barbell-rollout": {
+   "source_id": "Barbell_Ab_Rollout_-_On_Knees",
+   "source_name": "Barbell Ab Rollout - On Knees",
+   "images": [
+    "img/ex/barbell-rollout-0.jpg",
+    "img/ex/barbell-rollout-1.jpg"
+   ],
+   "match": "name"
+  },
+  "stability-ball-rollout": {
+   "source_id": "Exercise_Ball_Pull-In",
+   "source_name": "Exercise Ball Pull-In",
+   "images": [
+    "img/ex/stability-ball-rollout-0.jpg",
+    "img/ex/stability-ball-rollout-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a ball pull-in; the rollout is the same position with your forearms on the ball."
+  },
+  "standing-ab-wheel-rollout": {
+   "source_id": "Barbell_Ab_Rollout",
+   "source_name": "Barbell Ab Rollout",
+   "images": [
+    "img/ex/standing-ab-wheel-rollout-0.jpg",
+    "img/ex/standing-ab-wheel-rollout-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a standing barbell rollout."
+  },
+  "dead-hang": {
+   "source_id": "One_Handed_Hang",
+   "source_name": "One Handed Hang",
+   "images": [
+    "img/ex/dead-hang-0.jpg",
+    "img/ex/dead-hang-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a one-hand hang; the dead hang uses both hands."
+  },
+  "active-hang": {
+   "source_id": "Scapular_Pull-Up",
+   "source_name": "Scapular Pull-Up",
+   "images": [
+    "img/ex/active-hang-0.jpg",
+    "img/ex/active-hang-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the scapular pull-up; the active hang holds the top of it."
+  },
+  "scapular-pull-up": {
+   "source_id": "Scapular_Pull-Up",
+   "source_name": "Scapular Pull-Up",
+   "images": [
+    "img/ex/scapular-pull-up-0.jpg",
+    "img/ex/scapular-pull-up-1.jpg"
+   ],
+   "match": "name"
   }
  }
 }

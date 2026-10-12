@@ -14,7 +14,11 @@
    "iso-lateral-chest-press",
    "decline-bench-press",
    "deficit-push-up",
-   "converging-smith-bench-press"
+   "converging-smith-bench-press",
+   "ring-push-up",
+   "trx-push-up",
+   "archer-push-up",
+   "pseudo-planche-push-up"
   ],
   "incline_press": [
    "incline-barbell-bench-press",
@@ -34,12 +38,16 @@
    "iso-lateral-shoulder-press",
    "arnold-press",
    "pike-push-up",
-   "converging-smith-shoulder-press"
+   "converging-smith-shoulder-press",
+   "kettlebell-press",
+   "kettlebell-push-press",
+   "wall-handstand-push-up"
   ],
   "dip": [
    "weighted-dip",
    "dip-machine",
-   "assisted-dip"
+   "assisted-dip",
+   "ring-dip"
   ],
   "chest_fly": [
    "cable-fly",
@@ -47,7 +55,8 @@
    "dumbbell-fly",
    "cable-crossover-low-to-high",
    "cable-crossover-high-to-low",
-   "incline-dumbbell-fly"
+   "incline-dumbbell-fly",
+   "ring-fly"
   ],
   "vertical_pull": [
    "pull-up",
@@ -60,7 +69,9 @@
    "single-arm-lat-pulldown",
    "assisted-pull-up",
    "arc-lat-pulldown",
-   "selectorized-pulldown-machine"
+   "selectorized-pulldown-machine",
+   "ring-pull-up",
+   "muscle-up"
   ],
   "horizontal_row": [
    "barbell-row",
@@ -82,17 +93,24 @@
    "plate-loaded-chest-supported-row",
    "chest-supported-dumbbell-row",
    "seal-row",
-   "yates-row"
+   "yates-row",
+   "ring-row",
+   "trx-row",
+   "kettlebell-row",
+   "front-lever-row"
   ],
   "lat_isolation": [
-   "straight-arm-pulldown"
+   "straight-arm-pulldown",
+   "tuck-front-lever"
   ],
   "rear_delt": [
    "reverse-pec-deck",
    "face-pull",
    "dumbbell-rear-delt-fly",
    "dumbbell-incline-y-raise",
-   "cable-rear-delt-fly"
+   "cable-rear-delt-fly",
+   "ring-face-pull",
+   "trx-y-t-raise"
   ],
   "lateral_raise": [
    "dumbbell-lateral-raise",
@@ -127,7 +145,9 @@
    "concentration-curl",
    "ez-bar-curl",
    "spider-curl",
-   "cable-preacher-curl"
+   "cable-preacher-curl",
+   "ring-biceps-curl",
+   "trx-biceps-curl"
   ],
   "triceps_extension": [
    "skull-crusher",
@@ -137,7 +157,9 @@
    "overhead-triceps-machine",
    "dumbbell-kickback",
    "jm-press",
-   "cable-overhead-rope-extension"
+   "cable-overhead-rope-extension",
+   "ring-triceps-extension",
+   "trx-triceps-extension"
   ],
   "squat": [
    "back-squat",
@@ -154,14 +176,18 @@
    "goblet-squat",
    "horizontal-leg-press",
    "reverse-hack-squat",
-   "smith-squat-feet-forward"
+   "smith-squat-feet-forward",
+   "kettlebell-front-squat"
   ],
   "lunge": [
    "bulgarian-split-squat",
    "walking-lunge",
    "dumbbell-step-up",
    "smith-split-squat",
-   "dumbbell-reverse-lunge"
+   "dumbbell-reverse-lunge",
+   "trx-assisted-pistol",
+   "pistol-squat",
+   "shrimp-squat"
   ],
   "hinge": [
    "deadlift",
@@ -172,7 +198,8 @@
    "dumbbell-rdl",
    "good-morning",
    "rack-pull",
-   "trap-bar-deadlift"
+   "trap-bar-deadlift",
+   "kettlebell-single-leg-rdl"
   ],
   "hip_extension": [
    "hip-thrust",
@@ -196,7 +223,8 @@
    "nordic-curl",
    "standing-leg-curl",
    "glute-ham-raise",
-   "kneeling-leg-curl"
+   "kneeling-leg-curl",
+   "trx-hamstring-curl"
   ],
   "calf_raise": [
    "standing-calf-raise",
@@ -211,7 +239,16 @@
    "ab-crunch-machine",
    "weighted-decline-crunch",
    "standing-cable-crunch",
-   "captains-chair-knee-raise"
+   "captains-chair-knee-raise",
+   "ring-l-sit",
+   "trx-fallout",
+   "trx-pike",
+   "dragon-flag",
+   "hollow-body-hold",
+   "l-sit",
+   "barbell-rollout",
+   "stability-ball-rollout",
+   "standing-ab-wheel-rollout"
   ],
   "hip_adduction": [
    "hip-adduction-machine",
@@ -237,10 +274,38 @@
    "landmine-rotation",
    "cable-woodchop",
    "pallof-press",
-   "rotary-torso-machine"
+   "rotary-torso-machine",
+   "kettlebell-windmill",
+   "kettlebell-halo"
   ],
   "carry": [
-   "farmer-carry"
+   "farmer-carry",
+   "suitcase-carry"
+  ],
+  "swing": [
+   "kettlebell-swing"
+  ],
+  "ballistic": [
+   "kettlebell-clean",
+   "kettlebell-snatch"
+  ],
+  "get_up": [
+   "turkish-get-up"
+  ],
+  "plyometric": [
+   "box-jump",
+   "broad-jump",
+   "depth-jump",
+   "jump-squat",
+   "bounding",
+   "plyo-push-up",
+   "med-ball-slam",
+   "med-ball-chest-pass"
+  ],
+  "hang": [
+   "dead-hang",
+   "active-hang",
+   "scapular-pull-up"
   ]
  },
  "push_patterns": [
@@ -277,7 +342,11 @@
    "assisted-dip",
    "cable-crossover-high-to-low",
    "incline-dumbbell-fly",
-   "deficit-push-up"
+   "deficit-push-up",
+   "ring-dip",
+   "ring-push-up",
+   "ring-fly",
+   "archer-push-up"
   ],
   "biceps": [
    "incline-dumbbell-curl",
@@ -289,7 +358,9 @@
    "overhead-cable-triceps-extension",
    "skull-crusher",
    "overhead-triceps-machine",
-   "cable-overhead-rope-extension"
+   "cable-overhead-rope-extension",
+   "ring-triceps-extension",
+   "trx-triceps-extension"
   ],
   "hamstrings": [
    "romanian-deadlift",
@@ -300,7 +371,8 @@
    "nordic-curl",
    "dumbbell-rdl",
    "glute-ham-raise",
-   "good-morning"
+   "good-morning",
+   "kettlebell-single-leg-rdl"
   ],
   "quads": [
    "back-squat",
@@ -310,7 +382,10 @@
    "pendulum-squat",
    "belt-squat",
    "v-squat",
-   "sissy-squat"
+   "sissy-squat",
+   "trx-assisted-pistol",
+   "pistol-squat",
+   "shrimp-squat"
   ],
   "calves": [
    "standing-calf-raise",
@@ -334,7 +409,8 @@
    "high-to-low-row-machine",
    "arc-lat-pulldown",
    "selectorized-pulldown-machine",
-   "yates-row"
+   "yates-row",
+   "ring-pull-up"
   ],
   "glutes": [
    "high-foot-leg-press",

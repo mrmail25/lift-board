@@ -79,3 +79,21 @@ All 184 exercises now follow one type rule. The backup is `exercises.pre-types.j
   - Sets were trimmed only where a new cap warned, from isolation tiles first. Compounds were trimmed only after every isolation in that day was already at 2.
 - **Result:** zero warnings. Every preset with 3 or more days reaches every level-scaled minimum.
 - **2-day plans:** the gaps that remain are mostly small muscles. Under the caps, the fewest sets that can reach every minimum (33.5, 44.5 and 55.2) is still more than two sessions allow. The one big-muscle gap is quads: 8 of 10 on Full Body 2-day advanced, and 7 of 8 and 5 of 6 on Torso/Limbs 2-day intermediate and beginner.
+
+## Library round 3 (2026-10-11)
+I added 55 exercises, taking the library from 184 to 239. Backups are in `*.pre-libx3.json`. No existing id changed, and no preset changed.
+- **New equipment strings:** `rings`, `suspension`, `kettlebell`, `medicine ball` and `stability ball`. Calisthenics stay `bodyweight`.
+- **New patterns:**
+  - `plyometric`: jumps, bounds, plyo push-up and med-ball throws.
+  - `ballistic`: kettlebell clean and snatch.
+  - `swing`: kettlebell swing.
+  - `get_up`: Turkish get-up.
+  - `hang`: dead hang, active hang and scapular pull-up.
+  - None of these count toward push or pull volume, since plyometrics and ballistics aren't clean push or pull work. Everything else joins an existing pattern; ring and suspension rows and pulls, for example, count as pull.
+- **Plyometrics:** primary muscles are rated 0.35 to 0.6, not 1.0, because jumps and throws give a low hypertrophy stimulus. Each description says the exercise is for power, not size. Fatigue is 1.0 for low impact, and 1.2 for depth jumps, broad jumps and bounding.
+- **Kettlebell work:** the clean, snatch, Turkish get-up and halo get modest ratings, because they train skill, power and stability more than muscle. The swing rates glutes 0.8 and hamstrings 0.6.
+- **Holds:** dead hang, active hang, L-sit, hollow hold and tuck front lever are isolation at 0.8, with ratings at or below 0.6 except the lats on the tuck front lever.
+- **Rings and suspension:** ratings follow the free-weight or bar version, with a little extra core (below 0.25) for the instability.
+- **Types:** ring and suspension compounds and calisthenics compounds are accessory, because they're hard to load in small, steady steps for low reps.
+- **Stretch-biased:** ring dip, ring push-up, ring fly and archer push-up (chest); ring and suspension triceps extensions (triceps); ring pull-up (lats); pistol, shrimp and assisted pistol (quads); kettlebell single-leg RDL (hamstrings).
+- **Skipped as duplicates:** KB goblet squat (`goblet-squat` covers it), the bodyweight bar dip (`weighted-dip`), Nordic curl, chin-up and the kneeling ab wheel. Skin-the-cat, back lever and support holds were skipped as low value for the muscles the app tracks.
