@@ -1,5 +1,5 @@
 {
- "version": 8,
+ "version": 9,
  "counting": {
   "method": "fractional",
   "description": "Each working set adds the exercise's muscle rating (0-1) to that muscle. Ratings below 0.25 count as 0 (noise). Weekly total = sum over all tiles of sets x rating.",
@@ -384,7 +384,109 @@
    "factor": 0.5,
    "note": "effective sets past 10 for a muscle in one session count at 50%"
   },
-  "marginal": "S(x+1)-S(x), shown as % of max"
+  "marginal": "S(x+1)-S(x), shown as % of max",
+  "k_by_muscle": {
+   "chest": {
+    "beginner": 6.55,
+    "intermediate": 8.73,
+    "advanced": 10.91
+   },
+   "front_delts": {
+    "beginner": 2.73,
+    "intermediate": 3.27,
+    "advanced": 4.37
+   },
+   "side_delts": {
+    "beginner": 5.46,
+    "intermediate": 7.09,
+    "advanced": 8.73
+   },
+   "rear_delts": {
+    "beginner": 3.82,
+    "intermediate": 5.46,
+    "advanced": 6.55
+   },
+   "lats": {
+    "beginner": 6.55,
+    "intermediate": 8.73,
+    "advanced": 10.91
+   },
+   "upper_back": {
+    "beginner": 6.55,
+    "intermediate": 8.73,
+    "advanced": 10.91
+   },
+   "traps": {
+    "beginner": 2.73,
+    "intermediate": 3.27,
+    "advanced": 4.37
+   },
+   "biceps": {
+    "beginner": 5.46,
+    "intermediate": 7.09,
+    "advanced": 8.73
+   },
+   "triceps": {
+    "beginner": 5.46,
+    "intermediate": 7.09,
+    "advanced": 8.73
+   },
+   "forearms": {
+    "beginner": 1.09,
+    "intermediate": 1.64,
+    "advanced": 2.18
+   },
+   "abs": {
+    "beginner": 2.73,
+    "intermediate": 3.27,
+    "advanced": 4.37
+   },
+   "quads": {
+    "beginner": 6.55,
+    "intermediate": 8.73,
+    "advanced": 10.91
+   },
+   "hamstrings": {
+    "beginner": 5.46,
+    "intermediate": 7.09,
+    "advanced": 8.73
+   },
+   "glutes": {
+    "beginner": 5.46,
+    "intermediate": 7.09,
+    "advanced": 8.73
+   },
+   "calves": {
+    "beginner": 3.82,
+    "intermediate": 5.46,
+    "advanced": 6.55
+   },
+   "adductors": {
+    "beginner": 2.18,
+    "intermediate": 2.73,
+    "advanced": 3.27
+   },
+   "lower_back": {
+    "beginner": 2.18,
+    "intermediate": 2.73,
+    "advanced": 3.27
+   },
+   "obliques": {
+    "beginner": 1.09,
+    "intermediate": 1.64,
+    "advanced": 2.18
+   },
+   "abductors": {
+    "beginner": 2.18,
+    "intermediate": 2.73,
+    "advanced": 3.27
+   }
+  },
+  "anchors": {
+   "min": 0.6,
+   "method": "k = level-scaled min / ln(2.5), so every muscle sits at exactly 60% of modeled max at its minimum. The max then lands between 84% and 99.9% depending on how wide that muscle's range is."
+  },
+  "note_k_level": "k (by level) is kept as fallback for custom muscles only"
  },
  "recovery": {
   "fatigue_field": "exercises[].fatigue (1.5 heavy axial compound, 1.2 other compound, 0.8 isolation)",

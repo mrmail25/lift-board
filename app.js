@@ -48,7 +48,7 @@ const cap=s=>s[0].toUpperCase()+s.slice(1);
 function upd(){save();render()}
 function totals(day){const t={};MUS.forEach(m=>t[m]=0);(day==null?state.days.flat():state.days[day]).forEach(it=>{const x=EX[it.id];if(!x)return;for(const m in x.muscles){const r=x.muscles[m];if(r>=RULE.min_rating_to_count)t[m]+=r*it.sets}});
 for(const m in t)t[m]=Math.round(t[m]/RULE.round_to)*RULE.round_to;return t}
-const tgt=m=>{const g=TG[m]||{min:0,max:10};return{min:Math.round(g.min*(LMF[sel.level]||1)*2)/2,max:g.max}};
+const tgt=m=>{const g=TG[m]||{min:0,max:10};return{min:Math.max(.5,Math.round(g.min*(LMF[sel.level]||1)*2)/2),max:g.max}};
 function status(v,{min,max}){if(v<min-2||v>max*1.25)return'red';if(v<min||v>max)return'amber';return'green'}
 function vol(){const t=totals(),el=document.getElementById('vol');el.innerHTML=MUS.map(m=>{const g=tgt(m),s=status(t[m],g),p=Math.min(100,t[m]/(g.max*1.25)*100);
 return`<div class="row ${s}" data-m="${m}"><span>${cap(lab(m))}</span><div class="bar"><i style="width:${p}%"></i></div><b>${t[m]} / ${g.min}-${g.max}</b></div>`}).join('');el.querySelectorAll('.row').forEach(r=>r.onclick=e=>window.musclePop&&musclePop('g:'+r.dataset.m,e.clientX,e.clientY))}

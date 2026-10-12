@@ -4,7 +4,7 @@ const AKEY='liftboard.analytics';let AN={open:false,mus:null,sleep:false,age:'no
 const anSave=()=>localStorage.setItem(AKEY,JSON.stringify(AN));
 fetch('data/targets.json').then(r=>r.json()).then(t=>{for(const k of['curve','recovery','analytics'])if(t[k])ANC[k]=t[k];anUpdate()});
 const A$=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const kLvl=()=>ANC.curve.k[sel.level]||8,Sx=(x,k)=>1-Math.exp(-x/k);
+const kLvl=m=>{const B=ANC.curve.k_by_muscle;return(m&&B&&B[m]&&B[m][sel.level])||ANC.curve.k[sel.level]||8},Sx=(x,k)=>1-Math.exp(-x/k);
 const fat=x=>x?(x.fatigue||(x.base&&EX[x.base]&&EX[x.base].fatigue)||(x.type=='isolation'?.8:1.2)):1;
 const dayEff=(i,m)=>state.days[i].reduce((a,it)=>{const x=EX[it.id];const r=x&&x.muscles[m]||0;return r>=RULE.min_rating_to_count?a+r*it.sets:a},0);
 const disc=v=>{const d=ANC.curve.session_discount;return Math.min(v,d.cap)+Math.max(0,v-d.cap)*d.factor};
@@ -15,18 +15,22 @@ const modF=()=>{const M=ANC.recovery.modifiers;return(AN.sleep?M.sleep_under_6h:
 const baseline=()=>AN.baselines.length?(AN.baselines.find(b=>b.id==AN.normal)||AN.baselines[0]):null;
 function sessMin(i){const L=ANC.analytics.session_length,c=state.days[i];if(!c.length)return 0;return L.warmup_min+c.reduce((a,it)=>{const x=EX[it.id];if(!x)return a;const comp=L.compound_types.includes(x.type);return a+it.sets*(L.work_sec_per_set/60+(comp?L.rest_min.compound:L.rest_min.isolation))},0)}
 function stretchHit(x,m){if(!x)return false;if(x.custom)return !!x.stretch_biased;return typeof RU!='undefined'&&RU&&(RU.stretch_biased[m]||[]).includes(x.id)}
-function chart(m){const k=kLvl(),x=weekX(m),T=tgt(m),X=Math.max(30,Math.ceil((Math.max(x,T.max)+4)/5)*5),W=300,H=150,px=v=>28+v/X*(W-36),py=v=>H-20-v*(H-32);
+function band(m,X,px,H,W){if(typeof weekColor!='function')return'';const st=[];for(let i=0;i<=120;i++){const v=i/120*X;st.push(`<stop offset="${(i/120*100).toFixed(2)}%" stop-color="${grad(v,wkStops(m))}"/>`)}
+const raw=(typeof totals=='function'?totals(null)[m]:0)||0,mc=weekColor(m,raw),y=H-14,id='anb-'+m;
+return`<defs><linearGradient id="${id}" x1="0" x2="1">${st.join('')}</linearGradient></defs><rect class="an-wband" x="${px(0)}" y="${y}" width="${px(X)-px(0)}" height="10" rx="2" fill="url(#${id})"/>
+<text x="${px(0)}" y="${y-3}" class="an-bl2">week colour</text>${mc?`<path class="an-wmark" data-c="${mc}" d="M${px(Math.min(raw,X))-6},${y-7}h12l-6,7z" fill="${mc}" stroke="#fff" stroke-width="1.2"/><rect x="${px(Math.min(raw,X))-1.5}" y="${y}" width="3" height="10" fill="#fff"/>`:''}`}
+function chart(m){const k=kLvl(m),x=weekX(m),T=tgt(m),X=Math.max(30,Math.ceil((Math.max(x,T.max)+4)/5)*5),W=300,H=168,px=v=>28+v/X*(W-36),py=v=>H-38-v*(H-50);
 let d='';for(let i=0;i<=60;i++){const v=i/60*X;d+=(i?'L':'M')+px(v).toFixed(1)+','+py(Sx(v,k)).toFixed(1)}const nx=Sx(x+1,k)-Sx(x,k);
-const ticks=[];for(let v=0;v<=X;v+=X>30?10:5)ticks.push(`<text x="${px(v)}" y="${H-6}" text-anchor="middle">${v}</text>`);
+const ticks=[];for(let v=0;v<=X;v+=X>30?10:5)ticks.push(`<text x="${px(v)}" y="${H-24}" text-anchor="middle">${v}</text>`);
 return`<svg class="an-chart" viewBox="0 0 ${W} ${H}"><rect x="${px(T.min)}" y="8" width="${px(T.max)-px(T.min)}" height="${H-28}" class="an-band"/>
 ${[0,.5,1].map(v=>`<line x1="28" x2="${W-8}" y1="${py(v)}" y2="${py(v)}" class="an-grid"/><text x="24" y="${py(v)+3}" text-anchor="end">${v*100}%</text>`).join('')}${ticks.join('')}
-<path d="${d}" class="an-curve"/><circle cx="${px(x)}" cy="${py(Sx(x,k))}" r="5" class="an-dot"/><text x="${px(T.min)+3}" y="18" class="an-bl">target ${T.min}–${T.max}</text></svg>
+${band(m,X,px,H,W)}<path d="${d}" class="an-curve"/><circle cx="${px(x)}" cy="${py(Sx(x,k))}" r="5" class="an-dot"/><text x="${px(T.min)+3}" y="18" class="an-bl">target ${T.min}–${T.max}</text></svg>
 <div class="an-read"><b>${cap(lab(m))}</b>: ${r1(x)} effective sets/week → ${pc(Sx(x,k))} of modeled max. <b>Next set ≈ +${(nx*100).toFixed(1)}% of max.</b></div>`}
 function anUpdate(){const el=document.getElementById('anbody');document.querySelectorAll('.col').forEach((c,i)=>{const h=c.querySelector('h3');if(!h)return;let s=h.querySelector('.dmin');const mn=sessMin(i);if(!mn){if(s)s.remove();return}if(!s){s=document.createElement('span');s.className='dmin';h.appendChild(s)}s.textContent='~'+Math.round(mn/5)*5+' min'});
 const tg=document.getElementById('antog');if(tg)tg.textContent=(AN.open?'▾':'▸')+' Analytics';if(!el||!MUS.length)return;el.style.display=AN.open?'block':'none';if(!AN.open)return;
-const _H=typeof HSEL!="undefined"?HSEL:null;if(_H&&_H!==AN._hs){AN._hs=HSEL;AN.mus=HSEL.startsWith('g:')?HSEL.slice(2):RG[HSEL]}const k=kLvl(),hs=_H?(HSEL.startsWith('g:')?HSEL.slice(2):RG[HSEL]):null,m=AN.mus||hs||'chest',A=ANC.analytics;
+const _H=typeof HSEL!="undefined"?HSEL:null;if(_H&&_H!==AN._hs){AN._hs=HSEL;AN.mus=HSEL.startsWith('g:')?HSEL.slice(2):RG[HSEL]}let k;const hs=_H?(HSEL.startsWith('g:')?HSEL.slice(2):RG[HSEL]):null,m=AN.mus||hs||'chest',A=ANC.analytics;k=kLvl(m);
 // (a)
-const rows=MUS.map(g=>{const x=weekX(g);return[g,x,Sx(x,k),Sx(x+1,k)-Sx(x,k)]});
+const rows=MUS.map(g=>{const x=weekX(g);const kg=kLvl(g);return[g,x,Sx(x,kg),Sx(x+1,kg)-Sx(x,kg)]});
 // (b)
 const costs=DAYS.map((_,i)=>dayCost(i)*modF()),wk=costs.reduce((a,b)=>a+b,0),B=baseline();
 const rel=v=>B&&B.cost?pc(v/B.cost):r1(v)+' pts';
@@ -38,7 +42,7 @@ const swaps=[];new Set(state.days.flat().map(it=>it.id)).forEach(id=>{const x=EX
 const px=typeof patOf=='function'?patOf(id):null;Object.values(EX).forEach(y=>{if(y.id==id||y.custom||(px&&patOf(y.id)!=px))return;const ry=y.muscles[m2]||0;if(ry<r-.1)return;const s2=ry/fat(y);if(s2>sp+1e-9&&(!best||s2>best[1]))best=[y,s2]});if(best)swaps.push([x,best[0],m2,sp,best[1]])});
 el.innerHTML=`<p class="an-disc">${A$(A.disclaimer)}</p>
 <h4>Diminishing returns</h4><div class="an-chips" role="group" aria-label="Muscle">${MUS.map(g=>`<button type="button" class="an-chip${g==m?' on':''}" data-m="${g}" aria-pressed="${g==m}">${cap(lab(g))}</button>`).join('')}</div>${chart(m)}
-<p class="an-note">S(x) = 1 − e<sup>−x/k</sup>, k = ${k} for ${sel.level}. Sets past ${ANC.curve.session_discount.cap} for a muscle in one session count half. Shaded band = your weekly target.</p>
+<p class="an-note">S(x) = 1 − e<sup>−x/k</sup>, k = ${k} for ${lab(m)} at ${sel.level} (set so the level minimum sits at 60% of max). Sets past ${ANC.curve.session_discount.cap} for a muscle in one session count half. Shaded band = your weekly target.</p>
 <details class="an-tbl"><summary>All muscles</summary><table><tr><th>Muscle</th><th>Eff. sets</th><th>% of max</th><th>Next set</th></tr>${rows.map(([g,x,s,n])=>`<tr class="${g==m?'on':''}" data-m="${g}"><td>${cap(lab(g))}</td><td>${r1(x)}</td><td>${pc(s)}</td><td>+${(n*100).toFixed(1)}%</td></tr>`).join('')}</table></details>
 <h4>Recovery cost</h4><div class="an-cost">${DAYS.map((d,i)=>costs[i]?`<span><b>${d}</b> ${rel(costs[i])}</span>`:'').join('')}</div>
 <div class="an-wk">Week: <b>${rel(wk)}</b>${B?` of your normal week (“${A$(B.name)}”)`:''}</div>
