@@ -50,7 +50,7 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "dumbbell-bench-press",
@@ -58,11 +58,11 @@
         },
         {
          "id": "lat-pulldown",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "seated-leg-curl",
-         "sets": 2
+         "sets": 3
         },
         {
          "id": "dumbbell-lateral-raise",
@@ -70,11 +70,11 @@
         },
         {
          "id": "overhead-cable-triceps-extension",
-         "sets": 2
+         "sets": 3
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         }
        ]
       },
@@ -96,7 +96,7 @@
         },
         {
          "id": "romanian-deadlift",
-         "sets": 2
+         "sets": 4
         },
         {
          "id": "face-pull",
@@ -108,7 +108,7 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 2
+         "sets": 4
         }
        ]
       }
@@ -144,7 +144,7 @@
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         }
        ]
       },
@@ -208,7 +208,11 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 4
+        },
+        {
+         "id": "hip-abduction-machine",
+         "sets": 2
         }
        ]
       }
@@ -244,7 +248,7 @@
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         }
        ]
       },
@@ -308,7 +312,11 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 4
+        },
+        {
+         "id": "hip-abduction-machine",
+         "sets": 2
         }
        ]
       },
@@ -356,11 +364,11 @@
         },
         {
          "id": "barbell-bench-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "pull-up",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "seated-leg-curl",
@@ -376,11 +384,11 @@
         },
         {
          "id": "overhead-cable-triceps-extension",
-         "sets": 2
+         "sets": 3
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         }
        ],
        "reason": "Two-day plan: an eighth exercise is needed to reach the weekly minimum for every muscle."
@@ -391,19 +399,19 @@
        "tiles": [
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "incline-dumbbell-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "chest-supported-row",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "bulgarian-split-squat",
-         "sets": 2
+         "sets": 4
         },
         {
          "id": "cable-lateral-raise",
@@ -415,7 +423,7 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 5
         }
        ]
       }
@@ -485,7 +493,7 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 5
         }
        ]
       },
@@ -519,7 +527,7 @@
         },
         {
          "id": "cable-crunch",
-         "sets": 2
+         "sets": 4
         }
        ]
       }
@@ -623,7 +631,7 @@
         },
         {
          "id": "cable-crunch",
-         "sets": 2
+         "sets": 4
         }
        ]
       },
@@ -671,19 +679,19 @@
        "tiles": [
         {
          "id": "front-squat",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "incline-barbell-bench-press",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "pull-up",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "seated-leg-curl",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "cable-lateral-raise",
@@ -695,11 +703,11 @@
         },
         {
          "id": "overhead-cable-triceps-extension",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 4
         }
        ],
        "reason": "Two-day plan: an eighth exercise is needed to reach the weekly minimum for every muscle."
@@ -714,15 +722,15 @@
         },
         {
          "id": "dumbbell-bench-press",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "pendlay-row",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "bulgarian-split-squat",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "dumbbell-lateral-raise",
@@ -734,7 +742,7 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 4
+         "sets": 5
         }
        ]
       }
@@ -746,11 +754,11 @@
        "tiles": [
         {
          "id": "front-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "incline-barbell-bench-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "pull-up",
@@ -780,11 +788,11 @@
        "tiles": [
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "dumbbell-bench-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "pendlay-row",
@@ -792,7 +800,7 @@
         },
         {
          "id": "bulgarian-split-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "dumbbell-lateral-raise",
@@ -804,7 +812,7 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 4
+         "sets": 5
         }
        ]
       },
@@ -838,7 +846,7 @@
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 3
+         "sets": 4
         }
        ]
       }
@@ -942,7 +950,7 @@
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 3
+         "sets": 4
         }
        ]
       },
@@ -1004,7 +1012,7 @@
         },
         {
          "id": "lat-pulldown",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "seated-dumbbell-shoulder-press",
@@ -1012,7 +1020,7 @@
         },
         {
          "id": "seated-cable-row",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "dumbbell-lateral-raise",
@@ -1024,7 +1032,7 @@
         },
         {
          "id": "overhead-cable-triceps-extension",
-         "sets": 2
+         "sets": 3
         }
        ]
       },
@@ -1034,11 +1042,11 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "leg-extension",
@@ -1050,10 +1058,14 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "cable-crunch",
+         "sets": 3
+        },
+        {
+         "id": "cable-fly",
          "sets": 2
         }
        ]
@@ -1202,7 +1214,7 @@
         },
         {
          "id": "pull-up",
-         "sets": 3
+         "sets": 5
         },
         {
          "id": "overhead-press",
@@ -1210,7 +1222,7 @@
         },
         {
          "id": "chest-supported-row",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "cable-lateral-raise",
@@ -1222,7 +1234,7 @@
         },
         {
          "id": "overhead-cable-triceps-extension",
-         "sets": 2
+         "sets": 4
         }
        ]
       },
@@ -1236,11 +1248,11 @@
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "leg-extension",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "seated-leg-curl",
@@ -1248,11 +1260,11 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 5
         },
         {
          "id": "cable-crunch",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "cable-fly",
@@ -1554,7 +1566,7 @@
        "tiles": [
         {
          "id": "barbell-bench-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "incline-dumbbell-press",
@@ -1614,11 +1626,11 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "leg-extension",
@@ -1630,11 +1642,11 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "cable-crunch",
-         "sets": 2
+         "sets": 3
         }
        ]
       }
@@ -1852,7 +1864,7 @@
         },
         {
          "id": "barbell-row",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "lat-pulldown",
@@ -1882,15 +1894,15 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "leg-extension",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "seated-leg-curl",
@@ -1898,15 +1910,15 @@
         },
         {
          "id": "hip-abduction-machine",
-         "sets": 2
-        },
-        {
-         "id": "standing-calf-raise",
          "sets": 3
         },
         {
+         "id": "standing-calf-raise",
+         "sets": 5
+        },
+        {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         }
        ]
       }
@@ -2114,11 +2126,11 @@
        "tiles": [
         {
          "id": "incline-barbell-bench-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "dumbbell-bench-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "seated-dumbbell-shoulder-press",
@@ -2182,31 +2194,31 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "hip-thrust",
-         "sets": 2
+         "sets": 3
         },
         {
          "id": "leg-extension",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "seated-leg-curl",
-         "sets": 3
-        },
-        {
-         "id": "standing-calf-raise",
          "sets": 4
         },
         {
+         "id": "standing-calf-raise",
+         "sets": 5
+        },
+        {
          "id": "hanging-leg-raise",
-         "sets": 3
+         "sets": 4
         }
        ]
       }
@@ -2448,6 +2460,10 @@
         {
          "id": "cable-crunch",
          "sets": 3
+        },
+        {
+         "id": "hip-abduction-machine",
+         "sets": 2
         }
        ]
       },
@@ -2608,6 +2624,10 @@
         {
          "id": "barbell-shrug",
          "sets": 3
+        },
+        {
+         "id": "cable-crunch",
+         "sets": 2
         }
        ]
       },
@@ -2732,6 +2752,10 @@
         {
          "id": "hanging-leg-raise",
          "sets": 3
+        },
+        {
+         "id": "hip-thrust",
+         "sets": 2
         }
        ]
       },
@@ -2741,7 +2765,7 @@
        "tiles": [
         {
          "id": "pull-up",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "pendlay-row",
@@ -2758,6 +2782,10 @@
         {
          "id": "barbell-shrug",
          "sets": 3
+        },
+        {
+         "id": "hip-abduction-machine",
+         "sets": 2
         }
        ]
       },
@@ -2771,7 +2799,7 @@
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "hack-squat",
@@ -2783,7 +2811,7 @@
         },
         {
          "id": "seated-leg-curl",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "hip-adduction-machine",
@@ -2938,11 +2966,11 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "leg-extension",
@@ -2954,11 +2982,11 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "cable-crunch",
-         "sets": 2
+         "sets": 3
         }
        ]
       },
@@ -3074,15 +3102,15 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "leg-extension",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "seated-leg-curl",
@@ -3090,15 +3118,15 @@
         },
         {
          "id": "hip-abduction-machine",
-         "sets": 2
-        },
-        {
-         "id": "standing-calf-raise",
          "sets": 3
         },
         {
+         "id": "standing-calf-raise",
+         "sets": 5
+        },
+        {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         }
        ]
       },
@@ -3214,31 +3242,31 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "hip-thrust",
-         "sets": 2
+         "sets": 3
         },
         {
          "id": "leg-extension",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "seated-leg-curl",
-         "sets": 3
-        },
-        {
-         "id": "standing-calf-raise",
          "sets": 4
         },
         {
+         "id": "standing-calf-raise",
+         "sets": 5
+        },
+        {
          "id": "hanging-leg-raise",
-         "sets": 3
+         "sets": 4
         }
        ]
       },
@@ -3863,11 +3891,11 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "leg-extension",
@@ -3879,11 +3907,11 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "cable-crunch",
-         "sets": 2
+         "sets": 3
         }
        ]
       }
@@ -4071,7 +4099,7 @@
         },
         {
          "id": "barbell-row",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "cable-fly",
@@ -4127,15 +4155,15 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "leg-extension",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "seated-leg-curl",
@@ -4143,15 +4171,15 @@
         },
         {
          "id": "hip-abduction-machine",
-         "sets": 2
-        },
-        {
-         "id": "standing-calf-raise",
          "sets": 3
         },
         {
+         "id": "standing-calf-raise",
+         "sets": 5
+        },
+        {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         }
        ]
       }
@@ -4401,11 +4429,11 @@
         },
         {
          "id": "reverse-pec-deck",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "incline-dumbbell-curl",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "overhead-cable-triceps-extension",
@@ -4427,31 +4455,31 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "hip-thrust",
-         "sets": 2
+         "sets": 3
         },
         {
          "id": "leg-extension",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "seated-leg-curl",
-         "sets": 3
-        },
-        {
-         "id": "standing-calf-raise",
          "sets": 4
         },
         {
+         "id": "standing-calf-raise",
+         "sets": 5
+        },
+        {
          "id": "hanging-leg-raise",
-         "sets": 3
+         "sets": 4
         }
        ]
       }
@@ -4693,7 +4721,7 @@
         },
         {
          "id": "seated-cable-row",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "dumbbell-lateral-raise",
@@ -4705,7 +4733,7 @@
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         }
        ]
       },
@@ -4715,7 +4743,7 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "romanian-deadlift",
@@ -4735,7 +4763,11 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 4
+        },
+        {
+         "id": "cable-fly",
+         "sets": 2
         }
        ]
       }
@@ -4771,7 +4803,7 @@
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         }
        ]
       },
@@ -4883,19 +4915,19 @@
        "tiles": [
         {
          "id": "barbell-bench-press",
-         "sets": 3
-        },
-        {
-         "id": "pull-up",
          "sets": 4
         },
         {
+         "id": "pull-up",
+         "sets": 5
+        },
+        {
          "id": "incline-dumbbell-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "chest-supported-row",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "cable-lateral-raise",
@@ -4911,7 +4943,7 @@
         },
         {
          "id": "leg-extension",
-         "sets": 2
+         "sets": 4
         }
        ],
        "reason": "Two-day plan: an eighth exercise is needed to reach the weekly minimum for every muscle."
@@ -4926,7 +4958,7 @@
         },
         {
          "id": "romanian-deadlift",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "seated-leg-curl",
@@ -4942,11 +4974,11 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 5
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         },
         {
          "id": "dumbbell-lateral-raise",
@@ -4997,7 +5029,7 @@
        "tiles": [
         {
          "id": "back-squat",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "romanian-deadlift",
@@ -5021,7 +5053,7 @@
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 2
+         "sets": 3
         }
        ]
       },
@@ -5065,7 +5097,7 @@
        "tiles": [
         {
          "id": "leg-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "hip-thrust",
@@ -5137,7 +5169,7 @@
        "tiles": [
         {
          "id": "hack-squat",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "romanian-deadlift",
@@ -5161,7 +5193,7 @@
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 3
+         "sets": 4
         }
        ]
       },
@@ -5205,7 +5237,7 @@
        "tiles": [
         {
          "id": "leg-press",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "hip-thrust",
@@ -5516,11 +5548,11 @@
        "tiles": [
         {
          "id": "barbell-bench-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "barbell-row",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "overhead-press",
@@ -5584,7 +5616,7 @@
         },
         {
          "id": "chest-supported-row",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "cable-fly",
@@ -5711,11 +5743,11 @@
         },
         {
          "id": "standing-calf-raise",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "cable-crunch",
-         "sets": 2
+         "sets": 3
         }
        ]
       },
@@ -5759,7 +5791,7 @@
        "tiles": [
         {
          "id": "dumbbell-bench-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "pull-up",
@@ -5813,7 +5845,7 @@
         },
         {
          "id": "cable-crunch",
-         "sets": 3
+         "sets": 4
         }
        ]
       },
@@ -5827,7 +5859,7 @@
         },
         {
          "id": "incline-dumbbell-press",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "chest-supported-row",
@@ -5861,7 +5893,7 @@
        "tiles": [
         {
          "id": "incline-barbell-bench-press",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "pull-up",
@@ -5881,7 +5913,7 @@
         },
         {
          "id": "incline-dumbbell-curl",
-         "sets": 3
+         "sets": 4
         },
         {
          "id": "overhead-cable-triceps-extension",
@@ -5919,7 +5951,7 @@
         },
         {
          "id": "hanging-leg-raise",
-         "sets": 3
+         "sets": 4
         }
        ]
       },
@@ -5933,7 +5965,7 @@
         },
         {
          "id": "dumbbell-bench-press",
-         "sets": 4
+         "sets": 5
         },
         {
          "id": "pendlay-row",
