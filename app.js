@@ -9,7 +9,8 @@ function tile(x,item){const d=document.createElement('div');d.className='tile '+
 const tags=Object.entries(x.muscles).filter(([,v])=>v>=RULE.min_rating_to_count).sort((a,b)=>b[1]-a[1]).map(([m,v])=>`<span>${lab(m)}${v<1?' '+v:''}</span>`).join('');
 d.innerHTML=`<span class="grip" title="Drag">⋮⋮</span><div class="n"><span class="ic">${ICON[x.type]}</span>${x.name}${x.estimated?' <em class="est" title="Estimated ratings (custom exercise)">est.</em>':''}</div><div class="tags">${tags}</div>${x.custom&&!item?'<button class="cedit" title="Edit, duplicate or delete">✎</button>':''}`;
 if(x.custom&&!item)d.querySelector('.cedit').onclick=()=>openForm(x.id);
-if(item){d.innerHTML+=`<div class="sets"><button data-a="-">−</button><input type="number" min="0" value="${item.sets}"><button data-a="+">+</button> sets${x.custom?'<button class="feel" title="Where did you feel it?">Feel?</button>':''}</div><button class="del">✕</button>`;
+if(item){d.innerHTML+=`<div class="sets"><button data-a="-">−</button><input type="number" min="0" value="${item.sets}"><button data-a="+">+</button> sets${x.custom?'<button class="feel" title="Where did you feel it?">Feel?</button>':''}</div><button class="del">✕</button><button class="swp" title="Swap exercise" aria-label="Swap exercise">⇄</button>`;
+d.querySelector('.swp').onclick=e=>{e.stopPropagation();swapBubble(null,item,e.currentTarget)};
 if(x.custom)d.querySelector('.feel').onclick=()=>openFeel(x.id);
 const inp=d.querySelector('input');inp.onchange=()=>{item.sets=Math.max(0,+inp.value||0);upd()};
 d.querySelectorAll('.sets button[data-a]').forEach(b=>b.onclick=()=>{item.sets=Math.max(0,item.sets+(b.dataset.a=='+'?1:-1));upd()});

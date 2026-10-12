@@ -1,0 +1,244 @@
+{
+ "version": 1,
+ "reference": "tools/swap.py",
+ "score": {
+  "formula": "40*same_pattern + 25*cosine(muscles_cur, muscles_cand) + 15*(1 - mean_abs_diff) + 10*same_type + 5*same_equipment + 5*same_family",
+  "same_pattern": "1 if both ids are in the same rules.json patterns list, else 0",
+  "cosine": "Cosine similarity of the two 19-value muscles vectors, in the order of exercises.json muscles. 0 if either vector is all zeros.",
+  "mean_abs_diff": "Mean of |cur[m] - cand[m]| over the muscles the current exercise rates >= 0.5. If none, use its single highest-rated muscle.",
+  "same_type": "type is equal",
+  "same_equipment": "equipment string is equal",
+  "same_family": "equipment family is equal (see families)",
+  "rounding": "Round the score to 2 decimals. Sort by score descending, then by id ascending to break ties."
+ },
+ "exclude": [
+  "the candidate has the same id as the current exercise",
+  "cosine < 0.6 and not same_pattern"
+ ],
+ "top_n": 6,
+ "families": {
+  "machine": [
+   "machine",
+   "plate-loaded machine",
+   "smith machine"
+  ],
+  "free": [
+   "barbell",
+   "dumbbell",
+   "kettlebell",
+   "trap bar",
+   "landmine"
+  ],
+  "bodyweight": [
+   "bodyweight",
+   "rings",
+   "suspension"
+  ],
+  "cable": [
+   "cable"
+  ],
+  "other": [
+   "band",
+   "medicine ball",
+   "stability ball"
+  ]
+ },
+ "equipment_filter": "The toggle is a set of families to keep. If it's empty or all families are on, nothing is filtered. Otherwise drop candidates whose family isn't in the set before ranking, then take the top 6 of what's left. The current exercise is never filtered out of the board.",
+ "tags": {
+  "max_per_candidate": 2,
+  "order": "Evaluate in this order and keep the first 2 that apply.",
+  "rules": [
+   {
+    "tag": "more stretch",
+    "when": "The candidate is in stretch_biased[primary muscle of the current exercise] and the current exercise isn't. The primary muscle is the current exercise's highest-rated muscle; ties go to the first in muscles order."
+   },
+   {
+    "tag": "less fatigue",
+    "when": "cand.fatigue <= cur.fatigue - 0.2"
+   },
+   {
+    "tag": "more fatigue",
+    "when": "cand.fatigue >= cur.fatigue + 0.2"
+   },
+   {
+    "tag": "easier to load",
+    "when": "cand.type == primary and cur.type != primary"
+   },
+   {
+    "tag": "machine | free weight | bodyweight",
+    "when": "The families differ and the candidate is in the machine, free or bodyweight family. Use the tag for the candidate's family."
+   },
+   {
+    "tag": "same equipment",
+    "when": "The families match and the equipment strings are equal."
+   },
+   {
+    "tag": "more <muscle> / less <muscle>",
+    "when": "|cand[m] - cur[m]| >= 0.25, and either cur[m] >= 0.5 or cand[m] >= 0.75. Biggest difference first. Show the muscle key with underscores replaced by spaces."
+   }
+  ]
+ },
+ "worked_examples": {
+  "barbell-bench-press": [
+   {
+    "id": "decline-bench-press",
+    "name": "Decline Barbell Bench Press",
+    "score": 97.36,
+    "tags": [
+     "same equipment"
+    ]
+   },
+   {
+    "id": "close-grip-bench-press",
+    "name": "Close-Grip Bench Press",
+    "score": 91.52,
+    "tags": [
+     "same equipment",
+     "more triceps"
+    ]
+   },
+   {
+    "id": "smith-bench-press",
+    "name": "Smith Machine Bench Press",
+    "score": 90.0,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ]
+   },
+   {
+    "id": "converging-smith-bench-press",
+    "name": "Converging Smith Bench Press",
+    "score": 89.46,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ]
+   },
+   {
+    "id": "dumbbell-bench-press",
+    "name": "Dumbbell Bench Press",
+    "score": 84.43,
+    "tags": [
+     "more stretch"
+    ]
+   },
+   {
+    "id": "push-up",
+    "name": "Push-Up",
+    "score": 79.67,
+    "tags": [
+     "bodyweight"
+    ]
+   }
+  ],
+  "back-squat": [
+   {
+    "id": "front-squat",
+    "name": "Front Squat",
+    "score": 95.76,
+    "tags": [
+     "same equipment"
+    ]
+   },
+   {
+    "id": "smith-squat",
+    "name": "Smith Machine Squat",
+    "score": 88.71,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ]
+   },
+   {
+    "id": "belt-squat",
+    "name": "Belt Squat",
+    "score": 88.49,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ]
+   },
+   {
+    "id": "leg-press",
+    "name": "Leg Press",
+    "score": 87.41,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ]
+   },
+   {
+    "id": "v-squat",
+    "name": "V-Squat",
+    "score": 87.41,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ]
+   },
+   {
+    "id": "smith-squat-feet-forward",
+    "name": "Smith Squat (Feet Forward)",
+    "score": 87.11,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ]
+   }
+  ],
+  "lat-pulldown": [
+   {
+    "id": "single-arm-lat-pulldown",
+    "name": "Single-Arm Lat Pulldown",
+    "score": 98.5,
+    "tags": [
+     "less fatigue",
+     "same equipment"
+    ]
+   },
+   {
+    "id": "close-grip-pulldown",
+    "name": "Close-Grip Pulldown",
+    "score": 98.32,
+    "tags": [
+     "same equipment"
+    ]
+   },
+   {
+    "id": "wide-grip-lat-pulldown",
+    "name": "Wide-Grip Lat Pulldown",
+    "score": 97.72,
+    "tags": [
+     "same equipment"
+    ]
+   },
+   {
+    "id": "neutral-grip-lat-pulldown",
+    "name": "Neutral-Grip Lat Pulldown",
+    "score": 97.31,
+    "tags": [
+     "same equipment"
+    ]
+   },
+   {
+    "id": "selectorized-pulldown-machine",
+    "name": "Pulldown Machine (Selectorized)",
+    "score": 88.98,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ]
+   },
+   {
+    "id": "arc-lat-pulldown",
+    "name": "Converging Arc Lat Pulldown",
+    "score": 88.38,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ]
+   }
+  ]
+ }
+}

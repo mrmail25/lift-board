@@ -44,16 +44,21 @@ return msg.replace(/\{(\w+)\}/g,(_,k)=>V[k]!=null?V[k]:k)}
 function boardDays(){return state.days.map((c,i)=>({day:ORD[i],tiles:c.filter(t=>EX[t.id]).map(t=>({id:t.id,sets:t.sets})),reason:(state.reasons||[])[i]||''})).filter(d=>d.tiles.length)}
 function pcheck(){const el=document.getElementById('chk');if(!el||!RU||!MUS.length)return;const d=boardDays();
 if(!d.length){el.innerHTML='<div class="ck-empty">Add exercises to the board to check the program.</div>';return}
-let f=checkProgram(d,sel.level);const M=f.meta,P=x=>lab(x);
+let f=checkProgram(d,sel.level);const M=f.meta,P=x=>lab(x),ppOrig=f.find(x=>x.id=='push_pull_imbalance');
 const un=Object.keys(M.week).filter(m=>M.week[m]<=0);const isUn=x=>x.muscle&&un.includes(x.muscle)&&['weekly_volume','missing_stretch','low_frequency'].includes(x.id);
 f=f.filter(x=>!isUn(x)&&x.id!='push_pull_imbalance');const extra=[];
 if(M.push>=1&&M.pull>=1){const r=M.pull/M.push,pp=RU.rules.find(x=>x.id=='push_pull_imbalance')||{};if(r<(pp.min_ratio||.75)||r>(pp.max_ratio||2))f.push({sev:'warn',id:'push_pull_imbalance',ratio:pyR(r,2)})}
-else if(M.push>0&&!M.pull)extra.push({sev:'warn',txt:'No pulling yet this week. Add rows or pulldowns to balance your pressing.'});
+else if(M.push>0&&!M.pull)extra.push({sev:'warn',fl:ppOrig,txt:'No pulling yet this week. Add rows or pulldowns to balance your pressing.'});
 else if(M.pull>0&&!M.push)extra.push({sev:'warn',txt:'No pushing yet this week. Add presses to balance your pulling.'});
 const SS={'bro-split':0,'ppl':3,'pplu':0,'arnold':3},ss=state.sel||{};
 if(state.applied&&state.applied==snap()&&ss.split in SS&&(!SS[ss.split]||ss.days==SS[ss.split])){const lf=f.filter(x=>x.id=='low_frequency');if(lf.length){f=f.filter(x=>x.id!='low_frequency');
 const sp=SP.splits.find(x=>x.id==ss.split);extra.push({sev:'info',txt:`Trained once a week (expected for ${sp?sp.name:ss.split}): ${lf.map(x=>P(x.muscle)).join(', ')}.`})}}
 if(typeof baseline=='function'&&typeof dayCost=='function'){const B=baseline();if(B&&B.cost){const wk=DAYS.reduce((a,_,i)=>a+dayCost(i),0)*modF(),pct=Math.round(wk/B.cost*100);{const rr=((RU&&RU.rules)||[]).find(x=>x.id=='recovery_vs_baseline')||{},ia=(rr.info_above||1.15)*100,wa=(rr.warn_above||1.3)*100;if(pct>ia)f.push({sev:pct>wa?'warn':'info',id:'recovery_vs_baseline',pct})}}}
 if(un.length)extra.push({sev:'info',txt:'Not trained yet: '+un.map(P).join(', ')+'.'});
-const all=[...f.map(x=>({sev:x.sev,txt:fmsg(x)})),...extra].sort((a,b)=>(a.sev=='warn'?0:1)-(b.sev=='warn'?0:1)),w=all.filter(x=>x.sev=='warn');
-el.innerHTML=(w.length?'':`<div class="ck-ok">✓ All clear: no programming errors found for this ${sel.level} program.</div>`)+all.map(x=>`<div class="ck ${x.sev}"><b>${x.sev=='warn'?'⚠':'ℹ'}</b> ${x.txt}</div>`).join('')+(all.length>w.length&&!w.length?'<div class="ck-sub">Notes above are suggestions, not errors.</div>':'')}
+const all=[...f.map(x=>({sev:x.sev,txt:fmsg(x),fl:x.id=='recovery_vs_baseline'?null:x})),...extra].sort((a,b)=>(a.sev=='warn'?0:1)-(b.sev=='warn'?0:1)),w=all.filter(x=>x.sev=='warn');
+el.innerHTML=(w.length?'':`<div class="ck-ok">✓ All clear: no programming errors found for this ${sel.level} program.</div>`)+all.map((x,i)=>`<div class="ck ${x.sev}${x.fl?' fixable':''}" data-i="${i}"><b>${x.sev=='warn'?'⚠':'ℹ'}</b> ${x.txt}${x.fl?'<span class="ck-more">Fixes ▸</span>':''}</div>`).join('')+(all.length>w.length&&!w.length?'<div class="ck-sub">Notes above are suggestions, not errors.</div>':'');
+const key=JSON.stringify([d,sel.level]);if(window._ckKey!==key){window._ckKey=key;window._ckOpen=null}
+el.querySelectorAll('.ck.fixable').forEach(c=>{const x=all[+c.dataset.i],id=x.txt;c.onclick=e=>{if(e.target.closest('.fx'))return;window._ckOpen=window._ckOpen===id?null:id;pcheck()};
+if(window._ckOpen===id){const fx=fixesFor(d,sel.level,tupOf(x.fl));c.classList.add('open');c.querySelector('.ck-more').textContent='Fixes ▾';
+c.insertAdjacentHTML('beforeend','<div class="fx">'+(fx.length?fx.map((z,j)=>`<div class="fx-row"><span>${z.preview.replace(/</g,'&lt;')}${z.resolves?'':`<em class="fx-part">${RU.partial_label||'Partial'}</em>`}</span><button class="fx-apply" data-j="${j}">Apply</button></div>`).join(''):'<div class="cf-hint">No one-tap fix passes the checks for this one. Adjust it by hand.</div>')+'</div>');
+c.querySelectorAll('.fx-apply').forEach(b=>b.onclick=()=>{window._ckOpen=null;applyFix(fx[+b.dataset.j])})}})}

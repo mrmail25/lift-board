@@ -97,3 +97,13 @@ I added 55 exercises, taking the library from 184 to 239. Backups are in `*.pre-
 - **Types:** ring and suspension compounds and calisthenics compounds are accessory, because they're hard to load in small, steady steps for low reps.
 - **Stretch-biased:** ring dip, ring push-up, ring fly and archer push-up (chest); ring and suspension triceps extensions (triceps); ring pull-up (lats); pistol, shrimp and assisted pistol (quads); kettlebell single-leg RDL (hamstrings).
 - **Skipped as duplicates:** KB goblet squat (`goblet-squat` covers it), the bodyweight bar dip (`weighted-dip`), Nordic curl, chin-up and the kneeling ab wheel. Skin-the-cat, back lever and support holds were skipped as low value for the muscles the app tracks.
+
+## v18: validated fixes and swap scoring (2026-10-11)
+Backups are in `*.pre-v18.*`.
+- **rules.json is now v3.**
+  - **fix_actions:** a new top-level vocabulary listing each action's params and preview template. The actions are reduce_sets, remove_tile, move_tile, swap_exercise, add_exercise, add_sets, reorder_day, split_pattern, move_sets_to_day and merge_tiles.
+  - **fixes:** every rule now has an ordered list of fixes, and the app shows at most 3.
+  - **fix_validation:** apply the candidate to a copy and run every rule again. Drop it if it creates any new non-info flag, including a new red weekly volume, or if it doesn't move the targeted flag toward compliance. A candidate that clears the flag is marked resolves=true and is listed before one that only improves it.
+- **data/swap.json:** similarity scoring is 40 x same pattern + 25 x cosine + 15 x (1 - mean absolute difference over the current exercise's muscles rated 0.5 or higher) + 10 x same type + 5 x same equipment + 5 x same family. Candidates with cosine under 0.6 are excluded unless they share the pattern, and the top 6 are returned. It also sets out the equipment families, the filter toggle, the reason-tag rules and worked examples. `tools/swap.py` is the reference implementation.
+- **tools/check_program.py:** adds `fixes()` and `check_with_fixes()`, which emit validated fixes for each flag. `tools/test_fixes.py` runs every preset plus synthetic bad boards. Every rule the checker computes produces at least one valid fix on the synthetic boards.
+- **Presets:** unchanged, with zero warnings.
