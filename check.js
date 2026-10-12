@@ -53,7 +53,7 @@ else if(M.pull>0&&!M.push)extra.push({sev:'warn',txt:'No pushing yet this week. 
 const SS={'bro-split':0,'ppl':3,'pplu':0,'arnold':3},ss=state.sel||{};
 if(state.applied&&state.applied==snap()&&ss.split in SS&&(!SS[ss.split]||ss.days==SS[ss.split])){const lf=f.filter(x=>x.id=='low_frequency');if(lf.length){f=f.filter(x=>x.id!='low_frequency');
 const sp=SP.splits.find(x=>x.id==ss.split);extra.push({sev:'info',txt:`Trained once a week (expected for ${sp?sp.name:ss.split}): ${lf.map(x=>P(x.muscle)).join(', ')}.`})}}
-if(typeof baseline=='function'&&typeof dayCost=='function'){const B=baseline();if(B&&B.cost){const wk=DAYS.reduce((a,_,i)=>a+dayCost(i),0)*modF(),pct=Math.round(wk/B.cost*100);if(pct>RECOV_INFO_ABOVE)f.push({sev:'info',id:'recovery_vs_baseline',pct})}}
+if(typeof baseline=='function'&&typeof dayCost=='function'){const B=baseline();if(B&&B.cost){const wk=DAYS.reduce((a,_,i)=>a+dayCost(i),0)*modF(),pct=Math.round(wk/B.cost*100);{const rr=((RU&&RU.rules)||[]).find(x=>x.id=='recovery_vs_baseline')||{},ia=(rr.info_above||1.15)*100,wa=(rr.warn_above||1.3)*100;if(pct>ia)f.push({sev:pct>wa?'warn':'info',id:'recovery_vs_baseline',pct})}}}
 if(un.length)extra.push({sev:'info',txt:'Not trained yet: '+un.map(P).join(', ')+'.'});
 const all=[...f.map(x=>({sev:x.sev,txt:fmsg(x)})),...extra].sort((a,b)=>(a.sev=='warn'?0:1)-(b.sev=='warn'?0:1)),w=all.filter(x=>x.sev=='warn');
 el.innerHTML=(w.length?'':`<div class="ck-ok">✓ All clear: no programming errors found for this ${sel.level} program.</div>`)+all.map(x=>`<div class="ck ${x.sev}"><b>${x.sev=='warn'?'⚠':'ℹ'}</b> ${x.txt}</div>`).join('')+(all.length>w.length&&!w.length?'<div class="ck-sub">Notes above are suggestions, not errors.</div>':'')}

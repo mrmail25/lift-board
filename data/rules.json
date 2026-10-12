@@ -485,7 +485,9 @@
    "uses": "targets.recovery",
    "app_only": true,
    "message": "This week's recovery cost is {pct}% of your saved normal week. Expect more fatigue than usual.",
-   "note": "App-side only. Compares this week's recovery cost with the saved baseline week. The reference checker skips it because it has no baseline."
+   "note": "Compared to saved baseline week. Info above 115%, warn above 130%.",
+   "info_above": 1.15,
+   "warn_above": 1.3
   }
  ]
 }
