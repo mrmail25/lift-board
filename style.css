@@ -122,3 +122,5 @@ body.isdrag{cursor:grabbing;user-select:none;-webkit-user-select:none}
 .an-ev{margin:4px 0 6px;font-size:12px}.ev-leg{display:inline-block;margin-left:8px;color:#aab}.ev-leg summary{cursor:pointer;font-size:11px}.ev-leg div{margin:4px 0}
 .an-model{margin:6px 0;font-size:12px;color:#ccd;border-left:3px solid #888;padding-left:8px}.an-model summary{cursor:pointer;font-weight:600}.an-model li{margin:3px 0}
 #mpop{max-height:75vh;overflow:auto}.mp-ev{margin-top:8px;border-top:1px solid #ddd;padding-top:6px;font-size:12px}.mp-ev h5{margin:0 0 4px;font-size:13px}.mp-ev p{margin:0 0 4px}.mp-ev ol{margin:0;padding-left:18px}.mp-ev li{margin:4px 0}.mp-ev span{color:#555}.mp-ev a{word-break:break-all}
+.sg-item{margin:6px 0;font-size:12px}.sg-item .fx{margin-top:4px}.an-swap.sg-item .fx{margin:0}
+.mp-band{margin-top:8px;border-top:1px solid #ddd;padding-top:6px;font-size:12px}.mp-band h5{margin:0 0 4px;font-size:13px}.mp-band .fx-row{background:#f2f4f7}.mp-band .fx-row span{color:#222}

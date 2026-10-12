@@ -1,5 +1,5 @@
 {
- "version": 3,
+ "version": 4,
  "description": "Program-check rules. Effective sets use the same fractional counting as the volume panel (rating >= 0.25). Severity: warn = worth fixing, info = judgment call.",
  "patterns": {
   "horizontal_press": [
@@ -805,5 +805,190 @@
   "fri": "Friday",
   "sat": "Saturday",
   "sun": "Sunday"
+ },
+ "suggestions": {
+  "_note": "v22 quick-apply: every suggestion the app shows gets preview + Apply + Undo using the v18 mechanism (validate on a board copy, fix_validation). Program-check sources reuse rules[].fixes. Analytics sources define their own trigger, candidates and metric here. Reference: tools/suggest.py suggest(days, level, baseline). Custom exercises are never candidates. Show at most 3 fixes per suggestion.",
+  "validation": "Apply to a copy of the board, run every program-check rule again, drop the candidate if it adds any non-info flag (incl. a new red weekly_volume), and drop it unless the success metric moves toward the goal. resolves=true when the goal is met; resolves=true first, partial ones get partial_label.",
+  "many_small_entries": {
+   "kind": "program_check",
+   "rule": "many_small_entries",
+   "where": "check.js program check list (rules.json rules[id=many_small_entries])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "session_hard_sets": {
+   "kind": "program_check",
+   "rule": "session_hard_sets",
+   "where": "check.js program check list (rules.json rules[id=session_hard_sets])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "session_length": {
+   "kind": "program_check",
+   "rule": "session_length",
+   "where": "check.js program check list (rules.json rules[id=session_length])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)",
+   "extra": "Day header '~N min' is display only; fixes come from the session_length rule."
+  },
+  "spinal_load": {
+   "kind": "program_check",
+   "rule": "spinal_load",
+   "where": "check.js program check list (rules.json rules[id=spinal_load])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "junk_volume_session": {
+   "kind": "program_check",
+   "rule": "junk_volume_session",
+   "where": "check.js program check list (rules.json rules[id=junk_volume_session])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)",
+   "extra": "Analytics curve's half-value discount past 10 sets is the same condition."
+  },
+  "sets_per_exercise": {
+   "kind": "program_check",
+   "rule": "sets_per_exercise",
+   "where": "check.js program check list (rules.json rules[id=sets_per_exercise])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "low_frequency": {
+   "kind": "program_check",
+   "rule": "low_frequency",
+   "where": "check.js program check list (rules.json rules[id=low_frequency])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "redundant_pattern": {
+   "kind": "program_check",
+   "rule": "redundant_pattern",
+   "where": "check.js program check list (rules.json rules[id=redundant_pattern])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "push_pull_imbalance": {
+   "kind": "program_check",
+   "rule": "push_pull_imbalance",
+   "where": "check.js program check list (rules.json rules[id=push_pull_imbalance])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "missing_stretch": {
+   "kind": "program_check",
+   "rule": "missing_stretch",
+   "where": "check.js program check list (rules.json rules[id=missing_stretch])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "hinge_before_squat": {
+   "kind": "program_check",
+   "rule": "hinge_before_squat",
+   "where": "check.js program check list (rules.json rules[id=hinge_before_squat])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "consecutive_high_volume": {
+   "kind": "program_check",
+   "rule": "consecutive_high_volume",
+   "where": "check.js program check list (rules.json rules[id=consecutive_high_volume])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "beginner_squat_and_deadlift": {
+   "kind": "program_check",
+   "rule": "beginner_squat_and_deadlift",
+   "where": "check.js program check list (rules.json rules[id=beginner_squat_and_deadlift])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "weekly_volume": {
+   "kind": "program_check",
+   "rule": "weekly_volume",
+   "where": "check.js program check list (rules.json rules[id=weekly_volume])",
+   "actions": "rules[].fixes for this rule (v18, unchanged)",
+   "candidate_rule": "fix_actions + fix_validation",
+   "success_metric": "fix_validation (flag clears = resolves, else distance to compliance shrinks)"
+  },
+  "lower_fatigue_swap": {
+   "kind": "analytics",
+   "where": "analytics.js, 'Lower-fatigue swaps' (.an-swap); targets.json analytics.spf",
+   "trigger": "each distinct exercise on the board that has at least one candidate",
+   "action": "swap_exercise:lower_fatigue",
+   "scope": "every tile of that exercise, on every day, except a day that already has the candidate",
+   "candidate_rule": "main muscle m = cur's highest rating. Candidate: not custom; same rules.json pattern as cur (cosine >= 0.6 if cur has no pattern); never compound->isolation; rating[m] >= cur rating[m] - 0.1; rating[m]/fatigue strictly higher. Order: rating/fatigue desc, swap.json score desc, id. Take the first that validates (try up to 8).",
+   "preview": "Swap {name} for {new_name} on {day_list} ({muscle}: {spf_from}→{spf_to} stimulus per fatigue)",
+   "success_metric": "week recovery cost (sum sets x fatigue) strictly lower; always resolves=true when valid"
+  },
+  "stretch_share": {
+   "kind": "analytics",
+   "where": "analytics.js, 'Stretch-biased share' (.an-str.low + .an-sug 'Suggestion: try ...'); targets.json analytics.stretch_share_flag_below",
+   "trigger": "muscle in rules.stretch_biased with effective sets > 0 and share < stretch_share_flag_below (0.25)",
+   "actions": [
+    "swap_exercise:stretch_biased",
+    "add_exercise(stretch_biased)"
+   ],
+   "candidate_rule": "swap: board tiles rating m >= 0.5 that aren't stretch-biased for m, biggest sets x rating first (ties: day order, tile order); candidates from swap.json order that are in stretch_biased[m], same pattern or cosine >= 0.6, not custom, not already on that day; prefer the first that reaches 0.25. add: fix_actions.add_exercise with stretch=true (staples pool, 2 sets, lightest day).",
+   "preview": "Swap {name} for {new_name} on {day_name} (more stretch for {muscle})",
+   "preview_add": "use fix_actions.add_exercise.preview",
+   "success_metric": "stretch share for m rises; resolves when >= 0.25"
+  },
+  "effective_frequency": {
+   "kind": "analytics",
+   "where": "analytics.js 'Frequency' dot rows (display) + check.js low_frequency note; same trigger as rule low_frequency",
+   "trigger": "muscle in frequency_muscles with fewer than 2 days at >= analytics.frequency_min_effective effective sets, and >= 2 training days",
+   "actions": [
+    "move_sets_to_day",
+    "add_exercise(other day)"
+   ],
+   "candidate_rule": "source day = day with most load on m. Tiles there rating m >= 0.5, biggest sets x rating first; move k = 2.. sets (source keeps >= 2, existing tile <= 5). Target days = training days under the frequency threshold for m, ranked (1) not next to a day already at threshold for m, (2) least load on m, (3) fewest total sets, (4) week order. add_exercise: fix_actions.add_exercise excluding the source day.",
+   "preview": "use fix_actions.move_sets_to_day.preview / add_exercise.preview",
+   "success_metric": "number of days at threshold for m rises; resolves at 2",
+   "note": "This replaces the low_frequency rule's own fix list in the UI so the two never disagree."
+  },
+  "recovery_vs_baseline": {
+   "kind": "analytics",
+   "where": "check.js (app_only rule recovery_vs_baseline) + analytics.js 'Recovery cost' week %",
+   "trigger": "saved baseline exists and week cost x modifiers / baseline > info_above (1.15)",
+   "actions": [
+    "reduce_sets:highest_fatigue",
+    "swap_exercise:lower_fatigue"
+   ],
+   "candidate_rule": "reduce: greedy, one set at a time from the tile with highest sets x fatigue (ties: higher fatigue, day order, tile order), each tile stays >= 2 sets, skip a step that would add a non-info flag, stop at <= 1.15. swap: exercises by fatigue desc then total sets, each swapped (all its tiles) to its first valid lower_fatigue_swap candidate, stop at <= 1.15. One combined fix each.",
+   "preview": "Trim {sets} sets across {n} exercises ({parts})",
+   "preview_swap": "Swap {n} exercises for lower-fatigue ones ({parts})",
+   "success_metric": "week cost % of baseline falls; resolves at <= 115%"
+  },
+  "weekly_band": {
+   "kind": "analytics",
+   "where": "heat.js body map week colours + analytics curve marker (blue = under min, amber = over max); red is rule weekly_volume",
+   "trigger": "muscle week effective sets outside [level min (rounded to 0.5, >= 0.5), max] but not red",
+   "actions": {
+    "under": [
+     "add_sets",
+     "add_exercise"
+    ],
+    "over": [
+     "reduce_sets:highest_contributor"
+    ]
+   },
+   "candidate_rule": "fix_actions generators as for weekly_volume",
+   "preview": "use fix_actions previews",
+   "success_metric": "effective weekly sets closer to range; resolves when inside",
+   "note": "Optional: today the app colours these but shows no text. Show the quick fix in the muscle pop-up only."
+  }
  }
 }
