@@ -28,3 +28,13 @@ Rows and rear-delt exercises had no trap credit, even though retracting the shou
 
 ## Smith machine exercises (2026-10-11)
 I added 10 Smith machine variants. Each one copies the ratings of its free-weight version, with lower back, abs, obliques and other stabilizer ratings turned down, because the fixed bar path takes away most of the balance work. Fatigue for the Smith squat and Smith RDL drops from 1.5 to 1.2 for the same reason. Each variant joins its free-weight version's movement pattern, and the Smith RDL and Smith calf raise go on the stretch-biased list. No presets changed.
+
+## Library expansion (2026-10-11)
+I added 81 exercises, taking the library from 79 to 160. Backups are in `*.pre-libx.json`.
+- **New equipment strings:** `landmine` and `plate-loaded machine`. Plate-loaded is kept separate from `machine` where the lever arc and resistance curve feel different (iso-lateral presses and rows, pendulum, V-squat, high row).
+- **Ratings:** each one starts from its closest existing exercise and moves the head split toward the angle's bias. Incline presses and low-to-high flies favour chest_upper, decline and high-to-low favour chest_lower, and overhead triceps work favours triceps_long. Pendulum, belt and V-squats favour quads_vasti, and the sissy squat favours quads_rf. Each group equals its highest head. Supported machine and chest-supported versions drop lower back, abs and other stabilizers below 0.25, because the pad does the stabilizing.
+- **Fatigue:** 1.5 only for the good morning, an axial barbell hinge. Free-weight and landmine compounds are 1.2. Machine, plate-loaded and assisted compounds, plus loaded carries of body weight such as inverted rows and pike push-ups, are 1.0. Isolation exercises are 0.8, and landmine rotation is 1.0.
+- **New patterns:** `pullover`, which counts toward pull volume (`pull_patterns`), and `rotation`, for the landmine rotation, woodchop and Pallof press. Everything else joins an existing pattern.
+- **Stretch-biased:** I added the pullovers and lat pulldown variants (lats), Bayesian, machine preacher and cable preacher curls (biceps), overhead triceps machine and low-cable overhead rope (triceps), pendulum, belt, V-squat and sissy squat (quads), Nordic, glute-ham raise, dumbbell and landmine RDL and good morning (hamstrings), leg press calf raise (calves), plus iso-lateral press, high-to-low fly, incline dumbbell fly, deficit push-up and assisted dip (chest). The high-foot leg press starts a glutes list.
+- **Images:** mapped from free-exercise-db: exact name match where one exists, otherwise the closest variant marked approximate with a note, otherwise none.
+- **Presets:** unchanged. The program check still shows zero warnings across all 46 presets.

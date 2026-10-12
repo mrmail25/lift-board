@@ -706,6 +706,717 @@
    ],
    "match": "approximate"
   },
-  "smith-hip-thrust": null
+  "smith-hip-thrust": null,
+  "incline-cable-pullover": {
+   "source_id": "Straight-Arm_Pulldown",
+   "source_name": "Straight-Arm Pulldown",
+   "images": [
+    "img/ex/incline-cable-pullover-0.jpg",
+    "img/ex/incline-cable-pullover-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the standing straight-arm pulldown; same lat path, but lying on an incline."
+  },
+  "dumbbell-pullover": {
+   "source_id": "Straight-Arm_Dumbbell_Pullover",
+   "source_name": "Straight-Arm Dumbbell Pullover",
+   "images": [
+    "img/ex/dumbbell-pullover-0.jpg",
+    "img/ex/dumbbell-pullover-1.jpg"
+   ],
+   "match": "name"
+  },
+  "pullover-machine": {
+   "source_id": "Straight-Arm_Pulldown",
+   "source_name": "Straight-Arm Pulldown",
+   "images": [
+    "img/ex/pullover-machine-0.jpg",
+    "img/ex/pullover-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the cable straight-arm pulldown; the machine follows the same arc."
+  },
+  "landmine-t-bar-row": {
+   "source_id": "Lying_T-Bar_Row",
+   "source_name": "Lying T-Bar Row",
+   "images": [
+    "img/ex/landmine-t-bar-row-0.jpg",
+    "img/ex/landmine-t-bar-row-1.jpg"
+   ],
+   "match": "name"
+  },
+  "viking-press": null,
+  "landmine-press-one-arm": {
+   "source_id": "Landmine_Linear_Jammer",
+   "source_name": "Landmine Linear Jammer",
+   "images": [
+    "img/ex/landmine-press-one-arm-0.jpg",
+    "img/ex/landmine-press-one-arm-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the two-arm landmine jammer; this is the one-arm version without the leg drive."
+  },
+  "landmine-press-two-arm": {
+   "source_id": "Landmine_Linear_Jammer",
+   "source_name": "Landmine Linear Jammer",
+   "images": [
+    "img/ex/landmine-press-two-arm-0.jpg",
+    "img/ex/landmine-press-two-arm-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the jammer with leg drive; press strictly here."
+  },
+  "meadows-row": {
+   "source_id": "Bent_Over_One-Arm_Long_Bar_Row",
+   "source_name": "Bent Over One-Arm Long Bar Row",
+   "images": [
+    "img/ex/meadows-row-0.jpg",
+    "img/ex/meadows-row-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a one-arm long-bar row; Meadows grips the bar end overhand from the side."
+  },
+  "landmine-squat": null,
+  "landmine-rdl": {
+   "source_id": "Romanian_Deadlift",
+   "source_name": "Romanian Deadlift",
+   "images": [
+    "img/ex/landmine-rdl-0.jpg",
+    "img/ex/landmine-rdl-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the barbell RDL; same hinge, with the landmine end held in front."
+  },
+  "landmine-rotation": {
+   "source_id": "Landmine_180s",
+   "source_name": "Landmine 180's",
+   "images": [
+    "img/ex/landmine-rotation-0.jpg",
+    "img/ex/landmine-rotation-1.jpg"
+   ],
+   "match": "name"
+  },
+  "machine-preacher-curl": {
+   "source_id": "Machine_Preacher_Curls",
+   "source_name": "Machine Preacher Curls",
+   "images": [
+    "img/ex/machine-preacher-curl-0.jpg",
+    "img/ex/machine-preacher-curl-1.jpg"
+   ],
+   "match": "name"
+  },
+  "seated-machine-curl": {
+   "source_id": "Machine_Bicep_Curl",
+   "source_name": "Machine Bicep Curl",
+   "images": [
+    "img/ex/seated-machine-curl-0.jpg",
+    "img/ex/seated-machine-curl-1.jpg"
+   ],
+   "match": "name"
+  },
+  "cable-rope-hammer-curl": {
+   "source_id": "Cable_Hammer_Curls_-_Rope_Attachment",
+   "source_name": "Cable Hammer Curls - Rope Attachment",
+   "images": [
+    "img/ex/cable-rope-hammer-curl-0.jpg",
+    "img/ex/cable-rope-hammer-curl-1.jpg"
+   ],
+   "match": "name"
+  },
+  "bayesian-cable-curl": {
+   "source_id": "Standing_One-Arm_Cable_Curl",
+   "source_name": "Standing One-Arm Cable Curl",
+   "images": [
+    "img/ex/bayesian-cable-curl-0.jpg",
+    "img/ex/bayesian-cable-curl-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a one-arm cable curl facing the stack; Bayesian faces away with the arm behind the body."
+  },
+  "high-cable-curl": {
+   "source_id": "High_Cable_Curls",
+   "source_name": "High Cable Curls",
+   "images": [
+    "img/ex/high-cable-curl-0.jpg",
+    "img/ex/high-cable-curl-1.jpg"
+   ],
+   "match": "name"
+  },
+  "machine-triceps-extension": {
+   "source_id": "Machine_Triceps_Extension",
+   "source_name": "Machine Triceps Extension",
+   "images": [
+    "img/ex/machine-triceps-extension-0.jpg",
+    "img/ex/machine-triceps-extension-1.jpg"
+   ],
+   "match": "name"
+  },
+  "dip-machine": {
+   "source_id": "Dip_Machine",
+   "source_name": "Dip Machine",
+   "images": [
+    "img/ex/dip-machine-0.jpg",
+    "img/ex/dip-machine-1.jpg"
+   ],
+   "match": "name"
+  },
+  "overhead-triceps-machine": {
+   "source_id": "Machine_Triceps_Extension",
+   "source_name": "Machine Triceps Extension",
+   "images": [
+    "img/ex/overhead-triceps-machine-0.jpg",
+    "img/ex/overhead-triceps-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the elbows-forward machine extension; the overhead machine puts the elbows above the head."
+  },
+  "plate-loaded-chest-press": {
+   "source_id": "Leverage_Chest_Press",
+   "source_name": "Leverage Chest Press",
+   "images": [
+    "img/ex/plate-loaded-chest-press-0.jpg",
+    "img/ex/plate-loaded-chest-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "incline-machine-press": {
+   "source_id": "Leverage_Incline_Chest_Press",
+   "source_name": "Leverage Incline Chest Press",
+   "images": [
+    "img/ex/incline-machine-press-0.jpg",
+    "img/ex/incline-machine-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "decline-machine-press": {
+   "source_id": "Leverage_Decline_Chest_Press",
+   "source_name": "Leverage Decline Chest Press",
+   "images": [
+    "img/ex/decline-machine-press-0.jpg",
+    "img/ex/decline-machine-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "iso-lateral-chest-press": {
+   "source_id": "Leverage_Chest_Press",
+   "source_name": "Leverage Chest Press",
+   "images": [
+    "img/ex/iso-lateral-chest-press-0.jpg",
+    "img/ex/iso-lateral-chest-press-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a lever chest press; the iso-lateral version has independent, converging arms."
+  },
+  "iso-lateral-shoulder-press": {
+   "source_id": "Leverage_Shoulder_Press",
+   "source_name": "Leverage Shoulder Press",
+   "images": [
+    "img/ex/iso-lateral-shoulder-press-0.jpg",
+    "img/ex/iso-lateral-shoulder-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "lateral-raise-machine": {
+   "source_id": "Cable_Seated_Lateral_Raise",
+   "source_name": "Cable Seated Lateral Raise",
+   "images": [
+    "img/ex/lateral-raise-machine-0.jpg",
+    "img/ex/lateral-raise-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a seated cable lateral raise; the machine uses arm pads instead."
+  },
+  "high-row-machine": {
+   "source_id": "Leverage_High_Row",
+   "source_name": "Leverage High Row",
+   "images": [
+    "img/ex/high-row-machine-0.jpg",
+    "img/ex/high-row-machine-1.jpg"
+   ],
+   "match": "name"
+  },
+  "low-row-machine": {
+   "source_id": "Leverage_Iso_Row",
+   "source_name": "Leverage Iso Row",
+   "images": [
+    "img/ex/low-row-machine-0.jpg",
+    "img/ex/low-row-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the lever iso row; the low row pulls from below chest height."
+  },
+  "iso-lateral-row": {
+   "source_id": "Leverage_Iso_Row",
+   "source_name": "Leverage Iso Row",
+   "images": [
+    "img/ex/iso-lateral-row-0.jpg",
+    "img/ex/iso-lateral-row-1.jpg"
+   ],
+   "match": "name"
+  },
+  "wide-grip-lat-pulldown": {
+   "source_id": "Wide-Grip_Lat_Pulldown",
+   "source_name": "Wide-Grip Lat Pulldown",
+   "images": [
+    "img/ex/wide-grip-lat-pulldown-0.jpg",
+    "img/ex/wide-grip-lat-pulldown-1.jpg"
+   ],
+   "match": "name"
+  },
+  "neutral-grip-lat-pulldown": {
+   "source_id": "V-Bar_Pulldown",
+   "source_name": "V-Bar Pulldown",
+   "images": [
+    "img/ex/neutral-grip-lat-pulldown-0.jpg",
+    "img/ex/neutral-grip-lat-pulldown-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a V-bar pulldown; a wide neutral bar works the same way."
+  },
+  "single-arm-lat-pulldown": {
+   "source_id": "One_Arm_Lat_Pulldown",
+   "source_name": "One Arm Lat Pulldown",
+   "images": [
+    "img/ex/single-arm-lat-pulldown-0.jpg",
+    "img/ex/single-arm-lat-pulldown-1.jpg"
+   ],
+   "match": "name"
+  },
+  "assisted-pull-up": {
+   "source_id": "Band_Assisted_Pull-Up",
+   "source_name": "Band Assisted Pull-Up",
+   "images": [
+    "img/ex/assisted-pull-up-0.jpg",
+    "img/ex/assisted-pull-up-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a band-assisted pull-up; the machine uses a counterweight platform."
+  },
+  "assisted-dip": {
+   "source_id": "Dips_-_Chest_Version",
+   "source_name": "Dips - Chest Version",
+   "images": [
+    "img/ex/assisted-dip-0.jpg",
+    "img/ex/assisted-dip-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a free dip; the machine supports part of your weight."
+  },
+  "pendulum-squat": null,
+  "belt-squat": null,
+  "v-squat": {
+   "source_id": "Narrow_Stance_Hack_Squats",
+   "source_name": "Narrow Stance Hack Squats",
+   "images": [
+    "img/ex/v-squat-0.jpg",
+    "img/ex/v-squat-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a hack squat; the V-squat faces the same way on a different arc."
+  },
+  "single-leg-press": {
+   "source_id": "Leg_Press",
+   "source_name": "Leg Press",
+   "images": [
+    "img/ex/single-leg-press-0.jpg",
+    "img/ex/single-leg-press-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a two-leg leg press; push one leg at a time."
+  },
+  "high-foot-leg-press": {
+   "source_id": "Leg_Press",
+   "source_name": "Leg Press",
+   "images": [
+    "img/ex/high-foot-leg-press-0.jpg",
+    "img/ex/high-foot-leg-press-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the standard foot position; place the feet high on the platform."
+  },
+  "nordic-curl": {
+   "source_id": "Natural_Glute_Ham_Raise",
+   "source_name": "Natural Glute Ham Raise",
+   "images": [
+    "img/ex/nordic-curl-0.jpg",
+    "img/ex/nordic-curl-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows the natural glute-ham raise; the Nordic keeps the hips straight throughout."
+  },
+  "glute-kickback-machine": {
+   "source_id": "One-Legged_Cable_Kickback",
+   "source_name": "One-Legged Cable Kickback",
+   "images": [
+    "img/ex/glute-kickback-machine-0.jpg",
+    "img/ex/glute-kickback-machine-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a cable kickback; the machine uses a foot plate or pad."
+  },
+  "hip-thrust-machine": null,
+  "leg-press-calf-raise": {
+   "source_id": "Calf_Press_On_The_Leg_Press_Machine",
+   "source_name": "Calf Press On The Leg Press Machine",
+   "images": [
+    "img/ex/leg-press-calf-raise-0.jpg",
+    "img/ex/leg-press-calf-raise-1.jpg"
+   ],
+   "match": "name"
+  },
+  "ab-crunch-machine": {
+   "source_id": "Ab_Crunch_Machine",
+   "source_name": "Ab Crunch Machine",
+   "images": [
+    "img/ex/ab-crunch-machine-0.jpg",
+    "img/ex/ab-crunch-machine-1.jpg"
+   ],
+   "match": "name"
+  },
+  "45-degree-hyperextension": {
+   "source_id": "Hyperextensions_Back_Extensions",
+   "source_name": "Hyperextensions (Back Extensions)",
+   "images": [
+    "img/ex/45-degree-hyperextension-0.jpg",
+    "img/ex/45-degree-hyperextension-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a back extension; round the upper back and lead with the glutes."
+  },
+  "reverse-hyper": {
+   "source_id": "Reverse_Hyperextension",
+   "source_name": "Reverse Hyperextension",
+   "images": [
+    "img/ex/reverse-hyper-0.jpg",
+    "img/ex/reverse-hyper-1.jpg"
+   ],
+   "match": "name"
+  },
+  "shrug-machine": {
+   "source_id": "Leverage_Shrug",
+   "source_name": "Leverage Shrug",
+   "images": [
+    "img/ex/shrug-machine-0.jpg",
+    "img/ex/shrug-machine-1.jpg"
+   ],
+   "match": "name"
+  },
+  "cable-crossover-low-to-high": {
+   "source_id": "Low_Cable_Crossover",
+   "source_name": "Low Cable Crossover",
+   "images": [
+    "img/ex/cable-crossover-low-to-high-0.jpg",
+    "img/ex/cable-crossover-low-to-high-1.jpg"
+   ],
+   "match": "name"
+  },
+  "cable-crossover-high-to-low": {
+   "source_id": "Cable_Crossover",
+   "source_name": "Cable Crossover",
+   "images": [
+    "img/ex/cable-crossover-high-to-low-0.jpg",
+    "img/ex/cable-crossover-high-to-low-1.jpg"
+   ],
+   "match": "name"
+  },
+  "single-arm-cable-row": {
+   "source_id": "Seated_One-arm_Cable_Pulley_Rows",
+   "source_name": "Seated One-arm Cable Pulley Rows",
+   "images": [
+    "img/ex/single-arm-cable-row-0.jpg",
+    "img/ex/single-arm-cable-row-1.jpg"
+   ],
+   "match": "name"
+  },
+  "wide-grip-cable-row": {
+   "source_id": "Seated_Cable_Rows",
+   "source_name": "Seated Cable Rows",
+   "images": [
+    "img/ex/wide-grip-cable-row-0.jpg",
+    "img/ex/wide-grip-cable-row-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a close-grip seated row; use a wide bar to the upper chest."
+  },
+  "dumbbell-rdl": {
+   "source_id": "Stiff-Legged_Dumbbell_Deadlift",
+   "source_name": "Stiff-Legged Dumbbell Deadlift",
+   "images": [
+    "img/ex/dumbbell-rdl-0.jpg",
+    "img/ex/dumbbell-rdl-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a stiff-leg deadlift; bend the knees slightly for the RDL."
+  },
+  "goblet-squat": {
+   "source_id": "Goblet_Squat",
+   "source_name": "Goblet Squat",
+   "images": [
+    "img/ex/goblet-squat-0.jpg",
+    "img/ex/goblet-squat-1.jpg"
+   ],
+   "match": "name"
+  },
+  "dumbbell-reverse-lunge": {
+   "source_id": "Dumbbell_Rear_Lunge",
+   "source_name": "Dumbbell Rear Lunge",
+   "images": [
+    "img/ex/dumbbell-reverse-lunge-0.jpg",
+    "img/ex/dumbbell-reverse-lunge-1.jpg"
+   ],
+   "match": "name"
+  },
+  "arnold-press": {
+   "source_id": "Arnold_Dumbbell_Press",
+   "source_name": "Arnold Dumbbell Press",
+   "images": [
+    "img/ex/arnold-press-0.jpg",
+    "img/ex/arnold-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "cable-y-raise": {
+   "source_id": "Standing_Low-Pulley_Deltoid_Raise",
+   "source_name": "Standing Low-Pulley Deltoid Raise",
+   "images": [
+    "img/ex/cable-y-raise-0.jpg",
+    "img/ex/cable-y-raise-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a one-arm low-pulley raise; the Y-raise crosses two cables up into a Y."
+  },
+  "concentration-curl": {
+   "source_id": "Concentration_Curls",
+   "source_name": "Concentration Curls",
+   "images": [
+    "img/ex/concentration-curl-0.jpg",
+    "img/ex/concentration-curl-1.jpg"
+   ],
+   "match": "name"
+  },
+  "dumbbell-kickback": {
+   "source_id": "Tricep_Dumbbell_Kickback",
+   "source_name": "Tricep Dumbbell Kickback",
+   "images": [
+    "img/ex/dumbbell-kickback-0.jpg",
+    "img/ex/dumbbell-kickback-1.jpg"
+   ],
+   "match": "name"
+  },
+  "jm-press": {
+   "source_id": "JM_Press",
+   "source_name": "JM Press",
+   "images": [
+    "img/ex/jm-press-0.jpg",
+    "img/ex/jm-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "sissy-squat": {
+   "source_id": "Weighted_Sissy_Squat",
+   "source_name": "Weighted Sissy Squat",
+   "images": [
+    "img/ex/sissy-squat-0.jpg",
+    "img/ex/sissy-squat-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a weighted version; bodyweight or a sissy squat bench works the same."
+  },
+  "inverted-row": {
+   "source_id": "Inverted_Row",
+   "source_name": "Inverted Row",
+   "images": [
+    "img/ex/inverted-row-0.jpg",
+    "img/ex/inverted-row-1.jpg"
+   ],
+   "match": "name"
+  },
+  "pike-push-up": {
+   "source_id": "Handstand_Push-Ups",
+   "source_name": "Handstand Push-Ups",
+   "images": [
+    "img/ex/pike-push-up-0.jpg",
+    "img/ex/pike-push-up-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a handstand push-up; the pike keeps the feet on the floor or a box."
+  },
+  "weighted-decline-crunch": {
+   "source_id": "Decline_Crunch",
+   "source_name": "Decline Crunch",
+   "images": [
+    "img/ex/weighted-decline-crunch-0.jpg",
+    "img/ex/weighted-decline-crunch-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows an unweighted decline crunch; hold a plate at your chest."
+  },
+  "cable-woodchop": {
+   "source_id": "Standing_Cable_Wood_Chop",
+   "source_name": "Standing Cable Wood Chop",
+   "images": [
+    "img/ex/cable-woodchop-0.jpg",
+    "img/ex/cable-woodchop-1.jpg"
+   ],
+   "match": "name"
+  },
+  "pallof-press": {
+   "source_id": "Pallof_Press",
+   "source_name": "Pallof Press",
+   "images": [
+    "img/ex/pallof-press-0.jpg",
+    "img/ex/pallof-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "standing-cable-crunch": {
+   "source_id": "Standing_Rope_Crunch",
+   "source_name": "Standing Rope Crunch",
+   "images": [
+    "img/ex/standing-cable-crunch-0.jpg",
+    "img/ex/standing-cable-crunch-1.jpg"
+   ],
+   "match": "name"
+  },
+  "dumbbell-incline-y-raise": null,
+  "cable-rear-delt-fly": {
+   "source_id": "Cable_Rear_Delt_Fly",
+   "source_name": "Cable Rear Delt Fly",
+   "images": [
+    "img/ex/cable-rear-delt-fly-0.jpg",
+    "img/ex/cable-rear-delt-fly-1.jpg"
+   ],
+   "match": "name"
+  },
+  "cable-overhead-rope-extension": {
+   "source_id": "Triceps_Overhead_Extension_with_Rope",
+   "source_name": "Triceps Overhead Extension with Rope",
+   "images": [
+    "img/ex/cable-overhead-rope-extension-0.jpg",
+    "img/ex/cable-overhead-rope-extension-1.jpg"
+   ],
+   "match": "name"
+  },
+  "cable-kickback": {
+   "source_id": "One-Legged_Cable_Kickback",
+   "source_name": "One-Legged Cable Kickback",
+   "images": [
+    "img/ex/cable-kickback-0.jpg",
+    "img/ex/cable-kickback-1.jpg"
+   ],
+   "match": "name"
+  },
+  "incline-dumbbell-fly": {
+   "source_id": "Incline_Dumbbell_Flyes",
+   "source_name": "Incline Dumbbell Flyes",
+   "images": [
+    "img/ex/incline-dumbbell-fly-0.jpg",
+    "img/ex/incline-dumbbell-fly-1.jpg"
+   ],
+   "match": "name"
+  },
+  "decline-bench-press": {
+   "source_id": "Decline_Barbell_Bench_Press",
+   "source_name": "Decline Barbell Bench Press",
+   "images": [
+    "img/ex/decline-bench-press-0.jpg",
+    "img/ex/decline-bench-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "ez-bar-curl": {
+   "source_id": "EZ-Bar_Curl",
+   "source_name": "EZ-Bar Curl",
+   "images": [
+    "img/ex/ez-bar-curl-0.jpg",
+    "img/ex/ez-bar-curl-1.jpg"
+   ],
+   "match": "name"
+  },
+  "spider-curl": {
+   "source_id": "Dumbbell_Prone_Incline_Curl",
+   "source_name": "Dumbbell Prone Incline Curl",
+   "images": [
+    "img/ex/spider-curl-0.jpg",
+    "img/ex/spider-curl-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a prone incline dumbbell curl, which is the same exercise."
+  },
+  "reverse-curl": {
+   "source_id": "Reverse_Barbell_Curl",
+   "source_name": "Reverse Barbell Curl",
+   "images": [
+    "img/ex/reverse-curl-0.jpg",
+    "img/ex/reverse-curl-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a straight-bar reverse curl."
+  },
+  "cable-preacher-curl": {
+   "source_id": "Cable_Preacher_Curl",
+   "source_name": "Cable Preacher Curl",
+   "images": [
+    "img/ex/cable-preacher-curl-0.jpg",
+    "img/ex/cable-preacher-curl-1.jpg"
+   ],
+   "match": "name"
+  },
+  "standing-leg-curl": {
+   "source_id": "Standing_Leg_Curl",
+   "source_name": "Standing Leg Curl",
+   "images": [
+    "img/ex/standing-leg-curl-0.jpg",
+    "img/ex/standing-leg-curl-1.jpg"
+   ],
+   "match": "name"
+  },
+  "glute-ham-raise": {
+   "source_id": "Glute_Ham_Raise",
+   "source_name": "Glute Ham Raise",
+   "images": [
+    "img/ex/glute-ham-raise-0.jpg",
+    "img/ex/glute-ham-raise-1.jpg"
+   ],
+   "match": "name"
+  },
+  "barbell-glute-bridge": {
+   "source_id": "Barbell_Glute_Bridge",
+   "source_name": "Barbell Glute Bridge",
+   "images": [
+    "img/ex/barbell-glute-bridge-0.jpg",
+    "img/ex/barbell-glute-bridge-1.jpg"
+   ],
+   "match": "name"
+  },
+  "good-morning": {
+   "source_id": "Stiff_Leg_Barbell_Good_Morning",
+   "source_name": "Stiff Leg Barbell Good Morning",
+   "images": [
+    "img/ex/good-morning-0.jpg",
+    "img/ex/good-morning-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a stiff-leg version; keep a slight knee bend."
+  },
+  "seated-dumbbell-lateral-raise": {
+   "source_id": "Seated_Side_Lateral_Raise",
+   "source_name": "Seated Side Lateral Raise",
+   "images": [
+    "img/ex/seated-dumbbell-lateral-raise-0.jpg",
+    "img/ex/seated-dumbbell-lateral-raise-1.jpg"
+   ],
+   "match": "name"
+  },
+  "deficit-push-up": {
+   "source_id": "Pushups",
+   "source_name": "Pushups",
+   "images": [
+    "img/ex/deficit-push-up-0.jpg",
+    "img/ex/deficit-push-up-1.jpg"
+   ],
+   "match": "approximate",
+   "approxNote": "Shows a floor push-up; put your hands on plates or handles for extra depth."
+  }
  }
 }
