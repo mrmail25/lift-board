@@ -14,7 +14,7 @@ if(o.length==n.length){o.forEach((a,j)=>{const b=n[j];if(a.id!=b.id)out.push({op
 const os=new Map(),ns=new Map();o.forEach(t=>os.set(t.id,t.sets));n.forEach(t=>ns.set(t.id,t.sets));
 for(const [i,v] of os){if(!ns.has(i))out.push({op:'remove',day:od.day,id:i,sets:v});else if(ns.get(i)!=v)out.push({op:'sets',day:od.day,id:i,from:v,to:ns.get(i)})}
 for(const [i,v] of ns)if(!os.has(i))out.push({op:'add',day:od.day,id:i,sets:v})});return out}
-function sPreview(src,p){const DN=RU.day_names||{};p={...p};['day','to_day','from_day'].forEach(k=>{if(k in p)p[k+'_name']=DN[p[k]]||p[k]});const S=SGs()[src];['spf_from','spf_to'].forEach(k=>{if(typeof p[k]=='number'&&Number.isInteger(p[k]))p[k]=p[k]+'.0'});return fmtP(p.kind=='swap'&&src=='recovery_vs_baseline'?S.preview_swap:S.preview,p)}
+function sPreview(src,p){const DN=RU.day_names||{};p={...p};['day','to_day','from_day'].forEach(k=>{if(k in p)p[k+'_name']=DN[p[k]]||p[k]});const S=SGs()[src];return fmtP(p.kind=='swap'&&src=='recovery_vs_baseline'?S.preview_swap:S.preview,p)}
 const mkValid=(days,level)=>{const o=nonin(chk(days,level));return nw=>{for(const k of nonin(chk(nw,level)))if(!o.has(k))return false;return true}};
 function pack(a,p,preview,nw,days,resolves,before,after){const pp={};for(const k in p)if(!k.endsWith('name'))pp[k]=p[k];return{action:a,params:pp,preview,resolves,metric:{before:pyR(before,3),after:pyR(after,3)},diff:bdiff(days,nw),days:nw}}
 const uniq=a=>[...new Set(a)];const sortFx=fx=>fx.map((x,i)=>[x,i]).sort((a,b)=>(!a[0].resolves)-(!b[0].resolves)||a[1]-b[1]).map(x=>x[0]);
@@ -25,7 +25,7 @@ function sLowerFatigue(days,level,valid){const res=[],DN=RU.day_names;
 for(const cur of uniq(days.flatMap(d=>d.tiles.map(t=>t.id)))){if(EX[cur].custom)continue;const[cands,m]=lfCands(cur);if(!cands.length)continue;const fx=[];
 for(const c of cands.slice(0,8)){const nw=dcopy(days),hit=[];nw.forEach(d=>{if(d.tiles.some(t=>t.id==c))return;d.tiles.forEach(t=>{if(t.id==cur){t.id=c;hit.push(d.day)}})});
 if(!hit.length||!valid(nw))continue;const b=weekCost(days),a=weekCost(nw);if(a>=b)continue;
-const p={target:cur,criteria:'lower_fatigue',days:hit,name:EX[cur].name,new_name:EX[c].name,day:hit[0],day_list:hit.map(x=>DN[x]).join(', '),spf_from:pyR(spf(cur,m),2),spf_to:pyR(spf(c,m),2),muscle:m.replace(/_/g,' ')};
+const p={target:cur,criteria:'lower_fatigue',days:hit,name:EX[cur].name,new_name:EX[c].name,day:hit[0],day_list:hit.map(x=>DN[x]).join(', '),spf_from:pyR(spf(cur,m),2).toFixed(2),spf_to:pyR(spf(c,m),2).toFixed(2),muscle:m.replace(/_/g,' ')};
 fx.push(pack('swap_exercise',p,sPreview('lower_fatigue_swap',p),nw,days,true,b,a));break}
 res.push({target:{exercise:cur,muscle:m},fixes:fx})}return res}
 function sStretch(days,level,valid){const res=[],thr=ANC.analytics.stretch_share_flag_below;
