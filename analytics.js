@@ -24,7 +24,7 @@ ${[0,.5,1].map(v=>`<line x1="28" x2="${W-8}" y1="${py(v)}" y2="${py(v)}" class="
 <div class="an-read"><b>${cap(lab(m))}</b>: ${r1(x)} effective sets/week → ${pc(Sx(x,k))} of modeled max. <b>Next set ≈ +${(nx*100).toFixed(1)}% of max.</b></div>`}
 function anUpdate(){const el=document.getElementById('anbody');document.querySelectorAll('.col').forEach((c,i)=>{const h=c.querySelector('h3');if(!h)return;let s=h.querySelector('.dmin');const mn=sessMin(i);if(!mn){if(s)s.remove();return}if(!s){s=document.createElement('span');s.className='dmin';h.appendChild(s)}s.textContent='~'+Math.round(mn/5)*5+' min'});
 const tg=document.getElementById('antog');if(tg)tg.textContent=(AN.open?'▾':'▸')+' Analytics';if(!el||!MUS.length)return;el.style.display=AN.open?'block':'none';if(!AN.open)return;
-const k=kLvl(),hs=window.HSEL?(HSEL.startsWith('g:')?HSEL.slice(2):RG[HSEL]):null,m=AN.mus||hs||'chest',A=ANC.analytics;
+const _H=typeof HSEL!="undefined"?HSEL:null;if(_H&&_H!==AN._hs){AN._hs=HSEL;AN.mus=HSEL.startsWith('g:')?HSEL.slice(2):RG[HSEL]}const k=kLvl(),hs=_H?(HSEL.startsWith('g:')?HSEL.slice(2):RG[HSEL]):null,m=AN.mus||hs||'chest',A=ANC.analytics;
 // (a)
 const rows=MUS.map(g=>{const x=weekX(g);return[g,x,Sx(x,k),Sx(x+1,k)-Sx(x,k)]});
 // (b)
@@ -37,7 +37,7 @@ const str=strM.map(g=>{let t=0,s=0;state.days.flat().forEach(it=>{const x=EX[it.
 const swaps=[];new Set(state.days.flat().map(it=>it.id)).forEach(id=>{const x=EX[id];if(!x)return;const m2=Object.keys(x.muscles).sort((a,b)=>x.muscles[b]-x.muscles[a])[0],r=x.muscles[m2];if(!r)return;const sp=r/fat(x);let best=null;
 const px=typeof patOf=='function'?patOf(id):null;Object.values(EX).forEach(y=>{if(y.id==id||y.custom||(px&&patOf(y.id)!=px))return;const ry=y.muscles[m2]||0;if(ry<r-.1)return;const s2=ry/fat(y);if(s2>sp+1e-9&&(!best||s2>best[1]))best=[y,s2]});if(best)swaps.push([x,best[0],m2,sp,best[1]])});
 el.innerHTML=`<p class="an-disc">${A$(A.disclaimer)}</p>
-<h4>Diminishing returns</h4><label class="an-pick">Muscle <select id="an-mus">${MUS.map(g=>`<option value="${g}" ${g==m?'selected':''}>${cap(lab(g))}</option>`).join('')}</select></label>${chart(m)}
+<h4>Diminishing returns</h4><div class="an-chips" role="group" aria-label="Muscle">${MUS.map(g=>`<button type="button" class="an-chip${g==m?' on':''}" data-m="${g}" aria-pressed="${g==m}">${cap(lab(g))}</button>`).join('')}</div>${chart(m)}
 <p class="an-note">S(x) = 1 − e<sup>−x/k</sup>, k = ${k} for ${sel.level}. Sets past ${ANC.curve.session_discount.cap} for a muscle in one session count half. Shaded band = your weekly target.</p>
 <details class="an-tbl"><summary>All muscles</summary><table><tr><th>Muscle</th><th>Eff. sets</th><th>% of max</th><th>Next set</th></tr>${rows.map(([g,x,s,n])=>`<tr class="${g==m?'on':''}" data-m="${g}"><td>${cap(lab(g))}</td><td>${r1(x)}</td><td>${pc(s)}</td><td>+${(n*100).toFixed(1)}%</td></tr>`).join('')}</table></details>
 <h4>Recovery cost</h4><div class="an-cost">${DAYS.map((d,i)=>costs[i]?`<span><b>${d}</b> ${rel(costs[i])}</span>`:'').join('')}</div>
@@ -51,7 +51,7 @@ ${B?'':'<p class="an-note">These are raw points (sets × fatigue). Save a week y
 <p class="an-note">Dot = at least ${A.frequency_min_effective} effective sets that day.</p>
 <h4>Stretch-biased share</h4>${str.length?str.map(([g,t,s])=>`<div class="an-str ${s<A.stretch_share_flag_below?'low':''}"><span>${cap(lab(g))}</span><div class="bar"><i style="width:${Math.round(s*100)}%"></i></div><b>${pc(s)}</b></div>${s<A.stretch_share_flag_below?`<div class="an-sug">Suggestion: try ${RU.stretch_biased[g].slice(0,2).map(i=>EX[i]?EX[i].name:i).join(' or ')} for ${lab(g)}.</div>`:''}`).join(''):'<p class="an-note">Add exercises to see this.</p>'}
 <h4>Lower-fatigue swaps</h4><p class="an-note">Same movement pattern, at least as strong for the main muscle (within 0.1), less fatigue per unit of stimulus.</p>${swaps.length?swaps.map(([x,y,g,a,b])=>`<div class="an-swap">${A$(x.name)} → <b>${A$(y.name)}</b> <small>${lab(g)}: ${a.toFixed(2)} → ${b.toFixed(2)} stimulus per fatigue</small></div>`).join(''):'<p class="an-note">No lower-fatigue swaps found for this board.</p>'}`;
-el.querySelector('#an-mus').onchange=e=>{AN.mus=e.target.value;anSave();anUpdate()};el.querySelectorAll('.an-tbl tr[data-m]').forEach(r=>r.onclick=()=>{AN.mus=r.dataset.m;anSave();anUpdate()});
+el.querySelectorAll('.an-chip').forEach(c=>c.onclick=()=>{AN.mus=c.dataset.m;anSave();anUpdate()});el.querySelectorAll('.an-tbl tr[data-m]').forEach(r=>r.onclick=()=>{AN.mus=r.dataset.m;anSave();anUpdate()});
 el.querySelector('#an-sleep').onchange=e=>{AN.sleep=e.target.checked;anSave();anUpdate()};el.querySelector('#an-age').onchange=e=>{AN.age=e.target.value;anSave();anUpdate()};
 const bs=el.querySelector('#an-bsel');if(bs)bs.onchange=()=>{AN.normal=bs.value;anSave();anUpdate()};
 el.querySelector('#an-base').onclick=()=>{const raw=DAYS.reduce((a,_,i)=>a+dayCost(i),0);if(!raw){alert('Put a week on the board first.');return}const b={id:Date.now().toString(36),name:(state.labels||[]).filter(Boolean).slice(0,2).join(' / ')||'Week of '+new Date().toLocaleDateString(),date:new Date().toISOString(),cost:raw*modF()};
