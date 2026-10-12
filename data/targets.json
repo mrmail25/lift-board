@@ -1,5 +1,5 @@
 {
- "version": 6,
+ "version": 7,
  "counting": {
   "method": "fractional",
   "description": "Each working set adds the exercise's muscle rating (0-1) to that muscle. Ratings below 0.25 count as 0 (noise). Weekly total = sum over all tiles of sets x rating.",
@@ -266,14 +266,6 @@
     },
     {
      "at": ">0",
-     "color": "under_pale"
-    },
-    {
-     "at": "<solid",
-     "color": "under_strong"
-    },
-    {
-     "at": "solid",
      "color": "light"
     },
     {
@@ -297,7 +289,7 @@
     "lower_back (heavy 5)": "dark at 5, fully amber at 6, red at 8",
     "side_delts (heavy 10)": "fully amber at 12, red at 16"
    },
-   "note": "Every session heavy anchor is at or below junk_cap (10), so amber always starts by the junk cap."
+   "note": "No blue in day view: one session is not meant to reach a weekly minimum. Green from first set to darkest at heavy, then amber/red."
   },
   "legend": {
    "labels": [
@@ -307,7 +299,13 @@
     "over",
     "way over"
    ],
-   "note": "Blue segment up to the min/solid tick, then a hard step to light green, green to dark at max/heavy, then amber and red."
+   "note": "Blue segment up to the min/solid tick, then a hard step to light green, green to dark at max/heavy, then amber and red.",
+   "day_labels": [
+    "light work",
+    "heavy",
+    "over",
+    "way over"
+   ]
   },
   "estimated": "Custom-exercise loads keep the hatch overlay on top of this fill."
  },

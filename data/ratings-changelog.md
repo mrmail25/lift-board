@@ -53,3 +53,13 @@ I added 24 exercises, taking the library from 160 to 184. Backups are in `*.pre-
 - **heavy_hinges:** I added `trap-bar-deadlift` and `rack-pull`. No preset uses them, so the program check still shows zero warnings.
 - **Skipped as duplicates:** seated chest fly (`pec-deck`), machine reverse fly (`reverse-pec-deck`), seated and standing calf machines, cable crossover (`cable-fly` plus the low-to-high and high-to-low flies), triceps press machine (`dip-machine`), seated hip thrust machine (`hip-thrust-machine`), seated cable row with rope or wide bar (`wide-grip-cable-row`), spider curl machine (`machine-preacher-curl` and `spider-curl`), and Bulgarian split squat, step-up, walking lunge, hanging leg raise, ab wheel and wrist curl, which all already exist.
 - **Presets:** unchanged, with zero warnings across all 46.
+
+## Type rule (2026-10-11)
+All 184 exercises now follow one type rule. The backup is `exercises.pre-types.json`, and no id changed.
+- **isolation:** single-joint movements. That includes pullovers, the straight-arm pulldown, leg curls, leg extension, calf raises, abduction, adduction, kickbacks, core flexion and the back extension variants.
+- **primary:** multi-joint, large muscle mass and heavily loadable for steady low-rep progression. That covers barbell, trap-bar and Smith compounds, the big leg machines (hack, reverse hack, pendulum, leg press variants, belt squat and V-squat), pull-ups, chin-ups and the weighted dip.
+- **accessory:** every other multi-joint movement.
+- **Changed:** 28 types changed. The back extension's fatigue drops from 1.2 to 0.8 now that it's an isolation exercise.
+- **Judgment calls:** the glute-ham raise and JM press stay accessory, since both are partly multi-joint and neither is in the primary list. The rotary torso machine is now accessory, under the rotation group.
+- **Totals:** 42 primary, 60 accessory and 82 isolation.
+- **Presets:** `splits.json` is unchanged. The program check has no exercise-order rule, it shows zero warnings, and no preset needed reordering.

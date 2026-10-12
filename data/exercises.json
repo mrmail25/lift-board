@@ -340,7 +340,7 @@
   {
    "id": "weighted-dip",
    "name": "Weighted Dip",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "bodyweight",
    "muscles": {
     "chest": 0.8,
@@ -1348,7 +1348,7 @@
   {
    "id": "chin-up",
    "name": "Chin-Up",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "bodyweight",
    "muscles": {
     "chest": 0,
@@ -1600,7 +1600,7 @@
   {
    "id": "pendlay-row",
    "name": "Pendlay Row",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "barbell",
    "muscles": {
     "chest": 0,
@@ -1852,7 +1852,7 @@
   {
    "id": "t-bar-row",
    "name": "T-Bar Row",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "barbell",
    "muscles": {
     "chest": 0,
@@ -2482,7 +2482,7 @@
   {
    "id": "close-grip-bench-press",
    "name": "Close-Grip Bench Press",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "barbell",
    "muscles": {
     "chest": 0.6,
@@ -2923,7 +2923,7 @@
   {
    "id": "hack-squat",
    "name": "Hack Squat",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "machine",
    "muscles": {
     "chest": 0,
@@ -2986,7 +2986,7 @@
   {
    "id": "leg-press",
    "name": "Leg Press",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "machine",
    "muscles": {
     "chest": 0,
@@ -3427,7 +3427,7 @@
   {
    "id": "hip-thrust",
    "name": "Hip Thrust",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "barbell",
    "muscles": {
     "chest": 0,
@@ -3616,7 +3616,7 @@
   {
    "id": "back-extension",
    "name": "Back Extension",
-   "type": "accessory",
+   "type": "isolation",
    "equipment": "bodyweight",
    "muscles": {
     "chest": 0,
@@ -3674,7 +3674,7 @@
    ],
    "tip": "Round your upper back slightly to work the glutes more, or keep it flat to work the lower back.",
    "youtube": "",
-   "fatigue": 1.2
+   "fatigue": 0.8
   },
   {
    "id": "hip-adduction-machine",
@@ -4624,7 +4624,7 @@
   {
    "id": "smith-row",
    "name": "Smith Machine Row",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "smith machine",
    "muscles": {
     "chest": 0,
@@ -4876,7 +4876,7 @@
   {
    "id": "smith-hip-thrust",
    "name": "Smith Machine Hip Thrust",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "smith machine",
    "muscles": {
     "chest": 0,
@@ -5251,7 +5251,7 @@
   {
    "id": "viking-press",
    "name": "Landmine Viking Press",
-   "type": "primary",
+   "type": "accessory",
    "equipment": "landmine",
    "muscles": {
     "chest": 0.2,
@@ -6182,7 +6182,7 @@
   {
    "id": "plate-loaded-chest-press",
    "name": "Plate-Loaded Chest Press",
-   "type": "primary",
+   "type": "accessory",
    "equipment": "plate-loaded machine",
    "muscles": {
     "chest": 1,
@@ -6244,7 +6244,7 @@
   {
    "id": "incline-machine-press",
    "name": "Incline Chest Press Machine",
-   "type": "primary",
+   "type": "accessory",
    "equipment": "machine",
    "muscles": {
     "chest": 1,
@@ -6306,7 +6306,7 @@
   {
    "id": "decline-machine-press",
    "name": "Decline Chest Press Machine",
-   "type": "primary",
+   "type": "accessory",
    "equipment": "machine",
    "muscles": {
     "chest": 1,
@@ -6368,7 +6368,7 @@
   {
    "id": "iso-lateral-chest-press",
    "name": "Iso-Lateral Chest Press",
-   "type": "primary",
+   "type": "accessory",
    "equipment": "plate-loaded machine",
    "muscles": {
     "chest": 1,
@@ -6430,7 +6430,7 @@
   {
    "id": "iso-lateral-shoulder-press",
    "name": "Iso-Lateral Shoulder Press",
-   "type": "primary",
+   "type": "accessory",
    "equipment": "plate-loaded machine",
    "muscles": {
     "chest": 0.2,
@@ -6926,7 +6926,7 @@
   {
    "id": "assisted-pull-up",
    "name": "Assisted Pull-Up",
-   "type": "primary",
+   "type": "accessory",
    "equipment": "machine",
    "muscles": {
     "chest": 0,
@@ -6988,7 +6988,7 @@
   {
    "id": "assisted-dip",
    "name": "Assisted Dip",
-   "type": "primary",
+   "type": "accessory",
    "equipment": "machine",
    "muscles": {
     "chest": 1,
@@ -7298,7 +7298,7 @@
   {
    "id": "high-foot-leg-press",
    "name": "High-Foot Leg Press",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "machine",
    "muscles": {
     "chest": 0,
@@ -7670,7 +7670,7 @@
   {
    "id": "45-degree-hyperextension",
    "name": "45° Glute Hyperextension",
-   "type": "accessory",
+   "type": "isolation",
    "equipment": "bodyweight",
    "muscles": {
     "chest": 0,
@@ -7732,7 +7732,7 @@
   {
    "id": "reverse-hyper",
    "name": "Reverse Hyperextension",
-   "type": "accessory",
+   "type": "isolation",
    "equipment": "machine",
    "muscles": {
     "chest": 0,
@@ -9778,7 +9778,7 @@
   {
    "id": "barbell-glute-bridge",
    "name": "Barbell Glute Bridge",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "barbell",
    "muscles": {
     "chest": 0,
@@ -10522,7 +10522,7 @@
   {
    "id": "plate-loaded-chest-supported-row",
    "name": "Plate-Loaded Chest-Supported Row",
-   "type": "primary",
+   "type": "accessory",
    "equipment": "plate-loaded machine",
    "muscles": {
     "chest": 0,
@@ -10584,7 +10584,7 @@
   {
    "id": "rotary-torso-machine",
    "name": "Rotary Torso Machine",
-   "type": "isolation",
+   "type": "accessory",
    "equipment": "machine",
    "muscles": {
     "chest": 0,
@@ -10708,7 +10708,7 @@
   {
    "id": "horizontal-leg-press",
    "name": "Horizontal Leg Press",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "machine",
    "muscles": {
     "chest": 0,
@@ -10770,7 +10770,7 @@
   {
    "id": "reverse-hack-squat",
    "name": "Reverse Hack Squat",
-   "type": "accessory",
+   "type": "primary",
    "equipment": "plate-loaded machine",
    "muscles": {
     "chest": 0,
