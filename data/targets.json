@@ -1,5 +1,5 @@
 {
- "version": 7,
+ "version": 8,
  "counting": {
   "method": "fractional",
   "description": "Each working set adds the exercise's muscle rating (0-1) to that muscle. Ratings below 0.25 count as 0 (noise). Weekly total = sum over all tiles of sets x rating.",
@@ -289,7 +289,70 @@
     "lower_back (heavy 5)": "dark at 5, fully amber at 6, red at 8",
     "side_delts (heavy 10)": "fully amber at 12, red at 16"
    },
-   "note": "No blue in day view: one session is not meant to reach a weekly minimum. Green from first set to darkest at heavy, then amber/red."
+   "note": "No blue in day view: one session is not meant to reach a weekly minimum. Green from first set to darkest at heavy, then amber/red.",
+   "curve": {
+    "type": "sqrt",
+    "position": "p = sqrt(min(sets, heavy) / heavy); 0 sets stays untinted grey",
+    "note": "sqrt spreads out the low end: 1 of 10 sets lands at p=0.32, 3 at 0.55, 5 at 0.71."
+   },
+   "ramp": [
+    {
+     "p": 0.0,
+     "label": "first set",
+     "color": "#d8f5e6",
+     "opacity": 0.3
+    },
+    {
+     "p": 0.35,
+     "label": "light",
+     "color": "#9fe0bf",
+     "opacity": 0.5
+    },
+    {
+     "p": 0.55,
+     "label": "moderate",
+     "color": "#5cc48c",
+     "opacity": 0.65
+    },
+    {
+     "p": 0.75,
+     "label": "solid",
+     "color": "#24935c",
+     "opacity": 0.8
+    },
+    {
+     "p": 1.0,
+     "label": "heavy",
+     "color": "#0b4d31",
+     "opacity": 0.95
+    }
+   ],
+   "ramp_note": "Interpolate color and opacity between ramp stops in OKLCH. Past heavy, keep the existing amber at heavy*1.2 and red at heavy*1.6 (opacity 0.95). Each step is a large lightness jump so it reads clearly on the grey base.",
+   "legend_ticks": [
+    {
+     "p": 0.35,
+     "label": "light"
+    },
+    {
+     "p": 0.55,
+     "label": "moderate"
+    },
+    {
+     "p": 0.75,
+     "label": "solid"
+    },
+    {
+     "p": 1.0,
+     "label": "heavy"
+    }
+   ],
+   "examples_heavy10": {
+    "1 set": "p 0.32, near light",
+    "3 sets": "p 0.55, moderate",
+    "5 sets": "p 0.71, near solid",
+    "8 sets": "p 0.89, between solid and heavy",
+    "10 sets": "heavy"
+   }
   },
   "legend": {
    "labels": [

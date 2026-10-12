@@ -2,6 +2,19 @@ let SESS={},GR={colors:{under_pale:'#cfe3f7',under_strong:'#3f7fc4',light:'#5cc4
 const h2c=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
 // stops: [[value,colorName],...]; linear RGB interpolation, clamps past the last stop
 function grad(v,st){const C=GR.colors;if(st.length&&v<=st[0][0])return C[st[0][1]];for(let i=1;i<st.length;i++){if(v<=st[i][0]){const[a,ca]=st[i-1],[b,cb]=st[i],k=b>a?(v-a)/(b-a):1,A=h2c(C[ca]),B=h2c(C[cb]);return hex(A.map((c,j)=>c+(B[j]-c)*k))}}return C[st[st.length-1][1]]}
+// v19 day ramp: OKLCH interpolation of colour + opacity (targets.json gradient.day.ramp)
+const _lin=c=>{c/=255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4},_gam=c=>{c=c<=.0031308?12.92*c:1.055*c**(1/2.4)-.055;return Math.round(Math.max(0,Math.min(1,c))*255)};
+function h2ok(h){const[r,g,b]=h2c(h).map(_lin),l=Math.cbrt(.4122214708*r+.5363325363*g+.0514459929*b),m=Math.cbrt(.2119034982*r+.6806995451*g+.1073969566*b),q=Math.cbrt(.0883024619*r+.2817188376*g+.6299787005*b);
+const L=.2104542553*l+.793617785*m-.0040720468*q,A=1.9779984951*l-2.428592205*m+.4505937099*q,B=.0259040371*l+.7827717662*m-.808675766*q;return[L,Math.hypot(A,B),Math.atan2(B,A)]}
+function ok2h([L,C,H]){const A=C*Math.cos(H),B=C*Math.sin(H),l=(L+.3963377774*A+.2158037573*B)**3,m=(L-.1055613458*A-.0638541728*B)**3,q=(L-.0894841775*A-1.291485548*B)**3;
+return hex([_gam(4.0767416621*l-3.3077115913*m+.2309699292*q),_gam(-1.2684380046*l+2.6097574011*m-.3413193965*q),_gam(-.0041960863*l-.7034186147*m+1.707614701*q)])}
+function okMix(a,b,k){const A=h2ok(a),B=h2ok(b);let dh=B[2]-A[2];if(dh>Math.PI)dh-=2*Math.PI;if(dh<-Math.PI)dh+=2*Math.PI;return ok2h([A[0]+(B[0]-A[0])*k,A[1]+(B[1]-A[1])*k,A[2]+dh*k])}
+const DRAMP=()=>(GR.day&&GR.day.ramp)||[{p:0,color:'#d8f5e6',opacity:.3},{p:.35,color:'#9fe0bf',opacity:.5},{p:.55,color:'#5cc48c',opacity:.65},{p:.75,color:'#24935c',opacity:.8},{p:1,color:'#0b4d31',opacity:.95}];
+function rampAt(p){const R=DRAMP();p=Math.max(0,Math.min(1,p));for(let i=1;i<R.length;i++)if(p<=R[i].p){const a=R[i-1],b=R[i],k=b.p>a.p?(p-a.p)/(b.p-a.p):1;return{c:okMix(a.color,b.color,k),o:a.opacity+(b.opacity-a.opacity)*k}}const z=R[R.length-1];return{c:z.color,o:z.opacity}}
+// sets -> {c,o}; 0 -> null (untinted). Past heavy: heavy colour -> amber (1.2x) -> red (1.6x), 0.95 opacity.
+function dayTint(v,g,hh){if(!v)return null;const h=hh||(SESS[g]||{}).heavy||8,C=GR.colors,top=DRAMP()[DRAMP().length-1];if(v<=h)return rampAt(Math.sqrt(v/h));
+const o=Math.max(top.opacity,.95);if(v<=h*1.2)return{c:okMix(top.color,C.amber,(v-h)/(h*.2)),o};if(v<=h*1.6)return{c:okMix(C.amber,C.red,(v-h*1.2)/(h*.4)),o};return{c:C.red,o}}
+const OPM={};
 const wkStops=g=>{const T=tgt(g),mn=Math.max(.5,T.min),mx=Math.max(mn+.5,T.max);return[[0,'under_pale'],[mn-1e-6,'under_strong'],[mn,'light'],[mx,'dark'],[mx*1.1,'amber'],[mx*1.3,'red']]};
 const dyStops=g=>{const s=SESS[g]||{solid:4,heavy:8};return[[0,'light'],[0,'light'],[s.solid,'solid'],[s.heavy,'dark'],[s.heavy*1.2,'amber'],[s.heavy*1.6,'red']]};
 function stWord(v,st,day){if(!v)return'untrained';const[,,a,b,c,d]=st.map(x=>x[0]);if(v<a)return day?'light work':'under min, blue';if(v<=b)return day?'solid':'in range';if(v<c)return(day?'past heavy':'over max')+', amber';if(v<d)return(day?'well past heavy':'over max')+', amber→red';return(day?'way past heavy':'way over max')+', red'}
@@ -43,15 +56,20 @@ const hex=c=>'#'+c.map(v=>Math.round(v).toString(16).padStart(2,'0')).join('');
 const hasEst=()=>state.days.flat().some(it=>EX[it.id]&&EX[it.id].estimated)?'<span><i class="hatchsw"></i>Hatched = mostly from your custom (estimated) exercises</span>':'';
 function heat(){const el=document.getElementById('heat');if(!el||!MUS.length||!window.REG)return;const d=window.HD;
 const t=totals(d==null?null:d),rt=rtot(d==null?null:d);const MAXV=Math.max(1e-9,...Object.values(rt),...(MMJ?[].concat(...['front','back'].map(f=>MMJ[f].muscles.filter(m=>m.region&&m.region.startsWith('g:')).map(m=>t[m.region.slice(2)]||0))):[]));
-const col=r=>{const grp=r.startsWith('g:'),g=grp?r.slice(2):RG[r],v=grp?t[g]:rt[r];if(!v)return'#ffffff';if(d==null){const st=wkStops(g);return grad((!grp&&t[g]>=st[2][0])?Math.max(v,st[2][0]):v,st)}if(DMODE!='rel'){const st=dyStops(g);return grad((!grp&&t[g]>=st[2][0])?Math.max(v,st[2][0]):v,st)}
+const col=r=>{const grp=r.startsWith('g:'),g=grp?r.slice(2):RG[r],v=grp?t[g]:rt[r];if(!v)return'#ffffff';if(d==null){const st=wkStops(g);return grad((!grp&&t[g]>=st[2][0])?Math.max(v,st[2][0]):v,st)}if(DMODE!='rel'){const z=dayTint(v,g);OPM[r]=z.o;return z.c}
 const s=SESS[g]||{light:2,solid:4,heavy:8};const x=DMODE=='rel'?v/MAXV:Math.min(1,v/s.heavy);return shade(x)};
 const info=r=>{if(!r)return'Tap or hover a muscle.';const en=window.estShare&&estShare(r,d)>0?' Includes estimated ratings from custom exercises.':'';return info0(r)+en};const info0=r=>{const grp=r.startsWith('g:'),g=grp?r.slice(2):RG[r],nm=grp?cap(lab(g)):rname(r);if(grp)rt[r]=t[g];if(d==null){const T=tgt(g);return`${nm}: ${rt[r]} sets this week (${stWord(rt[r],wkStops(g))}). ${cap(lab(g))} group: ${t[g]} of ${T.min}–${T.max} (${sel.level} minimum).`}
 const s=SESS[g]||{};if(DMODE=='rel')return`${nm}: ${rt[r]} effective sets on ${DAYS[d]}, ${Math.round(rt[r]/MAXV*100)}% of the day's most-hit muscle`;return`${nm}: ${rt[r]} sets on ${DAYS[d]}, ${stWord(rt[r],dyStops(g),1)} (${cap(lab(g))} anchors: light ${s.light}, solid ${s.solid}, heavy ${s.heavy})`};
 const sw=c=>`<i style="background:${hex(c)}"></i>`;
+const DGB=()=>{const W=75,R=DRAMP(),C=GR.colors,rg=(c,o)=>{const[r,g,b]=h2c(c);return`rgba(${r},${g},${b},${o.toFixed(2)})`},st=[];
+for(let i=0;i<=20;i++){const p=i/20,z=rampAt(p);st.push(`${rg(z.c,z.o)} ${(p*W).toFixed(1)}%`)}
+for(let i=1;i<=10;i++){const z=dayTint(10*(1+i*.06),null,10);st.push(`${rg(z.c,z.o)} ${(W+(100-W)*i/10).toFixed(1)}%`)}
+const ticks=((GR.day&&GR.day.legend_ticks)||[]).map(t=>`<span style="left:${t.p*W}%">${t.label}</span>`).join('')+`<span style="left:${W+(100-W)*.33}%">over</span><span style="left:100%">way over</span>`;
+return`<div class="gleg"><div class="gbar" style="background:linear-gradient(90deg,${st.join(',')}),#8a8f98"></div><div class="gtk">${ticks}</div></div>`};
 const GB=(labs,day)=>{const C=GR.colors,P=day?[0,null,62,76,100]:[0,32,62,76,100];return`<div class="gleg"><div class="gbar" style="background:linear-gradient(90deg,${day?C.light+' 0%,':C.under_pale+' 0%,'+C.under_strong+' 32%,'+C.light+' 32%,'}${C.dark} 62%,${C.amber} 76%,${C.red} 100%)"></div><div class="gtk">${labs.map((l,i)=>P[i]==null?'':`<span style="left:${P[i]}%">${l}</span>`).join('')}</div></div>`};
 const lg=d==null?`<span><i style="background:#8a8f98"></i>Untrained (no tint)</span>${GB(['under','min','max','over','way over'])}<span style="flex-basis:100%;color:#99a">Blue means under the level minimum (pale to strong); at the minimum it switches to light green and darkens up to the max; past max it turns amber (10% over), then red (30% over).</span>${hasEst()}`
 :DMODE=='rel'?`<span><i style="background:#fff"></i>None</span><span style="display:inline-flex;align-items:center;gap:4px">Least<i style="width:90px;background:linear-gradient(90deg,${[0.02,.25,.5,.75,1].map(shade).join(',')})"></i>Most-hit muscle today</span>${hasEst()}`
-:`<span><i style="background:#8a8f98"></i>Untrained (no tint)</span>${GB(['light work','','heavy','over','way over'],1)}${hasEst()}`;
+:`<span><i style="background:#8a8f98"></i>Untrained (no tint)</span>${DGB()}${hasEst()}`;
 el.innerHTML=`<div class="sel">${['Week',...DAYS].map((n,i)=>`<button data-i="${i-1}" class="${(d==null?-1:d)==i-1?'on':''}">${n}</button>`).join('')}</div>
 <div class="figs">${['front','back'].map(f=>fig(f,col)).join('')}</div>
 <label style="font-size:12px"><input type="checkbox" id="outl" ${OUTL?'checked':''}> Muscle outlines</label>
@@ -80,6 +98,6 @@ cv.onclick=e=>{HSEL=pick(e);heat()}}
 let MMJ=null;fetch('img/mm/musclemap.json').then(r=>r.json()).then(j=>{MMJ=j;heat()});
 function fig(f,col){if(!MMJ)return'';const d=MMJ[f];
 const ps=d.muscles.map(m=>{if(!m.region)return'';const c=col(m.region),z=c=='#ffffff',sel=HSEL==m.region;
-const es=!z&&window.estShare&&estShare(m.region,window.HD)>.5,op=z?0:(window.HD==null?.8:.85)*(es?.6:1);
+const es=!z&&window.estShare&&estShare(m.region,window.HD)>.5,op=z?0:(window.HD!=null&&DMODE!='rel'&&OPM[m.region]!=null?OPM[m.region]:(window.HD==null?.8:.85))*(es?.6:1);
 return`<path class="mm${sel?' sel':''}${es?' est':''}" data-r="${m.region}" d="${m.d}" fill="${z?'transparent':c}" fill-opacity="${op}" stroke="${OUTL||sel?'#111':'none'}" stroke-width="${sel?5:2.2}" stroke-opacity="${sel?1:.7}"/>${es?`<path d="${m.d}" fill="url(#hatch-${f})" pointer-events="none"/>`:''}`}).join('');
 return`<svg viewBox="230 150 564 1300"><defs><pattern id="hatch-${f}" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="14" fill="#fff" fill-opacity=".18"/><line x1="0" y1="0" x2="0" y2="14" stroke="#fff" stroke-width="5" stroke-opacity=".75"/></pattern></defs><clipPath id="cl-${f}">${d.outline.map(o=>`<path d="${o}"/>`).join('')}</clipPath><image clip-path="url(#cl-${f})" href="${d.img.replace('.webp','-grey.jpg')}" width="1024" height="1536"/>${ps}</svg>`}
