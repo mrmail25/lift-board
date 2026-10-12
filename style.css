@@ -117,3 +117,8 @@ body.isdrag{cursor:grabbing;user-select:none;-webkit-user-select:none}
 .col h3 .dl-in{display:block;width:100%;box-sizing:border-box;font-size:12px;padding:3px 4px;margin-top:2px;border-radius:4px;border:1px solid #2a7de1}
 .col h3 small.dlab{display:block}
 .an-chart .an-bl2{font-size:8px;fill:#99a}
+.ev-chip{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;color:#111}
+.ev-direct{background:#5cc48c}.ev-pooled{background:#7fb6ff}.ev-extrapolated{background:#f0a830}
+.an-ev{margin:4px 0 6px;font-size:12px}.ev-leg{display:inline-block;margin-left:8px;color:#aab}.ev-leg summary{cursor:pointer;font-size:11px}.ev-leg div{margin:4px 0}
+.an-model{margin:6px 0;font-size:12px;color:#ccd;border-left:3px solid #888;padding-left:8px}.an-model summary{cursor:pointer;font-weight:600}.an-model li{margin:3px 0}
+#mpop{max-height:75vh;overflow:auto}.mp-ev{margin-top:8px;border-top:1px solid #ddd;padding-top:6px;font-size:12px}.mp-ev h5{margin:0 0 4px;font-size:13px}.mp-ev p{margin:0 0 4px}.mp-ev ol{margin:0;padding-left:18px}.mp-ev li{margin:4px 0}.mp-ev span{color:#555}.mp-ev a{word-break:break-all}

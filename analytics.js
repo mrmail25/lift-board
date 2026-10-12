@@ -41,8 +41,8 @@ const str=strM.map(g=>{let t=0,s=0;state.days.flat().forEach(it=>{const x=EX[it.
 const swaps=[];new Set(state.days.flat().map(it=>it.id)).forEach(id=>{const x=EX[id];if(!x)return;const m2=Object.keys(x.muscles).sort((a,b)=>x.muscles[b]-x.muscles[a])[0],r=x.muscles[m2];if(!r)return;const sp=r/fat(x);let best=null;
 const px=typeof patOf=='function'?patOf(id):null;Object.values(EX).forEach(y=>{if(y.id==id||y.custom||(px&&patOf(y.id)!=px))return;const ry=y.muscles[m2]||0;if(ry<r-.1)return;const s2=ry/fat(y);if(s2>sp+1e-9&&(!best||s2>best[1]))best=[y,s2]});if(best)swaps.push([x,best[0],m2,sp,best[1]])});
 el.innerHTML=`<p class="an-disc">${A$(A.disclaimer)}</p>
-<h4>Diminishing returns</h4><div class="an-chips" role="group" aria-label="Muscle">${MUS.map(g=>`<button type="button" class="an-chip${g==m?' on':''}" data-m="${g}" aria-pressed="${g==m}">${cap(lab(g))}</button>`).join('')}</div>${chart(m)}
-<p class="an-note">S(x) = 1 − e<sup>−x/k</sup>, k = ${k} for ${lab(m)} at ${sel.level} (set so the level minimum sits at 60% of max). Sets past ${ANC.curve.session_discount.cap} for a muscle in one session count half. Shaded band = your weekly target.</p>
+<h4>Diminishing returns</h4><div class="an-chips" role="group" aria-label="Muscle">${MUS.map(g=>`<button type="button" class="an-chip${g==m?' on':''}" data-m="${g}" aria-pressed="${g==m}">${cap(lab(g))}</button>`).join('')}</div>${evChip(m)}${chart(m)}
+<p class="an-note">S(x) = 1 − e<sup>−x/k</sup>, k = ${k} for ${lab(m)} at ${sel.level} (set so the level minimum sits at 60% of max). Sets past ${ANC.curve.session_discount.cap} for a muscle in one session count half. Shaded band = your weekly target.</p>${modelNote()}
 <details class="an-tbl"><summary>All muscles</summary><table><tr><th>Muscle</th><th>Eff. sets</th><th>% of max</th><th>Next set</th></tr>${rows.map(([g,x,s,n])=>`<tr class="${g==m?'on':''}" data-m="${g}"><td>${cap(lab(g))}</td><td>${r1(x)}</td><td>${pc(s)}</td><td>+${(n*100).toFixed(1)}%</td></tr>`).join('')}</table></details>
 <h4>Recovery cost</h4><div class="an-cost">${DAYS.map((d,i)=>costs[i]?`<span><b>${d}</b> ${rel(costs[i])}</span>`:'').join('')}</div>
 <div class="an-wk">Week: <b>${rel(wk)}</b>${B?` of your normal week (“${A$(B.name)}”)`:''}</div>
@@ -63,3 +63,11 @@ AN.baselines.push(b);AN.normal=b.id;anSave();anUpdate()}}
 function importAN(d){if(d.analytics&&typeof d.analytics=='object'){const a=d.analytics;['sleep'].forEach(k=>{if(typeof a[k]=='boolean')AN[k]=a[k]});if(['none','40','50'].includes(a.age))AN.age=a.age;if(Array.isArray(a.baselines))AN.baselines=a.baselines.filter(b=>b&&b.id&&typeof b.cost=='number');if(a.normal)AN.normal=a.normal;anSave()}}
 (function(){const vp=document.getElementById('chk').closest('.panel');vp.insertAdjacentHTML('afterend','<div class="panel" id="anp"><h2><button id="antog" class="ftog"></button></h2><div id="anbody"></div></div>');
 document.getElementById('antog').onclick=()=>{AN.open=!AN.open;anSave();anUpdate()}})();
+
+// v21 evidence (targets.json v10: targets[m].evidence, curve.modeling_choices)
+const EVDEF={direct:['Direct','Studies measured this muscle\'s growth at different weekly set volumes.'],pooled:['Pooled','No muscle-specific volume study; target comes from pooled whole-body volume data.'],extrapolated:['Extrapolated','Coaching inference from pooled data plus indirect work; weakest evidence.']};
+const evDefs=()=>{const c=ANC.curve&&ANC.curve.evidence_tags;const o={};for(const k in EVDEF){const d=c&&c[k];o[k]=d?[d.label||EVDEF[k][0],d.description||d.text||EVDEF[k][1]]:EVDEF[k]}return o};
+const evOf=m=>{const t=(typeof TG!='undefined'&&TG[m])||null;return t&&t.evidence&&t.evidence.tag?t.evidence:null};window.evOf=evOf;window.evDefs=evDefs;
+function evChip(m){const e=evOf(m);if(!e)return'';const D=evDefs(),d=D[e.tag]||[e.tag,''];
+return`<div class="an-ev"><span class="ev-chip ev-${A$(e.tag)}" title="${A$(d[1])}">Evidence: ${A$(d[0])}</span><details class="ev-leg"><summary>What do the tags mean?</summary>${Object.keys(D).map(k=>`<div><span class="ev-chip ev-${k}">${A$(D[k][0])}</span> ${A$(D[k][1])}</div>`).join('')}</details></div>`}
+function modelNote(){const L=(ANC.curve&&ANC.curve.modeling_choices)||[];if(!L.length)return'';return`<details class="an-model"><summary>Modeling choices (model assumptions, not data)</summary><ul>${L.map(x=>`<li><b>${A$(x.item)}</b>: ${A$(x.rationale)}</li>`).join('')}</ul></details>`}
