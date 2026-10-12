@@ -2,13 +2,14 @@
 let SWJ=null;fetch('data/swap.json').then(r=>r.json()).then(j=>{SWJ=j;FAMOF=null}).catch(()=>{});
 let FAMOF=null;const famMap=()=>{if(!FAMOF){FAMOF={};const F=(SWJ&&SWJ.families)||{machine:['machine','plate-loaded machine','smith machine'],free:['barbell','dumbbell','kettlebell','trap bar','landmine'],bodyweight:['bodyweight','rings','suspension'],cable:['cable']};for(const k in F)F[k].forEach(e=>FAMOF[e]=k)}return FAMOF};
 const famOf=e=>famMap()[e.equipment]||'other';
-const LIB=()=>Object.keys(EX).filter(i=>!EX[i].custom);
+const LIB=()=>Object.keys(EX).filter(i=>!EX[i].custom);const POOL=()=>[...LIB(),...Object.keys(EX).filter(i=>EX[i].custom)];
 const PATm=id=>{const p=patOf(id);return p==null?null:p};
+const PATs=id=>{const e=EX[id];if(e&&e.custom)return e.pattern||null;return PATm(id)};
 const fatOf=e=>e.fatigue!=null?e.fatigue:(e.base&&EX[e.base]&&EX[e.base].fatigue)||1;
 const vecOf=e=>MUS.map(m=>e.muscles[m]||0);
 function cosv(a,b){const na=Math.sqrt(a.reduce((s,x)=>s+x*x,0)),nb=Math.sqrt(b.reduce((s,x)=>s+x*x,0));return(!na||!nb)?0:a.reduce((s,x,i)=>s+x*b[i],0)/(na*nb)}
 function primaryMuscle(e){let b=MUS[0];MUS.forEach(m=>{if((e.muscles[m]||0)>(e.muscles[b]||0))b=m});return b}
-function swScore(cur,cand){const c=EX[cur],k=EX[cand],sp=PATm(cur)===PATm(cand),cs=cosv(vecOf(c),vecOf(k));let big=MUS.filter(m=>(c.muscles[m]||0)>=.5);if(!big.length)big=[primaryMuscle(c)];
+function swScore(cur,cand){const c=EX[cur],k=EX[cand],sp=PATs(cur)!=null&&PATs(cur)===PATs(cand),cs=cosv(vecOf(c),vecOf(k));let big=MUS.filter(m=>(c.muscles[m]||0)>=.5);if(!big.length)big=[primaryMuscle(c)];
 const mad=big.reduce((s,m)=>s+Math.abs((c.muscles[m]||0)-(k.muscles[m]||0)),0)/big.length;
 const s=40*sp+25*cs+15*(1-mad)+10*(c.type==k.type)+5*(c.equipment==k.equipment)+5*(famOf(c)==famOf(k));return[pyR(s,2),sp,cs]}
 function swTags(cur,cand){const c=EX[cur],k=EX[cand],pm=primaryMuscle(c),t=[],ST=RU.stretch_biased[pm]||[];
@@ -17,8 +18,8 @@ if(k.type=='primary'&&c.type!='primary')t.push('easier to load');
 if(famOf(k)!=famOf(c)){const f=famOf(k);if(f=='machine')t.push('machine');else if(f=='free')t.push('free weight');else if(f=='bodyweight')t.push('bodyweight')}else if(k.equipment==c.equipment)t.push('same equipment');
 const diffs=MUS.map(m=>[(k.muscles[m]||0)-(c.muscles[m]||0),m]).filter(([d,m])=>Math.abs(d)>=.25&&((c.muscles[m]||0)>=.5||(k.muscles[m]||0)>=.75));diffs.sort((a,b)=>Math.abs(b[0])-Math.abs(a[0]));
 diffs.forEach(([d,m])=>t.push((d>0?'more ':'less ')+m.replace(/_/g,' ')));return t.slice(0,2)}
-function swaps(cur,families,n=6){const out=[];LIB().forEach(cand=>{if(cand==cur)return;if(families&&families.length&&!families.includes(famOf(EX[cand])))return;const[s,sp,cs]=swScore(cur,cand);if(cs<.6&&!sp)return;out.push([s,cand])});
-out.sort((a,b)=>b[0]-a[0]||(a[1]<b[1]?-1:a[1]>b[1]?1:0));return out.slice(0,n).map(([s,c])=>({id:c,name:EX[c].name,score:s,tags:swTags(cur,c)}))}
+function swaps(cur,families,n=6,lib){const out=[];(lib?LIB():POOL()).forEach(cand=>{if(cand==cur)return;if(families&&families.length&&!families.includes(famOf(EX[cand])))return;const[s,sp,cs]=swScore(cur,cand);if(cs<.6&&!sp)return;out.push([s,cand])});
+out.sort((a,b)=>b[0]-a[0]||(a[1]<b[1]?-1:a[1]>b[1]?1:0));return out.slice(0,n).map(([s,c])=>{const r={id:c,name:EX[c].name,score:s,tags:swTags(cur,c)};if(EX[c].custom)r.badge='est.';return r})}
 // ---------- fixes ----------
 const cmpT=(a,b)=>{for(let i=0;i<Math.max(a.length,b.length);i++){let x=a[i],y=b[i];if(typeof x=='boolean')x=+x;if(typeof y=='boolean')y=+y;if(x<y)return -1;if(x>y)return 1}return 0};
 const sortBy=(arr,key)=>arr.map((v,i)=>[key(v),i,v]).sort((a,b)=>cmpT(a[0],b[0])||a[1]-b[1]).map(x=>x[2]);
@@ -30,7 +31,7 @@ const chk=(days,level)=>checkProgram(days,level).map(tupOf);
 const dcopy=d=>JSON.parse(JSON.stringify(d));const dayOf=(days,n)=>days.find(d=>d.day==n);
 const nmE=i=>EX[i].name;const mus=(i,m)=>(EX[i].muscles[m]||0);
 const fmtP=(tpl,p)=>tpl.replace(/\{(\w+)\}/g,(_,k)=>p[k]==null?'None':String(p[k]));
-function prev(a,p){const FA=RU.fix_actions;if(a=='reduce_sets'&&p.from==='')return fmtP(FA[a].preview_multi,p);return fmtP(FA[a].preview,p)}
+function prev(a,p){const FA=RU.fix_actions,DN=RU.day_names||{};p={...p};['day','to_day','from_day'].forEach(k=>{if(k in p)p[k+'_name']=DN[p[k]]||p[k]});if(a=='reduce_sets'&&p.from==='')return fmtP(FA[a].preview_multi,p);return fmtP(FA[a].preview,p)}
 const FXORD={primary:0,accessory:1,isolation:2};
 const ordIdx=d=>sortBy(d.tiles.map((_,i)=>i),i=>[FXORD[EX[d.tiles[i].id].type],i]);
 const loadOf=(d,m)=>effc(d.tiles)[m]||0;
@@ -58,7 +59,7 @@ const tl=dayOf(n,to).tiles,ex=tl.filter(x=>x.id==t.id);if(ex.length){if(ex[0].se
 yield['move_sets_to_day',{target:t.id,sets:k,to_day:to,name:nmE(t.id),day},n]}}}}
 function*gSwap(days,day,criteria,ids=null,muscle=null){const ds=day?[dayOf(days,day)]:days;const H=HEAVYS();
 for(const d of ds){for(let i=0;i<d.tiles.length;i++){const t=d.tiles[i];if(ids!=null&&!ids.has(t.id))continue;if(muscle&&mus(t.id,muscle)<.5)continue;
-for(const c of swaps(t.id,null,LIB().length)){const k=EX[c.id];if(criteria=='stretch_biased'&&!(RU.stretch_biased[muscle||primaryMuscle(EX[t.id])]||[]).includes(c.id))continue;
+for(const c of swaps(t.id,null,LIB().length,1)){const k=EX[c.id];if(criteria=='stretch_biased'&&!(RU.stretch_biased[muscle||primaryMuscle(EX[t.id])]||[]).includes(c.id))continue;
 if(criteria=='lower_fatigue'&&fatOf(k)>=fatOf(EX[t.id]))continue;if(criteria=='lower_spinal'&&(H.has(c.id)||(k.muscles.lower_back||0)>=(EX[t.id].muscles.lower_back||0)))continue;
 if(criteria=='same_pattern'&&PATm(c.id)!==PATm(t.id))continue;if(d.tiles.some(x=>x.id==c.id))continue;const n=dcopy(days);dayOf(n,d.day).tiles[i].id=c.id;
 yield['swap_exercise',{target:t.id,criteria,name:nmE(t.id),new_name:c.name,day:d.day},n]}}}}
@@ -69,14 +70,14 @@ days.forEach(d=>d.tiles.forEach(t=>{const v=[t.sets*(EX[t.id].muscles[muscle]||0
 const ok=i=>{const e=EX[i];return(e.muscles[muscle]||0)>=.75&&['isolation','accessory'].includes(e.type)&&PATm(i)!='plyometric'&&(!RARE.has(e.equipment)||used.has(e.equipment))&&(!stretch||(RU.stretch_biased[muscle]||[]).includes(i))&&(!patterns||patterns.includes(PATm(i)))};
 let c=(RU.staples||[]).filter(i=>EX[i]&&!EX[i].custom&&ok(i));if(!c.length)c=LIB().filter(ok);
 const sc=i=>ref[0]>0?swScore(ref[1],i)[0]+20*EX[i].muscles[muscle]:100*EX[i].muscles[muscle]-10*fatOf(EX[i]);const U=useC();
-return sortBy(c,i=>[-pyR(sc(i),1),-(U[i]||0),i])}
+const po=i=>patterns?patterns.indexOf(PATm(i)):0;return sortBy(c,i=>[po(i),-pyR(sc(i),1),-(U[i]||0),i])}
 function*gAddEx(days,muscle,stretch=false,exclude=null,patterns=null){for(const c of bestFor(days,muscle,stretch,patterns).slice(0,6)){
 for(const to of sortBy(days.filter(d=>d.day!=exclude).map(d=>d.day),n=>[dayOf(days,n).tiles.reduce((s,t)=>s+t.sets,0)])){if(dayOf(days,to).tiles.some(x=>x.id==c))continue;
 const n=dcopy(days);dayOf(n,to).tiles.push({id:c,sets:2});yield['add_exercise',{muscle,sets:2,to_day:to,name:nmE(c)},n]}}}
-function*gAddSets(days,muscle,day=null){const c=[];days.forEach(d=>{if(day&&d.day!=day)return;d.tiles.forEach((t,i)=>{const r=mus(t.id,muscle);if(r>=.5)c.push([r,d.day,i])})});c.sort((a,b)=>-cmpT(a,b));
+function*gAddSets(days,muscle,day=null,pats=null){const c=[];days.forEach(d=>{if(day&&d.day!=day)return;d.tiles.forEach((t,i)=>{const r=mus(t.id,muscle);if(r>=.5&&(!pats||pats.includes(PATm(t.id))))c.push([r,d.day,i])})});c.sort((a,b)=>-cmpT(a,b));
 for(const [,dn,i] of c){const t=dayOf(days,dn).tiles[i];for(let by=1;by<6-t.sets;by++){const n=dcopy(days);dayOf(n,dn).tiles[i].sets+=by;yield['add_sets',{muscle,by,max_sets:5,name:nmE(t.id),day:dn,from:t.sets,to:t.sets+by},n]}}}
 function*gSplit(days,day,pattern=null,tile=null){const d=dayOf(days,day);const ts=[];d.tiles.forEach((t,i)=>{if((tile&&t.id==tile)||(pattern&&PATm(t.id)==pattern))ts.push([t.sets,i])});ts.sort((a,b)=>-cmpT(a,b));
-for(const [,i] of ts){const t=d.tiles[i],mv=Math.floor(t.sets/2);if(mv<2)continue;for(const c of swaps(t.id,null,LIB().length)){if(PATm(c.id)!==PATm(t.id)||d.tiles.some(x=>x.id==c.id))continue;
+for(const [,i] of ts){const t=d.tiles[i],mv=Math.floor(t.sets/2);if(mv<2)continue;for(const c of swaps(t.id,null,LIB().length,1)){if(PATm(c.id)!==PATm(t.id)||d.tiles.some(x=>x.id==c.id))continue;
 const n=dcopy(days),tl=dayOf(n,day).tiles;tl[i].sets-=mv;tl.splice(i+1,0,{id:c.id,sets:mv});yield['split_pattern',{target:t.id,move_sets:mv,name:nmE(t.id),new_name:c.name,day,from:t.sets,keep:t.sets-mv,moved:mv},n]}}}
 function*gMerge(days,day){const d=dayOf(days,day);for(const i of sortBy(d.tiles.map((_,i)=>i),i=>[d.tiles[i].sets])){const t=d.tiles[i];for(let j=0;j<d.tiles.length;j++){const u=d.tiles[j];if(j==i||PATm(u.id)!==PATm(t.id)||u.sets+t.sets>5)continue;
 const n=dcopy(days),tl=dayOf(n,day).tiles;tl[j].sets+=t.sets;tl.splice(i,1);yield['merge_tiles',{target:t.id,into:u.id,name:nmE(t.id),into_name:nmE(u.id),day,into_from:u.sets,into_to:u.sets+t.sets},n]}}}
@@ -91,8 +92,10 @@ if(rid=='sets_per_exercise'){const[d,i]=[f[2],f[3]];return[gSplit(days,d,null,i)
 if(rid=='redundant_pattern'){const[d,p,m]=[f[2],f[3],f[5]];return[gReduce(days,d,'highest_contributor',m),gMoveSets(days,d,m,RU.patterns[p]),gMoveTile(days,d,RU.patterns[p])]}
 if(rid=='weekly_volume'){const[m,x]=[f[2],f[3]];if(x>TG[m].max)return[gReduce(days,null,'highest_contributor',m)];return[gAddSets(days,m),gAddEx(days,m)]}
 if(rid=='push_pull_imbalance'){const lag=f[2]<1?'pull':'push',ms=lag=='pull'?['upper_back','lats']:['chest','front_delts'],lead=lag=='pull'?['chest']:['lats'];
-const pulls=days.reduce((s,d)=>s+d.tiles.filter(t=>RU.pull_patterns.includes(PATm(t.id))).reduce((a,t)=>a+t.sets,0),0),pp=lag=='pull'&&pulls==0?['horizontal_row','vertical_pull']:null;
-return[gAddSets(days,ms[0]),gAddEx(days,ms[0],false,null,pp),gAddEx(days,ms[1],false,null,pp),gReduce(days,null,'highest_contributor',lead[0])]}
+const sumP=L=>days.reduce((s,d)=>s+d.tiles.filter(t=>L.includes(PATm(t.id))).reduce((a,t)=>a+t.sets,0),0),pulls=sumP(RU.pull_patterns),pushs=sumP(RU.push_patterns);
+if(pulls==0){const pp=['horizontal_row','vertical_pull'];return[gAddEx(days,'upper_back',false,null,pp),gAddEx(days,'lats',false,null,pp),gAddSets(days,'upper_back',null,RU.pull_patterns)]}
+if(pushs==0){const pp=['horizontal_press','incline_press','vertical_press'];return[gAddEx(days,'chest',false,null,pp),gAddEx(days,'front_delts',false,null,pp),gAddSets(days,'chest',null,RU.push_patterns)]}
+return[gAddSets(days,ms[0]),gAddEx(days,ms[0]),gAddEx(days,ms[1]),gReduce(days,null,'highest_contributor',lead[0])]}
 if(rid=='missing_stretch'){const m=f[2];return[gSwap(days,null,'stretch_biased',null,m),gAddEx(days,m,true)]}
 if(rid=='low_frequency'){const m=f[2];let hv=days[0];days.forEach(d=>{if(loadOf(d,m)>loadOf(hv,m))hv=d});return[gMoveSets(days,hv.day,m),gAddEx(days,m,false,hv.day)]}
 if(rid=='hinge_before_squat'){const d=f[2],nx=ORD[ORD.indexOf(d)+1];return[gMoveTile(days,d,RU.heavy_hinges),gMoveTile(days,nx,RU.heavy_squats),gSwap(days,nx,'lower_spinal',new Set(RU.heavy_squats))]}
@@ -116,7 +119,7 @@ const kill=()=>{t.remove()};t.querySelector('#t-undo').onclick=()=>{undo();kill(
 function swapBubble(dayIdx,item,anchor){closeSwap();const cur=item.id;if(!EX[cur])return;let fams=[];const b=document.createElement('div');b.id='swpop';document.body.appendChild(b);
 const FAMS=['machine','free','bodyweight','cable','other'],LBL={machine:'Machine',free:'Free weight',bodyweight:'Bodyweight',cable:'Cable',other:'Other'};
 const draw=()=>{const list=swaps(cur,fams.length&&fams.length<FAMS.length?fams:null,6);b.innerHTML=`<button class="mp-x" aria-label="Close">✕</button><b>Swap ${EX[cur].name.replace(/</g,'&lt;')}</b><div class="sw-fam">${FAMS.map(f=>`<button class="chip ${fams.includes(f)?'on':''}" data-f="${f}">${LBL[f]}</button>`).join('')}</div>
-${list.length?list.map(c=>`<button class="sw-opt" data-id="${c.id}"><span>${c.name.replace(/</g,'&lt;')}</span><small>${c.tags.join(' · ')}</small></button>`).join(''):'<div class="cf-hint">No close alternatives in these families.</div>'}<div class="cf-hint">Keeps your ${item.sets} sets.</div>`;
+${list.length?list.map(c=>`<button class="sw-opt" data-id="${c.id}"><span>${c.name.replace(/</g,'&lt;')}${c.badge?' <em class="est">est.</em>':''}</span><small>${c.tags.join(' · ')}</small></button>`).join(''):'<div class="cf-hint">No close alternatives in these families.</div>'}<div class="cf-hint">Keeps your ${item.sets} sets.</div>`;
 b.querySelector('.mp-x').onclick=closeSwap;b.querySelectorAll('.sw-fam .chip').forEach(c=>c.onclick=()=>{const f=c.dataset.f,i=fams.indexOf(f);i<0?fams.push(f):fams.splice(i,1);draw()});
 b.querySelectorAll('.sw-opt').forEach(o=>o.onclick=()=>{const prior=JSON.stringify(state);item.id=o.dataset.id;closeSwap();upd();toast(`Swapped to ${EX[item.id].name}`,()=>{state=JSON.parse(prior);upd()})});
 const r=anchor.getBoundingClientRect(),W=Math.min(320,innerWidth-16);b.style.width=W+'px';b.style.left=Math.max(8,Math.min(innerWidth-W-8,r.left))+'px';const h=b.offsetHeight;let top=r.bottom+6;if(top+h>innerHeight-8)top=Math.max(8,r.top-h-6);b.style.top=top+'px'};draw()}

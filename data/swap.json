@@ -240,5 +240,13 @@
     ]
    }
   ]
+ },
+ "custom": {
+  "candidates": true,
+  "fix_candidates": false,
+  "scoring": "Use the same formula with the custom exercise's own ratings. same_pattern uses its optional `pattern` field, and counts as 0 when the field is missing. Family comes from its equipment string.",
+  "badge": "est.",
+  "note": "Show the badge 'est.' on custom candidates because their ratings are user estimates. They are ranked together with library exercises and follow the same equipment filter and tags. Fixes in rules.json never pick a custom exercise.",
+  "reference": "tools/swap.py swaps(cur, families=None, n=6, custom=[...])"
  }
 }

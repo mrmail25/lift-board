@@ -8,8 +8,10 @@ REG.forEach(r=>h[r]=clamp01((c.ratings[r]||0)+(typeof mods[r]=='number'?mods[r]:
 if(c.curve=='top')REG.forEach(r=>{if(h[r]>=.75)h[r]=clamp01(h[r]+CR.modifiers.resistance_curve.options.top.primary_delta)});
 const post={...h};REG.forEach(r=>h[r]=clamp01(h[r]+((c.feelOffsets||{})[r]||0)));
 const m={};MUS.forEach(g=>m[g]=0);REG.forEach(r=>{const g=RG[r];m[g]=Math.max(m[g]||0,h[r])});
-return{id:c.id,name:c.name,type:c.type,equipment:c.equipment,base:c.base,muscles:m,heads:h,post,custom:true,estimated:true,stretch_biased:stretch,def:c}}
-function syncCustom(){Object.keys(EX).forEach(k=>{if(EX[k].custom)delete EX[k]});CUS.forEach(c=>EX[c.id]=buildCustom(c));localStorage.setItem(CKEY,JSON.stringify(CUS))}
+return{id:c.id,name:c.name,type:c.type,equipment:c.equipment,base:c.base,muscles:m,heads:h,post,custom:true,estimated:true,pattern:c.pattern||null,fatigue:(EX[c.base]&&EX[c.base].fatigue)||undefined,stretch_biased:stretch,def:c}}
+const basePat=b=>{if(typeof RU=='undefined'||!RU)return null;for(const p in RU.patterns)if(RU.patterns[p].includes(b))return p;return null};
+function migratePat(){if(typeof RU=='undefined'||!RU)return;let ch=0;CUS.forEach(c=>{if(!c.pattern&&c.base){const p=basePat(c.base);if(p){c.pattern=p;ch=1}}});if(ch){localStorage.setItem(CKEY,JSON.stringify(CUS));CUS.forEach(c=>{if(EX[c.id])EX[c.id].pattern=c.pattern||null})}}window.migratePat=migratePat;
+function syncCustom(){migratePat();Object.keys(EX).forEach(k=>{if(EX[k].custom)delete EX[k]});CUS.forEach(c=>EX[c.id]=buildCustom(c));localStorage.setItem(CKEY,JSON.stringify(CUS))}
 async function loadCustom(){try{CR=await fetch('data/custom-rules.json').then(r=>r.json())}catch{return}try{CUS=JSON.parse(localStorage.getItem(CKEY))||[]}catch{CUS=[]}
 CUS=CUS.filter(c=>c&&c.id&&c.ratings);syncCustom();addBtn()}
 function addBtn(){const tr=document.getElementById('tray');if(document.getElementById('addex'))return;const b=document.createElement('button');b.id='addex';b.className='addex';b.textContent='+ Add exercise';b.onclick=()=>openForm();tr.parentNode.insertBefore(b,tr)}
@@ -48,7 +50,7 @@ if(!f.name)err.push('Give it a name.');if(CUS.some(c=>c.name.toLowerCase()==f.na
 if(!f.base)err.push('Pick a base template.');const x=f.base&&buildCustom({...f,id:'tmp'});if(x&&!REG.some(r=>x.heads[r]>=.25))err.push('Set at least one muscle to Minor or higher.');
 if(x&&REG.filter(r=>x.heads[r]>=1).length>4)warn.push('More than 4 muscles are Primary, which usually means the ratings are overestimated.');
 if(err.length){$('#cf-err').textContent=err.join(' ');return}if(warn.length&&!$('#cf-err').dataset.w){$('#cf-err').dataset.w=1;$('#cf-err').textContent=warn[0]+' Press Save again to keep it.';return}
-if(!f.id||dup){f.id=newId(f.name);CUS.push(f)}else CUS[CUS.findIndex(c=>c.id==f.id)]=f;f.estimated=true;syncCustom();closeModal();upd()};
+f.pattern=basePat(f.base)||f.pattern||null;if(!f.id||dup){f.id=newId(f.name);CUS.push(f)}else CUS[CUS.findIndex(c=>c.id==f.id)]=f;f.estimated=true;syncCustom();closeModal();upd()};
 if(ex&&!dup){$('#cf-dup').onclick=()=>openForm(ex.id,true);$('#cf-del').onclick=()=>{const used=state.days.flat().filter(t=>t.id==ex.id).length;if(!confirm(`Delete "${ex.name}"?`+(used?` It's on the board ${used} time(s) and will be removed.`:'')))return;
 CUS=CUS.filter(c=>c.id!=ex.id);state.days=state.days.map(c=>c.filter(t=>t.id!=ex.id));syncCustom();closeModal();upd()}}}
 function openFeel(id){const c=CUS.find(x=>x.id==id);if(!c)return;const x=EX[id],fb=CR.feel_feedback,pick={};

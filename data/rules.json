@@ -556,11 +556,24 @@
    "min_ratio": 0.75,
    "max_ratio": 2.0,
    "message": "Pull-to-push sets are {ratio}:1 this week. Keep pulling at least about 75% of pushing, and no more than 2x, to protect the shoulders and balance the upper body.",
-   "fixes": [
-    "add_sets(lagging side)",
-    "add_exercise(lagging side)",
-    "reduce_sets(leading side)"
-   ]
+   "fixes": {
+    "ratio": [
+     "add_sets(lagging side)",
+     "add_exercise(lagging side)",
+     "reduce_sets(leading side)"
+    ],
+    "no_pull": [
+     "add_exercise(staples, pattern horizontal_row|vertical_pull, horizontal_row first)",
+     "add_sets(existing pull tile)"
+    ],
+    "no_push": [
+     "add_exercise(staples, pattern horizontal_press|incline_press|vertical_press, horizontal_press first)",
+     "add_sets(existing press tile)"
+    ]
+   },
+   "message_no_pull": "No pulling yet. Add a row or pulldown to balance your pressing.",
+   "message_no_push": "No pushing yet. Add a press to balance your pulling.",
+   "ratio_note": "ratio = pull_sets / push_sets. If push_sets = 0 and pull_sets > 0, the checker emits ratio 99 and the app shows message_no_push. If pull_sets = 0 and push_sets > 0, the ratio is 0 and the app shows message_no_pull. If both are 0, no flag."
   },
   {
    "id": "missing_stretch",
@@ -648,22 +661,22 @@
     "by": "default 1; the checker tries 1, 2, ... up to the amount needed",
     "min_sets": 2
    },
-   "preview": "Drop {name} on {day} {from}→{to} sets",
-   "preview_multi": "Trim {name} on {day}",
+   "preview": "Drop {name} on {day_name} {from}→{to} sets",
+   "preview_multi": "Trim {name} on {day_name}",
    "note": "With lowest_priority_isolation, the checker can trim several isolation tiles in one fix, working from the last tile up, to bring a session under its cap. Each tile stays at 2 sets or more."
   },
   "remove_tile": {
    "params": {
     "target": "tile id; default the smallest isolation tile, then the smallest tile"
    },
-   "preview": "Remove {name} from {day}"
+   "preview": "Remove {name} from {day_name}"
   },
   "move_tile": {
    "params": {
     "target": "tile id",
     "to_day": "best_valid_day"
    },
-   "preview": "Move {name} from {day} to {to_day}",
+   "preview": "Move {name} from {day_name} to {to_day_name}",
    "best_valid_day": "Use only existing training days, never adding one. Rank days by (1) fewest neighbouring days where the tile's primary muscle is already at solid or above, (2) least load on that muscle, (3) fewest total sets. Take the first day whose result passes validation."
   },
   "swap_exercise": {
@@ -672,7 +685,7 @@
     "criteria": "stretch_biased | lower_fatigue | same_pattern | lower_spinal",
     "uses": "swap.json scoring, best score first"
    },
-   "preview": "Swap {name} for {new_name} on {day}",
+   "preview": "Swap {name} for {new_name} on {day_name}",
    "note": "lower_spinal means the candidate is not in heavy_squats or heavy_hinges and rates lower_back lower than the current exercise."
   },
   "add_exercise": {
@@ -682,7 +695,7 @@
     "to_day": "lightest eligible day (fewest total sets) that doesn't already have the exercise",
     "sets": 2
    },
-   "preview": "Add {name} ({sets} sets) on {to_day}"
+   "preview": "Add {name} ({sets} sets) on {to_day_name}"
   },
   "add_sets": {
    "params": {
@@ -690,13 +703,13 @@
     "by": 1,
     "max_sets": 5
    },
-   "preview": "Add sets to {name} on {day} ({from}→{to})"
+   "preview": "Add sets to {name} on {day_name} ({from}→{to})"
   },
   "reorder_day": {
    "params": {
     "order": "primary,accessory,isolation; stable within each type"
    },
-   "preview": "Reorder {day}: primaries, then accessories, then isolation"
+   "preview": "Reorder {day_name}: primaries, then accessories, then isolation"
   },
   "split_pattern": {
    "params": {
@@ -704,7 +717,7 @@
     "move_sets": "floor(sets/2), at least 2",
     "to": "the best swap.json same-pattern alternative not already on that day, on the same day"
    },
-   "preview": "Split {name} on {day}: {from}→{keep} sets, plus {moved} sets of {new_name}"
+   "preview": "Split {name} on {day_name}: {from}→{keep} sets, plus {moved} sets of {new_name}"
   },
   "move_sets_to_day": {
    "params": {
@@ -712,15 +725,17 @@
     "sets": "n; both the source and any new tile keep at least 2 sets, and a tile already on the target day can't go past 5",
     "to_day": "best_valid_day"
    },
-   "preview": "Move {sets} sets of {name} from {day} to {to_day}"
+   "preview": "Move {sets} sets of {name} from {day_name} to {to_day_name}"
   },
   "merge_tiles": {
    "params": {
     "target": "the smallest tile",
     "into": "a same-pattern tile on the same day, total no more than 5 sets"
    },
-   "preview": "Merge {name} into {into_name} on {day} ({into_from}→{into_to} sets)"
-  }
+   "preview": "Merge {name} into {into_name} on {day_name} ({into_from}→{into_to} sets)"
+  },
+  "_note": "Previews use {day_name}, {to_day_name} and {from_day_name}, looked up in day_names. The raw keys {day}, {to_day} and {from_day} stay in params.",
+  "custom_exercises": "Custom exercises are never fix candidates. No fix suggests, adds or swaps in a custom exercise. They can still appear as manual swap suggestions (see swap.json custom)."
  },
  "fix_validation": "Every fix candidate has to pass validation before it's shown. Apply it to a copy of the board and run every rule again. Drop the candidate if it creates any non-info flag that wasn't there before, including a new red weekly_volume. Drop it too if it doesn't move the targeted flag toward compliance (fewer sets, fewer minutes, a ratio or volume closer to range, or more training days for the muscle). A candidate that clears the flag is marked resolves=true. One that only improves it is marked resolves=false and shown after the ones that clear it. Try each rule's fixes in the order listed, prefer a resolving candidate within each action, keep one per action, and show at most 3. If none are valid, show none, and never show an unvalidated fix.",
  "staples": [
@@ -781,5 +796,14 @@
   "weighted-dip",
   "wrist-curl"
  ],
- "partial_label": "Helps, but won't fully clear this"
+ "partial_label": "Helps, but won't fully clear this",
+ "day_names": {
+  "mon": "Monday",
+  "tue": "Tuesday",
+  "wed": "Wednesday",
+  "thu": "Thursday",
+  "fri": "Friday",
+  "sat": "Saturday",
+  "sun": "Sunday"
+ }
 }

@@ -1,6 +1,6 @@
 // Program check: JS port of tools/check_program.py using data/rules.json thresholds.
 let RU=null,SESSM={},SLEN={warmup_min:10,work_sec_per_set:45,rest_min:{compound:2.5,isolation:1.5},compound_types:['primary','accessory']};
-Promise.all([fetch('data/rules.json').then(r=>r.json()),fetch('data/targets.json').then(r=>r.json())]).then(([r,t])=>{RU=r;SESSM=(t.session||{}).muscles||{};if(t.analytics&&t.analytics.session_length)SLEN=t.analytics.session_length;pcheck()});
+Promise.all([fetch('data/rules.json').then(r=>r.json()),fetch('data/targets.json').then(r=>r.json())]).then(([r,t])=>{RU=r;SESSM=(t.session||{}).muscles||{};if(window.migratePat)migratePat();if(t.analytics&&t.analytics.session_length)SLEN=t.analytics.session_length;pcheck()});
 const RECOV_INFO_ABOVE=110;// rules.json gives no threshold; note only when clearly above the saved normal week
 // Python-style round (ties to even) so messages match tools/check_program.py exactly
 const pyR=(x,nd=1)=>{const e=Math.abs(x).toFixed(nd+40),i=e.indexOf('.')+nd+1;if(/^50*$/.test(e.slice(i))){const k=10**nd,f=Math.floor(x*k);return(f%2==0?f:f+1)/k}return +x.toFixed(nd)};
@@ -29,7 +29,7 @@ for(let i=0;i<6;i++){const a=byday[ORD[i]],b=byday[ORD[i+1]];if(!a||!b)continue;
 if(a.tiles.some(t=>H.has(baseId(t.id)))&&b.tiles.some(t=>Q.has(baseId(t.id))))f.push({sev:'warn',id:'hinge_before_squat',day1:ORD[i],day2:ORD[i+1]});
 const va=effc(a.tiles),vb=effc(b.tiles);for(const m in T){const s=SESSM[m];if(s&&va[m]>=s.solid&&vb[m]>=s.solid)f.push({sev:'warn',id:'consecutive_high_volume',day1:ORD[i],day2:ORD[i+1],muscle:m})}}
 if(spw>spn.week_warn_above[level])f.push({sev:'warn',id:'spinal_load_week',sets:spw,max:spn.week_warn_above[level]});
-if(push){const r=pull/push,pp=RL.push_pull_imbalance;if(r<pp.min_ratio||r>pp.max_ratio)f.push({sev:'warn',id:'push_pull_imbalance',ratio:pyR(r,2)})}
+if(push==0&&pull>0)f.push({sev:'warn',id:'push_pull_imbalance',ratio:99});if(push){const r=pull/push,pp=RL.push_pull_imbalance;if(r<pp.min_ratio||r>pp.max_ratio)f.push({sev:'warn',id:'push_pull_imbalance',ratio:pyR(r,2)})}
 const all=days.flatMap(d=>d.tiles.map(t=>EX[t.id]));
 for(const m in R.stretch_biased)if(!all.some(x=>stretchHits(x,m)))f.push({sev:'info',id:'missing_stretch',muscle:m,examples:R.stretch_biased[m].slice(0,2)});
 if(days.length>=2)R.frequency_muscles.forEach(m=>{if(freq[m]<2)f.push({sev:'info',id:'low_frequency',muscle:m,n:freq[m]})});
@@ -44,18 +44,15 @@ return msg.replace(/\{(\w+)\}/g,(_,k)=>V[k]!=null?V[k]:k)}
 function boardDays(){return state.days.map((c,i)=>({day:ORD[i],tiles:c.filter(t=>EX[t.id]).map(t=>({id:t.id,sets:t.sets})),reason:(state.reasons||[])[i]||''})).filter(d=>d.tiles.length)}
 function pcheck(){const el=document.getElementById('chk');if(!el||!RU||!MUS.length)return;const d=boardDays();
 if(!d.length){el.innerHTML='<div class="ck-empty">Add exercises to the board to check the program.</div>';return}
-let f=checkProgram(d,sel.level);const M=f.meta,P=x=>lab(x),ppOrig=f.find(x=>x.id=='push_pull_imbalance');
+let f=checkProgram(d,sel.level);const M=f.meta,P=x=>lab(x);
 const un=Object.keys(M.week).filter(m=>M.week[m]<=0);const isUn=x=>x.muscle&&un.includes(x.muscle)&&['weekly_volume','missing_stretch','low_frequency'].includes(x.id);
-f=f.filter(x=>!isUn(x)&&x.id!='push_pull_imbalance');const extra=[];
-if(M.push>=1&&M.pull>=1){const r=M.pull/M.push,pp=RU.rules.find(x=>x.id=='push_pull_imbalance')||{};if(r<(pp.min_ratio||.75)||r>(pp.max_ratio||2))f.push({sev:'warn',id:'push_pull_imbalance',ratio:pyR(r,2)})}
-else if(M.push>0&&!M.pull)extra.push({sev:'warn',fl:ppOrig,txt:'No pulling yet this week. Add rows or pulldowns to balance your pressing.'});
-else if(M.pull>0&&!M.push)extra.push({sev:'warn',txt:'No pushing yet this week. Add presses to balance your pulling.'});
+f=f.filter(x=>!isUn(x));const extra=[];
 const SS={'bro-split':0,'ppl':3,'pplu':0,'arnold':3},ss=state.sel||{};
 if(state.applied&&state.applied==snap()&&ss.split in SS&&(!SS[ss.split]||ss.days==SS[ss.split])){const lf=f.filter(x=>x.id=='low_frequency');if(lf.length){f=f.filter(x=>x.id!='low_frequency');
 const sp=SP.splits.find(x=>x.id==ss.split);extra.push({sev:'info',txt:`Trained once a week (expected for ${sp?sp.name:ss.split}): ${lf.map(x=>P(x.muscle)).join(', ')}.`})}}
 if(typeof baseline=='function'&&typeof dayCost=='function'){const B=baseline();if(B&&B.cost){const wk=DAYS.reduce((a,_,i)=>a+dayCost(i),0)*modF(),pct=Math.round(wk/B.cost*100);{const rr=((RU&&RU.rules)||[]).find(x=>x.id=='recovery_vs_baseline')||{},ia=(rr.info_above||1.15)*100,wa=(rr.warn_above||1.3)*100;if(pct>ia)f.push({sev:pct>wa?'warn':'info',id:'recovery_vs_baseline',pct})}}}
 if(un.length)extra.push({sev:'info',txt:'Not trained yet: '+un.map(P).join(', ')+'.'});
-const all=[...f.map(x=>({sev:x.sev,txt:fmsg(x),fl:x.id=='recovery_vs_baseline'?null:x})),...extra].sort((a,b)=>(a.sev=='warn'?0:1)-(b.sev=='warn'?0:1)),w=all.filter(x=>x.sev=='warn');
+const all=[...f.map(x=>({sev:x.sev,txt:x.id=='push_pull_imbalance'&&(x.ratio==0||x.ratio==99)?(RU.rules.find(r=>r.id=='push_pull_imbalance')[x.ratio?'message_no_push':'message_no_pull']):fmsg(x),fl:x.id=='recovery_vs_baseline'?null:x})),...extra].sort((a,b)=>(a.sev=='warn'?0:1)-(b.sev=='warn'?0:1)),w=all.filter(x=>x.sev=='warn');
 el.innerHTML=(w.length?'':`<div class="ck-ok">✓ All clear: no programming errors found for this ${sel.level} program.</div>`)+all.map((x,i)=>`<div class="ck ${x.sev}${x.fl?' fixable':''}" data-i="${i}"><b>${x.sev=='warn'?'⚠':'ℹ'}</b> ${x.txt}${x.fl?'<span class="ck-more">Fixes ▸</span>':''}</div>`).join('')+(all.length>w.length&&!w.length?'<div class="ck-sub">Notes above are suggestions, not errors.</div>':'');
 const key=JSON.stringify([d,sel.level]);if(window._ckKey!==key){window._ckKey=key;window._ckOpen=null}
 el.querySelectorAll('.ck.fixable').forEach(c=>{const x=all[+c.dataset.i],id=x.txt;c.onclick=e=>{if(e.target.closest('.fx'))return;window._ckOpen=window._ckOpen===id?null:id;pcheck()};
