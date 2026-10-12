@@ -7,16 +7,19 @@
    "dumbbell-bench-press",
    "machine-chest-press",
    "push-up",
-   "close-grip-bench-press"
+   "close-grip-bench-press",
+   "smith-bench-press"
   ],
   "incline_press": [
    "incline-barbell-bench-press",
-   "incline-dumbbell-press"
+   "incline-dumbbell-press",
+   "smith-incline-press"
   ],
   "vertical_press": [
    "overhead-press",
    "seated-dumbbell-shoulder-press",
-   "machine-shoulder-press"
+   "machine-shoulder-press",
+   "smith-overhead-press"
   ],
   "dip": [
    "weighted-dip"
@@ -38,7 +41,8 @@
    "one-arm-dumbbell-row",
    "chest-supported-row",
    "seated-cable-row",
-   "t-bar-row"
+   "t-bar-row",
+   "smith-row"
   ],
   "lat_isolation": [
    "straight-arm-pulldown"
@@ -58,7 +62,8 @@
   ],
   "shrug": [
    "barbell-shrug",
-   "dumbbell-shrug"
+   "dumbbell-shrug",
+   "smith-shrug"
   ],
   "curl": [
    "barbell-curl",
@@ -77,21 +82,25 @@
    "back-squat",
    "front-squat",
    "hack-squat",
-   "leg-press"
+   "leg-press",
+   "smith-squat"
   ],
   "lunge": [
    "bulgarian-split-squat",
    "walking-lunge",
-   "dumbbell-step-up"
+   "dumbbell-step-up",
+   "smith-split-squat"
   ],
   "hinge": [
    "deadlift",
    "romanian-deadlift",
-   "stiff-leg-dumbbell-deadlift"
+   "stiff-leg-dumbbell-deadlift",
+   "smith-rdl"
   ],
   "hip_extension": [
    "hip-thrust",
-   "back-extension"
+   "back-extension",
+   "smith-hip-thrust"
   ],
   "knee_extension": [
    "leg-extension"
@@ -102,7 +111,8 @@
   ],
   "calf_raise": [
    "standing-calf-raise",
-   "seated-calf-raise"
+   "seated-calf-raise",
+   "smith-calf-raise"
   ],
   "core": [
    "hanging-leg-raise",
@@ -160,7 +170,8 @@
   "hamstrings": [
    "romanian-deadlift",
    "stiff-leg-dumbbell-deadlift",
-   "seated-leg-curl"
+   "seated-leg-curl",
+   "smith-rdl"
   ],
   "quads": [
    "back-squat",
@@ -169,7 +180,8 @@
    "bulgarian-split-squat"
   ],
   "calves": [
-   "standing-calf-raise"
+   "standing-calf-raise",
+   "smith-calf-raise"
   ],
   "lats": [
    "pull-up",

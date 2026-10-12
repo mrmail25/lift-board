@@ -624,6 +624,88 @@
     "img/ex/dumbbell-step-up-1.jpg"
    ],
    "match": "name"
-  }
+  },
+  "smith-squat": {
+   "source_id": "Smith_Machine_Squat",
+   "source_name": "Smith Machine Squat",
+   "images": [
+    "img/ex/smith-squat-0.jpg",
+    "img/ex/smith-squat-1.jpg"
+   ],
+   "match": "name"
+  },
+  "smith-bench-press": {
+   "source_id": "Smith_Machine_Bench_Press",
+   "source_name": "Smith Machine Bench Press",
+   "images": [
+    "img/ex/smith-bench-press-0.jpg",
+    "img/ex/smith-bench-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "smith-incline-press": {
+   "source_id": "Smith_Machine_Incline_Bench_Press",
+   "source_name": "Smith Machine Incline Bench Press",
+   "images": [
+    "img/ex/smith-incline-press-0.jpg",
+    "img/ex/smith-incline-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "smith-overhead-press": {
+   "source_id": "Smith_Machine_Overhead_Shoulder_Press",
+   "source_name": "Smith Machine Overhead Shoulder Press",
+   "images": [
+    "img/ex/smith-overhead-press-0.jpg",
+    "img/ex/smith-overhead-press-1.jpg"
+   ],
+   "match": "name"
+  },
+  "smith-row": {
+   "source_id": "Smith_Machine_Bent_Over_Row",
+   "source_name": "Smith Machine Bent Over Row",
+   "images": [
+    "img/ex/smith-row-0.jpg",
+    "img/ex/smith-row-1.jpg"
+   ],
+   "match": "name"
+  },
+  "smith-rdl": {
+   "source_id": "Smith_Machine_Stiff-Legged_Deadlift",
+   "source_name": "Smith Machine Stiff-Legged Deadlift",
+   "images": [
+    "img/ex/smith-rdl-0.jpg",
+    "img/ex/smith-rdl-1.jpg"
+   ],
+   "match": "approximate"
+  },
+  "smith-split-squat": {
+   "source_id": "Smith_Single-Leg_Split_Squat",
+   "source_name": "Smith Single-Leg Split Squat",
+   "images": [
+    "img/ex/smith-split-squat-0.jpg",
+    "img/ex/smith-split-squat-1.jpg"
+   ],
+   "match": "name"
+  },
+  "smith-calf-raise": {
+   "source_id": "Smith_Machine_Calf_Raise",
+   "source_name": "Smith Machine Calf Raise",
+   "images": [
+    "img/ex/smith-calf-raise-0.jpg",
+    "img/ex/smith-calf-raise-1.jpg"
+   ],
+   "match": "name"
+  },
+  "smith-shrug": {
+   "source_id": "Smith_Machine_Behind_the_Back_Shrug",
+   "source_name": "Smith Machine Behind the Back Shrug",
+   "images": [
+    "img/ex/smith-shrug-0.jpg",
+    "img/ex/smith-shrug-1.jpg"
+   ],
+   "match": "approximate"
+  },
+  "smith-hip-thrust": null
  }
 }

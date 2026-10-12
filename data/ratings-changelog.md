@@ -25,3 +25,6 @@ Rows and rear-delt exercises had no trap credit, even though retracting the shou
 
 ## Presets
 - All 46 presets regenerated with `tools/gen_splits_v2.py`. They still show zero warnings in the program check.
+
+## Smith machine exercises (2026-10-11)
+I added 10 Smith machine variants. Each one copies the ratings of its free-weight version, with lower back, abs, obliques and other stabilizer ratings turned down, because the fixed bar path takes away most of the balance work. Fatigue for the Smith squat and Smith RDL drops from 1.5 to 1.2 for the same reason. Each variant joins its free-weight version's movement pattern, and the Smith RDL and Smith calf raise go on the stretch-biased list. No presets changed.
