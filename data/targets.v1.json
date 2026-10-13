@@ -1,0 +1,183 @@
+{
+ "version": 1,
+ "counting": {
+  "method": "fractional",
+  "description": "Each working set adds the exercise's muscle rating (0-1) to that muscle. Ratings below 0.25 count as 0 (noise). Weekly total = sum over all tiles of sets x rating.",
+  "min_rating_to_count": 0.25,
+  "round_to": 0.5,
+  "status": {
+   "green": "min <= total <= max",
+   "amber_under": "min - 2 <= total < min",
+   "amber_over": "max < total <= max * 1.25",
+   "red_under": "total < min - 2",
+   "red_over": "total > max * 1.25"
+  }
+ },
+ "targets": {
+  "chest": {
+   "min": 10,
+   "max": 20
+  },
+  "front_delts": {
+   "min": 6,
+   "max": 16
+  },
+  "side_delts": {
+   "min": 10,
+   "max": 22
+  },
+  "rear_delts": {
+   "min": 8,
+   "max": 18
+  },
+  "lats": {
+   "min": 10,
+   "max": 20
+  },
+  "upper_back": {
+   "min": 10,
+   "max": 20
+  },
+  "traps": {
+   "min": 6,
+   "max": 16
+  },
+  "biceps": {
+   "min": 8,
+   "max": 18
+  },
+  "triceps": {
+   "min": 8,
+   "max": 18
+  },
+  "forearms": {
+   "min": 4,
+   "max": 12
+  },
+  "abs": {
+   "min": 6,
+   "max": 16
+  },
+  "quads": {
+   "min": 10,
+   "max": 20
+  },
+  "hamstrings": {
+   "min": 8,
+   "max": 16
+  },
+  "glutes": {
+   "min": 8,
+   "max": 16
+  },
+  "calves": {
+   "min": 8,
+   "max": 16
+  },
+  "adductors": {
+   "min": 4,
+   "max": 12
+  },
+  "lower_back": {
+   "min": 4,
+   "max": 10
+  }
+ },
+ "session": {
+  "description": "Per-session effective sets (same fractional counting). light = meaningful stimulus, solid = full productive hit, heavy = top of useful range; beyond heavy is junk volume. Use for day-mode shading only, not a target check.",
+  "shading": {
+   "none": "0",
+   "light": "> 0 and < light",
+   "medium": "light to < solid",
+   "solid": "solid to heavy",
+   "heavy": "> heavy"
+  },
+  "muscles": {
+   "chest": {
+    "light": 3,
+    "solid": 6,
+    "heavy": 10
+   },
+   "front_delts": {
+    "light": 2,
+    "solid": 4,
+    "heavy": 8
+   },
+   "side_delts": {
+    "light": 3,
+    "solid": 6,
+    "heavy": 10
+   },
+   "rear_delts": {
+    "light": 2,
+    "solid": 5,
+    "heavy": 8
+   },
+   "lats": {
+    "light": 3,
+    "solid": 6,
+    "heavy": 10
+   },
+   "upper_back": {
+    "light": 3,
+    "solid": 6,
+    "heavy": 10
+   },
+   "traps": {
+    "light": 2,
+    "solid": 4,
+    "heavy": 8
+   },
+   "biceps": {
+    "light": 2,
+    "solid": 5,
+    "heavy": 8
+   },
+   "triceps": {
+    "light": 2,
+    "solid": 5,
+    "heavy": 8
+   },
+   "forearms": {
+    "light": 2,
+    "solid": 3,
+    "heavy": 6
+   },
+   "abs": {
+    "light": 2,
+    "solid": 4,
+    "heavy": 8
+   },
+   "quads": {
+    "light": 3,
+    "solid": 6,
+    "heavy": 10
+   },
+   "hamstrings": {
+    "light": 3,
+    "solid": 5,
+    "heavy": 8
+   },
+   "glutes": {
+    "light": 3,
+    "solid": 5,
+    "heavy": 8
+   },
+   "calves": {
+    "light": 2,
+    "solid": 4,
+    "heavy": 8
+   },
+   "adductors": {
+    "light": 2,
+    "solid": 3,
+    "heavy": 6
+   },
+   "lower_back": {
+    "light": 1,
+    "solid": 3,
+    "heavy": 5
+   }
+  }
+ }
+}
