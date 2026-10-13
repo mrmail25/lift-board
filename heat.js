@@ -15,6 +15,8 @@ function rampAt(p){const R=DRAMP();p=Math.max(0,Math.min(1,p));for(let i=1;i<R.l
 function dayTint(v,g,hh){if(!v)return null;const h=hh||(SESS[g]||{}).heavy||8,C=GR.colors,top=DRAMP()[DRAMP().length-1];if(v<=h)return rampAt(Math.sqrt(v/h));
 const o=Math.max(top.opacity,.95);if(v<=h*1.2)return{c:okMix(top.color,C.amber,(v-h)/(h*.2)),o};if(v<=h*1.6)return{c:okMix(C.amber,C.red,(v-h*1.2)/(h*.4)),o};return{c:C.red,o}}
 const OPM={};
+// week-view fill opacity from targets.json gradient.week.opacity (v24; was hardcoded 0.8)
+const WKOP=()=>GR.week&&typeof GR.week.opacity=='number'?GR.week.opacity:.8;
 const wkStops=g=>{const T=tgt(g),mn=Math.max(.5,T.min),mx=Math.max(mn+.5,T.max);return[[0,'under_pale'],[mn-1e-6,'under_strong'],[mn,'light'],[mx,'dark'],[mx*1.1,'amber'],[mx*1.3,'red']]};
 const dyStops=g=>{const s=SESS[g]||{solid:4,heavy:8};return[[0,'light'],[0,'light'],[s.solid,'solid'],[s.heavy,'dark'],[s.heavy*1.2,'amber'],[s.heavy*1.6,'red']]};
 function stWord(v,st,day){if(!v)return'untrained';const[,,a,b,c,d]=st.map(x=>x[0]);if(v<a)return day?'light work':'under min, blue';if(v<=b)return day?'solid':'in range';if(v<c)return(day?'past heavy':'over max')+', amber';if(v<d)return(day?'well past heavy':'over max')+', amber→red';return(day?'way past heavy':'way over max')+', red'}
@@ -54,7 +56,7 @@ let DMODE=localStorage.getItem('liftboard.dayMode')||'tgt';const shade=x=>{x=Mat
 function rtot(day){const t={};(window.REG||[]).forEach(r=>t[r]=0);(day==null?state.days.flat():state.days[day]).forEach(it=>{const x=EX[it.id];if(!x||!x.heads)return;for(const r in x.heads){const v=x.heads[r];if(v>=RULE.min_rating_to_count)t[r]+=v*it.sets}});for(const r in t)t[r]=Math.round(t[r]/RULE.round_to)*RULE.round_to;return t}
 const hex=c=>'#'+c.map(v=>Math.round(v).toString(16).padStart(2,'0')).join('');
 const hasEst=()=>state.days.flat().some(it=>EX[it.id]&&EX[it.id].estimated)?'<span><i class="hatchsw"></i>Hatched = mostly from your custom (estimated) exercises</span>':'';
-function heat(){const el=document.getElementById('heat');if(!el||!MUS.length||!window.REG)return;const d=window.HD;
+function heat(tgtEl){const el=tgtEl||document.getElementById('heat');if(!el||!MUS.length||!window.REG)return;const d=window.HD;
 const t=totals(d==null?null:d),rt=rtot(d==null?null:d);const MAXV=Math.max(1e-9,...Object.values(rt),...(MMJ?[].concat(...['front','back'].map(f=>MMJ[f].muscles.filter(m=>m.region&&m.region.startsWith('g:')).map(m=>t[m.region.slice(2)]||0))):[]));
 const col=r=>{const grp=r.startsWith('g:'),g=grp?r.slice(2):RG[r],v=grp?t[g]:rt[r];if(!v)return'#ffffff';if(d==null){const st=wkStops(g);return grad((!grp&&t[g]>=st[2][0])?Math.max(v,st[2][0]):v,st)}if(DMODE!='rel'){const z=dayTint(v,g);OPM[r]=z.o;return z.c}
 const s=SESS[g]||{light:2,solid:4,heavy:8};const x=DMODE=='rel'?v/MAXV:Math.min(1,v/s.heavy);return shade(x)};
@@ -98,8 +100,13 @@ cv.onclick=e=>{HSEL=pick(e);heat()}}
 let MMJ=null;fetch('img/mm/musclemap.json').then(r=>r.json()).then(j=>{MMJ=j;heat()});
 function fig(f,col){if(!MMJ)return'';const d=MMJ[f];
 const ps=d.muscles.map(m=>{if(!m.region)return'';const c=col(m.region),z=c=='#ffffff',sel=HSEL==m.region;
-const es=!z&&window.estShare&&estShare(m.region,window.HD)>.5,op=z?0:(window.HD!=null&&DMODE!='rel'&&OPM[m.region]!=null?OPM[m.region]:(window.HD==null?.8:.85))*(es?.6:1);
+const es=!z&&window.estShare&&estShare(m.region,window.HD)>.5,op=z?0:(window.HD!=null&&DMODE!='rel'&&OPM[m.region]!=null?OPM[m.region]:(window.HD==null?WKOP():.85))*(es?.6:1);
 return`<path class="mm${sel?' sel':''}${es?' est':''}" data-r="${m.region}" d="${m.d}" fill="${z?'transparent':c}" fill-opacity="${op}" stroke="${OUTL||sel?'#111':'none'}" stroke-width="${sel?5:2.2}" stroke-opacity="${sel?1:.7}"/>${es?`<path d="${m.d}" fill="url(#hatch-${f})" pointer-events="none"/>`:''}`}).join('');
 return`<svg viewBox="230 150 564 1300"><defs><pattern id="hatch-${f}" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="14" height="14" fill="#fff" fill-opacity=".18"/><line x1="0" y1="0" x2="0" y2="14" stroke="#fff" stroke-width="5" stroke-opacity=".75"/></pattern></defs><clipPath id="cl-${f}">${d.outline.map(o=>`<path d="${o}"/>`).join('')}</clipPath><image clip-path="url(#cl-${f})" href="${d.img.replace('.webp','-grey.jpg')}" width="1024" height="1536"/>${ps}</svg>`}
 // shared week colour (body map week mode) for other panels
 window.weekColor=(g,v)=>{if(v==null)v=totals(null)[g]||0;return v>0?grad(v,wkStops(g)):null};
+
+// v24: render the same body map (week view) for any days array into another element (logger Planned/Done)
+window.heatInto=function(el,days,sfx){const sv=state.days,hd=window.HD,hs=HSEL;state.days=days;window.HD=null;HSEL=null;try{heat(el)}finally{state.days=sv;window.HD=hd;HSEL=hs}
+el.querySelectorAll('.sel').forEach(x=>x.remove());const o=el.querySelector('#outl');if(o)o.closest('label').remove();const hi=el.querySelector('#hinfo');if(hi)hi.remove();
+el.querySelectorAll('[id]').forEach(x=>x.id=x.id+'-'+sfx);el.querySelectorAll('[mask],[clip-path],[fill^="url("]').forEach(x=>['mask','clip-path','fill'].forEach(a=>{const v=x.getAttribute(a);if(v&&v.startsWith('url(#'))x.setAttribute(a,v.replace(/\)$/,'-'+sfx+')'))}));el.classList.add('heat-copy')};

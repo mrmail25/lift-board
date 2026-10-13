@@ -128,3 +128,5 @@ body.isdrag{cursor:grabbing;user-select:none;-webkit-user-select:none}
 .sp-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#e8a33a}
 #sp-upd{padding:4px 10px}.bk-hint{flex-basis:100%;margin:2px 0 0;font-size:11px;opacity:.7;text-align:right}
 #ms-e #ms-rep{margin-left:6px}
+/* v24 logger palette (UI chrome only; body-map colours come from targets.json via heat.js) */
+:root{--lg-bg:#22262a;--lg-card:#33383e;--lg-card2:#3b4148;--lg-line:#4a5058;--lg-fg:#f2f2f2;--lg-dim:#aab;--lg-acc:#f0a830;--lg-ok:#3cb371;--lg-pri:#2a7de1;--lg-dng:#b33;--lg-flash:#f0a830;--lg-shadow:rgba(0,0,0,.4)}
