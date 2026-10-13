@@ -1,5 +1,5 @@
 {
- "version": 5,
+ "version": 6,
  "description": "Program-check rules. Effective sets use the same fractional counting as the volume panel (rating >= 0.25). Severity: warn = worth fixing, info = judgment call.",
  "patterns": {
   "horizontal_press": [
@@ -668,7 +668,7 @@
     "by": "default 1; the checker tries 1, 2, ... up to the amount needed",
     "min_sets": 2
    },
-   "preview": "Drop {name} on {day_name} {from}→{to} sets",
+   "preview": "Drop {name} on {day_name} {from}\u2192{to} sets",
    "preview_multi": "Trim {name} on {day_name}",
    "note": "With lowest_priority_isolation, the checker can trim several isolation tiles in one fix, working from the last tile up, to bring a session under its cap. Each tile stays at 2 sets or more."
   },
@@ -710,7 +710,7 @@
     "by": 1,
     "max_sets": 5
    },
-   "preview": "Add sets to {name} on {day_name} ({from}→{to})"
+   "preview": "Add sets to {name} on {day_name} ({from}\u2192{to})"
   },
   "reorder_day": {
    "params": {
@@ -724,7 +724,7 @@
     "move_sets": "floor(sets/2), at least 2",
     "to": "the best swap.json same-pattern alternative not already on that day, on the same day"
    },
-   "preview": "Split {name} on {day_name}: {from}→{keep} sets, plus {moved} sets of {new_name}"
+   "preview": "Split {name} on {day_name}: {from}\u2192{keep} sets, plus {moved} sets of {new_name}"
   },
   "move_sets_to_day": {
    "params": {
@@ -739,7 +739,7 @@
     "target": "the smallest tile",
     "into": "a same-pattern tile on the same day, total no more than 5 sets"
    },
-   "preview": "Merge {name} into {into_name} on {day_name} ({into_from}→{into_to} sets)"
+   "preview": "Merge {name} into {into_name} on {day_name} ({into_from}\u2192{into_to} sets)"
   },
   "_note": "Previews use {day_name}, {to_day_name} and {from_day_name}, looked up in day_names. The raw keys {day}, {to_day} and {from_day} stay in params.",
   "custom_exercises": "Custom exercises are never fix candidates. No fix suggests, adds or swaps in a custom exercise. They can still appear as manual swap suggestions (see swap.json custom)."
@@ -937,7 +937,7 @@
    "action": "swap_exercise:lower_fatigue",
    "scope": "every tile of that exercise, on every day, except a day that already has the candidate",
    "candidate_rule": "main muscle m = cur's highest rating. Candidate: not custom; same rules.json pattern as cur (cosine >= 0.6 if cur has no pattern); never compound->isolation; rating[m] >= cur rating[m] - 0.1; rating[m]/fatigue strictly higher. Order: rating/fatigue desc, swap.json score desc, id. Take the first that validates (try up to 8).",
-   "preview": "Swap {name} for {new_name} on {day_list} ({muscle}: {spf_from}→{spf_to} stimulus per fatigue)",
+   "preview": "Swap {name} for {new_name} on {day_list} ({muscle}: {spf_from}\u2192{spf_to} stimulus per fatigue)",
    "success_metric": "week recovery cost (sum sets x fatigue) strictly lower; always resolves=true when valid"
   },
   "stretch_share": {
@@ -997,5 +997,62 @@
    "success_metric": "effective weekly sets closer to range; resolves when inside",
    "note": "Optional: today the app colours these but shows no text. Show the quick fix in the muscle pop-up only."
   }
+ },
+ "logger": {
+  "note": "Logger coaching defaults (single source). User settings override per exercise.",
+  "hardRIR": 3,
+  "hardRIR_range": [
+   0,
+   5
+  ],
+  "rep_range_by_type": {
+   "primary": [
+    6,
+    10
+   ],
+   "accessory": [
+    8,
+    12
+   ],
+   "isolation": [
+    10,
+    15
+   ]
+  },
+  "target_rir_by_type": {
+   "primary": 3,
+   "accessory": 3,
+   "isolation": 2
+  },
+  "missing_rir_meets_target": true,
+  "load_step": {
+   "lb": {
+    "barbell": 5,
+    "trap bar": 5,
+    "smith machine": 5,
+    "landmine": 5,
+    "dumbbell": 5,
+    "kettlebell": 5,
+    "machine": 5,
+    "plate-loaded machine": 5,
+    "cable": 5,
+    "default": 5
+   },
+   "kg": {
+    "barbell": 2.5,
+    "trap bar": 2.5,
+    "smith machine": 2.5,
+    "landmine": 2.5,
+    "dumbbell": 2,
+    "kettlebell": 4,
+    "machine": 2.5,
+    "plate-loaded machine": 2.5,
+    "cable": 2.5,
+    "default": 2.5
+   }
+  },
+  "jump_prefer_reps_above": 0.05,
+  "e1rm_max_reps": 10,
+  "e1rm_formula": "epley"
  }
 }

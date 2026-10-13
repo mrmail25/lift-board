@@ -6,12 +6,11 @@
 'use strict';
 const LOG_SCHEMA=1;window.LOG_SCHEMA=LOG_SCHEMA;
 // Logger-only defaults from the spec that have no data file (§5 hard-set RIR, §6 rep ranges / target RIR / increments, §7 e1RM rep cap).
-const CFG={hardRIR:3,repRange:{primary:[6,10],accessory:[8,12],isolation:[10,15]},targetRIR:{primary:3,accessory:3,isolation:2},
-  inc:{lb:{barbell:5,'trap bar':5,'smith machine':5,landmine:5,dumbbell:2.5,kettlebell:2.5,machine:5,'plate-loaded machine':5,cable:5},
-       kg:{barbell:2.5,'trap bar':2.5,'smith machine':2.5,landmine:2.5,dumbbell:1,kettlebell:1,machine:2.5,'plate-loaded machine':2.5,cable:2.5}},
-  jumpPreferReps:.05,e1rmMaxReps:10,lbPerKg:2.20462,swipeMaxPx:120,beepMs:250,longPressMs:550,addSets:3};
+// pure UI values only; coaching defaults come from rules.json `logger` (LR())
+const CFG={lbPerKg:2.20462,swipeMaxPx:120,timerGapPx:12,beepMs:250,longPressMs:550,addSets:3};
+const LR=()=>(typeof RU!='undefined'&&RU&&RU.logger)||{};const HR=()=>S.hardRIR??LR().hardRIR;
 const SKEY='liftboard.logSettings',AKEY='liftboard.logActive',FKEY='liftboard.logs',TKEY='liftboard.logTimer';
-let S={unit:'lb',hardRIR:CFG.hardRIR,rpe:false,sound:false,restByType:{},restBy:{},repBy:{},incBy:{},sticky:{}};
+let S={unit:'lb',hardRIR:null,rpe:false,sound:false,restByType:{},restBy:{},repBy:{},incBy:{},sticky:{}};
 try{Object.assign(S,JSON.parse(localStorage.getItem(SKEY))||{})}catch{}
 const saveS=()=>localStorage.setItem(SKEY,JSON.stringify(S));
 let L={sessions:[],entries:[],sets:[],prs:[]},ALIAS={},db=null,ready=false,cur=null,activeSet=null,openEntry=null,view='plan';
@@ -58,22 +57,22 @@ const dLoad=x=>conv(x.load,sessUnit(x.sessionId),S.unit);
 const slRule=()=>((typeof RU!='undefined'&&RU&&RU.rules)||[]).find(r=>r.id=='session_length')||{};
 const typeRest=t=>{const r=slRule().rest_min_by_type||{};const m=r[t]!=null?r[t]:r.isolation;return Math.round(m*60)};
 const restFor=(exId,kind)=>{const x=EX[resolve(exId)]||{},t=kind=='warmup'?'warmup':x.type;if(kind!='warmup'&&S.restBy[exId]!=null)return S.restBy[exId];if(S.restByType[t]!=null)return S.restByType[t];return typeRest(t)};
-const repFor=exId=>S.repBy[exId]||CFG.repRange[(EX[resolve(exId)]||{}).type]||CFG.repRange.accessory;
-const incFor=exId=>S.incBy[exId]!=null?S.incBy[exId]:(CFG.inc[S.unit][(EX[resolve(exId)]||{}).equipment]||0);
-const tRIR=exId=>CFG.targetRIR[(EX[resolve(exId)]||{}).type]??CFG.targetRIR.accessory;
+const repFor=exId=>S.repBy[exId]||(LR().rep_range_by_type||{})[(EX[resolve(exId)]||{}).type]||(LR().rep_range_by_type||{}).accessory;
+const incFor=exId=>S.incBy[exId]!=null?S.incBy[exId]:(()=>{const t=(LR().load_step||{})[S.unit]||{};return t[(EX[resolve(exId)]||{}).equipment]??t.default??0})();
+const tRIR=exId=>(LR().target_rir_by_type||{})[(EX[resolve(exId)]||{}).type]??(LR().target_rir_by_type||{}).accessory;
 const e1rm=(load,reps)=>load*(1+reps/30);
-const isHard=x=>x.kind=='working'&&x.done&&(x.rir==null||x.rir<=S.hardRIR);
+const isHard=x=>x.kind=='working'&&x.done&&(x.rir==null||x.rir<=HR());
 // ---------- history ----------
 function hist(exId,exceptSid){return L.sessions.filter(s=>s.status=='completed'&&s.id!==exceptSid).sort(byT).reverse().map(s=>{const es=L.entries.filter(e=>e.sessionId==s.id&&resolve(e.exerciseId)==exId);if(!es.length)return null;
   const ids=new Set(es.map(e=>e.id));return{s,e:es[0],sets:L.sets.filter(x=>ids.has(x.entryId)&&x.done).sort((a,b)=>a.idx-b.idx)}}).filter(Boolean)}
 const work=a=>a.filter(x=>x.kind=='working');
-const bestOf=a=>{let b=null;work(a).forEach(x=>{if(x.reps>CFG.e1rmMaxReps||!x.reps)return;const v=e1rm(toLb(x.load,sessUnit(x.sessionId))||0,x.reps);if(!b||v>b.v)b={v,x}});return b};
+const bestOf=a=>{let b=null;work(a).forEach(x=>{if(x.reps>LR().e1rm_max_reps||!x.reps)return;const v=e1rm(toLb(x.load,sessUnit(x.sessionId))||0,x.reps);if(!b||v>b.v)b={v,x}});return b};
 const volOf=a=>work(a).reduce((s,x)=>s+(toLb(x.load,sessUnit(x.sessionId))||0)*(x.reps||0),0);
 function progression(exId,sid){const h=hist(exId,sid),last=h[0];if(!last)return{};const w=work(last.sets);if(!w.length)return{};const[lo,hi]=repFor(exId),inc=incFor(exId),u=sessUnit(last.s.id);
-  const top=Math.max(...w.map(x=>conv(x.load,u,S.unit)||0));const allTop=w.every(x=>x.reps>=hi&&(x.rir==null||x.rir<=tRIR(exId)));
+  const top=Math.max(...w.map(x=>conv(x.load,u,S.unit)||0));const allTop=w.every(x=>x.reps>=hi&&(x.rir==null?LR().missing_rir_meets_target!==false:x.rir<=tRIR(exId)));
   const missed=w.some(x=>x.reps<lo),prevMissed=h[1]&&work(h[1].sets).some(x=>x.reps<lo);const b=bestOf(last.sets);
   const out={beat:b?`Beat ${fmt(conv(b.x.load,u,S.unit))}×${b.x.reps}`:'',cut:missed&&prevMissed};
-  if(allTop){if(inc>0&&top>0&&inc/top<=CFG.jumpPreferReps)out.sugLoad=top+inc,out.sugReps=lo;else out.addRep=true}return out}
+  if(allTop){if(inc>0&&top>0&&inc/top<=LR().jump_prefer_reps_above)out.sugLoad=top+inc,out.sugReps=lo;else out.addRep=true}return out}
 function prevFor(exId,kind,pos,sid){const h=hist(exId,sid)[0];if(!h)return null;const a=h.sets.filter(x=>x.kind==kind);return a[pos]||null}
 // ---------- split order / Continue ----------
 function loaded(){return window.loadedSplit?loadedSplit():null}
@@ -139,7 +138,7 @@ function beatOf(e){const now=bestOf(setsOf(e.id).filter(x=>x.done));if(!now)retu
 function renderSession(){const o=document.getElementById('lg');if(!o||!cur)return;const es=entriesOf(cur.id);
   o.innerHTML=`<div class="lg-top"><b class="lg-name">${H(cur.label)}</b><span class="lg-el" id="lg-el"></span><button class="pri" id="lg-fin">Finish</button></div>
   <div class="lg-body">${es.map(cardHtml).join('')}<button class="lg-addex" id="lg-addex">+ Exercise</button><button class="lg-hide" id="lg-hide">Back to board (session keeps running)</button></div>`;
-  bindSession(o);tick();const a=o.querySelector('.lg-row.active');if(a&&!o._noScroll)a.scrollIntoView({block:'center'})}
+  bindSession(o);tick();const a=o.querySelector('.lg-row.active');if(a&&!o._noScroll)a.scrollIntoView({block:'center'});clearTimer()}
 function bindSession(o){o.querySelector('#lg-fin').onclick=summary;o.querySelector('#lg-addex').onclick=addExercise;o.querySelector('#lg-hide').onclick=closeLogger;
   o.querySelectorAll('.lg-card').forEach(c=>{const e=L.entries.find(x=>x.id==c.dataset.e);
     c.querySelector('.lg-ch').onclick=ev=>{if(ev.target.closest('.lg-more')||ev.target.closest('.lg-title')&&e.id==openEntry)return;openEntry=e.id;activeSet=firstOpenSet(e);renderSession()};
@@ -165,7 +164,7 @@ function check(e,x){if(x.done){x.done=false;x.doneAt=null;x.pr=null;persist(cur.
   const nx=setsOf(e.id).find(s=>!s.done);if(nx)activeSet=nx.id;else{const es=entriesOf(cur.id).filter(q=>!q.skipped),k=es.indexOf(e),ne=es.slice(k+1).concat(es.slice(0,k)).find(q=>setsOf(q.id).some(s=>!s.done));if(ne){openEntry=ne.id;activeSet=firstOpenSet(ne)}else activeSet=null}
   persist(cur.id);renderSession()}
 function prOf(e,x){if(x.kind!='working'||!x.reps)return null;const id=resolve(e.exerciseId),h=hist(id,cur.id);if(!h.length)return null;const all=h.flatMap(q=>work(q.sets)),lb=toLb(x.load,cur.unit)||0,r=[];
-  if(x.reps<=CFG.e1rmMaxReps){const b=Math.max(0,...all.filter(s=>s.reps<=CFG.e1rmMaxReps).map(s=>e1rm(toLb(s.load,sessUnit(s.sessionId))||0,s.reps)));if(e1rm(lb,x.reps)>b+1e-9)r.push('e1rm')}
+  if(x.reps<=LR().e1rm_max_reps){const b=Math.max(0,...all.filter(s=>s.reps<=LR().e1rm_max_reps).map(s=>e1rm(toLb(s.load,sessUnit(s.sessionId))||0,s.reps)));if(e1rm(lb,x.reps)>b+1e-9)r.push('e1rm')}
   const heavier=all.filter(s=>(toLb(s.load,sessUnit(s.sessionId))||0)>=lb-1e-9);if(heavier.length&&x.reps>Math.max(...heavier.map(s=>s.reps)))r.push('repsAtLoad');return r.length?r:null}
 function editSet(e,x){modal(`<h3>Edit set</h3><div class="lg-ed"><label>Type <select id="ed-k"><option value="working" ${x.kind=='working'?'selected':''}>Working</option><option value="warmup" ${x.kind=='warmup'?'selected':''}>Warm-up</option></select></label>
   <label>Load (${S.unit}) <input id="ed-l" inputmode="decimal" value="${fmt(conv(x.load,cur.unit,S.unit))}"></label><label>Reps <input id="ed-r" inputmode="numeric" value="${x.reps??''}"></label>
@@ -186,7 +185,11 @@ function drawKp(){const k=document.getElementById('lg-kp');if(!k||!KP)return;con
     let n;if(t[0]=='−'||t[0]=='+'){n=Math.max(0,(v||0)+(t[0]=='+'?inc:-inc))}else if(t=='⌫'){s=KP.fresh?'':s.slice(0,-1);n=s===''?null:+s}else{s=(KP.fresh?'':s)+t;n=s==='.'?0:+s}KP.fresh=false;
     if(f=='load'){x.load=n==null?null:conv(n,S.unit,cur.unit);x.sug=false}else x.reps=n==null?null:Math.round(n);drawKp();const o=document.getElementById('lg');if(o){o._noScroll=true;renderSession();o._noScroll=false}})}
 // ---------- rest timer (timestamps; survives reload/lock) ----------
-function startTimer(sec){const t={start:Date.now(),end:Date.now()+sec*1000};localStorage.setItem(TKEY,JSON.stringify(t));tick()}
+function startTimer(sec){const t={start:Date.now(),end:Date.now()+sec*1000};localStorage.setItem(TKEY,JSON.stringify(t));tick();requestAnimationFrame(clearTimer)}
+const plural=(n,w)=>`${n} ${w}${n==1?'':'s'}`;
+// keep the active row (or the last row) above the floating rest-timer bar
+function clearTimer(){const t=document.getElementById('lg-timer'),b=document.querySelector('#lg .lg-body');if(!t||!b)return;const top=t.getBoundingClientRect().top,gap=CFG.timerGapPx;
+  b.style.paddingBottom=Math.max(parseFloat(getComputedStyle(b).paddingBottom)||0,t.offsetHeight+2*gap)+'px';const r=b.querySelector('.lg-row.active')||[...b.querySelectorAll('.lg-row')].pop();if(!r)return;const d=r.getBoundingClientRect().bottom-(top-gap);if(d>0)b.scrollBy(0,d)}
 function timer(){try{return JSON.parse(localStorage.getItem(TKEY))}catch{return null}}
 function tick(){const el=document.getElementById('lg-el');if(el&&cur&&cur.startedAt){const m=Math.floor((Date.now()-Date.parse(cur.startedAt))/1000);el.textContent=Math.floor(m/60)+':'+String(m%60).padStart(2,'0')}
   const t=timer();let p=document.getElementById('lg-timer');if(!t||!cur){if(p)p.remove();return}const left=Math.ceil((t.end-Date.now())/1000);
@@ -227,9 +230,9 @@ function addExercise(){const done=countsFor(weekDone().days),rem=countsFor([entr
 function history_(id,e){const h=hist(id).reverse(),nm=(EX[id]||{}).name||(e&&e.nameSnapshot)||id;const pts=h.map(q=>{const b=bestOf(q.sets);return b?b.v:null});
   const vals=pts.filter(v=>v!=null),mx=Math.max(1,...vals),mn=Math.min(mx,...vals),W=300,Hh=110,px=i=>h.length<2?W/2:10+i*(W-20)/(h.length-1),py=v=>Hh-10-(mx==mn?1/2:(v-mn)/(mx-mn))*(Hh-20);
   const line=pts.map((v,i)=>v==null?null:`${px(i).toFixed(1)},${py(v).toFixed(1)}`).filter(Boolean).join(' ');const bu=v=>fmt(conv(v,'lb',S.unit));
-  const best=h.flatMap(q=>work(q.sets).filter(s=>s.reps&&s.reps<=CFG.e1rmMaxReps).map(s=>({s,v:e1rm(toLb(s.load,sessUnit(s.sessionId))||0,s.reps),d:q.s.date}))).sort((a,b)=>b.v-a.v).slice(0,5);
+  const best=h.flatMap(q=>work(q.sets).filter(s=>s.reps&&s.reps<=LR().e1rm_max_reps).map(s=>({s,v:e1rm(toLb(s.load,sessUnit(s.sessionId))||0,s.reps),d:q.s.date}))).sort((a,b)=>b.v-a.v).slice(0,5);
   const prs=new Set(L.prs.filter(p=>resolve(p.exerciseId)==id).map(p=>p.setId));
-  modal(`<div id="lg-hist"><h3>${H(nm)}${isArch(id)?' <em>archived exercise</em>':''}</h3><p class="cf-hint">Estimated 1RM (Epley, working sets ≤ ${CFG.e1rmMaxReps} reps), ${S.unit}.</p>
+  modal(`<div id="lg-hist"><h3>${H(nm)}${isArch(id)?' <em>archived exercise</em>':''}</h3><p class="cf-hint">Estimated 1RM (Epley, working sets ≤ ${LR().e1rm_max_reps} reps), ${S.unit}.</p>
   ${vals.length?`<svg class="lg-chart" viewBox="0 0 ${W} ${Hh}"><polyline points="${line}"/>${pts.map((v,i)=>v==null?'':`<circle cx="${px(i).toFixed(1)}" cy="${py(v).toFixed(1)}" r="3"/>`).join('')}<text x="4" y="12">${bu(mx)}</text><text x="4" y="${Hh-2}">${bu(mn)}</text></svg>`:'<p class="cf-hint">No completed sessions yet.</p>'}
   ${best.length?`<h4>Best sets</h4><table class="lg-tbl">${best.map(b=>`<tr><td>${fmt(dLoad(b.s))} × ${b.s.reps}${b.s.rir!=null?' @'+b.s.rir:''}</td><td>e1RM ${bu(b.v)}</td><td>${new Date(b.d).toLocaleDateString()}</td></tr>`).join('')}</table>`:''}
   <h4>Sessions</h4>${h.slice().reverse().map(q=>`<div class="lg-hs"><b>${new Date(q.s.date).toLocaleDateString()}</b> ${H(q.s.label)}<div>${q.sets.map(s=>`<span class="${s.kind=='warmup'?'w':''}">${s.kind=='warmup'?'W ':''}${fmt(dLoad(s))}×${s.reps}${s.rir!=null?' @'+s.rir:''}${prs.has(s.id)?' 🏆':''}</span>`).join(' ')}</div>${q.e.notes?`<small>📌 ${H(q.e.notes)}</small>`:''}</div>`).join('')||'<p class="cf-hint">None yet.</p>'}
@@ -247,8 +250,8 @@ function sessStats(s){const es=entriesOf(s.id),live=es.filter(e=>!isArch(e.exerc
   const doneW=es.flatMap(e=>e.skipped?[]:setsOf(e.id)).filter(x=>x.kind=='working'&&x.done).length;const skippedW=es.filter(e=>e.skipped).reduce((a,e)=>a+setsOf(e.id).filter(x=>x.kind=='working').length,0);
   return{hard:all.filter(isHard).length,doneW,planned,skippedW,beat:es.map(e=>beatOf(e)).filter(b=>b=='▲').length,prs:es.flatMap(e=>setsOf(e.id).filter(x=>x.pr).map(x=>({e,x}))),
     min:Math.round((Date.now()-Date.parse(s.startedAt))/60000)}}
-function summary(){closeKp();const s=cur,st=sessStats(s),rows=diffRows(s),m=loaded();
-  modal(`<div id="lg-sum"><h3>Finish ${H(s.label)}</h3><div class="lg-stats"><span>${st.min} min</span><span>${st.hard} hard sets</span><span>${st.doneW}/${st.planned} planned working sets${st.skippedW?` · ${st.skippedW} skipped`:''}</span><span>${st.beat} beat last time</span></div>
+function summary(){closeKp();const ot=document.getElementById('toast');if(ot)ot.remove();const s=cur,st=sessStats(s),rows=diffRows(s),m=loaded();
+  modal(`<div id="lg-sum"><h3>Finish ${H(s.label)}</h3><div class="lg-stats"><span>${st.min} min</span><span>${plural(st.hard,'hard set')}</span><span>${st.doneW}/${st.planned} planned working sets${st.skippedW?` · ${st.skippedW} skipped`:''}</span><span>${st.beat} beat last time</span></div>
   ${st.prs.length?`<h4>PRs</h4><ul>${st.prs.map(p=>`<li>🏆 ${H(exName(p.e))}: ${fmt(conv(p.x.load,s.unit,S.unit))}×${p.x.reps} (${p.x.pr.map(k=>k=='e1rm'?'estimated 1RM':'reps at load').join(', ')})</li>`).join('')}</ul>`:''}
   <label>Session notes<textarea id="sm-n">${H(s.notes||'')}</textarea></label>
   <h4>Write back to routine</h4>${rows.length?`<p class="cf-hint">Structural changes only (loads, reps and RIR are never written back).</p><div class="lg-diff">${rows.map((r,i)=>`<label><input type="checkbox" data-i="${i}" checked> ${H(r.txt)}</label>`).join('')}</div>
@@ -274,18 +277,18 @@ function weekView(tab){tab=tab||'week';const wd=weekDone(),days=view=='done'?wd.
   modal(`<div id="lg-wk"><div class="lg-tabs">${['week','history','settings'].map(t=>`<button data-t="${t}" class="${t==tab?'on':''}">${t[0].toUpperCase()+t.slice(1)}</button>`).join('')}</div>
   ${tab=='week'?`<div class="lg-seg"><button id="wk-plan" class="${view=='plan'?'on':''}">Planned</button><button id="wk-done" class="${view=='done'?'on':''}">Done</button></div><div id="lg-map"></div>
    ${wd.arch?`<p class="lg-arch">${wd.arch} set${wd.arch>1?'s':''} from archived exercises not counted.</p>`:''}
-   <p class="cf-hint">Done = hard sets this week (RIR ≤ ${S.hardRIR} or not logged), counted with the board's rule. Estimates.</p>
+   <p class="cf-hint">Done = hard sets this week (RIR ≤ ${HR()} or not logged), counted with the board's rule. Estimates.</p>
    <table class="lg-tbl lg-cnt">${MUS.map(m=>`<tr data-m="${m}" class="${status(view=='done'?dc[m]:pc[m],tgt(m))}"><td>${H(cap(lab(m)))}</td><td class="dn" data-v="${dc[m]}">${dc[m]}</td><td class="pl" data-v="${pc[m]}">/ ${pc[m]}</td><td>${tgt(m).min}–${tgt(m).max}</td></tr>`).join('')}</table>
    <h4>Adherence this week</h4><p class="lg-adh" data-c="${ad.completed}" data-s="${ad.skipped}" data-n="${ad.notStarted}">Sessions: ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started<br>Working sets: ${ad.doneW}/${ad.planW} done${ad.planW?` (${Math.round(ad.doneW/ad.planW*100)}%)`:''}${ad.skW?` · ${ad.skW} skipped`:''}</p>`:''}
   ${tab=='history'?`<div class="lg-hl">${L.sessions.filter(s=>s.status!='active').sort(byT).reverse().map(s=>`<div class="lg-hs ${s.status}"><b>${new Date(s.date).toLocaleDateString()}</b> ${H(s.label)} <em>${s.status}</em>${s.status=='completed'?`<div>${entriesOf(s.id).map(e=>`<button class="lg-hx" data-x="${H(resolve(e.exerciseId))}">${H(exName(e))}${isArch(e.exerciseId)?' (archived)':''}</button>`).join(' ')}</div>`:''}</div>`).join('')||'<p class="cf-hint">No sessions yet.</p>'}</div>`:''}
   ${tab=='settings'?`<div class="lg-set"><label>Units <span class="lg-seg"><button data-u="lb" class="${S.unit=='lb'?'on':''}">lb</button><button data-u="kg" class="${S.unit=='kg'?'on':''}">kg</button></span></label>
-   <label>Hard set = RIR ≤ <span class="lg-seg"><button data-h="-">−</button><b id="st-h">${S.hardRIR}</b><button data-h="+">+</button></span></label>
+   <label>Hard set = RIR ≤ <span class="lg-seg"><button data-h="-">−</button><b id="st-h">${HR()}</b><button data-h="+">+</button></span></label>
    <label><input type="checkbox" id="st-rpe" ${S.rpe?'checked':''}> Show effort as RPE (10 − RIR)</label><label><input type="checkbox" id="st-snd" ${S.sound?'checked':''}> Sound when rest ends</label></div>`:''}
   <div class="cf-btns"><button id="wk-x">Close</button></div></div>`);
   document.querySelectorAll('#lg-wk .lg-tabs button').forEach(b=>b.onclick=()=>weekView(b.dataset.t));document.getElementById('wk-x').onclick=closeModal;
   if(tab=='week'){heatInto(document.getElementById('lg-map'),days,'lg');document.getElementById('wk-plan').onclick=()=>{view='plan';weekView()};document.getElementById('wk-done').onclick=()=>{view='done';weekView()}}
   if(tab=='history')document.querySelectorAll('.lg-hx').forEach(b=>b.onclick=()=>history_(b.dataset.x));
-  if(tab=='settings'){document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{S.unit=b.dataset.u;saveS();weekView('settings')});document.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{S.hardRIR=Math.max(0,Math.min(5,S.hardRIR+(b.dataset.h=='+'?1:-1)));saveS();weekView('settings')});
+  if(tab=='settings'){document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{S.unit=b.dataset.u;saveS();weekView('settings')});document.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{S.hardRIR=(()=>{const r=LR().hardRIR_range||[];return Math.max(r[0],Math.min(r[1],HR()+(b.dataset.h=='+'?1:-1)))})();saveS();weekView('settings')});
     document.getElementById('st-rpe').onchange=e=>{S.rpe=e.target.checked;saveS()};document.getElementById('st-snd').onchange=e=>{S.sound=e.target.checked;saveS()}}}
 // ---------- backup / restore ----------
 window.logBackup=()=>({schema:LOG_SCHEMA,sessions:L.sessions,entries:L.entries,sets:L.sets,prs:L.prs,settings:S});
@@ -310,7 +313,7 @@ function buildBar(){if(document.getElementById('logbar'))return refreshBar();con
   b.querySelector('#lg-cont').onclick=()=>{if(cur)return openLogger();const c=continueIdx();if(c!=null)startSession(c)};b.querySelector('#lg-days').onclick=startSheet;b.querySelector('#lg-wkb').onclick=()=>weekView();refreshBar()}
 // keep the Continue label in sync with board edits
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);if(ready)refreshBar();return x}}
-window.LG={get L(){return L},get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG};
+window.LG={get L(){return L},get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();
