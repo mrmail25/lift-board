@@ -60,7 +60,10 @@ const restFor=(exId,kind)=>{const x=EX[resolve(exId)]||{},t=kind=='warmup'?'warm
 const repFor=exId=>S.repBy[exId]||(LR().rep_range_by_type||{})[(EX[resolve(exId)]||{}).type]||(LR().rep_range_by_type||{}).accessory;
 const incFor=exId=>S.incBy[exId]!=null?S.incBy[exId]:(()=>{const t=(LR().load_step||{})[S.unit]||{};return t[(EX[resolve(exId)]||{}).equipment]??t.default??0})();
 const tRIR=exId=>(LR().target_rir_by_type||{})[(EX[resolve(exId)]||{}).type]??(LR().target_rir_by_type||{}).accessory;
-const e1rm=(load,reps)=>load*(1+reps/30);
+// e1RM formula chosen by rules.json logger.e1rm_formula; unknown values fall back to Epley with a warning
+const E1RM={epley:(w,r)=>w*(1+r/30),brzycki:(w,r)=>w*36/(37-r)};let e1warned=null;
+function e1Formula(){const f=LR().e1rm_formula;if(E1RM[f])return{name:f,fn:E1RM[f],warn:null};const warn=`Unknown e1rm_formula '${f}' in rules.json; using Epley`;if(e1warned!==f){e1warned=f;console.warn('[Lift Board] '+warn)}return{name:Object.keys(E1RM)[0],fn:E1RM.epley,warn}}
+const e1rm=(load,reps)=>e1Formula().fn(load,reps);
 const isHard=x=>x.kind=='working'&&x.done&&(x.rir==null||x.rir<=HR());
 // ---------- history ----------
 function hist(exId,exceptSid){return L.sessions.filter(s=>s.status=='completed'&&s.id!==exceptSid).sort(byT).reverse().map(s=>{const es=L.entries.filter(e=>e.sessionId==s.id&&resolve(e.exerciseId)==exId);if(!es.length)return null;
@@ -232,7 +235,7 @@ function history_(id,e){const h=hist(id).reverse(),nm=(EX[id]||{}).name||(e&&e.n
   const line=pts.map((v,i)=>v==null?null:`${px(i).toFixed(1)},${py(v).toFixed(1)}`).filter(Boolean).join(' ');const bu=v=>fmt(conv(v,'lb',S.unit));
   const best=h.flatMap(q=>work(q.sets).filter(s=>s.reps&&s.reps<=LR().e1rm_max_reps).map(s=>({s,v:e1rm(toLb(s.load,sessUnit(s.sessionId))||0,s.reps),d:q.s.date}))).sort((a,b)=>b.v-a.v).slice(0,5);
   const prs=new Set(L.prs.filter(p=>resolve(p.exerciseId)==id).map(p=>p.setId));
-  modal(`<div id="lg-hist"><h3>${H(nm)}${isArch(id)?' <em>archived exercise</em>':''}</h3><p class="cf-hint">Estimated 1RM (Epley, working sets ≤ ${LR().e1rm_max_reps} reps), ${S.unit}.</p>
+  modal(`<div id="lg-hist"><h3>${H(nm)}${isArch(id)?' <em>archived exercise</em>':''}</h3><p class="cf-hint">Estimated 1RM (${cap(e1Formula().name)}, working sets ≤ ${LR().e1rm_max_reps} reps), ${S.unit}.</p>${e1Formula().warn?`<p class="lg-warn" id="e1-warn">⚠ ${H(e1Formula().warn)}</p>`:''}
   ${vals.length?`<svg class="lg-chart" viewBox="0 0 ${W} ${Hh}"><polyline points="${line}"/>${pts.map((v,i)=>v==null?'':`<circle cx="${px(i).toFixed(1)}" cy="${py(v).toFixed(1)}" r="3"/>`).join('')}<text x="4" y="12">${bu(mx)}</text><text x="4" y="${Hh-2}">${bu(mn)}</text></svg>`:'<p class="cf-hint">No completed sessions yet.</p>'}
   ${best.length?`<h4>Best sets</h4><table class="lg-tbl">${best.map(b=>`<tr><td>${fmt(dLoad(b.s))} × ${b.s.reps}${b.s.rir!=null?' @'+b.s.rir:''}</td><td>e1RM ${bu(b.v)}</td><td>${new Date(b.d).toLocaleDateString()}</td></tr>`).join('')}</table>`:''}
   <h4>Sessions</h4>${h.slice().reverse().map(q=>`<div class="lg-hs"><b>${new Date(q.s.date).toLocaleDateString()}</b> ${H(q.s.label)}<div>${q.sets.map(s=>`<span class="${s.kind=='warmup'?'w':''}">${s.kind=='warmup'?'W ':''}${fmt(dLoad(s))}×${s.reps}${s.rir!=null?' @'+s.rir:''}${prs.has(s.id)?' 🏆':''}</span>`).join(' ')}</div>${q.e.notes?`<small>📌 ${H(q.e.notes)}</small>`:''}</div>`).join('')||'<p class="cf-hint">None yet.</p>'}
@@ -313,7 +316,7 @@ function buildBar(){if(document.getElementById('logbar'))return refreshBar();con
   b.querySelector('#lg-cont').onclick=()=>{if(cur)return openLogger();const c=continueIdx();if(c!=null)startSession(c)};b.querySelector('#lg-days').onclick=startSheet;b.querySelector('#lg-wkb').onclick=()=>weekView();refreshBar()}
 // keep the Continue label in sync with board edits
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);if(ready)refreshBar();return x}}
-window.LG={get L(){return L},get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR};
+window.LG={get L(){return L},get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();

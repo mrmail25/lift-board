@@ -42,3 +42,4 @@ body:has(#lg-kp) #lg-timer{bottom:300px}
 .lg-chart{width:100%;height:auto;background:var(--lg-card)}.lg-chart polyline{fill:none;stroke:var(--lg-ok);stroke-width:2}.lg-chart circle{fill:var(--lg-ok)}.lg-chart text{fill:var(--lg-dim);font-size:10px}
 .heat-copy{pointer-events:none}#lg-map .figs{display:flex}
 #toast{z-index:300}
+.lg-warn{color:var(--lg-dng);font-size:12px;margin:2px 0}
