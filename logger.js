@@ -1,18 +1,22 @@
-// Lift Board workout logger v1 (release v24), built from data/logging-spec.md v0.3.
+// Lift Board workout logger (v24; v25: Train page, tabs, notes, options sheet, in-place tray), built from data/logging-spec.md v0.3.
 // One source of truth (§0.1): uses the board's globals and data (EX, MUS, RULE, tgt, totals, status, state, RU from rules.json,
 // heat.js via heatInto, fixes.js swaps/toast, custom.js modal, v14.js split helpers). No colours, bands, level factors,
 // rest values or muscle lists live in this file.
 (function(){
 'use strict';
-const LOG_SCHEMA=1;window.LOG_SCHEMA=LOG_SCHEMA;
+const LOG_SCHEMA=2;window.LOG_SCHEMA=LOG_SCHEMA;
 // Logger-only defaults from the spec that have no data file (§5 hard-set RIR, §6 rep ranges / target RIR / increments, §7 e1RM rep cap).
 // pure UI values only; coaching defaults come from rules.json `logger` (LR())
-const CFG={lbPerKg:2.20462,swipeMaxPx:120,timerGapPx:12,beepMs:250,longPressMs:550,addSets:3};
+const CFG={restStepSec:15,kpSwipePx:60,lbPerKg:2.20462,swipeMaxPx:120,timerGapPx:12,beepMs:250,longPressMs:550,addSets:3};
 const LR=()=>(typeof RU!='undefined'&&RU&&RU.logger)||{};const HR=()=>S.hardRIR??LR().hardRIR;
 const SKEY='liftboard.logSettings',AKEY='liftboard.logActive',FKEY='liftboard.logs',TKEY='liftboard.logTimer';
-let S={unit:'lb',hardRIR:null,rpe:false,sound:false,restByType:{},restBy:{},repBy:{},incBy:{},sticky:{}};
+let S={unit:'lb',hardRIR:null,rpe:false,sound:false,restByType:{},restBy:{},repBy:{}};
 try{Object.assign(S,JSON.parse(localStorage.getItem(SKEY))||{})}catch{}
 const saveS=()=>localStorage.setItem(SKEY,JSON.stringify(S));
+// v25 settings migration (kept, not lost): v24 sticky notes -> carried from the last session's workout note; per-exercise load step removed (rules.json default)
+function migrateS(){let ch=false;['sticky','incBy'].forEach(k=>{if(k in S){if(S[k]&&Object.keys(S[k]).length){S.v24=S.v24||{};S.v24[k]=S[k]}delete S[k];ch=true}});if(ch)saveS()}migrateS();
+const NKEY='liftboard.exNotes';let NOTES={};try{NOTES=JSON.parse(localStorage.getItem(NKEY))||{}}catch{}
+const saveN=()=>localStorage.setItem(NKEY,JSON.stringify(NOTES));const exNote=id=>NOTES[resolve(id)]||'';
 let L={sessions:[],entries:[],sets:[],prs:[]},ALIAS={},db=null,ready=false,cur=null,activeSet=null,openEntry=null,view='plan';
 const H=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>'&#'+c.charCodeAt(0)+';');
 const uid=p=>p+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
@@ -22,10 +26,11 @@ const tOf=s=>s.endedAt||s.date;const byT=(a,b)=>tOf(a)<tOf(b)?-1:tOf(a)>tOf(b)?1
 function resolve(id){let x=id,n=0;while(ALIAS[x]&&n++<50)x=ALIAS[x];return x}
 const isArch=id=>!EX[resolve(id)];
 const exName=e=>{const x=EX[resolve(e.exerciseId)];return x?x.name:(e.nameSnapshot||e.exerciseId)};
-function migrateIds(){let ch=false;const f=o=>{['exerciseId','swappedFrom'].forEach(k=>{if(o[k]&&resolve(o[k])!==o[k]){o[k]=resolve(o[k]);ch=true}})};
+function migrateNoteIds(){Object.keys(NOTES).forEach(k=>{const r=resolve(k);if(r!==k){if(!NOTES[r])NOTES[r]=NOTES[k];delete NOTES[k];saveN()}})}
+function migrateIds(){migrateNoteIds();let ch=false;const f=o=>{['exerciseId','swappedFrom'].forEach(k=>{if(o[k]&&resolve(o[k])!==o[k]){o[k]=resolve(o[k]);ch=true}})};
   L.entries.forEach(f);L.prs.forEach(f);L.sessions.forEach(s=>((s.snapshot||{}).exercises||[]).forEach(f));return ch}
 // ---------- schema migrations (ordered); schema 0 = pre-schema shape (no schema/unit/status, entry.exercise, set.weight) ----------
-const MIG={0:d=>{(d.sessions||[]).forEach(s=>{s.status=s.status||'completed';s.unit=s.unit||'lb';s.snapshot=s.snapshot||{exercises:[]};s.notes=s.notes||''});
+const MIG={1:d=>{(d.entries||[]).forEach(e=>{if(typeof e.notes!='string')e.notes=''});return d},0:d=>{(d.sessions||[]).forEach(s=>{s.status=s.status||'completed';s.unit=s.unit||'lb';s.snapshot=s.snapshot||{exercises:[]};s.notes=s.notes||''});
   (d.entries||[]).forEach(e=>{if(e.exercise&&!e.exerciseId){e.exerciseId=e.exercise;delete e.exercise}e.nameSnapshot=e.nameSnapshot||(EX[e.exerciseId]||{}).name||e.exerciseId;e.notes=e.notes||'';e.skipped=!!e.skipped});
   const em={};(d.entries||[]).forEach(e=>em[e.id]=e);(d.sets||[]).forEach(x=>{if('weight' in x&&!('load' in x)){x.load=x.weight;delete x.weight}x.kind=x.kind||'working';if(!x.sessionId&&em[x.entryId])x.sessionId=em[x.entryId].sessionId;if(!('rir' in x))x.rir=null});
   d.prs=d.prs||[];return d}};
@@ -58,7 +63,7 @@ const slRule=()=>((typeof RU!='undefined'&&RU&&RU.rules)||[]).find(r=>r.id=='ses
 const typeRest=t=>{const r=slRule().rest_min_by_type||{};const m=r[t]!=null?r[t]:r.isolation;return Math.round(m*60)};
 const restFor=(exId,kind)=>{const x=EX[resolve(exId)]||{},t=kind=='warmup'?'warmup':x.type;if(kind!='warmup'&&S.restBy[exId]!=null)return S.restBy[exId];if(S.restByType[t]!=null)return S.restByType[t];return typeRest(t)};
 const repFor=exId=>S.repBy[exId]||(LR().rep_range_by_type||{})[(EX[resolve(exId)]||{}).type]||(LR().rep_range_by_type||{}).accessory;
-const incFor=exId=>S.incBy[exId]!=null?S.incBy[exId]:(()=>{const t=(LR().load_step||{})[S.unit]||{};return t[(EX[resolve(exId)]||{}).equipment]??t.default??0})();
+const incFor=exId=>(()=>{const t=(LR().load_step||{})[S.unit]||{};return t[(EX[resolve(exId)]||{}).equipment]??t.default??0})();
 const tRIR=exId=>(LR().target_rir_by_type||{})[(EX[resolve(exId)]||{}).type]??(LR().target_rir_by_type||{}).accessory;
 // e1RM formula chosen by rules.json logger.e1rm_formula; unknown values fall back to Epley with a warning
 const E1RM={epley:(w,r)=>w*(1+r/30),brzycki:(w,r)=>w*36/(37-r)};let e1warned=null;
@@ -76,6 +81,7 @@ function progression(exId,sid){const h=hist(exId,sid),last=h[0];if(!last)return{
   const missed=w.some(x=>x.reps<lo),prevMissed=h[1]&&work(h[1].sets).some(x=>x.reps<lo);const b=bestOf(last.sets);
   const out={beat:b?`Beat ${fmt(conv(b.x.load,u,S.unit))}×${b.x.reps}`:'',cut:missed&&prevMissed};
   if(allTop){if(inc>0&&top>0&&inc/top<=LR().jump_prefer_reps_above)out.sugLoad=top+inc,out.sugReps=lo;else out.addRep=true}return out}
+function carryNote(id){const r=resolve(id),h=hist(r,cur&&cur.id)[0];if(h&&h.e.notes)return h.e.notes;const v=(S.v24||{}).sticky||{};return v[r]||v[id]||''}
 function prevFor(exId,kind,pos,sid){const h=hist(exId,sid)[0];if(!h)return null;const a=h.sets.filter(x=>x.kind==kind);return a[pos]||null}
 // ---------- split order / Continue ----------
 function loaded(){return window.loadedSplit?loadedSplit():null}
@@ -93,7 +99,7 @@ function prefill(e){const p=progression(resolve(e.exerciseId),e.sessionId);e.cue
     if(x.kind=='working'&&p.sugLoad!=null){x.load=conv(p.sugLoad,S.unit,cur.unit);x.reps=p.sugReps;x.sug=true}})}
 function startSession(i){if(cur)return openLogger();const tiles=dayTiles(i);if(!tiles.length)return;const m=loaded();
   const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),splitId:m?'my:'+m.id:undefined,dayIdx:i,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:tiles.map(t=>({exerciseId:t.id,sets:t.sets}))}};
-  L.sessions.push(s);cur=s;tiles.forEach((t,k)=>{const e={id:uid('e'),sessionId:s.id,order:k,exerciseId:t.id,nameSnapshot:(EX[t.id]||{}).name||t.id,repRange:[...repFor(t.id)],restSec:restFor(t.id,'working'),notes:S.sticky[t.id]||'',skipped:false};
+  L.sessions.push(s);cur=s;tiles.forEach((t,k)=>{const e={id:uid('e'),sessionId:s.id,order:k,exerciseId:t.id,nameSnapshot:(EX[t.id]||{}).name||t.id,repRange:[...repFor(t.id)],restSec:restFor(t.id,'working'),notes:carryNote(t.id),skipped:false};
     L.entries.push(e);for(let j=0;j<t.sets;j++)L.sets.push(newSet(e,'working',j));prefill(e)});
   const first=L.entries.find(e=>e.sessionId==s.id);openEntry=first&&first.id;activeSet=firstOpenSet(first);persist(s.id);closeModal();openLogger()}
 function skipDays(list){const made=list.map(i=>{const m=loaded();const s={id:uid('s'),schema:LOG_SCHEMA,status:'skipped',date:nowISO(),dayIdx:i,splitId:m?'my:'+m.id:undefined,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:dayTiles(i).map(t=>({exerciseId:t.id,sets:t.sets}))}};L.sessions.push(s);return s});
@@ -102,7 +108,7 @@ const entriesOf=sid=>L.entries.filter(e=>e.sessionId==sid).sort((a,b)=>a.order-b
 const setsOf=eid=>L.sets.filter(x=>x.entryId==eid).sort((a,b)=>a.idx-b.idx);
 function firstOpenSet(e){if(!e)return null;const x=setsOf(e.id).find(x=>!x.done);return x?x.id:null}
 // ---------- board bottom bar + start sheet ----------
-function refreshBar(){const b=document.getElementById('logbar');if(!b)return;const c=continueIdx();const bt=b.querySelector('#lg-cont');
+function refreshBar(){const tt=document.getElementById('tab-train');if(tt)tt.classList.toggle('live',!!cur);const b=document.getElementById('lg');if(!b||!b.querySelector('#lg-cont'))return;const c=continueIdx();const bt=b.querySelector('#lg-cont');
   if(cur){bt.textContent='Resume: '+cur.label;bt.disabled=false}else if(c==null){bt.textContent='Continue: add exercises first';bt.disabled=true}else{bt.textContent='Continue: '+dayLabel(c);bt.disabled=false}}
 function startSheet(){const c=continueIdx(),o=order();
   modal(`<div id="lg-start"><h3>Start a session</h3>${c==null?'<p class="cf-hint">Put exercises on the board first.</p>':`<button class="pri lg-big" id="lg-go">Continue: ${H(dayLabel(c))}</button>`}
@@ -117,8 +123,20 @@ function startSheet(){const c=continueIdx(),o=order();
       <div class="cf-btns"><button class="pri" id="lg-sk-no">No, just start ${DAYS[i]}</button><button id="lg-sk-yes">Yes, skip them</button></div>`);
     document.getElementById('lg-sk-no').onclick=()=>startSession(i);document.getElementById('lg-sk-yes').onclick=()=>{skipDays(between);startSession(i)}})}
 // ---------- logger screen ----------
-function openLogger(){closeModal();let o=document.getElementById('lg');if(!o){o=document.createElement('div');o.id='lg';document.body.appendChild(o)}document.body.classList.add('lg-on');renderSession()}
-function closeLogger(){const o=document.getElementById('lg');if(o)o.remove();document.body.classList.remove('lg-on');closeKp();refreshBar()}
+// ---------- app shell: Build / Train / Analytics pages (bottom tab bar). Pages are shown/hidden, never rebuilt, so a running
+// session, its timer, an open keypad and half-typed notes survive tab switches. ----------
+function setView(v){if(!['build','train','analytics'].includes(v))v='build';document.body.dataset.view=v;
+  document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.v==v)));
+  if(v=='train'){const o=document.getElementById('lg');if(cur){if(!o.querySelector('.lg-body:not(#lg-start-pg)'))renderSession()}else if(!o.querySelector('#lg-start-pg'))renderStart()}
+  if(v=='analytics'&&typeof AN!='undefined'){AN.open=true;if(window.anUpdate)anUpdate()}
+  if(v=='build'&&typeof render=='function')render();refreshBar()}
+function openLogger(){closeModal();setView('train');renderSession()}
+function closeLogger(){closeKp();renderStart();refreshBar()}
+function renderStart(){const o=document.getElementById('lg');if(!o)return;const ad=adherence();
+  o.innerHTML=`<div class="lg-top"><b class="lg-name">Train</b></div><div class="lg-body" id="lg-start-pg"><button class="pri lg-big" id="lg-cont"></button>
+  <div class="lg-startbtns"><button id="lg-days">Choose a day…</button><button id="lg-wkb">Week &amp; history</button></div>
+  <p class="cf-hint lg-adh0">This week: ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started</p></div>`;
+  o.querySelector('#lg-cont').onclick=()=>{if(cur)return openLogger();const c=continueIdx();if(c!=null)startSession(c)};o.querySelector('#lg-days').onclick=startSheet;o.querySelector('#lg-wkb').onclick=()=>weekView();refreshBar()}
 function cueHtml(e){const c=e.cue||{};const a=[];if(c.sugLoad!=null)a.push(`↑ Try ${fmt(c.sugLoad)}×${c.sugReps}`);else if(c.addRep)a.push('Add a rep this time');if(c.beat)a.push(H(c.beat));if(c.cut)a.push('Missed the range twice: consider −5%');return a.join(' · ')}
 function rowHtml(e,x,n){const pv=x.kind=='working'?prevFor(resolve(e.exerciseId),'working',n.w,cur.id):prevFor(resolve(e.exerciseId),'warmup',n.u,cur.id);
   const pvs=pv?`${fmt(dLoad(pv))} × ${pv.reps}${pv.rir!=null?' @'+pv.rir:''}`:'—';const L_=conv(x.load,cur.unit,S.unit);
@@ -133,20 +151,35 @@ function rowHtml(e,x,n){const pv=x.kind=='working'?prevFor(resolve(e.exerciseId)
 function cardHtml(e){const x=EX[resolve(e.exerciseId)],sets=setsOf(e.id),done=sets.filter(s=>s.done).length,open=e.id==openEntry,n={w:0,u:0};
   const rows=sets.map(s=>{const h=rowHtml(e,s,n);s.kind=='working'?n.w++:n.u++;return h}).join('');
   return`<div class="lg-card${open?' open':''}${e.skipped?' skipped':''}${x?'':' arch'}" data-e="${e.id}"><div class="lg-ch"><button class="lg-title">${x?ICON[x.type]:'⌧'} ${H(exName(e))}${x?'':' <em>archived exercise</em>'}${e.swappedFrom?' <em>swapped</em>':''}</button>
-   <span class="lg-rr">${e.repRange[0]}–${e.repRange[1]}</span><span class="lg-cnt">${done}/${sets.length}</span><button class="lg-more" aria-label="More">⋯</button></div>
-   ${open&&!e.skipped?`<div class="lg-cue">${cueHtml(e)}${beatHtml(e)}</div>${e.notes?`<div class="lg-pin">📌 ${H(e.notes)}</div>`:''}<div class="lg-sets">${rows}</div><button class="lg-addset">+ Set</button>`:''}${e.skipped?'<div class="lg-cue">Skipped</div>':''}</div>`}
+   <span class="lg-cnt">${done}/${sets.length}</span><button class="lg-more" aria-label="Options">⋯</button></div>
+   <div class="lg-meta"><button class="lg-chip lg-rest" aria-label="Rest time, tap to adjust">⏱ ${mmss(e.restSec)}</button><button class="lg-chip lg-rr" aria-label="Rep range, tap to adjust">${e.repRange[0]}–${e.repRange[1]} reps</button></div>
+   ${x&&(open||exNote(e.exerciseId))?pnHtml(resolve(e.exerciseId)):''}
+   ${open&&!e.skipped?`<div class="lg-cue">${cueHtml(e)}${beatHtml(e)}</div><div class="lg-sets">${rows}</div><button class="lg-addset">+ Set</button>
+   <label class="lg-wn">Workout note <small>(this session; carries to next time)</small><textarea data-wn="${e.id}" rows="2" placeholder="How did it go?">${H(e.notes||'')}</textarea></label>`:''}${e.skipped?'<div class="lg-cue">Skipped</div>':''}</div>`}
+const mmss=sec=>sec==null?'–':Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
+function adjSheet(e){const id=e.exerciseId;const draw=()=>{modal(`<div id="lg-adj"><h3>${H(exName(e))}</h3>
+  <div class="lg-adjrow"><span>Rest</span><button data-a="r-" aria-label="Less rest">−${CFG.restStepSec}s</button><b id="adj-r">${mmss(e.restSec)}</b><button data-a="r+" aria-label="More rest">+${CFG.restStepSec}s</button></div>
+  <div class="lg-adjrow"><span>Reps from</span><button data-a="l-">−</button><b id="adj-l">${e.repRange[0]}</b><button data-a="l+">+</button></div>
+  <div class="lg-adjrow"><span>Reps to</span><button data-a="h-">−</button><b id="adj-h">${e.repRange[1]}</b><button data-a="h+">+</button></div>
+  <div class="cf-btns"><button class="pri" id="adj-ok">Done</button></div></div>`);
+  document.querySelectorAll('#lg-adj [data-a]').forEach(b=>b.onclick=()=>{const a=b.dataset.a,d=a[1]=='+'?1:-1;let[lo,hi]=e.repRange;
+    if(a[0]=='r'){e.restSec=Math.max(0,(e.restSec||0)+d*CFG.restStepSec);S.restBy[id]=e.restSec}
+    if(a[0]=='l')lo=Math.max(1,Math.min(hi,lo+d));if(a[0]=='h')hi=Math.max(lo,hi+d);if(a[0]!='r'){e.repRange=[lo,hi];S.repBy[id]=[lo,hi]}saveS();persist(cur.id);draw()});
+  document.getElementById('adj-ok').onclick=()=>{closeModal();renderSession()}};draw()}
 function beatHtml(e){const b=beatOf(e);return b?` <b class="lg-beat">${b}</b>`:''}
 function beatOf(e){const now=bestOf(setsOf(e.id).filter(x=>x.done));if(!now)return'';const h=hist(resolve(e.exerciseId),cur&&cur.id)[0];if(!h)return'';const prev=bestOf(h.sets);if(!prev)return'▲';
   if(Math.abs(now.v-prev.v)>1e-9)return now.v>prev.v?'▲':'▼';const a=volOf(setsOf(e.id).filter(x=>x.done)),b=volOf(h.sets);return a>b?'▲':a<b?'▼':'='}
 function renderSession(){const o=document.getElementById('lg');if(!o||!cur)return;const es=entriesOf(cur.id);
   o.innerHTML=`<div class="lg-top"><b class="lg-name">${H(cur.label)}</b><span class="lg-el" id="lg-el"></span><button class="pri" id="lg-fin">Finish</button></div>
-  <div class="lg-body">${es.map(cardHtml).join('')}<button class="lg-addex" id="lg-addex">+ Exercise</button><button class="lg-hide" id="lg-hide">Back to board (session keeps running)</button></div>`;
+  <div class="lg-body">${es.map(cardHtml).join('')}<button class="lg-addex" id="lg-addex">+ Exercise</button><button class="lg-hide" id="lg-hide">Back to Build (session keeps running)</button></div>`;
   bindSession(o);tick();const a=o.querySelector('.lg-row.active');if(a&&!o._noScroll)a.scrollIntoView({block:'center'});clearTimer()}
-function bindSession(o){o.querySelector('#lg-fin').onclick=summary;o.querySelector('#lg-addex').onclick=addExercise;o.querySelector('#lg-hide').onclick=closeLogger;
+function bindSession(o){o.querySelector('#lg-fin').onclick=summary;o.querySelector('#lg-addex').onclick=addExercise;o.querySelector('#lg-hide').onclick=()=>setView('build');
   o.querySelectorAll('.lg-card').forEach(c=>{const e=L.entries.find(x=>x.id==c.dataset.e);
     c.querySelector('.lg-ch').onclick=ev=>{if(ev.target.closest('.lg-more')||ev.target.closest('.lg-title')&&e.id==openEntry)return;openEntry=e.id;activeSet=firstOpenSet(e);renderSession()};
     c.querySelector('.lg-title').addEventListener('click',ev=>{if(e.id==openEntry){ev.stopPropagation();history_(resolve(e.exerciseId),e)}});
-    c.querySelector('.lg-more').onclick=ev=>{ev.stopPropagation();moreMenu(e)};const ad=c.querySelector('.lg-addset');if(ad)ad.onclick=()=>{const ss=setsOf(e.id),last=ss[ss.length-1],x=newSet(e,'working',(last?last.idx:-1)+1);if(last){x.load=last.load;x.reps=last.reps}L.sets.push(x);activeSet=x.id;persist(cur.id);renderSession()};
+    c.querySelector('.lg-more').onclick=ev=>{ev.stopPropagation();moreMenu(e)};
+    c.querySelectorAll('.lg-chip').forEach(b=>b.onclick=ev=>{ev.stopPropagation();adjSheet(e)});bindPn(c,renderSession);
+    const wn=c.querySelector('textarea[data-wn]');if(wn){wn.onclick=ev=>ev.stopPropagation();wn.oninput=()=>{e.notes=wn.value;mirror();clearTimeout(wn._t);wn._t=setTimeout(()=>persist(cur.id),400)}}const ad=c.querySelector('.lg-addset');if(ad)ad.onclick=()=>{const ss=setsOf(e.id),last=ss[ss.length-1],x=newSet(e,'working',(last?last.idx:-1)+1);if(last){x.load=last.load;x.reps=last.reps}L.sets.push(x);activeSet=x.id;persist(cur.id);renderSession()};
     c.querySelectorAll('.lg-row').forEach(r=>bindRow(e,r))});
   o.querySelectorAll('.lg-sugchip').forEach(b=>b.onclick=()=>{const x=L.sets.find(s=>s.id==b.dataset.s);x.load=x.prevLoad??null;x.reps=x.prevReps??x.reps;x.sug=false;persist(cur.id);renderSession()})}
 function bindRow(e,r){const x=L.sets.find(s=>s.id==r.dataset.s);let sw=false;
@@ -177,12 +210,14 @@ function editSet(e,x){modal(`<h3>Edit set</h3><div class="lg-ed"><label>Type <se
     const i=g('ed-i');x.rir=i===''?null:S.rpe?10-(+i):+i;x.note=g('ed-n');x.sug=false;renum(e);closeModal();persist(cur.id);renderSession()}}
 // ---------- bottom keypad (load/reps) ----------
 let KP=null;
-function openKp(e,x,f){closeKp();KP={e,x,f,fresh:true};const k=document.createElement('div');k.id='lg-kp';document.body.appendChild(k);drawKp();renderSession()}
+function openKp(e,x,f){closeKp();KP={e,x,f,fresh:true};const k=document.createElement('div');k.id='lg-kp';document.body.appendChild(k);kpSwipe(k);drawKp();renderSession()}
+function minKp(){if(cur)persist(cur.id);closeKp();renderSession()}
+function kpSwipe(k){let y0=null,x0=null;k.addEventListener('pointerdown',ev=>{y0=ev.clientY;x0=ev.clientX});k.addEventListener('pointerup',ev=>{if(y0==null)return;const dy=ev.clientY-y0,dx=Math.abs(ev.clientX-x0);y0=null;if(dy>CFG.kpSwipePx&&dx<dy)minKp()});k.addEventListener('pointercancel',()=>{y0=null})}
 function closeKp(){const k=document.getElementById('lg-kp');if(k)k.remove();KP=null}
 function drawKp(){const k=document.getElementById('lg-kp');if(!k||!KP)return;const{e,x,f}=KP,inc=f=='load'?incFor(resolve(e.exerciseId))||1:1,v=f=='load'?conv(x.load,cur.unit,S.unit):x.reps;
-  k.innerHTML=`<div class="kp-top"><span>${f=='load'?'Load ('+S.unit+')':'Reps'} · ${H(exName(e))}</span><b class="kp-val">${v==null?'':fmt(v)}</b></div><div class="kp-grid">
-  ${['7','8','9','⌫','4','5','6','−'+fmt(inc),'1','2','3','+'+fmt(inc),'.','0','Done','Next'].map(b=>`<button data-k="${b}" class="${b=='Next'?'pri':''}">${b}</button>`).join('')}</div>`;
-  k.querySelectorAll('button').forEach(b=>b.onclick=()=>{const t=b.dataset.k;let s=v==null?'':fmt(v);
+  k.innerHTML=`<div class="kp-top"><span>${f=='load'?'Load ('+S.unit+')':'Reps'} · ${H(exName(e))}</span><b class="kp-val">${v==null?'':fmt(v)}</b><button id="kp-min" aria-label="Minimize keypad">▾</button></div><div class="kp-grid">
+  ${['1','2','3','⌫','4','5','6','−'+fmt(inc),'7','8','9','+'+fmt(inc),'.','0','Done','Next'].map(b=>`<button data-k="${b}" class="${b=='Next'?'pri':''}">${b}</button>`).join('')}</div>`;
+  k.querySelector('#kp-min').onclick=minKp;k.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const t=b.dataset.k;let s=v==null?'':fmt(v);
     if(t=='Done'){closeKp();persist(cur.id);renderSession();return}
     if(t=='Next'){persist(cur.id);if(f=='load'){KP.f='reps';KP.fresh=true;drawKp();renderSession();return}const ss=setsOf(e.id),i=ss.indexOf(x),nx=ss.slice(i+1).find(q=>!q.done);if(nx){activeSet=nx.id;KP.x=nx;KP.f='load';KP.fresh=true;drawKp();renderSession()}else{closeKp();renderSession()}return}
     let n;if(t[0]=='−'||t[0]=='+'){n=Math.max(0,(v||0)+(t[0]=='+'?inc:-inc))}else if(t=='⌫'){s=KP.fresh?'':s.slice(0,-1);n=s===''?null:+s}else{s=(KP.fresh?'':s)+t;n=s==='.'?0:+s}KP.fresh=false;
@@ -202,44 +237,76 @@ function tick(){const el=document.getElementById('lg-el');if(el&&cur&&cur.starte
 function beep(){if(!S.sound)return;try{const a=new (window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator();o.connect(a.destination);o.start();o.stop(a.currentTime+CFG.beepMs/1000)}catch{}}
 setInterval(tick,250);
 // ---------- card menu: swap / skip / note / rest / rep range / increment / history ----------
-function moreMenu(e){const x=EX[resolve(e.exerciseId)];modal(`<h3>${H(exName(e))}</h3><div class="lg-menu">${x?'<button data-a="swap">Swap</button>':''}<button data-a="skip">${e.skipped?'Unskip exercise':'Skip exercise'}</button>
-  <button data-a="note">Note (carries to next time)</button><button data-a="rest">Rest time (${e.restSec}s)</button><button data-a="rr">Rep range (${e.repRange.join('–')})</button><button data-a="inc">Load step (${fmt(incFor(resolve(e.exerciseId)))} ${S.unit})</button><button data-a="hist">History</button></div><div class="cf-btns"><button id="mm-x">Close</button></div>`);
-  document.getElementById('mm-x').onclick=closeModal;document.querySelectorAll('.lg-menu button').forEach(b=>b.onclick=()=>{const a=b.dataset.a;
-    if(a=='swap')return swapMenu(e);if(a=='hist')return history_(resolve(e.exerciseId),e);
-    if(a=='skip'){e.skipped=!e.skipped;closeModal();persist(cur.id);renderSession();return}
-    const ask=(q,v)=>{const r=prompt(q,v);return r==null?null:r.trim()};
-    if(a=='note'){const n=ask('Exercise note (shown next session)',e.notes||'');if(n!=null){e.notes=n;if(n)S.sticky[e.exerciseId]=n;else delete S.sticky[e.exerciseId];saveS()}}
-    if(a=='rest'){const n=ask('Rest seconds for this exercise',e.restSec);if(n&&+n>0){e.restSec=+n;S.restBy[e.exerciseId]=+n;saveS()}}
-    if(a=='rr'){const n=ask('Rep range, e.g. 8-12',e.repRange.join('-'));const m=n&&n.match(/^(\d+)\s*[-–]\s*(\d+)$/);if(m&&+m[1]<=+m[2]){e.repRange=[+m[1],+m[2]];S.repBy[e.exerciseId]=[+m[1],+m[2]];saveS()}}
-    if(a=='inc'){const n=ask('Load step ('+S.unit+')',incFor(resolve(e.exerciseId)));if(n!=null&&n!==''&&+n>=0){S.incBy[e.exerciseId]=+n;saveS()}}
-    closeModal();persist(cur.id);renderSession()})}
-function swapMenu(e){const id=resolve(e.exerciseId),list=swaps(id,null,6);modal(`<h3>Swap ${H(exName(e))}</h3><div class="lg-menu">${list.map(c=>`<button data-id="${c.id}">${H(c.name)}${c.badge?' <em class="est">est.</em>':''}<small>${H(c.tags.join(' · '))}</small></button>`).join('')||'<p class="cf-hint">No close alternatives.</p>'}</div><div class="cf-btns"><button id="sw-x">Cancel</button></div>`);
-  document.getElementById('sw-x').onclick=closeModal;document.querySelectorAll('.lg-menu button[data-id]').forEach(b=>b.onclick=()=>{const nid=b.dataset.id,ss=setsOf(e.id),done=ss.filter(s=>s.done),rest=ss.filter(s=>!s.done);
-    let ne;if(!done.length){if(!e.swappedFrom)e.swappedFrom=e.exerciseId;e.exerciseId=nid;e.nameSnapshot=EX[nid].name;e.repRange=[...repFor(nid)];e.restSec=restFor(nid,'working');e.notes=S.sticky[nid]||'';ne=e}
-    else{ne={id:uid('e'),sessionId:cur.id,order:e.order+1/2,exerciseId:nid,nameSnapshot:EX[nid].name,swappedFrom:e.swappedFrom||e.exerciseId,repRange:[...repFor(nid)],restSec:restFor(nid,'working'),notes:S.sticky[nid]||'',skipped:false};L.entries.push(ne);rest.forEach((s,i)=>{s.entryId=ne.id;s.idx=i});entriesOf(cur.id).forEach((q,i)=>q.order=i)}
-    rest.forEach(s=>{s.load=null;s.reps=null;s.sug=false;delete s.prevLoad;delete s.prevReps});prefill(ne);openEntry=ne.id;activeSet=firstOpenSet(ne);closeModal();persist(cur.id);renderSession();toast(`Swapped to ${EX[nid].name}`,null)})}
-function weekDone(){const ws=weekStart(),d=[];let arch=0;L.sessions.filter(s=>(s.status=='completed'||s.status=='active')&&Date.parse(s.startedAt||s.date)>=ws).forEach(s=>entriesOf(s.id).forEach(e=>{const n=setsOf(e.id).filter(isHard).length;if(!n)return;if(isArch(e.exerciseId)){arch+=n;return}d.push({id:resolve(e.exerciseId),sets:n})}));
-  return{days:[d,[],[],[],[],[],[]],arch}}
-function countsFor(days){const sv=state.days;state.days=days;try{return totals()}finally{state.days=sv}}
-function addExercise(){const done=countsFor(weekDone().days),rem=countsFor([entriesOf(cur.id).flatMap(e=>e.skipped||isArch(e.exerciseId)?[]:[{id:resolve(e.exerciseId),sets:setsOf(e.id).filter(s=>!s.done&&s.kind=='working').length}]),[],[],[],[],[],[]]);
-  const gap=MUS.filter(m=>done[m]+rem[m]<tgt(m).min);const sc=x=>gap.reduce((a,m)=>a+((x.muscles[m]||0)>=RULE.min_rating_to_count?x.muscles[m]:0),0);
-  const all=Object.values(EX).map(x=>({x,s:sc(x)})).sort((a,b)=>b.s-a.s||(a.x.name<b.x.name?-1:1));
-  modal(`<h3>Add exercise</h3><p class="cf-hint">${gap.length?'Sorted by what fills this week\'s gaps: '+gap.map(m=>H(lab(m))).join(', '):'No weekly gaps left; sorted by name.'}</p><input id="ax-q" placeholder="Search…"><div class="lg-menu" id="ax-l"></div><div class="cf-btns"><button id="ax-x">Cancel</button></div>`);
-  const draw=()=>{const q=document.getElementById('ax-q').value.toLowerCase();document.getElementById('ax-l').innerHTML=all.filter(o=>!q||o.x.name.toLowerCase().includes(q)).slice(0,30).map(o=>`<button data-id="${o.x.id}">${ICON[o.x.type]||''} ${H(o.x.name)}${o.x.estimated?' <em class="est">est.</em>':''}</button>`).join('');
-    document.querySelectorAll('#ax-l button').forEach(b=>b.onclick=()=>{const id=b.dataset.id,e={id:uid('e'),sessionId:cur.id,order:entriesOf(cur.id).length,exerciseId:id,nameSnapshot:EX[id].name,added:true,repRange:[...repFor(id)],restSec:restFor(id,'working'),notes:S.sticky[id]||'',skipped:false};
-      L.entries.push(e);for(let j=0;j<CFG.addSets;j++)L.sets.push(newSet(e,'working',j));prefill(e);openEntry=e.id;activeSet=firstOpenSet(e);closeModal();persist(cur.id);renderSession()})};
-  document.getElementById('ax-q').oninput=draw;document.getElementById('ax-x').onclick=closeModal;draw()}
-// ---------- per-exercise history ----------
-function history_(id,e){const h=hist(id).reverse(),nm=(EX[id]||{}).name||(e&&e.nameSnapshot)||id;const pts=h.map(q=>{const b=bestOf(q.sets);return b?b.v:null});
-  const vals=pts.filter(v=>v!=null),mx=Math.max(1,...vals),mn=Math.min(mx,...vals),W=300,Hh=110,px=i=>h.length<2?W/2:10+i*(W-20)/(h.length-1),py=v=>Hh-10-(mx==mn?1/2:(v-mn)/(mx-mn))*(Hh-20);
+// ---------- options sheet (⋯ / title): actions, permanent note, how-to, history chart (metric switch) + swipeable list ----------
+const METRICS=[['e1rm','e1RM'],['maxw','Max weight'],['bestvol','Best-set volume'],['totvol','Total volume'],['reps','Best reps']];let metric=METRICS[0][0];
+function metricOf(q,m){const w=work(q.sets).filter(x=>x.reps);if(!w.length)return null;const lb=x=>toLb(x.load,sessUnit(x.sessionId))||0,u=v=>conv(v,'lb',S.unit);
+  if(m=='e1rm'){const b=bestOf(q.sets);return b?u(b.v):null}if(m=='maxw')return u(Math.max(...w.map(lb)));if(m=='bestvol')return u(Math.max(...w.map(x=>lb(x)*x.reps)));
+  if(m=='totvol')return u(w.reduce((a,x)=>a+lb(x)*x.reps,0));if(m=='reps')return Math.max(...w.map(x=>x.reps));return null}
+function metricSeries(id,m){return hist(id).reverse().map(q=>metricOf(q,m))}
+function howtoHtml(id){const x=EX[id],h=x&&!x.custom&&x.howto;const img=h&&typeof h.image=='string'&&/^img\//.test(h.image)?h.image:null;
+  const pic=img?`<img class="lg-pic" src="${H(img)}" alt="${H(x.name)}">`:`<div class="lg-pic ph" role="img" aria-label="No picture yet">No picture yet</div>`;
+  const txt=h&&h.setup?`<div class="lg-howto"><p class="ht-setup"><b>Setup</b> ${H(h.setup)}</p>${Array.isArray(h.cues)&&h.cues.length?`<ul class="ht-cues">${h.cues.map(c=>`<li>${H(c)}</li>`).join('')}</ul>`:''}${h.mistake?`<p class="ht-mis"><b>Common mistake</b> ${H(h.mistake)}</p>`:''}</div>`
+    :`<p class="lg-howto ph">No how-to for this exercise yet${x&&x.custom?' (custom exercise)':''}.</p>`;return`<div class="lg-ht">${pic}${txt}</div>`}
+function histHtml(id,e){const h=hist(id).reverse(),nm=(EX[id]||{}).name||(e&&e.nameSnapshot)||id,f=e1Formula();const pts=metricSeries(id,metric),ml=METRICS.find(q=>q[0]==metric)[1];
+  const vals=pts.filter(v=>v!=null),mx=Math.max(...vals,0)||1,mn=vals.length?Math.min(...vals):0,W=300,Hh=110,px=i=>h.length<2?W/2:10+i*(W-20)/(h.length-1),py=v=>Hh-10-(mx==mn?1/2:(v-mn)/(mx-mn))*(Hh-20);
   const line=pts.map((v,i)=>v==null?null:`${px(i).toFixed(1)},${py(v).toFixed(1)}`).filter(Boolean).join(' ');const bu=v=>fmt(conv(v,'lb',S.unit));
   const best=h.flatMap(q=>work(q.sets).filter(s=>s.reps&&s.reps<=LR().e1rm_max_reps).map(s=>({s,v:e1rm(toLb(s.load,sessUnit(s.sessionId))||0,s.reps),d:q.s.date}))).sort((a,b)=>b.v-a.v).slice(0,5);
   const prs=new Set(L.prs.filter(p=>resolve(p.exerciseId)==id).map(p=>p.setId));
-  modal(`<div id="lg-hist"><h3>${H(nm)}${isArch(id)?' <em>archived exercise</em>':''}</h3><p class="cf-hint">Estimated 1RM (${cap(e1Formula().name)}, working sets ≤ ${LR().e1rm_max_reps} reps), ${S.unit}.</p>${e1Formula().warn?`<p class="lg-warn" id="e1-warn">⚠ ${H(e1Formula().warn)}</p>`:''}
-  ${vals.length?`<svg class="lg-chart" viewBox="0 0 ${W} ${Hh}"><polyline points="${line}"/>${pts.map((v,i)=>v==null?'':`<circle cx="${px(i).toFixed(1)}" cy="${py(v).toFixed(1)}" r="3"/>`).join('')}<text x="4" y="12">${bu(mx)}</text><text x="4" y="${Hh-2}">${bu(mn)}</text></svg>`:'<p class="cf-hint">No completed sessions yet.</p>'}
-  ${best.length?`<h4>Best sets</h4><table class="lg-tbl">${best.map(b=>`<tr><td>${fmt(dLoad(b.s))} × ${b.s.reps}${b.s.rir!=null?' @'+b.s.rir:''}</td><td>e1RM ${bu(b.v)}</td><td>${new Date(b.d).toLocaleDateString()}</td></tr>`).join('')}</table>`:''}
-  <h4>Sessions</h4>${h.slice().reverse().map(q=>`<div class="lg-hs"><b>${new Date(q.s.date).toLocaleDateString()}</b> ${H(q.s.label)}<div>${q.sets.map(s=>`<span class="${s.kind=='warmup'?'w':''}">${s.kind=='warmup'?'W ':''}${fmt(dLoad(s))}×${s.reps}${s.rir!=null?' @'+s.rir:''}${prs.has(s.id)?' 🏆':''}</span>`).join(' ')}</div>${q.e.notes?`<small>📌 ${H(q.e.notes)}</small>`:''}</div>`).join('')||'<p class="cf-hint">None yet.</p>'}
-  <div class="cf-btns"><button id="hi-x">Close</button></div></div>`);document.getElementById('hi-x').onclick=closeModal}
+  return`<div id="lg-hist" data-x="${H(id)}"><p class="cf-hint">Estimated 1RM (${cap(f.name)}, working sets ≤ ${LR().e1rm_max_reps} reps), ${S.unit}.</p>${f.warn?`<p class="lg-warn" id="e1-warn">⚠ ${H(f.warn)}</p>`:''}
+  <div class="lg-pgdots"><button data-pg="0" class="on">Chart</button><button data-pg="1">History list</button></div>
+  <div class="lg-pager"><section class="pg pg-chart"><div class="lg-seg lg-met">${METRICS.map(([k,t])=>`<button data-m="${k}" class="${k==metric?'on':''}">${t}</button>`).join('')}</div>
+   ${vals.length?`<svg class="lg-chart" viewBox="0 0 ${W} ${Hh}" data-m="${metric}"><polyline points="${line}"/>${pts.map((v,i)=>v==null?'':`<circle cx="${px(i).toFixed(1)}" cy="${py(v).toFixed(1)}" r="3"/>`).join('')}<text x="4" y="12">${fmt(mx)}</text><text x="4" y="${Hh-2}">${fmt(mn)}</text></svg><p class="cf-hint lg-mlab">${ml}${metric=='reps'?'':', '+S.unit}</p>`:'<p class="cf-hint">No completed sessions yet.</p>'}</section>
+  <section class="pg pg-list">${best.length?`<h4>Best sets</h4><table class="lg-tbl">${best.map(b=>`<tr><td>${fmt(dLoad(b.s))} × ${b.s.reps}${b.s.rir!=null?' @'+b.s.rir:''}</td><td>e1RM ${bu(b.v)}</td><td>${new Date(b.d).toLocaleDateString()}</td></tr>`).join('')}</table>`:''}
+  <h4>Sessions</h4>${h.slice().reverse().map(q=>`<div class="lg-hs"><b>${new Date(q.s.date).toLocaleDateString()}</b> ${H(q.s.label)}<div>${q.sets.map(s=>`<span class="${s.kind=='warmup'?'w':''}">${s.kind=='warmup'?'W ':''}${fmt(dLoad(s))}×${s.reps}${s.rir!=null?' @'+s.rir:''}${prs.has(s.id)?' 🏆':''}</span>`).join(' ')}</div>${q.e.notes?`<small class="lg-hwn">Workout note: ${H(q.e.notes)}</small>`:''}</div>`).join('')||'<p class="cf-hint">None yet.</p>'}</section></div></div>`}
+function bindHist(again){const r=document.getElementById('lg-hist');if(!r)return;const pg=r.querySelector('.lg-pager'),dots=r.querySelectorAll('.lg-pgdots button');
+  dots.forEach(b=>b.onclick=()=>pg.scrollTo({left:+b.dataset.pg*pg.clientWidth,behavior:'instant'}));pg.addEventListener('scroll',()=>{const k=Math.round(pg.scrollLeft/Math.max(1,pg.clientWidth));dots.forEach(d=>d.classList.toggle('on',+d.dataset.pg==k))});
+  r.querySelectorAll('.lg-met button').forEach(b=>b.onclick=()=>{metric=b.dataset.m;const sc=document.getElementById('modal');const y=sc?sc.scrollTop:0;again();const s2=document.getElementById('modal');if(s2)s2.scrollTop=y})}
+function pnHtml(id){const n=exNote(id);return`<div class="lg-pnwrap"><button class="lg-pn${n?'':' empty'}" data-x="${H(id)}">📌 ${n?H(n):'Add exercise note (permanent)'}</button></div>`}
+function bindPn(root,after){root.querySelectorAll('.lg-pn').forEach(b=>b.onclick=ev=>{ev.stopPropagation();editPn(b.dataset.x,after)})}
+function editPn(id,after){modal(`<div id="lg-pnm"><h3>${H((EX[id]||{}).name||id)}</h3><p class="cf-hint">Permanent note for this exercise: shown on the board and in every session that programs it.</p>
+  <textarea id="pn-t" rows="3" placeholder="e.g. Seat on 4, pins at 6">${H(exNote(id))}</textarea><div class="cf-btns"><button class="pri" id="pn-save">Save</button><button id="pn-x">Cancel</button></div></div>`);
+  document.getElementById('pn-x').onclick=()=>{closeModal();after&&after()};document.getElementById('pn-save').onclick=()=>{const v=document.getElementById('pn-t').value.trim();if(v)NOTES[id]=v;else delete NOTES[id];saveN();closeModal();if(typeof render=='function')render();after&&after()}}
+function moreMenu(e){const id=resolve(e.exerciseId),x=EX[id];const draw=()=>{modal(`<div id="lg-opt"><h3>${H(exName(e))}</h3><div class="lg-menu lg-acts">${x?'<button data-a="swap">Swap</button>':''}<button data-a="skip">${e.skipped?'Unskip exercise':'Skip exercise'}</button></div>
+  ${x?pnHtml(id):''}${howtoHtml(id)}${histHtml(id,e)}<div class="cf-btns"><button id="mm-x">Close</button></div></div>`);
+  document.getElementById('mm-x').onclick=()=>{closeModal();renderSession()};bindPn(document.getElementById('lg-opt'),draw);bindHist(draw);
+  document.querySelectorAll('#lg-opt .lg-acts button').forEach(b=>b.onclick=()=>{const a=b.dataset.a;if(a=='swap')return swapMenu(e);
+    if(a=='skip'){e.skipped=!e.skipped;closeModal();persist(cur.id);renderSession()}})};draw()}
+function history_(id,e){const draw=()=>{modal(`<div id="lg-hsheet"><h3>${H((EX[id]||{}).name||(e&&e.nameSnapshot)||id)}${isArch(id)?' <em>archived exercise</em>':''}</h3>${EX[id]?pnHtml(id):''}${howtoHtml(id)}${histHtml(id,e)}<div class="cf-btns"><button id="hi-x">Close</button></div></div>`);
+  document.getElementById('hi-x').onclick=closeModal;bindPn(document.getElementById('lg-hsheet'),draw);bindHist(draw)};draw()}
+// ---------- in-place exercise tray (the board's own tray panel, filters and search, moved into the logger) + create via custom-exercise form ----------
+let pendingCreate=null;
+function trayPick(title,onPick){const panel=document.getElementById('tray').closest('.panel'),home=panel.parentNode,next=panel.nextSibling;closeModal();
+  const sh=document.createElement('div');sh.id='lg-tray';sh.innerHTML=`<div class="lg-tray-top"><b>${H(title)}</b><button id="lt-x">Close</button></div><div id="lt-slot"></div>`;document.body.appendChild(sh);sh.querySelector('#lt-slot').appendChild(panel);
+  const isTile=ev=>{const t=ev.target.closest&&ev.target.closest('#tray .tile');return t&&!ev.target.closest('.cedit')?t:null};
+  const block=ev=>{if(isTile(ev))ev.stopPropagation()};const EVS=['pointerdown','pointermove','pointerup','mousedown','touchstart','touchmove','touchend','dragstart'];EVS.forEach(n=>panel.addEventListener(n,block,true));
+  const pick=ev=>{const t=isTile(ev);if(!t)return;ev.stopPropagation();ev.preventDefault();done();onPick(t.dataset.id)};panel.addEventListener('click',pick,true);
+  const done=()=>{EVS.forEach(n=>panel.removeEventListener(n,block,true));panel.removeEventListener('click',pick,true);home.insertBefore(panel,next);sh.remove()};
+  sh.querySelector('#lt-x').onclick=()=>{done();renderSession()};const q=panel.querySelector('#q');if(q)q.scrollIntoView({block:'start'})}
+function createEx(onNew){const before=new Set(CUS.map(c=>c.id));openForm();pendingCreate={before,cb:onNew}}
+if(typeof syncCustom=='function'){const sc0=syncCustom;syncCustom=function(){const r=sc0.apply(this,arguments);if(pendingCreate){const n=CUS.find(c=>!pendingCreate.before.has(c.id));if(n){const cb=pendingCreate.cb;pendingCreate=null;setTimeout(()=>cb(n.id))}}return r}}
+if(typeof closeModal=='function'){const cm0=closeModal;closeModal=function(){pendingCreate=null;return cm0.apply(this,arguments)}}
+// ---------- swap ----------
+function doSwap(e,nid){if(!cur||!EX[nid])return;const ss=setsOf(e.id),done=ss.filter(s=>s.done),rest=ss.filter(s=>!s.done);
+  let ne;if(!done.length){if(!e.swappedFrom)e.swappedFrom=e.exerciseId;e.exerciseId=nid;e.nameSnapshot=EX[nid].name;e.repRange=[...repFor(nid)];e.restSec=restFor(nid,'working');e.notes=carryNote(nid);ne=e}
+  else{ne={id:uid('e'),sessionId:cur.id,order:e.order+1/2,exerciseId:nid,nameSnapshot:EX[nid].name,swappedFrom:e.swappedFrom||e.exerciseId,repRange:[...repFor(nid)],restSec:restFor(nid,'working'),notes:carryNote(nid),skipped:false};L.entries.push(ne);rest.forEach((s,i)=>{s.entryId=ne.id;s.idx=i});entriesOf(cur.id).forEach((q,i)=>q.order=i)}
+  rest.forEach(s=>{s.load=null;s.reps=null;s.sug=false;delete s.prevLoad;delete s.prevReps});prefill(ne);openEntry=ne.id;activeSet=firstOpenSet(ne);closeModal();persist(cur.id);renderSession();toast(`Swapped to ${EX[nid].name}`,null)}
+function swapMenu(e){const id=resolve(e.exerciseId),list=swaps(id,null,6);modal(`<h3>Swap ${H(exName(e))}</h3><p class="cf-hint">Similar exercises</p><div class="lg-menu" id="sw-l">${list.map(c=>`<button data-id="${c.id}">${H(c.name)}${c.badge?' <em class="est">est.</em>':''}<small>${H(c.tags.join(' · '))}</small></button>`).join('')||'<p class="cf-hint">No close alternatives.</p>'}</div>
+  <div class="lg-menu lg-more2"><button id="sw-all">Browse all exercises…</button><button id="sw-new">Create new exercise…</button></div><div class="cf-btns"><button id="sw-x">Cancel</button></div>`);
+  document.getElementById('sw-x').onclick=closeModal;document.querySelectorAll('#sw-l button[data-id]').forEach(b=>b.onclick=()=>doSwap(e,b.dataset.id));
+  document.getElementById('sw-all').onclick=()=>trayPick('Swap '+exName(e)+' for…',nid=>doSwap(e,nid));document.getElementById('sw-new').onclick=()=>createEx(nid=>doSwap(e,nid))}
+function weekDone(){const ws=weekStart(),d=[];let arch=0;L.sessions.filter(s=>(s.status=='completed'||s.status=='active')&&Date.parse(s.startedAt||s.date)>=ws).forEach(s=>entriesOf(s.id).forEach(e=>{const n=setsOf(e.id).filter(isHard).length;if(!n)return;if(isArch(e.exerciseId)){arch+=n;return}d.push({id:resolve(e.exerciseId),sets:n})}));
+  return{days:[d,[],[],[],[],[],[]],arch}}
+function countsFor(days){const sv=state.days;state.days=days;try{return totals()}finally{state.days=sv}}
+function addEx(id){if(!cur||!EX[id])return;const e={id:uid('e'),sessionId:cur.id,order:entriesOf(cur.id).length,exerciseId:id,nameSnapshot:EX[id].name,added:true,repRange:[...repFor(id)],restSec:restFor(id,'working'),notes:carryNote(id),skipped:false};
+  L.entries.push(e);for(let j=0;j<CFG.addSets;j++)L.sets.push(newSet(e,'working',j));prefill(e);openEntry=e.id;activeSet=firstOpenSet(e);closeModal();persist(cur.id);renderSession()}
+function addExercise(){const done=countsFor(weekDone().days),rem=countsFor([entriesOf(cur.id).flatMap(e=>e.skipped||isArch(e.exerciseId)?[]:[{id:resolve(e.exerciseId),sets:setsOf(e.id).filter(s=>!s.done&&s.kind=='working').length}]),[],[],[],[],[],[]]);
+  const gap=MUS.filter(m=>done[m]+rem[m]<tgt(m).min);const sc=x=>gap.reduce((a,m)=>a+((x.muscles[m]||0)>=RULE.min_rating_to_count?x.muscles[m]:0),0);
+  const all=Object.values(EX).map(x=>({x,s:sc(x)})).sort((a,b)=>b.s-a.s||(a.x.name<b.x.name?-1:1));
+  modal(`<h3>Add exercise</h3><div class="lg-menu lg-more2"><button id="ax-tray">Open tray (all exercises, filters)…</button><button id="ax-new">Create exercise…</button></div>
+  <p class="cf-hint">${gap.length?'Suggestions sorted by what fills this week\'s gaps: '+gap.map(m=>H(lab(m))).join(', '):'No weekly gaps left; sorted by name.'}</p><input id="ax-q" placeholder="Search suggestions…"><div class="lg-menu" id="ax-l"></div><div class="cf-btns"><button id="ax-x">Cancel</button></div>`);
+  const draw=()=>{const q=document.getElementById('ax-q').value.toLowerCase();document.getElementById('ax-l').innerHTML=all.filter(o=>!q||o.x.name.toLowerCase().includes(q)).slice(0,30).map(o=>`<button data-id="${o.x.id}">${ICON[o.x.type]||''} ${H(o.x.name)}${o.x.estimated?' <em class="est">est.</em>':''}</button>`).join('');
+    document.querySelectorAll('#ax-l button').forEach(b=>b.onclick=()=>addEx(b.dataset.id))};
+  document.getElementById('ax-q').oninput=draw;document.getElementById('ax-x').onclick=closeModal;document.getElementById('ax-tray').onclick=()=>trayPick('Add exercise',addEx);document.getElementById('ax-new').onclick=()=>createEx(addEx);draw()}
 // ---------- summary + write back to routine ----------
 function diffRows(s){const es=entriesOf(s.id),rows=[],plan=(s.snapshot||{}).exercises||[];const wk=e=>setsOf(e.id).filter(x=>x.kind=='working').length;
   plan.forEach(p=>{const g=es.filter(e=>!e.added&&(e.swappedFrom||e.exerciseId)==p.exerciseId);const live=g.filter(e=>!e.skipped);const n=live.reduce((a,e)=>a+wk(e),0);
@@ -294,11 +361,11 @@ function weekView(tab){tab=tab||'week';const wd=weekDone(),days=view=='done'?wd.
   if(tab=='settings'){document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{S.unit=b.dataset.u;saveS();weekView('settings')});document.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{S.hardRIR=(()=>{const r=LR().hardRIR_range||[];return Math.max(r[0],Math.min(r[1],HR()+(b.dataset.h=='+'?1:-1)))})();saveS();weekView('settings')});
     document.getElementById('st-rpe').onchange=e=>{S.rpe=e.target.checked;saveS()};document.getElementById('st-snd').onchange=e=>{S.sound=e.target.checked;saveS()}}}
 // ---------- backup / restore ----------
-window.logBackup=()=>({schema:LOG_SCHEMA,sessions:L.sessions,entries:L.entries,sets:L.sets,prs:L.prs,settings:S});
+window.logBackup=()=>({schema:LOG_SCHEMA,exNotes:NOTES,sessions:L.sessions,entries:L.entries,sets:L.sets,prs:L.prs,settings:S});
 window.importLogs=function(d){if(!d||!d.logs)return;let g=JSON.parse(JSON.stringify(d.logs));if(typeof g.schema!='number'&&typeof d.schema=='number')g.schema=d.schema;
   if(!Array.isArray(g.sessions)||!Array.isArray(g.entries||[])||!Array.isArray(g.sets||[])){alert('The workout logs in this file are not valid.');return}
   g=migrate(g);if(L.sessions.length&&!confirm('Replace your workout logs with the ones in this backup?'))return;
-  L={sessions:g.sessions,entries:g.entries||[],sets:g.sets||[],prs:g.prs||[]};if(g.settings&&typeof g.settings=='object'){Object.assign(S,g.settings);saveS()}migrateIds();
+  L={sessions:g.sessions,entries:g.entries||[],sets:g.sets||[],prs:g.prs||[]};if(g.settings&&typeof g.settings=='object'){Object.assign(S,g.settings);migrateS();saveS()}if(g.exNotes&&typeof g.exNotes=='object'){NOTES={...g.exNotes};saveN();migrateNoteIds()}migrateIds();
   cur=L.sessions.find(s=>s.status=='active')||null;persistAll();refreshBar()};
 // ---------- boot ----------
 async function boot(){for(let i=0;i<200&&(!Object.keys(EX).length||(typeof RU=='undefined'||!RU)||!MUS.length);i++)await new Promise(r=>setTimeout(r,50));
@@ -306,17 +373,21 @@ async function boot(){for(let i=0;i<200&&(!Object.keys(EX).length||(typeof RU=='
   db=await idbOpen();if(db){const[a,b,c,d]=await Promise.all(['sessions','entries','sets','prs'].map(getAll));L={sessions:a,entries:b,sets:c,prs:d}}else{try{L=Object.assign(L,JSON.parse(localStorage.getItem(FKEY))||{})}catch{}}
   let m=null;try{m=JSON.parse(localStorage.getItem(AKEY))}catch{}
   if(m&&m.s&&m.s.status=='active'){L.sessions=L.sessions.filter(x=>x.id!==m.s.id).concat([m.s]);L.entries=L.entries.filter(x=>x.sessionId!==m.s.id).concat(m.e||[]);L.sets=L.sets.filter(x=>x.sessionId!==m.s.id).concat(m.t||[])}
-  const lg=migrate({schema:LOG_SCHEMA,...L});if(migrateIds())await persistAll();
+  const mn=Math.min(LOG_SCHEMA,...L.sessions.map(q=>typeof q.schema=='number'?q.schema:LOG_SCHEMA));const lg=migrate({schema:mn,...L});L={sessions:lg.sessions,entries:lg.entries||[],sets:lg.sets||[],prs:lg.prs||[]};if(migrateIds()||mn<LOG_SCHEMA)await persistAll();
   cur=L.sessions.find(s=>s.status=='active')||null;ready=true;window.LG.ready=true;buildBar();
   if(cur){const e=entriesOf(cur.id);e.forEach(prefillKeep);openEntry=(e.find(q=>setsOf(q.id).some(s=>!s.done))||e[0]||{}).id;activeSet=firstOpenSet(e.find(q=>q.id==openEntry));
     modal(`<div id="lg-resume"><h3>Unfinished session</h3><p>${H(cur.label)} (started ${new Date(cur.startedAt).toLocaleString()})</p><div class="cf-btns"><button class="pri" id="rs-go">Resume</button><button id="rs-del" class="dng">Discard</button></div></div>`);
     document.getElementById('rs-go').onclick=()=>openLogger();document.getElementById('rs-del').onclick=()=>{if(confirm('Discard the unfinished session? Logged sets will be deleted.'))discard()}}}
 function prefillKeep(e){e.cue=progression(resolve(e.exerciseId),e.sessionId)}
-function buildBar(){if(document.getElementById('logbar'))return refreshBar();const b=document.createElement('div');b.id='logbar';b.innerHTML='<button class="pri" id="lg-cont"></button><button id="lg-days">Days…</button><button id="lg-wkb">Log</button>';document.body.appendChild(b);
-  b.querySelector('#lg-cont').onclick=()=>{if(cur)return openLogger();const c=continueIdx();if(c!=null)startSession(c)};b.querySelector('#lg-days').onclick=startSheet;b.querySelector('#lg-wkb').onclick=()=>weekView();refreshBar()}
+function buildBar(){if(!document.getElementById('lg')){const o=document.createElement('section');o.id='lg';o.className='lg-page';document.body.appendChild(o)}
+  const an=document.getElementById('anp'),av=document.getElementById('anview');if(an&&av&&an.parentNode!==av)av.appendChild(an);
+  if(!document.getElementById('tabs')){const t=document.createElement('nav');t.id='tabs';t.setAttribute('role','tablist');t.innerHTML=[['build','Build'],['train','Train'],['analytics','Analytics']].map(([v,n])=>`<button id="tab-${v}" data-v="${v}" role="tab">${n}<i class="tab-dot"></i></button>`).join('');document.body.appendChild(t);
+    t.querySelectorAll('button').forEach(b=>b.onclick=()=>setView(b.dataset.v))}
+  renderStart();setView(document.body.dataset.view||'build')}
 // keep the Continue label in sync with board edits
-if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);if(ready)refreshBar();return x}}
-window.LG={get L(){return L},get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula};
+function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
+if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
+window.LG={get L(){return L},get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();

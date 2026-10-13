@@ -1,7 +1,4 @@
 /* Lift Board logger v1 (v24). Colours only via the --lg-* variables defined in style.css. */
-body.lg-on{overflow:hidden}
-#logbar{position:fixed;left:0;right:0;bottom:0;z-index:150;display:flex;gap:6px;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:var(--lg-bg);border-top:1px solid var(--lg-line)}
-#logbar button{min-height:48px;font-size:15px}#logbar #lg-cont{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 body{padding-bottom:80px}
 #lg{position:fixed;inset:0;z-index:180;background:var(--lg-bg);color:var(--lg-fg);display:flex;flex-direction:column}
 .lg-top{display:flex;align-items:center;gap:8px;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));border-bottom:1px solid var(--lg-line)}
@@ -43,3 +40,46 @@ body:has(#lg-kp) #lg-timer{bottom:300px}
 .heat-copy{pointer-events:none}#lg-map .figs{display:flex}
 #toast{z-index:300}
 .lg-warn{color:var(--lg-dng);font-size:12px;margin:2px 0}
+/* ---- v25: pages + bottom tab bar ---- */
+:root{--tabh:calc(56px + env(safe-area-inset-bottom))}
+body{padding-bottom:calc(var(--tabh) + 16px)}
+#tabs{position:fixed;left:0;right:0;bottom:0;z-index:170;display:flex;background:var(--lg-bg);border-top:1px solid var(--lg-line);padding-bottom:env(safe-area-inset-bottom)}
+#tabs button{flex:1;min-height:56px;font-size:15px;background:none;color:var(--lg-dim);border-radius:0;position:relative}
+#tabs button[aria-selected=true]{color:var(--lg-fg);box-shadow:inset 0 3px 0 var(--lg-pri)}
+#tabs .tab-dot{display:none;position:absolute;top:10px;right:calc(50% - 34px);width:8px;height:8px;border-radius:4px;background:var(--lg-ok)}
+#tabs button.live .tab-dot{display:block}
+body[data-view=train]>header,body[data-view=train]>#bar,body[data-view=train]>main,body[data-view=analytics]>header,body[data-view=analytics]>#bar,body[data-view=analytics]>main{display:none}
+body:not([data-view=analytics]) #anview{display:none}
+#anview{padding:8px}#anview #antog{display:none}#anview #anbody{display:block!important}
+.pg-h{margin:8px 4px}
+#lg.lg-page{position:fixed;left:0;right:0;top:0;bottom:var(--tabh);z-index:160;background:var(--lg-bg);color:var(--lg-fg);display:flex;flex-direction:column}
+body:not([data-view=train]) #lg.lg-page{display:none}
+body:not([data-view=train]) #lg-kp{display:none}
+#lg-kp{bottom:var(--tabh);padding-bottom:8px}
+#lg-timer{bottom:calc(var(--tabh) + 8px)}
+body:has(#lg-kp) #lg-timer{bottom:calc(var(--tabh) + 300px)}
+body:not([data-view=train]):has(#lg-kp) #lg-timer{bottom:calc(var(--tabh) + 8px)}
+.lg-startbtns{display:flex;gap:8px;margin:8px 0}.lg-startbtns button{flex:1;min-height:48px}
+#lg-start-pg .lg-big{width:100%;min-height:56px;font-size:17px}
+/* keypad top: minimize */
+.kp-top{gap:8px}.kp-top span{flex:1}#kp-min{min-width:44px;min-height:44px;font-size:20px}
+/* card meta + notes */
+.lg-meta{display:flex;gap:6px;padding:0 0 4px}
+.lg-chip{min-height:44px;padding:0 12px;font-size:13px;border-radius:22px;background:var(--lg-card2);color:var(--lg-fg)}
+.lg-pnwrap{padding:0 0 4px}.lg-pn{width:100%;min-height:44px;text-align:left;background:none;color:var(--lg-fg);font-size:14px;padding:4px 0}.lg-pn.empty{color:var(--lg-dim)}
+.lg-wn{display:block;font-size:13px;color:var(--lg-dim);padding:6px 0 8px}.lg-wn small{font-size:11px}
+.lg-wn textarea,#pn-t{display:block;width:100%;box-sizing:border-box;margin-top:4px;font-size:16px;background:var(--lg-card2);color:var(--lg-fg);border:1px solid var(--lg-line);border-radius:8px;padding:8px}
+.tnote{font-size:12px;color:var(--lg-dim);padding:2px 0}
+.lg-adjrow{display:grid;grid-template-columns:1fr 64px 64px 64px;gap:6px;align-items:center;margin:6px 0}.lg-adjrow button{min-height:44px}.lg-adjrow b{text-align:center;font-size:18px}
+/* options sheet: how-to + chart pager */
+.lg-ht{display:flex;gap:10px;align-items:flex-start;margin:6px 0 10px}.lg-pic{width:96px;height:96px;flex:none;border-radius:10px;object-fit:cover}
+.lg-pic.ph{display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;background:var(--lg-card2);color:var(--lg-dim)}
+.lg-howto{font-size:14px}.lg-howto p{margin:0 0 6px}.lg-howto ul{margin:0 0 6px;padding-left:18px}.lg-howto.ph{color:var(--lg-dim)}
+.lg-pgdots{display:flex;gap:6px;margin:6px 0}.lg-pgdots button{flex:1;min-height:44px}.lg-pgdots button.on{background:var(--lg-pri)}
+.lg-pager{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}.lg-pager .pg{flex:0 0 100%;scroll-snap-align:start;min-width:0}
+.lg-met{flex-wrap:wrap}.lg-met button{min-height:44px}.lg-met button.on{background:var(--lg-pri)}
+.lg-more2{margin:6px 0}
+/* in-place tray */
+#lg-tray{position:fixed;left:0;right:0;top:0;bottom:var(--tabh);z-index:195;background:var(--lg-bg);overflow:auto;padding:0 8px 16px}
+.lg-tray-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;padding:10px 4px;padding-top:calc(10px + env(safe-area-inset-top));background:var(--lg-bg)}.lg-tray-top b{flex:1}.lg-tray-top button{min-height:44px}
+#lg-tray .panel{margin:0}
