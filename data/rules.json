@@ -1,6 +1,6 @@
 {
- "version": 6,
- "description": "Program-check rules. Effective sets use the same fractional counting as the volume panel (rating >= 0.25). Severity: warn = worth fixing, info = judgment call.",
+ "version": 7,
+ "description": "Program-check rules. Effective sets use the same fractional counting as the volume panel (rating >= 0.25). Severity: warn = worth fixing, info = judgment call. v7: adds rule pattern_gap (movement slots from patterns.json) and fix action add_slot_exercise.",
  "patterns": {
   "horizontal_press": [
    "barbell-bench-press",
@@ -658,6 +658,20 @@
     "reduce_sets:highest_fatigue",
     "swap_exercise:lower_fatigue"
    ]
+  },
+  {
+   "id": "pattern_gap",
+   "severity": "warn",
+   "severity_rule": "warn when a slot in patterns.json `required` has 0 exercises this week; info when any slot is above 0 but below patterns.json weekly_min_by_level[level] (incl. a required slot at 1 of 2), or when a non-required slot with a min is at 0. Skipped on an empty board.",
+   "scope": "week",
+   "uses": "patterns.json (slots, required, weekly_min_by_level, counts_toward) + exercises.json `patterns`",
+   "counting": "Each tile counts 1 for every slot its exercise lists. Compound slots count only primary/accessory exercises. counts_toward adds the count to those slots too (lunge -> squat).",
+   "message": "No {slot_lower} this week. Add one {slot_lower} exercise ({examples}).",
+   "message_info": "{slot_name}: {n} of {min} exercises this week for your level.",
+   "message_note": "{slot_lower} = slot name lowercased, e.g. 'No vertical pull this week.' {examples} = names of the top 2 slot_recommendations.",
+   "fixes": [
+    "add_slot_exercise"
+   ]
   }
  ],
  "fix_actions": {
@@ -668,7 +682,7 @@
     "by": "default 1; the checker tries 1, 2, ... up to the amount needed",
     "min_sets": 2
    },
-   "preview": "Drop {name} on {day_name} {from}\u2192{to} sets",
+   "preview": "Drop {name} on {day_name} {from}→{to} sets",
    "preview_multi": "Trim {name} on {day_name}",
    "note": "With lowest_priority_isolation, the checker can trim several isolation tiles in one fix, working from the last tile up, to bring a session under its cap. Each tile stays at 2 sets or more."
   },
@@ -710,7 +724,7 @@
     "by": 1,
     "max_sets": 5
    },
-   "preview": "Add sets to {name} on {day_name} ({from}\u2192{to})"
+   "preview": "Add sets to {name} on {day_name} ({from}→{to})"
   },
   "reorder_day": {
    "params": {
@@ -724,7 +738,7 @@
     "move_sets": "floor(sets/2), at least 2",
     "to": "the best swap.json same-pattern alternative not already on that day, on the same day"
    },
-   "preview": "Split {name} on {day_name}: {from}\u2192{keep} sets, plus {moved} sets of {new_name}"
+   "preview": "Split {name} on {day_name}: {from}→{keep} sets, plus {moved} sets of {new_name}"
   },
   "move_sets_to_day": {
    "params": {
@@ -739,10 +753,19 @@
     "target": "the smallest tile",
     "into": "a same-pattern tile on the same day, total no more than 5 sets"
    },
-   "preview": "Merge {name} into {into_name} on {day_name} ({into_from}\u2192{into_to} sets)"
+   "preview": "Merge {name} into {into_name} on {day_name} ({into_from}→{into_to} sets)"
   },
   "_note": "Previews use {day_name}, {to_day_name} and {from_day_name}, looked up in day_names. The raw keys {day}, {to_day} and {from_day} stay in params.",
-  "custom_exercises": "Custom exercises are never fix candidates. No fix suggests, adds or swaps in a custom exercise. They can still appear as manual swap suggestions (see swap.json custom)."
+  "custom_exercises": "Custom exercises are never fix candidates. No fix suggests, adds or swaps in a custom exercise. They can still appear as manual swap suggestions (see swap.json custom).",
+  "add_slot_exercise": {
+   "params": {
+    "slot": "slot id",
+    "choose": "patterns.slot_recommendations(slot, level, board) order (eligible only: not custom, can count for the slot), first 6 tried",
+    "to_day": "days ordered by: has a tile in the same slot group (patterns.json slots[].group) first, then fewest total sets, then day order; skip a day that already has the exercise",
+    "sets": "rules.pattern_gap_fix.sets_by_kind (compound 3, isolation 2); if that adds a flag, the same exercise/day is tried at 2 sets"
+   },
+   "preview": "Add {name} ({sets} sets) on {to_day_name} for {slot_lower}"
+  }
  },
  "fix_validation": "Every fix candidate has to pass validation before it's shown. Apply it to a copy of the board and run every rule again. Drop the candidate if it creates any non-info flag that wasn't there before, including a new red weekly_volume. Drop it too if it doesn't move the targeted flag toward compliance (fewer sets, fewer minutes, a ratio or volume closer to range, or more training days for the muscle). A candidate that clears the flag is marked resolves=true. One that only improves it is marked resolves=false and shown after the ones that clear it. Try each rule's fixes in the order listed, prefer a resolving candidate within each action, keep one per action, and show at most 3. If none are valid, show none, and never show an unvalidated fix.",
  "staples": [
@@ -937,7 +960,7 @@
    "action": "swap_exercise:lower_fatigue",
    "scope": "every tile of that exercise, on every day, except a day that already has the candidate",
    "candidate_rule": "main muscle m = cur's highest rating. Candidate: not custom; same rules.json pattern as cur (cosine >= 0.6 if cur has no pattern); never compound->isolation; rating[m] >= cur rating[m] - 0.1; rating[m]/fatigue strictly higher. Order: rating/fatigue desc, swap.json score desc, id. Take the first that validates (try up to 8).",
-   "preview": "Swap {name} for {new_name} on {day_list} ({muscle}: {spf_from}\u2192{spf_to} stimulus per fatigue)",
+   "preview": "Swap {name} for {new_name} on {day_list} ({muscle}: {spf_from}→{spf_to} stimulus per fatigue)",
    "success_metric": "week recovery cost (sum sets x fatigue) strictly lower; always resolves=true when valid"
   },
   "stretch_share": {
@@ -996,6 +1019,15 @@
    "preview": "use fix_actions previews",
    "success_metric": "effective weekly sets closer to range; resolves when inside",
    "note": "Optional: today the app colours these but shows no text. Show the quick fix in the muscle pop-up only."
+  },
+  "pattern_gap": {
+   "kind": "program_check",
+   "rule": "pattern_gap",
+   "where": "check.js program check list (rules.json rules[id=pattern_gap])",
+   "actions": "rules[].fixes = add_slot_exercise",
+   "candidate_rule": "fix_actions.add_slot_exercise + fix_validation",
+   "success_metric": "slot count reaches the weekly min (flag clears = resolves; warn->info counts as resolving the warn); else count rises = partial",
+   "reference": "tools/patterns.py pattern_gaps / slot_recommendations; tools/check_program.py _gens('pattern_gap')"
   }
  },
  "logger": {
@@ -1054,5 +1086,13 @@
   "jump_prefer_reps_above": 0.05,
   "e1rm_max_reps": 10,
   "e1rm_formula": "epley"
+ },
+ "pattern_gap_fix": {
+  "sets_by_kind": {
+   "compound": 3,
+   "isolation": 2
+  },
+  "fallback_sets": 2,
+  "max_candidates": 6
  }
 }

@@ -1,5 +1,5 @@
 {
- "version": 4,
+ "version": 5,
  "muscles": [
   "chest",
   "front_delts",
@@ -78,7 +78,7 @@
    "howTo": [
     "Lie with your eyes under the bar and your feet flat. Pull your shoulder blades back and down.",
     "Grip a little wider than your shoulders and unrack the bar over your shoulders.",
-    "Lower it under control to your mid-chest, with your elbows about 45\u201370\u00b0 from your body.",
+    "Lower it under control to your mid-chest, with your elbows about 45–70° from your body.",
     "Press back up and slightly back toward your face until your arms are straight."
    ],
    "tip": "Keep your shoulder blades pinned and your butt on the bench the whole time.",
@@ -92,7 +92,10 @@
      "Press up and slightly back over the shoulders"
     ],
     "mistake": "Bouncing the bar off your chest instead of touching and pressing."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "incline-barbell-bench-press",
@@ -146,14 +149,14 @@
     "lower_back": 0,
     "abductors": 0
    },
-   "description": "A barbell press on a 30\u201345\u00b0 bench that shifts work toward the upper chest.",
+   "description": "A barbell press on a 30–45° bench that shifts work toward the upper chest.",
    "howTo": [
-    "Set the bench at 30\u201345\u00b0 and sit with your eyes just in front of the bar.",
+    "Set the bench at 30–45° and sit with your eyes just in front of the bar.",
     "Pull your shoulder blades back and grip a little wider than your shoulders.",
     "Lower the bar to your upper chest, just below your collarbones.",
     "Press up until your arms are straight over your shoulders."
    ],
-   "tip": "A lower incline (around 30\u00b0) keeps more of the work on the chest instead of the shoulders.",
+   "tip": "A lower incline (around 30°) keeps more of the work on the chest instead of the shoulders.",
    "youtube": "",
    "fatigue": 1.2,
    "howto": {
@@ -164,7 +167,10 @@
      "Press straight up over the shoulders"
     ],
     "mistake": "Setting the bench so steep the lift turns into a shoulder press."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "dumbbell-bench-press",
@@ -236,7 +242,10 @@
      "Press up and slightly in"
     ],
     "mistake": "Cutting the range short at the bottom to move heavier dumbbells."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "incline-dumbbell-press",
@@ -290,9 +299,9 @@
     "lower_back": 0,
     "abductors": 0
    },
-   "description": "A dumbbell press on a 30\u201345\u00b0 bench for the upper chest, with a long stretch at the bottom.",
+   "description": "A dumbbell press on a 30–45° bench for the upper chest, with a long stretch at the bottom.",
    "howTo": [
-    "Set the bench at 30\u201345\u00b0 and kick the dumbbells up to your shoulders as you lie back.",
+    "Set the bench at 30–45° and kick the dumbbells up to your shoulders as you lie back.",
     "Pull your shoulder blades back and keep your chest up.",
     "Press up until your arms are straight above your upper chest.",
     "Lower slowly until your elbows are a little below the bench."
@@ -308,7 +317,10 @@
      "Press up without clanking the bells"
     ],
     "mistake": "Flaring elbows straight out to the sides at the bottom."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "machine-chest-press",
@@ -380,7 +392,10 @@
      "Return slowly to a full stretch"
     ],
     "mistake": "Letting the shoulders roll forward off the pad at lockout."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "weighted-dip",
@@ -455,7 +470,11 @@
      "Drive back up to lockout"
     ],
     "mistake": "Swinging the legs to kick the weight up."
-   }
+   },
+   "patterns": [
+    "horizontal_push",
+    "triceps"
+   ]
   },
   {
    "id": "push-up",
@@ -513,7 +532,7 @@
    "howTo": [
     "Put your hands a little wider than your shoulders and make a straight line from head to heels.",
     "Brace your core and glutes.",
-    "Lower your chest to just above the floor, with your elbows about 45\u00b0 from your body.",
+    "Lower your chest to just above the floor, with your elbows about 45° from your body.",
     "Push back up to straight arms."
    ],
    "tip": "Keep your hips level, not sagging or piked up.",
@@ -530,7 +549,10 @@
      "Push the floor away to lockout"
     ],
     "mistake": "Letting the hips sag or pike during the rep."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "cable-fly",
@@ -602,7 +624,10 @@
      "Bring hands together in a hugging arc"
     ],
     "mistake": "Bending and straightening the elbows so it turns into a press."
-   }
+   },
+   "patterns": [
+    "chest_fly"
+   ]
   },
   {
    "id": "pec-deck",
@@ -674,7 +699,10 @@
      "Open slowly to a full stretch"
     ],
     "mistake": "Shrugging the shoulders up as you bring the handles in."
-   }
+   },
+   "patterns": [
+    "chest_fly"
+   ]
   },
   {
    "id": "dumbbell-fly",
@@ -746,7 +774,10 @@
      "Bring the bells back up over your chest"
     ],
     "mistake": "Turning it into a press by bending the elbows more as the weights come up."
-   }
+   },
+   "patterns": [
+    "chest_fly"
+   ]
   },
   {
    "id": "overhead-press",
@@ -818,7 +849,10 @@
      "Finish with the bar over mid-foot"
     ],
     "mistake": "Leaning back hard and turning it into an incline press."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "seated-dumbbell-shoulder-press",
@@ -890,7 +924,10 @@
      "Lower to about ear level"
     ],
     "mistake": "Arching the lower back off the pad to finish reps."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "machine-shoulder-press",
@@ -962,7 +999,10 @@
      "Lower under control to the start"
     ],
     "mistake": "Setting the seat too high and cutting the range short."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "dumbbell-lateral-raise",
@@ -1034,7 +1074,10 @@
      "Stop around shoulder height"
     ],
     "mistake": "Swinging the torso to heave the weight up."
-   }
+   },
+   "patterns": [
+    "side_delts"
+   ]
   },
   {
    "id": "cable-lateral-raise",
@@ -1106,7 +1149,10 @@
      "Lower slowly across your body"
     ],
     "mistake": "Shrugging the trap up as the hand rises."
-   }
+   },
+   "patterns": [
+    "side_delts"
+   ]
   },
   {
    "id": "upright-row",
@@ -1178,7 +1224,11 @@
      "Stop when elbows reach shoulder height"
     ],
     "mistake": "Using a very narrow grip and yanking the bar to the chin."
-   }
+   },
+   "patterns": [
+    "side_delts",
+    "traps"
+   ]
   },
   {
    "id": "reverse-pec-deck",
@@ -1250,7 +1300,10 @@
      "Return slowly without the stack touching"
     ],
     "mistake": "Pulling with the back by squeezing the shoulder blades hard."
-   }
+   },
+   "patterns": [
+    "rear_delts"
+   ]
   },
   {
    "id": "face-pull",
@@ -1322,7 +1375,10 @@
      "Finish with elbows high and out"
     ],
     "mistake": "Leaning back and using body weight to move the stack."
-   }
+   },
+   "patterns": [
+    "rear_delts"
+   ]
   },
   {
    "id": "dumbbell-rear-delt-fly",
@@ -1394,7 +1450,10 @@
      "Pause briefly at the top"
     ],
     "mistake": "Rowing the bells up instead of sweeping them out wide."
-   }
+   },
+   "patterns": [
+    "rear_delts"
+   ]
   },
   {
    "id": "front-raise",
@@ -1466,7 +1525,10 @@
      "Lower under control"
     ],
     "mistake": "Rocking the hips to swing the weight up."
-   }
+   },
+   "patterns": [
+    "front_delts"
+   ]
   },
   {
    "id": "pull-up",
@@ -1541,7 +1603,10 @@
      "Get your chin over the bar"
     ],
     "mistake": "Kipping or swinging to finish reps."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "chin-up",
@@ -1616,7 +1681,11 @@
      "Lower all the way down"
     ],
     "mistake": "Doing half reps that never reach a full hang."
-   }
+   },
+   "patterns": [
+    "vertical_pull",
+    "biceps"
+   ]
   },
   {
    "id": "lat-pulldown",
@@ -1688,7 +1757,10 @@
      "Let the arms fully extend at the top"
     ],
     "mistake": "Leaning way back and rowing the bar to your stomach."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "close-grip-pulldown",
@@ -1760,7 +1832,10 @@
      "Reach up to a full stretch"
     ],
     "mistake": "Rocking the torso to start each rep."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "barbell-row",
@@ -1816,7 +1891,7 @@
    },
    "description": "A bent-over barbell row for the upper back and lats, which also makes the lower back work to hold the position.",
    "howTo": [
-    "Hinge forward to about 30\u201345\u00b0 from the floor, holding the bar at arm's length.",
+    "Hinge forward to about 30–45° from the floor, holding the bar at arm's length.",
     "Brace your core and keep your back flat.",
     "Row the bar to your lower ribs.",
     "Lower it under control without standing up."
@@ -1832,7 +1907,10 @@
      "Lower until arms are straight"
     ],
     "mistake": "Standing more upright each rep as you tire."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "pendlay-row",
@@ -1904,7 +1982,10 @@
      "Return the bar to the floor each rep"
     ],
     "mistake": "Lifting the torso to help pull the bar up."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "one-arm-dumbbell-row",
@@ -1976,7 +2057,10 @@
      "Lower to a full stretch"
     ],
     "mistake": "Twisting the torso open to raise the dumbbell higher."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "chest-supported-row",
@@ -2048,7 +2132,10 @@
      "Lower until arms are straight"
     ],
     "mistake": "Lifting the chest off the pad to cheat the weight up."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "seated-cable-row",
@@ -2120,7 +2207,10 @@
      "Let your shoulders reach forward on the return"
     ],
     "mistake": "Rocking far back and forth to move the stack."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "t-bar-row",
@@ -2192,7 +2282,10 @@
      "Lower to full arm extension"
     ],
     "mistake": "Jerking the weight up with the hips and lower back."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "straight-arm-pulldown",
@@ -2264,7 +2357,10 @@
      "Return until you feel a lat stretch"
     ],
     "mistake": "Bending the elbows so it turns into a pushdown."
-   }
+   },
+   "patterns": [
+    "lat_iso"
+   ]
   },
   {
    "id": "barbell-shrug",
@@ -2336,7 +2432,10 @@
      "Lower to a full stretch"
     ],
     "mistake": "Rolling the shoulders in circles instead of moving straight up and down."
-   }
+   },
+   "patterns": [
+    "traps"
+   ]
   },
   {
    "id": "dumbbell-shrug",
@@ -2408,7 +2507,10 @@
      "Pause and lower slowly"
     ],
     "mistake": "Bending the elbows to help lift the weight."
-   }
+   },
+   "patterns": [
+    "traps"
+   ]
   },
   {
    "id": "barbell-curl",
@@ -2480,7 +2582,10 @@
      "Lower to straight arms"
     ],
     "mistake": "Swinging the hips to throw the bar up."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "dumbbell-curl",
@@ -2552,7 +2657,10 @@
      "Lower all the way down"
     ],
     "mistake": "Letting the elbows drift forward to shorten the rep."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "hammer-curl",
@@ -2624,7 +2732,10 @@
      "Lower under control"
     ],
     "mistake": "Swinging the dumbbells across the body."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "incline-dumbbell-curl",
@@ -2680,7 +2791,7 @@
    },
    "description": "A curl lying back on an incline bench so the biceps work from a long stretch.",
    "howTo": [
-    "Set the bench at 45\u201360\u00b0 and lie back with your arms hanging straight down.",
+    "Set the bench at 45–60° and lie back with your arms hanging straight down.",
     "Keep your upper arms still, pointing at the floor.",
     "Curl the dumbbells up.",
     "Lower all the way until your arms are fully straight."
@@ -2696,7 +2807,10 @@
      "Lower to a full stretch"
     ],
     "mistake": "Bringing the elbows forward as you curl."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "preacher-curl",
@@ -2768,7 +2882,10 @@
      "Stop just before the forearms go vertical"
     ],
     "mistake": "Dropping fast into the bottom of the rep."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "cable-curl",
@@ -2840,7 +2957,10 @@
      "Resist the cable on the way down"
     ],
     "mistake": "Leaning back to start each rep."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "close-grip-bench-press",
@@ -2912,7 +3032,11 @@
      "Press to lockout"
     ],
     "mistake": "Gripping so narrow that the wrists bend back."
-   }
+   },
+   "patterns": [
+    "horizontal_push",
+    "triceps"
+   ]
   },
   {
    "id": "skull-crusher",
@@ -2984,7 +3108,10 @@
      "Extend back to the start"
     ],
     "mistake": "Letting the elbows flare wide apart."
-   }
+   },
+   "patterns": [
+    "triceps"
+   ]
   },
   {
    "id": "triceps-pushdown",
@@ -3056,7 +3183,10 @@
      "Return until forearms pass parallel"
     ],
     "mistake": "Leaning over the stack and pushing with body weight."
-   }
+   },
+   "patterns": [
+    "triceps"
+   ]
   },
   {
    "id": "overhead-cable-triceps-extension",
@@ -3128,7 +3258,10 @@
      "Return to a deep stretch"
     ],
     "mistake": "Letting the elbows flare out to the sides."
-   }
+   },
+   "patterns": [
+    "triceps"
+   ]
   },
   {
    "id": "wrist-curl",
@@ -3200,7 +3333,10 @@
      "Keep forearms flat on the support"
     ],
     "mistake": "Lifting the forearms to move the weight."
-   }
+   },
+   "patterns": [
+    "forearms"
+   ]
   },
   {
    "id": "back-squat",
@@ -3272,7 +3408,10 @@
      "Drive up through the whole foot"
     ],
     "mistake": "Letting the knees cave in on the way up."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "front-squat",
@@ -3344,7 +3483,10 @@
      "Drive up through mid-foot"
     ],
     "mistake": "Dropping the elbows so the bar rolls forward."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "hack-squat",
@@ -3416,7 +3558,10 @@
      "Press through the whole foot"
     ],
     "mistake": "Letting the heels lift off the platform."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "leg-press",
@@ -3488,7 +3633,10 @@
      "Press without locking the knees hard"
     ],
     "mistake": "Letting the hips roll off the seat at the bottom."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "bulgarian-split-squat",
@@ -3560,7 +3708,10 @@
      "Drive up through the front heel"
     ],
     "mistake": "Standing too close to the bench so the front heel lifts."
-   }
+   },
+   "patterns": [
+    "lunge"
+   ]
   },
   {
    "id": "walking-lunge",
@@ -3632,7 +3783,10 @@
      "Push through the front foot into the next step"
     ],
     "mistake": "Taking short steps that push the front knee way past the toes with heels lifting."
-   }
+   },
+   "patterns": [
+    "lunge"
+   ]
   },
   {
    "id": "leg-extension",
@@ -3691,7 +3845,7 @@
     "Adjust the seat so your knees line up with the machine's pivot point.",
     "Hook the pad just above your ankles.",
     "Straighten your legs fully.",
-    "Lower slowly until your knees are bent past 90\u00b0."
+    "Lower slowly until your knees are bent past 90°."
    ],
    "tip": "Leaning back slightly stretches the rectus femoris more.",
    "youtube": "",
@@ -3704,7 +3858,10 @@
      "Lower under control"
     ],
     "mistake": "Using momentum and lifting the hips off the seat."
-   }
+   },
+   "patterns": [
+    "quads_iso"
+   ]
   },
   {
    "id": "deadlift",
@@ -3776,7 +3933,10 @@
      "Lock out with hips and knees together"
     ],
     "mistake": "Letting the hips shoot up first so the back rounds."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "romanian-deadlift",
@@ -3848,7 +4008,10 @@
      "Stop at a deep hamstring stretch and stand up"
     ],
     "mistake": "Rounding the back to reach the bar lower."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "stiff-leg-dumbbell-deadlift",
@@ -3920,7 +4083,10 @@
      "Return by driving the hips forward"
     ],
     "mistake": "Bending the knees so it turns into a squat."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "hip-thrust",
@@ -3992,7 +4158,10 @@
      "Squeeze glutes at the top"
     ],
     "mistake": "Arching the lower back to finish instead of extending the hips."
-   }
+   },
+   "patterns": [
+    "glute_iso"
+   ]
   },
   {
    "id": "lying-leg-curl",
@@ -4064,7 +4233,10 @@
      "Lower slowly to straight legs"
     ],
     "mistake": "Lifting the hips to start the curl."
-   }
+   },
+   "patterns": [
+    "hamstring_curl"
+   ]
   },
   {
    "id": "seated-leg-curl",
@@ -4136,7 +4308,10 @@
      "Return to nearly straight legs"
     ],
     "mistake": "Letting the weight snap back up between reps."
-   }
+   },
+   "patterns": [
+    "hamstring_curl"
+   ]
   },
   {
    "id": "back-extension",
@@ -4190,7 +4365,7 @@
     "lower_back": 0.8,
     "abductors": 0
    },
-   "description": "A hip extension on a 45\u00b0 or horizontal bench, for the lower back, glutes and hamstrings.",
+   "description": "A hip extension on a 45° or horizontal bench, for the lower back, glutes and hamstrings.",
    "howTo": [
     "Set the pad just below your hip bones and lock your heels in.",
     "Lower your torso forward.",
@@ -4211,7 +4386,10 @@
      "Pause briefly at the top"
     ],
     "mistake": "Swinging up and overarching at the top."
-   }
+   },
+   "patterns": [
+    "glute_iso"
+   ]
   },
   {
    "id": "hip-adduction-machine",
@@ -4283,7 +4461,10 @@
      "Open slowly to the start"
     ],
     "mistake": "Letting the pads slam open between reps."
-   }
+   },
+   "patterns": [
+    "hip_iso"
+   ]
   },
   {
    "id": "standing-calf-raise",
@@ -4355,7 +4536,10 @@
      "Rise as high as you can"
     ],
     "mistake": "Bouncing quick half reps."
-   }
+   },
+   "patterns": [
+    "calves"
+   ]
   },
   {
    "id": "seated-calf-raise",
@@ -4427,7 +4611,10 @@
      "Hold the top for a second"
     ],
     "mistake": "Rushing through the bottom stretch."
-   }
+   },
+   "patterns": [
+    "calves"
+   ]
   },
   {
    "id": "hanging-leg-raise",
@@ -4502,7 +4689,10 @@
      "Lower without swinging"
     ],
     "mistake": "Swinging the legs instead of curling the hips."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "cable-crunch",
@@ -4574,7 +4764,10 @@
      "Return to a long stretch"
     ],
     "mistake": "Sitting back on the heels to pull with the hips."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "ab-wheel-rollout",
@@ -4649,7 +4842,10 @@
      "Pull back with the abs"
     ],
     "mistake": "Letting the lower back sag at the far point."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "hip-abduction-machine",
@@ -4721,7 +4917,10 @@
      "Return slowly"
     ],
     "mistake": "Rocking the torso to push the pads out."
-   }
+   },
+   "patterns": [
+    "hip_iso"
+   ]
   },
   {
    "id": "cable-hip-abduction",
@@ -4793,7 +4992,10 @@
      "Return slowly across"
     ],
     "mistake": "Leaning the torso away to lift the leg higher."
-   }
+   },
+   "patterns": [
+    "hip_iso"
+   ]
   },
   {
    "id": "side-lying-hip-abduction",
@@ -4851,7 +5053,7 @@
    "howTo": [
     "Lie on your side with your legs stacked and straight.",
     "Rotate your top leg's toes slightly down.",
-    "Raise your top leg to about 30\u201345\u00b0.",
+    "Raise your top leg to about 30–45°.",
     "Lower slowly."
    ],
    "tip": "Keep your hips stacked. Don't roll back.",
@@ -4868,7 +5070,10 @@
      "Lower slowly"
     ],
     "mistake": "Rolling the hips back so the leg swings forward."
-   }
+   },
+   "patterns": [
+    "hip_iso"
+   ]
   },
   {
    "id": "banded-lateral-walk",
@@ -4940,7 +5145,10 @@
      "Keep toes pointing forward"
     ],
     "mistake": "Standing up tall and letting the feet snap together."
-   }
+   },
+   "patterns": [
+    "hip_iso"
+   ]
   },
   {
    "id": "dumbbell-step-up",
@@ -5012,7 +5220,10 @@
      "Lower slowly to the floor"
     ],
     "mistake": "Pushing off the bottom foot to cheat the rep."
-   }
+   },
+   "patterns": [
+    "lunge"
+   ]
   },
   {
    "id": "smith-squat",
@@ -5084,7 +5295,10 @@
      "Drive up through the whole foot"
     ],
     "mistake": "Placing the feet directly under the bar so the knees jam forward."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "smith-bench-press",
@@ -5156,7 +5370,10 @@
      "Press to lockout"
     ],
     "mistake": "Positioning the bench so the bar lands on your neck or stomach."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "smith-incline-press",
@@ -5228,7 +5445,10 @@
      "Press straight up"
     ],
     "mistake": "Lowering the bar to the neck because the bench is misplaced."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "smith-overhead-press",
@@ -5300,7 +5520,10 @@
      "Lower to chin level"
     ],
     "mistake": "Arching hard off the bench to finish reps."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "smith-row",
@@ -5372,7 +5595,10 @@
      "Lower to straight arms"
     ],
     "mistake": "Standing more upright with each rep."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "smith-rdl",
@@ -5444,7 +5670,10 @@
      "Stand by driving the hips forward"
     ],
     "mistake": "Rounding the back to reach lower."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "smith-split-squat",
@@ -5516,7 +5745,10 @@
      "Drive up to the start"
     ],
     "mistake": "Using a stance so short the front heel lifts."
-   }
+   },
+   "patterns": [
+    "lunge"
+   ]
   },
   {
    "id": "smith-calf-raise",
@@ -5588,7 +5820,10 @@
      "Pause at the top"
     ],
     "mistake": "Bending the knees to bounce the weight."
-   }
+   },
+   "patterns": [
+    "calves"
+   ]
   },
   {
    "id": "smith-hip-thrust",
@@ -5660,7 +5895,10 @@
      "Squeeze glutes before lowering"
     ],
     "mistake": "Pushing through the toes instead of the heels."
-   }
+   },
+   "patterns": [
+    "glute_iso"
+   ]
   },
   {
    "id": "smith-shrug",
@@ -5732,7 +5970,10 @@
      "Lower to a full stretch"
     ],
     "mistake": "Bending the elbows to pull the bar."
-   }
+   },
+   "patterns": [
+    "traps"
+   ]
   },
   {
    "id": "incline-cable-pullover",
@@ -5804,7 +6045,10 @@
      "Return to a deep lat stretch"
     ],
     "mistake": "Bending the elbows into a triceps extension."
-   }
+   },
+   "patterns": [
+    "lat_iso"
+   ]
   },
   {
    "id": "dumbbell-pullover",
@@ -5875,7 +6119,10 @@
      "Pull back over your chest"
     ],
     "mistake": "Flaring the ribs and arching to get extra range."
-   }
+   },
+   "patterns": [
+    "lat_iso"
+   ]
   },
   {
    "id": "pullover-machine",
@@ -5946,7 +6193,10 @@
      "Return slowly to the stretch"
     ],
     "mistake": "Pushing with the hands instead of driving through the elbows."
-   }
+   },
+   "patterns": [
+    "lat_iso"
+   ]
   },
   {
    "id": "landmine-t-bar-row",
@@ -6017,7 +6267,10 @@
      "Lower to full extension"
     ],
     "mistake": "Using leg drive and hip snap to lift the weight."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "viking-press",
@@ -6088,7 +6341,10 @@
      "Lower to shoulder height"
     ],
     "mistake": "Leaning back to turn it into an incline press."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "landmine-press-one-arm",
@@ -6159,7 +6415,12 @@
      "Lower back to the shoulder"
     ],
     "mistake": "Rotating the torso to push the bar up."
-   }
+   },
+   "patterns": [
+    "horizontal_push",
+    "vertical_push",
+    "front_delts"
+   ]
   },
   {
    "id": "landmine-press-two-arm",
@@ -6230,7 +6491,12 @@
      "Lower under control to the chest"
     ],
     "mistake": "Arching back instead of leaning into the bar."
-   }
+   },
+   "patterns": [
+    "horizontal_push",
+    "vertical_push",
+    "front_delts"
+   ]
   },
   {
    "id": "meadows-row",
@@ -6302,7 +6568,10 @@
      "Lower to a full stretch"
     ],
     "mistake": "Twisting the torso to finish the rep."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "landmine-squat",
@@ -6373,7 +6642,10 @@
      "Drive up through mid-foot"
     ],
     "mistake": "Letting the bar drift away from your chest."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "landmine-rdl",
@@ -6444,7 +6716,10 @@
      "Stand by squeezing the glutes"
     ],
     "mistake": "Squatting down instead of hinging."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "landmine-rotation",
@@ -6515,7 +6790,10 @@
      "Move through the torso with arms long"
     ],
     "mistake": "Bending the arms so the arms do the work."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "machine-preacher-curl",
@@ -6586,7 +6864,10 @@
      "Lower slowly"
     ],
     "mistake": "Lifting the elbows off the pad."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "seated-machine-curl",
@@ -6657,7 +6938,10 @@
      "Return to full extension"
     ],
     "mistake": "Shortening the range at the bottom."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "cable-rope-hammer-curl",
@@ -6728,7 +7012,10 @@
      "Lower to straight arms"
     ],
     "mistake": "Leaning back to pull the rope up."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "bayesian-cable-curl",
@@ -6799,7 +7086,10 @@
      "Return to a full stretch"
     ],
     "mistake": "Letting the elbow swing forward during the curl."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "high-cable-curl",
@@ -6870,7 +7160,10 @@
      "Extend back slowly"
     ],
     "mistake": "Dropping the elbows as you curl."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "machine-triceps-extension",
@@ -6941,7 +7234,10 @@
      "Return slowly"
     ],
     "mistake": "Lifting the shoulders to push with the chest."
-   }
+   },
+   "patterns": [
+    "triceps"
+   ]
   },
   {
    "id": "dip-machine",
@@ -7012,7 +7308,11 @@
      "Return to a deep bend"
     ],
     "mistake": "Leaning far forward and shrugging the shoulders up."
-   }
+   },
+   "patterns": [
+    "horizontal_push",
+    "triceps"
+   ]
   },
   {
    "id": "overhead-triceps-machine",
@@ -7083,7 +7383,10 @@
      "Return to a deep stretch"
     ],
     "mistake": "Moving the upper arms to help press."
-   }
+   },
+   "patterns": [
+    "triceps"
+   ]
   },
   {
    "id": "plate-loaded-chest-press",
@@ -7154,7 +7457,10 @@
      "Return to a deep stretch"
     ],
     "mistake": "Letting the shoulders roll forward at lockout."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "incline-machine-press",
@@ -7225,7 +7531,10 @@
      "Lower to a full stretch"
     ],
     "mistake": "Setting the seat so high it becomes a shoulder press."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "decline-machine-press",
@@ -7296,7 +7605,10 @@
      "Return to a full stretch"
     ],
     "mistake": "Cutting the range short at the stretch."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "iso-lateral-chest-press",
@@ -7367,7 +7679,10 @@
      "Return under control"
     ],
     "mistake": "Letting one arm drift ahead of the other."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "iso-lateral-shoulder-press",
@@ -7438,7 +7753,10 @@
      "Lower to shoulder level"
     ],
     "mistake": "Arching the lower back to finish reps."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "lateral-raise-machine",
@@ -7509,7 +7827,10 @@
      "Lower slowly"
     ],
     "mistake": "Shrugging to lift the pads."
-   }
+   },
+   "patterns": [
+    "side_delts"
+   ]
   },
   {
    "id": "high-row-machine",
@@ -7580,7 +7901,10 @@
      "Return to a full reach"
     ],
     "mistake": "Leaning back to use body weight."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "low-row-machine",
@@ -7651,7 +7975,10 @@
      "Reach forward fully"
     ],
     "mistake": "Lifting off the chest pad to move the weight."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "iso-lateral-row",
@@ -7722,7 +8049,10 @@
      "Return to a full reach"
     ],
     "mistake": "Twisting the torso to row one side."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "wide-grip-lat-pulldown",
@@ -7793,7 +8123,10 @@
      "Return to a full stretch"
     ],
     "mistake": "Pulling the bar behind the neck."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "neutral-grip-lat-pulldown",
@@ -7864,7 +8197,10 @@
      "Reach fully overhead"
     ],
     "mistake": "Leaning far back to row the handle."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "single-arm-lat-pulldown",
@@ -7935,7 +8271,10 @@
      "Reach fully up on the return"
     ],
     "mistake": "Leaning sideways to pull further."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "assisted-pull-up",
@@ -8006,7 +8345,10 @@
      "Lower to a full hang"
     ],
     "mistake": "Bouncing off the assist pad."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "assisted-dip",
@@ -8077,7 +8419,11 @@
      "Press to lockout"
     ],
     "mistake": "Stopping the descent halfway."
-   }
+   },
+   "patterns": [
+    "horizontal_push",
+    "triceps"
+   ]
   },
   {
    "id": "pendulum-squat",
@@ -8148,7 +8494,10 @@
      "Drive up without locking the knees hard"
     ],
     "mistake": "Letting the knees cave inward."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "belt-squat",
@@ -8219,7 +8568,10 @@
      "Drive through the whole foot"
     ],
     "mistake": "Letting the hips shoot back so the belt swings."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "v-squat",
@@ -8290,7 +8642,10 @@
      "Drive up through the platform"
     ],
     "mistake": "Cutting depth to move more weight."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "single-leg-press",
@@ -8361,7 +8716,11 @@
      "Press through the whole foot"
     ],
     "mistake": "Letting the knee drift outward."
-   }
+   },
+   "patterns": [
+    "squat",
+    "quads_iso"
+   ]
   },
   {
    "id": "high-foot-leg-press",
@@ -8432,7 +8791,10 @@
      "Stop just short of lockout"
     ],
     "mistake": "Letting the lower back peel off the pad."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "nordic-curl",
@@ -8506,7 +8868,10 @@
      "Push up with your hands and pull back"
     ],
     "mistake": "Bending at the hips to shorten the lever."
-   }
+   },
+   "patterns": [
+    "hamstring_curl"
+   ]
   },
   {
    "id": "glute-kickback-machine",
@@ -8577,7 +8942,10 @@
      "Return under control"
     ],
     "mistake": "Arching the lower back to get more range."
-   }
+   },
+   "patterns": [
+    "glute_iso"
+   ]
   },
   {
    "id": "hip-thrust-machine",
@@ -8648,7 +9016,10 @@
      "Lower slowly"
     ],
     "mistake": "Overextending the lower back at the top."
-   }
+   },
+   "patterns": [
+    "glute_iso"
+   ]
   },
   {
    "id": "leg-press-calf-raise",
@@ -8719,7 +9090,10 @@
      "Keep the knees nearly straight"
     ],
     "mistake": "Bending the knees to push with the quads."
-   }
+   },
+   "patterns": [
+    "calves"
+   ]
   },
   {
    "id": "ab-crunch-machine",
@@ -8790,11 +9164,14 @@
      "Return to a full stretch"
     ],
     "mistake": "Pulling with the arms instead of the abs."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "45-degree-hyperextension",
-   "name": "45\u00b0 Glute Hyperextension",
+   "name": "45° Glute Hyperextension",
    "type": "isolation",
    "equipment": "bodyweight",
    "muscles": {
@@ -8864,7 +9241,10 @@
      "Squeeze glutes at the top"
     ],
     "mistake": "Hyperextending the back at the top."
-   }
+   },
+   "patterns": [
+    "glute_iso"
+   ]
   },
   {
    "id": "reverse-hyper",
@@ -8935,7 +9315,10 @@
      "Lower under control"
     ],
     "mistake": "Swinging the pendulum with momentum."
-   }
+   },
+   "patterns": [
+    "glute_iso"
+   ]
   },
   {
    "id": "shrug-machine",
@@ -9006,7 +9389,10 @@
      "Lower fully"
     ],
     "mistake": "Rolling the shoulders forward and back."
-   }
+   },
+   "patterns": [
+    "traps"
+   ]
   },
   {
    "id": "cable-crossover-low-to-high",
@@ -9077,7 +9463,10 @@
      "Lower back to a stretch"
     ],
     "mistake": "Turning it into a front raise by shrugging."
-   }
+   },
+   "patterns": [
+    "chest_fly"
+   ]
   },
   {
    "id": "cable-crossover-high-to-low",
@@ -9148,7 +9537,10 @@
      "Return slowly to a stretch"
     ],
     "mistake": "Bending the elbows into a press."
-   }
+   },
+   "patterns": [
+    "chest_fly"
+   ]
   },
   {
    "id": "single-arm-cable-row",
@@ -9219,7 +9611,10 @@
      "Reach forward fully"
     ],
     "mistake": "Twisting the torso to pull."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "wide-grip-cable-row",
@@ -9290,7 +9685,10 @@
      "Reach forward fully"
     ],
     "mistake": "Rocking far back to move the stack."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "dumbbell-rdl",
@@ -9361,7 +9759,10 @@
      "Stand by squeezing the glutes"
     ],
     "mistake": "Rounding the back to reach the floor."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "goblet-squat",
@@ -9432,7 +9833,11 @@
      "Drive up through mid-foot"
     ],
     "mistake": "Letting the dumbbell pull your torso forward."
-   }
+   },
+   "patterns": [
+    "squat",
+    "quads_iso"
+   ]
   },
   {
    "id": "dumbbell-reverse-lunge",
@@ -9503,7 +9908,10 @@
      "Drive through the front foot to stand"
     ],
     "mistake": "Leaning forward and pushing off the back foot."
-   }
+   },
+   "patterns": [
+    "lunge"
+   ]
   },
   {
    "id": "arnold-press",
@@ -9574,7 +9982,11 @@
      "Reverse the rotation on the way down"
     ],
     "mistake": "Rushing the rotation and losing control."
-   }
+   },
+   "patterns": [
+    "vertical_push",
+    "front_delts"
+   ]
   },
   {
    "id": "cable-y-raise",
@@ -9645,7 +10057,10 @@
      "Lower slowly"
     ],
     "mistake": "Shrugging the traps up as the arms rise."
-   }
+   },
+   "patterns": [
+    "side_delts"
+   ]
   },
   {
    "id": "concentration-curl",
@@ -9716,7 +10131,10 @@
      "Lower to full extension"
     ],
     "mistake": "Swinging the torso to lift the weight."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "dumbbell-kickback",
@@ -9787,7 +10205,10 @@
      "Return slowly"
     ],
     "mistake": "Swinging the upper arm."
-   }
+   },
+   "patterns": [
+    "triceps"
+   ]
   },
   {
    "id": "jm-press",
@@ -9858,7 +10279,11 @@
      "Press back to lockout"
     ],
     "mistake": "Letting it turn into a regular bench press."
-   }
+   },
+   "patterns": [
+    "triceps",
+    "horizontal_push"
+   ]
   },
   {
    "id": "sissy-squat",
@@ -9932,7 +10357,10 @@
      "Rise back up with the quads"
     ],
     "mistake": "Bending at the hips into a regular squat."
-   }
+   },
+   "patterns": [
+    "quads_iso"
+   ]
   },
   {
    "id": "inverted-row",
@@ -10006,7 +10434,10 @@
      "Lower to straight arms"
     ],
     "mistake": "Letting the hips sag toward the floor."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "pike-push-up",
@@ -10080,7 +10511,10 @@
      "Press back up"
     ],
     "mistake": "Dropping the hips into a regular push-up."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "weighted-decline-crunch",
@@ -10154,7 +10588,10 @@
      "Lower slowly"
     ],
     "mistake": "Pulling up with the hip flexors instead of curling."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "cable-woodchop",
@@ -10225,7 +10662,10 @@
      "Keep arms long"
     ],
     "mistake": "Pulling with the arms instead of rotating."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "pallof-press",
@@ -10296,7 +10736,11 @@
      "Hold, then return"
     ],
     "mistake": "Letting the torso twist toward the stack."
-   }
+   },
+   "patterns": [
+    "abs",
+    "carry_core"
+   ]
   },
   {
    "id": "standing-cable-crunch",
@@ -10367,7 +10811,10 @@
      "Return to tall"
     ],
     "mistake": "Bending at the hips instead of curling the spine."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "dumbbell-incline-y-raise",
@@ -10438,7 +10885,10 @@
      "Lower slowly"
     ],
     "mistake": "Using heavy dumbbells and swinging."
-   }
+   },
+   "patterns": [
+    "rear_delts"
+   ]
   },
   {
    "id": "cable-rear-delt-fly",
@@ -10509,7 +10959,10 @@
      "Return across slowly"
     ],
     "mistake": "Pinching the shoulder blades hard to pull with the back."
-   }
+   },
+   "patterns": [
+    "rear_delts"
+   ]
   },
   {
    "id": "cable-overhead-rope-extension",
@@ -10580,7 +11033,10 @@
      "Return to a deep stretch"
     ],
     "mistake": "Letting the elbows drift apart."
-   }
+   },
+   "patterns": [
+    "triceps"
+   ]
   },
   {
    "id": "cable-kickback",
@@ -10651,7 +11107,10 @@
      "Return slowly"
     ],
     "mistake": "Swinging the arm to finish reps."
-   }
+   },
+   "patterns": [
+    "glute_iso"
+   ]
   },
   {
    "id": "incline-dumbbell-fly",
@@ -10722,7 +11181,10 @@
      "Bring the bells together over your chest"
     ],
     "mistake": "Turning it into a press by bending the elbows."
-   }
+   },
+   "patterns": [
+    "chest_fly"
+   ]
   },
   {
    "id": "decline-bench-press",
@@ -10793,7 +11255,10 @@
      "Press to lockout"
     ],
     "mistake": "Bouncing off the chest."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "ez-bar-curl",
@@ -10864,7 +11329,10 @@
      "Lower to straight arms"
     ],
     "mistake": "Leaning back to swing the bar."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "spider-curl",
@@ -10935,7 +11403,10 @@
      "Lower to full extension"
     ],
     "mistake": "Moving the upper arms forward."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "reverse-curl",
@@ -11006,7 +11477,11 @@
      "Lower slowly"
     ],
     "mistake": "Letting the wrists bend back."
-   }
+   },
+   "patterns": [
+    "forearms",
+    "biceps"
+   ]
   },
   {
    "id": "cable-preacher-curl",
@@ -11077,7 +11552,10 @@
      "Squeeze at the top"
     ],
     "mistake": "Lifting the elbows off the pad."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "standing-leg-curl",
@@ -11148,7 +11626,10 @@
      "Lower slowly"
     ],
     "mistake": "Swinging the hip to start the curl."
-   }
+   },
+   "patterns": [
+    "hamstring_curl"
+   ]
   },
   {
    "id": "glute-ham-raise",
@@ -11219,7 +11700,10 @@
      "Curl back up with the hamstrings"
     ],
     "mistake": "Bending at the hips to make it easier."
-   }
+   },
+   "patterns": [
+    "hamstring_curl"
+   ]
   },
   {
    "id": "barbell-glute-bridge",
@@ -11290,7 +11774,10 @@
      "Lower until the plates touch"
     ],
     "mistake": "Pushing through the toes."
-   }
+   },
+   "patterns": [
+    "glute_iso"
+   ]
   },
   {
    "id": "good-morning",
@@ -11361,7 +11848,10 @@
      "Stand by driving the hips forward"
     ],
     "mistake": "Rounding the back to go deeper."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "seated-dumbbell-lateral-raise",
@@ -11432,7 +11922,10 @@
      "Lower slowly"
     ],
     "mistake": "Leaning to swing the weight up."
-   }
+   },
+   "patterns": [
+    "side_delts"
+   ]
   },
   {
    "id": "deficit-push-up",
@@ -11506,7 +11999,10 @@
      "Press back up"
     ],
     "mistake": "Letting the hips sag."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "seated-row-machine",
@@ -11577,7 +12073,10 @@
      "Reach forward fully"
     ],
     "mistake": "Leaning back off the pad."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "high-to-low-row-machine",
@@ -11648,7 +12147,10 @@
      "Return to a full stretch"
     ],
     "mistake": "Shrugging the shoulders as you pull."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "arc-lat-pulldown",
@@ -11719,7 +12221,10 @@
      "Reach fully overhead"
     ],
     "mistake": "Rocking the torso to start the rep."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "standing-lateral-raise-machine",
@@ -11790,7 +12295,10 @@
      "Lower slowly"
     ],
     "mistake": "Shrugging up to lift the pads."
-   }
+   },
+   "patterns": [
+    "side_delts"
+   ]
   },
   {
    "id": "converging-smith-bench-press",
@@ -11861,7 +12369,10 @@
      "Keep shoulder blades back"
     ],
     "mistake": "Cutting the bottom range short."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "converging-smith-incline-press",
@@ -11932,7 +12443,10 @@
      "Keep your back on the pad"
     ],
     "mistake": "Lifting the shoulders off the pad at lockout."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "converging-smith-shoulder-press",
@@ -12003,7 +12517,10 @@
      "Lower to shoulder level"
     ],
     "mistake": "Arching the back off the pad."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "selectorized-pulldown-machine",
@@ -12074,7 +12591,10 @@
      "Return to a full stretch"
     ],
     "mistake": "Leaning way back."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "plate-loaded-chest-supported-row",
@@ -12145,7 +12665,10 @@
      "Lower to full extension"
     ],
     "mistake": "Lifting off the pad to jerk the weight."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "rotary-torso-machine",
@@ -12216,7 +12739,10 @@
      "Return slowly"
     ],
     "mistake": "Using momentum to swing the pad."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "standing-cable-adduction",
@@ -12287,7 +12813,10 @@
      "Return slowly"
     ],
     "mistake": "Leaning the torso to help the leg across."
-   }
+   },
+   "patterns": [
+    "hip_iso"
+   ]
   },
   {
    "id": "horizontal-leg-press",
@@ -12358,7 +12887,10 @@
      "Press without locking hard"
     ],
     "mistake": "Letting the knees cave inward."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "reverse-hack-squat",
@@ -12429,7 +12961,10 @@
      "Drive up through the heels"
     ],
     "mistake": "Letting the heels lift."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "kneeling-leg-curl",
@@ -12500,7 +13035,10 @@
      "Lower slowly"
     ],
     "mistake": "Lifting the hip to get more range."
-   }
+   },
+   "patterns": [
+    "hamstring_curl"
+   ]
   },
   {
    "id": "smith-squat-feet-forward",
@@ -12571,7 +13109,10 @@
      "Drive through the heels"
     ],
     "mistake": "Going so shallow the quads barely bend."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "chest-supported-dumbbell-row",
@@ -12642,7 +13183,10 @@
      "Lower fully"
     ],
     "mistake": "Lifting the head and chest off the bench."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "seal-row",
@@ -12713,7 +13257,10 @@
      "Lower to straight arms"
     ],
     "mistake": "Kicking the legs to jerk the bar up."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "yates-row",
@@ -12784,7 +13331,10 @@
      "Lower to straight arms"
     ],
     "mistake": "Standing nearly upright so it turns into a shrug."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "rack-pull",
@@ -12855,7 +13405,10 @@
      "Lower under control"
     ],
     "mistake": "Leaning back hard at lockout."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "trap-bar-deadlift",
@@ -12927,7 +13480,10 @@
      "Lower under control"
     ],
     "mistake": "Letting the hips rise before the bar moves."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "captains-chair-knee-raise",
@@ -13001,7 +13557,10 @@
      "Lower slowly"
     ],
     "mistake": "Swinging the legs with momentum."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "back-extension-machine",
@@ -13072,7 +13631,10 @@
      "Return slowly"
     ],
     "mistake": "Overarching past upright."
-   }
+   },
+   "patterns": [
+    "glute_iso"
+   ]
   },
   {
    "id": "reverse-wrist-curl",
@@ -13143,7 +13705,10 @@
      "Lower slowly"
     ],
     "mistake": "Using a weight so heavy the forearms lift."
-   }
+   },
+   "patterns": [
+    "forearms"
+   ]
   },
   {
    "id": "farmer-carry",
@@ -13214,7 +13779,10 @@
      "Grip hard"
     ],
     "mistake": "Leaning to one side or shuffling."
-   }
+   },
+   "patterns": [
+    "carry_core"
+   ]
   },
   {
    "id": "ring-dip",
@@ -13288,7 +13856,11 @@
      "Press to lockout"
     ],
     "mistake": "Letting the rings drift wide."
-   }
+   },
+   "patterns": [
+    "horizontal_push",
+    "triceps"
+   ]
   },
   {
    "id": "ring-push-up",
@@ -13362,7 +13934,10 @@
      "Press and turn the rings out at the top"
     ],
     "mistake": "Letting the rings wobble outward."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "ring-row",
@@ -13436,7 +14011,10 @@
      "Lower to straight arms"
     ],
     "mistake": "Letting the hips sag."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "ring-pull-up",
@@ -13510,7 +14088,10 @@
      "Lower to a full hang"
     ],
     "mistake": "Kipping to finish reps."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "ring-fly",
@@ -13584,7 +14165,10 @@
      "Squeeze back to the start"
     ],
     "mistake": "Going wider than you can bring back with control."
-   }
+   },
+   "patterns": [
+    "chest_fly"
+   ]
   },
   {
    "id": "ring-face-pull",
@@ -13658,7 +14242,10 @@
      "Keep your body straight"
     ],
     "mistake": "Bending at the hips to cheat."
-   }
+   },
+   "patterns": [
+    "rear_delts"
+   ]
   },
   {
    "id": "ring-biceps-curl",
@@ -13732,7 +14319,10 @@
      "Lower slowly"
     ],
     "mistake": "Pulling with the back instead of the arms."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "ring-triceps-extension",
@@ -13806,7 +14396,10 @@
      "Extend back out"
     ],
     "mistake": "Letting the hips sag as you push back."
-   }
+   },
+   "patterns": [
+    "triceps"
+   ]
   },
   {
    "id": "ring-l-sit",
@@ -13880,7 +14473,10 @@
      "Press the shoulders down"
     ],
     "mistake": "Letting the shoulders shrug up."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "trx-row",
@@ -13954,7 +14550,10 @@
      "Lower to straight arms"
     ],
     "mistake": "Letting the hips sag."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "trx-push-up",
@@ -14028,7 +14627,10 @@
      "Press back up"
     ],
     "mistake": "Letting the hips sag."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "trx-y-t-raise",
@@ -14102,7 +14704,10 @@
      "Return slowly"
     ],
     "mistake": "Bending the arms to pull."
-   }
+   },
+   "patterns": [
+    "rear_delts"
+   ]
   },
   {
    "id": "trx-biceps-curl",
@@ -14176,7 +14781,10 @@
      "Lower slowly"
     ],
     "mistake": "Dropping the elbows during the rep."
-   }
+   },
+   "patterns": [
+    "biceps"
+   ]
   },
   {
    "id": "trx-triceps-extension",
@@ -14250,7 +14858,10 @@
      "Extend back"
     ],
     "mistake": "Letting the elbows flare wide."
-   }
+   },
+   "patterns": [
+    "triceps"
+   ]
   },
   {
    "id": "trx-assisted-pistol",
@@ -14324,7 +14935,10 @@
      "Drive up through the heel"
     ],
     "mistake": "Pulling with the arms to stand."
-   }
+   },
+   "patterns": [
+    "lunge"
+   ]
   },
   {
    "id": "trx-hamstring-curl",
@@ -14398,7 +15012,10 @@
      "Extend slowly"
     ],
     "mistake": "Dropping the hips during the curl."
-   }
+   },
+   "patterns": [
+    "hamstring_curl"
+   ]
   },
   {
    "id": "trx-fallout",
@@ -14472,7 +15089,10 @@
      "Pull back with the abs"
     ],
     "mistake": "Letting the lower back sag."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "trx-pike",
@@ -14546,7 +15166,10 @@
      "Lower slowly"
     ],
     "mistake": "Bending the knees instead of piking."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "kettlebell-swing",
@@ -14617,7 +15240,10 @@
      "Let the bell float to chest height"
     ],
     "mistake": "Squatting the swing instead of hinging."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "kettlebell-front-squat",
@@ -14688,7 +15314,10 @@
      "Drive up through mid-foot"
     ],
     "mistake": "Letting the bells pull your torso forward."
-   }
+   },
+   "patterns": [
+    "squat"
+   ]
   },
   {
    "id": "kettlebell-clean",
@@ -14759,7 +15388,10 @@
      "Rotate the bell softly into the rack"
     ],
     "mistake": "Letting the bell flip over and bang the forearm."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "kettlebell-press",
@@ -14830,7 +15462,10 @@
      "Lower back to the rack"
     ],
     "mistake": "Leaning back to press."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "kettlebell-push-press",
@@ -14901,7 +15536,10 @@
      "Lock out overhead"
     ],
     "mistake": "Dipping too deep and losing the drive."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "kettlebell-snatch",
@@ -14972,7 +15610,10 @@
      "Punch through to lockout overhead"
     ],
     "mistake": "Letting the bell flop over and crash onto the wrist."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "turkish-get-up",
@@ -15044,7 +15685,10 @@
      "Reverse the steps back down"
     ],
     "mistake": "Rushing the steps and losing a vertical arm."
-   }
+   },
+   "patterns": [
+    "carry_core"
+   ]
   },
   {
    "id": "kettlebell-single-leg-rdl",
@@ -15115,7 +15759,10 @@
      "Stand by driving the hip forward"
     ],
     "mistake": "Opening the hips toward the ceiling."
-   }
+   },
+   "patterns": [
+    "hinge"
+   ]
   },
   {
    "id": "kettlebell-row",
@@ -15186,7 +15833,10 @@
      "Lower fully"
     ],
     "mistake": "Twisting the torso to finish."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "kettlebell-windmill",
@@ -15257,7 +15907,11 @@
      "Return by driving the hips"
     ],
     "mistake": "Bending the elbow of the top arm."
-   }
+   },
+   "patterns": [
+    "abs",
+    "carry_core"
+   ]
   },
   {
    "id": "suitcase-carry",
@@ -15328,7 +15982,10 @@
      "Walk with control"
     ],
     "mistake": "Leaning toward the weight."
-   }
+   },
+   "patterns": [
+    "carry_core"
+   ]
   },
   {
    "id": "kettlebell-halo",
@@ -15399,7 +16056,10 @@
      "Keep the ribs down"
     ],
     "mistake": "Arching the back as the bell passes behind you."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "muscle-up",
@@ -15473,7 +16133,10 @@
      "Press to lockout"
     ],
     "mistake": "Chicken-winging one arm over at a time."
-   }
+   },
+   "patterns": [
+    "vertical_pull"
+   ]
   },
   {
    "id": "archer-push-up",
@@ -15547,7 +16210,10 @@
      "Press back up"
     ],
     "mistake": "Letting the hips twist."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "pseudo-planche-push-up",
@@ -15621,7 +16287,10 @@
      "Press back up"
     ],
     "mistake": "Losing the lean so it becomes a normal push-up."
-   }
+   },
+   "patterns": [
+    "horizontal_push"
+   ]
   },
   {
    "id": "wall-handstand-push-up",
@@ -15695,7 +16364,10 @@
      "Press back up"
     ],
     "mistake": "Arching the back to press."
-   }
+   },
+   "patterns": [
+    "vertical_push"
+   ]
   },
   {
    "id": "pistol-squat",
@@ -15769,7 +16441,10 @@
      "Drive up with control"
     ],
     "mistake": "Dropping fast into the bottom."
-   }
+   },
+   "patterns": [
+    "lunge"
+   ]
   },
   {
    "id": "shrimp-squat",
@@ -15843,7 +16518,10 @@
      "Drive up through the front foot"
     ],
     "mistake": "Letting the front heel lift."
-   }
+   },
+   "patterns": [
+    "lunge"
+   ]
   },
   {
    "id": "front-lever-row",
@@ -15917,7 +16595,10 @@
      "Lower with control"
     ],
     "mistake": "Letting the hips drop below the line."
-   }
+   },
+   "patterns": [
+    "horizontal_pull"
+   ]
   },
   {
    "id": "tuck-front-lever",
@@ -15991,7 +16672,10 @@
      "Keep the tuck tight"
     ],
     "mistake": "Bending the arms to hold the position."
-   }
+   },
+   "patterns": [
+    "lat_iso"
+   ]
   },
   {
    "id": "dragon-flag",
@@ -16065,7 +16749,10 @@
      "Lower slowly"
     ],
     "mistake": "Bending at the hips."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "hollow-body-hold",
@@ -16139,7 +16826,10 @@
      "Hold the shape"
     ],
     "mistake": "Letting the lower back lift."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "l-sit",
@@ -16213,7 +16903,10 @@
      "Press the shoulders down"
     ],
     "mistake": "Bending the knees."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "box-jump",
@@ -16287,7 +16980,10 @@
      "Step down"
     ],
     "mistake": "Picking a box so high you land in a deep squat."
-   }
+   },
+   "patterns": [
+    "power"
+   ]
   },
   {
    "id": "broad-jump",
@@ -16361,7 +17057,10 @@
      "Stick the landing"
     ],
     "mistake": "Landing with straight legs."
-   }
+   },
+   "patterns": [
+    "power"
+   ]
   },
   {
    "id": "depth-jump",
@@ -16435,7 +17134,10 @@
      "Minimise ground contact"
     ],
     "mistake": "Using a box so high the landing slows the jump."
-   }
+   },
+   "patterns": [
+    "power"
+   ]
   },
   {
    "id": "jump-squat",
@@ -16509,7 +17211,10 @@
      "Land softly into the next rep"
     ],
     "mistake": "Landing stiff-legged."
-   }
+   },
+   "patterns": [
+    "power"
+   ]
   },
   {
    "id": "bounding",
@@ -16583,7 +17288,10 @@
      "Land and push off again"
     ],
     "mistake": "Taking short steps instead of long bounds."
-   }
+   },
+   "patterns": [
+    "power"
+   ]
   },
   {
    "id": "plyo-push-up",
@@ -16657,7 +17365,10 @@
      "Land softly"
     ],
     "mistake": "Letting the hips sag on landing."
-   }
+   },
+   "patterns": [
+    "power"
+   ]
   },
   {
    "id": "med-ball-slam",
@@ -16731,7 +17442,10 @@
      "Catch and repeat"
     ],
     "mistake": "Using only the arms."
-   }
+   },
+   "patterns": [
+    "power"
+   ]
   },
   {
    "id": "med-ball-chest-pass",
@@ -16805,7 +17519,10 @@
      "Catch with soft arms"
     ],
     "mistake": "Throwing with the arms only and no leg drive."
-   }
+   },
+   "patterns": [
+    "power"
+   ]
   },
   {
    "id": "barbell-rollout",
@@ -16876,7 +17593,10 @@
      "Pull back with the abs"
     ],
     "mistake": "Letting the lower back sag."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "stability-ball-rollout",
@@ -16947,7 +17667,10 @@
      "Pull back with the abs"
     ],
     "mistake": "Letting the hips sag."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "standing-ab-wheel-rollout",
@@ -17021,7 +17744,10 @@
      "Pull back with the abs"
     ],
     "mistake": "Rolling past the point you can return from."
-   }
+   },
+   "patterns": [
+    "abs"
+   ]
   },
   {
    "id": "dead-hang",
@@ -17095,7 +17821,10 @@
      "Hold for time"
     ],
     "mistake": "Bending the arms to hold on."
-   }
+   },
+   "patterns": [
+    "forearms"
+   ]
   },
   {
    "id": "active-hang",
@@ -17169,7 +17898,10 @@
      "Hold for time"
     ],
     "mistake": "Bending the elbows to fake the hold."
-   }
+   },
+   "patterns": [
+    "forearms"
+   ]
   },
   {
    "id": "scapular-pull-up",
@@ -17243,7 +17975,10 @@
      "Lower slowly"
     ],
     "mistake": "Bending the elbows during the rep."
-   }
+   },
+   "patterns": [
+    "forearms"
+   ]
   }
  ],
  "regions": [
@@ -17297,5 +18032,6 @@
   "calves_soleus": "calves",
   "lower_back": "lower_back",
   "abductors": "abductors"
- }
+ },
+ "patterns_note": "v5: `patterns` = movement-slot ids from patterns.json (first = main slot). Model choice, not measured."
 }

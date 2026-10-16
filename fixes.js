@@ -23,7 +23,7 @@ out.sort((a,b)=>b[0]-a[0]||(a[1]<b[1]?-1:a[1]>b[1]?1:0));return out.slice(0,n).m
 // ---------- fixes ----------
 const cmpT=(a,b)=>{for(let i=0;i<Math.max(a.length,b.length);i++){let x=a[i],y=b[i];if(typeof x=='boolean')x=+x;if(typeof y=='boolean')y=+y;if(x<y)return -1;if(x>y)return 1}return 0};
 const sortBy=(arr,key)=>arr.map((v,i)=>[key(v),i,v]).sort((a,b)=>cmpT(a[0],b[0])||a[1]-b[1]).map(x=>x[2]);
-const TUP={many_small_entries:x=>[x.day,x.n,x.avg],session_hard_sets:x=>[x.day,x.sets],session_length:x=>[x.day,x.minutes],spinal_load_session:x=>[x.day,x.sets],sets_per_exercise:x=>[x.day,x.exercise],redundant_pattern:x=>[x.day,x.pattern,x.n,x.muscle,x.sets],junk_volume_session:x=>[x.day,x.muscle,x.sets],beginner_squat_and_deadlift:x=>[x.day],hinge_before_squat:x=>[x.day1],consecutive_high_volume:x=>[x.day1,x.muscle],spinal_load_week:x=>[x.sets],push_pull_imbalance:x=>[x.ratio],missing_stretch:x=>[x.muscle],low_frequency:x=>[x.muscle,x.n],weekly_volume:x=>[x.muscle,x.sets]};
+const TUP={many_small_entries:x=>[x.day,x.n,x.avg],session_hard_sets:x=>[x.day,x.sets],session_length:x=>[x.day,x.minutes],spinal_load_session:x=>[x.day,x.sets],sets_per_exercise:x=>[x.day,x.exercise],redundant_pattern:x=>[x.day,x.pattern,x.n,x.muscle,x.sets],junk_volume_session:x=>[x.day,x.muscle,x.sets],beginner_squat_and_deadlift:x=>[x.day],hinge_before_squat:x=>[x.day1],consecutive_high_volume:x=>[x.day1,x.muscle],spinal_load_week:x=>[x.sets],push_pull_imbalance:x=>[x.ratio],missing_stretch:x=>[x.muscle],low_frequency:x=>[x.muscle,x.n],weekly_volume:x=>[x.muscle,x.sets],pattern_gap:x=>[x.slot,x.n,x.min]};
 const tupOf=x=>[x.sev,x.id,...(TUP[x.id]?TUP[x.id](x):[])];
 const fkey=t=>[t[1],...t.slice(2).filter(v=>typeof v=='string')].join('\u0001');
 const nonin=fl=>new Set(fl.filter(x=>x[0]!='info').map(fkey));
@@ -31,7 +31,7 @@ const chk=(days,level)=>checkProgram(days,level).map(tupOf);
 const dcopy=d=>JSON.parse(JSON.stringify(d));const dayOf=(days,n)=>days.find(d=>d.day==n);
 const nmE=i=>EX[i].name;const mus=(i,m)=>(EX[i].muscles[m]||0);
 const fmtP=(tpl,p)=>tpl.replace(/\{(\w+)\}/g,(_,k)=>p[k]==null?'None':String(p[k]));
-function prev(a,p){const FA=RU.fix_actions,DN=RU.day_names||{};p={...p};['day','to_day','from_day'].forEach(k=>{if(k in p)p[k+'_name']=DN[p[k]]||p[k]});if(a=='reduce_sets'&&p.from==='')return fmtP(FA[a].preview_multi,p);return fmtP(FA[a].preview,p)}
+function prev(a,p){const FA=RU.fix_actions,DN=RU.day_names||{};p={...p};if('slot' in p)p.slot_lower=PJ.slots[p.slot].name.toLowerCase();['day','to_day','from_day'].forEach(k=>{if(k in p)p[k+'_name']=DN[p[k]]||p[k]});if(a=='reduce_sets'&&p.from==='')return fmtP(FA[a].preview_multi,p);return fmtP(FA[a].preview,p)}
 const FXORD={primary:0,accessory:1,isolation:2};
 const ordIdx=d=>sortBy(d.tiles.map((_,i)=>i),i=>[FXORD[EX[d.tiles[i].id].type],i]);
 const loadOf=(d,m)=>effc(d.tiles)[m]||0;
@@ -101,9 +101,10 @@ if(rid=='low_frequency'){const m=f[2];let hv=days[0];days.forEach(d=>{if(loadOf(
 if(rid=='hinge_before_squat'){const d=f[2],nx=ORD[ORD.indexOf(d)+1];return[gMoveTile(days,d,RU.heavy_hinges),gMoveTile(days,nx,RU.heavy_squats),gSwap(days,nx,'lower_spinal',new Set(RU.heavy_squats))]}
 if(rid=='beginner_squat_and_deadlift'){const d=f[2];return[gMoveTile(days,d,RU.heavy_hinges),gMoveTile(days,d,RU.heavy_squats),gSwap(days,d,'lower_spinal',H)]}
 if(rid=='consecutive_high_volume'){const[d,m]=[f[2],f[3]],nx=ORD[ORD.indexOf(d)+1];return[gMoveSets(days,nx,m),gMoveSets(days,d,m),gReduce(days,nx,'highest_contributor',m)]}
-if(rid=='many_small_entries'){const d=f[2];return[gMerge(days,d),gRemove(days,d)]}return[]}
+if(rid=='many_small_entries'){const d=f[2];return[gMerge(days,d),gRemove(days,d)]}
+if(rid=='pattern_gap')return[gFillSlot(days,f[2],level)];return[]}
 function fdist(f,level){if(f[1]=='weekly_volume'){const[m,x]=[f[2],f[3]],a=Math.round(TG[m].min*LMF[level]*2)/2;return x<a?a-x:x-TG[m].max}
-if(f[1]=='push_pull_imbalance')return f[2]<.75?.75-f[2]:f[2]-2;if(f[1]=='low_frequency')return 2-f[3];const nums=f.slice(2).filter(x=>typeof x=='number');return nums.length?nums[nums.length-1]:0}
+if(f[1]=='push_pull_imbalance')return f[2]<.75?.75-f[2]:f[2]-2;if(f[1]=='low_frequency')return 2-f[3];if(f[1]=='pattern_gap')return f[4]-f[3];const nums=f.slice(2).filter(x=>typeof x=='number');return nums.length?nums[nums.length-1]:0}
 function evalFix(oldNI,nw,level,f){const nf=chk(nw,level),nn=nonin(nf);for(const k of nn)if(!oldNI.has(k))return null;const k=fkey(f);const same=nf.filter(x=>fkey(x)==k&&(f[0]=='info'||x[0]!='info'));
 if(!same.length)return'resolves';return fdist(same[0],level)<fdist(f,level)-1e-9?'improves':null}
 function fixesFor(days,level,f,maxn=3,budget=400){const out=[],oldNI=nonin(chk(days,level));

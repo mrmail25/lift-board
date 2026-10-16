@@ -35,6 +35,7 @@ for(const m in R.stretch_biased)if(!all.some(x=>stretchHits(x,m)))f.push({sev:'i
 if(days.length>=2)R.frequency_muscles.forEach(m=>{if(freq[m]<2)f.push({sev:'info',id:'low_frequency',muscle:m,n:freq[m]})});
 const LF=(typeof LMF!='undefined'&&LMF[level])||1;
 for(const m in week){const x=week[m],a=Math.round(T[m].min*LF*2)/2,b=T[m].max;const ok=(a<=x&&x<=b)||(a-2<=x&&x<a)||(b<x&&x<=b*1.25);if(!ok)f.push({sev:'warn',id:'weekly_volume',muscle:m,sets:pyR(x),min:a,max:b})}
+if(typeof patternFlags=='function')f.push(...patternFlags(days,level));
 f.meta={week,push,pull};return f}
 const DN={mon:'Monday',tue:'Tuesday',wed:'Wednesday',thu:'Thursday',fri:'Friday',sat:'Saturday',sun:'Sunday'};
 function fmsg(fl){const rid=fl.id.startsWith('spinal_load')?'spinal_load':fl.id,r=RU.rules.find(x=>x.id==rid);const nm=id=>(EX[id]||{name:id}).name;
@@ -42,7 +43,7 @@ const V={day:DN[fl.day],day1:DN[fl.day1],day2:DN[fl.day2],n:fl.n,muscle:fl.muscl
 let msg=r.message;if(fl.id=='low_frequency'&&fl.n==0&&r.message_indirect_only)msg=r.message_indirect_only;else if(fl.id=='spinal_load_week')msg=r.message_week||msg;else if(fl.sev=='info'&&r.message_info)msg=r.message_info;
 return msg.replace(/\{(\w+)\}/g,(_,k)=>V[k]!=null?V[k]:k)}
 function boardDays(){return state.days.map((c,i)=>({day:ORD[i],tiles:c.filter(t=>EX[t.id]).map(t=>({id:t.id,sets:t.sets})),reason:(state.reasons||[])[i]||''})).filter(d=>d.tiles.length)}
-function pcheck(){const el=document.getElementById('chk');if(!el||!RU||!MUS.length)return;const d=boardDays();
+function pcheck(){const el=document.getElementById('chk');if(!el||!RU||!MUS.length||(typeof PJ!='undefined'&&!PJ))return;const d=boardDays();
 if(!d.length){el.innerHTML='<div class="ck-empty">Add exercises to the board to check the program.</div>';return}
 let f=checkProgram(d,sel.level);const M=f.meta,P=x=>lab(x);
 const un=Object.keys(M.week).filter(m=>M.week[m]<=0);const isUn=x=>x.muscle&&un.includes(x.muscle)&&['weekly_volume','missing_stretch','low_frequency'].includes(x.id);
@@ -52,7 +53,7 @@ if(state.applied&&state.applied==snap()&&ss.split in SS&&(!SS[ss.split]||ss.days
 const sp=SP.splits.find(x=>x.id==ss.split);extra.push({sev:'info',txt:`Trained once a week (expected for ${sp?sp.name:ss.split}): ${lf.map(x=>P(x.muscle)).join(', ')}.`})}}
 if(typeof baseline=='function'&&typeof dayCost=='function'){const B=baseline();if(B&&B.cost){const wk=DAYS.reduce((a,_,i)=>a+dayCost(i),0)*modF(),pct=Math.round(wk/B.cost*100);{const rr=((RU&&RU.rules)||[]).find(x=>x.id=='recovery_vs_baseline')||{},ia=(rr.info_above||1.15)*100,wa=(rr.warn_above||1.3)*100;if(pct>ia)f.push({sev:pct>wa?'warn':'info',id:'recovery_vs_baseline',pct})}}}
 if(un.length)extra.push({sev:'info',txt:'Not trained yet: '+un.map(P).join(', ')+'.'});
-const all=[...f.map(x=>({sev:x.sev,txt:x.id=='push_pull_imbalance'&&(x.ratio==0||x.ratio==99)?(RU.rules.find(r=>r.id=='push_pull_imbalance')[x.ratio?'message_no_push':'message_no_pull']):fmsg(x),fl:x})),...extra].sort((a,b)=>(a.sev=='warn'?0:1)-(b.sev=='warn'?0:1)),w=all.filter(x=>x.sev=='warn');
+const all=[...f.map(x=>({sev:x.sev,txt:x.id=='push_pull_imbalance'&&(x.ratio==0||x.ratio==99)?(RU.rules.find(r=>r.id=='push_pull_imbalance')[x.ratio?'message_no_push':'message_no_pull']):x.id=='pattern_gap'?gapMsg(x,d,sel.level):fmsg(x),fl:x})),...extra].sort((a,b)=>(a.sev=='warn'?0:1)-(b.sev=='warn'?0:1)),w=all.filter(x=>x.sev=='warn');
 el.innerHTML=(w.length?'':`<div class="ck-ok">✓ All clear: no programming errors found for this ${sel.level} program.</div>`)+all.map((x,i)=>`<div class="ck ${x.sev}${x.fl?' fixable':''}" data-i="${i}"><b>${x.sev=='warn'?'⚠':'ℹ'}</b> ${x.txt}${x.fl?'<span class="ck-more">Fixes ▸</span>':''}</div>`).join('')+(all.length>w.length&&!w.length?'<div class="ck-sub">Notes above are suggestions, not errors.</div>':'');
 const key=JSON.stringify([d,sel.level]);if(window._ckKey!==key){window._ckKey=key;window._ckOpen=null}
 el.querySelectorAll('.ck.fixable').forEach(c=>{const x=all[+c.dataset.i],id=x.txt;c.onclick=e=>{if(e.target.closest('.fx'))return;window._ckOpen=window._ckOpen===id?null:id;pcheck()};
