@@ -58,3 +58,9 @@ const o=modal(`<div id="slpick"><h3>${E(S.name)}</h3><p class="cf-hint">${E(S.de
 o.querySelector('#sl-x').onclick=closeModal;o.querySelectorAll('.sl-opt').forEach(b=>b.onclick=()=>{const prior=JSON.stringify(state),L=state.slots[i],k=L.indexOf(it);
 const at=it.o-L.filter(s=>s.o<it.o).length;L.splice(k,1);state.days[i].splice(Math.min(at,state.days[i].length),0,{id:b.dataset.id,sets:it.sets});closeModal();upd();
 toast(`${EX[b.dataset.id].name} fills ${S.name.toLowerCase()}`,()=>{state=JSON.parse(prior);upd()})})}
+// v27: slot suggestion for a new custom exercise (patterns-spec "Slot suggestion for new custom exercises"; mirrors tools/patterns.py suggest_slots_for_custom)
+function suggestSlotsForCustom(muscles,type){const iso=type=='isolation',lib=LIB().map(i=>EX[i]).filter(e=>(e.type=='isolation')==iso&&(e.patterns||[]).length);
+const ks=MUS,cos=(a,b)=>{const d=nsum(ks.map(k=>(a[k]||0)*(b[k]||0))),na=Math.sqrt(nsum(Object.values(a).map(v=>v*v))),nb=Math.sqrt(nsum(Object.values(b).map(v=>v*v)));return na&&nb?d/(na*nb):0};
+const c=lib.map((e,k)=>[cos(muscles,e.muscles),k,e]).sort((x,y)=>y[0]-x[0]||x[1]-y[1]);if(!c.length||c[0][0]<.6)return[];
+const out=[c[0][2].patterns[0]];for(const[s,,e]of c.slice(1,6))if(s>=.85&&!out.includes(e.patterns[0])&&out.length<3)out.push(e.patterns[0]);return out}
+const cleanSlots=a=>Array.isArray(a)?[...new Set(a.filter(s=>PJ&&PJ.slots[s]))]:undefined;

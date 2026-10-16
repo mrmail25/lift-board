@@ -43,3 +43,11 @@ Reason (one line, from the score inputs): "Top-rated / Staple / Alternative {slo
 - If a slot is below the level's min it's added (compound 3 sets, isolation 2) to the same-group day with the fewest sets, keeping the day under 75 min then 90 min (`session_length`) and under the level's `session_hard_sets` cap; else 2 sets are trimmed from the biggest slot on a day (isolation ≥4 sets, then compound ≥5) and the slot is added at 2; else a same-group slot above its own min is replaced. All 19 additions are in `templates_added`.
 - `fill_template(template, level)`: each slot gets the best recommendation of the hinted type not already on that day, rotating through the top 3 across the week (A/B variety), and skipping a pick that adds a new session-level warn. Every filled template passes with 0 non-info flags.
 - The Build page shows a slot tile with `name` + `description`; tapping it lists `slot_recommendations(slot, level, board)` (4–6, with reason); picking one replaces the slot with a tile of that exercise and the template's sets.
+
+## Custom exercises
+
+A custom exercise inherits the `patterns` of its base exercise. A custom exercise with no base counts toward no slot. The create flow may let the user pick slots; if they do, those override the inherited ones.
+
+## Slot suggestion for new custom exercises
+
+Compare the custom exercise muscle weights (19-muscle vector) with every library exercise using cosine similarity. Only consider library exercises of the same kind: primary/accessory against compound slots, isolation against isolation slots. Suggest the main slot (patterns[0]) of the best match, and list up to 2 more distinct slots from the next 5 matches if their similarity is at least 0.85. If no match reaches 0.6, suggest nothing. The suggestion is pre-selected; the user can change it or clear it.
