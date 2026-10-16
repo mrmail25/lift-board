@@ -58,9 +58,15 @@ const o=modal(`<div id="slpick"><h3>${E(S.name)}</h3><p class="cf-hint">${E(S.de
 o.querySelector('#sl-x').onclick=closeModal;o.querySelectorAll('.sl-opt').forEach(b=>b.onclick=()=>{const prior=JSON.stringify(state),L=state.slots[i],k=L.indexOf(it);
 const at=it.o-L.filter(s=>s.o<it.o).length;L.splice(k,1);state.days[i].splice(Math.min(at,state.days[i].length),0,{id:b.dataset.id,sets:it.sets});closeModal();upd();
 toast(`${EX[b.dataset.id].name} fills ${S.name.toLowerCase()}`,()=>{state=JSON.parse(prior);upd()})})}
-// v27: slot suggestion for a new custom exercise (patterns-spec "Slot suggestion for new custom exercises"; mirrors tools/patterns.py suggest_slots_for_custom)
-function suggestSlotsForCustom(muscles,type){const iso=type=='isolation',lib=LIB().map(i=>EX[i]).filter(e=>(e.type=='isolation')==iso&&(e.patterns||[]).length);
-const ks=MUS,cos=(a,b)=>{const d=nsum(ks.map(k=>(a[k]||0)*(b[k]||0))),na=Math.sqrt(nsum(Object.values(a).map(v=>v*v))),nb=Math.sqrt(nsum(Object.values(b).map(v=>v*v)));return na&&nb?d/(na*nb):0};
-const c=lib.map((e,k)=>[cos(muscles,e.muscles),k,e]).sort((x,y)=>y[0]-x[0]||x[1]-y[1]);if(!c.length||c[0][0]<.6)return[];
-const out=[c[0][2].patterns[0]];for(const[s,,e]of c.slice(1,6))if(s>=.85&&!out.includes(e.patterns[0])&&out.length<3)out.push(e.patterns[0]);return out}
+// v27.1: slot suggestion for a custom exercise — exact port of tools/patterns.py suggest_slots_for_custom (patterns.json custom_suggest)
+// returns {slots, ask_direction}; base exercise patterns decide when present (spec v2.1); else muscle similarity picks the family and the name the direction
+function suggestSlotsForCustom(muscles,type,name='',baseId=null){const cfg=PJ.custom_suggest;
+if(baseId){const b=EX[baseId];if(b&&!b.custom&&(b.patterns||[]).length)return{slots:b.patterns.slice(0,cfg.max_slots),ask_direction:null}}
+const iso=type=='isolation',lib=LIB().map(i=>EX[i]).filter(e=>(e.type=='isolation')==iso&&(e.patterns||[]).length);
+const cos=(a,b)=>{const ks=[...new Set([...Object.keys(a),...Object.keys(b)])],d=nsum(ks.map(k=>(a[k]||0)*(b[k]||0))),na=Math.sqrt(nsum(Object.values(a).map(v=>v*v))),nb=Math.sqrt(nsum(Object.values(b).map(v=>v*v)));return na&&nb?d/(na*nb):0};
+const c=lib.map((e,k)=>[cos(muscles,e.muscles),k,e]).sort((x,y)=>y[0]-x[0]||x[1]-y[1]);if(!c.length||c[0][0]<cfg.min_similarity)return{slots:[],ask_direction:null};
+let out=[c[0][2].patterns[0]];for(const[s,,e]of c.slice(1,1+cfg.extra_lookahead))if(s>=cfg.extra_similarity&&!out.includes(e.patterns[0])&&out.length<cfg.max_slots)out.push(e.patterns[0]);
+const low=String(name||'').toLowerCase(),hit=new Set(Object.entries(cfg.direction_keywords).filter(([,kw])=>kw.some(k=>low.includes(k))).map(([s])=>s));let ask=null;
+for(const pair of cfg.direction_pairs)if(pair.includes(out[0])){const named=pair.filter(s=>hit.has(s));if(named.length==1)out[0]=named[0];else if(!named.length&&cfg.ask_if_no_keyword)ask=pair;out=[out[0],...out.slice(1).filter(s=>!pair.includes(s))];break}
+return{slots:out,ask_direction:ask}}
 const cleanSlots=a=>Array.isArray(a)?[...new Set(a.filter(s=>PJ&&PJ.slots[s]))]:undefined;

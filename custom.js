@@ -32,6 +32,7 @@ const o=modal(`<h3>${ex&&!dup?'Edit':'Add'} custom exercise</h3>
 <div id="cf-rest"></div><div id="cf-err" class="cf-err"></div>
 <div class="cf-btns"><button id="cf-save" class="pri">Save</button>${ex&&!dup?'<button id="cf-dup">Duplicate</button><button id="cf-del" class="dng">Delete</button>':''}<button id="cf-x">Cancel</button></div>`);
 const $=s=>o.querySelector(s);let adv=false;
+$('#cf-name').addEventListener('input',e=>{f.name=e.target.value;if(f.base)drawSlots(o,f,buildCustom({...f,id:'tmp'}))});
 const rest=()=>{const el=$('#cf-rest');if(!f.base){el.innerHTML='<p class="cf-hint">Pick the closest library exercise. Its type and every muscle rating are copied, then you can adjust them.</p>';return}
 const pos=CR.modifiers.position[f.cat],rc=CR.modifiers.resistance_curve;const x=buildCustom({...f,id:'tmp'});
 el.innerHTML=`<label>Type<select id="cf-type">${['primary','accessory','isolation'].map(t=>`<option value="${t}" ${t==f.type?'selected':''}>${ICON[t]} ${t}</option>`).join('')}</select></label>
@@ -50,7 +51,7 @@ if(!f.name)err.push('Give it a name.');if(CUS.some(c=>c.name.toLowerCase()==f.na
 if(!f.base)err.push('Pick a base template.');const x=f.base&&buildCustom({...f,id:'tmp'});if(x&&!REG.some(r=>x.heads[r]>=.25))err.push('Set at least one muscle to Minor or higher.');
 if(x&&REG.filter(r=>x.heads[r]>=1).length>4)warn.push('More than 4 muscles are Primary, which usually means the ratings are overestimated.');
 if(err.length){$('#cf-err').textContent=err.join(' ');return}if(warn.length&&!$('#cf-err').dataset.w){$('#cf-err').dataset.w=1;$('#cf-err').textContent=warn[0]+' Press Save again to keep it.';return}
-if(!f.slotsTouched&&!Array.isArray(f.slots)&&!(ex&&!dup))f.slots=suggestSlotsForCustom(x.muscles,f.type);if(Array.isArray(f.slots))f.slots=cleanSlots(f.slots);delete f.slotsTouched;f.pattern=basePat(f.base)||f.pattern||null;if(!f.id||dup){f.id=newId(f.name);CUS.push(f)}else CUS[CUS.findIndex(c=>c.id==f.id)]=f;f.estimated=true;syncCustom();closeModal();upd()};
+if(!f.slotsTouched&&!Array.isArray(f.slots)&&!(ex&&!dup))f.slots=effSug(f,x).slots;if(Array.isArray(f.slots))f.slots=cleanSlots(f.slots);delete f.slotsTouched;delete f.dir;f.pattern=basePat(f.base)||f.pattern||null;if(!f.id||dup){f.id=newId(f.name);CUS.push(f)}else CUS[CUS.findIndex(c=>c.id==f.id)]=f;f.estimated=true;syncCustom();closeModal();upd()};
 if(ex&&!dup){$('#cf-dup').onclick=()=>openForm(ex.id,true);$('#cf-del').onclick=()=>{const used=state.days.flat().filter(t=>t.id==ex.id).length;if(!confirm(`Delete "${ex.name}"?`+(used?` It's on the board ${used} time(s) and will be removed.`:'')))return;
 CUS=CUS.filter(c=>c.id!=ex.id);state.days=state.days.map(c=>c.filter(t=>t.id!=ex.id));syncCustom();closeModal();upd()}}}
 function openFeel(id){const c=CUS.find(x=>x.id==id);if(!c)return;const x=EX[id],fb=CR.feel_feedback,pick={};
@@ -64,13 +65,19 @@ let off=Math.max(-fb.total_drift_cap,Math.min(fb.total_drift_cap,(c.feelOffsets[
 off=Math.max(-base,Math.min(1-base,off));off=Math.round(off*100)/100;if(off)c.feelOffsets[r]=off;else delete c.feelOffsets[r]}syncCustom();closeModal();upd()}}
 // share of a region's load coming from estimated (custom) exercises
 function estShare(r,day){const grp=r.startsWith('g:'),g=grp?r.slice(2):null;let tot=0,est=0;(day==null?state.days.flat():state.days[day]).forEach(it=>{const x=EX[it.id];if(!x)return;const v=grp?(x.muscles[g]||0):((x.heads||{})[r]||0);if(v<RULE.min_rating_to_count)return;tot+=v*it.sets;if(x.estimated)est+=v*it.sets});return tot?est/tot:0}
-// v27 optional movement-pattern picker. New exercise: Coach's suggestion pre-selected (live with ratings/type) until the user touches it.
-// Saved as def.slots (user choice, [] = counts toward no slot) and overrides the base exercise's patterns; absent = inherit from base.
-function drawSlots(o,f,x){const el=o.querySelector('#cf-slots');if(!el||typeof PJ=='undefined'||!PJ)return;const sug=suggestSlotsForCustom(x.muscles,f.type);
+// v27.1 optional movement-pattern picker. New exercise: Coach's suggestion (base patterns, else muscles + name direction) pre-selected and live
+// with name/ratings/type until the user touches the chips; if the name gives no direction it asks horizontal or vertical (guess pre-selected).
+// Saved as def.slots (user choice, [] = counts toward no slot), overriding the base exercise's patterns; absent = inherit from base.
+function effSug(f,x){const r=suggestSlotsForCustom(x.muscles,f.type,f.name||'',f.base||null),s=r.slots.slice();if(r.ask_direction&&r.ask_direction.includes(f.dir))s[0]=f.dir;return{slots:s,ask:r.ask_direction,guess:r.slots[0]}}
+function drawSlots(o,f,x){const el=o.querySelector('#cf-slots');if(!el||typeof PJ=='undefined'||!PJ)return;const S=effSug(f,x),sug=S.slots;
 const inh=f.base&&EX[f.base]?(EX[f.base].patterns||[]):[];const cur=Array.isArray(f.slots)&&(f.slotsTouched||f.id)?f.slots:(f.id?inh:sug);
-const K={compound:'Compound',isolation:'Isolation'};const kind=f.type=='isolation'?'isolation':'compound';
-const src=f.slotsTouched||Array.isArray(f.slots)&&f.id?'Your choice':f.id?'From the base exercise':sug.length?'Suggested from the closest library exercises':'No close match, so no slot is suggested';
-el.dataset.sug=JSON.stringify(sug);el.dataset.cur=JSON.stringify(cur);el.innerHTML=`<div class="cf-mh"><b>Movement pattern (optional)</b><button type="button" id="cf-sl-clr" class="chip">Clear</button></div><p class="cf-hint" id="cf-sl-src">${src}. Counts toward the weekly movement-pattern check.</p>
+const K={compound:'Compound',isolation:'Isolation'},kind=f.type=='isolation'?'isolation':'compound',fresh=!f.slotsTouched&&!f.id;
+const baseDec=fresh&&f.base&&inh.length;
+const src=f.slotsTouched||Array.isArray(f.slots)&&f.id?'Your choice':f.id?'From the base exercise':baseDec?'From the base exercise ('+esc(EX[f.base].name)+')':sug.length?'Suggested from the closest library exercises and the name':'No close match, so no slot is suggested';
+const ask=fresh&&S.ask?`<div class="cf-dir" id="cf-dir"><span>Which way does it move?</span>${S.ask.map(s=>`<button type="button" class="chip ${sug[0]==s?'on':''}" data-d="${s}">${esc(PJ.slots[s].name)}</button>`).join('')}</div>`:'';
+el.dataset.sug=JSON.stringify(sug);el.dataset.cur=JSON.stringify(cur);el.dataset.ask=JSON.stringify(fresh?S.ask:null);
+el.innerHTML=`<div class="cf-mh"><b>Movement pattern (optional)</b><button type="button" id="cf-sl-clr" class="chip">Clear</button></div><p class="cf-hint" id="cf-sl-src">${src}. Counts toward the weekly movement-pattern check.</p>${ask}
 ${['compound','isolation'].map(k=>`<div class="fl">${K[k]}${k!=kind&&k=='compound'?' (isolation exercises never count here)':''}</div><div class="chips cf-sl">${Object.entries(PJ.slots).filter(([,s])=>s.kind==k).map(([id,s])=>`<button type="button" class="chip ${cur.includes(id)?'on':''}" data-s="${id}">${esc(s.name)}</button>`).join('')}</div>`).join('')}`;
 const set=a=>{f.slots=a;f.slotsTouched=true;drawSlots(o,f,x)};
+el.querySelectorAll('#cf-dir .chip').forEach(b=>b.onclick=()=>{f.dir=b.dataset.d;drawSlots(o,f,x)});
 el.querySelectorAll('.cf-sl .chip').forEach(b=>b.onclick=()=>{const s=b.dataset.s,a=cur.slice(),i=a.indexOf(s);i<0?a.push(s):a.splice(i,1);set(a)});el.querySelector('#cf-sl-clr').onclick=()=>set([])}

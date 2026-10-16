@@ -51,3 +51,11 @@ A custom exercise inherits the `patterns` of its base exercise. A custom exercis
 ## Slot suggestion for new custom exercises
 
 Compare the custom exercise muscle weights (19-muscle vector) with every library exercise using cosine similarity. Only consider library exercises of the same kind: primary/accessory against compound slots, isolation against isolation slots. Suggest the main slot (patterns[0]) of the best match, and list up to 2 more distinct slots from the next 5 matches if their similarity is at least 0.85. If no match reaches 0.6, suggest nothing. The suggestion is pre-selected; the user can change it or clear it.
+
+### Direction (v2)
+
+The movement pattern follows the direction of the pull or push, not the leading muscle. After muscle matching, if the main slot is horizontal or vertical pull or push, the name decides the direction using `custom_suggest.direction_keywords` (row means horizontal pull; pulldown, pull-up or chin means vertical pull; and so on). If the name gives no direction, the picker asks horizontal or vertical (`ask_direction`), with the muscle-based guess pre-selected. Extra slots from the opposite direction are dropped. All cut-offs live in `patterns.json` `custom_suggest`.
+
+### Base exercise first (v2.1)
+
+If the custom exercise has a base exercise with patterns, the suggestion is exactly the base patterns (main slot first, up to max_slots) and nothing is asked. Muscle similarity plus name direction is only the fallback when there is no base or the base has no patterns.

@@ -137,3 +137,4 @@ input,select,textarea{font-size:max(16px,1em)!important}
 .tile.slot .sl-n{font-weight:600}.tile.slot .sl-d{display:block;color:#555;font-size:11px;line-height:1.25;margin-top:2px}.tile.slot .sl-tap{display:block;color:#8a6d1a;font-size:11px;margin-top:3px;font-style:normal}
 #slpick .sl-opt{display:flex;flex-direction:column;align-items:flex-start;width:100%;text-align:left;margin:4px 0;padding:8px 10px}#slpick .sl-opt small{color:#99a;font-size:12px;margin-top:2px}
 #cf-slots .cf-sl .chip{min-height:32px;font-size:13px;background:#e8eaee;color:#333}#cf-slots .cf-sl .chip.on{background:#e0a100;color:#111}#cf-slots .fl{font-size:12px;margin-top:6px}
+#cf-dir{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0;font-size:13px}#cf-dir .chip{min-height:34px;font-size:13px;background:#e8eaee;color:#333}#cf-dir .chip.on{background:#e0a100;color:#111}

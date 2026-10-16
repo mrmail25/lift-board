@@ -1,5 +1,5 @@
 {
- "version": 1,
+ "version": 2,
  "description": "Movement-pattern slots, weekly minimums and slot templates. Spec: patterns-spec.md. Slot assignment and minimums are model choices, not measured.",
  "count_unit": "exercises per week: each tile on the board whose exercise lists the slot counts 1 (sets are not counted). A compound slot is only counted by non-isolation exercises. A slot with counts_toward also counts for those slots.",
  "slots": {
@@ -7748,5 +7748,52 @@
    "slot": "chest_fly",
    "sets": 2
   }
- ]
+ ],
+ "custom_suggest": {
+  "note": "Muscle similarity picks the family; the name decides direction (pattern = line of pull/push, not leading muscle).",
+  "min_similarity": 0.6,
+  "extra_similarity": 0.85,
+  "extra_lookahead": 5,
+  "max_slots": 3,
+  "direction_keywords": {
+   "horizontal_pull": [
+    "row"
+   ],
+   "vertical_pull": [
+    "pulldown",
+    "pull-down",
+    "pull-up",
+    "pullup",
+    "pull up",
+    "chin"
+   ],
+   "horizontal_push": [
+    "bench",
+    "push-up",
+    "pushup",
+    "push up",
+    "chest press",
+    "floor press",
+    "dip"
+   ],
+   "vertical_push": [
+    "overhead",
+    "shoulder press",
+    "military",
+    "pike",
+    "handstand"
+   ]
+  },
+  "direction_pairs": [
+   [
+    "horizontal_pull",
+    "vertical_pull"
+   ],
+   [
+    "horizontal_push",
+    "vertical_push"
+   ]
+  ],
+  "ask_if_no_keyword": true
+ }
 }
