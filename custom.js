@@ -72,8 +72,8 @@ function effSug(f,x){const r=suggestSlotsForCustom(x.muscles,f.type,f.name||'',f
 function drawSlots(o,f,x){const el=o.querySelector('#cf-slots');if(!el||typeof PJ=='undefined'||!PJ)return;const S=effSug(f,x),sug=S.slots;
 const inh=f.base&&EX[f.base]?(EX[f.base].patterns||[]):[];const cur=Array.isArray(f.slots)&&(f.slotsTouched||f.id)?f.slots:(f.id?inh:sug);
 const K={compound:'Compound',isolation:'Isolation'},kind=f.type=='isolation'?'isolation':'compound',fresh=!f.slotsTouched&&!f.id;
-const baseDec=fresh&&f.base&&inh.length;
-const src=f.slotsTouched||Array.isArray(f.slots)&&f.id?'Your choice':f.id?'From the base exercise':baseDec?'From the base exercise ('+esc(EX[f.base].name)+')':sug.length?'Suggested from the closest library exercises and the name':'No close match, so no slot is suggested';
+const baseDec=fresh&&f.base&&inh.length,nameSw=baseDec&&sug[0]!==inh[0];
+const src=f.slotsTouched||Array.isArray(f.slots)&&f.id?'Your choice':f.id?'From the base exercise':nameSw?'From the base exercise ('+esc(EX[f.base].name)+'), direction from the name':baseDec?'From the base exercise ('+esc(EX[f.base].name)+')':sug.length?'Suggested from the closest library exercises and the name':'No close match, so no slot is suggested';
 const ask=fresh&&S.ask?`<div class="cf-dir" id="cf-dir"><span>Which way does it move?</span>${S.ask.map(s=>`<button type="button" class="chip ${sug[0]==s?'on':''}" data-d="${s}">${esc(PJ.slots[s].name)}</button>`).join('')}</div>`:'';
 el.dataset.sug=JSON.stringify(sug);el.dataset.cur=JSON.stringify(cur);el.dataset.ask=JSON.stringify(fresh?S.ask:null);
 el.innerHTML=`<div class="cf-mh"><b>Movement pattern (optional)</b><button type="button" id="cf-sl-clr" class="chip">Clear</button></div><p class="cf-hint" id="cf-sl-src">${src}. Counts toward the weekly movement-pattern check.</p>${ask}

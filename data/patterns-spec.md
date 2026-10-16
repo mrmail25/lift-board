@@ -59,3 +59,7 @@ The movement pattern follows the direction of the pull or push, not the leading 
 ### Base exercise first (v2.1)
 
 If the custom exercise has a base exercise with patterns, the suggestion is exactly the base patterns (main slot first, up to max_slots) and nothing is asked. Muscle similarity plus name direction is only the fallback when there is no base or the base has no patterns.
+
+### Name overrides base direction (v2.2)
+
+With a base exercise, the base patterns are used, except that a single clear direction keyword in the name swaps the main slot within its direction pair (e.g. base seated-cable-row named "Neutral Pulldown" gives vertical_pull). The name never changes the family (pull vs push vs legs), and nothing is asked.
