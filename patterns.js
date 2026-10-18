@@ -1,6 +1,6 @@
 // v26: movement-pattern check (rule pattern_gap) + slot templates. Exact port of tools/patterns.py and
 // tools/check_program.py slot_counts/pattern_flags. All data from patterns.json v1, rules.json v7, exercises.json v5.
-let PJ=null;fetch('data/patterns.json').then(r=>r.json()).then(j=>{PJ=j;if(window.bar)bar();if(window.render)render()}).catch(()=>{});
+let PJ=null;fetch('data/patterns.json').then(r=>r.json()).then(j=>{PJ=j;if(window.bar)bar();if(window.filt&&Object.keys(EX).length)filt();if(window.render)render()}).catch(()=>{});
 // Python 3.12+ float sum() is Neumaier-compensated; mirror it so ties round identically
 const nsum=a=>{let f=0,c=0;for(const x of a){const s=f+x;c+=Math.abs(f)>=Math.abs(x)?(f-s)+x:(x-s)+f;f=s}return c&&isFinite(c)?f+c:f};
 const patsOf=e=>e?(e.patterns||(e.base&&EX[e.base]&&EX[e.base].patterns)||[]):[];
@@ -73,3 +73,7 @@ const hit=hitOf(name);let ask=null;
 for(const pair of cfg.direction_pairs)if(pair.includes(out[0])){const named=pair.filter(s=>hit.has(s));if(named.length==1)out[0]=named[0];else if(!named.length&&cfg.ask_if_no_keyword)ask=pair;out=[out[0],...out.slice(1).filter(s=>!pair.includes(s))];break}
 return{slots:out,ask_direction:ask}}
 const cleanSlots=a=>Array.isArray(a)?[...new Set(a.filter(s=>PJ&&PJ.slots[s]))]:undefined;
+// v27.3 tray filter: movement-pattern chips grouped by slot kind (order and names from patterns.json); an exercise matches if any of its
+// effective slots (patsOf: library patterns; custom = user choice, else base's, else none) is selected (OR), ANDed with the other filters.
+function patChips(ch){const kinds=[];Object.values(PJ.slots).forEach(s=>{if(!kinds.includes(s.kind))kinds.push(s.kind)});
+return`<div class="fl">Movement pattern${F.pat.length?` <button id="fpclr" class="chip">Clear patterns</button>`:''}</div>`+kinds.map(k=>`<div class="fl fl-sub">${cap(k)}</div><div class="chips" data-kind="${k}">${Object.entries(PJ.slots).filter(([,s])=>s.kind==k).map(([id,s])=>ch('pat',id,s.name)).join('')}</div>`).join('')}

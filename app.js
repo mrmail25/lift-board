@@ -1,5 +1,5 @@
 const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],ICON={primary:'★',accessory:'✚',isolation:'●'},KEY='liftboard.v1';
-let SP=null,sel={level:'beginner',days:3,split:null};let F={types:[],mus:[],eq:[],minor:false};let EX={},MUS=[],TG={},LMF={beginner:.6,intermediate:.8,advanced:1},RULE={min_rating_to_count:.25,round_to:.5},state={days:DAYS.map(()=>[])};
+let SP=null,sel={level:'beginner',days:3,split:null};let F={types:[],mus:[],eq:[],pat:[],minor:false};let EX={},MUS=[],TG={},LMF={beginner:.6,intermediate:.8,advanced:1},RULE={min_rating_to_count:.25,round_to:.5},state={days:DAYS.map(()=>[])};
 const lab=m=>m.replace(/_/g,' ');
 async function init(){try{const[e,t]=await Promise.all([fetch('data/exercises.json').then(r=>r.json()),fetch('data/targets.json').then(r=>r.json())]);
 MUS=e.muscles;window.REG=e.regions;window.RG=e.regionGroup;e.exercises.forEach(x=>EX[x.id]=x);TG=t.targets;if(t.levelMinFactor)LMF=t.levelMinFactor;try{SP=await fetch('data/splits.json').then(r=>r.json())}catch{}Object.assign(RULE,t.counting||{});if(window.loadCustom)await loadCustom();}catch(err){alert('Could not load data files. Serve this folder over http.');}
@@ -32,18 +32,18 @@ const q=document.getElementById('q').value.toLowerCase(),tr=document.getElementB
 Object.values(EX).filter(x=>pass(x,q)).forEach(x=>tr.appendChild(tile(x)));const fc=document.getElementById('fcount');if(fc)fc.textContent=tr.children.length+' shown';vol();if(window.markTray)markTray();if(window.pcheck)pcheck();if(window.anUpdate)anUpdate();if(window.heat)heat()}
 function pass(x,q){if(q&&!(x.name.toLowerCase().includes(q)||Object.keys(x.muscles).some(m=>x.muscles[m]>=.5&&lab(m).includes(q))))return false;
 if(F.types.length&&!F.types.includes(x.type))return false;if(F.eq.length&&!F.eq.some(q=>q==x.equipment||(q.startsWith('cat:')&&(x.categories||[]).includes(q.slice(4)))||(q=='machine'&&/^(plate-loaded|selectorized) machine$/.test(x.equipment))))return false;
-const th=F.minor?RULE.min_rating_to_count:.5;if(F.mus.length&&!F.mus.some(m=>(m=='back'?['lats','upper_back']:[m]).some(k=>(x.muscles[k]||0)>=th)))return false;return true}
+if(F.pat&&F.pat.length&&typeof patsOf=='function'){const ps=patsOf(x);if(!F.pat.some(s=>ps.includes(s)))return false}const th=F.minor?RULE.min_rating_to_count:.5;if(F.mus.length&&!F.mus.some(m=>(m=='back'?['lats','upper_back']:[m]).some(k=>(x.muscles[k]||0)>=th)))return false;return true}
 function filt(){const el=document.getElementById('filt'),eqs=[...new Set(Object.values(EX).map(x=>x.equipment))].sort();
 const ch=(k,v,t)=>`<button class="chip ${F[k].includes(v)?'on':''}" data-k="${k}" data-v="${v}">${t}</button>`;
-const nAct=F.types.length+F.mus.length+F.eq.length+(F.minor?1:0);let op=localStorage.getItem('liftboard.filtOpen');op=op==null?innerWidth>800:op=='1';
+if(!F.pat)F.pat=[];const nAct=F.types.length+F.mus.length+F.eq.length+F.pat.length+(F.minor?1:0);let op=localStorage.getItem('liftboard.filtOpen');op=op==null?innerWidth>800:op=='1';
 el.innerHTML=`<button id="ftog" class="ftog">${op?'▾':'▸'} Filters (${nAct} active)</button><div id="fbody" style="display:${op?'flex':'none'}"><div class="fl">Type</div><div class="chips">${['primary','accessory','isolation'].map(t=>ch('types',t,ICON[t]+' '+t)).join('')}</div>
 <div class="fl">Muscles</div><div class="chips">${[ch('mus','back','Back (all)')].concat(MUS.map(m=>ch('mus',m,cap(lab(m))))).join('')}</div>
 <label><input type="checkbox" id="minor" ${F.minor?'checked':''}> Include minor hits (0.25+)</label>
 <div class="fl">Equipment</div><div class="chips">${ch('eq','cat:calisthenics','Calisthenics (all)')+ch('eq','cat:plyometric','Plyometric (all)')+eqs.map(e=>ch('eq',e,cap(e))).join('')}</div>
-<div><button id="fclr" class="chip">Clear filters</button> <span id="fcount"></span></div></div>`;el.querySelector('#ftog').onclick=()=>{localStorage.setItem('liftboard.filtOpen',op?'0':'1');filt()};
+${typeof PJ!='undefined'&&PJ?patChips(ch):''}<div><button id="fclr" class="chip">Clear filters</button> <span id="fcount"></span></div></div>`;el.querySelector('#ftog').onclick=()=>{localStorage.setItem('liftboard.filtOpen',op?'0':'1');filt()};
 el.querySelectorAll('.chip[data-k]').forEach(b=>b.onclick=()=>{const a=F[b.dataset.k],i=a.indexOf(b.dataset.v);i<0?a.push(b.dataset.v):a.splice(i,1);filt();render()});
 el.querySelector('#minor').onchange=e=>{F.minor=e.target.checked;render()};
-el.querySelector('#fclr').onclick=()=>{F={types:[],mus:[],eq:[],minor:false};document.getElementById('q').value='';filt();render()}}
+{const pc=el.querySelector('#fpclr');if(pc)pc.onclick=()=>{F.pat=[];filt();render()}}el.querySelector('#fclr').onclick=()=>{F={types:[],mus:[],eq:[],pat:[],minor:false};document.getElementById('q').value='';filt();render()}}
 const cap=s=>s[0].toUpperCase()+s.slice(1);
 function upd(){save();render()}
 function totals(day){const t={};MUS.forEach(m=>t[m]=0);(day==null?state.days.flat():state.days[day]).forEach(it=>{const x=EX[it.id];if(!x)return;for(const m in x.muscles){const r=x.muscles[m];if(r>=RULE.min_rating_to_count)t[m]+=r*it.sets}});
@@ -89,7 +89,7 @@ init();
 // test hook: #fill=level,days,splitId
 addEventListener('load',()=>setTimeout(()=>{const m=location.hash.match(/fill=(\w+),(\d),([\w-]+)/);if(m&&SP){sel={level:m[1],days:+m[2],split:m[3]};bar();applySplit(true)}},500));
 addEventListener('load',()=>setTimeout(()=>{const h=new URLSearchParams(location.hash.slice(1).replace(/^fill=[^&]*&?/,''));
-if(h.get('day'))window.HD=+h.get('day');if(h.get('mus'))F.mus=h.get('mus').split('.');if(h.get('eq'))F.eq=h.get('eq').split('.');if(h.get('type'))F.types=h.get('type').split('.');filt();render()},900));
+if(h.get('day'))window.HD=+h.get('day');if(h.get('mus'))F.mus=h.get('mus').split('.');if(h.get('eq'))F.eq=h.get('eq').split('.');if(h.get('type'))F.types=h.get('type').split('.');if(h.get('pat'))F.pat=h.get('pat').split('.');filt();render()},900));
 
 function editLabel(i,h){if(h.querySelector('input'))return;const sm=h.querySelector('.dlab'),old=(state.labels||[])[i]||'';const inp=document.createElement('input');inp.className='dl-in';inp.maxLength=20;inp.value=old;inp.placeholder='Label (e.g. Push)';sm.replaceWith(inp);inp.focus();inp.select();
 let done=false;const fin=ok=>{if(done)return;done=true;document.removeEventListener('pointerdown',out,true);if(ok){if(!Array.isArray(state.labels))state.labels=DAYS.map(()=>'');state.labels[i]=inp.value.trim().slice(0,20)}upd()};
