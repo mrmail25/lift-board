@@ -1,0 +1,678 @@
+{
+ "version": "v29-D.1",
+ "rule": {
+  "step_fraction": 0.5,
+  "flat_pct_key": "review.flat_pct",
+  "rule": "Weight PR needs load > best + step_fraction x smallest real step (active gym profile gap at that load, else load_step[session unit][equipment]). set_volume and e1rm PRs need > best x (1 + review.flat_pct/100). reps_at_load treats earlier sets within step_fraction x step as the same load. Anything else is a tie: no badge. Removes kg/lb rounding PRs.",
+  "why_weight_uses_step_not_pct": "Loads are discrete; a real plate or dumbbell jump is a real weight PR even when under 1% (e.g. +2.5 lb microplates on a 300 lb lift). Conversion noise is always well under half a step."
+ },
+ "flat_pct": 1,
+ "cases": [
+  {
+   "name": "conversion_tie_curl",
+   "profile": null,
+   "history": {
+    "sessions": [
+     {
+      "id": "s1",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-01T17:00:00Z",
+      "startedAt": "2026-09-01T17:00:00Z",
+      "endedAt": "2026-09-01T17:00:00Z",
+      "unit": "kg",
+      "dayIdx": 0,
+      "label": "s1",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "dumbbell-curl",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "s2",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-03T17:00:00Z",
+      "startedAt": "2026-09-03T17:00:00Z",
+      "endedAt": "2026-09-03T17:00:00Z",
+      "unit": "lb",
+      "dayIdx": 0,
+      "label": "s2",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "dumbbell-curl",
+         "sets": 1
+        }
+       ]
+      }
+     }
+    ],
+    "entries": [
+     {
+      "id": "s1-e0",
+      "sessionId": "s1",
+      "order": 0,
+      "exerciseId": "dumbbell-curl",
+      "nameSnapshot": "dumbbell-curl",
+      "skipped": false,
+      "notes": ""
+     },
+     {
+      "id": "s2-e0",
+      "sessionId": "s2",
+      "order": 0,
+      "exerciseId": "dumbbell-curl",
+      "nameSnapshot": "dumbbell-curl",
+      "skipped": false,
+      "notes": ""
+     }
+    ],
+    "sets": [
+     {
+      "id": "s1-e0-t0",
+      "entryId": "s1-e0",
+      "sessionId": "s1",
+      "idx": 0,
+      "kind": "working",
+      "load": 15.75,
+      "reps": 10,
+      "rir": null,
+      "done": true
+     },
+     {
+      "id": "s2-e0-t0",
+      "entryId": "s2-e0",
+      "sessionId": "s2",
+      "idx": 0,
+      "kind": "working",
+      "load": 35,
+      "reps": 10,
+      "rir": null,
+      "done": true
+     }
+    ]
+   },
+   "expected_prs": {}
+  },
+  {
+   "name": "real_dumbbell_jump",
+   "profile": null,
+   "history": {
+    "sessions": [
+     {
+      "id": "s1",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-01T17:00:00Z",
+      "startedAt": "2026-09-01T17:00:00Z",
+      "endedAt": "2026-09-01T17:00:00Z",
+      "unit": "lb",
+      "dayIdx": 0,
+      "label": "s1",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "dumbbell-curl",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "s2",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-03T17:00:00Z",
+      "startedAt": "2026-09-03T17:00:00Z",
+      "endedAt": "2026-09-03T17:00:00Z",
+      "unit": "lb",
+      "dayIdx": 0,
+      "label": "s2",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "dumbbell-curl",
+         "sets": 1
+        }
+       ]
+      }
+     }
+    ],
+    "entries": [
+     {
+      "id": "s1-e0",
+      "sessionId": "s1",
+      "order": 0,
+      "exerciseId": "dumbbell-curl",
+      "nameSnapshot": "dumbbell-curl",
+      "skipped": false,
+      "notes": ""
+     },
+     {
+      "id": "s2-e0",
+      "sessionId": "s2",
+      "order": 0,
+      "exerciseId": "dumbbell-curl",
+      "nameSnapshot": "dumbbell-curl",
+      "skipped": false,
+      "notes": ""
+     }
+    ],
+    "sets": [
+     {
+      "id": "s1-e0-t0",
+      "entryId": "s1-e0",
+      "sessionId": "s1",
+      "idx": 0,
+      "kind": "working",
+      "load": 35,
+      "reps": 10,
+      "rir": null,
+      "done": true
+     },
+     {
+      "id": "s2-e0-t0",
+      "entryId": "s2-e0",
+      "sessionId": "s2",
+      "idx": 0,
+      "kind": "working",
+      "load": 40,
+      "reps": 8,
+      "rir": null,
+      "done": true
+     }
+    ]
+   },
+   "expected_prs": {
+    "s2": {
+     "dumbbell-curl": {
+      "weight": {
+       "value": 18.143716,
+       "set_id": "s2-e0-t0",
+       "load_kg": 18.143716,
+       "reps": 8,
+       "set_ids": [
+        "s2-e0-t0"
+       ]
+      },
+      "e1rm": {
+       "value": 22.982041,
+       "set_id": "s2-e0-t0",
+       "load_kg": 18.143716,
+       "reps": 8,
+       "set_ids": [
+        "s2-e0-t0"
+       ]
+      }
+     }
+    }
+   }
+  },
+  {
+   "name": "e1rm_inside_band",
+   "profile": null,
+   "history": {
+    "sessions": [
+     {
+      "id": "s1",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-01T17:00:00Z",
+      "startedAt": "2026-09-01T17:00:00Z",
+      "endedAt": "2026-09-01T17:00:00Z",
+      "unit": "kg",
+      "dayIdx": 0,
+      "label": "s1",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "s2",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-03T17:00:00Z",
+      "startedAt": "2026-09-03T17:00:00Z",
+      "endedAt": "2026-09-03T17:00:00Z",
+      "unit": "kg",
+      "dayIdx": 0,
+      "label": "s2",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        }
+       ]
+      }
+     }
+    ],
+    "entries": [
+     {
+      "id": "s1-e0",
+      "sessionId": "s1",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "barbell-bench-press",
+      "skipped": false,
+      "notes": ""
+     },
+     {
+      "id": "s2-e0",
+      "sessionId": "s2",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "barbell-bench-press",
+      "skipped": false,
+      "notes": ""
+     }
+    ],
+    "sets": [
+     {
+      "id": "s1-e0-t0",
+      "entryId": "s1-e0",
+      "sessionId": "s1",
+      "idx": 0,
+      "kind": "working",
+      "load": 100,
+      "reps": 5,
+      "rir": null,
+      "done": true
+     },
+     {
+      "id": "s2-e0-t0",
+      "entryId": "s2-e0",
+      "sessionId": "s2",
+      "idx": 0,
+      "kind": "working",
+      "load": 97.5,
+      "reps": 6,
+      "rir": null,
+      "done": true
+     }
+    ]
+   },
+   "expected_prs": {
+    "s2": {
+     "barbell-bench-press": {
+      "set_volume": {
+       "value": 585.0,
+       "set_id": "s2-e0-t0",
+       "load_kg": 97.5,
+       "reps": 6,
+       "set_ids": [
+        "s2-e0-t0"
+       ]
+      },
+      "reps_at_load": {
+       "value": 6,
+       "set_id": "s2-e0-t0",
+       "load_kg": 97.5,
+       "reps": 6,
+       "set_ids": [
+        "s2-e0-t0"
+       ]
+      }
+     }
+    }
+   }
+  },
+  {
+   "name": "volume_inside_band",
+   "profile": null,
+   "history": {
+    "sessions": [
+     {
+      "id": "s1",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-01T17:00:00Z",
+      "startedAt": "2026-09-01T17:00:00Z",
+      "endedAt": "2026-09-01T17:00:00Z",
+      "unit": "kg",
+      "dayIdx": 0,
+      "label": "s1",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "s2",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-03T17:00:00Z",
+      "startedAt": "2026-09-03T17:00:00Z",
+      "endedAt": "2026-09-03T17:00:00Z",
+      "unit": "kg",
+      "dayIdx": 0,
+      "label": "s2",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        }
+       ]
+      }
+     }
+    ],
+    "entries": [
+     {
+      "id": "s1-e0",
+      "sessionId": "s1",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "barbell-bench-press",
+      "skipped": false,
+      "notes": ""
+     },
+     {
+      "id": "s2-e0",
+      "sessionId": "s2",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "barbell-bench-press",
+      "skipped": false,
+      "notes": ""
+     }
+    ],
+    "sets": [
+     {
+      "id": "s1-e0-t0",
+      "entryId": "s1-e0",
+      "sessionId": "s1",
+      "idx": 0,
+      "kind": "working",
+      "load": 100,
+      "reps": 5,
+      "rir": null,
+      "done": true
+     },
+     {
+      "id": "s2-e0-t0",
+      "entryId": "s2-e0",
+      "sessionId": "s2",
+      "idx": 0,
+      "kind": "working",
+      "load": 84,
+      "reps": 6,
+      "rir": null,
+      "done": true
+     }
+    ]
+   },
+   "expected_prs": {
+    "s2": {
+     "barbell-bench-press": {
+      "reps_at_load": {
+       "value": 6,
+       "set_id": "s2-e0-t0",
+       "load_kg": 84.0,
+       "reps": 6,
+       "set_ids": [
+        "s2-e0-t0"
+       ]
+      }
+     }
+    }
+   }
+  },
+  {
+   "name": "sub_step_jump_no_profile",
+   "profile": null,
+   "history": {
+    "sessions": [
+     {
+      "id": "s1",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-01T17:00:00Z",
+      "startedAt": "2026-09-01T17:00:00Z",
+      "endedAt": "2026-09-01T17:00:00Z",
+      "unit": "kg",
+      "dayIdx": 0,
+      "label": "s1",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "s2",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-03T17:00:00Z",
+      "startedAt": "2026-09-03T17:00:00Z",
+      "endedAt": "2026-09-03T17:00:00Z",
+      "unit": "kg",
+      "dayIdx": 0,
+      "label": "s2",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        }
+       ]
+      }
+     }
+    ],
+    "entries": [
+     {
+      "id": "s1-e0",
+      "sessionId": "s1",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "barbell-bench-press",
+      "skipped": false,
+      "notes": ""
+     },
+     {
+      "id": "s2-e0",
+      "sessionId": "s2",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "barbell-bench-press",
+      "skipped": false,
+      "notes": ""
+     }
+    ],
+    "sets": [
+     {
+      "id": "s1-e0-t0",
+      "entryId": "s1-e0",
+      "sessionId": "s1",
+      "idx": 0,
+      "kind": "working",
+      "load": 100,
+      "reps": 5,
+      "rir": null,
+      "done": true
+     },
+     {
+      "id": "s2-e0-t0",
+      "entryId": "s2-e0",
+      "sessionId": "s2",
+      "idx": 0,
+      "kind": "working",
+      "load": 101,
+      "reps": 5,
+      "rir": null,
+      "done": true
+     }
+    ]
+   },
+   "expected_prs": {}
+  },
+  {
+   "name": "microplate_jump_with_profile",
+   "profile": {
+    "unit": "kg",
+    "plates": [
+     {
+      "weight": 20,
+      "pairs": 3
+     },
+     {
+      "weight": 10,
+      "pairs": 1
+     },
+     {
+      "weight": 5,
+      "pairs": 1
+     },
+     {
+      "weight": 2.5,
+      "pairs": 1
+     },
+     {
+      "weight": 1.25,
+      "pairs": 1
+     }
+    ],
+    "microplates": [
+     {
+      "weight": 0.5,
+      "pairs": 1
+     }
+    ],
+    "bars": {
+     "barbell": 20
+    }
+   },
+   "history": {
+    "sessions": [
+     {
+      "id": "s1",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-01T17:00:00Z",
+      "startedAt": "2026-09-01T17:00:00Z",
+      "endedAt": "2026-09-01T17:00:00Z",
+      "unit": "kg",
+      "dayIdx": 0,
+      "label": "s1",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "s2",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-09-03T17:00:00Z",
+      "startedAt": "2026-09-03T17:00:00Z",
+      "endedAt": "2026-09-03T17:00:00Z",
+      "unit": "kg",
+      "dayIdx": 0,
+      "label": "s2",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        }
+       ]
+      }
+     }
+    ],
+    "entries": [
+     {
+      "id": "s1-e0",
+      "sessionId": "s1",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "barbell-bench-press",
+      "skipped": false,
+      "notes": ""
+     },
+     {
+      "id": "s2-e0",
+      "sessionId": "s2",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "barbell-bench-press",
+      "skipped": false,
+      "notes": ""
+     }
+    ],
+    "sets": [
+     {
+      "id": "s1-e0-t0",
+      "entryId": "s1-e0",
+      "sessionId": "s1",
+      "idx": 0,
+      "kind": "working",
+      "load": 100,
+      "reps": 5,
+      "rir": null,
+      "done": true
+     },
+     {
+      "id": "s2-e0-t0",
+      "entryId": "s2-e0",
+      "sessionId": "s2",
+      "idx": 0,
+      "kind": "working",
+      "load": 101,
+      "reps": 5,
+      "rir": null,
+      "done": true
+     }
+    ]
+   },
+   "expected_prs": {
+    "s2": {
+     "barbell-bench-press": {
+      "weight": {
+       "value": 101.0,
+       "set_id": "s2-e0-t0",
+       "load_kg": 101.0,
+       "reps": 5,
+       "set_ids": [
+        "s2-e0-t0"
+       ]
+      }
+     }
+    }
+   }
+  }
+ ],
+ "profile_semantics": "profile null = no saved gym, use gym_profile_default[session unit]"
+}

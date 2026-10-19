@@ -43,12 +43,13 @@ const prSet=x=>x.kind=='working'&&x.reps>0;
 // PR type k allowed for this set? logger.set_tags[tag].pr_exclude (prs.py _pr_ok)
 const prOk=(x,k,R)=>{if(!prSet(x))return false;const t=x.tag;return!(t&&(((R.lg.set_tags||{})[t]||{}).pr_exclude||[]).includes(k))};
 // v29 D.1 (logger.prs.tie, prs.py step_kg): smallest real weight step for this set's exercise, in kg. profile (active gym profile, optional):
-// gap between the nearest available load and its lower neighbour (microplates / odd dumbbells count); else logger.load_step[unit][equipment].
+// none saved (null/undefined) -> logger.gym_profile_default[session unit]; false -> load_step only. Gap between the nearest available load and its lower neighbour (microplates / odd dumbbells count); else logger.load_step[unit][equipment].
 function prStepKg(x,unit,R,profile,o){const T=(o&&o.exercises)||(typeof EX!='undefined'?EX:{}),m=T[x.ex],eq=(m&&!m.custom&&m.equipment)||'default';
+  if(profile==null)profile=((R.lg.gym_profile_default||{})[unit])||null;/* no saved gym: the default gym the suggestions use (session unit); false = load_step only (prs.py profile=False) */
   if(profile){let av=null;try{av=typeof availableLoads=='function'?availableLoads(profile,eq,x.ex):null}catch(e){av=null}
     if(av&&av.length>1){const pu=profile.unit||unit,v=x.added_kg*(pu=='lb'?R.lbPerKg:1);let i=0;for(let k=1;k<av.length;k++)if(Math.abs(av[k]-v)<Math.abs(av[i]-v))i=k;const j=i>0?i:1,g=av[j]-av[j-1];if(g>0)return prKg(g,pu,R)}}
   const st=R.load_step||{},ne=d=>d&&typeof d=='object'&&Object.keys(d).length?d:null,u=ne(st[unit])||ne(st.lb)||{};return prKg(eq in u?u[eq]:(u.default??5),unit in st?unit:'lb',R)}
-function detectPrs(h,al,o){const R=prRules(),mx=R.mx,prior={},out={},ok=(x,k)=>prOk(x,k,R),fl=1+R.flat_pct/100,sf=R.sf,prof=(o&&o.profile)||null;
+function detectPrs(h,al,o){const R=prRules(),mx=R.mx,prior={},out={},ok=(x,k)=>prOk(x,k,R),fl=1+R.flat_pct/100,sf=R.sf,prof=o&&o.profile!==undefined?o.profile:null;
   for(const q of prFlatten(h,al,R,o)){const sid=q.s.id,cur={},order=[],unit=q.s.unit||'lb';q.sets.forEach(x=>{if(PR_TYPES.some(k=>ok(x,k))){if(!cur[x.ex]){cur[x.ex]=[];order.push(x.ex)}cur[x.ex].push(x)}});
     for(const ex of order){const xs=cur[ex],P=prior[ex];
       if(P&&P.length){const lp=k=>P.filter(p=>p.load_kg>PRS_EPS&&ok(p,k));const mxOf=a=>a.length?Math.max(...a):0;

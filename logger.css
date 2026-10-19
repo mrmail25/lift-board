@@ -170,3 +170,15 @@ body:not([data-view=train]):has(#lg-kp) #lg-timer{bottom:calc(var(--tabh) + 8px)
 .vs-pr{color:var(--lg-acc)}.tr-pvd{margin-top:4px}
 .an-pvd th{font-weight:600;font-size:12px;opacity:.7;text-align:left}.an-pvd tr.ok td:nth-child(2){color:var(--lg-ok)}.an-pvd tr.lo td:nth-child(2){color:var(--lg-acc)}.an-pvd td.up{color:var(--lg-ok)}.an-pvd td.dn{color:var(--lg-dng)}
 .vs-a{font-style:normal;font-size:12px;margin-right:2px}.vs-r.up .vs-a{color:var(--lg-ok)}.vs-r.down .vs-a{color:var(--lg-dng)}.vs-r.flat .vs-a{color:var(--lg-dim)}.vs-dl{font-weight:400;opacity:.75;font-size:13px}
+/* v29 E: suggested deload prompt / deload week / progress signals */
+#dl-prompt{margin:12px 0;padding:12px;border:1px solid var(--lg-acc);border-radius:12px}
+#dl-prompt b small{color:var(--lg-dim);font-weight:normal;margin-left:6px}
+#dl-prompt p{margin:6px 0}
+#dl-prompt .dl-ev{color:var(--lg-dim);font-size:.85em}
+.dl-on{margin:12px 0;padding:10px 12px;border:1px solid var(--lg-line);border-radius:12px;display:flex;flex-direction:column;gap:4px}
+.dl-on span{color:var(--lg-dim);font-size:.9em}
+.lg-chip.lg-dlr,.lgc-dl{color:var(--lg-acc)}
+.lgc-dl{margin-left:8px;font-size:.85em}
+.an-pg tr.up .pg-a{color:var(--lg-ok)}
+.an-pg tr.dropping .pg-a{color:var(--lg-dng)}
+.an-pg tr.stalled .pg-a{color:var(--lg-dim)}

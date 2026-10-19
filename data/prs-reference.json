@@ -5151,5 +5151,196 @@
     "sessions_ratio": 0.6667
    }
   }
+ },
+ "custom_exercise_case": {
+  "history": {
+   "sessions": [
+    {
+     "id": "c1",
+     "status": "completed",
+     "date": "2026-10-12",
+     "startedAt": "2026-10-12T17:00:00-07:00",
+     "endedAt": "2026-10-12T18:00:00-07:00",
+     "unit": "lb"
+    }
+   ],
+   "entries": [
+    {
+     "id": "ce1",
+     "sessionId": "c1",
+     "order": 0,
+     "exerciseId": "custom-cable-high-row",
+     "skipped": false
+    },
+    {
+     "id": "ce2",
+     "sessionId": "c1",
+     "order": 1,
+     "exerciseId": "custom-deleted-thing",
+     "skipped": false
+    }
+   ],
+   "sets": [
+    {
+     "id": "cx1",
+     "entryId": "ce1",
+     "sessionId": "c1",
+     "idx": 0,
+     "kind": "working",
+     "load": 100,
+     "reps": 10,
+     "rir": 1,
+     "done": true
+    },
+    {
+     "id": "cx2",
+     "entryId": "ce1",
+     "sessionId": "c1",
+     "idx": 1,
+     "kind": "working",
+     "load": 100,
+     "reps": 9,
+     "rir": null,
+     "done": true
+    },
+    {
+     "id": "cx3",
+     "entryId": "ce2",
+     "sessionId": "c1",
+     "idx": 0,
+     "kind": "working",
+     "load": 50,
+     "reps": 12,
+     "rir": 2,
+     "done": true
+    }
+   ],
+   "customExercises": [
+    {
+     "id": "custom-cable-high-row",
+     "name": "Cable High Row",
+     "type": "accessory",
+     "custom": true,
+     "muscles": {
+      "upper_back": 1,
+      "lats": 0.5,
+      "rear_delts": 0.5,
+      "biceps": 0.5
+     }
+    }
+   ]
+  },
+  "week": "2026-10-12",
+  "expected_analytics": {
+   "week_start": "2026-10-12",
+   "week_end_exclusive": "2026-10-19",
+   "unit": "kg",
+   "hardRIR": 3,
+   "label": "Logged totals, not estimates of muscle growth.",
+   "hard_sets": {
+    "per_muscle": {
+     "chest": 0.0,
+     "front_delts": 0.0,
+     "side_delts": 0.0,
+     "rear_delts": 1.0,
+     "lats": 1.0,
+     "upper_back": 2.0,
+     "traps": 0.0,
+     "biceps": 1.0,
+     "triceps": 0.0,
+     "forearms": 0.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 0.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "per_muscle_board_rounded": {
+     "chest": 0.0,
+     "front_delts": 0.0,
+     "side_delts": 0.0,
+     "rear_delts": 1.0,
+     "lats": 1.0,
+     "upper_back": 2.0,
+     "traps": 0.0,
+     "biceps": 1.0,
+     "triceps": 0.0,
+     "forearms": 0.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 0.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "set_count": 2,
+    "credited_sets": 2.0,
+    "credit_by_tag": {},
+    "effort_not_logged": 1,
+    "archived_sets_not_counted": 1
+   },
+   "volume": {
+    "per_session_kg": {
+     "c1": 1133.9823
+    },
+    "week_kg": 1133.9823,
+    "per_muscle_kg": {
+     "chest": 0.0,
+     "front_delts": 0.0,
+     "side_delts": 0.0,
+     "rear_delts": 430.9133,
+     "lats": 430.9133,
+     "upper_back": 861.8265,
+     "traps": 0.0,
+     "biceps": 430.9133,
+     "triceps": 0.0,
+     "forearms": 0.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 0.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "bodyweight_part_kg": 0.0,
+    "external_kg": 1133.9823
+   },
+   "bodyweight": {
+    "sets_without_bodyweight": 0,
+    "sets_backfilled": 0
+   },
+   "load_trend": {
+    "custom-cable-high-row": [
+     {
+      "session_id": "c1",
+      "date": "2026-10-12",
+      "e1rm_kg": 60.4791,
+      "set_id": "cx1"
+     }
+    ]
+   },
+   "adherence": {
+    "planned_sets": 0,
+    "completed_planned_sets": 0,
+    "skipped_sets": 0,
+    "sets_ratio": null,
+    "sessions_completed": 1,
+    "sessions_skipped": 0,
+    "sessions_planned": 1,
+    "sessions_not_started": 0,
+    "sessions_ratio": 1.0
+   }
+  },
+  "expected_prs": {}
  }
 }

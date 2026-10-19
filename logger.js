@@ -85,7 +85,7 @@ const bestOf=a=>{let b=null;work(a).forEach(x=>{if(x.reps>LR().e1rm_max_reps||!x
 const volOf=a=>work(a).reduce((s,x)=>s+effLb(x)*(x.reps||0),0);
 // v29 A: gym profile (rules.json v9 logger.gym_profile_schema). Stored in settings (S.gymProfiles[], S.activeGymId) -> localStorage + backups.
 // Until he saves his own, the rules.json gym_profile_default for the display unit is used.
-/* D.1: the gym profile PRs use (logger.prs.tie): the user's active profile; none chosen -> null (prs.py falls back to load_step) */
+/* PR ties (logger.prs.tie): the user's saved active profile; none -> null -> prs.js uses logger.gym_profile_default[session unit], the gym suggestions use */
 function prProf(){return(S.gymProfiles||[]).find(x=>x.id==S.activeGymId)||null}
 function gymP(){const g=(S.gymProfiles||[]).find(x=>x.id==S.activeGymId);return g||JSON.parse(JSON.stringify((LR().gym_profile_default||{})[S.unit]||{}))}
 const exEq=exId=>(EX[resolve(exId)]||{}).equipment,exAsst=exId=>!!(EX[resolve(exId)]||{}).bodyweight_assisted;
@@ -109,6 +109,8 @@ const RKEY='liftboard.routines';let ROUT=[];try{ROUT=JSON.parse(localStorage.get
 // v28.1: decimal-bug cleanup state: {shown, sets:{setId:{a:'fixed'|'dismissed',from,to,at}}}; kept in backups
 // v29 B: history.bodyweights [{date:'YYYY-MM-DD', value, unit}] (rules.json logger.bodyweight). Own key, in backups; fed to prs.js via hx().
 const BKEY='liftboard.bodyweights';let BW=[];try{const v=JSON.parse(localStorage.getItem(BKEY));if(Array.isArray(v))BW=v}catch{}const saveBW=()=>localStorage.setItem(BKEY,JSON.stringify(BW));
+// v29 E: suggested-deload state (history.deloads / deloadPrompt / readiness in deload.py terms); in backups
+const DLKEY='liftboard.deload';let DLS={deloads:[],deloadPrompt:null,readiness:[]};try{const v=JSON.parse(localStorage.getItem(DLKEY));if(v&&typeof v=='object')DLS={...DLS,...v}}catch{}const saveDL=()=>localStorage.setItem(DLKEY,JSON.stringify(DLS));
 const DKEY='liftboard.decimalFix';let DFX={shown:false,sets:{}};try{Object.assign(DFX,JSON.parse(localStorage.getItem(DKEY))||{})}catch{}const saveDF=()=>localStorage.setItem(DKEY,JSON.stringify(DFX));
 const rtVers=id=>ROUT.filter(r=>r.id==id).sort((a,b)=>a.version-b.version);const rtLatest=id=>rtVers(id).pop()||null;
 const rtList=()=>[...new Set(ROUT.map(r=>r.id))].map(rtLatest).sort((a,b)=>a.publishedAt<b.publishedAt?1:-1);
@@ -137,10 +139,10 @@ function prefill(e){const p=progression(resolve(e.exerciseId),e.sessionId);e.cue
   L.sets.filter(x=>x.entryId==e.id).sort((a,b)=>a.idx-b.idx).forEach(x=>{const k=pos[x.kind]++;if(x.done)return;const pv=prevFor(resolve(e.exerciseId),x.kind,k,e.sessionId);
     if(pv){x.load=conv(pv.load,sessUnit(pv.sessionId),cur.unit);x.reps=pv.reps;x.prevLoad=x.load;x.prevReps=x.reps}
     if(x.kind=='working'&&p.sugLoad!=null){x.load=conv(p.sugLoad,S.unit,cur.unit);x.reps=p.sugReps;x.sug=true}})}
-function startSession(i){if(cur)return openLogger();const tiles=dayTiles(i);if(!tiles.length)return;const m=loaded();
-  const rt=activeRt();const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),splitId:m?'my:'+m.id:undefined,...rtRef(rt),dayIdx:i,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:tiles.map(t=>({exerciseId:t.id,sets:t.sets}))},planSnap:planOf(planDays())};
+function startSession(i){if(cur)return openLogger();const dw=dlActive();let tiles=dayTiles(i);if(!tiles.length)return;if(dw)tiles=deloadVersion([tiles])[0];const m=loaded();
+  const rt=activeRt();const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),splitId:m?'my:'+m.id:undefined,...rtRef(rt),dayIdx:i,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:tiles.map(t=>({exerciseId:t.id,sets:t.sets}))},planSnap:planOf(planDays()),...(dw?{deload:true,deloadStart:dw.start}:{})};
   L.sessions.push(s);cur=s;tiles.forEach((t,k)=>{const e={id:uid('e'),sessionId:s.id,order:k,exerciseId:t.id,nameSnapshot:(EX[t.id]||{}).name||t.id,repRange:[...repFor(t.id)],restSec:restFor(t.id,'working'),notes:carryNote(t.id),skipped:false};
-    L.entries.push(e);for(let j=0;j<t.sets;j++)L.sets.push(newSet(e,'working',j));prefill(e)});ssCarry(s);
+    if(t.rir_target)e.rirTarget=[...t.rir_target];L.entries.push(e);for(let j=0;j<t.sets;j++)L.sets.push(newSet(e,'working',j));prefill(e);if(dw)dlPrefill(e)});ssCarry(s);
   const first=L.entries.find(e=>e.sessionId==s.id);openEntry=first&&first.id;activeSet=firstOpenSet(first);persist(s.id);closeModal();openLogger()}
 const rtRef=r=>r?{routineId:r.id,routineVersion:r.version,routineName:r.name}:{};
 function startEmpty(){if(cur)return openLogger();const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),dayIdx:null,label:'Empty workout',empty:true,unit:S.unit,notes:'',snapshot:{exercises:[]}};
@@ -180,7 +182,7 @@ function renderStart(){const o=document.getElementById('lg');if(!o)return;const 
   <div class="tr-rt" data-r="${r?H(r.id):''}" data-v="${r?r.version:''}">${r?`<small>Active routine</small><b>${H(r.name)}</b><span>v${r.version} · published ${H(new Date(r.publishedAt).toLocaleDateString())}</span>`:`<small>No routine active</small><b>Build board</b><span>${n?'Pick a published routine, or train from the board.':'Publish from Build to add routines to this library.'}</span>`}</div>
   <button class="pri lg-big" id="lg-cont"></button>
   <div class="lg-startbtns"><button id="lg-days">Choose a day…</button><button id="tr-change">${n?'Change routine…':'Routines…'}</button><button id="tr-empty">Empty workout</button><button id="lg-wkb">Week &amp; history</button></div>
-  <p class="cf-hint lg-adh0">This week (logged totals): ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started</p>${dashLine()}</div>`;
+  <p class="cf-hint lg-adh0">This week (logged totals): ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started</p>${dashLine()}${dlHtml()}</div>`;dlWire(o);
   o.querySelector('#lg-cont').onclick=()=>{if(cur)return openLogger();const c=continueIdx();if(c!=null)startSession(c)};o.querySelector('#lg-days').onclick=startSheet;o.querySelector('#lg-wkb').onclick=()=>weekView();
   o.querySelector('#tr-change').onclick=routinePicker;o.querySelector('#tr-empty').onclick=startEmpty;refreshBar()}
 function routinePicker(){const a=activeRt(),L_=rtList();modal(`<div id="tr-pick"><h3>Train library</h3>${L_.length?'':'<p class="cf-hint">Nothing published yet. Use Publish on Build.</p>'}
@@ -197,7 +199,7 @@ function publishSheet(){const nm=defaultRtName(),ex=ROUT.find(r=>r.name.toLowerC
 function startTraining(){if(cur)return openLogger();const p=publish(defaultRtName());if(!p){toast('Add exercises to the board first',null);return}S.activeRoutine=p.r.id;saveS();const c=continueIdx();if(c==null)return;startSession(c)}
 function buildBtns(){const a=document.querySelector('header .actions');if(!a||document.getElementById('pb-btn'))return;a.insertAdjacentHTML('afterbegin','<button id="pb-btn" title="Save a versioned snapshot of this board to the Train library">Publish</button><button id="st-btn" class="pri" title="Publish, make it the active routine and start the session clock">Start training</button>');
   document.getElementById('pb-btn').onclick=publishSheet;document.getElementById('st-btn').onclick=startTraining}
-function cueHtml(e){const c=e.cue||{};const a=[];if(c.sugLoad!=null)a.push(`↑ Try ${fmt(c.sugLoad)}×${c.sugReps}`);else if(c.addRep)a.push(`Same load, aim for ${c.addRep} reps`);else if(c.max)a.push(exAsst(resolve(e.exerciseId))?'Least assistance on the stack: try a harder variation':'Top of your rack: try a harder variation');if(c.beat)a.push(H(c.beat));if(c.cut)a.push('Missed the range twice: consider −5%');return a.join(' · ')}
+function cueHtml(e){const c=e.cue||{};const a=[];if(c.deload){const V=dlDS().deload_version;return`Deload: RIR ${V.rir_target[0]}–${V.rir_target[1]}, about ×${V.load_factor} of last time`}if(c.sugLoad!=null)a.push(`↑ Try ${fmt(c.sugLoad)}×${c.sugReps}`);else if(c.addRep)a.push(`Same load, aim for ${c.addRep} reps`);else if(c.max)a.push(exAsst(resolve(e.exerciseId))?'Least assistance on the stack: try a harder variation':'Top of your rack: try a harder variation');if(c.beat)a.push(H(c.beat));if(c.cut)a.push('Missed the range twice: consider −5%');return a.join(' · ')}
 function rowHtml(e,x,n){const pv=x.kind=='working'?prevFor(resolve(e.exerciseId),'working',n.w,cur.id):prevFor(resolve(e.exerciseId),'warmup',n.u,cur.id);
   const pvs=pv?`${fmt(dLoad(pv))} × ${pv.reps}${pv.rir!=null?' @'+pv.rir:''}`:'—';const L_=conv(x.load,cur.unit,S.unit);
   const pt=prTypesOf(x.id,LP);const rirTxt=x.rir==null?(S.rpe?'RPE':'RIR'):(S.rpe?'RPE '+(10-x.rir):'@'+(x.rir==5?'5+':x.rir));const TG=tagDefs(),tg=x.tag&&TG[x.tag];
@@ -216,7 +218,7 @@ function cardHtml(e){const x=EX[resolve(e.exerciseId)],sets=setsOf(e.id),done=se
   const rows=sets.map(s=>{const h=rowHtml(e,s,n);s.kind=='working'?n.w++:n.u++;return h}).join('');
   return`<div class="lg-card${open?' open':''}${e.skipped?' skipped':''}${x?'':' arch'}${ssLetter(e)?' ss':''}" data-e="${e.id}"${ssLetter(e)?` data-g="${ssLetter(e)}"`:''}><div class="lg-ch"><button class="lg-drag" aria-label="Drag to reorder">≡</button><button class="lg-title">${x?ICON[x.type]:'⌧'} ${H(exName(e))}${x?'':' <em>archived exercise</em>'}${e.swappedFrom?' <em>swapped</em>':''}${ssLetter(e)?` <em class="lg-ss">Superset ${ssLetter(e)}</em>`:''}</button>
    <span class="lg-cnt">${done}/${sets.length}</span><button class="lg-more" aria-label="Options">⋯</button></div>
-   <div class="lg-meta"><button class="lg-chip lg-rest" aria-label="Rest time, tap to adjust">⏱ ${mmss(e.restSec)}</button><button class="lg-chip lg-rr" aria-label="Rep range, tap to adjust">${e.repRange[0]}–${e.repRange[1]} reps</button></div>
+   <div class="lg-meta"><button class="lg-chip lg-rest" aria-label="Rest time, tap to adjust">⏱ ${mmss(e.restSec)}</button><button class="lg-chip lg-rr" aria-label="Rep range, tap to adjust">${e.repRange[0]}–${e.repRange[1]} reps</button>${e.rirTarget?`<span class="lg-chip lg-dlr">RIR ${e.rirTarget[0]}–${e.rirTarget[1]}</span>`:''}</div>
    ${x&&(open||exNote(e.exerciseId))?pnHtml(resolve(e.exerciseId)):''}
    ${open&&!e.skipped?`<div class="lg-cue">${cueHtml(e)}${beatHtml(e)}</div>${wuBtn(e)}<div class="lg-sets">${rows}</div><button class="lg-addset">+ Set</button>
    <label class="lg-wn">Workout note <small>(this session; carries to next time)</small><textarea data-wn="${e.id}" rows="2" placeholder="How did it go?">${H(e.notes||'')}</textarea></label>`:''}${e.skipped?'<div class="lg-cue">Skipped</div>':''}</div>`}
@@ -277,7 +279,7 @@ function check(e,x){if(x.done){x.done=false;x.doneAt=null;delete x.pr;persist(cu
   const nx=setsOf(e.id).find(s=>!s.done);if(nx)activeSet=nx.id;else{const es=entriesOf(cur.id).filter(q=>!q.skipped),k=es.indexOf(e),ne=es.slice(k+1).concat(es.slice(0,k)).find(q=>setsOf(q.id).some(s=>!s.done));if(ne){openEntry=ne.id;activeSet=firstOpenSet(ne)}else activeSet=null}
   persist(cur.id);renderSession()}
 // v28: PRs are derived from the logged history by prs.js (port of tools/prs.py) and recomputed after every change; nothing stored is a source of truth.
-let LP={};function hx(live){const ss=L.sessions.map(s=>live&&cur&&s.id==cur.id?{...s,status:'completed',endedAt:nowISO()}:s);return{schema:LOG_SCHEMA,plannedSessionsPerWeek:order().length||undefined,sessions:ss,entries:L.entries,sets:L.sets,bodyweights:BW}}
+let LP={};function hx(live){const ss=L.sessions.map(s=>live&&cur&&s.id==cur.id?{...s,status:'completed',endedAt:nowISO()}:s);return{schema:LOG_SCHEMA,plannedSessionsPerWeek:order().length||undefined,sessions:ss,entries:L.entries,sets:L.sets,bodyweights:BW,deloads:DLS.deloads||[],deloadPrompt:DLS.deloadPrompt||null,readiness:DLS.readiness||[]}}
 function livePrs(){return cur?(detectPrs(hx(true),ALIAS,{profile:prProf()})[cur.id]||{}):{}}
 function prTypesOf(setId,sp){const P=sp||livePrs(),o=[];Object.values(P).forEach(r=>PR_TYPES.forEach(k=>{if(r[k]&&r[k].set_id==setId)o.push(k)}));return o}
 function recomputePrs(){const P=detectPrs(hx(false),ALIAS,{profile:prProf()}),out=[];Object.keys(P).forEach(sid=>Object.keys(P[sid]).forEach(ex=>PR_TYPES.forEach(k=>{const r=P[sid][ex][k];if(r)out.push({id:sid+'|'+ex+'|'+k,sessionId:sid,exerciseId:ex,kind:k,value:r.value,unit:k=='reps_at_load'?'reps':k=='set_volume'?'kg·reps':'kg',setId:r.set_id,load_kg:r.load_kg,reps:r.reps})})));L.prs=out;return P}
@@ -500,6 +502,35 @@ const planOf=days=>plannedSets(days,L,{exercises:EX}).per_muscle;
 /* D2: planned-sets snapshots taken at Publish (routine version) and Start (session); finished weeks compare with the latest one before they ended */
 function planSnaps(){return[...ROUT.filter(r=>r.planSnap).map(r=>({at:r.publishedAt,per_muscle:r.planSnap})),...L.sessions.filter(s=>s.planSnap).map(s=>({at:s.startedAt||s.date,per_muscle:s.planSnap}))]}
 function planVsDone(wk){wk=wk||weekKey();const pl=weekPlan(planDays(),wk,todayYmd(),planSnaps(),L,{exercises:EX});return{pl,dash:planDash(pl,weekAnalytics(wk).hard_sets.per_muscle)}}
+// ---------- v29 E: suggested deload (deload.js = tools/deload.py) ----------
+function dlActive(){const t=todayYmd();return(DLS.deloads||[]).find(d=>dlD(d.start)<=t&&t<=dlD(d.end))||null}
+function dlCheckNow(){return deloadCheck(hx(false),todayYmd(),{aliases:ALIAS})}
+// reasons with points, most points first (ties: rules order), at most 3
+function dlReasons(c){const s=c.signals||{},D=dlDS(),a=[],P=s.performance,W=s.weeks_since_deload,Rr=s.rir_drift,Hs=s.hard_sets_over_target,Rd=s.readiness;
+  if(W&&W.points)a.push([W.points,0,`${Math.floor(W.weeks)} weeks since your ${(DLS.deloads||[]).length?'last deload':'first logged session'}`]);
+  if(P&&P.points)a.push([P.points,1,P.points==D.performance.points_dropping?`${P.dropping} of ${P.lifts} lifts dropping`:`${P.dropping+P.stalled} of ${P.lifts} lifts stalled or dropping`]);
+  if(Rr&&Rr.points)a.push([Rr.points,2,`same loads at lower RIR on ${Rr.exercises.length} exercises`]);
+  if(Hs&&Hs.points)a.push([Hs.points,3,`hard sets over target on ${D.hard_sets_over_target.min_muscles}+ muscles for ${Hs.weeks.length} weeks`]);
+  if(Rd&&Rd.points)a.push([Rd.points,4,`readiness averaging ${Rd.mean.toFixed(1)}/5`]);
+  return a.sort((x,y)=>y[0]-x[0]||x[1]-y[1]).slice(0,3).map(z=>z[2])}
+const dlLabel=k=>(dlDS().prompt.choices[k]||k).split(':')[0];
+function dlHtml(){const D=dlDS(),V=D.deload_version,w=dlActive();if(!D.prompt)return'';const dd=v=>new Date(dlD(v)+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'});
+  if(w)return`<div class="dl-on" data-end="${H(dlD(w.end))}"><b>Deload week through ${H(dd(w.end))}</b><span>Sessions use the lighter version: sets ×${V.sets_factor} (rounded up), RIR ${V.rir_target[0]}–${V.rir_target[1]}, loads ×${V.load_factor} rounded down to real loads.</span></div>`;
+  const c=dlCheckNow();if(!c.suggest)return'';const rs=dlReasons(c);
+  return`<div id="dl-prompt" data-score="${c.score}" data-max="${D.score_max}" data-n="${rs.length}"><b>Suggested deload <small>score ${c.score}/${D.score_max}</small></b>
+   <p class="dl-copy">${H(D.prompt.copy.replace('<top reasons>',rs.join('; ')))}</p>
+   <p class="dl-ver">Deload version for ${V.days_length} days: same exercises and days, sets ×${V.sets_factor} (rounded up, min 1), RIR ${V.rir_target[0]}–${V.rir_target[1]}, loads ×${V.load_factor} rounded down to real loads.</p>
+   <p class="dl-ev">${H(D.evidence_note)}</p>
+   <div class="cf-btns"><button class="pri" id="dl-use">${H(dlLabel('use'))}</button><button id="dl-delay">${H(dlLabel('delay'))}</button><button id="dl-later">${H(dlLabel('later'))}</button></div></div>`}
+function dlChoose(k){const before=JSON.stringify(DLS),g=applyChoice({deloads:DLS.deloads||[],deloadPrompt:DLS.deloadPrompt},k,todayYmd());DLS.deloads=g.deloads||[];DLS.deloadPrompt=g.deloadPrompt;saveDL();renderStart();
+  toast(k=='use'?'Deload week started: sessions use the lighter version':k=='delay'?`Deload prompt snoozed until ${dlD(g.deloadPrompt.snoozedUntil)}`:'We will ask again tomorrow',()=>{DLS=JSON.parse(before);saveDL();renderStart()})}
+function dlWire(o){[['use','#dl-use'],['delay','#dl-delay'],['later','#dl-later']].forEach(([k,s])=>{const b=o.querySelector(s);if(b)b.onclick=()=>dlChoose(k)})}
+// deload session loads: last working load (top set of the latest non-deload session, drop/partial sets left out) x load_factor, rounded down
+// to a real load (deloadLoad = deload.py deload_load). Assisted machines keep the last assistance (less assistance would make it harder).
+function dlPrefill(e){const id=resolve(e.exerciseId),hs=hist(id,e.sessionId),q=hs.find(z=>!z.s.deload)||hs[0];e.cue={deload:true};if(!q)return;const R=prRules();
+  const w=work(q.sets).filter(x=>prOk({kind:'working',reps:x.reps,tag:x.tag},'weight',R)&&x.load!=null);if(!w.length)return;const u=sessUnit(q.s.id),last=Math.max(...w.map(x=>+x.load||0)),g=gymP();
+  const v=exAsst(id)?conv(last,u,cur.unit):conv(deloadLoad(last,g,exEq(id),u,id),g.unit||u,cur.unit);
+  L.sets.filter(x=>x.entryId==e.id&&x.kind=='working'&&!x.done).forEach(x=>{x.load=Math.round(v*1e6)/1e6;x.sug=false;x.dl=true})}
 function dashLine(){const{dash:d}=planVsDone();if(!d.muscles)return'';const b=d.behind;
   return`<p class="cf-hint tr-pvd" data-m="${d.muscles}" data-on="${d.on_plan}" data-b="${b?b.muscle:''}">Planned vs done so far this week: ${d.on_plan}/${d.muscles} muscles on plan${b?` · furthest behind: ${H(cap(lab(b.muscle)))} ${b.done}/${b.planned}`:''}</p>`}
 function writeBack(s,rows,pick){const i=s.dayIdx,prior=JSON.stringify(state),m=loaded(),priorM=m?JSON.stringify(m):null;
@@ -547,11 +578,11 @@ function bwSheet(edit){const ed=edit!=null?BW[edit]:null,today=prLocalDate(nowIS
   document.querySelectorAll('.bw-del').forEach(b=>b.onclick=()=>{const before=JSON.stringify(BW);BW.splice(+b.dataset.i,1);saveBW();done();bwSheet();toast('Bodyweight entry deleted',()=>{BW=JSON.parse(before);saveBW();done();bwSheet()})});
   document.getElementById('bw-x').onclick=()=>weekView('settings')}
 // ---------- backup / restore ----------
-window.logBackup=()=>({schema:LOG_SCHEMA,routines:ROUT,decimalFix:DFX,bodyweights:BW,exNotes:NOTES,sessions:L.sessions,entries:L.entries,sets:L.sets,prs:L.prs,settings:S});
+window.logBackup=()=>({schema:LOG_SCHEMA,routines:ROUT,decimalFix:DFX,bodyweights:BW,deloads:DLS.deloads||[],deloadPrompt:DLS.deloadPrompt||null,readiness:DLS.readiness||[],exNotes:NOTES,sessions:L.sessions,entries:L.entries,sets:L.sets,prs:L.prs,settings:S});
 window.importLogs=function(d){if(!d||!d.logs)return;let g=JSON.parse(JSON.stringify(d.logs));if(typeof g.schema!='number'&&typeof d.schema=='number')g.schema=d.schema;
   if(!Array.isArray(g.sessions)||!Array.isArray(g.entries||[])||!Array.isArray(g.sets||[])){alert('The workout logs in this file are not valid.');return}
   g=migrate(g);if(L.sessions.length&&!confirm('Replace your workout logs with the ones in this backup?'))return;
-  L={sessions:g.sessions,entries:g.entries||[],sets:g.sets||[],prs:g.prs||[]};if(Array.isArray(g.routines)){ROUT=JSON.parse(JSON.stringify(g.routines));saveR()}if(g.decimalFix&&typeof g.decimalFix=='object'){DFX={shown:!!g.decimalFix.shown,sets:{...(g.decimalFix.sets||{})}};saveDF()}if(Array.isArray(g.bodyweights)){BW=JSON.parse(JSON.stringify(g.bodyweights));saveBW()}if(g.settings&&typeof g.settings=='object'){Object.assign(S,g.settings);migrateS();saveS()}if(g.exNotes&&typeof g.exNotes=='object'){NOTES={...g.exNotes};saveN();migrateNoteIds()}migrateIds();
+  L={sessions:g.sessions,entries:g.entries||[],sets:g.sets||[],prs:g.prs||[]};if(Array.isArray(g.routines)){ROUT=JSON.parse(JSON.stringify(g.routines));saveR()}if(g.decimalFix&&typeof g.decimalFix=='object'){DFX={shown:!!g.decimalFix.shown,sets:{...(g.decimalFix.sets||{})}};saveDF()}if(Array.isArray(g.bodyweights)){BW=JSON.parse(JSON.stringify(g.bodyweights));saveBW()}if(Array.isArray(g.deloads)||g.deloadPrompt||Array.isArray(g.readiness)){DLS={deloads:JSON.parse(JSON.stringify(g.deloads||[])),deloadPrompt:g.deloadPrompt||null,readiness:JSON.parse(JSON.stringify(g.readiness||[]))};saveDL()}if(g.settings&&typeof g.settings=='object'){Object.assign(S,g.settings);migrateS();saveS()}if(g.exNotes&&typeof g.exNotes=='object'){NOTES={...g.exNotes};saveN();migrateNoteIds()}migrateIds();
   cur=L.sessions.find(s=>s.status=='active')||null;persistAll();refreshBar()};
 // ---------- boot ----------
 async function boot(){for(let i=0;i<200&&(!Object.keys(EX).length||(typeof RU=='undefined'||!RU)||!MUS.length);i++)await new Promise(r=>setTimeout(r,50));
@@ -572,7 +603,7 @@ function buildBar(){if(!document.getElementById('lg')){const o=document.createEl
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={get L(){return L},vsTie,vsDisp,vsSheet,vsRows,planDays,planVsDone,planSnaps,todayYmd,wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={get L(){return L},get DLS(){return DLS},dlHist:()=>hx(false),dlCheckNow,dlActive,dlReasons,vsTie,vsDisp,vsSheet,vsRows,planDays,planVsDone,planSnaps,todayYmd,wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();

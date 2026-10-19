@@ -1108,8 +1108,9 @@
       "tie": {
         "step_fraction": 0.5,
         "flat_pct_key": "review.flat_pct",
-        "rule": "Weight PR needs load > best + step_fraction x smallest real step (active gym profile gap at that load, else load_step[session unit][equipment]). set_volume and e1rm PRs need > best x (1 + review.flat_pct/100). reps_at_load treats earlier sets within step_fraction x step as the same load. Anything else is a tie: no badge. Removes kg/lb rounding PRs.",
-        "why_weight_uses_step_not_pct": "Loads are discrete; a real plate or dumbbell jump is a real weight PR even when under 1% (e.g. +2.5 lb microplates on a 300 lb lift). Conversion noise is always well under half a step."
+        "rule": "Weight PR needs load > best + step_fraction x smallest real step (gap at that load in the saved active gym profile; no saved profile = logger.gym_profile_default[session unit], the same default gym suggestions use; equipment not described there = load_step[session unit][equipment]). set_volume and e1rm PRs need > best x (1 + review.flat_pct/100). reps_at_load treats earlier sets within step_fraction x step as the same load. Anything else is a tie: no badge. Removes kg/lb rounding PRs.",
+        "why_weight_uses_step_not_pct": "Loads are discrete; a real plate or dumbbell jump is a real weight PR even when under 1% (e.g. +2.5 lb microplates on a 300 lb lift). Conversion noise is always well under half a step.",
+        "no_profile_fallback": "logger.gym_profile_default[session unit], shared with suggestions"
       }
     },
     "suspect_decimal": {
