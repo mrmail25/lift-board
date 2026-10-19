@@ -164,3 +164,9 @@ body:not([data-view=train]):has(#lg-kp) #lg-timer{bottom:calc(var(--tabh) + 8px)
 .lg-wu{display:block;width:100%;min-height:44px;margin:4px 0;font-size:14px;text-align:left;padding:0 10px;color:var(--lg-dim);border:1px dashed var(--lg-dim);background:transparent;border-radius:10px}
 .lg-card.ss{border-left:4px solid var(--lg-acc)}.lg-ss{color:var(--lg-acc);font-style:normal;font-size:12px}
 .lg-row.warm .lg-fld{color:var(--lg-dim)}
+/* v29 D: vs-last-time sheet, planned vs done */
+.vs-l{list-style:none;margin:8px 0;padding:0}.vs-r{display:flex;flex-wrap:wrap;gap:2px 8px;padding:7px 0 7px 10px;border-left:3px solid var(--lg-dim);border-bottom:1px solid var(--lg-line)}
+.vs-r b{flex:1 1 100%;font-size:15px}.vs-r span{font-size:14px}.vs-r em{font-style:normal;opacity:.75}.vs-r.up{border-left-color:var(--lg-ok)}.vs-r.down{border-left-color:var(--lg-dng)}.vs-r.flat,.vs-r.first{border-left-color:var(--lg-dim)}
+.vs-pr{color:var(--lg-acc)}.tr-pvd{margin-top:4px}
+.an-pvd th{font-weight:600;font-size:12px;opacity:.7;text-align:left}.an-pvd tr.ok td:nth-child(2){color:var(--lg-ok)}.an-pvd tr.lo td:nth-child(2){color:var(--lg-acc)}.an-pvd td.up{color:var(--lg-ok)}.an-pvd td.dn{color:var(--lg-dng)}
+.vs-a{font-style:normal;font-size:12px;margin-right:2px}.vs-r.up .vs-a{color:var(--lg-ok)}.vs-r.down .vs-a{color:var(--lg-dng)}.vs-r.flat .vs-a{color:var(--lg-dim)}.vs-dl{font-weight:400;opacity:.75;font-size:13px}

@@ -117,7 +117,7 @@ function defaultRtName(){const r=ROUT.filter(x=>x.source==srcKey()).sort((a,b)=>
 function publish(name){name=String(name||'').trim()||defaultRtName();const sn=boardSnap();if(!sn.days.some(d=>d.length))return null;
   const same=ROUT.find(r=>r.name.toLowerCase()==name.toLowerCase()),id=same?same.id:uid('r'),last=rtLatest(id);
   if(last&&JSON.stringify({days:last.days,labels:last.labels})==JSON.stringify(sn))return{r:last,fresh:false};
-  const r={id,name,version:last?last.version+1:1,publishedAt:nowISO(),source:srcKey(),days:sn.days,labels:sn.labels};ROUT.push(r);saveR();return{r,fresh:true}}
+  const r={id,name,version:last?last.version+1:1,publishedAt:nowISO(),source:srcKey(),days:sn.days,labels:sn.labels,planSnap:planOf(sn.days.map(d=>d.map(t=>({id:t.id,sets:t.sets}))))};ROUT.push(r);saveR();return{r,fresh:true}}
 function setActive(id){S.activeRoutine=id||null;saveS();renderStart();refreshBar()}
 function dayTilesBoard(i){const m=loaded();return(state.days[i]&&state.days[i].length)?state.days[i]:(m&&m.days[i])||[]}
 function dayTiles(i){const r=activeRt();return r?(r.days[i]||[]):dayTilesBoard(i)}
@@ -136,7 +136,7 @@ function prefill(e){const p=progression(resolve(e.exerciseId),e.sessionId);e.cue
     if(pv){x.load=conv(pv.load,sessUnit(pv.sessionId),cur.unit);x.reps=pv.reps;x.prevLoad=x.load;x.prevReps=x.reps}
     if(x.kind=='working'&&p.sugLoad!=null){x.load=conv(p.sugLoad,S.unit,cur.unit);x.reps=p.sugReps;x.sug=true}})}
 function startSession(i){if(cur)return openLogger();const tiles=dayTiles(i);if(!tiles.length)return;const m=loaded();
-  const rt=activeRt();const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),splitId:m?'my:'+m.id:undefined,...rtRef(rt),dayIdx:i,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:tiles.map(t=>({exerciseId:t.id,sets:t.sets}))}};
+  const rt=activeRt();const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),splitId:m?'my:'+m.id:undefined,...rtRef(rt),dayIdx:i,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:tiles.map(t=>({exerciseId:t.id,sets:t.sets}))},planSnap:planOf(planDays())};
   L.sessions.push(s);cur=s;tiles.forEach((t,k)=>{const e={id:uid('e'),sessionId:s.id,order:k,exerciseId:t.id,nameSnapshot:(EX[t.id]||{}).name||t.id,repRange:[...repFor(t.id)],restSec:restFor(t.id,'working'),notes:carryNote(t.id),skipped:false};
     L.entries.push(e);for(let j=0;j<t.sets;j++)L.sets.push(newSet(e,'working',j));prefill(e)});ssCarry(s);
   const first=L.entries.find(e=>e.sessionId==s.id);openEntry=first&&first.id;activeSet=firstOpenSet(first);persist(s.id);closeModal();openLogger()}
@@ -178,7 +178,7 @@ function renderStart(){const o=document.getElementById('lg');if(!o)return;const 
   <div class="tr-rt" data-r="${r?H(r.id):''}" data-v="${r?r.version:''}">${r?`<small>Active routine</small><b>${H(r.name)}</b><span>v${r.version} · published ${H(new Date(r.publishedAt).toLocaleDateString())}</span>`:`<small>No routine active</small><b>Build board</b><span>${n?'Pick a published routine, or train from the board.':'Publish from Build to add routines to this library.'}</span>`}</div>
   <button class="pri lg-big" id="lg-cont"></button>
   <div class="lg-startbtns"><button id="lg-days">Choose a day…</button><button id="tr-change">${n?'Change routine…':'Routines…'}</button><button id="tr-empty">Empty workout</button><button id="lg-wkb">Week &amp; history</button></div>
-  <p class="cf-hint lg-adh0">This week (logged totals): ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started</p></div>`;
+  <p class="cf-hint lg-adh0">This week (logged totals): ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started</p>${dashLine()}</div>`;
   o.querySelector('#lg-cont').onclick=()=>{if(cur)return openLogger();const c=continueIdx();if(c!=null)startSession(c)};o.querySelector('#lg-days').onclick=startSheet;o.querySelector('#lg-wkb').onclick=()=>weekView();
   o.querySelector('#tr-change').onclick=routinePicker;o.querySelector('#tr-empty').onclick=startEmpty;refreshBar()}
 function routinePicker(){const a=activeRt(),L_=rtList();modal(`<div id="tr-pick"><h3>Train library</h3>${L_.length?'':'<p class="cf-hint">Nothing published yet. Use Publish on Build.</p>'}
@@ -473,7 +473,25 @@ function summary(){closeKp();const ot=document.getElementById('toast');if(ot)ot.
   document.getElementById('sm-ok').onclick=()=>{s.notes=document.getElementById('sm-n').value;const pick=(document.querySelector('input[name=wb]:checked')||{}).value||'none';const sel=rows.filter((r,i)=>{const c=document.querySelector(`.lg-diff input[data-i="${i}"]`);return c&&c.checked});
     if(s.pausedAt){s.pausedMs=(s.pausedMs||0)+Math.max(0,Date.now()-Date.parse(s.pausedAt));delete s.pausedAt}s.status='completed';s.endedAt=nowISO();s.writeBack=rows.length?pick:'none';
     L.sets.filter(x=>x.sessionId==s.id).forEach(x=>{delete x.sug;delete x.prevLoad;delete x.prevReps});localStorage.removeItem(TKEY);const sid=s.id;cur=null;persist(sid);closeModal();closeLogger();
-    if(pick!='none'&&sel.length)writeBack(s,sel,pick);else toast('Session saved',null)}}
+    vsSheet(sid);if(pick!='none'&&sel.length)writeBack(s,sel,pick);else toast('Session saved',null)}}
+// ---------- v29 D: "vs last time" finish summary (#8; review.js finishSummary = tests/v29d_ref.py on prs.py) ----------
+const sgn=(v,d=1)=>{const r=Math.round(v*10**d)/10**d;return(r>0?'+':r<0?'−':'±')+String(Math.abs(r))};
+function vsRows(sid){return finishSummary(hx(false),sid,{aliases:ALIAS,exercises:EX})||[]}
+const VSA={up:'▲',down:'▼',flat:'▶',first:'•'},VSB={e1rm:'e1RM',set_volume:'top-set volume',reps:'reps',volume:'volume'};
+function vsSheet(sid){const s=L.sessions.find(x=>x.id==sid);if(!s)return;const u=s.unit||S.unit,rows=vsRows(sid);if(!rows.length)return;const k=v=>conv(v,'kg',u);
+  modal(`<div id="lg-vs" data-s="${H(sid)}"><h3>vs last time</h3><p class="cf-hint">${H(s.label||'')} · each exercise against the last time you did it (warm-ups not counted; deload sessions skipped).</p><ul class="vs-l">${rows.map(r=>{const nm=H((EX[r.exercise]||{}).name||r.exercise),top=r.top_load_kg==null?'drops/partials only':`${r.top_load_kg>PRS_EPS?fmt(k(r.top_load_kg)):'BW'}×${r.top_reps}`,pr=r.prs.length?` <span class="vs-pr" data-n="${r.prs.length}">🏆 ${r.prs.map(x=>PRL[x]).join(', ')}</span>`:'';
+    if(r.status=='first')return`<li class="vs-r first" data-x="${H(r.exercise)}" data-st="first"><b>${nm}</b><span>${top} · first time</span>${pr}</li>`;
+    return`<li class="vs-r ${r.status}" data-x="${H(r.exercise)}" data-st="${r.status}" data-basis="${r.basis}" data-dl="${r.d_load_kg}" data-dr="${r.d_reps}" data-dv="${r.d_volume_kg}" data-de="${r.d_e1rm_kg}" data-pct="${r.d_basis_pct}" data-deload="${r.last_deload?1:0}"><b><i class="vs-a" aria-label="${r.status}">${VSA[r.status]}</i> ${nm}${r.last_deload?' <em class="vs-dl">(deload)</em>':''}</b><span>${top}${r.d_load_kg!=null?` <em>(${sgn(k(r.d_load_kg))} ${u}, ${sgn(r.d_reps,0)} rep${Math.abs(r.d_reps)==1?'':'s'})</em>`:''} · ${VSB[r.basis]} ${r.d_basis_pct!=null?sgn(r.d_basis_pct)+'%':r.basis=='reps'?sgn(r.d_reps,0):'–'}${r.basis!='volume'?` · vol ${sgn(k(r.d_volume_kg),0)} ${u}`:''}</span>${pr}</li>`}).join('')}</ul>
+  <div class="cf-btns"><button class="pri" id="vs-x">Close</button></div></div>`);document.getElementById('vs-x').onclick=closeModal}
+// ---------- v29 D: planned vs done (#9). Plan = the days Train uses (active routine, else the Build board); done = credited hard sets ----------
+function planDays(){return DAYS.map((_,i)=>(dayTiles(i)||[]).map(t=>({id:t.id,sets:t.sets})))}
+const todayYmd=()=>prLocalDate(nowISO());
+const planOf=days=>plannedSets(days,L,{exercises:EX}).per_muscle;
+/* D2: planned-sets snapshots taken at Publish (routine version) and Start (session); finished weeks compare with the latest one before they ended */
+function planSnaps(){return[...ROUT.filter(r=>r.planSnap).map(r=>({at:r.publishedAt,per_muscle:r.planSnap})),...L.sessions.filter(s=>s.planSnap).map(s=>({at:s.startedAt||s.date,per_muscle:s.planSnap}))]}
+function planVsDone(wk){wk=wk||weekKey();const pl=weekPlan(planDays(),wk,todayYmd(),planSnaps(),L,{exercises:EX});return{pl,dash:planDash(pl,weekAnalytics(wk).hard_sets.per_muscle)}}
+function dashLine(){const{dash:d}=planVsDone();if(!d.muscles)return'';const b=d.behind;
+  return`<p class="cf-hint tr-pvd" data-m="${d.muscles}" data-on="${d.on_plan}" data-b="${b?b.muscle:''}">Planned vs done so far this week: ${d.on_plan}/${d.muscles} muscles on plan${b?` · furthest behind: ${H(cap(lab(b.muscle)))} ${b.done}/${b.planned}`:''}</p>`}
 function writeBack(s,rows,pick){const i=s.dayIdx,prior=JSON.stringify(state),m=loaded(),priorM=m?JSON.stringify(m):null;
   state.days[i]=applyRows(state.days[i]||[],rows);if(pick=='split'&&m){m.days[i]=applyRows(m.days[i]||[],rows);m.saved=new Date().toISOString();saveMy()}
   upd();if(window.bar)bar();refreshBar();
@@ -544,7 +562,7 @@ function buildBar(){if(!document.getElementById('lg')){const o=document.createEl
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={get L(){return L},wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={get L(){return L},vsSheet,vsRows,planDays,planVsDone,planSnaps,todayYmd,wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();

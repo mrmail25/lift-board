@@ -115,8 +115,10 @@ return out.map((x,i)=>[x,i]).sort((a,b)=>(!a[0].resolves)-(!b[0].resolves)||a[1]
 // ---------- UI glue ----------
 function applyFix(fx){const prior=JSON.stringify(state);const nd=DAYS.map(()=>[]);fx.days.forEach(d=>{nd[ORD.indexOf(d.day)]=d.tiles.map(t=>({id:t.id,sets:t.sets}))});
 state.days=state.days.map((c,i)=>fx.days.some(d=>d.day==ORD[i])?nd[i]:c);upd();toast('Applied: '+fx.preview,()=>{state=JSON.parse(prior);upd()})}
+// v29 D: an Undo banner belongs to the action just taken: the next tap outside it (and outside an open sheet) dismisses it, so it never lingers into later screens
+document.addEventListener('pointerdown',e=>{const t=document.getElementById('toast');if(t&&!t.contains(e.target)&&!(e.target.closest&&e.target.closest('#modal')))t.remove()},true);
 function toast(msg,undo){let t=document.getElementById('toast');if(t)t.remove();t=document.createElement('div');t.id='toast';t.innerHTML=`<span>${msg.replace(/</g,'&lt;')}</span><button id="t-undo">Undo</button><button id="t-x" aria-label="Close">✕</button>`;document.body.appendChild(t);
-const kill=()=>{t.remove()};t.querySelector('#t-undo').onclick=()=>{undo();kill()};t.querySelector('#t-x').onclick=kill;clearTimeout(window._toastT);window._toastT=setTimeout(kill,10000)}
+const kill=()=>{t.remove()};if(typeof undo!='function')t.querySelector('#t-undo').remove();else t.querySelector('#t-undo').onclick=()=>{undo();kill()};t.querySelector('#t-x').onclick=kill;clearTimeout(window._toastT);window._toastT=setTimeout(kill,10000)}
 function swapBubble(dayIdx,item,anchor){closeSwap();const cur=item.id;if(!EX[cur])return;let fams=[];const b=document.createElement('div');b.id='swpop';document.body.appendChild(b);
 const FAMS=['machine','free','bodyweight','cable','other'],LBL={machine:'Machine',free:'Free weight',bodyweight:'Bodyweight',cable:'Cable',other:'Other'};
 const draw=()=>{const list=swaps(cur,fams.length&&fams.length<FAMS.length?fams:null,6);b.innerHTML=`<button class="mp-x" aria-label="Close">✕</button><b>Swap ${EX[cur].name.replace(/</g,'&lt;')}</b><div class="sw-fam">${FAMS.map(f=>`<button class="chip ${fams.includes(f)?'on':''}" data-f="${f}">${LBL[f]}</button>`).join('')}</div>
