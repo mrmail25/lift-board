@@ -27,7 +27,7 @@ ${[0,.5,1].map(v=>`<line x1="28" x2="${W-8}" y1="${py(v)}" y2="${py(v)}" class="
 ${band(m,X,px,H,W)}<path d="${d}" class="an-curve"/><circle cx="${px(x)}" cy="${py(Sx(x,k))}" r="5" class="an-dot"/><text x="${px(T.min)+3}" y="18" class="an-bl">target ${T.min}–${T.max}</text></svg>
 <div class="an-read"><b>${cap(lab(m))}</b>: ${r1(x)} effective sets/week → ${pc(Sx(x,k))} of modeled max. <b>Next set ≈ +${(nx*100).toFixed(1)}% of max.</b></div>`}
 function anUpdate(){const el=document.getElementById('anbody');document.querySelectorAll('.col').forEach((c,i)=>{const h=c.querySelector('h3');if(!h)return;let s=h.querySelector('.dmin');const mn=sessMin(i);if(!mn){if(s)s.remove();return}if(!s){s=document.createElement('span');s.className='dmin';h.appendChild(s)}s.textContent='~'+Math.round(mn/5)*5+' min'});
-const tg=document.getElementById('antog');if(tg)tg.textContent=(AN.open?'▾':'▸')+' Analytics';if(!el||!MUS.length)return;el.style.display=AN.open?'block':'none';if(!AN.open)return;
+const tg=document.getElementById('antog');if(tg)tg.textContent=(AN.open?'▾':'▸')+' Planning analytics';if(!el||!MUS.length)return;el.style.display=AN.open?'block':'none';if(!AN.open)return;
 const _H=typeof HSEL!="undefined"?HSEL:null;if(_H&&_H!==AN._hs){AN._hs=HSEL;AN.mus=HSEL.startsWith('g:')?HSEL.slice(2):RG[HSEL]}let k;const hs=_H?(HSEL.startsWith('g:')?HSEL.slice(2):RG[HSEL]):null,m=AN.mus||hs||'chest',A=ANC.analytics;k=kLvl(m);
 // (a)
 const rows=MUS.map(g=>{const x=weekX(g);const kg=kLvl(g);return[g,x,Sx(x,kg),Sx(x+1,kg)-Sx(x,kg)]});

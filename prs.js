@@ -34,7 +34,7 @@ function detectPrs(h,al){const R=prRules(),mx=R.mx,prior={},out={};
       (prior[ex]=prior[ex]||[]).push(...xs)}}
   return out}
 function completedAnalytics(h,week,o={}){const R=prRules(),al=o.aliases,hr=o.hardRIR??R.hardRIR,mx=R.mx,ws=prWeekStart(String(week)),we=prAddDays(ws,7);
-  const LIBX=o.exercises||EX,mus=o.muscles||MUS,ld=s=>prLocalDate(s.startedAt||s.date),inwk=s=>{const d=ld(s);return ws<=d&&d<we};
+  const LIBX={...(o.exercises||EX)};(h.customExercises||[]).forEach(c=>{if(c&&c.id&&c.muscles)LIBX[c.id]=c});/* prs.py: customs count toward their muscles; only ids unknown after aliasing are archived */const mus=o.muscles||MUS,ld=s=>prLocalDate(s.startedAt||s.date),inwk=s=>{const d=ld(s);return ws<=d&&d<we};
   const flat=prFlatten(h,al,R),hard={},volM={},volS={};mus.forEach(m=>{hard[m]=0;volM[m]=0});let nHard=0,nNoeff=0,arch=0;
   flat.forEach(q=>{if(!inwk(q.s))return;const sid=q.s.id;volS[sid]=0;q.sets.forEach(x=>{if(x.kind!='working')return;const v=x.load_kg*x.reps;volS[sid]+=v;
     const isH=x.reps>0&&(x.rir==null||x.rir<=hr),e=LIBX[x.ex];if(!e){arch+=isH?1:0;return}if(isH){nHard++;nNoeff+=x.rir==null?1:0}

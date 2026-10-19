@@ -125,10 +125,10 @@ function startSheet(){const c=continueIdx(),o=order();
 // ---------- logger screen ----------
 // ---------- app shell: Build / Train / Analytics pages (bottom tab bar). Pages are shown/hidden, never rebuilt, so a running
 // session, its timer, an open keypad and half-typed notes survive tab switches. ----------
-function setView(v){if(!['build','train','analytics'].includes(v))v='build';document.body.dataset.view=v;
+function setView(v){if(!['build','train','log','analytics'].includes(v))v='build';document.body.dataset.view=v;
   document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.v==v)));
   if(v=='train'){const o=document.getElementById('lg');if(cur){if(!o.querySelector('.lg-body:not(#lg-start-pg)'))renderSession()}else if(!o.querySelector('#lg-start-pg'))renderStart()}
-  if(v=='analytics'&&typeof AN!='undefined'){AN.open=true;if(window.anUpdate)anUpdate()}
+  if(v=='analytics'&&window.renderAnalytics)renderAnalytics();if(v=='log'&&window.renderLog)renderLog();/* v28: planning analytics live in Build again; Analytics = completed workouts only */
   if(v=='build'&&typeof render=='function')render();refreshBar()}
 function openLogger(){closeModal();setView('train');renderSession()}
 function closeLogger(){closeKp();renderStart();refreshBar()}
@@ -200,7 +200,7 @@ function check(e,x){if(x.done){x.done=false;x.doneAt=null;delete x.pr;persist(cu
   const nx=setsOf(e.id).find(s=>!s.done);if(nx)activeSet=nx.id;else{const es=entriesOf(cur.id).filter(q=>!q.skipped),k=es.indexOf(e),ne=es.slice(k+1).concat(es.slice(0,k)).find(q=>setsOf(q.id).some(s=>!s.done));if(ne){openEntry=ne.id;activeSet=firstOpenSet(ne)}else activeSet=null}
   persist(cur.id);renderSession()}
 // v28: PRs are derived from the logged history by prs.js (port of tools/prs.py) and recomputed after every change; nothing stored is a source of truth.
-let LP={};function hx(live){const ss=L.sessions.map(s=>live&&cur&&s.id==cur.id?{...s,status:'completed',endedAt:nowISO()}:s);return{schema:LOG_SCHEMA,plannedSessionsPerWeek:order().length,sessions:ss,entries:L.entries,sets:L.sets}}
+let LP={};function hx(live){const ss=L.sessions.map(s=>live&&cur&&s.id==cur.id?{...s,status:'completed',endedAt:nowISO()}:s);return{schema:LOG_SCHEMA,plannedSessionsPerWeek:order().length||undefined,sessions:ss,entries:L.entries,sets:L.sets}}
 function livePrs(){return cur?(detectPrs(hx(true),ALIAS)[cur.id]||{}):{}}
 function prTypesOf(setId,sp){const P=sp||livePrs(),o=[];Object.values(P).forEach(r=>PR_TYPES.forEach(k=>{if(r[k]&&r[k].set_id==setId)o.push(k)}));return o}
 function recomputePrs(){const P=detectPrs(hx(false),ALIAS),out=[];Object.keys(P).forEach(sid=>Object.keys(P[sid]).forEach(ex=>PR_TYPES.forEach(k=>{const r=P[sid][ex][k];if(r)out.push({id:sid+'|'+ex+'|'+k,sessionId:sid,exerciseId:ex,kind:k,value:r.value,unit:k=='reps_at_load'?'reps':k=='set_volume'?'kg·reps':'kg',setId:r.set_id,load_kg:r.load_kg,reps:r.reps})})));L.prs=out;return P}
@@ -348,7 +348,7 @@ function discard(){const sid=cur.id;L.sessions=L.sessions.filter(x=>x.id!==sid);
 // ---------- week view: Planned / Done body map, counts, adherence; history; settings ----------
 function weekStart(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return d.getTime()}
 function weekKey(){const d=new Date(weekStart());return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function weekAnalytics(wk){return completedAnalytics(hx(false),wk||weekKey(),{aliases:ALIAS,plannedSessions:order().length,hardRIR:HR(),exercises:EX})}
+function weekAnalytics(wk){return completedAnalytics(hx(false),wk||weekKey(),{aliases:ALIAS,plannedSessions:order().length||undefined/* no plan on the board: prs.py default (completed + skipped) */,hardRIR:HR(),exercises:EX})}
 const loggedNote=()=>((LR().completed_analytics||{}).note)||'';
 function adherence(){const a=weekAnalytics().adherence;return{completed:a.sessions_completed,skipped:a.sessions_skipped,notStarted:a.sessions_not_started,doneW:a.completed_planned_sets,planW:a.planned_sets,skW:a.skipped_sets,ratio:a.sets_ratio}}
 function weekView(tab){tab=tab||'week';const wd=weekDone(),days=view=='done'?wd.days:state.days,ad=adherence();const pc=countsFor(state.days),dc=countsFor(wd.days);
@@ -388,14 +388,13 @@ async function boot(){for(let i=0;i<200&&(!Object.keys(EX).length||(typeof RU=='
     document.getElementById('rs-go').onclick=()=>openLogger();document.getElementById('rs-del').onclick=()=>{if(confirm('Discard the unfinished session? Logged sets will be deleted.'))discard()}}}
 function prefillKeep(e){e.cue=progression(resolve(e.exerciseId),e.sessionId)}
 function buildBar(){if(!document.getElementById('lg')){const o=document.createElement('section');o.id='lg';o.className='lg-page';document.body.appendChild(o)}
-  const an=document.getElementById('anp'),av=document.getElementById('anview');if(an&&av&&an.parentNode!==av)av.appendChild(an);
-  if(!document.getElementById('tabs')){const t=document.createElement('nav');t.id='tabs';t.setAttribute('role','tablist');t.innerHTML=[['build','Build'],['train','Train'],['analytics','Analytics']].map(([v,n])=>`<button id="tab-${v}" data-v="${v}" role="tab">${n}<i class="tab-dot"></i></button>`).join('');document.body.appendChild(t);
+  if(!document.getElementById('tabs')){const t=document.createElement('nav');t.id='tabs';t.setAttribute('role','tablist');t.innerHTML=[['build','Build'],['train','Train'],['log','Log'],['analytics','Analytics']].map(([v,n])=>`<button id="tab-${v}" data-v="${v}" role="tab">${n}<i class="tab-dot"></i></button>`).join('');document.body.appendChild(t);
     t.querySelectorAll('button').forEach(b=>b.onclick=()=>setView(b.dataset.v))}
   renderStart();setView(document.body.dataset.view||'build')}
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={get L(){return L},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={get L(){return L},set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();

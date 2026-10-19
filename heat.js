@@ -107,6 +107,6 @@ return`<svg viewBox="230 150 564 1300"><defs><pattern id="hatch-${f}" width="14"
 window.weekColor=(g,v)=>{if(v==null)v=totals(null)[g]||0;return v>0?grad(v,wkStops(g)):null};
 
 // v24: render the same body map (week view) for any days array into another element (logger Planned/Done)
-window.heatInto=function(el,days,sfx){const sv=state.days,hd=window.HD,hs=HSEL;state.days=days;window.HD=null;HSEL=null;try{heat(el)}finally{state.days=sv;window.HD=hd;HSEL=hs}
+window.heatInto=function(el,days,sfx,day){const sv=state.days,hd=window.HD,hs=HSEL;state.days=days;window.HD=day==null?null:day;/* v28: day = index -> day-mode tint (Log cards) */HSEL=null;try{heat(el)}finally{state.days=sv;window.HD=hd;HSEL=hs}
 el.querySelectorAll('.sel').forEach(x=>x.remove());const o=el.querySelector('#outl');if(o)o.closest('label').remove();const hi=el.querySelector('#hinfo');if(hi)hi.remove();
 el.querySelectorAll('[id]').forEach(x=>x.id=x.id+'-'+sfx);el.querySelectorAll('[mask],[clip-path],[fill^="url("]').forEach(x=>['mask','clip-path','fill'].forEach(a=>{const v=x.getAttribute(a);if(v&&v.startsWith('url(#'))x.setAttribute(a,v.replace(/\)$/,'-'+sfx+')'))}));el.classList.add('heat-copy')};
