@@ -88,6 +88,8 @@ function loaded(){return window.loadedSplit?loadedSplit():null}
 // v28 C: Train library = published routines. Each Publish stores an immutable, versioned snapshot of the Build board (days + labels).
 // The active routine (S.activeRoutine) drives Continue / day picker; with none active, Train uses the Build board as before.
 const RKEY='liftboard.routines';let ROUT=[];try{ROUT=JSON.parse(localStorage.getItem(RKEY))||[]}catch{}const saveR=()=>localStorage.setItem(RKEY,JSON.stringify(ROUT));
+// v28.1: decimal-bug cleanup state: {shown, sets:{setId:{a:'fixed'|'dismissed',from,to,at}}}; kept in backups
+const DKEY='liftboard.decimalFix';let DFX={shown:false,sets:{}};try{Object.assign(DFX,JSON.parse(localStorage.getItem(DKEY))||{})}catch{}const saveDF=()=>localStorage.setItem(DKEY,JSON.stringify(DFX));
 const rtVers=id=>ROUT.filter(r=>r.id==id).sort((a,b)=>a.version-b.version);const rtLatest=id=>rtVers(id).pop()||null;
 const rtList=()=>[...new Set(ROUT.map(r=>r.id))].map(rtLatest).sort((a,b)=>a.publishedAt<b.publishedAt?1:-1);
 function activeRt(){return S.activeRoutine?rtLatest(S.activeRoutine):null}
@@ -419,11 +421,11 @@ function weekView(tab){tab=tab||'week';const wd=weekDone(),days=view=='done'?wd.
   if(tab=='settings'){document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{S.unit=b.dataset.u;saveS();weekView('settings')});document.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{S.hardRIR=(()=>{const r=LR().hardRIR_range||[];return Math.max(r[0],Math.min(r[1],HR()+(b.dataset.h=='+'?1:-1)))})();saveS();weekView('settings')});
     document.getElementById('st-rpe').onchange=e=>{S.rpe=e.target.checked;saveS()};document.getElementById('st-snd').onchange=e=>{S.sound=e.target.checked;saveS()}}}
 // ---------- backup / restore ----------
-window.logBackup=()=>({schema:LOG_SCHEMA,routines:ROUT,exNotes:NOTES,sessions:L.sessions,entries:L.entries,sets:L.sets,prs:L.prs,settings:S});
+window.logBackup=()=>({schema:LOG_SCHEMA,routines:ROUT,decimalFix:DFX,exNotes:NOTES,sessions:L.sessions,entries:L.entries,sets:L.sets,prs:L.prs,settings:S});
 window.importLogs=function(d){if(!d||!d.logs)return;let g=JSON.parse(JSON.stringify(d.logs));if(typeof g.schema!='number'&&typeof d.schema=='number')g.schema=d.schema;
   if(!Array.isArray(g.sessions)||!Array.isArray(g.entries||[])||!Array.isArray(g.sets||[])){alert('The workout logs in this file are not valid.');return}
   g=migrate(g);if(L.sessions.length&&!confirm('Replace your workout logs with the ones in this backup?'))return;
-  L={sessions:g.sessions,entries:g.entries||[],sets:g.sets||[],prs:g.prs||[]};if(Array.isArray(g.routines)){ROUT=JSON.parse(JSON.stringify(g.routines));saveR()}if(g.settings&&typeof g.settings=='object'){Object.assign(S,g.settings);migrateS();saveS()}if(g.exNotes&&typeof g.exNotes=='object'){NOTES={...g.exNotes};saveN();migrateNoteIds()}migrateIds();
+  L={sessions:g.sessions,entries:g.entries||[],sets:g.sets||[],prs:g.prs||[]};if(Array.isArray(g.routines)){ROUT=JSON.parse(JSON.stringify(g.routines));saveR()}if(g.decimalFix&&typeof g.decimalFix=='object'){DFX={shown:!!g.decimalFix.shown,sets:{...(g.decimalFix.sets||{})}};saveDF()}if(g.settings&&typeof g.settings=='object'){Object.assign(S,g.settings);migrateS();saveS()}if(g.exNotes&&typeof g.exNotes=='object'){NOTES={...g.exNotes};saveN();migrateNoteIds()}migrateIds();
   cur=L.sessions.find(s=>s.status=='active')||null;persistAll();refreshBar()};
 // ---------- boot ----------
 async function boot(){for(let i=0;i<200&&(!Object.keys(EX).length||(typeof RU=='undefined'||!RU)||!MUS.length);i++)await new Promise(r=>setTimeout(r,50));
@@ -444,7 +446,7 @@ function buildBar(){if(!document.getElementById('lg')){const o=document.createEl
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={get L(){return L},publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={get L(){return L},get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();

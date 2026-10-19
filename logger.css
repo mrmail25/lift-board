@@ -138,3 +138,12 @@ body:not([data-view=train]):has(#lg-kp) #lg-timer{bottom:calc(var(--tabh) + 8px)
 .lg-el.paused{color:var(--lg-acc)}
 .lg-drag{touch-action:none;cursor:grab;min-width:36px;font-size:18px;background:none;border:0;color:var(--lg-dim)}
 .lg-card.dragging{position:relative;z-index:5;box-shadow:0 8px 20px var(--lg-shadow);opacity:.95}
+/* v28.1 keypad-bug cleanup sheet */
+#dec-sheet .dec-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--lg-line)}
+#dec-sheet .dec-row small,#dec-sheet .dec-m small{display:block;opacity:.75}
+#dec-sheet .dec-b{display:flex;gap:6px;align-items:center;flex-wrap:wrap}#dec-sheet .dec-b button{min-height:44px}
+#dec-sheet .dec-row.fixed em{color:var(--lg-acc)}
+#dec-sheet .dec-m{padding:6px 0}
+.lgv-dec{margin:4px 0 8px;width:100%}
+.lgv-dec.has{border-color:var(--lg-acc)}
+#dec-sheet .dec-all{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}#dec-sheet .dec-all button{min-height:44px}

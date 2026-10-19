@@ -52,3 +52,16 @@ function completedAnalytics(h,week,o={}){const R=prRules(),al=o.aliases,hr=o.har
     volume:{per_session_kg:map(volS,r4),week_kg:r4(prNsum(Object.values(volS))),per_muscle_kg:map(volM,r4)},load_trend:trend,
     adherence:{planned_sets:planned,completed_planned_sets:donePl,skipped_sets:skSets,sets_ratio:planned?r4(donePl/planned):null,sessions_completed:comp,sessions_skipped:skip,
       sessions_planned:ps,sessions_not_started:Math.max(0,ps-comp-skip),sessions_ratio:ps?r4(comp/ps):null}}}
+// v28.1: exact port of tools/prs.py suspect_decimal_sets(history, cutoff, aliases, rules, ignore_ids) — the v24..v28B keypad decimal bug
+// (a typed "." was dropped, so 101.5 was saved as 1015). Thresholds come from rules.json logger.suspect_decimal (same values prs.py uses).
+// Working, done, loaded sets in completed sessions; "pre" = session startedAt (else date, read as -07:00) before saved_before.
+// Median of the OTHER loaded working sets on that alias-resolved exercise (kg); fewer than min_others others -> unjudged (manual check).
+const prMedian=a=>{const v=a.slice().sort((x,y)=>x-y),n=v.length;return n%2?v[(n-1)/2]:(v[n/2-1]+v[n/2])/2};
+function suspectDecimalSets(h,o={}){const R=prRules(),sd=o.rules||R.lg.suspect_decimal,co=Date.parse(o.cutoff||sd.saved_before),ign=new Set(o.ignore||[]);
+  const rows=[];prFlatten(h,o.aliases,R).forEach(q=>{const st=q.s.startedAt||q.s.date,ts=Date.parse(String(st).includes('T')?st:st+'T00:00:00-07:00');
+    q.sets.forEach(x=>{if(x.kind=='working'&&x.load_kg>PRS_EPS)rows.push([x,q.s,ts<co])})});
+  const by={};rows.forEach(r=>(by[r[0].ex]=by[r[0].ex]||[]).push(r));const flagged=[],unjudged=[],r4=v=>pyRound(v,4);
+  for(const ex in by){const rs=by[ex];for(const[x,s,pre]of rs){if(!pre||ign.has(x.id))continue;const others=rs.filter(y=>y[0].id!=x.id).map(y=>y[0].load_kg);
+    if(others.length<sd.min_others){unjudged.push({set_id:x.id,session_id:s.id,exercise_id:ex,load_kg:r4(x.load_kg)});continue}const med=prMedian(others);
+    if(x.load_kg>=sd.min_ratio*med&&Math.abs(x.load_kg/sd.divisor-med)<=sd.window*med)flagged.push({set_id:x.id,session_id:s.id,exercise_id:ex,load_kg:r4(x.load_kg),median_kg:r4(med),suggested_kg:r4(x.load_kg/sd.divisor)})}}
+  const k=(a,b)=>prCmp(a.session_id,b.session_id)||prCmp(a.set_id,b.set_id);return{flagged:flagged.sort(k),unjudged:unjudged.sort(k)}}

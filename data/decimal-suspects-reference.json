@@ -1,0 +1,387 @@
+{
+ "cutoff": "2026-10-18T21:10:00-07:00",
+ "rule": "flag pre-cutoff working set if load_kg >= 5*median(other working loaded sets of same exercise, kg) and |load/10 - median| <= 0.3*median; <3 others -> unjudged",
+ "history": {
+  "sessions": [
+   {
+    "id": "d1",
+    "status": "completed",
+    "date": "2026-10-13",
+    "startedAt": "2026-10-13T17:00:00-07:00",
+    "endedAt": "2026-10-13T18:00:00-07:00",
+    "unit": "lb"
+   },
+   {
+    "id": "d2",
+    "status": "completed",
+    "date": "2026-10-15",
+    "startedAt": "2026-10-15T17:00:00-07:00",
+    "endedAt": "2026-10-15T18:00:00-07:00",
+    "unit": "lb"
+   },
+   {
+    "id": "d3",
+    "status": "completed",
+    "date": "2026-10-17",
+    "startedAt": "2026-10-17T17:00:00-07:00",
+    "endedAt": "2026-10-17T18:00:00-07:00",
+    "unit": "kg"
+   },
+   {
+    "id": "d4",
+    "status": "completed",
+    "date": "2026-10-19",
+    "startedAt": "2026-10-19T17:00:00-07:00",
+    "endedAt": "2026-10-19T18:00:00-07:00",
+    "unit": "lb"
+   }
+  ],
+  "entries": [
+   {
+    "id": "d1-barbell-bench-press",
+    "sessionId": "d1",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "skipped": false
+   },
+   {
+    "id": "d2-barbell-bench-press",
+    "sessionId": "d2",
+    "order": 1,
+    "exerciseId": "barbell-bench-press",
+    "skipped": false
+   },
+   {
+    "id": "d3-barbell-bench-press",
+    "sessionId": "d3",
+    "order": 2,
+    "exerciseId": "barbell-bench-press",
+    "skipped": false
+   },
+   {
+    "id": "d4-barbell-bench-press",
+    "sessionId": "d4",
+    "order": 3,
+    "exerciseId": "barbell-bench-press",
+    "skipped": false
+   },
+   {
+    "id": "d1-lat-pulldown",
+    "sessionId": "d1",
+    "order": 4,
+    "exerciseId": "lat-pulldown",
+    "skipped": false
+   },
+   {
+    "id": "d2-lat-pulldown",
+    "sessionId": "d2",
+    "order": 5,
+    "exerciseId": "lat-pulldown",
+    "skipped": false
+   },
+   {
+    "id": "d1-dumbbell-lateral-raise",
+    "sessionId": "d1",
+    "order": 6,
+    "exerciseId": "dumbbell-lateral-raise",
+    "skipped": false
+   },
+   {
+    "id": "d2-seated-cable-row",
+    "sessionId": "d2",
+    "order": 7,
+    "exerciseId": "seated-cable-row",
+    "skipped": false
+   },
+   {
+    "id": "d1-barbell-bench-press",
+    "sessionId": "d1",
+    "order": 8,
+    "exerciseId": "barbell-bench-press",
+    "skipped": false
+   }
+  ],
+  "sets": [
+   {
+    "id": "s1",
+    "entryId": "d1-barbell-bench-press",
+    "sessionId": "d1",
+    "idx": 0,
+    "kind": "working",
+    "load": 185,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s2",
+    "entryId": "d1-barbell-bench-press",
+    "sessionId": "d1",
+    "idx": 1,
+    "kind": "working",
+    "load": 185,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s3",
+    "entryId": "d1-barbell-bench-press",
+    "sessionId": "d1",
+    "idx": 2,
+    "kind": "working",
+    "load": 1875,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s4",
+    "entryId": "d2-barbell-bench-press",
+    "sessionId": "d2",
+    "idx": 0,
+    "kind": "working",
+    "load": 190,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s5",
+    "entryId": "d2-barbell-bench-press",
+    "sessionId": "d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 190,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s6",
+    "entryId": "d3-barbell-bench-press",
+    "sessionId": "d3",
+    "idx": 0,
+    "kind": "working",
+    "load": 85,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s7",
+    "entryId": "d3-barbell-bench-press",
+    "sessionId": "d3",
+    "idx": 1,
+    "kind": "working",
+    "load": 855,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s8",
+    "entryId": "d4-barbell-bench-press",
+    "sessionId": "d4",
+    "idx": 0,
+    "kind": "working",
+    "load": 1900,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s9",
+    "entryId": "d1-lat-pulldown",
+    "sessionId": "d1",
+    "idx": 0,
+    "kind": "working",
+    "load": 120,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s10",
+    "entryId": "d1-lat-pulldown",
+    "sessionId": "d1",
+    "idx": 1,
+    "kind": "working",
+    "load": 1225,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s11",
+    "entryId": "d1-lat-pulldown",
+    "sessionId": "d1",
+    "idx": 2,
+    "kind": "working",
+    "load": 1225,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s12",
+    "entryId": "d2-lat-pulldown",
+    "sessionId": "d2",
+    "idx": 0,
+    "kind": "working",
+    "load": 125,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s13",
+    "entryId": "d1-dumbbell-lateral-raise",
+    "sessionId": "d1",
+    "idx": 0,
+    "kind": "working",
+    "load": 225,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s14",
+    "entryId": "d2-seated-cable-row",
+    "sessionId": "d2",
+    "idx": 0,
+    "kind": "working",
+    "load": 150,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s15",
+    "entryId": "d2-seated-cable-row",
+    "sessionId": "d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 150,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s16",
+    "entryId": "d2-seated-cable-row",
+    "sessionId": "d2",
+    "idx": 2,
+    "kind": "working",
+    "load": 150,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s17",
+    "entryId": "d2-seated-cable-row",
+    "sessionId": "d2",
+    "idx": 3,
+    "kind": "working",
+    "load": 700,
+    "reps": 8,
+    "rir": 2,
+    "done": true
+   },
+   {
+    "id": "s18",
+    "entryId": "d1-barbell-bench-press",
+    "sessionId": "d1",
+    "idx": 0,
+    "kind": "warmup",
+    "load": 1350,
+    "reps": 5,
+    "rir": 2,
+    "done": true
+   }
+  ]
+ },
+ "expected": {
+  "base": {
+   "flagged": [
+    {
+     "set_id": "s10",
+     "session_id": "d1",
+     "exercise_id": "lat-pulldown",
+     "load_kg": 555.6513,
+     "median_kg": 56.6991,
+     "suggested_kg": 55.5651
+    },
+    {
+     "set_id": "s11",
+     "session_id": "d1",
+     "exercise_id": "lat-pulldown",
+     "load_kg": 555.6513,
+     "median_kg": 56.6991,
+     "suggested_kg": 55.5651
+    },
+    {
+     "set_id": "s3",
+     "session_id": "d1",
+     "exercise_id": "barbell-bench-press",
+     "load_kg": 850.4867,
+     "median_kg": 86.1827,
+     "suggested_kg": 85.0487
+    },
+    {
+     "set_id": "s7",
+     "session_id": "d3",
+     "exercise_id": "barbell-bench-press",
+     "load_kg": 855.0,
+     "median_kg": 86.1827,
+     "suggested_kg": 85.5
+    }
+   ],
+   "unjudged": [
+    {
+     "set_id": "s13",
+     "session_id": "d1",
+     "exercise_id": "dumbbell-lateral-raise",
+     "load_kg": 102.0584
+    }
+   ]
+  },
+  "with_ignore": {
+   "flagged": [
+    {
+     "set_id": "s10",
+     "session_id": "d1",
+     "exercise_id": "lat-pulldown",
+     "load_kg": 555.6513,
+     "median_kg": 56.6991,
+     "suggested_kg": 55.5651
+    },
+    {
+     "set_id": "s11",
+     "session_id": "d1",
+     "exercise_id": "lat-pulldown",
+     "load_kg": 555.6513,
+     "median_kg": 56.6991,
+     "suggested_kg": 55.5651
+    },
+    {
+     "set_id": "s7",
+     "session_id": "d3",
+     "exercise_id": "barbell-bench-press",
+     "load_kg": 855.0,
+     "median_kg": 86.1827,
+     "suggested_kg": 85.5
+    }
+   ],
+   "unjudged": [
+    {
+     "set_id": "s13",
+     "session_id": "d1",
+     "exercise_id": "dumbbell-lateral-raise",
+     "load_kg": 102.0584
+    }
+   ]
+  }
+ }
+}

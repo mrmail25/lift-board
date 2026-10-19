@@ -52,9 +52,9 @@ let IO=null;
 function renderLog(){const o=document.getElementById('logview');if(!o||!G()||!G().ready)return;const all=done(),list=LV.mode=='cal'&&LV.day?all.filter(s=>ymd(tS(s))==LV.day):all;
   o.innerHTML=`<div class="lg-top"><b class="lg-name">Log</b><span class="lg-seg lgv-mode"><button data-m="list" class="${LV.mode=='list'?'on':''}">List</button><button data-m="cal" class="${LV.mode=='cal'?'on':''}">Calendar</button></span></div>
   <div class="lg-body lgv-body">${LV.mode=='cal'?calHtml():''}${LV.mode=='cal'&&LV.day?`<p class="cf-hint lgv-day">${list.length} workout${list.length==1?'':'s'} on ${E(new Date(LV.day+'T12:00:00').toLocaleDateString())} <button class="lgv-all">Show all</button></p>`:''}
-  ${all.length?`<p class="cf-hint lgv-note">Completed workouts, newest first. ${E(G().loggedNote())}</p>`:''}<div class="lgv-list">${list.map(cardHtml).join('')||'<p class="cf-hint">No completed workouts yet. Finish a session in Train and it shows up here.</p>'}</div></div>`;
+  ${(()=>{const c=decCount();return c.any?`<button class="lgv-dec${c.open?' has':''}" data-n="${c.open}">Check keypad-bug sets${c.open?` (${c.open})`:''}</button>`:''})()}${all.length?`<p class="cf-hint lgv-note">Completed workouts, newest first. ${E(G().loggedNote())}</p>`:''}<div class="lgv-list">${list.map(cardHtml).join('')||'<p class="cf-hint">No completed workouts yet. Finish a session in Train and it shows up here.</p>'}</div></div>`;
   o.querySelectorAll('.lgv-mode button').forEach(b=>b.onclick=()=>{LV.mode=b.dataset.m;LV.day=null;saveLV();renderLog()});
-  const al=o.querySelector('.lgv-all');if(al)al.onclick=()=>{LV.day=null;renderLog()};
+  const dq=o.querySelector('.lgv-dec');if(dq)dq.onclick=decimalSheet;const al=o.querySelector('.lgv-all');if(al)al.onclick=()=>{LV.day=null;renderLog()};
   o.querySelectorAll('.lgcal-d.has').forEach(b=>b.onclick=()=>{LV.day=LV.day==b.dataset.d?null:b.dataset.d;renderLog()});
   const mv=k=>{const[y,m]=LV.month.split('-').map(Number),d=new Date(Date.UTC(y,m-1+k,1));LV.month=d.toISOString().slice(0,7);LV.day=null;renderLog()};
   const p=o.querySelector('.lgcal-p'),n=o.querySelector('.lgcal-n');if(p){p.onclick=()=>mv(-1);n.onclick=()=>mv(1)}
@@ -84,4 +84,44 @@ function renderAnalytics(){const o=document.getElementById('anview');if(!o||!G()
   <h3>PRs this week (logged)</h3><ul class="an-prs">${prs.map(p=>`<li data-k="${p.kind}">🏆 ${E((EX[p.exerciseId]||{}).name||p.exerciseId)}: ${lg.PRL[p.kind]} · ${lg.prVal(p.kind,{value:p.value,load_kg:p.load_kg,reps:p.reps})}</li>`).join('')||'<li class="cf-hint">None this week.</li>'}</ul>`;
   heatInto(c.querySelector('#an-map'),days,'anc');c.querySelector('#anw-p').onclick=()=>{LV.wk=W[i-1];renderAnalytics()};c.querySelector('#anw-n').onclick=()=>{LV.wk=W[i+1];renderAnalytics()}}
 window.renderLog=renderLog;window.renderAnalytics=renderAnalytics;window.LOGV={LV,tilesOf,stats,done,wkA,invalidate};
+// ---------- v28.1: one-time cleanup prompt for sets hit by the keypad decimal bug ----------
+// Detection is prs.js suspectDecimalSets (thresholds in rules.json logger.suspect_decimal). Fix divides the logged load by `divisor`;
+// fixed / kept sets are remembered in localStorage (LG.DFX, also in backups). Every fix or undo recomputes PRs and analytics (changed()).
+const decSD=()=>RU.logger.suspect_decimal,decRaw=id=>G().L.sets.find(z=>z.id==id),decSess=id=>G().L.sessions.find(z=>z.id==id)||{};
+const decTo=x=>Math.round(Number(x.load)/decSD().divisor*1e6)/1e6;/* fix in the unit it was logged in */
+function decRun(){const lg=G();return suspectDecimalSets(lg.L,{aliases:lg.ALIAS,ignore:Object.keys(lg.DFX.sets)})}
+function decItems(){const lg=G(),r=decRun(),D=lg.DFX.sets,rows=[];
+  r.flagged.forEach(f=>{const x=decRaw(f.set_id);rows.push({...f,unit:decSess(f.session_id).unit||'lb',load:x.load,to:decTo(x),state:'open'})});
+  Object.entries(D).forEach(([id,d])=>{const x=decRaw(id);if(!x)return;rows.push({set_id:id,session_id:x.sessionId,exercise_id:d.ex,unit:d.unit,load:d.from,to:d.to,median_kg:d.med,state:d.a})});
+  const st=id=>tS(decSess(id))||'';rows.sort((a,b)=>prCmp(st(a.session_id),st(b.session_id))||prCmp(a.set_id,b.set_id));
+  const man=[],g={};r.unjudged.forEach(u=>{if(!g[u.exercise_id]){g[u.exercise_id]={exercise_id:u.exercise_id,set_ids:[]};man.push(g[u.exercise_id])}g[u.exercise_id].set_ids.push(u.set_id)});
+  return{rows,manual:man,open:rows.filter(x=>x.state=='open').length}}
+const exN=id=>G().exName({exerciseId:id});
+function setLine(id){const lg=G(),x=lg.L.sets.find(z=>z.id==id);if(!x)return'';const s=lg.L.sessions.find(z=>z.id==x.sessionId)||{};return`${E(dateTxt(s))} · ${x.load==null?'BW':lg.fmt(x.load)} ${E(s.unit||'lb')} × ${x.reps??''}`}
+function decHtml(){const lg=G(),it=decItems(),u=r=>E(r.unit||'lb'),kgU2=k=>lg.fmt(lg.conv(k,'kg',U()));
+  return`<div id="dec-sheet"><h3>Check sets from the keypad bug</h3><p class="cf-hint">Before Oct 18, a typed decimal point was dropped (101.5 was saved as 1015). These loads look about ${E(String(decSD().divisor))}× too high compared with your other sets on the same exercise.</p>
+  ${it.open||DECB?`<div class="dec-all">${it.open?`<button class="pri dec-fixall">Fix all ${it.open} (÷${E(String(decSD().divisor))})</button>`:''}${DECB?`<button class="dec-undoall">Undo fix all (${DECB.length})</button>`:''}</div>`:''}${it.rows.length?`<div class="dec-list">${it.rows.map(r=>`<div class="dec-row ${r.state}" data-t="${E(r.set_id)}"><div><b>${E(exN(r.exercise_id))}</b><small>${setLine(r.set_id)}${r.median_kg?` · your usual ≈ ${kgU2(r.median_kg)} ${U()}`:''}</small></div>
+    ${r.state=='open'?`<span class="dec-b"><button class="pri dec-fix">Fix (÷${E(String(decSD().divisor))}) → ${lg.fmt(r.to)} ${u(r)}</button><button class="dec-keep">Keep</button></span>`
+     :`<span class="dec-b"><em>${r.state=='fixed'?`Fixed: ${lg.fmt(r.load)} → ${lg.fmt(r.to)} ${u(r)}`:'Kept as logged'}</em><button class="dec-undo">Undo</button></span>`}</div>`).join('')}</div>`:'<p class="cf-hint dec-none">No suspect sets found.</p>'}
+  ${it.manual.length?`<h4>Check by hand</h4><p class="cf-hint">Too few sets logged on these exercises to judge (fewer than ${E(String(decSD().min_others))} other sets to compare with). Edit the workout in the Log if a load is wrong.</p><div class="dec-man">${it.manual.map(m=>`<div class="dec-m" data-x="${E(m.exercise_id)}"><b>${E(exN(m.exercise_id))}</b>${m.set_ids.map(id=>`<small data-t="${E(id)}">${setLine(id)}</small>`).join('')}</div>`).join('')}</div>`:''}
+  <div class="cf-btns"><button id="dec-close">Done</button></div></div>`}
+let DECB=null;/* last Fix all batch: set ids, one Undo */
+function decAll(undo){const lg=G(),D=lg.DFX.sets;
+  if(undo){(DECB||[]).forEach(id=>{const x=decRaw(id),d=D[id];if(x&&d&&d.a=='fixed')x.load=d.from;delete D[id]});DECB=null}
+  else{const at=new Date().toISOString(),fl=decRun().flagged;DECB=[];fl.forEach(f=>{const x=decRaw(f.set_id);if(!x)return;const to=decTo(x);D[f.set_id]={a:'fixed',from:x.load,to,ex:f.exercise_id,unit:decSess(f.session_id).unit||'lb',med:f.median_kg,at,batch:at};x.load=to;DECB.push(f.set_id)})}
+  lg.saveDF();changed();decRender()}
+function decAct(id,a){DECB=null;const lg=G(),x=decRaw(id);if(!x)return;const D=lg.DFX.sets;
+  if(a=='undo'){const d=D[id];if(d&&d.a=='fixed')x.load=d.from;delete D[id]}
+  else{const f=decRun().flagged.find(z=>z.set_id==id);if(!f)return;const to=decTo(x);D[id]={a:a=='fix'?'fixed':'dismissed',from:x.load,to,ex:f.exercise_id,unit:decSess(f.session_id).unit||'lb',med:f.median_kg,at:new Date().toISOString()};if(a=='fix')x.load=to}
+  lg.saveDF();changed();decRender()}
+function decRender(){const m=document.querySelector('#modal #dec-sheet');if(!m)return;const box=m.parentElement,sc=box.scrollTop;box.innerHTML=decHtml();box.scrollTop=sc;decBind()}
+function decBind(){document.querySelectorAll('#dec-sheet .dec-row').forEach(r=>{const id=r.dataset.t;[['fix','.dec-fix'],['keep','.dec-keep'],['undo','.dec-undo']].forEach(([a,q])=>{const b=r.querySelector(q);if(b)b.onclick=()=>decAct(id,a)})});
+  const fa=document.querySelector('#dec-sheet .dec-fixall'),ua=document.querySelector('#dec-sheet .dec-undoall');if(fa)fa.onclick=()=>decAll(false);if(ua)ua.onclick=()=>decAll(true);
+  document.getElementById('dec-close').onclick=closeModal}
+function decimalSheet(){DECB=null;const lg=G();lg.DFX.shown=true;lg.saveDF();modal(decHtml());decBind()}
+function decCount(){const it=decItems();return{open:it.open,any:it.rows.length+it.manual.length}}
+// on launch: shown once, and only when a set is flagged (unjudged-only stays in the Log tab button); waits for the resume prompt
+(function decOnce(){let n=0;const t=setInterval(()=>{const lg=G();if(++n>600)return clearInterval(t);if(!lg||!lg.ready||typeof RU=='undefined'||!RU||!RU.logger)return;if(lg.DFX.shown)return clearInterval(t);
+  if(document.getElementById('modal'))return;clearInterval(t);if(decCount().open)decimalSheet()},250)})();
+window.decimalSheet=decimalSheet;window.LOGV.decItems=decItems;window.LOGV.decRun=decRun;
 })();

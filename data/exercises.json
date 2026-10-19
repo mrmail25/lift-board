@@ -1,5 +1,5 @@
 {
- "version": 5,
+ "version": 6,
  "muscles": [
   "chest",
   "front_delts",
@@ -474,7 +474,10 @@
    "patterns": [
     "horizontal_push",
     "triceps"
-   ]
+   ],
+   "bodyweight_fraction": 0.95,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "push-up",
@@ -552,7 +555,10 @@
    },
    "patterns": [
     "horizontal_push"
-   ]
+   ],
+   "bodyweight_fraction": 0.64,
+   "bodyweight_basis": "measured",
+   "bodyweight_ref": "ebben2011"
   },
   {
    "id": "cable-fly",
@@ -1606,7 +1612,10 @@
    },
    "patterns": [
     "vertical_pull"
-   ]
+   ],
+   "bodyweight_fraction": 0.95,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "chin-up",
@@ -1685,7 +1694,10 @@
    "patterns": [
     "vertical_pull",
     "biceps"
-   ]
+   ],
+   "bodyweight_fraction": 0.95,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "lat-pulldown",
@@ -4389,7 +4401,10 @@
    },
    "patterns": [
     "glute_iso"
-   ]
+   ],
+   "bodyweight_fraction": 0.53,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "hip-adduction-machine",
@@ -4692,7 +4707,10 @@
    },
    "patterns": [
     "abs"
-   ]
+   ],
+   "bodyweight_fraction": 0.33,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "cable-crunch",
@@ -5073,7 +5091,10 @@
    },
    "patterns": [
     "hip_iso"
-   ]
+   ],
+   "bodyweight_fraction": 0.17,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "banded-lateral-walk",
@@ -8348,7 +8369,11 @@
    },
    "patterns": [
     "vertical_pull"
-   ]
+   ],
+   "bodyweight_fraction": 0.95,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983",
+   "bodyweight_assisted": true
   },
   {
    "id": "assisted-dip",
@@ -8423,7 +8448,11 @@
    "patterns": [
     "horizontal_push",
     "triceps"
-   ]
+   ],
+   "bodyweight_fraction": 0.95,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983",
+   "bodyweight_assisted": true
   },
   {
    "id": "pendulum-squat",
@@ -8871,7 +8900,10 @@
    },
    "patterns": [
     "hamstring_curl"
-   ]
+   ],
+   "bodyweight_fraction": 0.88,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "glute-kickback-machine",
@@ -9244,7 +9276,10 @@
    },
    "patterns": [
     "glute_iso"
-   ]
+   ],
+   "bodyweight_fraction": 0.53,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "reverse-hyper",
@@ -10360,7 +10395,10 @@
    },
    "patterns": [
     "quads_iso"
-   ]
+   ],
+   "bodyweight_fraction": 0.88,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "inverted-row",
@@ -10437,7 +10475,9 @@
    },
    "patterns": [
     "horizontal_pull"
-   ]
+   ],
+   "bodyweight_fraction": 0.6,
+   "bodyweight_basis": "modeling"
   },
   {
    "id": "pike-push-up",
@@ -10514,7 +10554,10 @@
    },
    "patterns": [
     "vertical_push"
-   ]
+   ],
+   "bodyweight_fraction": 0.74,
+   "bodyweight_basis": "modeling",
+   "bodyweight_ref": "ebben2011"
   },
   {
    "id": "weighted-decline-crunch",
@@ -12002,7 +12045,10 @@
    },
    "patterns": [
     "horizontal_push"
-   ]
+   ],
+   "bodyweight_fraction": 0.64,
+   "bodyweight_basis": "modeling",
+   "bodyweight_ref": "ebben2011"
   },
   {
    "id": "seated-row-machine",
@@ -13560,7 +13606,10 @@
    },
    "patterns": [
     "abs"
-   ]
+   ],
+   "bodyweight_fraction": 0.33,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "back-extension-machine",
@@ -13860,7 +13909,10 @@
    "patterns": [
     "horizontal_push",
     "triceps"
-   ]
+   ],
+   "bodyweight_fraction": 0.95,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "ring-push-up",
@@ -13937,7 +13989,10 @@
    },
    "patterns": [
     "horizontal_push"
-   ]
+   ],
+   "bodyweight_fraction": 0.64,
+   "bodyweight_basis": "modeling",
+   "bodyweight_ref": "ebben2011"
   },
   {
    "id": "ring-row",
@@ -14014,7 +14069,9 @@
    },
    "patterns": [
     "horizontal_pull"
-   ]
+   ],
+   "bodyweight_fraction": 0.55,
+   "bodyweight_basis": "modeling"
   },
   {
    "id": "ring-pull-up",
@@ -14091,7 +14148,10 @@
    },
    "patterns": [
     "vertical_pull"
-   ]
+   ],
+   "bodyweight_fraction": 0.95,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "ring-fly",
@@ -14553,7 +14613,9 @@
    },
    "patterns": [
     "horizontal_pull"
-   ]
+   ],
+   "bodyweight_fraction": 0.55,
+   "bodyweight_basis": "modeling"
   },
   {
    "id": "trx-push-up",
@@ -14630,7 +14692,10 @@
    },
    "patterns": [
     "horizontal_push"
-   ]
+   ],
+   "bodyweight_fraction": 0.5,
+   "bodyweight_basis": "modeling",
+   "bodyweight_ref": "ebben2011"
   },
   {
    "id": "trx-y-t-raise",
@@ -14938,7 +15003,9 @@
    },
    "patterns": [
     "lunge"
-   ]
+   ],
+   "bodyweight_fraction": 0.6,
+   "bodyweight_basis": "modeling"
   },
   {
    "id": "trx-hamstring-curl",
@@ -16136,7 +16203,10 @@
    },
    "patterns": [
     "vertical_pull"
-   ]
+   ],
+   "bodyweight_fraction": 0.95,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "archer-push-up",
@@ -16213,7 +16283,10 @@
    },
    "patterns": [
     "horizontal_push"
-   ]
+   ],
+   "bodyweight_fraction": 0.64,
+   "bodyweight_basis": "modeling",
+   "bodyweight_ref": "ebben2011"
   },
   {
    "id": "pseudo-planche-push-up",
@@ -16290,7 +16363,10 @@
    },
    "patterns": [
     "horizontal_push"
-   ]
+   ],
+   "bodyweight_fraction": 0.74,
+   "bodyweight_basis": "modeling",
+   "bodyweight_ref": "ebben2011"
   },
   {
    "id": "wall-handstand-push-up",
@@ -16367,7 +16443,9 @@
    },
    "patterns": [
     "vertical_push"
-   ]
+   ],
+   "bodyweight_fraction": 0.9,
+   "bodyweight_basis": "modeling"
   },
   {
    "id": "pistol-squat",
@@ -16444,7 +16522,10 @@
    },
    "patterns": [
     "lunge"
-   ]
+   ],
+   "bodyweight_fraction": 0.94,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "shrimp-squat",
@@ -16521,7 +16602,10 @@
    },
    "patterns": [
     "lunge"
-   ]
+   ],
+   "bodyweight_fraction": 0.94,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "front-lever-row",
@@ -16598,7 +16682,10 @@
    },
    "patterns": [
     "horizontal_pull"
-   ]
+   ],
+   "bodyweight_fraction": 0.95,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   },
   {
    "id": "tuck-front-lever",
@@ -17978,7 +18065,10 @@
    },
    "patterns": [
     "forearms"
-   ]
+   ],
+   "bodyweight_fraction": 0.95,
+   "bodyweight_basis": "derived",
+   "bodyweight_ref": "plagenhoef1983"
   }
  ],
  "regions": [
@@ -18033,5 +18123,6 @@
   "lower_back": "lower_back",
   "abductors": "abductors"
  },
- "patterns_note": "v5: `patterns` = movement-slot ids from patterns.json (first = main slot). Model choice, not measured."
+ "patterns_note": "v5: `patterns` = movement-slot ids from patterns.json (first = main slot). Model choice, not measured.",
+ "bodyweight_note": "v6: bodyweight_fraction = share of body mass the exercise moves (0-1; omitted = external load only). effective load = fraction x bodyweight + added load (bodyweight_assisted machines: minus assistance). basis: measured (force plate, Ebben 2011 doi:10.1519/JSC.0b013e31820c8587), derived (from segment masses, Plagenhoef 1983 doi:10.1080/02701367.1983.10605290, men), modeling (our estimate). Holds, jumps, rollouts and angle-dependent suspension isolation moves are left without a fraction. A model, not a measurement."
 }
