@@ -153,3 +153,10 @@ body:not([data-view=train]):has(#lg-kp) #lg-timer{bottom:calc(var(--tabh) + 8px)
 .kp-plates{font-size:14px;color:var(--lg-dim);padding:0 4px 6px}.kp-plates[data-exact="false"]{color:var(--lg-acc)}
 #lg-gym label{display:block;margin:6px 0}#lg-gym input{width:100%;font-size:16px}#lg-gym .gp-bars{display:grid;grid-template-columns:1fr 1fr;gap:0 8px}
 .st-gym{width:100%;min-height:44px;margin:6px 0}
+/* v29 B: set tags (one chip row in the set options) + bodyweight sheet */
+.lg-rir{flex-wrap:wrap}.lg-tags{display:flex;gap:4px;flex-wrap:wrap;width:100%}.lg-tags button{flex:1 1 auto;min-height:44px;font-size:14px;padding:0 8px}.lg-tags button.on{background:var(--lg-pri)}
+.lg-rirb .lg-tg{display:block;font-size:10px;color:var(--lg-acc)}
+#lg-bw .bw-f{display:flex;gap:6px;align-items:center;flex-wrap:wrap}#lg-bw #bw-v{width:90px;font-size:16px;min-height:44px}#lg-bw #bw-d{font-size:16px;min-height:44px}
+#lg-bw .lg-seg button{min-width:44px;min-height:44px}#lg-bw .bw-l{list-style:none;padding:0;margin:8px 0 0}#lg-bw .bw-l li{display:flex;gap:8px;align-items:center;padding:4px 0}#lg-bw .bw-l li span{flex:1}
+#lg-bw .bw-l button{min-height:44px;min-width:44px}
+.kp-chip.kp-end{font-size:13px;opacity:.85}
