@@ -1,0 +1,5361 @@
+{
+ "version": 1,
+ "generated_by": "tools/gen_prs_reference.py (tools/prs.py)",
+ "rules_version": 8,
+ "rules_used": {
+  "hardRIR": 3,
+  "e1rm_formula": "epley",
+  "e1rm_max_reps": 10,
+  "lbPerKg": 2.20462,
+  "min_rating_to_count": 0.25,
+  "round_to": 0.5,
+  "eps_kg": 1e-06,
+  "tz": "America/Los_Angeles",
+  "week_starts": "Monday 00:00 local, by startedAt||date",
+  "session_order": "endedAt||date, then id",
+  "units": "all expected loads/volumes/e1RMs in kg"
+ },
+ "aliases": {
+  "bent-over-row-old": "barbell-row"
+ },
+ "notes": [
+  "Loads stored in each session's unit; Evening sessions start 17:30 PT = 00:30Z next day. w2d6 is SUNDAY 17:30 PT = Monday 00:30Z: it belongs to week 2 (local), not week 3.",
+  "w2d0 has a 225 lb warmup (ignored). w2d2 has 165x12 (above e1rm_max_reps: no e1rm). w2d6 has a 205x0 set (ignored).",
+  "w3d0 row entry skipped after 1 done set: the set counts in PRs/hard sets/volume, not in adherence. w4d4 skipped session. w6d4 active (excluded).",
+  "Row is logged as bent-over-row-old in week 1; pass `aliases` to resolve it.",
+  "edit_case: delete session w5d0 and recompute; expected_prs_after_edit is the full result."
+ ],
+ "history": {
+  "schema": 2,
+  "plannedSessionsPerWeek": 3,
+  "sessions": [
+   {
+    "id": "w1d0",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-08T00:30:00.000Z",
+    "startedAt": "2026-09-08T00:30:00.000Z",
+    "unit": "lb",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    },
+    "endedAt": "2026-09-08T01:30:00.000Z"
+   },
+   {
+    "id": "w1d2",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-09T13:15:00.000Z",
+    "startedAt": "2026-09-09T13:15:00.000Z",
+    "unit": "lb",
+    "dayIdx": 2,
+    "label": "Upper B",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 2
+      }
+     ]
+    },
+    "endedAt": "2026-09-09T14:15:00.000Z"
+   },
+   {
+    "id": "w1d4",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-12T00:30:00.000Z",
+    "startedAt": "2026-09-12T00:30:00.000Z",
+    "unit": "lb",
+    "dayIdx": 4,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    },
+    "endedAt": "2026-09-12T01:30:00.000Z"
+   },
+   {
+    "id": "w2d0",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-15T00:30:00.000Z",
+    "startedAt": "2026-09-15T00:30:00.000Z",
+    "unit": "lb",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    },
+    "endedAt": "2026-09-15T01:30:00.000Z"
+   },
+   {
+    "id": "w2d2",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-16T13:15:00.000Z",
+    "startedAt": "2026-09-16T13:15:00.000Z",
+    "unit": "lb",
+    "dayIdx": 2,
+    "label": "Upper B",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 2
+      }
+     ]
+    },
+    "endedAt": "2026-09-16T14:15:00.000Z"
+   },
+   {
+    "id": "w2d6",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-21T00:30:00.000Z",
+    "startedAt": "2026-09-21T00:30:00.000Z",
+    "unit": "lb",
+    "dayIdx": 6,
+    "label": "Upper A (Sun)",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    },
+    "endedAt": "2026-09-21T01:30:00.000Z"
+   },
+   {
+    "id": "w3d0",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-22T00:30:00.000Z",
+    "startedAt": "2026-09-22T00:30:00.000Z",
+    "unit": "lb",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    },
+    "endedAt": "2026-09-22T01:30:00.000Z"
+   },
+   {
+    "id": "w3d2",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-23T13:15:00.000Z",
+    "startedAt": "2026-09-23T13:15:00.000Z",
+    "unit": "lb",
+    "dayIdx": 2,
+    "label": "Upper B",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 2
+      }
+     ]
+    },
+    "endedAt": "2026-09-23T14:15:00.000Z"
+   },
+   {
+    "id": "w3d4",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-26T00:30:00.000Z",
+    "startedAt": "2026-09-26T00:30:00.000Z",
+    "unit": "lb",
+    "dayIdx": 4,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    },
+    "endedAt": "2026-09-26T01:30:00.000Z"
+   },
+   {
+    "id": "w4d0",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-29T00:30:00.000Z",
+    "startedAt": "2026-09-29T00:30:00.000Z",
+    "unit": "kg",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    },
+    "endedAt": "2026-09-29T01:30:00.000Z"
+   },
+   {
+    "id": "w4d2",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-09-30T13:15:00.000Z",
+    "startedAt": "2026-09-30T13:15:00.000Z",
+    "unit": "kg",
+    "dayIdx": 2,
+    "label": "Upper B",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 2
+      }
+     ]
+    },
+    "endedAt": "2026-09-30T14:15:00.000Z"
+   },
+   {
+    "id": "w4d4",
+    "schema": 2,
+    "status": "skipped",
+    "date": "2026-10-03T00:30:00.000Z",
+    "startedAt": "2026-10-03T00:30:00.000Z",
+    "unit": "kg",
+    "dayIdx": 4,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    }
+   },
+   {
+    "id": "w5d0",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-10-06T00:30:00.000Z",
+    "startedAt": "2026-10-06T00:30:00.000Z",
+    "unit": "kg",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    },
+    "endedAt": "2026-10-06T01:30:00.000Z"
+   },
+   {
+    "id": "w5d2",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-10-07T13:15:00.000Z",
+    "startedAt": "2026-10-07T13:15:00.000Z",
+    "unit": "lb",
+    "dayIdx": 2,
+    "label": "Upper B",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 2
+      }
+     ]
+    },
+    "endedAt": "2026-10-07T14:15:00.000Z"
+   },
+   {
+    "id": "w5d4",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-10-10T00:30:00.000Z",
+    "startedAt": "2026-10-10T00:30:00.000Z",
+    "unit": "kg",
+    "dayIdx": 4,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    },
+    "endedAt": "2026-10-10T01:30:00.000Z"
+   },
+   {
+    "id": "w6d0",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-10-13T00:30:00.000Z",
+    "startedAt": "2026-10-13T00:30:00.000Z",
+    "unit": "kg",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    },
+    "endedAt": "2026-10-13T01:30:00.000Z"
+   },
+   {
+    "id": "w6d2",
+    "schema": 2,
+    "status": "completed",
+    "date": "2026-10-14T13:15:00.000Z",
+    "startedAt": "2026-10-14T13:15:00.000Z",
+    "unit": "kg",
+    "dayIdx": 2,
+    "label": "Upper B",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 2
+      }
+     ]
+    },
+    "endedAt": "2026-10-14T14:15:00.000Z"
+   },
+   {
+    "id": "w6d4",
+    "schema": 2,
+    "status": "active",
+    "date": "2026-10-17T00:30:00.000Z",
+    "startedAt": "2026-10-17T00:30:00.000Z",
+    "unit": "kg",
+    "dayIdx": 4,
+    "label": "Upper A",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "barbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      }
+     ]
+    }
+   }
+  ],
+  "entries": [
+   {
+    "id": "w1d0-e0",
+    "sessionId": "w1d0",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w1d0-e1",
+    "sessionId": "w1d0",
+    "order": 1,
+    "exerciseId": "bent-over-row-old",
+    "nameSnapshot": "bent-over-row-old",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w1d2-e0",
+    "sessionId": "w1d2",
+    "order": 0,
+    "exerciseId": "pull-up",
+    "nameSnapshot": "pull-up",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w1d2-e1",
+    "sessionId": "w1d2",
+    "order": 1,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w1d4-e0",
+    "sessionId": "w1d4",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w1d4-e1",
+    "sessionId": "w1d4",
+    "order": 1,
+    "exerciseId": "bent-over-row-old",
+    "nameSnapshot": "bent-over-row-old",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w2d0-e0",
+    "sessionId": "w2d0",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w2d0-e1",
+    "sessionId": "w2d0",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "nameSnapshot": "barbell-row",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w2d2-e0",
+    "sessionId": "w2d2",
+    "order": 0,
+    "exerciseId": "pull-up",
+    "nameSnapshot": "pull-up",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w2d2-e1",
+    "sessionId": "w2d2",
+    "order": 1,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w2d6-e0",
+    "sessionId": "w2d6",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w2d6-e1",
+    "sessionId": "w2d6",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "nameSnapshot": "barbell-row",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w3d0-e0",
+    "sessionId": "w3d0",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w3d0-e1",
+    "sessionId": "w3d0",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "nameSnapshot": "barbell-row",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": true
+   },
+   {
+    "id": "w3d2-e0",
+    "sessionId": "w3d2",
+    "order": 0,
+    "exerciseId": "pull-up",
+    "nameSnapshot": "pull-up",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w3d2-e1",
+    "sessionId": "w3d2",
+    "order": 1,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w3d4-e0",
+    "sessionId": "w3d4",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w3d4-e1",
+    "sessionId": "w3d4",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "nameSnapshot": "barbell-row",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w4d0-e0",
+    "sessionId": "w4d0",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w4d0-e1",
+    "sessionId": "w4d0",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "nameSnapshot": "barbell-row",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w4d2-e0",
+    "sessionId": "w4d2",
+    "order": 0,
+    "exerciseId": "pull-up",
+    "nameSnapshot": "pull-up",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w4d2-e1",
+    "sessionId": "w4d2",
+    "order": 1,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w5d0-e0",
+    "sessionId": "w5d0",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w5d0-e1",
+    "sessionId": "w5d0",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "nameSnapshot": "barbell-row",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w5d2-e0",
+    "sessionId": "w5d2",
+    "order": 0,
+    "exerciseId": "pull-up",
+    "nameSnapshot": "pull-up",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w5d2-e1",
+    "sessionId": "w5d2",
+    "order": 1,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w5d4-e0",
+    "sessionId": "w5d4",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w5d4-e1",
+    "sessionId": "w5d4",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "nameSnapshot": "barbell-row",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w6d0-e0",
+    "sessionId": "w6d0",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w6d0-e1",
+    "sessionId": "w6d0",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "nameSnapshot": "barbell-row",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w6d2-e0",
+    "sessionId": "w6d2",
+    "order": 0,
+    "exerciseId": "pull-up",
+    "nameSnapshot": "pull-up",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w6d2-e1",
+    "sessionId": "w6d2",
+    "order": 1,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   },
+   {
+    "id": "w6d4-e0",
+    "sessionId": "w6d4",
+    "order": 0,
+    "exerciseId": "barbell-bench-press",
+    "nameSnapshot": "barbell-bench-press",
+    "repRange": [
+     6,
+     10
+    ],
+    "restSec": 180,
+    "notes": "",
+    "skipped": false
+   }
+  ],
+  "sets": [
+   {
+    "id": "w1d0-e0-t0",
+    "entryId": "w1d0-e0",
+    "sessionId": "w1d0",
+    "idx": 0,
+    "kind": "warmup",
+    "load": 135,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-08T00:30:00.000Z"
+   },
+   {
+    "id": "w1d0-e0-t1",
+    "entryId": "w1d0-e0",
+    "sessionId": "w1d0",
+    "idx": 1,
+    "kind": "warmup",
+    "load": 185,
+    "reps": 3,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-08T00:30:00.000Z"
+   },
+   {
+    "id": "w1d0-e0-t2",
+    "entryId": "w1d0-e0",
+    "sessionId": "w1d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 185,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-08T00:30:00.000Z"
+   },
+   {
+    "id": "w1d0-e0-t3",
+    "entryId": "w1d0-e0",
+    "sessionId": "w1d0",
+    "idx": 3,
+    "kind": "working",
+    "load": 185,
+    "reps": 8,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-09-08T00:30:00.000Z"
+   },
+   {
+    "id": "w1d0-e0-t4",
+    "entryId": "w1d0-e0",
+    "sessionId": "w1d0",
+    "idx": 4,
+    "kind": "working",
+    "load": 185,
+    "reps": 7,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-08T00:30:00.000Z"
+   },
+   {
+    "id": "w1d0-e1-t0",
+    "entryId": "w1d0-e1",
+    "sessionId": "w1d0",
+    "idx": 0,
+    "kind": "working",
+    "load": 155,
+    "reps": 10,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-08T00:30:00.000Z"
+   },
+   {
+    "id": "w1d0-e1-t1",
+    "entryId": "w1d0-e1",
+    "sessionId": "w1d0",
+    "idx": 1,
+    "kind": "working",
+    "load": 155,
+    "reps": 10,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-08T00:30:00.000Z"
+   },
+   {
+    "id": "w1d0-e1-t2",
+    "entryId": "w1d0-e1",
+    "sessionId": "w1d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 155,
+    "reps": 9,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-09-08T00:30:00.000Z"
+   },
+   {
+    "id": "w1d2-e0-t0",
+    "entryId": "w1d2-e0",
+    "sessionId": "w1d2",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-09T13:15:00.000Z"
+   },
+   {
+    "id": "w1d2-e0-t1",
+    "entryId": "w1d2-e0",
+    "sessionId": "w1d2",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 7,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-09T13:15:00.000Z"
+   },
+   {
+    "id": "w1d2-e0-t2",
+    "entryId": "w1d2-e0",
+    "sessionId": "w1d2",
+    "idx": 2,
+    "kind": "working",
+    "load": null,
+    "reps": 6,
+    "rir": 1,
+    "done": true,
+    "doneAt": "2026-09-09T13:15:00.000Z"
+   },
+   {
+    "id": "w1d2-e1-t0",
+    "entryId": "w1d2-e1",
+    "sessionId": "w1d2",
+    "idx": 0,
+    "kind": "working",
+    "load": 175,
+    "reps": 10,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-09T13:15:00.000Z"
+   },
+   {
+    "id": "w1d2-e1-t1",
+    "entryId": "w1d2-e1",
+    "sessionId": "w1d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 175,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-09T13:15:00.000Z"
+   },
+   {
+    "id": "w1d4-e0-t0",
+    "entryId": "w1d4-e0",
+    "sessionId": "w1d4",
+    "idx": 0,
+    "kind": "working",
+    "load": 190,
+    "reps": 6,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-12T00:30:00.000Z"
+   },
+   {
+    "id": "w1d4-e0-t1",
+    "entryId": "w1d4-e0",
+    "sessionId": "w1d4",
+    "idx": 1,
+    "kind": "working",
+    "load": 190,
+    "reps": 6,
+    "rir": 1,
+    "done": true,
+    "doneAt": "2026-09-12T00:30:00.000Z"
+   },
+   {
+    "id": "w1d4-e0-t2",
+    "entryId": "w1d4-e0",
+    "sessionId": "w1d4",
+    "idx": 2,
+    "kind": "working",
+    "load": 190,
+    "reps": 5,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-12T00:30:00.000Z"
+   },
+   {
+    "id": "w1d4-e1-t0",
+    "entryId": "w1d4-e1",
+    "sessionId": "w1d4",
+    "idx": 0,
+    "kind": "working",
+    "load": 160,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-12T00:30:00.000Z"
+   },
+   {
+    "id": "w1d4-e1-t1",
+    "entryId": "w1d4-e1",
+    "sessionId": "w1d4",
+    "idx": 1,
+    "kind": "working",
+    "load": 160,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-12T00:30:00.000Z"
+   },
+   {
+    "id": "w1d4-e1-t2",
+    "entryId": "w1d4-e1",
+    "sessionId": "w1d4",
+    "idx": 2,
+    "kind": "working",
+    "load": 160,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-12T00:30:00.000Z"
+   },
+   {
+    "id": "w2d0-e0-t0",
+    "entryId": "w2d0-e0",
+    "sessionId": "w2d0",
+    "idx": 0,
+    "kind": "warmup",
+    "load": 135,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-15T00:30:00.000Z"
+   },
+   {
+    "id": "w2d0-e0-t1",
+    "entryId": "w2d0-e0",
+    "sessionId": "w2d0",
+    "idx": 1,
+    "kind": "warmup",
+    "load": 225,
+    "reps": 1,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-15T00:30:00.000Z"
+   },
+   {
+    "id": "w2d0-e0-t2",
+    "entryId": "w2d0-e0",
+    "sessionId": "w2d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 185,
+    "reps": 9,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-09-15T00:30:00.000Z"
+   },
+   {
+    "id": "w2d0-e0-t3",
+    "entryId": "w2d0-e0",
+    "sessionId": "w2d0",
+    "idx": 3,
+    "kind": "working",
+    "load": 185,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-15T00:30:00.000Z"
+   },
+   {
+    "id": "w2d0-e0-t4",
+    "entryId": "w2d0-e0",
+    "sessionId": "w2d0",
+    "idx": 4,
+    "kind": "working",
+    "load": 185,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-15T00:30:00.000Z"
+   },
+   {
+    "id": "w2d0-e1-t0",
+    "entryId": "w2d0-e1",
+    "sessionId": "w2d0",
+    "idx": 0,
+    "kind": "working",
+    "load": 160,
+    "reps": 10,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-09-15T00:30:00.000Z"
+   },
+   {
+    "id": "w2d0-e1-t1",
+    "entryId": "w2d0-e1",
+    "sessionId": "w2d0",
+    "idx": 1,
+    "kind": "working",
+    "load": 160,
+    "reps": 10,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-15T00:30:00.000Z"
+   },
+   {
+    "id": "w2d0-e1-t2",
+    "entryId": "w2d0-e1",
+    "sessionId": "w2d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 160,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-15T00:30:00.000Z"
+   },
+   {
+    "id": "w2d2-e0-t0",
+    "entryId": "w2d2-e0",
+    "sessionId": "w2d2",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-16T13:15:00.000Z"
+   },
+   {
+    "id": "w2d2-e0-t1",
+    "entryId": "w2d2-e0",
+    "sessionId": "w2d2",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-16T13:15:00.000Z"
+   },
+   {
+    "id": "w2d2-e0-t2",
+    "entryId": "w2d2-e0",
+    "sessionId": "w2d2",
+    "idx": 2,
+    "kind": "working",
+    "load": null,
+    "reps": 7,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-16T13:15:00.000Z"
+   },
+   {
+    "id": "w2d2-e1-t0",
+    "entryId": "w2d2-e1",
+    "sessionId": "w2d2",
+    "idx": 0,
+    "kind": "working",
+    "load": 165,
+    "reps": 12,
+    "rir": 1,
+    "done": true,
+    "doneAt": "2026-09-16T13:15:00.000Z"
+   },
+   {
+    "id": "w2d2-e1-t1",
+    "entryId": "w2d2-e1",
+    "sessionId": "w2d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 165,
+    "reps": 11,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-16T13:15:00.000Z"
+   },
+   {
+    "id": "w2d6-e0-t0",
+    "entryId": "w2d6-e0",
+    "sessionId": "w2d6",
+    "idx": 0,
+    "kind": "working",
+    "load": 195,
+    "reps": 6,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-21T00:30:00.000Z"
+   },
+   {
+    "id": "w2d6-e0-t1",
+    "entryId": "w2d6-e0",
+    "sessionId": "w2d6",
+    "idx": 1,
+    "kind": "working",
+    "load": 195,
+    "reps": 5,
+    "rir": 1,
+    "done": true,
+    "doneAt": "2026-09-21T00:30:00.000Z"
+   },
+   {
+    "id": "w2d6-e0-t2",
+    "entryId": "w2d6-e0",
+    "sessionId": "w2d6",
+    "idx": 2,
+    "kind": "working",
+    "load": 205,
+    "reps": 0,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-21T00:30:00.000Z"
+   },
+   {
+    "id": "w2d6-e1-t0",
+    "entryId": "w2d6-e1",
+    "sessionId": "w2d6",
+    "idx": 0,
+    "kind": "working",
+    "load": 165,
+    "reps": 9,
+    "rir": 3,
+    "done": true,
+    "doneAt": "2026-09-21T00:30:00.000Z"
+   },
+   {
+    "id": "w2d6-e1-t1",
+    "entryId": "w2d6-e1",
+    "sessionId": "w2d6",
+    "idx": 1,
+    "kind": "working",
+    "load": 165,
+    "reps": 8,
+    "rir": 4,
+    "done": true,
+    "doneAt": "2026-09-21T00:30:00.000Z"
+   },
+   {
+    "id": "w2d6-e1-t2",
+    "entryId": "w2d6-e1",
+    "sessionId": "w2d6",
+    "idx": 2,
+    "kind": "working",
+    "load": 165,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-21T00:30:00.000Z"
+   },
+   {
+    "id": "w3d0-e0-t0",
+    "entryId": "w3d0-e0",
+    "sessionId": "w3d0",
+    "idx": 0,
+    "kind": "warmup",
+    "load": 135,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-22T00:30:00.000Z"
+   },
+   {
+    "id": "w3d0-e0-t1",
+    "entryId": "w3d0-e0",
+    "sessionId": "w3d0",
+    "idx": 1,
+    "kind": "working",
+    "load": 195,
+    "reps": 7,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-22T00:30:00.000Z"
+   },
+   {
+    "id": "w3d0-e0-t2",
+    "entryId": "w3d0-e0",
+    "sessionId": "w3d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 195,
+    "reps": 6,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-09-22T00:30:00.000Z"
+   },
+   {
+    "id": "w3d0-e0-t3",
+    "entryId": "w3d0-e0",
+    "sessionId": "w3d0",
+    "idx": 3,
+    "kind": "working",
+    "load": 195,
+    "reps": 6,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-22T00:30:00.000Z"
+   },
+   {
+    "id": "w3d0-e0-t4",
+    "entryId": "w3d0-e0",
+    "sessionId": "w3d0",
+    "idx": 4,
+    "kind": "working",
+    "load": 185,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-22T00:30:00.000Z"
+   },
+   {
+    "id": "w3d0-e1-t0",
+    "entryId": "w3d0-e1",
+    "sessionId": "w3d0",
+    "idx": 0,
+    "kind": "working",
+    "load": 170,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-22T00:30:00.000Z"
+   },
+   {
+    "id": "w3d2-e0-t0",
+    "entryId": "w3d2-e0",
+    "sessionId": "w3d2",
+    "idx": 0,
+    "kind": "working",
+    "load": 10,
+    "reps": 6,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-23T13:15:00.000Z"
+   },
+   {
+    "id": "w3d2-e0-t1",
+    "entryId": "w3d2-e0",
+    "sessionId": "w3d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 10,
+    "reps": 6,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-23T13:15:00.000Z"
+   },
+   {
+    "id": "w3d2-e0-t2",
+    "entryId": "w3d2-e0",
+    "sessionId": "w3d2",
+    "idx": 2,
+    "kind": "working",
+    "load": null,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-23T13:15:00.000Z"
+   },
+   {
+    "id": "w3d2-e1-t0",
+    "entryId": "w3d2-e1",
+    "sessionId": "w3d2",
+    "idx": 0,
+    "kind": "working",
+    "load": 170,
+    "reps": 11,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-23T13:15:00.000Z"
+   },
+   {
+    "id": "w3d2-e1-t1",
+    "entryId": "w3d2-e1",
+    "sessionId": "w3d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 170,
+    "reps": 10,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-09-23T13:15:00.000Z"
+   },
+   {
+    "id": "w3d4-e0-t0",
+    "entryId": "w3d4-e0",
+    "sessionId": "w3d4",
+    "idx": 0,
+    "kind": "working",
+    "load": 200,
+    "reps": 5,
+    "rir": 1,
+    "done": true,
+    "doneAt": "2026-09-26T00:30:00.000Z"
+   },
+   {
+    "id": "w3d4-e0-t1",
+    "entryId": "w3d4-e0",
+    "sessionId": "w3d4",
+    "idx": 1,
+    "kind": "working",
+    "load": 200,
+    "reps": 5,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-26T00:30:00.000Z"
+   },
+   {
+    "id": "w3d4-e0-t2",
+    "entryId": "w3d4-e0",
+    "sessionId": "w3d4",
+    "idx": 2,
+    "kind": "working",
+    "load": 200,
+    "reps": 4,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-26T00:30:00.000Z"
+   },
+   {
+    "id": "w3d4-e1-t0",
+    "entryId": "w3d4-e1",
+    "sessionId": "w3d4",
+    "idx": 0,
+    "kind": "working",
+    "load": 170,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-26T00:30:00.000Z"
+   },
+   {
+    "id": "w3d4-e1-t1",
+    "entryId": "w3d4-e1",
+    "sessionId": "w3d4",
+    "idx": 1,
+    "kind": "working",
+    "load": 170,
+    "reps": 9,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-09-26T00:30:00.000Z"
+   },
+   {
+    "id": "w3d4-e1-t2",
+    "entryId": "w3d4-e1",
+    "sessionId": "w3d4",
+    "idx": 2,
+    "kind": "working",
+    "load": 170,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-26T00:30:00.000Z"
+   },
+   {
+    "id": "w4d0-e0-t0",
+    "entryId": "w4d0-e0",
+    "sessionId": "w4d0",
+    "idx": 0,
+    "kind": "warmup",
+    "load": 60,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-29T00:30:00.000Z"
+   },
+   {
+    "id": "w4d0-e0-t1",
+    "entryId": "w4d0-e0",
+    "sessionId": "w4d0",
+    "idx": 1,
+    "kind": "working",
+    "load": 90,
+    "reps": 7,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-29T00:30:00.000Z"
+   },
+   {
+    "id": "w4d0-e0-t2",
+    "entryId": "w4d0-e0",
+    "sessionId": "w4d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 90,
+    "reps": 7,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-09-29T00:30:00.000Z"
+   },
+   {
+    "id": "w4d0-e0-t3",
+    "entryId": "w4d0-e0",
+    "sessionId": "w4d0",
+    "idx": 3,
+    "kind": "working",
+    "load": 90,
+    "reps": 6,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-29T00:30:00.000Z"
+   },
+   {
+    "id": "w4d0-e1-t0",
+    "entryId": "w4d0-e1",
+    "sessionId": "w4d0",
+    "idx": 0,
+    "kind": "working",
+    "load": 77.5,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-29T00:30:00.000Z"
+   },
+   {
+    "id": "w4d0-e1-t1",
+    "entryId": "w4d0-e1",
+    "sessionId": "w4d0",
+    "idx": 1,
+    "kind": "working",
+    "load": 77.5,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-29T00:30:00.000Z"
+   },
+   {
+    "id": "w4d0-e1-t2",
+    "entryId": "w4d0-e1",
+    "sessionId": "w4d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 77.5,
+    "reps": 8,
+    "rir": 3,
+    "done": true,
+    "doneAt": "2026-09-29T00:30:00.000Z"
+   },
+   {
+    "id": "w4d2-e0-t0",
+    "entryId": "w4d2-e0",
+    "sessionId": "w4d2",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-30T13:15:00.000Z"
+   },
+   {
+    "id": "w4d2-e0-t1",
+    "entryId": "w4d2-e0",
+    "sessionId": "w4d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 5,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-30T13:15:00.000Z"
+   },
+   {
+    "id": "w4d2-e0-t2",
+    "entryId": "w4d2-e0",
+    "sessionId": "w4d2",
+    "idx": 2,
+    "kind": "working",
+    "load": 5,
+    "reps": 7,
+    "rir": 1,
+    "done": true,
+    "doneAt": "2026-09-30T13:15:00.000Z"
+   },
+   {
+    "id": "w4d2-e1-t0",
+    "entryId": "w4d2-e1",
+    "sessionId": "w4d2",
+    "idx": 0,
+    "kind": "working",
+    "load": 80,
+    "reps": 10,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-30T13:15:00.000Z"
+   },
+   {
+    "id": "w4d2-e1-t1",
+    "entryId": "w4d2-e1",
+    "sessionId": "w4d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 80,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-09-30T13:15:00.000Z"
+   },
+   {
+    "id": "w5d0-e0-t0",
+    "entryId": "w5d0-e0",
+    "sessionId": "w5d0",
+    "idx": 0,
+    "kind": "warmup",
+    "load": 60,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-06T00:30:00.000Z"
+   },
+   {
+    "id": "w5d0-e0-t1",
+    "entryId": "w5d0-e0",
+    "sessionId": "w5d0",
+    "idx": 1,
+    "kind": "working",
+    "load": 92.5,
+    "reps": 5,
+    "rir": 1,
+    "done": true,
+    "doneAt": "2026-10-06T00:30:00.000Z"
+   },
+   {
+    "id": "w5d0-e0-t2",
+    "entryId": "w5d0-e0",
+    "sessionId": "w5d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 92.5,
+    "reps": 5,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-06T00:30:00.000Z"
+   },
+   {
+    "id": "w5d0-e0-t3",
+    "entryId": "w5d0-e0",
+    "sessionId": "w5d0",
+    "idx": 3,
+    "kind": "working",
+    "load": 92.5,
+    "reps": 4,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-06T00:30:00.000Z"
+   },
+   {
+    "id": "w5d0-e1-t0",
+    "entryId": "w5d0-e1",
+    "sessionId": "w5d0",
+    "idx": 0,
+    "kind": "working",
+    "load": 80,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-06T00:30:00.000Z"
+   },
+   {
+    "id": "w5d0-e1-t1",
+    "entryId": "w5d0-e1",
+    "sessionId": "w5d0",
+    "idx": 1,
+    "kind": "working",
+    "load": 80,
+    "reps": 8,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-10-06T00:30:00.000Z"
+   },
+   {
+    "id": "w5d0-e1-t2",
+    "entryId": "w5d0-e1",
+    "sessionId": "w5d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 80,
+    "reps": 7,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-06T00:30:00.000Z"
+   },
+   {
+    "id": "w5d2-e0-t0",
+    "entryId": "w5d2-e0",
+    "sessionId": "w5d2",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 11,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-07T13:15:00.000Z"
+   },
+   {
+    "id": "w5d2-e0-t1",
+    "entryId": "w5d2-e0",
+    "sessionId": "w5d2",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 4,
+    "done": true,
+    "doneAt": "2026-10-07T13:15:00.000Z"
+   },
+   {
+    "id": "w5d2-e0-t2",
+    "entryId": "w5d2-e0",
+    "sessionId": "w5d2",
+    "idx": 2,
+    "kind": "working",
+    "load": 25,
+    "reps": 5,
+    "rir": 5,
+    "done": true,
+    "doneAt": "2026-10-07T13:15:00.000Z"
+   },
+   {
+    "id": "w5d2-e1-t0",
+    "entryId": "w5d2-e1",
+    "sessionId": "w5d2",
+    "idx": 0,
+    "kind": "working",
+    "load": 175,
+    "reps": 11,
+    "rir": 1,
+    "done": true,
+    "doneAt": "2026-10-07T13:15:00.000Z"
+   },
+   {
+    "id": "w5d2-e1-t1",
+    "entryId": "w5d2-e1",
+    "sessionId": "w5d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 175,
+    "reps": 10,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-07T13:15:00.000Z"
+   },
+   {
+    "id": "w5d4-e0-t0",
+    "entryId": "w5d4-e0",
+    "sessionId": "w5d4",
+    "idx": 0,
+    "kind": "working",
+    "load": 87.5,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-10T00:30:00.000Z"
+   },
+   {
+    "id": "w5d4-e0-t1",
+    "entryId": "w5d4-e0",
+    "sessionId": "w5d4",
+    "idx": 1,
+    "kind": "working",
+    "load": 87.5,
+    "reps": 8,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-10-10T00:30:00.000Z"
+   },
+   {
+    "id": "w5d4-e0-t2",
+    "entryId": "w5d4-e0",
+    "sessionId": "w5d4",
+    "idx": 2,
+    "kind": "working",
+    "load": 87.5,
+    "reps": 7,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-10T00:30:00.000Z"
+   },
+   {
+    "id": "w5d4-e1-t0",
+    "entryId": "w5d4-e1",
+    "sessionId": "w5d4",
+    "idx": 0,
+    "kind": "working",
+    "load": 80,
+    "reps": 9,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-10T00:30:00.000Z"
+   },
+   {
+    "id": "w5d4-e1-t1",
+    "entryId": "w5d4-e1",
+    "sessionId": "w5d4",
+    "idx": 1,
+    "kind": "working",
+    "load": 80,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-10T00:30:00.000Z"
+   },
+   {
+    "id": "w5d4-e1-t2",
+    "entryId": "w5d4-e1",
+    "sessionId": "w5d4",
+    "idx": 2,
+    "kind": "working",
+    "load": 80,
+    "reps": 8,
+    "rir": 4,
+    "done": true,
+    "doneAt": "2026-10-10T00:30:00.000Z"
+   },
+   {
+    "id": "w6d0-e0-t0",
+    "entryId": "w6d0-e0",
+    "sessionId": "w6d0",
+    "idx": 0,
+    "kind": "warmup",
+    "load": 60,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-13T00:30:00.000Z"
+   },
+   {
+    "id": "w6d0-e0-t1",
+    "entryId": "w6d0-e0",
+    "sessionId": "w6d0",
+    "idx": 1,
+    "kind": "working",
+    "load": 95,
+    "reps": 4,
+    "rir": 1,
+    "done": true,
+    "doneAt": "2026-10-13T00:30:00.000Z"
+   },
+   {
+    "id": "w6d0-e0-t2",
+    "entryId": "w6d0-e0",
+    "sessionId": "w6d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 90,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-13T00:30:00.000Z"
+   },
+   {
+    "id": "w6d0-e0-t3",
+    "entryId": "w6d0-e0",
+    "sessionId": "w6d0",
+    "idx": 3,
+    "kind": "working",
+    "load": 90,
+    "reps": 7,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-13T00:30:00.000Z"
+   },
+   {
+    "id": "w6d0-e1-t0",
+    "entryId": "w6d0-e1",
+    "sessionId": "w6d0",
+    "idx": 0,
+    "kind": "working",
+    "load": 82.5,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-13T00:30:00.000Z"
+   },
+   {
+    "id": "w6d0-e1-t1",
+    "entryId": "w6d0-e1",
+    "sessionId": "w6d0",
+    "idx": 1,
+    "kind": "working",
+    "load": 82.5,
+    "reps": 8,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-13T00:30:00.000Z"
+   },
+   {
+    "id": "w6d0-e1-t2",
+    "entryId": "w6d0-e1",
+    "sessionId": "w6d0",
+    "idx": 2,
+    "kind": "working",
+    "load": 82.5,
+    "reps": 7,
+    "rir": 2,
+    "done": true,
+    "doneAt": "2026-10-13T00:30:00.000Z"
+   },
+   {
+    "id": "w6d2-e0-t0",
+    "entryId": "w6d2-e0",
+    "sessionId": "w6d2",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 12,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-14T13:15:00.000Z"
+   },
+   {
+    "id": "w6d2-e0-t1",
+    "entryId": "w6d2-e0",
+    "sessionId": "w6d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 10,
+    "reps": 7,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-14T13:15:00.000Z"
+   },
+   {
+    "id": "w6d2-e0-t2",
+    "entryId": "w6d2-e0",
+    "sessionId": "w6d2",
+    "idx": 2,
+    "kind": "working",
+    "load": 10,
+    "reps": 6,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-14T13:15:00.000Z"
+   },
+   {
+    "id": "w6d2-e1-t0",
+    "entryId": "w6d2-e1",
+    "sessionId": "w6d2",
+    "idx": 0,
+    "kind": "working",
+    "load": 82.5,
+    "reps": 10,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-14T13:15:00.000Z"
+   },
+   {
+    "id": "w6d2-e1-t1",
+    "entryId": "w6d2-e1",
+    "sessionId": "w6d2",
+    "idx": 1,
+    "kind": "working",
+    "load": 82.5,
+    "reps": 9,
+    "rir": 3,
+    "done": true,
+    "doneAt": "2026-10-14T13:15:00.000Z"
+   },
+   {
+    "id": "w6d4-e0-t0",
+    "entryId": "w6d4-e0",
+    "sessionId": "w6d4",
+    "idx": 0,
+    "kind": "working",
+    "load": 100,
+    "reps": 5,
+    "rir": null,
+    "done": true,
+    "doneAt": "2026-10-17T00:30:00.000Z"
+   }
+  ]
+ },
+ "expected_prs": {
+  "w1d2": {
+   "barbell-bench-press": {
+    "set_volume": {
+     "value": 793.787592,
+     "set_id": "w1d2-e1-t0",
+     "load_kg": 79.378759,
+     "reps": 10,
+     "set_ids": [
+      "w1d2-e1-t0",
+      "w1d2-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w1d2-e1-t0",
+     "load_kg": 79.378759,
+     "reps": 10,
+     "set_ids": [
+      "w1d2-e1-t0",
+      "w1d2-e1-t1"
+     ]
+    }
+   }
+  },
+  "w1d4": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 86.182653,
+     "set_id": "w1d4-e0-t0",
+     "load_kg": 86.182653,
+     "reps": 6,
+     "set_ids": [
+      "w1d4-e0-t0",
+      "w1d4-e0-t1",
+      "w1d4-e0-t2"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 72.574866,
+     "set_id": "w1d4-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 9,
+     "set_ids": [
+      "w1d4-e1-t0",
+      "w1d4-e1-t1",
+      "w1d4-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 94.347325,
+     "set_id": "w1d4-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 9,
+     "set_ids": [
+      "w1d4-e1-t0",
+      "w1d4-e1-t1"
+     ]
+    }
+   }
+  },
+  "w2d0": {
+   "barbell-bench-press": {
+    "e1rm": {
+     "value": 109.089095,
+     "set_id": "w2d0-e0-t2",
+     "load_kg": 83.914688,
+     "reps": 9,
+     "set_ids": [
+      "w2d0-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w2d0-e0-t2",
+     "load_kg": 83.914688,
+     "reps": 9,
+     "set_ids": [
+      "w2d0-e0-t2"
+     ]
+    }
+   },
+   "barbell-row": {
+    "set_volume": {
+     "value": 725.748655,
+     "set_id": "w2d0-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 10,
+     "set_ids": [
+      "w2d0-e1-t0",
+      "w2d0-e1-t1"
+     ]
+    },
+    "e1rm": {
+     "value": 96.766487,
+     "set_id": "w2d0-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 10,
+     "set_ids": [
+      "w2d0-e1-t0",
+      "w2d0-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w2d0-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 10,
+     "set_ids": [
+      "w2d0-e1-t0",
+      "w2d0-e1-t1"
+     ]
+    }
+   }
+  },
+  "w2d2": {
+   "pull-up": {
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w2d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 9,
+     "set_ids": [
+      "w2d2-e0-t0"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "set_volume": {
+     "value": 898.113961,
+     "set_id": "w2d2-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 12,
+     "set_ids": [
+      "w2d2-e1-t0",
+      "w2d2-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 12,
+     "set_id": "w2d2-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 12,
+     "set_ids": [
+      "w2d2-e1-t0",
+      "w2d2-e1-t1"
+     ]
+    }
+   }
+  },
+  "w2d6": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 88.450617,
+     "set_id": "w2d6-e0-t0",
+     "load_kg": 88.450617,
+     "reps": 6,
+     "set_ids": [
+      "w2d6-e0-t0",
+      "w2d6-e0-t1"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 74.84283,
+     "set_id": "w2d6-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 9,
+     "set_ids": [
+      "w2d6-e1-t0",
+      "w2d6-e1-t1",
+      "w2d6-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 97.295679,
+     "set_id": "w2d6-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 9,
+     "set_ids": [
+      "w2d6-e1-t0"
+     ]
+    }
+   }
+  },
+  "w3d0": {
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 7,
+     "set_id": "w3d0-e0-t1",
+     "load_kg": 88.450617,
+     "reps": 7,
+     "set_ids": [
+      "w3d0-e0-t1"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 77.110795,
+     "set_id": "w3d0-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 8,
+     "set_ids": [
+      "w3d0-e1-t0"
+     ]
+    },
+    "e1rm": {
+     "value": 97.673673,
+     "set_id": "w3d0-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 8,
+     "set_ids": [
+      "w3d0-e1-t0"
+     ]
+    }
+   }
+  },
+  "w3d2": {
+   "pull-up": {
+    "weight": {
+     "value": 4.535929,
+     "set_id": "w3d2-e0-t0",
+     "load_kg": 4.535929,
+     "reps": 6,
+     "set_ids": [
+      "w3d2-e0-t0",
+      "w3d2-e0-t1"
+     ]
+    },
+    "set_volume": {
+     "value": 27.215575,
+     "set_id": "w3d2-e0-t0",
+     "load_kg": 4.535929,
+     "reps": 6,
+     "set_ids": [
+      "w3d2-e0-t0",
+      "w3d2-e0-t1"
+     ]
+    },
+    "e1rm": {
+     "value": 5.443115,
+     "set_id": "w3d2-e0-t0",
+     "load_kg": 4.535929,
+     "reps": 6,
+     "set_ids": [
+      "w3d2-e0-t0",
+      "w3d2-e0-t1"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 11,
+     "set_id": "w3d2-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 11,
+     "set_ids": [
+      "w3d2-e1-t0"
+     ]
+    }
+   }
+  },
+  "w3d4": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 90.718582,
+     "set_id": "w3d4-e0-t0",
+     "load_kg": 90.718582,
+     "reps": 5,
+     "set_ids": [
+      "w3d4-e0-t0",
+      "w3d4-e0-t1",
+      "w3d4-e0-t2"
+     ]
+    }
+   },
+   "barbell-row": {
+    "e1rm": {
+     "value": 100.244033,
+     "set_id": "w3d4-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 9,
+     "set_ids": [
+      "w3d4-e1-t0",
+      "w3d4-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w3d4-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 9,
+     "set_ids": [
+      "w3d4-e1-t0",
+      "w3d4-e1-t1"
+     ]
+    }
+   }
+  },
+  "w4d0": {
+   "barbell-bench-press": {
+    "e1rm": {
+     "value": 111.0,
+     "set_id": "w4d0-e0-t1",
+     "load_kg": 90.0,
+     "reps": 7,
+     "set_ids": [
+      "w4d0-e0-t1",
+      "w4d0-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 7,
+     "set_id": "w4d0-e0-t1",
+     "load_kg": 90.0,
+     "reps": 7,
+     "set_ids": [
+      "w4d0-e0-t1",
+      "w4d0-e0-t2",
+      "w4d0-e0-t3"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 77.5,
+     "set_id": "w4d0-e1-t0",
+     "load_kg": 77.5,
+     "reps": 9,
+     "set_ids": [
+      "w4d0-e1-t0",
+      "w4d0-e1-t1",
+      "w4d0-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 100.75,
+     "set_id": "w4d0-e1-t0",
+     "load_kg": 77.5,
+     "reps": 9,
+     "set_ids": [
+      "w4d0-e1-t0",
+      "w4d0-e1-t1"
+     ]
+    }
+   }
+  },
+  "w4d2": {
+   "pull-up": {
+    "weight": {
+     "value": 5.0,
+     "set_id": "w4d2-e0-t1",
+     "load_kg": 5.0,
+     "reps": 8,
+     "set_ids": [
+      "w4d2-e0-t1",
+      "w4d2-e0-t2"
+     ]
+    },
+    "set_volume": {
+     "value": 40.0,
+     "set_id": "w4d2-e0-t1",
+     "load_kg": 5.0,
+     "reps": 8,
+     "set_ids": [
+      "w4d2-e0-t1",
+      "w4d2-e0-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 6.333333,
+     "set_id": "w4d2-e0-t1",
+     "load_kg": 5.0,
+     "reps": 8,
+     "set_ids": [
+      "w4d2-e0-t1",
+      "w4d2-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w4d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 10,
+     "set_ids": [
+      "w4d2-e0-t0"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w4d2-e1-t0",
+     "load_kg": 80.0,
+     "reps": 10,
+     "set_ids": [
+      "w4d2-e1-t0"
+     ]
+    }
+   }
+  },
+  "w5d0": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 92.5,
+     "set_id": "w5d0-e0-t1",
+     "load_kg": 92.5,
+     "reps": 5,
+     "set_ids": [
+      "w5d0-e0-t1",
+      "w5d0-e0-t2",
+      "w5d0-e0-t3"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 80.0,
+     "set_id": "w5d0-e1-t0",
+     "load_kg": 80.0,
+     "reps": 8,
+     "set_ids": [
+      "w5d0-e1-t0",
+      "w5d0-e1-t1",
+      "w5d0-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 101.333333,
+     "set_id": "w5d0-e1-t0",
+     "load_kg": 80.0,
+     "reps": 8,
+     "set_ids": [
+      "w5d0-e1-t0",
+      "w5d0-e1-t1"
+     ]
+    }
+   }
+  },
+  "w5d2": {
+   "pull-up": {
+    "weight": {
+     "value": 11.339823,
+     "set_id": "w5d2-e0-t2",
+     "load_kg": 11.339823,
+     "reps": 5,
+     "set_ids": [
+      "w5d2-e0-t2"
+     ]
+    },
+    "set_volume": {
+     "value": 56.699114,
+     "set_id": "w5d2-e0-t2",
+     "load_kg": 11.339823,
+     "reps": 5,
+     "set_ids": [
+      "w5d2-e0-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 13.229793,
+     "set_id": "w5d2-e0-t2",
+     "load_kg": 11.339823,
+     "reps": 5,
+     "set_ids": [
+      "w5d2-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 11,
+     "set_id": "w5d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 11,
+     "set_ids": [
+      "w5d2-e0-t0"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 11,
+     "set_id": "w5d2-e1-t0",
+     "load_kg": 79.378759,
+     "reps": 11,
+     "set_ids": [
+      "w5d2-e1-t0"
+     ]
+    }
+   }
+  },
+  "w5d4": {
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 8,
+     "set_id": "w5d4-e0-t0",
+     "load_kg": 87.5,
+     "reps": 8,
+     "set_ids": [
+      "w5d4-e0-t0",
+      "w5d4-e0-t1"
+     ]
+    }
+   },
+   "barbell-row": {
+    "e1rm": {
+     "value": 104.0,
+     "set_id": "w5d4-e1-t0",
+     "load_kg": 80.0,
+     "reps": 9,
+     "set_ids": [
+      "w5d4-e1-t0"
+     ]
+    },
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w5d4-e1-t0",
+     "load_kg": 80.0,
+     "reps": 9,
+     "set_ids": [
+      "w5d4-e1-t0"
+     ]
+    }
+   }
+  },
+  "w6d0": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 95.0,
+     "set_id": "w6d0-e0-t1",
+     "load_kg": 95.0,
+     "reps": 4,
+     "set_ids": [
+      "w6d0-e0-t1"
+     ]
+    },
+    "e1rm": {
+     "value": 114.0,
+     "set_id": "w6d0-e0-t2",
+     "load_kg": 90.0,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 8,
+     "set_id": "w6d0-e0-t2",
+     "load_kg": 90.0,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e0-t2"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 82.5,
+     "set_id": "w6d0-e1-t0",
+     "load_kg": 82.5,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e1-t0",
+      "w6d0-e1-t1",
+      "w6d0-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 104.5,
+     "set_id": "w6d0-e1-t0",
+     "load_kg": 82.5,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e1-t0",
+      "w6d0-e1-t1"
+     ]
+    }
+   }
+  },
+  "w6d2": {
+   "pull-up": {
+    "set_volume": {
+     "value": 70.0,
+     "set_id": "w6d2-e0-t1",
+     "load_kg": 10.0,
+     "reps": 7,
+     "set_ids": [
+      "w6d2-e0-t1",
+      "w6d2-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 12,
+     "set_id": "w6d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 12,
+     "set_ids": [
+      "w6d2-e0-t0",
+      "w6d2-e0-t1",
+      "w6d2-e0-t2"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w6d2-e1-t0",
+     "load_kg": 82.5,
+     "reps": 10,
+     "set_ids": [
+      "w6d2-e1-t0"
+     ]
+    }
+   }
+  }
+ },
+ "expected_prs_without_aliases": {
+  "w1d2": {
+   "barbell-bench-press": {
+    "set_volume": {
+     "value": 793.787592,
+     "set_id": "w1d2-e1-t0",
+     "load_kg": 79.378759,
+     "reps": 10,
+     "set_ids": [
+      "w1d2-e1-t0",
+      "w1d2-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w1d2-e1-t0",
+     "load_kg": 79.378759,
+     "reps": 10,
+     "set_ids": [
+      "w1d2-e1-t0",
+      "w1d2-e1-t1"
+     ]
+    }
+   }
+  },
+  "w1d4": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 86.182653,
+     "set_id": "w1d4-e0-t0",
+     "load_kg": 86.182653,
+     "reps": 6,
+     "set_ids": [
+      "w1d4-e0-t0",
+      "w1d4-e0-t1",
+      "w1d4-e0-t2"
+     ]
+    }
+   },
+   "bent-over-row-old": {
+    "weight": {
+     "value": 72.574866,
+     "set_id": "w1d4-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 9,
+     "set_ids": [
+      "w1d4-e1-t0",
+      "w1d4-e1-t1",
+      "w1d4-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 94.347325,
+     "set_id": "w1d4-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 9,
+     "set_ids": [
+      "w1d4-e1-t0",
+      "w1d4-e1-t1"
+     ]
+    }
+   }
+  },
+  "w2d0": {
+   "barbell-bench-press": {
+    "e1rm": {
+     "value": 109.089095,
+     "set_id": "w2d0-e0-t2",
+     "load_kg": 83.914688,
+     "reps": 9,
+     "set_ids": [
+      "w2d0-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w2d0-e0-t2",
+     "load_kg": 83.914688,
+     "reps": 9,
+     "set_ids": [
+      "w2d0-e0-t2"
+     ]
+    }
+   }
+  },
+  "w2d2": {
+   "pull-up": {
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w2d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 9,
+     "set_ids": [
+      "w2d2-e0-t0"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "set_volume": {
+     "value": 898.113961,
+     "set_id": "w2d2-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 12,
+     "set_ids": [
+      "w2d2-e1-t0",
+      "w2d2-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 12,
+     "set_id": "w2d2-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 12,
+     "set_ids": [
+      "w2d2-e1-t0",
+      "w2d2-e1-t1"
+     ]
+    }
+   }
+  },
+  "w2d6": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 88.450617,
+     "set_id": "w2d6-e0-t0",
+     "load_kg": 88.450617,
+     "reps": 6,
+     "set_ids": [
+      "w2d6-e0-t0",
+      "w2d6-e0-t1"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 74.84283,
+     "set_id": "w2d6-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 9,
+     "set_ids": [
+      "w2d6-e1-t0",
+      "w2d6-e1-t1",
+      "w2d6-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 97.295679,
+     "set_id": "w2d6-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 9,
+     "set_ids": [
+      "w2d6-e1-t0"
+     ]
+    }
+   }
+  },
+  "w3d0": {
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 7,
+     "set_id": "w3d0-e0-t1",
+     "load_kg": 88.450617,
+     "reps": 7,
+     "set_ids": [
+      "w3d0-e0-t1"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 77.110795,
+     "set_id": "w3d0-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 8,
+     "set_ids": [
+      "w3d0-e1-t0"
+     ]
+    },
+    "e1rm": {
+     "value": 97.673673,
+     "set_id": "w3d0-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 8,
+     "set_ids": [
+      "w3d0-e1-t0"
+     ]
+    }
+   }
+  },
+  "w3d2": {
+   "pull-up": {
+    "weight": {
+     "value": 4.535929,
+     "set_id": "w3d2-e0-t0",
+     "load_kg": 4.535929,
+     "reps": 6,
+     "set_ids": [
+      "w3d2-e0-t0",
+      "w3d2-e0-t1"
+     ]
+    },
+    "set_volume": {
+     "value": 27.215575,
+     "set_id": "w3d2-e0-t0",
+     "load_kg": 4.535929,
+     "reps": 6,
+     "set_ids": [
+      "w3d2-e0-t0",
+      "w3d2-e0-t1"
+     ]
+    },
+    "e1rm": {
+     "value": 5.443115,
+     "set_id": "w3d2-e0-t0",
+     "load_kg": 4.535929,
+     "reps": 6,
+     "set_ids": [
+      "w3d2-e0-t0",
+      "w3d2-e0-t1"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 11,
+     "set_id": "w3d2-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 11,
+     "set_ids": [
+      "w3d2-e1-t0"
+     ]
+    }
+   }
+  },
+  "w3d4": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 90.718582,
+     "set_id": "w3d4-e0-t0",
+     "load_kg": 90.718582,
+     "reps": 5,
+     "set_ids": [
+      "w3d4-e0-t0",
+      "w3d4-e0-t1",
+      "w3d4-e0-t2"
+     ]
+    }
+   },
+   "barbell-row": {
+    "e1rm": {
+     "value": 100.244033,
+     "set_id": "w3d4-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 9,
+     "set_ids": [
+      "w3d4-e1-t0",
+      "w3d4-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w3d4-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 9,
+     "set_ids": [
+      "w3d4-e1-t0",
+      "w3d4-e1-t1"
+     ]
+    }
+   }
+  },
+  "w4d0": {
+   "barbell-bench-press": {
+    "e1rm": {
+     "value": 111.0,
+     "set_id": "w4d0-e0-t1",
+     "load_kg": 90.0,
+     "reps": 7,
+     "set_ids": [
+      "w4d0-e0-t1",
+      "w4d0-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 7,
+     "set_id": "w4d0-e0-t1",
+     "load_kg": 90.0,
+     "reps": 7,
+     "set_ids": [
+      "w4d0-e0-t1",
+      "w4d0-e0-t2",
+      "w4d0-e0-t3"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 77.5,
+     "set_id": "w4d0-e1-t0",
+     "load_kg": 77.5,
+     "reps": 9,
+     "set_ids": [
+      "w4d0-e1-t0",
+      "w4d0-e1-t1",
+      "w4d0-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 100.75,
+     "set_id": "w4d0-e1-t0",
+     "load_kg": 77.5,
+     "reps": 9,
+     "set_ids": [
+      "w4d0-e1-t0",
+      "w4d0-e1-t1"
+     ]
+    }
+   }
+  },
+  "w4d2": {
+   "pull-up": {
+    "weight": {
+     "value": 5.0,
+     "set_id": "w4d2-e0-t1",
+     "load_kg": 5.0,
+     "reps": 8,
+     "set_ids": [
+      "w4d2-e0-t1",
+      "w4d2-e0-t2"
+     ]
+    },
+    "set_volume": {
+     "value": 40.0,
+     "set_id": "w4d2-e0-t1",
+     "load_kg": 5.0,
+     "reps": 8,
+     "set_ids": [
+      "w4d2-e0-t1",
+      "w4d2-e0-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 6.333333,
+     "set_id": "w4d2-e0-t1",
+     "load_kg": 5.0,
+     "reps": 8,
+     "set_ids": [
+      "w4d2-e0-t1",
+      "w4d2-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w4d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 10,
+     "set_ids": [
+      "w4d2-e0-t0"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w4d2-e1-t0",
+     "load_kg": 80.0,
+     "reps": 10,
+     "set_ids": [
+      "w4d2-e1-t0"
+     ]
+    }
+   }
+  },
+  "w5d0": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 92.5,
+     "set_id": "w5d0-e0-t1",
+     "load_kg": 92.5,
+     "reps": 5,
+     "set_ids": [
+      "w5d0-e0-t1",
+      "w5d0-e0-t2",
+      "w5d0-e0-t3"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 80.0,
+     "set_id": "w5d0-e1-t0",
+     "load_kg": 80.0,
+     "reps": 8,
+     "set_ids": [
+      "w5d0-e1-t0",
+      "w5d0-e1-t1",
+      "w5d0-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 101.333333,
+     "set_id": "w5d0-e1-t0",
+     "load_kg": 80.0,
+     "reps": 8,
+     "set_ids": [
+      "w5d0-e1-t0",
+      "w5d0-e1-t1"
+     ]
+    }
+   }
+  },
+  "w5d2": {
+   "pull-up": {
+    "weight": {
+     "value": 11.339823,
+     "set_id": "w5d2-e0-t2",
+     "load_kg": 11.339823,
+     "reps": 5,
+     "set_ids": [
+      "w5d2-e0-t2"
+     ]
+    },
+    "set_volume": {
+     "value": 56.699114,
+     "set_id": "w5d2-e0-t2",
+     "load_kg": 11.339823,
+     "reps": 5,
+     "set_ids": [
+      "w5d2-e0-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 13.229793,
+     "set_id": "w5d2-e0-t2",
+     "load_kg": 11.339823,
+     "reps": 5,
+     "set_ids": [
+      "w5d2-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 11,
+     "set_id": "w5d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 11,
+     "set_ids": [
+      "w5d2-e0-t0"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 11,
+     "set_id": "w5d2-e1-t0",
+     "load_kg": 79.378759,
+     "reps": 11,
+     "set_ids": [
+      "w5d2-e1-t0"
+     ]
+    }
+   }
+  },
+  "w5d4": {
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 8,
+     "set_id": "w5d4-e0-t0",
+     "load_kg": 87.5,
+     "reps": 8,
+     "set_ids": [
+      "w5d4-e0-t0",
+      "w5d4-e0-t1"
+     ]
+    }
+   },
+   "barbell-row": {
+    "e1rm": {
+     "value": 104.0,
+     "set_id": "w5d4-e1-t0",
+     "load_kg": 80.0,
+     "reps": 9,
+     "set_ids": [
+      "w5d4-e1-t0"
+     ]
+    },
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w5d4-e1-t0",
+     "load_kg": 80.0,
+     "reps": 9,
+     "set_ids": [
+      "w5d4-e1-t0"
+     ]
+    }
+   }
+  },
+  "w6d0": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 95.0,
+     "set_id": "w6d0-e0-t1",
+     "load_kg": 95.0,
+     "reps": 4,
+     "set_ids": [
+      "w6d0-e0-t1"
+     ]
+    },
+    "e1rm": {
+     "value": 114.0,
+     "set_id": "w6d0-e0-t2",
+     "load_kg": 90.0,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 8,
+     "set_id": "w6d0-e0-t2",
+     "load_kg": 90.0,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e0-t2"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 82.5,
+     "set_id": "w6d0-e1-t0",
+     "load_kg": 82.5,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e1-t0",
+      "w6d0-e1-t1",
+      "w6d0-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 104.5,
+     "set_id": "w6d0-e1-t0",
+     "load_kg": 82.5,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e1-t0",
+      "w6d0-e1-t1"
+     ]
+    }
+   }
+  },
+  "w6d2": {
+   "pull-up": {
+    "set_volume": {
+     "value": 70.0,
+     "set_id": "w6d2-e0-t1",
+     "load_kg": 10.0,
+     "reps": 7,
+     "set_ids": [
+      "w6d2-e0-t1",
+      "w6d2-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 12,
+     "set_id": "w6d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 12,
+     "set_ids": [
+      "w6d2-e0-t0",
+      "w6d2-e0-t1",
+      "w6d2-e0-t2"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w6d2-e1-t0",
+     "load_kg": 82.5,
+     "reps": 10,
+     "set_ids": [
+      "w6d2-e1-t0"
+     ]
+    }
+   }
+  }
+ },
+ "expected_analytics": {
+  "2026-09-07": {
+   "week_start": "2026-09-07",
+   "week_end_exclusive": "2026-09-14",
+   "unit": "kg",
+   "hardRIR": 3,
+   "label": "Logged totals, not estimates of muscle growth.",
+   "hard_sets": {
+    "per_muscle": {
+     "chest": 8.0,
+     "front_delts": 4.0,
+     "side_delts": 0.0,
+     "rear_delts": 3.9,
+     "lats": 7.8,
+     "upper_back": 7.5,
+     "traps": 3.0,
+     "biceps": 4.8,
+     "triceps": 4.0,
+     "forearms": 0.9,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 3.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "per_muscle_board_rounded": {
+     "chest": 8.0,
+     "front_delts": 4.0,
+     "side_delts": 0.0,
+     "rear_delts": 4.0,
+     "lats": 8.0,
+     "upper_back": 7.5,
+     "traps": 3.0,
+     "biceps": 5.0,
+     "triceps": 4.0,
+     "forearms": 1.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 3.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "set_count": 17,
+    "effort_not_logged": 13,
+    "archived_sets_not_counted": 0
+   },
+   "volume": {
+    "per_session_kg": {
+     "w1d0": 3968.938,
+     "w1d2": 1508.1964,
+     "w1d4": 3352.0516
+    },
+    "week_kg": 8829.186,
+    "per_muscle_kg": {
+     "chest": 4903.3394,
+     "front_delts": 2451.6697,
+     "side_delts": 0.0,
+     "rear_delts": 1962.9233,
+     "lats": 3140.6773,
+     "upper_back": 3925.8466,
+     "traps": 1962.9233,
+     "biceps": 1962.9233,
+     "triceps": 2451.6697,
+     "forearms": 0.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1962.9233,
+     "obliques": 0.0,
+     "abductors": 0.0
+    }
+   },
+   "load_trend": {
+    "barbell-bench-press": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 106.2919,
+      "set_id": "w1d0-e0-t2"
+     },
+     {
+      "session_id": "w1d2",
+      "date": "2026-09-09",
+      "e1rm_kg": 105.8383,
+      "set_id": "w1d2-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 103.4192,
+      "set_id": "w1d4-e0-t0"
+     }
+    ],
+    "barbell-row": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 93.7425,
+      "set_id": "w1d0-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 94.3473,
+      "set_id": "w1d4-e1-t0"
+     }
+    ]
+   },
+   "adherence": {
+    "planned_sets": 17,
+    "completed_planned_sets": 17,
+    "skipped_sets": 0,
+    "sets_ratio": 1.0,
+    "sessions_completed": 3,
+    "sessions_skipped": 0,
+    "sessions_planned": 3,
+    "sessions_not_started": 0,
+    "sessions_ratio": 1.0
+   }
+  },
+  "2026-09-14": {
+   "week_start": "2026-09-14",
+   "week_end_exclusive": "2026-09-21",
+   "unit": "kg",
+   "hardRIR": 3,
+   "label": "Logged totals, not estimates of muscle growth.",
+   "hard_sets": {
+    "per_muscle": {
+     "chest": 7.0,
+     "front_delts": 3.5,
+     "side_delts": 0.0,
+     "rear_delts": 3.4,
+     "lats": 7.0,
+     "upper_back": 6.5,
+     "traps": 2.5,
+     "biceps": 4.3,
+     "triceps": 3.5,
+     "forearms": 0.9,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 2.5,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "per_muscle_board_rounded": {
+     "chest": 7.0,
+     "front_delts": 3.5,
+     "side_delts": 0.0,
+     "rear_delts": 3.5,
+     "lats": 7.0,
+     "upper_back": 6.5,
+     "traps": 2.5,
+     "biceps": 4.5,
+     "triceps": 3.5,
+     "forearms": 1.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 2.5,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "set_count": 15,
+    "effort_not_logged": 10,
+    "archived_sets_not_counted": 0
+   },
+   "volume": {
+    "per_session_kg": {
+     "w2d0": 4202.5383,
+     "w2d2": 1721.3851,
+     "w2d6": 2844.0275
+    },
+    "week_kg": 8767.9509,
+    "per_muscle_kg": {
+     "chest": 4792.2091,
+     "front_delts": 2396.1045,
+     "side_delts": 0.0,
+     "rear_delts": 1987.8709,
+     "lats": 3180.5935,
+     "upper_back": 3975.7419,
+     "traps": 1987.8709,
+     "biceps": 1987.8709,
+     "triceps": 2396.1045,
+     "forearms": 0.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1987.8709,
+     "obliques": 0.0,
+     "abductors": 0.0
+    }
+   },
+   "load_trend": {
+    "barbell-bench-press": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 106.2919,
+      "set_id": "w1d0-e0-t2"
+     },
+     {
+      "session_id": "w1d2",
+      "date": "2026-09-09",
+      "e1rm_kg": 105.8383,
+      "set_id": "w1d2-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 103.4192,
+      "set_id": "w1d4-e0-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 109.0891,
+      "set_id": "w2d0-e0-t2"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 106.1407,
+      "set_id": "w2d6-e0-t0"
+     }
+    ],
+    "barbell-row": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 93.7425,
+      "set_id": "w1d0-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 94.3473,
+      "set_id": "w1d4-e1-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 96.7665,
+      "set_id": "w2d0-e1-t0"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 97.2957,
+      "set_id": "w2d6-e1-t0"
+     }
+    ]
+   },
+   "adherence": {
+    "planned_sets": 17,
+    "completed_planned_sets": 17,
+    "skipped_sets": 0,
+    "sets_ratio": 1.0,
+    "sessions_completed": 3,
+    "sessions_skipped": 0,
+    "sessions_planned": 3,
+    "sessions_not_started": 0,
+    "sessions_ratio": 1.0
+   }
+  },
+  "2026-09-21": {
+   "week_start": "2026-09-21",
+   "week_end_exclusive": "2026-09-28",
+   "unit": "kg",
+   "hardRIR": 3,
+   "label": "Logged totals, not estimates of muscle growth.",
+   "hard_sets": {
+    "per_muscle": {
+     "chest": 9.0,
+     "front_delts": 4.5,
+     "side_delts": 0.0,
+     "rear_delts": 2.9,
+     "lats": 6.2,
+     "upper_back": 5.5,
+     "traps": 2.0,
+     "biceps": 3.8,
+     "triceps": 4.5,
+     "forearms": 0.9,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 2.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "per_muscle_board_rounded": {
+     "chest": 9.0,
+     "front_delts": 4.5,
+     "side_delts": 0.0,
+     "rear_delts": 3.0,
+     "lats": 6.0,
+     "upper_back": 5.5,
+     "traps": 2.0,
+     "biceps": 4.0,
+     "triceps": 4.5,
+     "forearms": 1.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 2.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "set_count": 16,
+    "effort_not_logged": 12,
+    "archived_sets_not_counted": 0
+   },
+   "volume": {
+    "per_session_kg": {
+     "w3d0": 2968.7656,
+     "w3d2": 1673.7578,
+     "w3d4": 3274.9408
+    },
+    "week_kg": 7917.4642,
+    "per_muscle_kg": {
+     "chest": 5241.2661,
+     "front_delts": 2620.633,
+     "side_delts": 0.0,
+     "rear_delts": 1327.2129,
+     "lats": 2151.8448,
+     "upper_back": 2648.9826,
+     "traps": 1310.8835,
+     "biceps": 1343.5422,
+     "triceps": 2620.633,
+     "forearms": 16.3293,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1310.8835,
+     "obliques": 0.0,
+     "abductors": 0.0
+    }
+   },
+   "load_trend": {
+    "barbell-bench-press": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 106.2919,
+      "set_id": "w1d0-e0-t2"
+     },
+     {
+      "session_id": "w1d2",
+      "date": "2026-09-09",
+      "e1rm_kg": 105.8383,
+      "set_id": "w1d2-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 103.4192,
+      "set_id": "w1d4-e0-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 109.0891,
+      "set_id": "w2d0-e0-t2"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 106.1407,
+      "set_id": "w2d6-e0-t0"
+     },
+     {
+      "session_id": "w3d0",
+      "date": "2026-09-21",
+      "e1rm_kg": 109.0891,
+      "set_id": "w3d0-e0-t1"
+     },
+     {
+      "session_id": "w3d2",
+      "date": "2026-09-23",
+      "e1rm_kg": 102.8144,
+      "set_id": "w3d2-e1-t1"
+     },
+     {
+      "session_id": "w3d4",
+      "date": "2026-09-25",
+      "e1rm_kg": 105.8383,
+      "set_id": "w3d4-e0-t0"
+     }
+    ],
+    "barbell-row": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 93.7425,
+      "set_id": "w1d0-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 94.3473,
+      "set_id": "w1d4-e1-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 96.7665,
+      "set_id": "w2d0-e1-t0"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 97.2957,
+      "set_id": "w2d6-e1-t0"
+     },
+     {
+      "session_id": "w3d0",
+      "date": "2026-09-21",
+      "e1rm_kg": 97.6737,
+      "set_id": "w3d0-e1-t0"
+     },
+     {
+      "session_id": "w3d4",
+      "date": "2026-09-25",
+      "e1rm_kg": 100.244,
+      "set_id": "w3d4-e1-t0"
+     }
+    ],
+    "pull-up": [
+     {
+      "session_id": "w3d2",
+      "date": "2026-09-23",
+      "e1rm_kg": 5.4431,
+      "set_id": "w3d2-e0-t0"
+     }
+    ]
+   },
+   "adherence": {
+    "planned_sets": 17,
+    "completed_planned_sets": 14,
+    "skipped_sets": 3,
+    "sets_ratio": 0.8235,
+    "sessions_completed": 3,
+    "sessions_skipped": 0,
+    "sessions_planned": 3,
+    "sessions_not_started": 0,
+    "sessions_ratio": 1.0
+   }
+  },
+  "2026-09-28": {
+   "week_start": "2026-09-28",
+   "week_end_exclusive": "2026-10-05",
+   "unit": "kg",
+   "hardRIR": 3,
+   "label": "Logged totals, not estimates of muscle growth.",
+   "hard_sets": {
+    "per_muscle": {
+     "chest": 5.0,
+     "front_delts": 2.5,
+     "side_delts": 0.0,
+     "rear_delts": 2.4,
+     "lats": 5.4,
+     "upper_back": 4.5,
+     "traps": 1.5,
+     "biceps": 3.3,
+     "triceps": 2.5,
+     "forearms": 0.9,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1.5,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "per_muscle_board_rounded": {
+     "chest": 5.0,
+     "front_delts": 2.5,
+     "side_delts": 0.0,
+     "rear_delts": 2.5,
+     "lats": 5.5,
+     "upper_back": 4.5,
+     "traps": 1.5,
+     "biceps": 3.5,
+     "triceps": 2.5,
+     "forearms": 1.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1.5,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "set_count": 11,
+    "effort_not_logged": 8,
+    "archived_sets_not_counted": 0
+   },
+   "volume": {
+    "per_session_kg": {
+     "w4d0": 3815.0,
+     "w4d2": 1595.0
+    },
+    "week_kg": 5410.0,
+    "per_muscle_kg": {
+     "chest": 3320.0,
+     "front_delts": 1660.0,
+     "side_delts": 0.0,
+     "rear_delts": 1030.0,
+     "lats": 1687.0,
+     "upper_back": 2052.5,
+     "traps": 1007.5,
+     "biceps": 1052.5,
+     "triceps": 1660.0,
+     "forearms": 22.5,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1007.5,
+     "obliques": 0.0,
+     "abductors": 0.0
+    }
+   },
+   "load_trend": {
+    "barbell-bench-press": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 106.2919,
+      "set_id": "w1d0-e0-t2"
+     },
+     {
+      "session_id": "w1d2",
+      "date": "2026-09-09",
+      "e1rm_kg": 105.8383,
+      "set_id": "w1d2-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 103.4192,
+      "set_id": "w1d4-e0-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 109.0891,
+      "set_id": "w2d0-e0-t2"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 106.1407,
+      "set_id": "w2d6-e0-t0"
+     },
+     {
+      "session_id": "w3d0",
+      "date": "2026-09-21",
+      "e1rm_kg": 109.0891,
+      "set_id": "w3d0-e0-t1"
+     },
+     {
+      "session_id": "w3d2",
+      "date": "2026-09-23",
+      "e1rm_kg": 102.8144,
+      "set_id": "w3d2-e1-t1"
+     },
+     {
+      "session_id": "w3d4",
+      "date": "2026-09-25",
+      "e1rm_kg": 105.8383,
+      "set_id": "w3d4-e0-t0"
+     },
+     {
+      "session_id": "w4d0",
+      "date": "2026-09-28",
+      "e1rm_kg": 111.0,
+      "set_id": "w4d0-e0-t1"
+     },
+     {
+      "session_id": "w4d2",
+      "date": "2026-09-30",
+      "e1rm_kg": 106.6667,
+      "set_id": "w4d2-e1-t0"
+     }
+    ],
+    "barbell-row": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 93.7425,
+      "set_id": "w1d0-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 94.3473,
+      "set_id": "w1d4-e1-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 96.7665,
+      "set_id": "w2d0-e1-t0"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 97.2957,
+      "set_id": "w2d6-e1-t0"
+     },
+     {
+      "session_id": "w3d0",
+      "date": "2026-09-21",
+      "e1rm_kg": 97.6737,
+      "set_id": "w3d0-e1-t0"
+     },
+     {
+      "session_id": "w3d4",
+      "date": "2026-09-25",
+      "e1rm_kg": 100.244,
+      "set_id": "w3d4-e1-t0"
+     },
+     {
+      "session_id": "w4d0",
+      "date": "2026-09-28",
+      "e1rm_kg": 100.75,
+      "set_id": "w4d0-e1-t0"
+     }
+    ],
+    "pull-up": [
+     {
+      "session_id": "w3d2",
+      "date": "2026-09-23",
+      "e1rm_kg": 5.4431,
+      "set_id": "w3d2-e0-t0"
+     },
+     {
+      "session_id": "w4d2",
+      "date": "2026-09-30",
+      "e1rm_kg": 6.3333,
+      "set_id": "w4d2-e0-t1"
+     }
+    ]
+   },
+   "adherence": {
+    "planned_sets": 17,
+    "completed_planned_sets": 11,
+    "skipped_sets": 6,
+    "sets_ratio": 0.6471,
+    "sessions_completed": 2,
+    "sessions_skipped": 1,
+    "sessions_planned": 3,
+    "sessions_not_started": 0,
+    "sessions_ratio": 0.6667
+   }
+  },
+  "2026-10-05": {
+   "week_start": "2026-10-05",
+   "week_end_exclusive": "2026-10-12",
+   "unit": "kg",
+   "hardRIR": 3,
+   "label": "Logged totals, not estimates of muscle growth.",
+   "hard_sets": {
+    "per_muscle": {
+     "chest": 8.0,
+     "front_delts": 4.0,
+     "side_delts": 0.0,
+     "rear_delts": 2.8,
+     "lats": 5.0,
+     "upper_back": 5.5,
+     "traps": 2.5,
+     "biceps": 3.1,
+     "triceps": 4.0,
+     "forearms": 0.3,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 2.5,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "per_muscle_board_rounded": {
+     "chest": 8.0,
+     "front_delts": 4.0,
+     "side_delts": 0.0,
+     "rear_delts": 3.0,
+     "lats": 5.0,
+     "upper_back": 5.5,
+     "traps": 2.5,
+     "biceps": 3.0,
+     "triceps": 4.0,
+     "forearms": 0.5,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 2.5,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "set_count": 14,
+    "effort_not_logged": 10,
+    "archived_sets_not_counted": 0
+   },
+   "volume": {
+    "per_session_kg": {
+     "w5d0": 3135.0,
+     "w5d2": 1723.6531,
+     "w5d4": 4012.5
+    },
+    "week_kg": 8871.1531,
+    "per_muscle_kg": {
+     "chest": 4974.4539,
+     "front_delts": 2487.227,
+     "side_delts": 0.0,
+     "rear_delts": 1937.0097,
+     "lats": 3128.6991,
+     "upper_back": 3868.3496,
+     "traps": 1920.0,
+     "biceps": 1954.0195,
+     "triceps": 2487.227,
+     "forearms": 17.0097,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1920.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    }
+   },
+   "load_trend": {
+    "barbell-bench-press": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 106.2919,
+      "set_id": "w1d0-e0-t2"
+     },
+     {
+      "session_id": "w1d2",
+      "date": "2026-09-09",
+      "e1rm_kg": 105.8383,
+      "set_id": "w1d2-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 103.4192,
+      "set_id": "w1d4-e0-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 109.0891,
+      "set_id": "w2d0-e0-t2"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 106.1407,
+      "set_id": "w2d6-e0-t0"
+     },
+     {
+      "session_id": "w3d0",
+      "date": "2026-09-21",
+      "e1rm_kg": 109.0891,
+      "set_id": "w3d0-e0-t1"
+     },
+     {
+      "session_id": "w3d2",
+      "date": "2026-09-23",
+      "e1rm_kg": 102.8144,
+      "set_id": "w3d2-e1-t1"
+     },
+     {
+      "session_id": "w3d4",
+      "date": "2026-09-25",
+      "e1rm_kg": 105.8383,
+      "set_id": "w3d4-e0-t0"
+     },
+     {
+      "session_id": "w4d0",
+      "date": "2026-09-28",
+      "e1rm_kg": 111.0,
+      "set_id": "w4d0-e0-t1"
+     },
+     {
+      "session_id": "w4d2",
+      "date": "2026-09-30",
+      "e1rm_kg": 106.6667,
+      "set_id": "w4d2-e1-t0"
+     },
+     {
+      "session_id": "w5d0",
+      "date": "2026-10-05",
+      "e1rm_kg": 107.9167,
+      "set_id": "w5d0-e0-t1"
+     },
+     {
+      "session_id": "w5d2",
+      "date": "2026-10-07",
+      "e1rm_kg": 105.8383,
+      "set_id": "w5d2-e1-t1"
+     },
+     {
+      "session_id": "w5d4",
+      "date": "2026-10-09",
+      "e1rm_kg": 110.8333,
+      "set_id": "w5d4-e0-t0"
+     }
+    ],
+    "barbell-row": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 93.7425,
+      "set_id": "w1d0-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 94.3473,
+      "set_id": "w1d4-e1-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 96.7665,
+      "set_id": "w2d0-e1-t0"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 97.2957,
+      "set_id": "w2d6-e1-t0"
+     },
+     {
+      "session_id": "w3d0",
+      "date": "2026-09-21",
+      "e1rm_kg": 97.6737,
+      "set_id": "w3d0-e1-t0"
+     },
+     {
+      "session_id": "w3d4",
+      "date": "2026-09-25",
+      "e1rm_kg": 100.244,
+      "set_id": "w3d4-e1-t0"
+     },
+     {
+      "session_id": "w4d0",
+      "date": "2026-09-28",
+      "e1rm_kg": 100.75,
+      "set_id": "w4d0-e1-t0"
+     },
+     {
+      "session_id": "w5d0",
+      "date": "2026-10-05",
+      "e1rm_kg": 101.3333,
+      "set_id": "w5d0-e1-t0"
+     },
+     {
+      "session_id": "w5d4",
+      "date": "2026-10-09",
+      "e1rm_kg": 104.0,
+      "set_id": "w5d4-e1-t0"
+     }
+    ],
+    "pull-up": [
+     {
+      "session_id": "w3d2",
+      "date": "2026-09-23",
+      "e1rm_kg": 5.4431,
+      "set_id": "w3d2-e0-t0"
+     },
+     {
+      "session_id": "w4d2",
+      "date": "2026-09-30",
+      "e1rm_kg": 6.3333,
+      "set_id": "w4d2-e0-t1"
+     },
+     {
+      "session_id": "w5d2",
+      "date": "2026-10-07",
+      "e1rm_kg": 13.2298,
+      "set_id": "w5d2-e0-t2"
+     }
+    ]
+   },
+   "adherence": {
+    "planned_sets": 17,
+    "completed_planned_sets": 17,
+    "skipped_sets": 0,
+    "sets_ratio": 1.0,
+    "sessions_completed": 3,
+    "sessions_skipped": 0,
+    "sessions_planned": 3,
+    "sessions_not_started": 0,
+    "sessions_ratio": 1.0
+   }
+  },
+  "2026-10-12": {
+   "week_start": "2026-10-12",
+   "week_end_exclusive": "2026-10-19",
+   "unit": "kg",
+   "hardRIR": 3,
+   "label": "Logged totals, not estimates of muscle growth.",
+   "hard_sets": {
+    "per_muscle": {
+     "chest": 5.0,
+     "front_delts": 2.5,
+     "side_delts": 0.0,
+     "rear_delts": 2.4,
+     "lats": 5.4,
+     "upper_back": 4.5,
+     "traps": 1.5,
+     "biceps": 3.3,
+     "triceps": 2.5,
+     "forearms": 0.9,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1.5,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "per_muscle_board_rounded": {
+     "chest": 5.0,
+     "front_delts": 2.5,
+     "side_delts": 0.0,
+     "rear_delts": 2.5,
+     "lats": 5.5,
+     "upper_back": 4.5,
+     "traps": 1.5,
+     "biceps": 3.5,
+     "triceps": 2.5,
+     "forearms": 1.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1.5,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "set_count": 11,
+    "effort_not_logged": 8,
+    "archived_sets_not_counted": 0
+   },
+   "volume": {
+    "per_session_kg": {
+     "w6d0": 3627.5,
+     "w6d2": 1697.5
+    },
+    "week_kg": 5325.0,
+    "per_muscle_kg": {
+     "chest": 3297.5,
+     "front_delts": 1648.75,
+     "side_delts": 0.0,
+     "rear_delts": 987.75,
+     "lats": 1648.0,
+     "upper_back": 1962.5,
+     "traps": 948.75,
+     "biceps": 1026.75,
+     "triceps": 1648.75,
+     "forearms": 39.0,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 948.75,
+     "obliques": 0.0,
+     "abductors": 0.0
+    }
+   },
+   "load_trend": {
+    "barbell-bench-press": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 106.2919,
+      "set_id": "w1d0-e0-t2"
+     },
+     {
+      "session_id": "w1d2",
+      "date": "2026-09-09",
+      "e1rm_kg": 105.8383,
+      "set_id": "w1d2-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 103.4192,
+      "set_id": "w1d4-e0-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 109.0891,
+      "set_id": "w2d0-e0-t2"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 106.1407,
+      "set_id": "w2d6-e0-t0"
+     },
+     {
+      "session_id": "w3d0",
+      "date": "2026-09-21",
+      "e1rm_kg": 109.0891,
+      "set_id": "w3d0-e0-t1"
+     },
+     {
+      "session_id": "w3d2",
+      "date": "2026-09-23",
+      "e1rm_kg": 102.8144,
+      "set_id": "w3d2-e1-t1"
+     },
+     {
+      "session_id": "w3d4",
+      "date": "2026-09-25",
+      "e1rm_kg": 105.8383,
+      "set_id": "w3d4-e0-t0"
+     },
+     {
+      "session_id": "w4d0",
+      "date": "2026-09-28",
+      "e1rm_kg": 111.0,
+      "set_id": "w4d0-e0-t1"
+     },
+     {
+      "session_id": "w4d2",
+      "date": "2026-09-30",
+      "e1rm_kg": 106.6667,
+      "set_id": "w4d2-e1-t0"
+     },
+     {
+      "session_id": "w5d0",
+      "date": "2026-10-05",
+      "e1rm_kg": 107.9167,
+      "set_id": "w5d0-e0-t1"
+     },
+     {
+      "session_id": "w5d2",
+      "date": "2026-10-07",
+      "e1rm_kg": 105.8383,
+      "set_id": "w5d2-e1-t1"
+     },
+     {
+      "session_id": "w5d4",
+      "date": "2026-10-09",
+      "e1rm_kg": 110.8333,
+      "set_id": "w5d4-e0-t0"
+     },
+     {
+      "session_id": "w6d0",
+      "date": "2026-10-12",
+      "e1rm_kg": 114.0,
+      "set_id": "w6d0-e0-t2"
+     },
+     {
+      "session_id": "w6d2",
+      "date": "2026-10-14",
+      "e1rm_kg": 110.0,
+      "set_id": "w6d2-e1-t0"
+     }
+    ],
+    "barbell-row": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 93.7425,
+      "set_id": "w1d0-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 94.3473,
+      "set_id": "w1d4-e1-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 96.7665,
+      "set_id": "w2d0-e1-t0"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 97.2957,
+      "set_id": "w2d6-e1-t0"
+     },
+     {
+      "session_id": "w3d0",
+      "date": "2026-09-21",
+      "e1rm_kg": 97.6737,
+      "set_id": "w3d0-e1-t0"
+     },
+     {
+      "session_id": "w3d4",
+      "date": "2026-09-25",
+      "e1rm_kg": 100.244,
+      "set_id": "w3d4-e1-t0"
+     },
+     {
+      "session_id": "w4d0",
+      "date": "2026-09-28",
+      "e1rm_kg": 100.75,
+      "set_id": "w4d0-e1-t0"
+     },
+     {
+      "session_id": "w5d0",
+      "date": "2026-10-05",
+      "e1rm_kg": 101.3333,
+      "set_id": "w5d0-e1-t0"
+     },
+     {
+      "session_id": "w5d4",
+      "date": "2026-10-09",
+      "e1rm_kg": 104.0,
+      "set_id": "w5d4-e1-t0"
+     },
+     {
+      "session_id": "w6d0",
+      "date": "2026-10-12",
+      "e1rm_kg": 104.5,
+      "set_id": "w6d0-e1-t0"
+     }
+    ],
+    "pull-up": [
+     {
+      "session_id": "w3d2",
+      "date": "2026-09-23",
+      "e1rm_kg": 5.4431,
+      "set_id": "w3d2-e0-t0"
+     },
+     {
+      "session_id": "w4d2",
+      "date": "2026-09-30",
+      "e1rm_kg": 6.3333,
+      "set_id": "w4d2-e0-t1"
+     },
+     {
+      "session_id": "w5d2",
+      "date": "2026-10-07",
+      "e1rm_kg": 13.2298,
+      "set_id": "w5d2-e0-t2"
+     },
+     {
+      "session_id": "w6d2",
+      "date": "2026-10-14",
+      "e1rm_kg": 12.3333,
+      "set_id": "w6d2-e0-t1"
+     }
+    ]
+   },
+   "adherence": {
+    "planned_sets": 11,
+    "completed_planned_sets": 11,
+    "skipped_sets": 0,
+    "sets_ratio": 1.0,
+    "sessions_completed": 2,
+    "sessions_skipped": 0,
+    "sessions_planned": 3,
+    "sessions_not_started": 1,
+    "sessions_ratio": 0.6667
+   }
+  }
+ },
+ "edit_case": {
+  "delete_session": "w5d0"
+ },
+ "expected_prs_after_edit": {
+  "w1d2": {
+   "barbell-bench-press": {
+    "set_volume": {
+     "value": 793.787592,
+     "set_id": "w1d2-e1-t0",
+     "load_kg": 79.378759,
+     "reps": 10,
+     "set_ids": [
+      "w1d2-e1-t0",
+      "w1d2-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w1d2-e1-t0",
+     "load_kg": 79.378759,
+     "reps": 10,
+     "set_ids": [
+      "w1d2-e1-t0",
+      "w1d2-e1-t1"
+     ]
+    }
+   }
+  },
+  "w1d4": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 86.182653,
+     "set_id": "w1d4-e0-t0",
+     "load_kg": 86.182653,
+     "reps": 6,
+     "set_ids": [
+      "w1d4-e0-t0",
+      "w1d4-e0-t1",
+      "w1d4-e0-t2"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 72.574866,
+     "set_id": "w1d4-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 9,
+     "set_ids": [
+      "w1d4-e1-t0",
+      "w1d4-e1-t1",
+      "w1d4-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 94.347325,
+     "set_id": "w1d4-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 9,
+     "set_ids": [
+      "w1d4-e1-t0",
+      "w1d4-e1-t1"
+     ]
+    }
+   }
+  },
+  "w2d0": {
+   "barbell-bench-press": {
+    "e1rm": {
+     "value": 109.089095,
+     "set_id": "w2d0-e0-t2",
+     "load_kg": 83.914688,
+     "reps": 9,
+     "set_ids": [
+      "w2d0-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w2d0-e0-t2",
+     "load_kg": 83.914688,
+     "reps": 9,
+     "set_ids": [
+      "w2d0-e0-t2"
+     ]
+    }
+   },
+   "barbell-row": {
+    "set_volume": {
+     "value": 725.748655,
+     "set_id": "w2d0-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 10,
+     "set_ids": [
+      "w2d0-e1-t0",
+      "w2d0-e1-t1"
+     ]
+    },
+    "e1rm": {
+     "value": 96.766487,
+     "set_id": "w2d0-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 10,
+     "set_ids": [
+      "w2d0-e1-t0",
+      "w2d0-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w2d0-e1-t0",
+     "load_kg": 72.574866,
+     "reps": 10,
+     "set_ids": [
+      "w2d0-e1-t0",
+      "w2d0-e1-t1"
+     ]
+    }
+   }
+  },
+  "w2d2": {
+   "pull-up": {
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w2d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 9,
+     "set_ids": [
+      "w2d2-e0-t0"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "set_volume": {
+     "value": 898.113961,
+     "set_id": "w2d2-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 12,
+     "set_ids": [
+      "w2d2-e1-t0",
+      "w2d2-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 12,
+     "set_id": "w2d2-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 12,
+     "set_ids": [
+      "w2d2-e1-t0",
+      "w2d2-e1-t1"
+     ]
+    }
+   }
+  },
+  "w2d6": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 88.450617,
+     "set_id": "w2d6-e0-t0",
+     "load_kg": 88.450617,
+     "reps": 6,
+     "set_ids": [
+      "w2d6-e0-t0",
+      "w2d6-e0-t1"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 74.84283,
+     "set_id": "w2d6-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 9,
+     "set_ids": [
+      "w2d6-e1-t0",
+      "w2d6-e1-t1",
+      "w2d6-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 97.295679,
+     "set_id": "w2d6-e1-t0",
+     "load_kg": 74.84283,
+     "reps": 9,
+     "set_ids": [
+      "w2d6-e1-t0"
+     ]
+    }
+   }
+  },
+  "w3d0": {
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 7,
+     "set_id": "w3d0-e0-t1",
+     "load_kg": 88.450617,
+     "reps": 7,
+     "set_ids": [
+      "w3d0-e0-t1"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 77.110795,
+     "set_id": "w3d0-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 8,
+     "set_ids": [
+      "w3d0-e1-t0"
+     ]
+    },
+    "e1rm": {
+     "value": 97.673673,
+     "set_id": "w3d0-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 8,
+     "set_ids": [
+      "w3d0-e1-t0"
+     ]
+    }
+   }
+  },
+  "w3d2": {
+   "pull-up": {
+    "weight": {
+     "value": 4.535929,
+     "set_id": "w3d2-e0-t0",
+     "load_kg": 4.535929,
+     "reps": 6,
+     "set_ids": [
+      "w3d2-e0-t0",
+      "w3d2-e0-t1"
+     ]
+    },
+    "set_volume": {
+     "value": 27.215575,
+     "set_id": "w3d2-e0-t0",
+     "load_kg": 4.535929,
+     "reps": 6,
+     "set_ids": [
+      "w3d2-e0-t0",
+      "w3d2-e0-t1"
+     ]
+    },
+    "e1rm": {
+     "value": 5.443115,
+     "set_id": "w3d2-e0-t0",
+     "load_kg": 4.535929,
+     "reps": 6,
+     "set_ids": [
+      "w3d2-e0-t0",
+      "w3d2-e0-t1"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 11,
+     "set_id": "w3d2-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 11,
+     "set_ids": [
+      "w3d2-e1-t0"
+     ]
+    }
+   }
+  },
+  "w3d4": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 90.718582,
+     "set_id": "w3d4-e0-t0",
+     "load_kg": 90.718582,
+     "reps": 5,
+     "set_ids": [
+      "w3d4-e0-t0",
+      "w3d4-e0-t1",
+      "w3d4-e0-t2"
+     ]
+    }
+   },
+   "barbell-row": {
+    "e1rm": {
+     "value": 100.244033,
+     "set_id": "w3d4-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 9,
+     "set_ids": [
+      "w3d4-e1-t0",
+      "w3d4-e1-t1"
+     ]
+    },
+    "reps_at_load": {
+     "value": 9,
+     "set_id": "w3d4-e1-t0",
+     "load_kg": 77.110795,
+     "reps": 9,
+     "set_ids": [
+      "w3d4-e1-t0",
+      "w3d4-e1-t1"
+     ]
+    }
+   }
+  },
+  "w4d0": {
+   "barbell-bench-press": {
+    "e1rm": {
+     "value": 111.0,
+     "set_id": "w4d0-e0-t1",
+     "load_kg": 90.0,
+     "reps": 7,
+     "set_ids": [
+      "w4d0-e0-t1",
+      "w4d0-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 7,
+     "set_id": "w4d0-e0-t1",
+     "load_kg": 90.0,
+     "reps": 7,
+     "set_ids": [
+      "w4d0-e0-t1",
+      "w4d0-e0-t2",
+      "w4d0-e0-t3"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 77.5,
+     "set_id": "w4d0-e1-t0",
+     "load_kg": 77.5,
+     "reps": 9,
+     "set_ids": [
+      "w4d0-e1-t0",
+      "w4d0-e1-t1",
+      "w4d0-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 100.75,
+     "set_id": "w4d0-e1-t0",
+     "load_kg": 77.5,
+     "reps": 9,
+     "set_ids": [
+      "w4d0-e1-t0",
+      "w4d0-e1-t1"
+     ]
+    }
+   }
+  },
+  "w4d2": {
+   "pull-up": {
+    "weight": {
+     "value": 5.0,
+     "set_id": "w4d2-e0-t1",
+     "load_kg": 5.0,
+     "reps": 8,
+     "set_ids": [
+      "w4d2-e0-t1",
+      "w4d2-e0-t2"
+     ]
+    },
+    "set_volume": {
+     "value": 40.0,
+     "set_id": "w4d2-e0-t1",
+     "load_kg": 5.0,
+     "reps": 8,
+     "set_ids": [
+      "w4d2-e0-t1",
+      "w4d2-e0-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 6.333333,
+     "set_id": "w4d2-e0-t1",
+     "load_kg": 5.0,
+     "reps": 8,
+     "set_ids": [
+      "w4d2-e0-t1",
+      "w4d2-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w4d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 10,
+     "set_ids": [
+      "w4d2-e0-t0"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w4d2-e1-t0",
+     "load_kg": 80.0,
+     "reps": 10,
+     "set_ids": [
+      "w4d2-e1-t0"
+     ]
+    }
+   }
+  },
+  "w5d2": {
+   "pull-up": {
+    "weight": {
+     "value": 11.339823,
+     "set_id": "w5d2-e0-t2",
+     "load_kg": 11.339823,
+     "reps": 5,
+     "set_ids": [
+      "w5d2-e0-t2"
+     ]
+    },
+    "set_volume": {
+     "value": 56.699114,
+     "set_id": "w5d2-e0-t2",
+     "load_kg": 11.339823,
+     "reps": 5,
+     "set_ids": [
+      "w5d2-e0-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 13.229793,
+     "set_id": "w5d2-e0-t2",
+     "load_kg": 11.339823,
+     "reps": 5,
+     "set_ids": [
+      "w5d2-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 11,
+     "set_id": "w5d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 11,
+     "set_ids": [
+      "w5d2-e0-t0"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 11,
+     "set_id": "w5d2-e1-t0",
+     "load_kg": 79.378759,
+     "reps": 11,
+     "set_ids": [
+      "w5d2-e1-t0"
+     ]
+    }
+   }
+  },
+  "w5d4": {
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 8,
+     "set_id": "w5d4-e0-t0",
+     "load_kg": 87.5,
+     "reps": 8,
+     "set_ids": [
+      "w5d4-e0-t0",
+      "w5d4-e0-t1"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 80.0,
+     "set_id": "w5d4-e1-t0",
+     "load_kg": 80.0,
+     "reps": 9,
+     "set_ids": [
+      "w5d4-e1-t0",
+      "w5d4-e1-t1",
+      "w5d4-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 104.0,
+     "set_id": "w5d4-e1-t0",
+     "load_kg": 80.0,
+     "reps": 9,
+     "set_ids": [
+      "w5d4-e1-t0",
+      "w5d4-e1-t1",
+      "w5d4-e1-t2"
+     ]
+    }
+   }
+  },
+  "w6d0": {
+   "barbell-bench-press": {
+    "weight": {
+     "value": 95.0,
+     "set_id": "w6d0-e0-t1",
+     "load_kg": 95.0,
+     "reps": 4,
+     "set_ids": [
+      "w6d0-e0-t1"
+     ]
+    },
+    "e1rm": {
+     "value": 114.0,
+     "set_id": "w6d0-e0-t2",
+     "load_kg": 90.0,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 8,
+     "set_id": "w6d0-e0-t2",
+     "load_kg": 90.0,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e0-t2"
+     ]
+    }
+   },
+   "barbell-row": {
+    "weight": {
+     "value": 82.5,
+     "set_id": "w6d0-e1-t0",
+     "load_kg": 82.5,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e1-t0",
+      "w6d0-e1-t1",
+      "w6d0-e1-t2"
+     ]
+    },
+    "e1rm": {
+     "value": 104.5,
+     "set_id": "w6d0-e1-t0",
+     "load_kg": 82.5,
+     "reps": 8,
+     "set_ids": [
+      "w6d0-e1-t0",
+      "w6d0-e1-t1"
+     ]
+    }
+   }
+  },
+  "w6d2": {
+   "pull-up": {
+    "set_volume": {
+     "value": 70.0,
+     "set_id": "w6d2-e0-t1",
+     "load_kg": 10.0,
+     "reps": 7,
+     "set_ids": [
+      "w6d2-e0-t1",
+      "w6d2-e0-t2"
+     ]
+    },
+    "reps_at_load": {
+     "value": 12,
+     "set_id": "w6d2-e0-t0",
+     "load_kg": 0.0,
+     "reps": 12,
+     "set_ids": [
+      "w6d2-e0-t0",
+      "w6d2-e0-t1",
+      "w6d2-e0-t2"
+     ]
+    }
+   },
+   "barbell-bench-press": {
+    "reps_at_load": {
+     "value": 10,
+     "set_id": "w6d2-e1-t0",
+     "load_kg": 82.5,
+     "reps": 10,
+     "set_ids": [
+      "w6d2-e1-t0"
+     ]
+    }
+   }
+  }
+ },
+ "expected_analytics_after_edit": {
+  "2026-10-05": {
+   "week_start": "2026-10-05",
+   "week_end_exclusive": "2026-10-12",
+   "unit": "kg",
+   "hardRIR": 3,
+   "label": "Logged totals, not estimates of muscle growth.",
+   "hard_sets": {
+    "per_muscle": {
+     "chest": 5.0,
+     "front_delts": 2.5,
+     "side_delts": 0.0,
+     "rear_delts": 1.3,
+     "lats": 2.6,
+     "upper_back": 2.5,
+     "traps": 1.0,
+     "biceps": 1.6,
+     "triceps": 2.5,
+     "forearms": 0.3,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "per_muscle_board_rounded": {
+     "chest": 5.0,
+     "front_delts": 2.5,
+     "side_delts": 0.0,
+     "rear_delts": 1.5,
+     "lats": 2.5,
+     "upper_back": 2.5,
+     "traps": 1.0,
+     "biceps": 1.5,
+     "triceps": 2.5,
+     "forearms": 0.5,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    },
+    "set_count": 8,
+    "effort_not_logged": 6,
+    "archived_sets_not_counted": 0
+   },
+   "volume": {
+    "per_session_kg": {
+     "w5d2": 1723.6531,
+     "w5d4": 4012.5
+    },
+    "week_kg": 5736.1531,
+    "per_muscle_kg": {
+     "chest": 3679.4539,
+     "front_delts": 1839.727,
+     "side_delts": 0.0,
+     "rear_delts": 1017.0097,
+     "lats": 1656.6991,
+     "upper_back": 2028.3496,
+     "traps": 1000.0,
+     "biceps": 1034.0195,
+     "triceps": 1839.727,
+     "forearms": 17.0097,
+     "abs": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "glutes": 0.0,
+     "calves": 0.0,
+     "adductors": 0.0,
+     "lower_back": 1000.0,
+     "obliques": 0.0,
+     "abductors": 0.0
+    }
+   },
+   "load_trend": {
+    "barbell-bench-press": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 106.2919,
+      "set_id": "w1d0-e0-t2"
+     },
+     {
+      "session_id": "w1d2",
+      "date": "2026-09-09",
+      "e1rm_kg": 105.8383,
+      "set_id": "w1d2-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 103.4192,
+      "set_id": "w1d4-e0-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 109.0891,
+      "set_id": "w2d0-e0-t2"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 106.1407,
+      "set_id": "w2d6-e0-t0"
+     },
+     {
+      "session_id": "w3d0",
+      "date": "2026-09-21",
+      "e1rm_kg": 109.0891,
+      "set_id": "w3d0-e0-t1"
+     },
+     {
+      "session_id": "w3d2",
+      "date": "2026-09-23",
+      "e1rm_kg": 102.8144,
+      "set_id": "w3d2-e1-t1"
+     },
+     {
+      "session_id": "w3d4",
+      "date": "2026-09-25",
+      "e1rm_kg": 105.8383,
+      "set_id": "w3d4-e0-t0"
+     },
+     {
+      "session_id": "w4d0",
+      "date": "2026-09-28",
+      "e1rm_kg": 111.0,
+      "set_id": "w4d0-e0-t1"
+     },
+     {
+      "session_id": "w4d2",
+      "date": "2026-09-30",
+      "e1rm_kg": 106.6667,
+      "set_id": "w4d2-e1-t0"
+     },
+     {
+      "session_id": "w5d2",
+      "date": "2026-10-07",
+      "e1rm_kg": 105.8383,
+      "set_id": "w5d2-e1-t1"
+     },
+     {
+      "session_id": "w5d4",
+      "date": "2026-10-09",
+      "e1rm_kg": 110.8333,
+      "set_id": "w5d4-e0-t0"
+     }
+    ],
+    "barbell-row": [
+     {
+      "session_id": "w1d0",
+      "date": "2026-09-07",
+      "e1rm_kg": 93.7425,
+      "set_id": "w1d0-e1-t0"
+     },
+     {
+      "session_id": "w1d4",
+      "date": "2026-09-11",
+      "e1rm_kg": 94.3473,
+      "set_id": "w1d4-e1-t0"
+     },
+     {
+      "session_id": "w2d0",
+      "date": "2026-09-14",
+      "e1rm_kg": 96.7665,
+      "set_id": "w2d0-e1-t0"
+     },
+     {
+      "session_id": "w2d6",
+      "date": "2026-09-20",
+      "e1rm_kg": 97.2957,
+      "set_id": "w2d6-e1-t0"
+     },
+     {
+      "session_id": "w3d0",
+      "date": "2026-09-21",
+      "e1rm_kg": 97.6737,
+      "set_id": "w3d0-e1-t0"
+     },
+     {
+      "session_id": "w3d4",
+      "date": "2026-09-25",
+      "e1rm_kg": 100.244,
+      "set_id": "w3d4-e1-t0"
+     },
+     {
+      "session_id": "w4d0",
+      "date": "2026-09-28",
+      "e1rm_kg": 100.75,
+      "set_id": "w4d0-e1-t0"
+     },
+     {
+      "session_id": "w5d4",
+      "date": "2026-10-09",
+      "e1rm_kg": 104.0,
+      "set_id": "w5d4-e1-t0"
+     }
+    ],
+    "pull-up": [
+     {
+      "session_id": "w3d2",
+      "date": "2026-09-23",
+      "e1rm_kg": 5.4431,
+      "set_id": "w3d2-e0-t0"
+     },
+     {
+      "session_id": "w4d2",
+      "date": "2026-09-30",
+      "e1rm_kg": 6.3333,
+      "set_id": "w4d2-e0-t1"
+     },
+     {
+      "session_id": "w5d2",
+      "date": "2026-10-07",
+      "e1rm_kg": 13.2298,
+      "set_id": "w5d2-e0-t2"
+     }
+    ]
+   },
+   "adherence": {
+    "planned_sets": 11,
+    "completed_planned_sets": 11,
+    "skipped_sets": 0,
+    "sets_ratio": 1.0,
+    "sessions_completed": 2,
+    "sessions_skipped": 0,
+    "sessions_planned": 3,
+    "sessions_not_started": 1,
+    "sessions_ratio": 0.6667
+   }
+  }
+ }
+}

@@ -83,3 +83,20 @@ body:not([data-view=train]):has(#lg-kp) #lg-timer{bottom:calc(var(--tabh) + 8px)
 #lg-tray{position:fixed;left:0;right:0;top:0;bottom:var(--tabh);z-index:195;background:var(--lg-bg);overflow:auto;padding:0 8px 16px}
 .lg-tray-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;padding:10px 4px;padding-top:calc(10px + env(safe-area-inset-top));background:var(--lg-bg)}.lg-tray-top b{flex:1}.lg-tray-top button{min-height:44px}
 #lg-tray .panel{margin:0}
+/* v28 PR badges + celebration (reduce-motion: static, no burst) */
+.lg-prb{display:flex;flex-wrap:wrap;gap:4px;margin:-2px 0 6px 34px}
+.lg-prb span{font-size:11px;line-height:1;padding:4px 7px;border-radius:999px;background:var(--lg-card2);color:var(--lg-acc);border:1px solid var(--lg-acc);font-weight:600}
+.lg-sumpr{list-style:none;padding:0;margin:4px 0}.lg-sumpr li{padding:3px 0}
+.lg-wtot{margin:4px 0 8px}
+#lg-cel{position:fixed;left:50%;top:22%;transform:translateX(-50%);z-index:1200;background:var(--lg-card);color:var(--lg-fg);border:1px solid var(--lg-acc);padding:14px 18px;border-radius:16px;box-shadow:0 10px 30px var(--lg-shadow);display:flex;align-items:center;gap:10px;font-size:15px;max-width:88vw;pointer-events:none}
+#lg-cel .cel-t{font-size:28px}
+#lg-cel[data-motion=full]{animation:celIn .5s cubic-bezier(.2,1.4,.4,1) both}
+#lg-cel[data-motion=full] .cel-t{animation:celPop .7s ease-out .1s both}
+.cel-burst{position:absolute;left:28px;top:50%;width:0;height:0}
+.cel-burst s{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--lg-acc);animation:celB .9s ease-out both}
+.cel-burst s:nth-child(3n){background:var(--lg-ok)}.cel-burst s:nth-child(3n+1){background:var(--lg-pri)}
+.cel-burst s:nth-child(1){--a:0deg}.cel-burst s:nth-child(2){--a:30deg}.cel-burst s:nth-child(3){--a:60deg}.cel-burst s:nth-child(4){--a:90deg}.cel-burst s:nth-child(5){--a:120deg}.cel-burst s:nth-child(6){--a:150deg}.cel-burst s:nth-child(7){--a:180deg}.cel-burst s:nth-child(8){--a:210deg}.cel-burst s:nth-child(9){--a:240deg}.cel-burst s:nth-child(10){--a:270deg}.cel-burst s:nth-child(11){--a:300deg}.cel-burst s:nth-child(12){--a:330deg}
+@keyframes celB{from{transform:rotate(var(--a)) translateX(0);opacity:1}to{transform:rotate(var(--a)) translateX(46px);opacity:0}}
+@keyframes celIn{from{opacity:0;transform:translate(-50%,12px) scale(.9)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes celPop{0%{transform:scale(.4)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){#lg-cel,#lg-cel *{animation:none!important;transition:none!important}.cel-burst{display:none}}

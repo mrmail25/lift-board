@@ -45,12 +45,12 @@ function idbOpen(){return new Promise(res=>{try{if(!window.indexedDB)return res(
 const getAll=st=>new Promise(res=>{const q=db.transaction(st).objectStore(st).getAll();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>res([])});
 function mirror(){if(cur&&cur.status=='active')localStorage.setItem(AKEY,JSON.stringify({s:cur,e:L.entries.filter(x=>x.sessionId==cur.id),t:L.sets.filter(x=>x.sessionId==cur.id)}));else localStorage.removeItem(AKEY);
   if(!db)localStorage.setItem(FKEY,JSON.stringify(L))}
-function persist(sid){mirror();if(!db)return Promise.resolve();return new Promise(res=>{const tx=db.transaction(['sessions','entries','sets','prs'],'readwrite');
+function persist(sid){recomputePrs();mirror();if(!db)return Promise.resolve();return new Promise(res=>{const tx=db.transaction(['sessions','entries','sets','prs'],'readwrite');
   const Ss=tx.objectStore('sessions'),En=tx.objectStore('entries'),St=tx.objectStore('sets'),P=tx.objectStore('prs');const s=L.sessions.find(x=>x.id==sid);if(s)Ss.put(s);else Ss.delete(sid);
   const redo=(store,list)=>{const c=store.index('sessionId').openCursor(IDBKeyRange.only(sid));c.onsuccess=()=>{const k=c.result;if(k){k.delete();k.continue()}else list.forEach(x=>store.put(x))}};
   redo(En,L.entries.filter(e=>e.sessionId==sid));redo(St,L.sets.filter(x=>x.sessionId==sid));P.clear();L.prs.forEach(p=>P.put(p));
   tx.oncomplete=()=>res();tx.onerror=()=>res()})}
-function persistAll(){mirror();if(!db)return Promise.resolve();return new Promise(res=>{const tx=db.transaction(['sessions','entries','sets','prs'],'readwrite');
+function persistAll(){recomputePrs();mirror();if(!db)return Promise.resolve();return new Promise(res=>{const tx=db.transaction(['sessions','entries','sets','prs'],'readwrite');
   [['sessions',L.sessions],['entries',L.entries],['sets',L.sets],['prs',L.prs]].forEach(([n,a])=>{const o=tx.objectStore(n);o.clear();a.forEach(x=>o.put(x))});tx.oncomplete=()=>res();tx.onerror=()=>res()})}
 // ---------- units ----------
 const conv=(v,from,to)=>v==null||v===''?null:from==to?v:from=='kg'?v*CFG.lbPerKg:v/CFG.lbPerKg;
@@ -69,7 +69,7 @@ const tRIR=exId=>(LR().target_rir_by_type||{})[(EX[resolve(exId)]||{}).type]??(L
 const E1RM={epley:(w,r)=>w*(1+r/30),brzycki:(w,r)=>w*36/(37-r)};let e1warned=null;
 function e1Formula(){const f=LR().e1rm_formula;if(E1RM[f])return{name:f,fn:E1RM[f],warn:null};const warn=`Unknown e1rm_formula '${f}' in rules.json; using Epley`;if(e1warned!==f){e1warned=f;console.warn('[Lift Board] '+warn)}return{name:Object.keys(E1RM)[0],fn:E1RM.epley,warn}}
 const e1rm=(load,reps)=>e1Formula().fn(load,reps);
-const isHard=x=>x.kind=='working'&&x.done&&(x.rir==null||x.rir<=HR());
+const isHard=x=>x.kind=='working'&&x.done&&Number(x.reps)>0&&(x.rir==null||x.rir<=HR());/* v28 rules.json v8: a hard set needs at least 1 rep */
 // ---------- history ----------
 function hist(exId,exceptSid){return L.sessions.filter(s=>s.status=='completed'&&s.id!==exceptSid).sort(byT).reverse().map(s=>{const es=L.entries.filter(e=>e.sessionId==s.id&&resolve(e.exerciseId)==exId);if(!es.length)return null;
   const ids=new Set(es.map(e=>e.id));return{s,e:es[0],sets:L.sets.filter(x=>ids.has(x.entryId)&&x.done).sort((a,b)=>a.idx-b.idx)}}).filter(Boolean)}
@@ -135,17 +135,17 @@ function closeLogger(){closeKp();renderStart();refreshBar()}
 function renderStart(){const o=document.getElementById('lg');if(!o)return;const ad=adherence();
   o.innerHTML=`<div class="lg-top"><b class="lg-name">Train</b></div><div class="lg-body" id="lg-start-pg"><button class="pri lg-big" id="lg-cont"></button>
   <div class="lg-startbtns"><button id="lg-days">Choose a day…</button><button id="lg-wkb">Week &amp; history</button></div>
-  <p class="cf-hint lg-adh0">This week: ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started</p></div>`;
+  <p class="cf-hint lg-adh0">This week (logged totals): ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started</p></div>`;
   o.querySelector('#lg-cont').onclick=()=>{if(cur)return openLogger();const c=continueIdx();if(c!=null)startSession(c)};o.querySelector('#lg-days').onclick=startSheet;o.querySelector('#lg-wkb').onclick=()=>weekView();refreshBar()}
 function cueHtml(e){const c=e.cue||{};const a=[];if(c.sugLoad!=null)a.push(`↑ Try ${fmt(c.sugLoad)}×${c.sugReps}`);else if(c.addRep)a.push('Add a rep this time');if(c.beat)a.push(H(c.beat));if(c.cut)a.push('Missed the range twice: consider −5%');return a.join(' · ')}
 function rowHtml(e,x,n){const pv=x.kind=='working'?prevFor(resolve(e.exerciseId),'working',n.w,cur.id):prevFor(resolve(e.exerciseId),'warmup',n.u,cur.id);
   const pvs=pv?`${fmt(dLoad(pv))} × ${pv.reps}${pv.rir!=null?' @'+pv.rir:''}`:'—';const L_=conv(x.load,cur.unit,S.unit);
-  const rirTxt=x.rir==null?(S.rpe?'RPE':'RIR'):(S.rpe?'RPE '+(10-x.rir):'@'+(x.rir==5?'5+':x.rir));
+  const pt=prTypesOf(x.id,LP);const rirTxt=x.rir==null?(S.rpe?'RPE':'RIR'):(S.rpe?'RPE '+(10-x.rir):'@'+(x.rir==5?'5+':x.rir));
   return`<div class="lg-row${x.id==activeSet?' active':''}${x.done?' done':''}${x.kind=='warmup'?' warm':''}" data-s="${x.id}">
    <button class="lg-n" aria-label="Set type">${x.kind=='warmup'?'W':n.w+1}</button><button class="lg-prev" aria-label="Copy previous">${pvs}</button>
    <button class="lg-fld lg-load${x.sug?' sug':''}" data-f="load">${L_==null?'':fmt(L_)}<small>${S.unit}</small></button>
    <button class="lg-fld lg-reps" data-f="reps">${x.reps==null?'':x.reps}<small>reps</small></button>
-   <button class="lg-rirb${x.rir==null?'':' on'}">${rirTxt}</button><button class="lg-ck" aria-label="Done">${x.pr?'🏆':'✓'}</button></div>
+   <button class="lg-rirb${x.rir==null?'':' on'}">${rirTxt}</button><button class="lg-ck" aria-label="Done">${pt.length?'🏆':'✓'}</button></div>${pt.length?`<div class="lg-prb" data-s="${x.id}" data-t="${pt.join(',')}">${pt.map(k=>`<span data-k="${k}">🏆 ${PRL[k]}</span>`).join('')}</div>`:''}
    ${x.sug&&!x.done?`<div class="lg-sugrow"><button class="lg-sugchip" data-s="${x.id}">↑ suggested · tap for last time</button></div>`:''}
    <div class="lg-rir" data-s="${x.id}" hidden>${[0,1,2,3,4,5].map(r=>`<button data-r="${r}" class="${x.rir===r?'on':''}">${S.rpe?10-r:(r==5?'5+':r)}</button>`).join('')}</div>`}
 function cardHtml(e){const x=EX[resolve(e.exerciseId)],sets=setsOf(e.id),done=sets.filter(s=>s.done).length,open=e.id==openEntry,n={w:0,u:0};
@@ -169,7 +169,7 @@ function adjSheet(e){const id=e.exerciseId;const draw=()=>{modal(`<div id="lg-ad
 function beatHtml(e){const b=beatOf(e);return b?` <b class="lg-beat">${b}</b>`:''}
 function beatOf(e){const now=bestOf(setsOf(e.id).filter(x=>x.done));if(!now)return'';const h=hist(resolve(e.exerciseId),cur&&cur.id)[0];if(!h)return'';const prev=bestOf(h.sets);if(!prev)return'▲';
   if(Math.abs(now.v-prev.v)>1e-9)return now.v>prev.v?'▲':'▼';const a=volOf(setsOf(e.id).filter(x=>x.done)),b=volOf(h.sets);return a>b?'▲':a<b?'▼':'='}
-function renderSession(){const o=document.getElementById('lg');if(!o||!cur)return;const es=entriesOf(cur.id);
+function renderSession(){const o=document.getElementById('lg');if(!o||!cur)return;LP=livePrs();const es=entriesOf(cur.id);
   o.innerHTML=`<div class="lg-top"><b class="lg-name">${H(cur.label)}</b><span class="lg-el" id="lg-el"></span><button class="pri" id="lg-fin">Finish</button></div>
   <div class="lg-body">${es.map(cardHtml).join('')}<button class="lg-addex" id="lg-addex">+ Exercise</button><button class="lg-hide" id="lg-hide">Back to Build (session keeps running)</button></div>`;
   bindSession(o);tick();const a=o.querySelector('.lg-row.active');if(a&&!o._noScroll)a.scrollIntoView({block:'center'});clearTimer()}
@@ -195,13 +195,21 @@ function bindRow(e,r){const x=L.sets.find(s=>s.id==r.dataset.s);let sw=false;
   r.addEventListener('pointerup',ev=>{if(sx==null)return;const dx=ev.clientX-sx;sx=null;r.style.transform='';if(dx<-70&&Math.abs(ev.clientY-sy)<30){sw=true;delSet(e,x)}})}
 function renum(e){let w=0,u=0;setsOf(e.id).forEach((s,i)=>{s.idx=i})}
 function delSet(e,x){const before=JSON.stringify(L.sets);L.sets=L.sets.filter(s=>s.id!==x.id);renum(e);persist(cur.id);renderSession();toast('Set deleted',()=>{L.sets=JSON.parse(before);persist(cur.id);renderSession()})}
-function check(e,x){if(x.done){x.done=false;x.doneAt=null;x.pr=null;persist(cur.id);renderSession();return}if(x.reps==null||x.reps==='' ){activeSet=x.id;openKp(e,x,x.load==null?'load':'reps');return}
-  x.done=true;x.doneAt=nowISO();x.sug=false;x.pr=prOf(e,x);startTimer(x.kind=='warmup'?restFor(e.exerciseId,'warmup'):e.restSec);
+function check(e,x){if(x.done){x.done=false;x.doneAt=null;delete x.pr;persist(cur.id);renderSession();return}if(x.reps==null||x.reps==='' ){activeSet=x.id;openKp(e,x,x.load==null?'load':'reps');return}
+  x.done=true;x.doneAt=nowISO();x.sug=false;delete x.pr;{const won=prTypesOf(x.id);if(won.length)celebrate(won)}startTimer(x.kind=='warmup'?restFor(e.exerciseId,'warmup'):e.restSec);
   const nx=setsOf(e.id).find(s=>!s.done);if(nx)activeSet=nx.id;else{const es=entriesOf(cur.id).filter(q=>!q.skipped),k=es.indexOf(e),ne=es.slice(k+1).concat(es.slice(0,k)).find(q=>setsOf(q.id).some(s=>!s.done));if(ne){openEntry=ne.id;activeSet=firstOpenSet(ne)}else activeSet=null}
   persist(cur.id);renderSession()}
-function prOf(e,x){if(x.kind!='working'||!x.reps)return null;const id=resolve(e.exerciseId),h=hist(id,cur.id);if(!h.length)return null;const all=h.flatMap(q=>work(q.sets)),lb=toLb(x.load,cur.unit)||0,r=[];
-  if(x.reps<=LR().e1rm_max_reps){const b=Math.max(0,...all.filter(s=>s.reps<=LR().e1rm_max_reps).map(s=>e1rm(toLb(s.load,sessUnit(s.sessionId))||0,s.reps)));if(e1rm(lb,x.reps)>b+1e-9)r.push('e1rm')}
-  const heavier=all.filter(s=>(toLb(s.load,sessUnit(s.sessionId))||0)>=lb-1e-9);if(heavier.length&&x.reps>Math.max(...heavier.map(s=>s.reps)))r.push('repsAtLoad');return r.length?r:null}
+// v28: PRs are derived from the logged history by prs.js (port of tools/prs.py) and recomputed after every change; nothing stored is a source of truth.
+let LP={};function hx(live){const ss=L.sessions.map(s=>live&&cur&&s.id==cur.id?{...s,status:'completed',endedAt:nowISO()}:s);return{schema:LOG_SCHEMA,plannedSessionsPerWeek:order().length,sessions:ss,entries:L.entries,sets:L.sets}}
+function livePrs(){return cur?(detectPrs(hx(true),ALIAS)[cur.id]||{}):{}}
+function prTypesOf(setId,sp){const P=sp||livePrs(),o=[];Object.values(P).forEach(r=>PR_TYPES.forEach(k=>{if(r[k]&&r[k].set_id==setId)o.push(k)}));return o}
+function recomputePrs(){const P=detectPrs(hx(false),ALIAS),out=[];Object.keys(P).forEach(sid=>Object.keys(P[sid]).forEach(ex=>PR_TYPES.forEach(k=>{const r=P[sid][ex][k];if(r)out.push({id:sid+'|'+ex+'|'+k,sessionId:sid,exerciseId:ex,kind:k,value:r.value,unit:k=='reps_at_load'?'reps':k=='set_volume'?'kg·reps':'kg',setId:r.set_id,load_kg:r.load_kg,reps:r.reps})})));L.prs=out;return P}
+const PRL={weight:'Weight PR',set_volume:'Set-volume PR',e1rm:'Estimated 1RM PR',reps_at_load:'Rep PR'};
+const prVal=(k,r)=>k=='reps_at_load'?`${r.reps} reps at ${fmt(conv(r.load_kg,'kg',S.unit))} ${S.unit}`:k=='set_volume'?`${fmt(conv(r.value,'kg',S.unit))} ${S.unit}·reps`:`${fmt(conv(r.value,'kg',S.unit))} ${S.unit}`;
+const reduceMotion=()=>!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+function celebrate(types){const o=document.getElementById('lg-cel');if(o)o.remove();const c=document.createElement('div');c.id='lg-cel';c.setAttribute('role','status');c.setAttribute('aria-live','polite');
+  const rm=reduceMotion();c.dataset.motion=rm?'reduced':'full';c.dataset.types=types.join(',');c.innerHTML=`<span class="cel-t">🏆</span><b>New ${types.map(k=>PRL[k]).join(' · ')}</b>${rm?'':'<i class="cel-burst" aria-hidden="true">'+'<s></s>'.repeat(12)+'</i>'}`;
+  document.body.appendChild(c);setTimeout(()=>c.remove(),rm?2200:1800)}
 function editSet(e,x){modal(`<h3>Edit set</h3><div class="lg-ed"><label>Type <select id="ed-k"><option value="working" ${x.kind=='working'?'selected':''}>Working</option><option value="warmup" ${x.kind=='warmup'?'selected':''}>Warm-up</option></select></label>
   <label>Load (${S.unit}) <input id="ed-l" inputmode="decimal" value="${fmt(conv(x.load,cur.unit,S.unit))}"></label><label>Reps <input id="ed-r" inputmode="numeric" value="${x.reps??''}"></label>
   <label>${S.rpe?'RPE':'RIR'} (optional) <input id="ed-i" inputmode="decimal" value="${x.rir==null?'':S.rpe?10-x.rir:x.rir}"></label><label>Note <input id="ed-n" value="${H(x.note||'')}"></label></div>
@@ -294,12 +302,12 @@ function swapMenu(e){const id=resolve(e.exerciseId),list=swaps(id,null,6);modal(
   <div class="lg-menu lg-more2"><button id="sw-all">Browse all exercises…</button><button id="sw-new">Create new exercise…</button></div><div class="cf-btns"><button id="sw-x">Cancel</button></div>`);
   document.getElementById('sw-x').onclick=closeModal;document.querySelectorAll('#sw-l button[data-id]').forEach(b=>b.onclick=()=>doSwap(e,b.dataset.id));
   document.getElementById('sw-all').onclick=()=>trayPick('Swap '+exName(e)+' for…',nid=>doSwap(e,nid));document.getElementById('sw-new').onclick=()=>createEx(nid=>doSwap(e,nid))}
-function weekDone(){const ws=weekStart(),d=[];let arch=0;L.sessions.filter(s=>(s.status=='completed'||s.status=='active')&&Date.parse(s.startedAt||s.date)>=ws).forEach(s=>entriesOf(s.id).forEach(e=>{const n=setsOf(e.id).filter(isHard).length;if(!n)return;if(isArch(e.exerciseId)){arch+=n;return}d.push({id:resolve(e.exerciseId),sets:n})}));
+function weekDone(){const ws=weekStart(),d=[];let arch=0;L.sessions.filter(s=>s.status=='completed'&&Date.parse(s.startedAt||s.date)>=ws&&Date.parse(s.startedAt||s.date)<ws+7*864e5)/* v28: weekly totals are completed sessions only */.forEach(s=>entriesOf(s.id).forEach(e=>{const n=setsOf(e.id).filter(isHard).length;if(!n)return;if(isArch(e.exerciseId)){arch+=n;return}d.push({id:resolve(e.exerciseId),sets:n})}));
   return{days:[d,[],[],[],[],[],[]],arch}}
 function countsFor(days){const sv=state.days;state.days=days;try{return totals()}finally{state.days=sv}}
 function addEx(id){if(!cur||!EX[id])return;const e={id:uid('e'),sessionId:cur.id,order:entriesOf(cur.id).length,exerciseId:id,nameSnapshot:EX[id].name,added:true,repRange:[...repFor(id)],restSec:restFor(id,'working'),notes:carryNote(id),skipped:false};
   L.entries.push(e);for(let j=0;j<CFG.addSets;j++)L.sets.push(newSet(e,'working',j));prefill(e);openEntry=e.id;activeSet=firstOpenSet(e);closeModal();persist(cur.id);renderSession()}
-function addExercise(){const done=countsFor(weekDone().days),rem=countsFor([entriesOf(cur.id).flatMap(e=>e.skipped||isArch(e.exerciseId)?[]:[{id:resolve(e.exerciseId),sets:setsOf(e.id).filter(s=>!s.done&&s.kind=='working').length}]),[],[],[],[],[],[]]);
+function addExercise(){const done=countsFor(weekDone().days),rem=countsFor([entriesOf(cur.id).flatMap(e=>e.skipped||isArch(e.exerciseId)?[]:[{id:resolve(e.exerciseId),sets:setsOf(e.id).filter(s=>(!s.done&&s.kind=='working')||isHard(s)).length}]),[],[],[],[],[],[]]);
   const gap=MUS.filter(m=>done[m]+rem[m]<tgt(m).min);const sc=x=>gap.reduce((a,m)=>a+((x.muscles[m]||0)>=RULE.min_rating_to_count?x.muscles[m]:0),0);
   const all=Object.values(EX).map(x=>({x,s:sc(x)})).sort((a,b)=>b.s-a.s||(a.x.name<b.x.name?-1:1));
   modal(`<h3>Add exercise</h3><div class="lg-menu lg-more2"><button id="ax-tray">Open tray (all exercises, filters)…</button><button id="ax-new">Create exercise…</button></div>
@@ -318,18 +326,18 @@ function applyRows(tiles,rows){let t=tiles.map(x=>({...x}));rows.forEach(r=>{if(
   if(r.type=='remove')t.splice(i,1);else if(r.type=='swap')t[i]={id:r.to,sets:r.sets};else t[i].sets=r.sets});return t}
 function sessStats(s){const es=entriesOf(s.id),live=es.filter(e=>!isArch(e.exerciseId));const all=live.flatMap(e=>setsOf(e.id));const planned=((s.snapshot||{}).exercises||[]).reduce((a,p)=>a+p.sets,0);
   const doneW=es.flatMap(e=>e.skipped?[]:setsOf(e.id)).filter(x=>x.kind=='working'&&x.done).length;const skippedW=es.filter(e=>e.skipped).reduce((a,e)=>a+setsOf(e.id).filter(x=>x.kind=='working').length,0);
-  return{hard:all.filter(isHard).length,doneW,planned,skippedW,beat:es.map(e=>beatOf(e)).filter(b=>b=='▲').length,prs:es.flatMap(e=>setsOf(e.id).filter(x=>x.pr).map(x=>({e,x}))),
+  return{hard:all.filter(isHard).length,doneW,planned,skippedW,beat:es.map(e=>beatOf(e)).filter(b=>b=='▲').length,prs:(()=>{const P=cur&&s.id==cur.id?livePrs():(detectPrs(hx(false),ALIAS)[s.id]||{});return Object.keys(P).flatMap(ex=>PR_TYPES.filter(k=>P[ex][k]).map(k=>({ex,k,r:P[ex][k]})))})(),
     min:Math.round((Date.now()-Date.parse(s.startedAt))/60000)}}
 function summary(){closeKp();const ot=document.getElementById('toast');if(ot)ot.remove();const s=cur,st=sessStats(s),rows=diffRows(s),m=loaded();
   modal(`<div id="lg-sum"><h3>Finish ${H(s.label)}</h3><div class="lg-stats"><span>${st.min} min</span><span>${plural(st.hard,'hard set')}</span><span>${st.doneW}/${st.planned} planned working sets${st.skippedW?` · ${st.skippedW} skipped`:''}</span><span>${st.beat} beat last time</span></div>
-  ${st.prs.length?`<h4>PRs</h4><ul>${st.prs.map(p=>`<li>🏆 ${H(exName(p.e))}: ${fmt(conv(p.x.load,s.unit,S.unit))}×${p.x.reps} (${p.x.pr.map(k=>k=='e1rm'?'estimated 1RM':'reps at load').join(', ')})</li>`).join('')}</ul>`:''}
+  ${st.prs.length?`<h4>PRs</h4><ul class="lg-sumpr">${st.prs.map(p=>`<li data-k="${p.k}" data-x="${H(p.ex)}">🏆 ${H((EX[p.ex]||{}).name||p.ex)}: ${PRL[p.k]} · ${prVal(p.k,p.r)}</li>`).join('')}</ul>`:''}
   <label>Session notes<textarea id="sm-n">${H(s.notes||'')}</textarea></label>
   <h4>Write back to routine</h4>${rows.length?`<p class="cf-hint">Structural changes only (loads, reps and RIR are never written back).</p><div class="lg-diff">${rows.map((r,i)=>`<label><input type="checkbox" data-i="${i}" checked> ${H(r.txt)}</label>`).join('')}</div>
    <div class="lg-wb">${m?`<label><input type="radio" name="wb" value="split"> Update loaded split '${H(m.name)}'</label>`:''}<label><input type="radio" name="wb" value="board"> Apply to this board only</label><label><input type="radio" name="wb" value="none" checked> Don't apply</label></div>`:'<p class="cf-hint">No structural changes.</p>'}
   <div class="cf-btns"><button class="pri" id="sm-ok">Save session</button><button id="sm-back">Keep logging</button><button id="sm-del" class="dng">Discard session</button></div></div>`);
   document.getElementById('sm-back').onclick=()=>{closeModal();renderSession()};document.getElementById('sm-del').onclick=()=>{if(confirm('Discard this session? Logged sets will be deleted.'))discard()};
   document.getElementById('sm-ok').onclick=()=>{s.notes=document.getElementById('sm-n').value;const pick=(document.querySelector('input[name=wb]:checked')||{}).value||'none';const sel=rows.filter((r,i)=>{const c=document.querySelector(`.lg-diff input[data-i="${i}"]`);return c&&c.checked});
-    s.status='completed';s.endedAt=nowISO();s.writeBack=rows.length?pick:'none';st.prs.forEach(p=>p.x.pr.forEach(k=>L.prs.push({id:uid('p'),exerciseId:resolve(p.e.exerciseId),kind:k,value:k=='e1rm'?e1rm(toLb(p.x.load,s.unit)||0,p.x.reps):p.x.reps,setId:p.x.id,at:s.endedAt})));
+    s.status='completed';s.endedAt=nowISO();s.writeBack=rows.length?pick:'none';
     L.sets.filter(x=>x.sessionId==s.id).forEach(x=>{delete x.sug;delete x.prevLoad;delete x.prevReps});localStorage.removeItem(TKEY);const sid=s.id;cur=null;persist(sid);closeModal();closeLogger();
     if(pick!='none'&&sel.length)writeBack(s,sel,pick);else toast('Session saved',null)}}
 function writeBack(s,rows,pick){const i=s.dayIdx,prior=JSON.stringify(state),m=loaded(),priorM=m?JSON.stringify(m):null;
@@ -339,17 +347,17 @@ function writeBack(s,rows,pick){const i=s.dayIdx,prior=JSON.stringify(state),m=l
 function discard(){const sid=cur.id;L.sessions=L.sessions.filter(x=>x.id!==sid);L.entries=L.entries.filter(x=>x.sessionId!==sid);L.sets=L.sets.filter(x=>x.sessionId!==sid);cur=null;localStorage.removeItem(TKEY);persist(sid);closeModal();closeLogger()}
 // ---------- week view: Planned / Done body map, counts, adherence; history; settings ----------
 function weekStart(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return d.getTime()}
-function adherence(){const ws=weekStart(),ss=L.sessions.filter(s=>Date.parse(s.date)>=ws&&s.status!='active');const comp=ss.filter(s=>s.status=='completed'),skip=ss.filter(s=>s.status=='skipped');
-  const o=order().length,planW=comp.concat(skip).reduce((a,s)=>a+((s.snapshot||{}).exercises||[]).reduce((b,p)=>b+p.sets,0),0);let doneW=0,skW=0;
-  comp.forEach(s=>{const st=sessStats(s);doneW+=st.doneW;skW+=st.skippedW});skip.forEach(s=>skW+=((s.snapshot||{}).exercises||[]).reduce((b,p)=>b+p.sets,0));
-  return{completed:comp.length,skipped:skip.length,notStarted:Math.max(0,o-comp.length-skip.length),doneW,planW,skW}}
+function weekKey(){const d=new Date(weekStart());return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function weekAnalytics(wk){return completedAnalytics(hx(false),wk||weekKey(),{aliases:ALIAS,plannedSessions:order().length,hardRIR:HR(),exercises:EX})}
+const loggedNote=()=>((LR().completed_analytics||{}).note)||'';
+function adherence(){const a=weekAnalytics().adherence;return{completed:a.sessions_completed,skipped:a.sessions_skipped,notStarted:a.sessions_not_started,doneW:a.completed_planned_sets,planW:a.planned_sets,skW:a.skipped_sets,ratio:a.sets_ratio}}
 function weekView(tab){tab=tab||'week';const wd=weekDone(),days=view=='done'?wd.days:state.days,ad=adherence();const pc=countsFor(state.days),dc=countsFor(wd.days);
   modal(`<div id="lg-wk"><div class="lg-tabs">${['week','history','settings'].map(t=>`<button data-t="${t}" class="${t==tab?'on':''}">${t[0].toUpperCase()+t.slice(1)}</button>`).join('')}</div>
   ${tab=='week'?`<div class="lg-seg"><button id="wk-plan" class="${view=='plan'?'on':''}">Planned</button><button id="wk-done" class="${view=='done'?'on':''}">Done</button></div><div id="lg-map"></div>
    ${wd.arch?`<p class="lg-arch">${wd.arch} set${wd.arch>1?'s':''} from archived exercises not counted.</p>`:''}
-   <p class="cf-hint">Done = hard sets this week (RIR ≤ ${HR()} or not logged), counted with the board's rule. Estimates.</p>
+   <p class="cf-hint lg-logged">Done = logged total of hard sets in completed sessions this week (at least 1 rep, RIR ≤ ${HR()} or not logged), counted with the board's rule. ${H(loggedNote())}</p>
    <table class="lg-tbl lg-cnt">${MUS.map(m=>`<tr data-m="${m}" class="${status(view=='done'?dc[m]:pc[m],tgt(m))}"><td>${H(cap(lab(m)))}</td><td class="dn" data-v="${dc[m]}">${dc[m]}</td><td class="pl" data-v="${pc[m]}">/ ${pc[m]}</td><td>${tgt(m).min}–${tgt(m).max}</td></tr>`).join('')}</table>
-   <h4>Adherence this week</h4><p class="lg-adh" data-c="${ad.completed}" data-s="${ad.skipped}" data-n="${ad.notStarted}">Sessions: ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started<br>Working sets: ${ad.doneW}/${ad.planW} done${ad.planW?` (${Math.round(ad.doneW/ad.planW*100)}%)`:''}${ad.skW?` · ${ad.skW} skipped`:''}</p>`:''}
+   ${(()=>{const w=weekAnalytics(),n=L.prs.filter(p=>L.sessions.some(s=>s.id==p.sessionId&&Date.parse(s.startedAt||s.date)>=weekStart())).length;return`<h4>Logged totals this week</h4><p class="lg-wtot" data-kg="${w.volume.week_kg}" data-hs="${w.hard_sets.set_count}" data-pr="${n}">Logged total volume ${fmt(conv(w.volume.week_kg,'kg',S.unit))} ${S.unit} · logged total ${plural(w.hard_sets.set_count,'hard set')} · ${plural(n,'PR')}</p>`})()}<h4>Adherence this week (logged totals)</h4><p class="lg-adh" data-c="${ad.completed}" data-s="${ad.skipped}" data-n="${ad.notStarted}">Sessions: ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started<br>Working sets: ${ad.doneW}/${ad.planW} done${ad.planW?` (${Math.round(ad.doneW/ad.planW*100)}%)`:''}${ad.skW?` · ${ad.skW} skipped`:''}</p>`:''}
   ${tab=='history'?`<div class="lg-hl">${L.sessions.filter(s=>s.status!='active').sort(byT).reverse().map(s=>`<div class="lg-hs ${s.status}"><b>${new Date(s.date).toLocaleDateString()}</b> ${H(s.label)} <em>${s.status}</em>${s.status=='completed'?`<div>${entriesOf(s.id).map(e=>`<button class="lg-hx" data-x="${H(resolve(e.exerciseId))}">${H(exName(e))}${isArch(e.exerciseId)?' (archived)':''}</button>`).join(' ')}</div>`:''}</div>`).join('')||'<p class="cf-hint">No sessions yet.</p>'}</div>`:''}
   ${tab=='settings'?`<div class="lg-set"><label>Units <span class="lg-seg"><button data-u="lb" class="${S.unit=='lb'?'on':''}">lb</button><button data-u="kg" class="${S.unit=='kg'?'on':''}">kg</button></span></label>
    <label>Hard set = RIR ≤ <span class="lg-seg"><button data-h="-">−</button><b id="st-h">${HR()}</b><button data-h="+">+</button></span></label>
@@ -374,7 +382,7 @@ async function boot(){for(let i=0;i<200&&(!Object.keys(EX).length||(typeof RU=='
   let m=null;try{m=JSON.parse(localStorage.getItem(AKEY))}catch{}
   if(m&&m.s&&m.s.status=='active'){L.sessions=L.sessions.filter(x=>x.id!==m.s.id).concat([m.s]);L.entries=L.entries.filter(x=>x.sessionId!==m.s.id).concat(m.e||[]);L.sets=L.sets.filter(x=>x.sessionId!==m.s.id).concat(m.t||[])}
   const mn=Math.min(LOG_SCHEMA,...L.sessions.map(q=>typeof q.schema=='number'?q.schema:LOG_SCHEMA));const lg=migrate({schema:mn,...L});L={sessions:lg.sessions,entries:lg.entries||[],sets:lg.sets||[],prs:lg.prs||[]};if(migrateIds()||mn<LOG_SCHEMA)await persistAll();
-  cur=L.sessions.find(s=>s.status=='active')||null;ready=true;window.LG.ready=true;buildBar();
+  cur=L.sessions.find(s=>s.status=='active')||null;recomputePrs();ready=true;window.LG.ready=true;buildBar();
   if(cur){const e=entriesOf(cur.id);e.forEach(prefillKeep);openEntry=(e.find(q=>setsOf(q.id).some(s=>!s.done))||e[0]||{}).id;activeSet=firstOpenSet(e.find(q=>q.id==openEntry));
     modal(`<div id="lg-resume"><h3>Unfinished session</h3><p>${H(cur.label)} (started ${new Date(cur.startedAt).toLocaleString()})</p><div class="cf-btns"><button class="pri" id="rs-go">Resume</button><button id="rs-del" class="dng">Discard</button></div></div>`);
     document.getElementById('rs-go').onclick=()=>openLogger();document.getElementById('rs-del').onclick=()=>{if(confirm('Discard the unfinished session? Logged sets will be deleted.'))discard()}}}
@@ -387,7 +395,7 @@ function buildBar(){if(!document.getElementById('lg')){const o=document.createEl
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={get L(){return L},get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={get L(){return L},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();
