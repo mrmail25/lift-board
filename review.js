@@ -46,13 +46,18 @@ function weekPlan(days,week,today,snaps,h,o={}){const R=prRules(),mus=o.muscles|
   return Object.assign(plannedSets(days,h,o),{source:'current'})}
 // block = logger.progress_signals.window_weeks weeks ending with `week` vs the same span before; shown only past the Phase E gate
 // (deload_signals.eligible: min_logged_weeks since the first completed session and min_sessions) with >= block_min_prior_weeks logged weeks in the earlier window
+// v29.1 (Coach review.block_exclude_deload): true -> weeks with a completed deload session are skipped and each window reaches back past them to keep
+// window_weeks training weeks (this window first, then the earlier one); false/missing -> contiguous weeks (v29 D). Skipped weeks are returned for the note.
+const rvExDl=()=>rvRV().block_exclude_deload===true;
 function blockCompare(h,week,today,o={}){const n=((RU.logger||{}).progress_signals||{}).window_weeks,E=((RU.logger||{}).deload_signals||{}).eligible||{},ws=prWeekStart(String(week)),mus=o.muscles||MUS;
-  const W=[...Array(2*n)].map((_,k)=>prAddDays(ws,-7*k)),A={};W.forEach(w=>A[w]=(o.weekA?o.weekA(w):completedAnalytics(h,w,o)).hard_sets.per_muscle);
+  const dlw=new Set(rvExDl()?(h.sessions||[]).filter(s=>s.status=='completed'&&s.deload).map(s=>prWeekStart(prDay(s.startedAt||s.date))):[]);
+  const Tw=[],Lw=[],skip=[];for(let w=ws;Lw.length<n;w=prAddDays(w,-7)){if(dlw.has(w))skip.push(w);else(Tw.length<n?Tw:Lw).push(w)}
+  const A={};[ws,...Tw,...Lw].forEach(w=>{if(!(w in A))A[w]=(o.weekA?o.weekA(w):completedAnalytics(h,w,o)).hard_sets.per_muscle});
   const S=ws_=>Object.fromEntries(mus.map(m=>[m,rvR4(prNsum(ws_.map(w=>A[w][m])))]));
   const comp=(h.sessions||[]).filter(s=>s.status=='completed').map(s=>prDay(s.startedAt||s.date)).sort(),td=String(today).slice(0,10),dd=(a,b)=>Math.round((Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))/864e5);
-  const gate=comp.length>0&&dd(td,comp[0])>=7*E.min_logged_weeks&&comp.length>=E.min_sessions,prior=W.slice(n).filter(w=>comp.some(d=>w<=d&&d<prAddDays(w,7))).length;
-  return{weeks:n,this_start:W[n-1],this_end_exclusive:prAddDays(ws,7),last_start:W[2*n-1],this:S(W.slice(0,n)),last:S(W.slice(n)),week:Object.fromEntries(mus.map(m=>[m,rvR4(A[ws][m])])),
-    gate,prior_weeks_logged:prior,shown:gate&&prior>=rvMinPrior()}}
+  const gate=comp.length>0&&dd(td,comp[0])>=7*E.min_logged_weeks&&comp.length>=E.min_sessions,prior=Lw.filter(w=>comp.some(d=>w<=d&&d<prAddDays(w,7))).length;
+  return{weeks:n,this_start:Tw[n-1],this_end_exclusive:prAddDays(ws,7),last_start:Lw[n-1],this:S(Tw),last:S(Lw),week:Object.fromEntries(mus.map(m=>[m,rvR4(A[ws][m])])),
+    gate,prior_weeks_logged:prior,shown:gate&&prior>=rvMinPrior(),deload_weeks_skipped:skip,this_weeks:Tw,last_weeks:Lw}}
 // dashboard: M = muscles with planned > 0; on plan = credited done >= planned - review.on_plan_margin; furthest behind = lowest done/planned, ties larger gap, then muscle order
 function planDash(pl,done,o={}){const R=prRules(),mg=rvMargin(),mus=(o.muscles||MUS).filter(m=>pl.per_muscle[m]>PRS_EPS),dn=m=>done[m]||0;
   const on=mus.filter(m=>dn(m)>=pl.per_muscle[m]-mg-PRS_EPS);let gap=null;

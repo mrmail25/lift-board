@@ -1618,7 +1618,8 @@
         "sessions": "logged with session.deload = true: excluded from progress signals and deload trends; PRs and analytics still count them",
         "why": "Delphi coaches agreed deloads can reduce volume (fewer sets), proximity to failure and intensity, keep familiar exercises and frequency (Bell 2023); athletes report fewer sets and reps, lighter loads and more RIR, same frequency and exercises (Rogerson 2024)."
       },
-      "evidence_note": "Honest status: deloading is mostly expert opinion. The Bell 2023 Delphi panel itself agreed \"there are limited scientific studies and understanding about deloading\" (100%) and that current approaches rest on coach experience. The one trial of a mid-programme deload (Coleman 2024: 1 week off training at the midpoint of a 9-week programme, 39 resistance-trained adults) found no difference in muscle growth and slightly smaller lower-body strength gains than training straight through. No study has validated these triggers or thresholds; they are our model of what coaches and athletes report. Treat the prompt as a nudge to consider a lighter week, not a measurement of fatigue."
+      "evidence_note": "Honest status: deloading is mostly expert opinion. The Bell 2023 Delphi panel itself agreed \"there are limited scientific studies and understanding about deloading\" (100%) and that current approaches rest on coach experience. The one trial of a mid-programme deload (Coleman 2024: 1 week off training at the midpoint of a 9-week programme, 39 resistance-trained adults) found no difference in muscle growth and slightly smaller lower-body strength gains than training straight through. No study has validated these triggers or thresholds; they are our model of what coaches and athletes report. Treat the prompt as a nudge to consider a lighter week, not a measurement of fatigue.",
+      "evidence_short": "Several of your fatigue signals are up. A lighter week is worth considering, but deload triggers are coach experience, not tested science."
     }
   },
   "pattern_gap_fix": {
@@ -1635,6 +1636,8 @@
     "flat_pct": 1,
     "block_min_prior_weeks": 2,
     "flat_pct_note": "Finish-summary arrow is flat when the top-set e1RM (or volume) changes by no more than this percent.",
-    "block_min_prior_weeks_note": "Block comparison stays hidden until the prior window has at least this many weeks with logs (on top of the Phase E gate)."
+    "block_min_prior_weeks_note": "Block comparison stays hidden until the prior window has at least this many weeks with logs (on top of the Phase E gate).",
+    "block_exclude_deload": true,
+    "block_exclude_deload_note": "4 wk vs Prev skips weeks that contain a deload session (same rule as progress_signals). Each window reaches back over skipped weeks to keep window_weeks training weeks; block_min_prior_weeks still applies. Show 'deload excluded' when a week was skipped."
   }
 }

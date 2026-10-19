@@ -57,7 +57,12 @@ const conv=(v,from,to)=>v==null||v===''?null:from==to?v:from=='kg'?v*CFG.lbPerKg
 const fmt=v=>v==null?'':String(Math.round(v*10)/10);
 const toLb=(v,u)=>conv(v,u,'lb');
 const sessUnit=sid=>(L.sessions.find(s=>s.id==sid)||{}).unit||'lb';
-const dLoad=x=>conv(x.load,sessUnit(x.sessionId),S.unit);
+// v29.1: a past load in the display unit. Same unit -> as logged. Logged in the other unit -> the exact conversion is not a load anyone can lift
+// (112.6162 kg = 248.27 lb), so it becomes the nearest real load of that unit: the saved gym profile if it is in that unit, else rules.json
+// logger.gym_profile_default[unit] (no profile -> loads.js falls back to logger.load_step). Display / prefill only; stored sets are never changed.
+function realIn(v,from,to,exId){if(v==null||v==='')return null;if(from==to)return Number(v);const id=resolve(exId),g=gymP(),p=g&&g.unit==to?g:JSON.parse(JSON.stringify((LR().gym_profile_default||{})[to]||{unit:to}));
+  return nearestRealLoad(conv(Number(v),from,to),p,exEq(id),to,id)}
+const dLoad=x=>realIn(x.load,sessUnit(x.sessionId),S.unit,setEx(x));
 // ---------- rules from data ----------
 const slRule=()=>((typeof RU!='undefined'&&RU&&RU.rules)||[]).find(r=>r.id=='session_length')||{};
 const typeRest=t=>{const r=slRule().rest_min_by_type||{};const m=r[t]!=null?r[t]:r.isolation;return Math.round(m*60)};
@@ -137,7 +142,7 @@ const dayLabel=i=>{const r=activeRt(),l=r?(r.labels||[])[i]:(state.labels||[])[i
 function newSet(e,kind,idx){return{id:uid('t'),entryId:e.id,sessionId:e.sessionId,idx,kind,load:null,reps:null,rir:null,done:false,doneAt:null}}
 function prefill(e){const p=progression(resolve(e.exerciseId),e.sessionId);e.cue=p;const pos={warmup:0,working:0};
   L.sets.filter(x=>x.entryId==e.id).sort((a,b)=>a.idx-b.idx).forEach(x=>{const k=pos[x.kind]++;if(x.done)return;const pv=prevFor(resolve(e.exerciseId),x.kind,k,e.sessionId);
-    if(pv){x.load=conv(pv.load,sessUnit(pv.sessionId),cur.unit);x.reps=pv.reps;x.prevLoad=x.load;x.prevReps=x.reps}
+    if(pv){x.load=realIn(pv.load,sessUnit(pv.sessionId),cur.unit,e.exerciseId);x.reps=pv.reps;x.prevLoad=x.load;x.prevReps=x.reps}
     if(x.kind=='working'&&p.sugLoad!=null){x.load=conv(p.sugLoad,S.unit,cur.unit);x.reps=p.sugReps;x.sug=true}})}
 function startSession(i){if(cur)return openLogger();const dw=dlActive();let tiles=dayTiles(i);if(!tiles.length)return;if(dw)tiles=deloadVersion([tiles])[0];const m=loaded();
   const rt=activeRt();const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),splitId:m?'my:'+m.id:undefined,...rtRef(rt),dayIdx:i,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:tiles.map(t=>({exerciseId:t.id,sets:t.sets}))},planSnap:planOf(planDays()),...(dw?{deload:true,deloadStart:dw.start}:{})};
@@ -258,7 +263,7 @@ function bindSession(o){o.querySelector('#lg-fin').onclick=summary;o.querySelect
   o.querySelectorAll('.lg-sugchip').forEach(b=>b.onclick=()=>{const x=L.sets.find(s=>s.id==b.dataset.s);x.load=x.prevLoad??null;x.reps=x.prevReps??x.reps;x.sug=false;persist(cur.id);renderSession()})}
 function bindRow(e,r){const x=L.sets.find(s=>s.id==r.dataset.s);let sw=false;
   r.querySelector('.lg-n').onclick=()=>{if(sw)return;x.kind=x.kind=='warmup'?'working':'warmup';if(x.kind=='warmup')delete x.tag;renum(e);persist(cur.id);renderSession()};
-  r.querySelector('.lg-prev').onclick=()=>{const n=work(setsOf(e.id)).indexOf(x),pv=prevFor(resolve(e.exerciseId),x.kind,n<0?setsOf(e.id).filter(s=>s.kind==x.kind).indexOf(x):n,cur.id);if(pv&&!x.done){x.load=conv(pv.load,sessUnit(pv.sessionId),cur.unit);x.reps=pv.reps;x.sug=false;persist(cur.id);renderSession()}};
+  r.querySelector('.lg-prev').onclick=()=>{const n=work(setsOf(e.id)).indexOf(x),pv=prevFor(resolve(e.exerciseId),x.kind,n<0?setsOf(e.id).filter(s=>s.kind==x.kind).indexOf(x):n,cur.id);if(pv&&!x.done){x.load=realIn(pv.load,sessUnit(pv.sessionId),cur.unit,e.exerciseId);x.reps=pv.reps;x.sug=false;persist(cur.id);renderSession()}};
   r.querySelectorAll('.lg-fld').forEach(b=>b.onclick=()=>{if(sw)return;activeSet=x.id;openKp(e,x,b.dataset.f)});
   r.querySelector('.lg-rirb').onclick=()=>{const p=document.querySelector(`.lg-rir[data-s="${x.id}"]`);p.hidden=!p.hidden};
   document.querySelectorAll(`.lg-rir[data-s="${x.id}"] button[data-r]`).forEach(b=>b.onclick=()=>{const v=+b.dataset.r;x.rir=x.rir===v?null:v;persist(cur.id);renderSession()});
@@ -520,11 +525,13 @@ function dlHtml(){const D=dlDS(),V=D.deload_version,w=dlActive();if(!D.prompt)re
   return`<div id="dl-prompt" data-score="${c.score}" data-max="${D.score_max}" data-n="${rs.length}"><b>Suggested deload <small>score ${c.score}/${D.score_max}</small></b>
    <p class="dl-copy">${H(D.prompt.copy.replace('<top reasons>',rs.join('; ')))}</p>
    <p class="dl-ver">Deload version for ${V.days_length} days: same exercises and days, sets ×${V.sets_factor} (rounded up, min 1), RIR ${V.rir_target[0]}–${V.rir_target[1]}, loads ×${V.load_factor} rounded down to real loads.</p>
-   <p class="dl-ev">${H(D.evidence_note)}</p>
+   <p class="dl-evs">${D.evidence_short?`<span class="dl-short">${H(D.evidence_short)}</span> `:''}${D.evidence_note?`<button type="button" class="dl-why" aria-expanded="false" aria-controls="dl-ev">Why?</button>`:''}</p>
+   ${D.evidence_note?`<p class="dl-ev" id="dl-ev" hidden>${H(D.evidence_note)}</p>`:''}
    <div class="cf-btns"><button class="pri" id="dl-use">${H(dlLabel('use'))}</button><button id="dl-delay">${H(dlLabel('delay'))}</button><button id="dl-later">${H(dlLabel('later'))}</button></div></div>`}
 function dlChoose(k){const before=JSON.stringify(DLS),g=applyChoice({deloads:DLS.deloads||[],deloadPrompt:DLS.deloadPrompt},k,todayYmd());DLS.deloads=g.deloads||[];DLS.deloadPrompt=g.deloadPrompt;saveDL();renderStart();
   toast(k=='use'?'Deload week started: sessions use the lighter version':k=='delay'?`Deload prompt snoozed until ${dlD(g.deloadPrompt.snoozedUntil)}`:'We will ask again tomorrow',()=>{DLS=JSON.parse(before);saveDL();renderStart()})}
-function dlWire(o){[['use','#dl-use'],['delay','#dl-delay'],['later','#dl-later']].forEach(([k,s])=>{const b=o.querySelector(s);if(b)b.onclick=()=>dlChoose(k)})}
+function dlWire(o){[['use','#dl-use'],['delay','#dl-delay'],['later','#dl-later']].forEach(([k,s])=>{const b=o.querySelector(s);if(b)b.onclick=()=>dlChoose(k)});
+  /* v29.1: Why? expands / collapses rules.json deload_signals.evidence_note (verbatim) */const w=o.querySelector('.dl-why'),n=o.querySelector('#dl-ev');if(w&&n)w.onclick=()=>{const open=n.hidden;n.hidden=!open;w.setAttribute('aria-expanded',String(open))}}
 // deload session loads: last working load (top set of the latest non-deload session, drop/partial sets left out) x load_factor, rounded down
 // to a real load (deloadLoad = deload.py deload_load). Assisted machines keep the last assistance (less assistance would make it harder).
 function dlPrefill(e){const id=resolve(e.exerciseId),hs=hist(id,e.sessionId),q=hs.find(z=>!z.s.deload)||hs[0];e.cue={deload:true};if(!q)return;const R=prRules();
@@ -603,7 +610,7 @@ function buildBar(){if(!document.getElementById('lg')){const o=document.createEl
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={get L(){return L},get DLS(){return DLS},dlHist:()=>hx(false),dlCheckNow,dlActive,dlReasons,vsTie,vsDisp,vsSheet,vsRows,planDays,planVsDone,planSnaps,todayYmd,wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={renderSession,realIn,get L(){return L},get DLS(){return DLS},dlHist:()=>hx(false),dlCheckNow,dlActive,dlReasons,vsTie,vsDisp,vsSheet,vsRows,planDays,planVsDone,planSnaps,todayYmd,wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();
