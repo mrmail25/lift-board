@@ -76,11 +76,20 @@ function hist(exId,exceptSid){return L.sessions.filter(s=>s.status=='completed'&
 const work=a=>a.filter(x=>x.kind=='working');
 const bestOf=a=>{let b=null;work(a).forEach(x=>{if(x.reps>LR().e1rm_max_reps||!x.reps)return;const v=e1rm(toLb(x.load,sessUnit(x.sessionId))||0,x.reps);if(!b||v>b.v)b={v,x}});return b};
 const volOf=a=>work(a).reduce((s,x)=>s+(toLb(x.load,sessUnit(x.sessionId))||0)*(x.reps||0),0);
+// v29 A: gym profile (rules.json v9 logger.gym_profile_schema). Stored in settings (S.gymProfiles[], S.activeGymId) -> localStorage + backups.
+// Until he saves his own, the rules.json gym_profile_default for the display unit is used.
+function gymP(){const g=(S.gymProfiles||[]).find(x=>x.id==S.activeGymId);return g||JSON.parse(JSON.stringify((LR().gym_profile_default||{})[S.unit]||{}))}
+const exEq=exId=>(EX[resolve(exId)]||{}).equipment,exAsst=exId=>!!(EX[resolve(exId)]||{}).bodyweight_assisted;
+// next real load from the gym in the display unit (assisted machines step toward less assistance); null when the gym has nothing further
+function realStep(exId,v,dir){const g=gymP(),r=nextRealLoad(v||0,exAsst(exId)?-dir:dir,g,exEq(exId),S.unit,resolve(exId));return r==null?null:Math.round(conv(r,g.unit||S.unit,S.unit)*1e6)/1e6}
 function progression(exId,sid){const h=hist(exId,sid),last=h[0];if(!last)return{};const w=work(last.sets);if(!w.length)return{};const[lo,hi]=repFor(exId),inc=incFor(exId),u=sessUnit(last.s.id);
   const top=Math.max(...w.map(x=>conv(x.load,u,S.unit)||0));const allTop=w.every(x=>x.reps>=hi&&(x.rir==null?LR().missing_rir_meets_target!==false:x.rir<=tRIR(exId)));
   const missed=w.some(x=>x.reps<lo),prevMissed=h[1]&&work(h[1].sets).some(x=>x.reps<lo);const b=bestOf(last.sets);
   const out={beat:b?`Beat ${fmt(conv(b.x.load,u,S.unit))}×${b.x.reps}`:'',cut:missed&&prevMissed};
-  if(allTop){if(inc>0&&top>0&&inc/top<=LR().jump_prefer_reps_above)out.sugLoad=top+inc,out.sugReps=lo;else out.addRep=true}return out}
+  // v29 A: double progression with real loads (loads.js suggestNext = tools/loads.py); suggestions only use weights the gym has
+  const g=gymP(),sg=suggestNext(w.map(x=>({load:x.load,reps:x.reps,rir:x.rir})),(EX[exId]||{}).type,[lo,hi],tRIR(exId),g,exEq(exId),u,exId,0,exAsst(exId));
+  const inS=v=>v==null?null:Math.round(conv(v,g.unit||u,S.unit)*1e6)/1e6;out.sg={...sg,loadS:inS(sg.load)};
+  if(sg.action=='load')out.sugLoad=inS(sg.load),out.sugReps=sg.reps;else if(sg.action=='reps')out.addRep=sg.reps,out.holdLoad=inS(sg.load);else if(sg.action=='max')out.max=true;void allTop;void top;void inc;return out}
 function carryNote(id){const r=resolve(id),h=hist(r,cur&&cur.id)[0];if(h&&h.e.notes)return h.e.notes;const v=(S.v24||{}).sticky||{};return v[r]||v[id]||''}
 function prevFor(exId,kind,pos,sid){const h=hist(exId,sid)[0];if(!h)return null;const a=h.sets.filter(x=>x.kind==kind);return a[pos]||null}
 // ---------- split order / Continue ----------
@@ -177,7 +186,7 @@ function publishSheet(){const nm=defaultRtName(),ex=ROUT.find(r=>r.name.toLowerC
 function startTraining(){if(cur)return openLogger();const p=publish(defaultRtName());if(!p){toast('Add exercises to the board first',null);return}S.activeRoutine=p.r.id;saveS();const c=continueIdx();if(c==null)return;startSession(c)}
 function buildBtns(){const a=document.querySelector('header .actions');if(!a||document.getElementById('pb-btn'))return;a.insertAdjacentHTML('afterbegin','<button id="pb-btn" title="Save a versioned snapshot of this board to the Train library">Publish</button><button id="st-btn" class="pri" title="Publish, make it the active routine and start the session clock">Start training</button>');
   document.getElementById('pb-btn').onclick=publishSheet;document.getElementById('st-btn').onclick=startTraining}
-function cueHtml(e){const c=e.cue||{};const a=[];if(c.sugLoad!=null)a.push(`↑ Try ${fmt(c.sugLoad)}×${c.sugReps}`);else if(c.addRep)a.push('Add a rep this time');if(c.beat)a.push(H(c.beat));if(c.cut)a.push('Missed the range twice: consider −5%');return a.join(' · ')}
+function cueHtml(e){const c=e.cue||{};const a=[];if(c.sugLoad!=null)a.push(`↑ Try ${fmt(c.sugLoad)}×${c.sugReps}`);else if(c.addRep)a.push(`Same load, aim for ${c.addRep} reps`);else if(c.max)a.push('Top of your rack: try a harder variation');if(c.beat)a.push(H(c.beat));if(c.cut)a.push('Missed the range twice: consider −5%');return a.join(' · ')}
 function rowHtml(e,x,n){const pv=x.kind=='working'?prevFor(resolve(e.exerciseId),'working',n.w,cur.id):prevFor(resolve(e.exerciseId),'warmup',n.u,cur.id);
   const pvs=pv?`${fmt(dLoad(pv))} × ${pv.reps}${pv.rir!=null?' @'+pv.rir:''}`:'—';const L_=conv(x.load,cur.unit,S.unit);
   const pt=prTypesOf(x.id,LP);const rirTxt=x.rir==null?(S.rpe?'RPE':'RIR'):(S.rpe?'RPE '+(10-x.rir):'@'+(x.rir==5?'5+':x.rir));
@@ -271,9 +280,9 @@ function minKp(){if(cur)persist(cur.id);closeKp();renderSession()}
 function kpSwipe(k){let y0=null,x0=null;k.addEventListener('pointerdown',ev=>{y0=ev.clientY;x0=ev.clientX});k.addEventListener('pointerup',ev=>{if(y0==null)return;const dy=ev.clientY-y0,dx=Math.abs(ev.clientX-x0);y0=null;if(dy>CFG.kpSwipePx&&dx<dy)minKp()});k.addEventListener('pointercancel',()=>{y0=null})}
 function closeKp(){const k=document.getElementById('lg-kp');if(k)k.remove();KP=null}
 function drawKp(){const k=document.getElementById('lg-kp');if(!k||!KP)return;const{e,x,f}=KP,inc=f=='load'?incFor(resolve(e.exerciseId))||1:1,v=f=='load'?conv(x.load,cur.unit,S.unit):x.reps;
-  k.innerHTML=`<div class="kp-top"><span>${f=='load'?'Load ('+S.unit+')':'Reps'} · ${H(exName(e))}</span><b class="kp-val">${KP.buf!=null?H(KP.buf):v==null?'':fmt(v)}</b><button id="kp-min" aria-label="Minimize keypad">▾</button></div><div class="kp-grid">
+  k.innerHTML=`<div class="kp-top"><span>${f=='load'?'Load ('+S.unit+')':'Reps'} · ${H(exName(e))}</span><b class="kp-val">${KP.buf!=null?H(KP.buf):v==null?'':fmt(v)}</b><button id="kp-min" aria-label="Minimize keypad">▾</button></div>${f=='load'?kpChips(e,x,v):''}<div class="kp-grid">
   ${['1','2','3','⌫','4','5','6','−'+fmt(inc),'7','8','9','+'+fmt(inc),'.','0','Done','Next'].map(b=>`<button data-k="${b}" class="${b=='Next'?'pri':''}">${b}</button>`).join('')}</div>`;
-  k.querySelector('#kp-min').onclick=minKp;k.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const t=b.dataset.k;let s=v==null?'':fmt(v);
+  k.querySelector('#kp-min').onclick=minKp;kpChipBind(k,e,x);k.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const t=b.dataset.k;let s=v==null?'':fmt(v);
     if(t=='Done'){closeKp();persist(cur.id);renderSession();return}
     if(t=='Next'){persist(cur.id);if(f=='load'){KP.f='reps';KP.fresh=true;KP.buf=null;drawKp();renderSession();return}const ss=setsOf(e.id),i=ss.indexOf(x),nx=ss.slice(i+1).find(q=>!q.done);if(nx){activeSet=nx.id;KP.x=nx;KP.f='load';KP.fresh=true;KP.buf=null;drawKp();renderSession()}else{closeKp();renderSession()}return}
     // v28: typed keys edit a text buffer (KP.buf), so a decimal point survives until the next digit (101.5 was logged as 1015)
@@ -282,6 +291,41 @@ function drawKp(){const k=document.getElementById('lg-kp');if(!k||!KP)return;con
     else if(t=='⌫'){const b=base.slice(0,-1);KP.buf=b;n=b===''||b==='.'?null:parseFloat(b)}
     else{if(t=='.'&&(f!='load'||base.includes('.')))return;if(f=='load'&&/\.\d\d$/.test(base))return;const b=(t=='.'&&base==='')?'0.':(base==='0'&&t!='.'?t:base+t);KP.buf=b;n=parseFloat(b)}KP.fresh=false;
     if(f=='load'){x.load=n==null?null:conv(n,S.unit,cur.unit);x.sug=false}else x.reps=n==null?null:Math.round(n);drawKp();const o=document.getElementById('lg');if(o){o._noScroll=true;renderSession();o._noScroll=false}})}
+// v29 A quick weight picker (#10) + plate calculator toggle (#6): one chip row on the load keypad. Every chip is a weight the gym has
+// (gym profile; the v8 load_step grid where the profile doesn't describe the equipment). Plates: loads.js plateBreakdown (= tools/loads.py).
+function kpPick(e,x,v){const id=resolve(e.exerciseId),c=e.cue||{},o=[],g=gymP(),last=x.prevLoad!=null?conv(x.prevLoad,cur.unit,S.unit):null;
+  if(last!=null)o.push(['last','Last',last]);const sg=x.kind=='working'?(c.sugLoad!=null?c.sugLoad:c.holdLoad!=null?c.holdLoad:null):null;if(sg!=null)o.push(['sug','Suggested',sg]);
+  const nx=realStep(id,v??last??0,1);if(nx!=null)o.push(['next','Next',nx]);else if(v!=null)o.push(['max','Max',null]);return o}
+function kpChips(e,x,v){const id=resolve(e.exerciseId),g=gymP(),pl=LD_PLATE.includes(exEq(id))&&(g.plates||[]).length;
+  const b=kpPick(e,x,v).map(([k,l,w])=>`<button class="kp-chip" data-c="${k}" ${w==null?'disabled':`data-w="${w}"`}><small>${l}</small> ${w==null?'—':fmt(w)}</button>`).join('');
+  let pt='';if(pl&&S.kpPlates&&v!=null){const pb=plateBreakdown(Math.round(conv(v,S.unit,g.unit||S.unit)*1e6)/1e6,g,exEq(id),id),side=pb.per_side||pb.on_sleeve||[];
+    pt=`<div class="kp-plates" data-exact="${pb.exact}" data-load="${pb.load}" data-side="${side.join(',')}">${pb.exact?'':`Can't build ${fmt(v)} · nearest below ${fmt(conv(pb.load,g.unit||S.unit,S.unit))} ${S.unit}: `}${pb.bar?`bar ${fmt(pb.bar)} + `:''}${side.length?(pb.per_side?'per side ':'on sleeve ')+side.map(fmt).join(' · '):'no plates'} <small>${H(g.unit||S.unit)}</small></div>`}
+  return`<div class="kp-chips">${b}${pl?`<button class="kp-chip kp-pl${S.kpPlates?' on':''}" aria-pressed="${!!S.kpPlates}">Plates</button>`:''}</div>${pt}`}
+function kpChipBind(k,e,x){k.querySelectorAll('.kp-chip[data-w]').forEach(b=>b.onclick=()=>{x.load=conv(+b.dataset.w,S.unit,cur.unit);x.sug=false;KP.buf=null;KP.fresh=true;drawKp();const o=document.getElementById('lg');if(o){o._noScroll=true;renderSession();o._noScroll=false}});
+  const pl=k.querySelector('.kp-pl');if(pl)pl.onclick=()=>{S.kpPlates=!S.kpPlates;saveS();drawKp()}}
+// v29 A gym profile sheet (#4): everything his gym has, in one sheet. Lists are typed as text: "5, 10, 15" and plates as "45×4, 25×2" (weight × pairs).
+const gpL=a=>(a||[]).join(', '),gpP=a=>(a||[]).map(p=>`${p.weight}×${p.pairs}`).join(', ');
+const gpNums=s=>{const v=String(s||'').split(/[,\s]+/).filter(Boolean).map(Number);return v.every(n=>isFinite(n)&&n>=0)?v:null};
+const gpPairs=s=>{const o=[];for(const t of String(s||'').split(',').map(q=>q.trim()).filter(Boolean)){const m=t.match(/^([\d.]+)\s*[×x*]\s*(\d+)$/);if(!m)return null;o.push({weight:+m[1],pairs:+m[2]})}return o};
+function gymSheet(){const g=gymP(),st=g.stacks||{},sk=k=>st[k]||{},own=(S.gymProfiles||[]).some(x=>x.id==S.activeGymId),BK=Object.keys((LR().gym_profile_default||{})[S.unit]?.bars||g.bars||{});
+  modal(`<div id="lg-gym"><h3>Gym profile</h3><p class="cf-hint">Suggestions, the weight picker and the plate calculator only use weights listed here.${own?'':' Showing the default gym until you save.'}</p>
+  <label>Name<input id="gp-name" value="${H(g.name||'')}"></label><label>Unit <span class="lg-seg">${['lb','kg'].map(u=>`<button data-gu="${u}" class="${(g.unit||S.unit)==u?'on':''}">${u}</button>`).join('')}</span></label>
+  <label>Dumbbells (per hand)<input id="gp-db" inputmode="decimal" value="${gpL(g.dumbbells)}"></label><label>Kettlebells<input id="gp-kb" inputmode="decimal" value="${gpL(g.kettlebells)}"></label>
+  <label>Plates (weight × pairs)<input id="gp-pl" value="${gpP(g.plates)}"></label><label>Microplates<input id="gp-mp" value="${gpP(g.microplates)}"></label>
+  <div class="gp-bars">${BK.map(k=>`<label>${H(k)}<input data-bar="${H(k)}" inputmode="decimal" value="${(g.bars||{})[k]??''}"></label>`).join('')}<label>EZ bar<input id="gp-ez" inputmode="decimal" value="${(g.bar_by_exercise||{})['ez-bar-curl']??''}"></label></div>
+  ${['machine','cable'].map(k=>`<label>${k=='machine'?'Machine':'Cable'} stack: start, step, count, add-ons<input data-st="${k}" value="${sk(k).weights?gpL(sk(k).weights):[sk(k).start,sk(k).step,sk(k).count].filter(v=>v!=null).join(', ')}${(sk(k).add_ons||[]).length?' + '+gpL(sk(k).add_ons):''}"></label>`).join('')}
+  <p class="cf-hint gp-err" hidden></p><div class="cf-btns"><button class="pri" id="gp-save">Save</button>${own?'<button id="gp-reset">Use default</button>':''}<button id="gp-x">Cancel</button></div></div>`);
+  let unit=g.unit||S.unit;document.querySelectorAll('[data-gu]').forEach(b=>b.onclick=()=>{unit=b.dataset.gu;document.querySelectorAll('[data-gu]').forEach(q=>q.classList.toggle('on',q==b))});
+  document.getElementById('gp-x').onclick=closeModal;const rs=document.getElementById('gp-reset');if(rs)rs.onclick=()=>{S.gymProfiles=(S.gymProfiles||[]).filter(x=>x.id!=S.activeGymId);S.activeGymId=null;saveS();closeModal();refreshKp()};
+  document.getElementById('gp-save').onclick=()=>{const v=id=>document.getElementById(id).value,err=m=>{const e=document.querySelector('#lg-gym .gp-err');e.textContent=m;e.hidden=false};
+    const db=gpNums(v('gp-db')),kb=gpNums(v('gp-kb')),pl=gpPairs(v('gp-pl')),mp=gpPairs(v('gp-mp'));if(!db||!kb)return err('Dumbbells and kettlebells: numbers separated by commas.');if(!pl||!mp)return err('Plates: weight × pairs, e.g. 45×4, 25×2.');
+    const bars={};for(const i of document.querySelectorAll('#lg-gym [data-bar]')){const n=i.value===''?0:+i.value;if(!isFinite(n)||n<0)return err('Bar weights must be numbers.');bars[i.dataset.bar]=n}
+    const be={...(g.bar_by_exercise||{})};if(v('gp-ez')==='')delete be['ez-bar-curl'];else{if(!isFinite(+v('gp-ez')))return err('EZ bar must be a number.');be['ez-bar-curl']=+v('gp-ez')}
+    const stacks={...st};for(const i of document.querySelectorAll('#lg-gym [data-st]')){const[a,b]=i.value.split('+'),n=gpNums(a),ad=b==null?[]:gpNums(b);if(!n||!ad)return err('Stacks: start, step, count (+ add-ons).');
+      if(!n.length){delete stacks[i.dataset.st];continue}const old=st[i.dataset.st]||{};stacks[i.dataset.st]=old.weights?{weights:n}:(n.length==3?{start:n[0],step:n[1],count:n[2]}:{weights:n});if(ad.length)stacks[i.dataset.st].add_ons=ad}
+    const id=(S.gymProfiles||[]).some(x=>x.id==S.activeGymId)?S.activeGymId:uid('g');const np={id,name:v('gp-name').trim()||'My gym',unit,dumbbells:db,kettlebells:kb,plates:pl,microplates:mp,bars,bar_by_exercise:be,stacks};
+    S.gymProfiles=(S.gymProfiles||[]).filter(x=>x.id!=id).concat([np]);S.activeGymId=id;saveS();closeModal();refreshKp();toast(`Saved ${np.name}`,null)}}
+function refreshKp(){if(cur){entriesOf(cur.id).forEach(prefillKeep);if(document.getElementById('lg'))renderSession()}}
 // ---------- rest timer (timestamps; survives reload/lock) ----------
 function startTimer(sec){const t={start:Date.now(),end:Date.now()+sec*1000};localStorage.setItem(TKEY,JSON.stringify(t));tick();requestAnimationFrame(clearTimer)}
 const plural=(n,w)=>`${n} ${w}${n==1?'':'s'}`;
@@ -413,13 +457,13 @@ function weekView(tab){tab=tab||'week';const wd=weekDone(),days=view=='done'?wd.
   ${tab=='history'?`<div class="lg-hl">${L.sessions.filter(s=>s.status!='active').sort(byT).reverse().map(s=>`<div class="lg-hs ${s.status}"><b>${new Date(s.date).toLocaleDateString()}</b> ${H(s.label)} <em>${s.status}</em>${s.status=='completed'?`<div>${entriesOf(s.id).map(e=>`<button class="lg-hx" data-x="${H(resolve(e.exerciseId))}">${H(exName(e))}${isArch(e.exerciseId)?' (archived)':''}</button>`).join(' ')}</div>`:''}</div>`).join('')||'<p class="cf-hint">No sessions yet.</p>'}</div>`:''}
   ${tab=='settings'?`<div class="lg-set"><label>Units <span class="lg-seg"><button data-u="lb" class="${S.unit=='lb'?'on':''}">lb</button><button data-u="kg" class="${S.unit=='kg'?'on':''}">kg</button></span></label>
    <label>Hard set = RIR ≤ <span class="lg-seg"><button data-h="-">−</button><b id="st-h">${HR()}</b><button data-h="+">+</button></span></label>
-   <label><input type="checkbox" id="st-rpe" ${S.rpe?'checked':''}> Show effort as RPE (10 − RIR)</label><label><input type="checkbox" id="st-snd" ${S.sound?'checked':''}> Sound when rest ends</label></div>`:''}
+   <button id="st-gym" class="st-gym">Gym profile · ${H(gymP().name||'')}</button><label><input type="checkbox" id="st-rpe" ${S.rpe?'checked':''}> Show effort as RPE (10 − RIR)</label><label><input type="checkbox" id="st-snd" ${S.sound?'checked':''}> Sound when rest ends</label></div>`:''}
   <div class="cf-btns"><button id="wk-x">Close</button></div></div>`);
   document.querySelectorAll('#lg-wk .lg-tabs button').forEach(b=>b.onclick=()=>weekView(b.dataset.t));document.getElementById('wk-x').onclick=closeModal;
   if(tab=='week'){heatInto(document.getElementById('lg-map'),days,'lg');document.getElementById('wk-plan').onclick=()=>{view='plan';weekView()};document.getElementById('wk-done').onclick=()=>{view='done';weekView()}}
   if(tab=='history')document.querySelectorAll('.lg-hx').forEach(b=>b.onclick=()=>history_(b.dataset.x));
   if(tab=='settings'){document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{S.unit=b.dataset.u;saveS();weekView('settings')});document.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{S.hardRIR=(()=>{const r=LR().hardRIR_range||[];return Math.max(r[0],Math.min(r[1],HR()+(b.dataset.h=='+'?1:-1)))})();saveS();weekView('settings')});
-    document.getElementById('st-rpe').onchange=e=>{S.rpe=e.target.checked;saveS()};document.getElementById('st-snd').onchange=e=>{S.sound=e.target.checked;saveS()}}}
+    document.getElementById('st-gym').onclick=gymSheet;document.getElementById('st-rpe').onchange=e=>{S.rpe=e.target.checked;saveS()};document.getElementById('st-snd').onchange=e=>{S.sound=e.target.checked;saveS()}}}
 // ---------- backup / restore ----------
 window.logBackup=()=>({schema:LOG_SCHEMA,routines:ROUT,decimalFix:DFX,exNotes:NOTES,sessions:L.sessions,entries:L.entries,sets:L.sets,prs:L.prs,settings:S});
 window.importLogs=function(d){if(!d||!d.logs)return;let g=JSON.parse(JSON.stringify(d.logs));if(typeof g.schema!='number'&&typeof d.schema=='number')g.schema=d.schema;
@@ -446,7 +490,7 @@ function buildBar(){if(!document.getElementById('lg')){const o=document.createEl
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={get L(){return L},get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={get L(){return L},gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();

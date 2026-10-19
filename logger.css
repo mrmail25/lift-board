@@ -147,3 +147,9 @@ body:not([data-view=train]):has(#lg-kp) #lg-timer{bottom:calc(var(--tabh) + 8px)
 .lgv-dec{margin:4px 0 8px;width:100%}
 .lgv-dec.has{border-color:var(--lg-acc)}
 #dec-sheet .dec-all{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}#dec-sheet .dec-all button{min-height:44px}
+/* v29 A: quick weight picker + plates toggle (one chip row on the load keypad), gym sheet */
+.kp-chips{display:flex;gap:6px;overflow-x:auto;padding:0 2px 6px}.kp-chip{flex:0 0 auto;min-height:40px;padding:4px 10px;border-radius:20px;font-size:16px;white-space:nowrap}
+.kp-chip small{opacity:.7;font-size:12px}.kp-chip.on{border-color:var(--lg-acc);color:var(--lg-acc)}
+.kp-plates{font-size:14px;color:var(--lg-dim);padding:0 4px 6px}.kp-plates[data-exact="false"]{color:var(--lg-acc)}
+#lg-gym label{display:block;margin:6px 0}#lg-gym input{width:100%;font-size:16px}#lg-gym .gp-bars{display:grid;grid-template-columns:1fr 1fr;gap:0 8px}
+.st-gym{width:100%;min-height:44px;margin:6px 0}
