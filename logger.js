@@ -85,6 +85,8 @@ const bestOf=a=>{let b=null;work(a).forEach(x=>{if(x.reps>LR().e1rm_max_reps||!x
 const volOf=a=>work(a).reduce((s,x)=>s+effLb(x)*(x.reps||0),0);
 // v29 A: gym profile (rules.json v9 logger.gym_profile_schema). Stored in settings (S.gymProfiles[], S.activeGymId) -> localStorage + backups.
 // Until he saves his own, the rules.json gym_profile_default for the display unit is used.
+/* D.1: the gym profile PRs use (logger.prs.tie): the user's active profile; none chosen -> null (prs.py falls back to load_step) */
+function prProf(){return(S.gymProfiles||[]).find(x=>x.id==S.activeGymId)||null}
 function gymP(){const g=(S.gymProfiles||[]).find(x=>x.id==S.activeGymId);return g||JSON.parse(JSON.stringify((LR().gym_profile_default||{})[S.unit]||{}))}
 const exEq=exId=>(EX[resolve(exId)]||{}).equipment,exAsst=exId=>!!(EX[resolve(exId)]||{}).bodyweight_assisted;
 // next real load from the gym in the display unit (assisted machines step toward less assistance); null when the gym has nothing further
@@ -168,7 +170,7 @@ function startSheet(){const c=continueIdx(),o=order();
 // session, its timer, an open keypad and half-typed notes survive tab switches. ----------
 function setView(v){if(!['build','train','log','analytics'].includes(v))v='build';document.body.dataset.view=v;
   document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.v==v)));
-  if(v=='train'){const o=document.getElementById('lg');if(cur){if(!o.querySelector('.lg-body:not(#lg-start-pg)'))renderSession()}else if(!o.querySelector('#lg-start-pg'))renderStart()}
+  if(v=='train'){const o=document.getElementById('lg');if(cur){if(!o.querySelector('.lg-body:not(#lg-start-pg)'))renderSession()}else renderStart()/* D.1: always fresh, so the dashboard line reads the same data as Analytics after Log edits */}
   if(v=='analytics'&&window.renderAnalytics)renderAnalytics();if(v=='log'&&window.renderLog)renderLog();/* v28: planning analytics live in Build again; Analytics = completed workouts only */
   if(v=='build'&&typeof render=='function')render();refreshBar()}
 function openLogger(){closeModal();setView('train');renderSession()}
@@ -276,9 +278,9 @@ function check(e,x){if(x.done){x.done=false;x.doneAt=null;delete x.pr;persist(cu
   persist(cur.id);renderSession()}
 // v28: PRs are derived from the logged history by prs.js (port of tools/prs.py) and recomputed after every change; nothing stored is a source of truth.
 let LP={};function hx(live){const ss=L.sessions.map(s=>live&&cur&&s.id==cur.id?{...s,status:'completed',endedAt:nowISO()}:s);return{schema:LOG_SCHEMA,plannedSessionsPerWeek:order().length||undefined,sessions:ss,entries:L.entries,sets:L.sets,bodyweights:BW}}
-function livePrs(){return cur?(detectPrs(hx(true),ALIAS)[cur.id]||{}):{}}
+function livePrs(){return cur?(detectPrs(hx(true),ALIAS,{profile:prProf()})[cur.id]||{}):{}}
 function prTypesOf(setId,sp){const P=sp||livePrs(),o=[];Object.values(P).forEach(r=>PR_TYPES.forEach(k=>{if(r[k]&&r[k].set_id==setId)o.push(k)}));return o}
-function recomputePrs(){const P=detectPrs(hx(false),ALIAS),out=[];Object.keys(P).forEach(sid=>Object.keys(P[sid]).forEach(ex=>PR_TYPES.forEach(k=>{const r=P[sid][ex][k];if(r)out.push({id:sid+'|'+ex+'|'+k,sessionId:sid,exerciseId:ex,kind:k,value:r.value,unit:k=='reps_at_load'?'reps':k=='set_volume'?'kg·reps':'kg',setId:r.set_id,load_kg:r.load_kg,reps:r.reps})})));L.prs=out;return P}
+function recomputePrs(){const P=detectPrs(hx(false),ALIAS,{profile:prProf()}),out=[];Object.keys(P).forEach(sid=>Object.keys(P[sid]).forEach(ex=>PR_TYPES.forEach(k=>{const r=P[sid][ex][k];if(r)out.push({id:sid+'|'+ex+'|'+k,sessionId:sid,exerciseId:ex,kind:k,value:r.value,unit:k=='reps_at_load'?'reps':k=='set_volume'?'kg·reps':'kg',setId:r.set_id,load_kg:r.load_kg,reps:r.reps})})));L.prs=out;return P}
 const PRL={weight:'Weight PR',set_volume:'Set-volume PR',e1rm:'Estimated 1RM PR',reps_at_load:'Rep PR'};
 const prVal=(k,r)=>k=='reps_at_load'?`${r.reps} reps at ${fmt(conv(r.load_kg,'kg',S.unit))} ${S.unit}`:k=='set_volume'?`${fmt(conv(r.value,'kg',S.unit))} ${S.unit}·reps`:`${fmt(conv(r.value,'kg',S.unit))} ${S.unit}`;
 const reduceMotion=()=>!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -343,7 +345,7 @@ function gymSheet(){const g=gymP(),st=g.stacks||{},sk=k=>st[k]||{},own=(S.gymPro
       if(!n.length){delete stacks[i.dataset.st];continue}const old=st[i.dataset.st]||{};stacks[i.dataset.st]=old.weights?{weights:n}:(n.length==3?{start:n[0],step:n[1],count:n[2]}:{weights:n});if(ad.length)stacks[i.dataset.st].add_ons=ad}
     const id=(S.gymProfiles||[]).some(x=>x.id==S.activeGymId)?S.activeGymId:uid('g');const np={id,name:v('gp-name').trim()||'My gym',unit,dumbbells:db,kettlebells:kb,plates:pl,microplates:mp,bars,bar_by_exercise:be,stacks};
     S.gymProfiles=(S.gymProfiles||[]).filter(x=>x.id!=id).concat([np]);S.activeGymId=id;saveS();closeModal();refreshKp();toast(`Saved ${np.name}`,null)}}
-function refreshKp(){if(cur){entriesOf(cur.id).forEach(prefillKeep);if(document.getElementById('lg'))renderSession()}}
+function refreshKp(){recomputePrs()/* D.1: PR ties use the active gym profile */;if(cur){entriesOf(cur.id).forEach(prefillKeep);if(document.getElementById('lg'))renderSession()}}
 // ---------- rest timer (timestamps; survives reload/lock) ----------
 function startTimer(sec){const t={start:Date.now(),end:Date.now()+sec*1000};localStorage.setItem(TKEY,JSON.stringify(t));tick();requestAnimationFrame(clearTimer)}
 const plural=(n,w)=>`${n} ${w}${n==1?'':'s'}`;
@@ -460,7 +462,7 @@ function applyRows(tiles,rows){let t=tiles.map(x=>({...x}));rows.forEach(r=>{if(
   if(r.type=='remove')t.splice(i,1);else if(r.type=='swap')t[i]={id:r.to,sets:r.sets};else t[i].sets=r.sets});return t}
 function sessStats(s){const es=entriesOf(s.id),live=es.filter(e=>!isArch(e.exerciseId));const all=live.flatMap(e=>setsOf(e.id));const planned=((s.snapshot||{}).exercises||[]).reduce((a,p)=>a+p.sets,0);
   const doneW=es.flatMap(e=>e.skipped?[]:setsOf(e.id)).filter(x=>x.kind=='working'&&x.done).length;const skippedW=es.filter(e=>e.skipped).reduce((a,e)=>a+setsOf(e.id).filter(x=>x.kind=='working').length,0);
-  return{hard:all.filter(isHard).length,doneW,planned,skippedW,beat:es.map(e=>beatOf(e)).filter(b=>b=='▲').length,prs:(()=>{const P=cur&&s.id==cur.id?livePrs():(detectPrs(hx(false),ALIAS)[s.id]||{});return Object.keys(P).flatMap(ex=>PR_TYPES.filter(k=>P[ex][k]).map(k=>({ex,k,r:P[ex][k]})))})(),
+  return{hard:all.filter(isHard).length,doneW,planned,skippedW,beat:es.map(e=>beatOf(e)).filter(b=>b=='▲').length,prs:(()=>{const P=cur&&s.id==cur.id?livePrs():(detectPrs(hx(false),ALIAS,{profile:prProf()})[s.id]||{});return Object.keys(P).flatMap(ex=>PR_TYPES.filter(k=>P[ex][k]).map(k=>({ex,k,r:P[ex][k]})))})(),
     min:Math.round(elMs(s)/60000)}}
 function summary(){closeKp();const ot=document.getElementById('toast');if(ot)ot.remove();const s=cur,st=sessStats(s),rows=s.dayIdx==null?[]:diffRows(s)/* empty workout: nothing to write back */,m=loaded();
   modal(`<div id="lg-sum"><h3>Finish ${H(s.label)}</h3><div class="lg-stats"><span>${st.min} min</span><span>${plural(st.hard,'hard set')}</span><span>${st.doneW}/${st.planned} planned working sets${st.skippedW?` · ${st.skippedW} skipped`:''}</span><span>${st.beat} beat last time</span></div>
@@ -476,12 +478,20 @@ function summary(){closeKp();const ot=document.getElementById('toast');if(ot)ot.
     vsSheet(sid);if(pick!='none'&&sel.length)writeBack(s,sel,pick);else toast('Session saved',null)}}
 // ---------- v29 D: "vs last time" finish summary (#8; review.js finishSummary = tests/v29d_ref.py on prs.py) ----------
 const sgn=(v,d=1)=>{const r=Math.round(v*10**d)/10**d;return(r>0?'+':r<0?'−':'±')+String(Math.abs(r))};
-function vsRows(sid){return finishSummary(hx(false),sid,{aliases:ALIAS,exercises:EX})||[]}
-const VSA={up:'▲',down:'▼',flat:'▶',first:'•'},VSB={e1rm:'e1RM',set_volume:'top-set volume',reps:'reps',volume:'volume'};
+function vsRows(sid){return finishSummary(hx(false),sid,{aliases:ALIAS,exercises:EX,profile:prProf()})||[]}
+const VSA={up:'▲',down:'▼',flat:'▶',first:'•'},VSB={e1rm:'e1RM',set_volume:'top-set volume',reps:'reps',volume:'session vol'};
+/* D.1: a top-set load change within logger.prs.tie (step_fraction x real step: active gym profile gap, else load_step) is a tie, the
+   same test prs.py uses for weight PRs: shown as ±0, and the e1RM / set-volume change is shown from the reps alone. */
+function vsTie(r,unit){if(r.d_load_kg==null||r.top_load_kg==null||r.last_top_load_kg==null)return false;const R=prRules();
+  return Math.abs(r.top_load_kg-r.last_top_load_kg)<=R.sf*prStepKg({ex:r.exercise,added_kg:r.top_load_kg},unit||S.unit,R,prProf(),{exercises:EX})+PRS_EPS}
+function vsDisp(r,unit){const tie=vsTie(r,unit);if(!tie||r.status=='first')return{tie:false,pct:r.d_basis_pct,st:r.status};const R=prRules(),L_=r.top_load_kg;let pct=r.d_basis_pct;
+  if(r.basis=='e1rm'){const a=prE1(L_,r.top_reps,R),b=prE1(L_,r.last_top_reps,R);pct=b>PRS_EPS?(a-b)/b*100:null}else if(r.basis=='set_volume'||r.basis=='reps')pct=r.last_top_reps>0?(r.top_reps-r.last_top_reps)/r.last_top_reps*100:null;
+  const st=pct==null?r.status:Math.abs(pct)<=rvFlat()+1e-9?'flat':pct>0?'up':'down';return{tie,pct,st}}
 function vsSheet(sid){const s=L.sessions.find(x=>x.id==sid);if(!s)return;const u=s.unit||S.unit,rows=vsRows(sid);if(!rows.length)return;const k=v=>conv(v,'kg',u);
   modal(`<div id="lg-vs" data-s="${H(sid)}"><h3>vs last time</h3><p class="cf-hint">${H(s.label||'')} · each exercise against the last time you did it (warm-ups not counted; deload sessions skipped).</p><ul class="vs-l">${rows.map(r=>{const nm=H((EX[r.exercise]||{}).name||r.exercise),top=r.top_load_kg==null?'drops/partials only':`${r.top_load_kg>PRS_EPS?fmt(k(r.top_load_kg)):'BW'}×${r.top_reps}`,pr=r.prs.length?` <span class="vs-pr" data-n="${r.prs.length}">🏆 ${r.prs.map(x=>PRL[x]).join(', ')}</span>`:'';
     if(r.status=='first')return`<li class="vs-r first" data-x="${H(r.exercise)}" data-st="first"><b>${nm}</b><span>${top} · first time</span>${pr}</li>`;
-    return`<li class="vs-r ${r.status}" data-x="${H(r.exercise)}" data-st="${r.status}" data-basis="${r.basis}" data-dl="${r.d_load_kg}" data-dr="${r.d_reps}" data-dv="${r.d_volume_kg}" data-de="${r.d_e1rm_kg}" data-pct="${r.d_basis_pct}" data-deload="${r.last_deload?1:0}"><b><i class="vs-a" aria-label="${r.status}">${VSA[r.status]}</i> ${nm}${r.last_deload?' <em class="vs-dl">(deload)</em>':''}</b><span>${top}${r.d_load_kg!=null?` <em>(${sgn(k(r.d_load_kg))} ${u}, ${sgn(r.d_reps,0)} rep${Math.abs(r.d_reps)==1?'':'s'})</em>`:''} · ${VSB[r.basis]} ${r.d_basis_pct!=null?sgn(r.d_basis_pct)+'%':r.basis=='reps'?sgn(r.d_reps,0):'–'}${r.basis!='volume'?` · vol ${sgn(k(r.d_volume_kg),0)} ${u}`:''}</span>${pr}</li>`}).join('')}</ul>
+    const v=vsDisp(r,u),dl=v.tie?0:r.d_load_kg;
+    return`<li class="vs-r ${v.st}" data-x="${H(r.exercise)}" data-st="${r.status}" data-show="${v.st}" data-tie="${v.tie?1:0}" data-basis="${r.basis}" data-dl="${r.d_load_kg}" data-dr="${r.d_reps}" data-dv="${r.d_volume_kg}" data-de="${r.d_e1rm_kg}" data-pct="${r.d_basis_pct}" data-deload="${r.last_deload?1:0}"><b><i class="vs-a" aria-label="${v.st}">${VSA[v.st]}</i> ${nm}${r.last_deload?' <em class="vs-dl">(deload)</em>':''}</b><span>${top}${r.d_load_kg!=null?` <em class="vs-d">(${sgn(k(dl))} ${u}, ${sgn(r.d_reps,0)} rep${Math.abs(r.d_reps)==1?'':'s'})</em>`:''} · ${VSB[r.basis]} ${v.pct!=null?sgn(v.pct)+'%':r.basis=='reps'?sgn(r.d_reps,0):'–'}${r.basis!='volume'?` · session vol ${sgn(k(r.d_volume_kg),0)} ${u}`:''}</span>${pr}</li>`}).join('')}</ul>
   <div class="cf-btns"><button class="pri" id="vs-x">Close</button></div></div>`);document.getElementById('vs-x').onclick=closeModal}
 // ---------- v29 D: planned vs done (#9). Plan = the days Train uses (active routine, else the Build board); done = credited hard sets ----------
 function planDays(){return DAYS.map((_,i)=>(dayTiles(i)||[]).map(t=>({id:t.id,sets:t.sets})))}
@@ -562,7 +572,7 @@ function buildBar(){if(!document.getElementById('lg')){const o=document.createEl
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={get L(){return L},vsSheet,vsRows,planDays,planVsDone,planSnaps,todayYmd,wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={get L(){return L},vsTie,vsDisp,vsSheet,vsRows,planDays,planVsDone,planSnaps,todayYmd,wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();

@@ -1104,7 +1104,13 @@
         "the first ever logged session of an exercise (sets the baseline, no badge)"
       ],
       "recompute_on_edit": true,
-      "one_badge_per_type_per_session": true
+      "one_badge_per_type_per_session": true,
+      "tie": {
+        "step_fraction": 0.5,
+        "flat_pct_key": "review.flat_pct",
+        "rule": "Weight PR needs load > best + step_fraction x smallest real step (active gym profile gap at that load, else load_step[session unit][equipment]). set_volume and e1rm PRs need > best x (1 + review.flat_pct/100). reps_at_load treats earlier sets within step_fraction x step as the same load. Anything else is a tie: no badge. Removes kg/lb rounding PRs.",
+        "why_weight_uses_step_not_pct": "Loads are discrete; a real plate or dumbbell jump is a real weight PR even when under 1% (e.g. +2.5 lb microplates on a 300 lb lift). Conversion noise is always well under half a step."
+      }
     },
     "suspect_decimal": {
       "note": "v28.1 one-time cleanup for the keypad decimal bug (v24..v28B: a typed \".\" was dropped, 101.5 saved as 1015). Same rule as tools/prs.py suspect_decimal_sets: a done, loaded working set in a completed session started before saved_before is flagged when load_kg >= min_ratio x median(other loaded working sets of that exercise, kg) and |load_kg/divisor - median| <= window x median. Fewer than min_others other sets -> listed for a manual check (no fix). Fix = logged load / divisor.",
@@ -1624,6 +1630,10 @@
   },
   "review": {
     "on_plan_margin": 0.5,
-    "on_plan_margin_note": "A muscle is on plan when credited done >= planned - margin, in credited sets. Mid-week, planned = routine sets Monday through today."
+    "on_plan_margin_note": "A muscle is on plan when credited done >= planned - margin, in credited sets. Mid-week, planned = routine sets Monday through today.",
+    "flat_pct": 1,
+    "block_min_prior_weeks": 2,
+    "flat_pct_note": "Finish-summary arrow is flat when the top-set e1RM (or volume) changes by no more than this percent.",
+    "block_min_prior_weeks_note": "Block comparison stays hidden until the prior window has at least this many weeks with logs (on top of the Phase E gate)."
   }
 }

@@ -1,9 +1,10 @@
-// v29 B (rules.json v9 logger.bodyweight / logger.set_tags, prs.py v29): history.bodyweights -> effective load for exercises with
+// v29 D.1: PR tie rule (logger.prs.tie; detectPrs o.profile = active gym profile). v29 B (rules.json v9 logger.bodyweight / logger.set_tags, prs.py v29): history.bodyweights -> effective load for exercises with
 // exercises.json bodyweight_fraction; set.tag changes hard-set credit and PR eligibility. Without bodyweights and tags every result equals v8.
 // v28: PR detection + completed-workout analytics. Exact port of tools/prs.py (rules.json v8 logger.prs / logger.completed_analytics).
 // Pure functions of the logged history (L): PRs and analytics are always recomputed, never stored (recompute_on_edit).
 const PRS_EPS=1e-6,PR_TYPES=['weight','set_volume','e1rm','reps_at_load'];
 const prRules=()=>{const lg=(typeof RU!='undefined'&&RU&&RU.logger)||{};return{lg,hardRIR:lg.hardRIR,f:lg.e1rm_formula||'epley',mx:lg.e1rm_max_reps,lbPerKg:lg.lbPerKg??2.20462,
+  load_step:lg.load_step||{},flat_pct:((typeof RU!='undefined'&&RU&&RU.review)||{}).flat_pct??1,sf:((lg.prs||{}).tie||{}).step_fraction??.5,
   mr:(typeof RULE!='undefined'?RULE.min_rating_to_count:.25),rt:(typeof RULE!='undefined'?RULE.round_to:.5)}};
 const PRE1={epley:(w,r)=>w*(1+r/30),brzycki:(w,r)=>w*36/(37-r)};
 const prE1=(w,r,R)=>(PRE1[R.f]||PRE1.epley)(w,r);
@@ -41,13 +42,19 @@ function prFlatten(h,al,R,o){const ent={};(h.entries||[]).forEach(e=>ent[e.id]=e
 const prSet=x=>x.kind=='working'&&x.reps>0;
 // PR type k allowed for this set? logger.set_tags[tag].pr_exclude (prs.py _pr_ok)
 const prOk=(x,k,R)=>{if(!prSet(x))return false;const t=x.tag;return!(t&&(((R.lg.set_tags||{})[t]||{}).pr_exclude||[]).includes(k))};
-function detectPrs(h,al,o){const R=prRules(),mx=R.mx,prior={},out={},ok=(x,k)=>prOk(x,k,R);
-  for(const q of prFlatten(h,al,R,o)){const sid=q.s.id,cur={},order=[];q.sets.forEach(x=>{if(PR_TYPES.some(k=>ok(x,k))){if(!cur[x.ex]){cur[x.ex]=[];order.push(x.ex)}cur[x.ex].push(x)}});
+// v29 D.1 (logger.prs.tie, prs.py step_kg): smallest real weight step for this set's exercise, in kg. profile (active gym profile, optional):
+// gap between the nearest available load and its lower neighbour (microplates / odd dumbbells count); else logger.load_step[unit][equipment].
+function prStepKg(x,unit,R,profile,o){const T=(o&&o.exercises)||(typeof EX!='undefined'?EX:{}),m=T[x.ex],eq=(m&&!m.custom&&m.equipment)||'default';
+  if(profile){let av=null;try{av=typeof availableLoads=='function'?availableLoads(profile,eq,x.ex):null}catch(e){av=null}
+    if(av&&av.length>1){const pu=profile.unit||unit,v=x.added_kg*(pu=='lb'?R.lbPerKg:1);let i=0;for(let k=1;k<av.length;k++)if(Math.abs(av[k]-v)<Math.abs(av[i]-v))i=k;const j=i>0?i:1,g=av[j]-av[j-1];if(g>0)return prKg(g,pu,R)}}
+  const st=R.load_step||{},ne=d=>d&&typeof d=='object'&&Object.keys(d).length?d:null,u=ne(st[unit])||ne(st.lb)||{};return prKg(eq in u?u[eq]:(u.default??5),unit in st?unit:'lb',R)}
+function detectPrs(h,al,o){const R=prRules(),mx=R.mx,prior={},out={},ok=(x,k)=>prOk(x,k,R),fl=1+R.flat_pct/100,sf=R.sf,prof=(o&&o.profile)||null;
+  for(const q of prFlatten(h,al,R,o)){const sid=q.s.id,cur={},order=[],unit=q.s.unit||'lb';q.sets.forEach(x=>{if(PR_TYPES.some(k=>ok(x,k))){if(!cur[x.ex]){cur[x.ex]=[];order.push(x.ex)}cur[x.ex].push(x)}});
     for(const ex of order){const xs=cur[ex],P=prior[ex];
       if(P&&P.length){const lp=k=>P.filter(p=>p.load_kg>PRS_EPS&&ok(p,k));const mxOf=a=>a.length?Math.max(...a):0;
         const bw=mxOf(lp('weight').map(p=>p.load_kg)),bv=mxOf(lp('set_volume').map(p=>p.load_kg*p.reps)),be=mxOf(lp('e1rm').filter(p=>p.reps<=mx).map(p=>prE1(p.load_kg,p.reps,R)));const hit={};
-        xs.forEach(x=>{const L=x.load_kg,r=x.reps,c=[];if(L>PRS_EPS){if(ok(x,'weight')&&L>bw+PRS_EPS)c.push(['weight',L]);if(ok(x,'set_volume')&&L*r>bv+PRS_EPS)c.push(['set_volume',L*r]);if(ok(x,'e1rm')&&r<=mx&&prE1(L,r,R)>be+PRS_EPS)c.push(['e1rm',prE1(L,r,R)])}
-          if(ok(x,'reps_at_load')){const hv=P.filter(p=>ok(p,'reps_at_load')&&p.load_kg>=L-PRS_EPS).map(p=>p.reps);if(hv.length&&r>Math.max(...hv))c.push(['reps_at_load',r])}c.forEach(([k,v])=>(hit[k]=hit[k]||[]).push([v,x]))});
+        xs.forEach(x=>{const L=x.load_kg,r=x.reps,c=[],tol=sf*prStepKg(x,unit,R,prof,o);if(L>PRS_EPS){if(ok(x,'weight')&&L>bw+tol+PRS_EPS)c.push(['weight',L]);if(ok(x,'set_volume')&&L*r>bv*fl+PRS_EPS)c.push(['set_volume',L*r]);if(ok(x,'e1rm')&&r<=mx&&prE1(L,r,R)>be*fl+PRS_EPS)c.push(['e1rm',prE1(L,r,R)])}
+          if(ok(x,'reps_at_load')){const hv=P.filter(p=>ok(p,'reps_at_load')&&p.load_kg>=L-(L>PRS_EPS?tol:0)-PRS_EPS).map(p=>p.reps);if(hv.length&&r>Math.max(...hv))c.push(['reps_at_load',r])}c.forEach(([k,v])=>(hit[k]=hit[k]||[]).push([v,x]))});
         if(Object.keys(hit).length){const rec={};PR_TYPES.forEach(k=>{if(!hit[k])return;const[v,x]=hit[k].map((z,i)=>[z,i]).sort((a,b)=>(b[0][0]-a[0][0])||(b[0][1].load_kg-a[0][1].load_kg)||(a[0][1].idx-b[0][1].idx)||a[1]-b[1])[0][0];
           rec[k]={value:pyRound(v,6),set_id:x.id,load_kg:pyRound(x.load_kg,6),reps:x.reps,set_ids:hit[k].map(z=>z[1].id)};
           if(x.bw=='logged'||x.bw=='backfilled')Object.assign(rec[k],{added_kg:pyRound(x.added_kg,6),bodyweight_kg:pyRound(x.bw_kg,6),bodyweight:x.bw})});(out[sid]=out[sid]||{})[ex]=rec}}
