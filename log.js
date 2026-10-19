@@ -3,28 +3,28 @@
 (function(){
 const G=()=>window.LG,LVK='liftboard.logView';let LV={mode:'list',open:null,day:null,month:null,wk:null};try{Object.assign(LV,JSON.parse(localStorage.getItem(LVK))||{})}catch{}LV.open=null;LV.day=null;
 const saveLV=()=>localStorage.setItem(LVK,JSON.stringify({mode:LV.mode}));
-const E=s=>G().H(s),U=()=>G().S.unit,kgU=v=>G().fmt(G().conv(v,'kg',U())),tS=s=>s.startedAt||s.date;
+const E=s=>G().H(s),U=()=>G().S.unit,kgU=v=>G().fmt(G().conv(v,'kg',U())),kgW=v=>String(Math.round(G().conv(v,'kg',U())||0))/* display only: whole number */,tS=s=>s.startedAt||s.date;
 const ymd=iso=>prLocalDate(iso),DOW=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const dateTxt=s=>new Date(tS(s)).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
 function done(){return G().L.sessions.filter(s=>s.status=='completed').sort((a,b)=>tS(a)<tS(b)?1:tS(a)>tS(b)?-1:(a.id<b.id?1:-1))}
-function routineOf(s){if(s.routineName)return s.routineName;const id=String(s.splitId||'');if(id.startsWith('my:')){const m=(window.mySplits?mySplits():[]).find(x=>x.id==id.slice(3));if(m)return m.name}return'Board'}
+function routineOf(s){if(s.empty)return'Empty workout';if(s.routineName)return s.routineName+(s.routineVersion?' v'+s.routineVersion:'');const id=String(s.splitId||'');if(id.startsWith('my:')){const m=(window.mySplits?mySplits():[]).find(x=>x.id==id.slice(3));if(m)return m.name}return'Board'}
 const WA={};function wkA(ws){return WA[ws]||(WA[ws]=G().weekAnalytics(ws))}
 function invalidate(){for(const k in WA)delete WA[k]}
 // one session -> the board's day tiles (hard sets per exercise), so the same heat module and counting rule draw it
 function tilesOf(s){const lg=G();return lg.entriesOf(s.id).flatMap(e=>{if(e.skipped||lg.isArch(e.exerciseId))return[];const n=lg.setsOf(e.id).filter(lg.isHard).length;return n?[{id:lg.resolve(e.exerciseId),sets:n}]:[]})}
 function stats(s){const lg=G(),es=lg.entriesOf(s.id),hard=es.reduce((a,e)=>a+(e.skipped?0:lg.setsOf(e.id).filter(lg.isHard).length),0);
-  const min=s.endedAt&&s.startedAt?Math.max(0,Math.round((Date.parse(s.endedAt)-Date.parse(s.startedAt)-(s.pausedMs||0))/60000)):null;
+  const min=s.endedAt&&s.startedAt?Math.round(G().durMs(s)/60000):null;/* paused time excluded, manual clock moves included */
   const vol=wkA(prWeekStart(ymd(tS(s)))).volume.per_session_kg[s.id]||0;const prs=lg.L.prs.filter(p=>p.sessionId==s.id);
   const notes=[s.notes,...es.map(e=>e.notes?`${lg.exName(e)}: ${e.notes}`:'')].filter(x=>x&&x.trim()).flatMap(x=>x.split('\n')).filter(x=>x.trim()).slice(0,2);return{hard,min,vol,prs,notes}}
 function prChips(prs){const c={};prs.forEach(p=>c[p.kind]=(c[p.kind]||0)+1);return PR_TYPES.filter(k=>c[k]).map(k=>`<span class="lgc-pr" data-k="${k}">🏆 ${G().PRL[k]}${c[k]>1?' ×'+c[k]:''}</span>`).join('')}
 function cardHtml(s){const st=stats(s),open=LV.open==s.id;
   return`<article class="lgc${open?' open':''}" data-s="${E(s.id)}"><button class="lgc-hit" aria-expanded="${open}" aria-label="${E(dateTxt(s)+' '+s.label)}"></button><div class="lgc-map" data-s="${E(s.id)}"></div><div class="lgc-main">
    <div class="lgc-h"><b class="lgc-date">${E(dateTxt(s))}</b><span class="lgc-day">${E(s.label||'')}</span></div><div class="lgc-rt">${E(routineOf(s))}</div>
-   <div class="lgc-st"><span data-k="min">⏱ ${st.min==null?'–':st.min+' min'}</span><span data-k="vol" data-kg="${st.vol}">${kgU(st.vol)} ${U()}</span><span data-k="hard" data-n="${st.hard}">${st.hard} hard</span></div>
+   <div class="lgc-st"><span data-k="min">⏱ ${st.min==null?'–':st.min+' min'}</span><span data-k="vol" data-kg="${st.vol}">${kgW(st.vol)} ${U()}</span><span data-k="hard" data-n="${st.hard}">${st.hard} hard</span></div>
    ${st.prs.length?`<div class="lgc-prs">${prChips(st.prs)}</div>`:''}${st.notes.length?`<div class="lgc-notes">${st.notes.map(n=>`<p>${E(n)}</p>`).join('')}</div>`:''}</div>
    ${open?detailHtml(s):''}</article>`}
 function detailHtml(s){const lg=G(),u=s.unit||'lb',pr={};lg.L.prs.filter(p=>p.sessionId==s.id).forEach(p=>(pr[p.setId]=pr[p.setId]||[]).push(p.kind));
-  return`<div class="lgc-x"><p class="cf-hint">Logged totals: ${kgU(stats(s).vol)} ${U()} volume (working sets, load × reps) · ${stats(s).hard} hard sets.</p>${lg.entriesOf(s.id).map(e=>`<div class="lgc-ex"><b>${E(lg.exName(e))}</b>${e.skipped?' <em>skipped</em>':''}${e.swappedFrom?' <em>swapped</em>':''}${e.added?' <em>added</em>':''}
+  return`<div class="lgc-x"><p class="cf-hint">Logged totals: ${kgW(stats(s).vol)} ${U()} volume (working sets, load × reps) · ${stats(s).hard} hard sets.</p>${lg.entriesOf(s.id).map(e=>`<div class="lgc-ex"><b>${E(lg.exName(e))}</b>${e.skipped?' <em>skipped</em>':''}${e.swappedFrom?' <em>swapped</em>':''}${e.added?' <em>added</em>':''}
    <div class="lgc-sets">${lg.setsOf(e.id).filter(x=>x.done).map(x=>`<span class="${x.kind}${pr[x.id]?' pr':''}" data-t="${E(x.id)}">${x.kind=='warmup'?'W ':''}${x.load?lg.fmt(lg.conv(x.load,u,U())):'BW'}×${x.reps??''}${x.rir!=null?' @'+x.rir:''}${pr[x.id]?' 🏆':''}</span>`).join('')}</div></div>`).join('')}
    ${s.notes?`<p class="lgc-sn">${E(s.notes)}</p>`:''}<div class="cf-btns"><button class="lgc-edit">Edit</button><button class="lgc-del dng">Delete</button></div></div>`}
 function snap(sid){const L=G().L;return JSON.stringify({s:L.sessions.filter(x=>x.id==sid),e:L.entries.filter(x=>x.sessionId==sid),t:L.sets.filter(x=>x.sessionId==sid)})}
@@ -70,12 +70,12 @@ function spark(pts){if(pts.length<2)return'';const W=128,Hh=28,v=pts.map(p=>p.e1
 function renderAnalytics(){const o=document.getElementById('anview');if(!o||!G()||!G().ready)return;invalidate();const lg=G(),W=weeksAvail();if(!LV.wk||!W.includes(LV.wk))LV.wk=lg.weekKey();const ws=LV.wk,a=wkA(ws),i=W.indexOf(ws);
   const ss=done().filter(s=>prWeekStart(ymd(tS(s)))==ws).reverse(),days=[ss.flatMap(tilesOf),[],[],[],[],[],[]],board=lg.countsFor(days),ad=a.adherence,prs=lg.L.prs.filter(p=>ss.some(s=>s.id==p.sessionId));
   const trend=Object.keys(a.load_trend).filter(x=>a.load_trend[x].some(p=>prWeekStart(p.date)==ws)).sort((x,y)=>((EX[x]||{}).name||x)<((EX[y]||{}).name||y)?-1:1);
-  const pct=v=>v==null?'–':Math.round(v*100)+'%',wl=d=>new Date(d+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'});
+  const tmin=Math.round(ss.reduce((n,s)=>n+(lg.durMs(s)||0),0)/60000);const pct=v=>v==null?'–':Math.round(v*100)+'%',wl=d=>new Date(d+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'});
   let c=o.querySelector('#anc');if(!c){c=document.createElement('div');c.id='anc';o.appendChild(c)}
   c.innerHTML=`<div class="an-wk"><button id="anw-p" ${i>0?'':'disabled'} aria-label="Previous week">‹</button><b id="anw-l" data-w="${ws}">Week of ${E(wl(ws))}</b><button id="anw-n" ${i<W.length-1?'':'disabled'} aria-label="Next week">›</button></div>
   <p class="cf-hint an-logged">Completed workouts only (the session in progress is not counted). ${E(lg.loggedNote())}</p>
   <div class="an-tiles"><div data-k="vol" data-kg="${a.volume.week_kg}"><b>${kgU(a.volume.week_kg)} ${U()}</b><small>logged total volume</small></div><div data-k="hard" data-n="${a.hard_sets.set_count}"><b>${a.hard_sets.set_count}</b><small>logged hard sets</small></div>
-   <div data-k="sess" data-c="${ad.sessions_completed}" data-p="${ad.sessions_planned}"><b>${ad.sessions_completed}/${ad.sessions_planned}</b><small>sessions done (logged)</small></div><div data-k="sets" data-r="${ad.sets_ratio}"><b>${pct(ad.sets_ratio)}</b><small>planned sets done (logged)</small></div></div>
+   <div data-k="sess" data-c="${ad.sessions_completed}" data-p="${ad.sessions_planned}"><b>${ad.sessions_completed}/${ad.sessions_planned}</b><small>sessions done (logged)</small></div><div data-k="sets" data-r="${ad.sets_ratio}"><b>${pct(ad.sets_ratio)}</b><small>planned sets done (logged)</small></div><div data-k="time" data-min="${tmin}"><b>${tmin} min</b><small>logged training time (pauses excluded)</small></div></div>
   <h3>Hard sets per muscle (logged totals)</h3><div id="an-map"></div>${a.hard_sets.archived_sets_not_counted?`<p class="lg-arch">${a.hard_sets.archived_sets_not_counted} hard sets from archived exercises not counted.</p>`:''}
   <table class="lg-tbl an-hs">${MUS.map(m=>`<tr data-m="${m}" data-v="${board[m]}" class="${status(board[m],tgt(m))}"><td>${E(cap(lab(m)))}</td><td>${board[m]}</td><td>/ ${tgt(m).min}–${tgt(m).max}</td></tr>`).join('')}</table>
   <h3>Adherence (logged totals)</h3><p class="an-adh" data-done="${ad.completed_planned_sets}" data-plan="${ad.planned_sets}" data-skip="${ad.skipped_sets}">Planned working sets done: ${ad.completed_planned_sets}/${ad.planned_sets}${ad.skipped_sets?` · ${ad.skipped_sets} skipped`:''} · sessions: ${ad.sessions_completed} completed, ${ad.sessions_skipped} skipped, ${ad.sessions_not_started} not started</p>

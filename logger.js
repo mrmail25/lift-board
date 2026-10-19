@@ -85,12 +85,30 @@ function carryNote(id){const r=resolve(id),h=hist(r,cur&&cur.id)[0];if(h&&h.e.no
 function prevFor(exId,kind,pos,sid){const h=hist(exId,sid)[0];if(!h)return null;const a=h.sets.filter(x=>x.kind==kind);return a[pos]||null}
 // ---------- split order / Continue ----------
 function loaded(){return window.loadedSplit?loadedSplit():null}
-function dayTiles(i){const m=loaded();return(state.days[i]&&state.days[i].length)?state.days[i]:(m&&m.days[i])||[]}
-function order(){const m=loaded(),d=m?m.days:state.days;return DAYS.map((_,i)=>i).filter(i=>(d[i]||[]).length&&dayTiles(i).length)}
-function lastDone(){return L.sessions.filter(s=>s.status=='completed'||s.status=='skipped').sort(byT).pop()}
+// v28 C: Train library = published routines. Each Publish stores an immutable, versioned snapshot of the Build board (days + labels).
+// The active routine (S.activeRoutine) drives Continue / day picker; with none active, Train uses the Build board as before.
+const RKEY='liftboard.routines';let ROUT=[];try{ROUT=JSON.parse(localStorage.getItem(RKEY))||[]}catch{}const saveR=()=>localStorage.setItem(RKEY,JSON.stringify(ROUT));
+const rtVers=id=>ROUT.filter(r=>r.id==id).sort((a,b)=>a.version-b.version);const rtLatest=id=>rtVers(id).pop()||null;
+const rtList=()=>[...new Set(ROUT.map(r=>r.id))].map(rtLatest).sort((a,b)=>a.publishedAt<b.publishedAt?1:-1);
+function activeRt(){return S.activeRoutine?rtLatest(S.activeRoutine):null}
+const srcKey=()=>state.loaded?String(state.loaded):'board';
+function boardSnap(){return{days:JSON.parse(JSON.stringify(DAYS.map((_,i)=>dayTilesBoard(i)))),labels:JSON.parse(JSON.stringify(DAYS.map((_,i)=>(state.labels||[])[i]||'')))}}
+function defaultRtName(){const r=ROUT.filter(x=>x.source==srcKey()).sort((a,b)=>a.publishedAt<b.publishedAt?1:-1)[0];if(r)return r.name;const m=loaded();return m?m.name:'My routine'}
+function publish(name){name=String(name||'').trim()||defaultRtName();const sn=boardSnap();if(!sn.days.some(d=>d.length))return null;
+  const same=ROUT.find(r=>r.name.toLowerCase()==name.toLowerCase()),id=same?same.id:uid('r'),last=rtLatest(id);
+  if(last&&JSON.stringify({days:last.days,labels:last.labels})==JSON.stringify(sn))return{r:last,fresh:false};
+  const r={id,name,version:last?last.version+1:1,publishedAt:nowISO(),source:srcKey(),days:sn.days,labels:sn.labels};ROUT.push(r);saveR();return{r,fresh:true}}
+function setActive(id){S.activeRoutine=id||null;saveS();renderStart();refreshBar()}
+function dayTilesBoard(i){const m=loaded();return(state.days[i]&&state.days[i].length)?state.days[i]:(m&&m.days[i])||[]}
+function dayTiles(i){const r=activeRt();return r?(r.days[i]||[]):dayTilesBoard(i)}
+function order(){const r=activeRt();if(r)return DAYS.map((_,i)=>i).filter(i=>(r.days[i]||[]).length);const m=loaded(),d=m?m.days:state.days;return DAYS.map((_,i)=>i).filter(i=>(d[i]||[]).length&&dayTiles(i).length)}
+function lastDone(){const r=activeRt();return L.sessions.filter(s=>(s.status=='completed'||s.status=='skipped')&&s.dayIdx!=null&&(!r||s.routineId==r.id)).sort(byT).pop()}
+// session clock: paused time never counts; manual moves (adjMs) do
+function elMs(s,now){const end=s.endedAt?Date.parse(s.endedAt):(now||Date.now()),p=(s.pausedMs||0)+(s.pausedAt&&!s.endedAt?end-Date.parse(s.pausedAt):0);return Math.max(0,end-Date.parse(s.startedAt)-p+(s.adjMs||0))}
+const durMs=s=>s.startedAt?elMs(s):null;
 function continueIdx(){const o=order();if(!o.length)return null;const l=lastDone();if(!l)return o[0];const k=o.indexOf(l.dayIdx);if(k>=0)return o[(k+1)%o.length];
   for(let j=1;j<=7;j++){const d=(l.dayIdx+j)%7;if(o.includes(d))return d}return o[0]}
-const dayLabel=i=>DAYS[i]+((state.labels||[])[i]?' · '+state.labels[i]:'');
+const dayLabel=i=>{const r=activeRt(),l=r?(r.labels||[])[i]:(state.labels||[])[i];return DAYS[i]+(l?' · '+l:'')};
 // ---------- sessions ----------
 function newSet(e,kind,idx){return{id:uid('t'),entryId:e.id,sessionId:e.sessionId,idx,kind,load:null,reps:null,rir:null,done:false,doneAt:null}}
 function prefill(e){const p=progression(resolve(e.exerciseId),e.sessionId);e.cue=p;const pos={warmup:0,working:0};
@@ -98,11 +116,14 @@ function prefill(e){const p=progression(resolve(e.exerciseId),e.sessionId);e.cue
     if(pv){x.load=conv(pv.load,sessUnit(pv.sessionId),cur.unit);x.reps=pv.reps;x.prevLoad=x.load;x.prevReps=x.reps}
     if(x.kind=='working'&&p.sugLoad!=null){x.load=conv(p.sugLoad,S.unit,cur.unit);x.reps=p.sugReps;x.sug=true}})}
 function startSession(i){if(cur)return openLogger();const tiles=dayTiles(i);if(!tiles.length)return;const m=loaded();
-  const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),splitId:m?'my:'+m.id:undefined,dayIdx:i,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:tiles.map(t=>({exerciseId:t.id,sets:t.sets}))}};
+  const rt=activeRt();const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),splitId:m?'my:'+m.id:undefined,...rtRef(rt),dayIdx:i,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:tiles.map(t=>({exerciseId:t.id,sets:t.sets}))}};
   L.sessions.push(s);cur=s;tiles.forEach((t,k)=>{const e={id:uid('e'),sessionId:s.id,order:k,exerciseId:t.id,nameSnapshot:(EX[t.id]||{}).name||t.id,repRange:[...repFor(t.id)],restSec:restFor(t.id,'working'),notes:carryNote(t.id),skipped:false};
     L.entries.push(e);for(let j=0;j<t.sets;j++)L.sets.push(newSet(e,'working',j));prefill(e)});
   const first=L.entries.find(e=>e.sessionId==s.id);openEntry=first&&first.id;activeSet=firstOpenSet(first);persist(s.id);closeModal();openLogger()}
-function skipDays(list){const made=list.map(i=>{const m=loaded();const s={id:uid('s'),schema:LOG_SCHEMA,status:'skipped',date:nowISO(),dayIdx:i,splitId:m?'my:'+m.id:undefined,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:dayTiles(i).map(t=>({exerciseId:t.id,sets:t.sets}))}};L.sessions.push(s);return s});
+const rtRef=r=>r?{routineId:r.id,routineVersion:r.version,routineName:r.name}:{};
+function startEmpty(){if(cur)return openLogger();const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),dayIdx:null,label:'Empty workout',empty:true,unit:S.unit,notes:'',snapshot:{exercises:[]}};
+  L.sessions.push(s);cur=s;openEntry=null;activeSet=null;persist(s.id);closeModal();openLogger();addExercise()}
+function skipDays(list){const made=list.map(i=>{const m=loaded();const s={id:uid('s'),schema:LOG_SCHEMA,status:'skipped',date:nowISO(),...rtRef(activeRt()),dayIdx:i,splitId:m?'my:'+m.id:undefined,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:dayTiles(i).map(t=>({exerciseId:t.id,sets:t.sets}))}};L.sessions.push(s);return s});
   Promise.all(made.map(s=>persist(s.id))).then(()=>{refreshBar();toast(`Skipped ${made.map(s=>DAYS[s.dayIdx]).join(', ')}`,()=>{made.forEach(s=>{L.sessions=L.sessions.filter(x=>x.id!==s.id);persist(s.id)});refreshBar();if(document.getElementById('lg-start'))startSheet()})})}
 const entriesOf=sid=>L.entries.filter(e=>e.sessionId==sid).sort((a,b)=>a.order-b.order);
 const setsOf=eid=>L.sets.filter(x=>x.entryId==eid).sort((a,b)=>a.idx-b.idx);
@@ -132,11 +153,28 @@ function setView(v){if(!['build','train','log','analytics'].includes(v))v='build
   if(v=='build'&&typeof render=='function')render();refreshBar()}
 function openLogger(){closeModal();setView('train');renderSession()}
 function closeLogger(){closeKp();renderStart();refreshBar()}
-function renderStart(){const o=document.getElementById('lg');if(!o)return;const ad=adherence();
-  o.innerHTML=`<div class="lg-top"><b class="lg-name">Train</b></div><div class="lg-body" id="lg-start-pg"><button class="pri lg-big" id="lg-cont"></button>
-  <div class="lg-startbtns"><button id="lg-days">Choose a day…</button><button id="lg-wkb">Week &amp; history</button></div>
+function renderStart(){const o=document.getElementById('lg');if(!o)return;const ad=adherence(),r=activeRt(),n=rtList().length;
+  o.innerHTML=`<div class="lg-top"><b class="lg-name">Train</b></div><div class="lg-body" id="lg-start-pg">
+  <div class="tr-rt" data-r="${r?H(r.id):''}" data-v="${r?r.version:''}">${r?`<small>Active routine</small><b>${H(r.name)}</b><span>v${r.version} · published ${H(new Date(r.publishedAt).toLocaleDateString())}</span>`:`<small>No routine active</small><b>Build board</b><span>${n?'Pick a published routine, or train from the board.':'Publish from Build to add routines to this library.'}</span>`}</div>
+  <button class="pri lg-big" id="lg-cont"></button>
+  <div class="lg-startbtns"><button id="lg-days">Choose a day…</button><button id="tr-change">${n?'Change routine…':'Routines…'}</button><button id="tr-empty">Empty workout</button><button id="lg-wkb">Week &amp; history</button></div>
   <p class="cf-hint lg-adh0">This week (logged totals): ${ad.completed} completed · ${ad.skipped} skipped · ${ad.notStarted} not started</p></div>`;
-  o.querySelector('#lg-cont').onclick=()=>{if(cur)return openLogger();const c=continueIdx();if(c!=null)startSession(c)};o.querySelector('#lg-days').onclick=startSheet;o.querySelector('#lg-wkb').onclick=()=>weekView();refreshBar()}
+  o.querySelector('#lg-cont').onclick=()=>{if(cur)return openLogger();const c=continueIdx();if(c!=null)startSession(c)};o.querySelector('#lg-days').onclick=startSheet;o.querySelector('#lg-wkb').onclick=()=>weekView();
+  o.querySelector('#tr-change').onclick=routinePicker;o.querySelector('#tr-empty').onclick=startEmpty;refreshBar()}
+function routinePicker(){const a=activeRt(),L_=rtList();modal(`<div id="tr-pick"><h3>Train library</h3>${L_.length?'':'<p class="cf-hint">Nothing published yet. Use Publish on Build.</p>'}
+  <div class="lg-menu">${L_.map(r=>`<button data-r="${H(r.id)}" class="${a&&a.id==r.id?'on':''}"><b>${H(r.name)}</b> v${r.version}<small>${DAYS.filter((_,i)=>(r.days[i]||[]).length).join(' · ')} · ${rtVers(r.id).length} version${rtVers(r.id).length>1?'s':''}</small></button>`).join('')}<button data-r="" class="${a?'':'on'}">Build board (unpublished)</button></div>
+  <div class="cf-btns"><button id="tr-x">Close</button></div></div>`);document.getElementById('tr-x').onclick=closeModal;
+  document.querySelectorAll('#tr-pick .lg-menu button').forEach(b=>b.onclick=()=>{setActive(b.dataset.r);closeModal();toast(b.dataset.r?'Active routine: '+rtLatest(b.dataset.r).name:'Training from the Build board',null)})}
+function publishSheet(){const nm=defaultRtName(),ex=ROUT.find(r=>r.name.toLowerCase()==nm.toLowerCase());
+  modal(`<div id="pb"><h3>Publish to Train</h3><p class="cf-hint">Saves a versioned snapshot of this board to the Train library. Later board edits don't change it until you publish again.</p>
+  <label>Routine name <input id="pb-n" value="${H(nm)}"></label><p class="cf-hint" id="pb-v">${ex?`Publishes ${H(ex.name)} v${rtLatest(ex.id).version+1}`:'New routine, v1'}</p>
+  <div class="cf-btns"><button class="pri" id="pb-ok">Publish</button><button id="pb-x">Cancel</button></div></div>`);
+  const n=document.getElementById('pb-n');n.oninput=()=>{const e=ROUT.find(r=>r.name.toLowerCase()==n.value.trim().toLowerCase());document.getElementById('pb-v').textContent=e?`Publishes ${e.name} v${rtLatest(e.id).version+1}`:'New routine, v1'};
+  document.getElementById('pb-x').onclick=closeModal;document.getElementById('pb-ok').onclick=()=>{const p=publish(n.value);closeModal();if(!p){toast('Add exercises to the board first',null);return}
+    if(!activeRt())S.activeRoutine=p.r.id,saveS();renderStart();toast(p.fresh?`Published ${p.r.name} v${p.r.version}`:`${p.r.name} v${p.r.version} is already up to date`,null)}}
+function startTraining(){if(cur)return openLogger();const p=publish(defaultRtName());if(!p){toast('Add exercises to the board first',null);return}S.activeRoutine=p.r.id;saveS();const c=continueIdx();if(c==null)return;startSession(c)}
+function buildBtns(){const a=document.querySelector('header .actions');if(!a||document.getElementById('pb-btn'))return;a.insertAdjacentHTML('afterbegin','<button id="pb-btn" title="Save a versioned snapshot of this board to the Train library">Publish</button><button id="st-btn" class="pri" title="Publish, make it the active routine and start the session clock">Start training</button>');
+  document.getElementById('pb-btn').onclick=publishSheet;document.getElementById('st-btn').onclick=startTraining}
 function cueHtml(e){const c=e.cue||{};const a=[];if(c.sugLoad!=null)a.push(`↑ Try ${fmt(c.sugLoad)}×${c.sugReps}`);else if(c.addRep)a.push('Add a rep this time');if(c.beat)a.push(H(c.beat));if(c.cut)a.push('Missed the range twice: consider −5%');return a.join(' · ')}
 function rowHtml(e,x,n){const pv=x.kind=='working'?prevFor(resolve(e.exerciseId),'working',n.w,cur.id):prevFor(resolve(e.exerciseId),'warmup',n.u,cur.id);
   const pvs=pv?`${fmt(dLoad(pv))} × ${pv.reps}${pv.rir!=null?' @'+pv.rir:''}`:'—';const L_=conv(x.load,cur.unit,S.unit);
@@ -150,7 +188,7 @@ function rowHtml(e,x,n){const pv=x.kind=='working'?prevFor(resolve(e.exerciseId)
    <div class="lg-rir" data-s="${x.id}" hidden>${[0,1,2,3,4,5].map(r=>`<button data-r="${r}" class="${x.rir===r?'on':''}">${S.rpe?10-r:(r==5?'5+':r)}</button>`).join('')}</div>`}
 function cardHtml(e){const x=EX[resolve(e.exerciseId)],sets=setsOf(e.id),done=sets.filter(s=>s.done).length,open=e.id==openEntry,n={w:0,u:0};
   const rows=sets.map(s=>{const h=rowHtml(e,s,n);s.kind=='working'?n.w++:n.u++;return h}).join('');
-  return`<div class="lg-card${open?' open':''}${e.skipped?' skipped':''}${x?'':' arch'}" data-e="${e.id}"><div class="lg-ch"><button class="lg-title">${x?ICON[x.type]:'⌧'} ${H(exName(e))}${x?'':' <em>archived exercise</em>'}${e.swappedFrom?' <em>swapped</em>':''}</button>
+  return`<div class="lg-card${open?' open':''}${e.skipped?' skipped':''}${x?'':' arch'}" data-e="${e.id}"><div class="lg-ch"><button class="lg-drag" aria-label="Drag to reorder">≡</button><button class="lg-title">${x?ICON[x.type]:'⌧'} ${H(exName(e))}${x?'':' <em>archived exercise</em>'}${e.swappedFrom?' <em>swapped</em>':''}</button>
    <span class="lg-cnt">${done}/${sets.length}</span><button class="lg-more" aria-label="Options">⋯</button></div>
    <div class="lg-meta"><button class="lg-chip lg-rest" aria-label="Rest time, tap to adjust">⏱ ${mmss(e.restSec)}</button><button class="lg-chip lg-rr" aria-label="Rep range, tap to adjust">${e.repRange[0]}–${e.repRange[1]} reps</button></div>
    ${x&&(open||exNote(e.exerciseId))?pnHtml(resolve(e.exerciseId)):''}
@@ -171,11 +209,19 @@ function beatOf(e){const now=bestOf(setsOf(e.id).filter(x=>x.done));if(!now)retu
   if(Math.abs(now.v-prev.v)>1e-9)return now.v>prev.v?'▲':'▼';const a=volOf(setsOf(e.id).filter(x=>x.done)),b=volOf(h.sets);return a>b?'▲':a<b?'▼':'='}
 function renderSession(){const o=document.getElementById('lg');if(!o||!cur)return;LP=livePrs();const es=entriesOf(cur.id);
   o.innerHTML=`<div class="lg-top"><b class="lg-name">${H(cur.label)}</b><span class="lg-el" id="lg-el"></span><button class="pri" id="lg-fin">Finish</button></div>
-  <div class="lg-body">${es.map(cardHtml).join('')}<button class="lg-addex" id="lg-addex">+ Exercise</button><button class="lg-hide" id="lg-hide">Back to Build (session keeps running)</button></div>`;
+  <div class="lg-clock"><button id="lg-pause" aria-pressed="${!!cur.pausedAt}">${cur.pausedAt?'▶ Resume':'⏸ Pause'}</button><button id="lg-tmb" aria-label="Move elapsed time back 1 minute">−1 min</button><button id="lg-tmf" aria-label="Move elapsed time forward 1 minute">+1 min</button>${cur.pausedAt?'<em>Paused: not counted</em>':''}</div>
+  <div class="lg-body">${es.length?'':'<p class="cf-hint lg-empty">Empty workout: add exercises as you go.</p>'}${es.map(cardHtml).join('')}<button class="lg-addex" id="lg-addex">+ Exercise</button><button class="lg-hide" id="lg-hide">Back to Build (session keeps running)</button></div>`;
   bindSession(o);tick();const a=o.querySelector('.lg-row.active');if(a&&!o._noScroll)a.scrollIntoView({block:'center'});clearTimer()}
-function bindSession(o){o.querySelector('#lg-fin').onclick=summary;o.querySelector('#lg-addex').onclick=addExercise;o.querySelector('#lg-hide').onclick=()=>setView('build');
+function pauseToggle(){if(!cur)return;if(cur.pausedAt){cur.pausedMs=(cur.pausedMs||0)+Math.max(0,Date.now()-Date.parse(cur.pausedAt));delete cur.pausedAt}else cur.pausedAt=nowISO();persist(cur.id);renderSession()}
+function moveClock(min){if(!cur)return;const raw=elMs({...cur,adjMs:0});cur.adjMs=Math.max(-raw,(cur.adjMs||0)+min*60000);persist(cur.id);tick()}
+function moveEntry(e,to){const es=entriesOf(e.sessionId),k=es.indexOf(e);if(k<0||to<0||to>=es.length||to==k)return;es.splice(k,1);es.splice(to,0,e);es.forEach((q,i)=>q.order=i);persist(e.sessionId);renderSession()}
+function dragBind(o){o.querySelectorAll('.lg-drag').forEach(h=>{h.addEventListener('pointerdown',ev=>{ev.preventDefault();ev.stopPropagation();const card=h.closest('.lg-card'),e=L.entries.find(x=>x.id==card.dataset.e),y0=ev.clientY;try{h.setPointerCapture(ev.pointerId)}catch{}card.classList.add('dragging');
+  const mv=v=>{card.style.transform=`translateY(${v.clientY-y0}px)`},up=v=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);h.removeEventListener('pointercancel',up);card.classList.remove('dragging');card.style.transform='';
+    const cs=[...o.querySelectorAll('.lg-card')].filter(c=>c!==card),mid=c=>{const r=c.getBoundingClientRect();return r.top+r.height/2},y=v.clientY;const to=cs.filter(c=>mid(c)<y).length;moveEntry(e,to)};
+  h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up)});h.onclick=ev=>ev.stopPropagation()})}
+function bindSession(o){o.querySelector('#lg-fin').onclick=summary;o.querySelector('#lg-pause').onclick=pauseToggle;o.querySelector('#lg-tmb').onclick=()=>moveClock(-1);o.querySelector('#lg-tmf').onclick=()=>moveClock(1);dragBind(o);o.querySelector('#lg-addex').onclick=addExercise;o.querySelector('#lg-hide').onclick=()=>setView('build');
   o.querySelectorAll('.lg-card').forEach(c=>{const e=L.entries.find(x=>x.id==c.dataset.e);
-    c.querySelector('.lg-ch').onclick=ev=>{if(ev.target.closest('.lg-more')||ev.target.closest('.lg-title')&&e.id==openEntry)return;openEntry=e.id;activeSet=firstOpenSet(e);renderSession()};
+    c.querySelector('.lg-ch').onclick=ev=>{if(ev.target.closest('.lg-more')||ev.target.closest('.lg-drag')||ev.target.closest('.lg-title')&&e.id==openEntry)return;openEntry=e.id;activeSet=firstOpenSet(e);renderSession()};
     c.querySelector('.lg-title').addEventListener('click',ev=>{if(e.id==openEntry){ev.stopPropagation();history_(resolve(e.exerciseId),e)}});
     c.querySelector('.lg-more').onclick=ev=>{ev.stopPropagation();moreMenu(e)};
     c.querySelectorAll('.lg-chip').forEach(b=>b.onclick=ev=>{ev.stopPropagation();adjSheet(e)});bindPn(c,renderSession);
@@ -218,17 +264,21 @@ function editSet(e,x){modal(`<h3>Edit set</h3><div class="lg-ed"><label>Type <se
     const i=g('ed-i');x.rir=i===''?null:S.rpe?10-(+i):+i;x.note=g('ed-n');x.sug=false;renum(e);closeModal();persist(cur.id);renderSession()}}
 // ---------- bottom keypad (load/reps) ----------
 let KP=null;
-function openKp(e,x,f){closeKp();KP={e,x,f,fresh:true};const k=document.createElement('div');k.id='lg-kp';document.body.appendChild(k);kpSwipe(k);drawKp();renderSession()}
+function openKp(e,x,f){closeKp();KP={e,x,f,fresh:true,buf:null};const k=document.createElement('div');k.id='lg-kp';document.body.appendChild(k);kpSwipe(k);drawKp();renderSession()}
 function minKp(){if(cur)persist(cur.id);closeKp();renderSession()}
 function kpSwipe(k){let y0=null,x0=null;k.addEventListener('pointerdown',ev=>{y0=ev.clientY;x0=ev.clientX});k.addEventListener('pointerup',ev=>{if(y0==null)return;const dy=ev.clientY-y0,dx=Math.abs(ev.clientX-x0);y0=null;if(dy>CFG.kpSwipePx&&dx<dy)minKp()});k.addEventListener('pointercancel',()=>{y0=null})}
 function closeKp(){const k=document.getElementById('lg-kp');if(k)k.remove();KP=null}
 function drawKp(){const k=document.getElementById('lg-kp');if(!k||!KP)return;const{e,x,f}=KP,inc=f=='load'?incFor(resolve(e.exerciseId))||1:1,v=f=='load'?conv(x.load,cur.unit,S.unit):x.reps;
-  k.innerHTML=`<div class="kp-top"><span>${f=='load'?'Load ('+S.unit+')':'Reps'} · ${H(exName(e))}</span><b class="kp-val">${v==null?'':fmt(v)}</b><button id="kp-min" aria-label="Minimize keypad">▾</button></div><div class="kp-grid">
+  k.innerHTML=`<div class="kp-top"><span>${f=='load'?'Load ('+S.unit+')':'Reps'} · ${H(exName(e))}</span><b class="kp-val">${KP.buf!=null?H(KP.buf):v==null?'':fmt(v)}</b><button id="kp-min" aria-label="Minimize keypad">▾</button></div><div class="kp-grid">
   ${['1','2','3','⌫','4','5','6','−'+fmt(inc),'7','8','9','+'+fmt(inc),'.','0','Done','Next'].map(b=>`<button data-k="${b}" class="${b=='Next'?'pri':''}">${b}</button>`).join('')}</div>`;
   k.querySelector('#kp-min').onclick=minKp;k.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const t=b.dataset.k;let s=v==null?'':fmt(v);
     if(t=='Done'){closeKp();persist(cur.id);renderSession();return}
-    if(t=='Next'){persist(cur.id);if(f=='load'){KP.f='reps';KP.fresh=true;drawKp();renderSession();return}const ss=setsOf(e.id),i=ss.indexOf(x),nx=ss.slice(i+1).find(q=>!q.done);if(nx){activeSet=nx.id;KP.x=nx;KP.f='load';KP.fresh=true;drawKp();renderSession()}else{closeKp();renderSession()}return}
-    let n;if(t[0]=='−'||t[0]=='+'){n=Math.max(0,(v||0)+(t[0]=='+'?inc:-inc))}else if(t=='⌫'){s=KP.fresh?'':s.slice(0,-1);n=s===''?null:+s}else{s=(KP.fresh?'':s)+t;n=s==='.'?0:+s}KP.fresh=false;
+    if(t=='Next'){persist(cur.id);if(f=='load'){KP.f='reps';KP.fresh=true;KP.buf=null;drawKp();renderSession();return}const ss=setsOf(e.id),i=ss.indexOf(x),nx=ss.slice(i+1).find(q=>!q.done);if(nx){activeSet=nx.id;KP.x=nx;KP.f='load';KP.fresh=true;KP.buf=null;drawKp();renderSession()}else{closeKp();renderSession()}return}
+    // v28: typed keys edit a text buffer (KP.buf), so a decimal point survives until the next digit (101.5 was logged as 1015)
+    const base=KP.fresh?'':(KP.buf!=null?KP.buf:s);let n;
+    if(t[0]=='−'||t[0]=='+'){n=Math.max(0,Math.round(((v||0)+(t[0]=='+'?inc:-inc))*1e6)/1e6);KP.buf=null}
+    else if(t=='⌫'){const b=base.slice(0,-1);KP.buf=b;n=b===''||b==='.'?null:parseFloat(b)}
+    else{if(t=='.'&&(f!='load'||base.includes('.')))return;if(f=='load'&&/\.\d\d$/.test(base))return;const b=(t=='.'&&base==='')?'0.':(base==='0'&&t!='.'?t:base+t);KP.buf=b;n=parseFloat(b)}KP.fresh=false;
     if(f=='load'){x.load=n==null?null:conv(n,S.unit,cur.unit);x.sug=false}else x.reps=n==null?null:Math.round(n);drawKp();const o=document.getElementById('lg');if(o){o._noScroll=true;renderSession();o._noScroll=false}})}
 // ---------- rest timer (timestamps; survives reload/lock) ----------
 function startTimer(sec){const t={start:Date.now(),end:Date.now()+sec*1000};localStorage.setItem(TKEY,JSON.stringify(t));tick();requestAnimationFrame(clearTimer)}
@@ -237,7 +287,7 @@ const plural=(n,w)=>`${n} ${w}${n==1?'':'s'}`;
 function clearTimer(){const t=document.getElementById('lg-timer'),b=document.querySelector('#lg .lg-body');if(!t||!b)return;const top=t.getBoundingClientRect().top,gap=CFG.timerGapPx;
   b.style.paddingBottom=Math.max(parseFloat(getComputedStyle(b).paddingBottom)||0,t.offsetHeight+2*gap)+'px';const r=b.querySelector('.lg-row.active')||[...b.querySelectorAll('.lg-row')].pop();if(!r)return;const d=r.getBoundingClientRect().bottom-(top-gap);if(d>0)b.scrollBy(0,d)}
 function timer(){try{return JSON.parse(localStorage.getItem(TKEY))}catch{return null}}
-function tick(){const el=document.getElementById('lg-el');if(el&&cur&&cur.startedAt){const m=Math.floor((Date.now()-Date.parse(cur.startedAt))/1000);el.textContent=Math.floor(m/60)+':'+String(m%60).padStart(2,'0')}
+function tick(){const el=document.getElementById('lg-el');if(el&&cur&&cur.startedAt){const m=Math.floor(elMs(cur)/1000);el.textContent=Math.floor(m/60)+':'+String(m%60).padStart(2,'0');el.dataset.ms=elMs(cur);el.classList.toggle('paused',!!cur.pausedAt)}
   const t=timer();let p=document.getElementById('lg-timer');if(!t||!cur){if(p)p.remove();return}const left=Math.ceil((t.end-Date.now())/1000);
   if(!p){p=document.createElement('div');p.id='lg-timer';p.innerHTML=`<span class="tm-t"></span><button data-t="-">−15s</button><button data-t="+">+15s</button><button data-t="x">Skip</button>`;document.body.appendChild(p);
     p.querySelectorAll('button').forEach(b=>b.onclick=()=>{const q=timer();if(!q)return;if(b.dataset.t=='x'){localStorage.removeItem(TKEY);p.remove();return}q.end+=(b.dataset.t=='+'?15:-15)*1000;localStorage.setItem(TKEY,JSON.stringify(q));tick()})}
@@ -274,11 +324,11 @@ function bindPn(root,after){root.querySelectorAll('.lg-pn').forEach(b=>b.onclick
 function editPn(id,after){modal(`<div id="lg-pnm"><h3>${H((EX[id]||{}).name||id)}</h3><p class="cf-hint">Permanent note for this exercise: shown on the board and in every session that programs it.</p>
   <textarea id="pn-t" rows="3" placeholder="e.g. Seat on 4, pins at 6">${H(exNote(id))}</textarea><div class="cf-btns"><button class="pri" id="pn-save">Save</button><button id="pn-x">Cancel</button></div></div>`);
   document.getElementById('pn-x').onclick=()=>{closeModal();after&&after()};document.getElementById('pn-save').onclick=()=>{const v=document.getElementById('pn-t').value.trim();if(v)NOTES[id]=v;else delete NOTES[id];saveN();closeModal();if(typeof render=='function')render();after&&after()}}
-function moreMenu(e){const id=resolve(e.exerciseId),x=EX[id];const draw=()=>{modal(`<div id="lg-opt"><h3>${H(exName(e))}</h3><div class="lg-menu lg-acts">${x?'<button data-a="swap">Swap</button>':''}<button data-a="skip">${e.skipped?'Unskip exercise':'Skip exercise'}</button></div>
+function moreMenu(e){const id=resolve(e.exerciseId),x=EX[id];const draw=()=>{modal(`<div id="lg-opt"><h3>${H(exName(e))}</h3><div class="lg-menu lg-acts">${x?'<button data-a="swap">Swap</button>':''}<button data-a="skip">${e.skipped?'Unskip exercise':'Skip exercise'}</button><button data-a="up">Move up</button><button data-a="down">Move down</button></div>
   ${x?pnHtml(id):''}${howtoHtml(id)}${histHtml(id,e)}<div class="cf-btns"><button id="mm-x">Close</button></div></div>`);
   document.getElementById('mm-x').onclick=()=>{closeModal();renderSession()};bindPn(document.getElementById('lg-opt'),draw);bindHist(draw);
   document.querySelectorAll('#lg-opt .lg-acts button').forEach(b=>b.onclick=()=>{const a=b.dataset.a;if(a=='swap')return swapMenu(e);
-    if(a=='skip'){e.skipped=!e.skipped;closeModal();persist(cur.id);renderSession()}})};draw()}
+    if(a=='skip'){e.skipped=!e.skipped;closeModal();persist(cur.id);renderSession()}if(a=='up'||a=='down'){const k=entriesOf(cur.id).indexOf(e);closeModal();moveEntry(e,k+(a=='up'?-1:1))}})};draw()}
 function history_(id,e){const draw=()=>{modal(`<div id="lg-hsheet"><h3>${H((EX[id]||{}).name||(e&&e.nameSnapshot)||id)}${isArch(id)?' <em>archived exercise</em>':''}</h3>${EX[id]?pnHtml(id):''}${howtoHtml(id)}${histHtml(id,e)}<div class="cf-btns"><button id="hi-x">Close</button></div></div>`);
   document.getElementById('hi-x').onclick=closeModal;bindPn(document.getElementById('lg-hsheet'),draw);bindHist(draw)};draw()}
 // ---------- in-place exercise tray (the board's own tray panel, filters and search, moved into the logger) + create via custom-exercise form ----------
@@ -327,8 +377,8 @@ function applyRows(tiles,rows){let t=tiles.map(x=>({...x}));rows.forEach(r=>{if(
 function sessStats(s){const es=entriesOf(s.id),live=es.filter(e=>!isArch(e.exerciseId));const all=live.flatMap(e=>setsOf(e.id));const planned=((s.snapshot||{}).exercises||[]).reduce((a,p)=>a+p.sets,0);
   const doneW=es.flatMap(e=>e.skipped?[]:setsOf(e.id)).filter(x=>x.kind=='working'&&x.done).length;const skippedW=es.filter(e=>e.skipped).reduce((a,e)=>a+setsOf(e.id).filter(x=>x.kind=='working').length,0);
   return{hard:all.filter(isHard).length,doneW,planned,skippedW,beat:es.map(e=>beatOf(e)).filter(b=>b=='▲').length,prs:(()=>{const P=cur&&s.id==cur.id?livePrs():(detectPrs(hx(false),ALIAS)[s.id]||{});return Object.keys(P).flatMap(ex=>PR_TYPES.filter(k=>P[ex][k]).map(k=>({ex,k,r:P[ex][k]})))})(),
-    min:Math.round((Date.now()-Date.parse(s.startedAt))/60000)}}
-function summary(){closeKp();const ot=document.getElementById('toast');if(ot)ot.remove();const s=cur,st=sessStats(s),rows=diffRows(s),m=loaded();
+    min:Math.round(elMs(s)/60000)}}
+function summary(){closeKp();const ot=document.getElementById('toast');if(ot)ot.remove();const s=cur,st=sessStats(s),rows=s.dayIdx==null?[]:diffRows(s)/* empty workout: nothing to write back */,m=loaded();
   modal(`<div id="lg-sum"><h3>Finish ${H(s.label)}</h3><div class="lg-stats"><span>${st.min} min</span><span>${plural(st.hard,'hard set')}</span><span>${st.doneW}/${st.planned} planned working sets${st.skippedW?` · ${st.skippedW} skipped`:''}</span><span>${st.beat} beat last time</span></div>
   ${st.prs.length?`<h4>PRs</h4><ul class="lg-sumpr">${st.prs.map(p=>`<li data-k="${p.k}" data-x="${H(p.ex)}">🏆 ${H((EX[p.ex]||{}).name||p.ex)}: ${PRL[p.k]} · ${prVal(p.k,p.r)}</li>`).join('')}</ul>`:''}
   <label>Session notes<textarea id="sm-n">${H(s.notes||'')}</textarea></label>
@@ -337,7 +387,7 @@ function summary(){closeKp();const ot=document.getElementById('toast');if(ot)ot.
   <div class="cf-btns"><button class="pri" id="sm-ok">Save session</button><button id="sm-back">Keep logging</button><button id="sm-del" class="dng">Discard session</button></div></div>`);
   document.getElementById('sm-back').onclick=()=>{closeModal();renderSession()};document.getElementById('sm-del').onclick=()=>{if(confirm('Discard this session? Logged sets will be deleted.'))discard()};
   document.getElementById('sm-ok').onclick=()=>{s.notes=document.getElementById('sm-n').value;const pick=(document.querySelector('input[name=wb]:checked')||{}).value||'none';const sel=rows.filter((r,i)=>{const c=document.querySelector(`.lg-diff input[data-i="${i}"]`);return c&&c.checked});
-    s.status='completed';s.endedAt=nowISO();s.writeBack=rows.length?pick:'none';
+    if(s.pausedAt){s.pausedMs=(s.pausedMs||0)+Math.max(0,Date.now()-Date.parse(s.pausedAt));delete s.pausedAt}s.status='completed';s.endedAt=nowISO();s.writeBack=rows.length?pick:'none';
     L.sets.filter(x=>x.sessionId==s.id).forEach(x=>{delete x.sug;delete x.prevLoad;delete x.prevReps});localStorage.removeItem(TKEY);const sid=s.id;cur=null;persist(sid);closeModal();closeLogger();
     if(pick!='none'&&sel.length)writeBack(s,sel,pick);else toast('Session saved',null)}}
 function writeBack(s,rows,pick){const i=s.dayIdx,prior=JSON.stringify(state),m=loaded(),priorM=m?JSON.stringify(m):null;
@@ -369,11 +419,11 @@ function weekView(tab){tab=tab||'week';const wd=weekDone(),days=view=='done'?wd.
   if(tab=='settings'){document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>{S.unit=b.dataset.u;saveS();weekView('settings')});document.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{S.hardRIR=(()=>{const r=LR().hardRIR_range||[];return Math.max(r[0],Math.min(r[1],HR()+(b.dataset.h=='+'?1:-1)))})();saveS();weekView('settings')});
     document.getElementById('st-rpe').onchange=e=>{S.rpe=e.target.checked;saveS()};document.getElementById('st-snd').onchange=e=>{S.sound=e.target.checked;saveS()}}}
 // ---------- backup / restore ----------
-window.logBackup=()=>({schema:LOG_SCHEMA,exNotes:NOTES,sessions:L.sessions,entries:L.entries,sets:L.sets,prs:L.prs,settings:S});
+window.logBackup=()=>({schema:LOG_SCHEMA,routines:ROUT,exNotes:NOTES,sessions:L.sessions,entries:L.entries,sets:L.sets,prs:L.prs,settings:S});
 window.importLogs=function(d){if(!d||!d.logs)return;let g=JSON.parse(JSON.stringify(d.logs));if(typeof g.schema!='number'&&typeof d.schema=='number')g.schema=d.schema;
   if(!Array.isArray(g.sessions)||!Array.isArray(g.entries||[])||!Array.isArray(g.sets||[])){alert('The workout logs in this file are not valid.');return}
   g=migrate(g);if(L.sessions.length&&!confirm('Replace your workout logs with the ones in this backup?'))return;
-  L={sessions:g.sessions,entries:g.entries||[],sets:g.sets||[],prs:g.prs||[]};if(g.settings&&typeof g.settings=='object'){Object.assign(S,g.settings);migrateS();saveS()}if(g.exNotes&&typeof g.exNotes=='object'){NOTES={...g.exNotes};saveN();migrateNoteIds()}migrateIds();
+  L={sessions:g.sessions,entries:g.entries||[],sets:g.sets||[],prs:g.prs||[]};if(Array.isArray(g.routines)){ROUT=JSON.parse(JSON.stringify(g.routines));saveR()}if(g.settings&&typeof g.settings=='object'){Object.assign(S,g.settings);migrateS();saveS()}if(g.exNotes&&typeof g.exNotes=='object'){NOTES={...g.exNotes};saveN();migrateNoteIds()}migrateIds();
   cur=L.sessions.find(s=>s.status=='active')||null;persistAll();refreshBar()};
 // ---------- boot ----------
 async function boot(){for(let i=0;i<200&&(!Object.keys(EX).length||(typeof RU=='undefined'||!RU)||!MUS.length);i++)await new Promise(r=>setTimeout(r,50));
@@ -390,11 +440,11 @@ function prefillKeep(e){e.cue=progression(resolve(e.exerciseId),e.sessionId)}
 function buildBar(){if(!document.getElementById('lg')){const o=document.createElement('section');o.id='lg';o.className='lg-page';document.body.appendChild(o)}
   if(!document.getElementById('tabs')){const t=document.createElement('nav');t.id='tabs';t.setAttribute('role','tablist');t.innerHTML=[['build','Build'],['train','Train'],['log','Log'],['analytics','Analytics']].map(([v,n])=>`<button id="tab-${v}" data-v="${v}" role="tab">${n}<i class="tab-dot"></i></button>`).join('');document.body.appendChild(t);
     t.querySelectorAll('button').forEach(b=>b.onclick=()=>setView(b.dataset.v))}
-  renderStart();setView(document.body.dataset.view||'build')}
+  buildBtns();renderStart();setView(document.body.dataset.view||'build')}
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={get L(){return L},set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={get L(){return L},publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();
