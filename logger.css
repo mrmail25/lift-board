@@ -160,3 +160,7 @@ body:not([data-view=train]):has(#lg-kp) #lg-timer{bottom:calc(var(--tabh) + 8px)
 #lg-bw .lg-seg button{min-width:44px;min-height:44px}#lg-bw .bw-l{list-style:none;padding:0;margin:8px 0 0}#lg-bw .bw-l li{display:flex;gap:8px;align-items:center;padding:4px 0}#lg-bw .bw-l li span{flex:1}
 #lg-bw .bw-l button{min-height:44px;min-width:44px}
 .kp-chip.kp-end{font-size:13px;opacity:.85}
+/* v29 C: warm-up ramp button + superset marker */
+.lg-wu{display:block;width:100%;min-height:44px;margin:4px 0;font-size:14px;text-align:left;padding:0 10px;color:var(--lg-dim);border:1px dashed var(--lg-dim);background:transparent;border-radius:10px}
+.lg-card.ss{border-left:4px solid var(--lg-acc)}.lg-ss{color:var(--lg-acc);font-style:normal;font-size:12px}
+.lg-row.warm .lg-fld{color:var(--lg-dim)}

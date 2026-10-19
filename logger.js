@@ -138,7 +138,7 @@ function prefill(e){const p=progression(resolve(e.exerciseId),e.sessionId);e.cue
 function startSession(i){if(cur)return openLogger();const tiles=dayTiles(i);if(!tiles.length)return;const m=loaded();
   const rt=activeRt();const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),splitId:m?'my:'+m.id:undefined,...rtRef(rt),dayIdx:i,label:dayLabel(i),unit:S.unit,notes:'',snapshot:{exercises:tiles.map(t=>({exerciseId:t.id,sets:t.sets}))}};
   L.sessions.push(s);cur=s;tiles.forEach((t,k)=>{const e={id:uid('e'),sessionId:s.id,order:k,exerciseId:t.id,nameSnapshot:(EX[t.id]||{}).name||t.id,repRange:[...repFor(t.id)],restSec:restFor(t.id,'working'),notes:carryNote(t.id),skipped:false};
-    L.entries.push(e);for(let j=0;j<t.sets;j++)L.sets.push(newSet(e,'working',j));prefill(e)});
+    L.entries.push(e);for(let j=0;j<t.sets;j++)L.sets.push(newSet(e,'working',j));prefill(e)});ssCarry(s);
   const first=L.entries.find(e=>e.sessionId==s.id);openEntry=first&&first.id;activeSet=firstOpenSet(first);persist(s.id);closeModal();openLogger()}
 const rtRef=r=>r?{routineId:r.id,routineVersion:r.version,routineName:r.name}:{};
 function startEmpty(){if(cur)return openLogger();const s={id:uid('s'),schema:LOG_SCHEMA,status:'active',date:nowISO(),startedAt:nowISO(),dayIdx:null,label:'Empty workout',empty:true,unit:S.unit,notes:'',snapshot:{exercises:[]}};
@@ -200,7 +200,7 @@ function rowHtml(e,x,n){const pv=x.kind=='working'?prevFor(resolve(e.exerciseId)
   const pvs=pv?`${fmt(dLoad(pv))} × ${pv.reps}${pv.rir!=null?' @'+pv.rir:''}`:'—';const L_=conv(x.load,cur.unit,S.unit);
   const pt=prTypesOf(x.id,LP);const rirTxt=x.rir==null?(S.rpe?'RPE':'RIR'):(S.rpe?'RPE '+(10-x.rir):'@'+(x.rir==5?'5+':x.rir));const TG=tagDefs(),tg=x.tag&&TG[x.tag];
   return`<div class="lg-row${x.id==activeSet?' active':''}${x.done?' done':''}${x.kind=='warmup'?' warm':''}" data-s="${x.id}">
-   <button class="lg-n" aria-label="Set type">${x.kind=='warmup'?'W':n.w+1}</button><button class="lg-prev" aria-label="Copy previous">${pvs}</button>
+   <button class="lg-n" aria-label="${x.kind=='warmup'?'Warm-up set, not counted in stats. Tap to make it a working set':'Set type'}">${x.kind=='warmup'?'W':n.w+1}</button><button class="lg-prev" aria-label="Copy previous">${pvs}</button>
    <button class="lg-fld lg-load${x.sug?' sug':''}" data-f="load">${L_==null?'':fmt(L_)}<small>${S.unit}</small></button>
    <button class="lg-fld lg-reps" data-f="reps">${x.reps==null?'':x.reps}<small>reps</small></button>
    <button class="lg-rirb${x.rir==null&&!tg?'':' on'}">${rirTxt}${tg?`<small class="lg-tg" data-tag="${H(x.tag)}">${H(tagShort(tg))}</small>`:''}</button><button class="lg-ck" aria-label="Done">${pt.length?'🏆':'✓'}</button></div>${pt.length?`<div class="lg-prb" data-s="${x.id}" data-t="${pt.join(',')}">${pt.map(k=>`<span data-k="${k}">🏆 ${PRL[k]}</span>`).join('')}</div>`:''}
@@ -212,11 +212,11 @@ const tagShort=d=>String(d.label).split(/[\s-]/)[0];
 function setTag(x,k){const d=tagDefs()[k];if(!d)return;if(x.tag==k){delete x.tag;return}x.tag=k;if(d.default_rir!=null)x.rir=d.default_rir/* failure / drop set: RIR 0 */}
 function cardHtml(e){const x=EX[resolve(e.exerciseId)],sets=setsOf(e.id),done=sets.filter(s=>s.done).length,open=e.id==openEntry,n={w:0,u:0};
   const rows=sets.map(s=>{const h=rowHtml(e,s,n);s.kind=='working'?n.w++:n.u++;return h}).join('');
-  return`<div class="lg-card${open?' open':''}${e.skipped?' skipped':''}${x?'':' arch'}" data-e="${e.id}"><div class="lg-ch"><button class="lg-drag" aria-label="Drag to reorder">≡</button><button class="lg-title">${x?ICON[x.type]:'⌧'} ${H(exName(e))}${x?'':' <em>archived exercise</em>'}${e.swappedFrom?' <em>swapped</em>':''}</button>
+  return`<div class="lg-card${open?' open':''}${e.skipped?' skipped':''}${x?'':' arch'}${ssLetter(e)?' ss':''}" data-e="${e.id}"${ssLetter(e)?` data-g="${ssLetter(e)}"`:''}><div class="lg-ch"><button class="lg-drag" aria-label="Drag to reorder">≡</button><button class="lg-title">${x?ICON[x.type]:'⌧'} ${H(exName(e))}${x?'':' <em>archived exercise</em>'}${e.swappedFrom?' <em>swapped</em>':''}${ssLetter(e)?` <em class="lg-ss">Superset ${ssLetter(e)}</em>`:''}</button>
    <span class="lg-cnt">${done}/${sets.length}</span><button class="lg-more" aria-label="Options">⋯</button></div>
    <div class="lg-meta"><button class="lg-chip lg-rest" aria-label="Rest time, tap to adjust">⏱ ${mmss(e.restSec)}</button><button class="lg-chip lg-rr" aria-label="Rep range, tap to adjust">${e.repRange[0]}–${e.repRange[1]} reps</button></div>
    ${x&&(open||exNote(e.exerciseId))?pnHtml(resolve(e.exerciseId)):''}
-   ${open&&!e.skipped?`<div class="lg-cue">${cueHtml(e)}${beatHtml(e)}</div><div class="lg-sets">${rows}</div><button class="lg-addset">+ Set</button>
+   ${open&&!e.skipped?`<div class="lg-cue">${cueHtml(e)}${beatHtml(e)}</div>${wuBtn(e)}<div class="lg-sets">${rows}</div><button class="lg-addset">+ Set</button>
    <label class="lg-wn">Workout note <small>(this session; carries to next time)</small><textarea data-wn="${e.id}" rows="2" placeholder="How did it go?">${H(e.notes||'')}</textarea></label>`:''}${e.skipped?'<div class="lg-cue">Skipped</div>':''}</div>`}
 const mmss=sec=>sec==null?'–':Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
 function adjSheet(e){const id=e.exerciseId;const draw=()=>{modal(`<div id="lg-adj"><h3>${H(exName(e))}</h3>
@@ -249,7 +249,7 @@ function bindSession(o){o.querySelector('#lg-fin').onclick=summary;o.querySelect
     c.querySelector('.lg-title').addEventListener('click',ev=>{if(e.id==openEntry){ev.stopPropagation();history_(resolve(e.exerciseId),e)}});
     c.querySelector('.lg-more').onclick=ev=>{ev.stopPropagation();moreMenu(e)};
     c.querySelectorAll('.lg-chip').forEach(b=>b.onclick=ev=>{ev.stopPropagation();adjSheet(e)});bindPn(c,renderSession);
-    const wn=c.querySelector('textarea[data-wn]');if(wn){wn.onclick=ev=>ev.stopPropagation();wn.oninput=()=>{e.notes=wn.value;mirror();clearTimeout(wn._t);wn._t=setTimeout(()=>persist(cur.id),400)}}const ad=c.querySelector('.lg-addset');if(ad)ad.onclick=()=>{const ss=setsOf(e.id),last=ss[ss.length-1],x=newSet(e,'working',(last?last.idx:-1)+1);if(last){x.load=last.load;x.reps=last.reps}L.sets.push(x);activeSet=x.id;persist(cur.id);renderSession()};
+    const wn=c.querySelector('textarea[data-wn]');if(wn){wn.onclick=ev=>ev.stopPropagation();wn.oninput=()=>{e.notes=wn.value;mirror();clearTimeout(wn._t);wn._t=setTimeout(()=>persist(cur.id),400)}}const wu=c.querySelector('.lg-wu');if(wu)wu.onclick=ev=>{ev.stopPropagation();addWarmups(e)};const ad=c.querySelector('.lg-addset');if(ad)ad.onclick=()=>{const ss=setsOf(e.id),last=ss[ss.length-1],x=newSet(e,'working',(last?last.idx:-1)+1);if(last){x.load=last.load;x.reps=last.reps}L.sets.push(x);activeSet=x.id;persist(cur.id);renderSession()};
     c.querySelectorAll('.lg-row').forEach(r=>bindRow(e,r))});
   o.querySelectorAll('.lg-sugchip').forEach(b=>b.onclick=()=>{const x=L.sets.find(s=>s.id==b.dataset.s);x.load=x.prevLoad??null;x.reps=x.prevReps??x.reps;x.sug=false;persist(cur.id);renderSession()})}
 function bindRow(e,r){const x=L.sets.find(s=>s.id==r.dataset.s);let sw=false;
@@ -267,7 +267,11 @@ function bindRow(e,r){const x=L.sets.find(s=>s.id==r.dataset.s);let sw=false;
 function renum(e){let w=0,u=0;setsOf(e.id).forEach((s,i)=>{s.idx=i})}
 function delSet(e,x){const before=JSON.stringify(L.sets);L.sets=L.sets.filter(s=>s.id!==x.id);renum(e);persist(cur.id);renderSession();toast('Set deleted',()=>{L.sets=JSON.parse(before);persist(cur.id);renderSession()})}
 function check(e,x){if(x.done){x.done=false;x.doneAt=null;delete x.pr;persist(cur.id);renderSession();return}if(x.reps==null||x.reps==='' ){activeSet=x.id;openKp(e,x,x.load==null?'load':'reps');return}
-  x.done=true;x.doneAt=nowISO();x.sug=false;delete x.pr;{const won=prTypesOf(x.id);if(won.length)celebrate(won)}startTimer(x.kind=='warmup'?restFor(e.exerciseId,'warmup'):e.restSec);
+  x.done=true;x.doneAt=nowISO();x.sug=false;delete x.pr;{const won=prTypesOf(x.id);if(won.length)celebrate(won)}
+  const sm=x.kind=='working'?ssLive(e):[];if(sm.length){const open=q=>setsOf(q.id).some(s=>!s.done),later=sm.slice(sm.indexOf(e)+1).find(open);
+    if(later){openEntry=later.id;activeSet=firstOpenSet(later);persist(cur.id);renderSession();return}/* superset: straight to the partner, no rest */
+    startTimer(e.restSec);const first=sm.find(open);if(first){openEntry=first.id;activeSet=firstOpenSet(first);persist(cur.id);renderSession();return}}
+  else startTimer(x.kind=='warmup'?restFor(e.exerciseId,'warmup'):e.restSec);
   const nx=setsOf(e.id).find(s=>!s.done);if(nx)activeSet=nx.id;else{const es=entriesOf(cur.id).filter(q=>!q.skipped),k=es.indexOf(e),ne=es.slice(k+1).concat(es.slice(0,k)).find(q=>setsOf(q.id).some(s=>!s.done));if(ne){openEntry=ne.id;activeSet=firstOpenSet(ne)}else activeSet=null}
   persist(cur.id);renderSession()}
 // v28: PRs are derived from the logged history by prs.js (port of tools/prs.py) and recomputed after every change; nothing stored is a source of truth.
@@ -384,11 +388,11 @@ function bindPn(root,after){root.querySelectorAll('.lg-pn').forEach(b=>b.onclick
 function editPn(id,after){modal(`<div id="lg-pnm"><h3>${H((EX[id]||{}).name||id)}</h3><p class="cf-hint">Permanent note for this exercise: shown on the board and in every session that programs it.</p>
   <textarea id="pn-t" rows="3" placeholder="e.g. Seat on 4, pins at 6">${H(exNote(id))}</textarea><div class="cf-btns"><button class="pri" id="pn-save">Save</button><button id="pn-x">Cancel</button></div></div>`);
   document.getElementById('pn-x').onclick=()=>{closeModal();after&&after()};document.getElementById('pn-save').onclick=()=>{const v=document.getElementById('pn-t').value.trim();if(v)NOTES[id]=v;else delete NOTES[id];saveN();closeModal();if(typeof render=='function')render();after&&after()}}
-function moreMenu(e){const id=resolve(e.exerciseId),x=EX[id];const draw=()=>{modal(`<div id="lg-opt"><h3>${H(exName(e))}</h3><div class="lg-menu lg-acts">${x?'<button data-a="swap">Swap</button>':''}<button data-a="skip">${e.skipped?'Unskip exercise':'Skip exercise'}</button><button data-a="up">Move up</button><button data-a="down">Move down</button></div>
+function moreMenu(e){const id=resolve(e.exerciseId),x=EX[id];const draw=()=>{modal(`<div id="lg-opt"><h3>${H(exName(e))}</h3><div class="lg-menu lg-acts">${x?'<button data-a="swap">Swap</button>':''}<button data-a="skip">${e.skipped?'Unskip exercise':'Skip exercise'}</button><button data-a="up">Move up</button><button data-a="down">Move down</button>${e.group&&ssMembers(e).length>=2?'<button data-a="unlink">Unlink superset</button>':entriesOf(cur.id).indexOf(e)<entriesOf(cur.id).length-1?'<button data-a="link">Superset with next</button>':''}</div>
   ${x?pnHtml(id):''}${howtoHtml(id)}${histHtml(id,e)}<div class="cf-btns"><button id="mm-x">Close</button></div></div>`);
   document.getElementById('mm-x').onclick=()=>{closeModal();renderSession()};bindPn(document.getElementById('lg-opt'),draw);bindHist(draw);
   document.querySelectorAll('#lg-opt .lg-acts button').forEach(b=>b.onclick=()=>{const a=b.dataset.a;if(a=='swap')return swapMenu(e);
-    if(a=='skip'){e.skipped=!e.skipped;closeModal();persist(cur.id);renderSession()}if(a=='up'||a=='down'){const k=entriesOf(cur.id).indexOf(e);closeModal();moveEntry(e,k+(a=='up'?-1:1))}})};draw()}
+    if(a=='skip'){e.skipped=!e.skipped;closeModal();persist(cur.id);renderSession()}if(a=='link'||a=='unlink'){a=='link'?ssLink(e):ssUnlink(e);closeModal();persist(cur.id);renderSession()}if(a=='up'||a=='down'){const k=entriesOf(cur.id).indexOf(e);closeModal();moveEntry(e,k+(a=='up'?-1:1))}})};draw()}
 function history_(id,e){const draw=()=>{modal(`<div id="lg-hsheet"><h3>${H((EX[id]||{}).name||(e&&e.nameSnapshot)||id)}${isArch(id)?' <em>archived exercise</em>':''}</h3>${EX[id]?pnHtml(id):''}${howtoHtml(id)}${histHtml(id,e)}<div class="cf-btns"><button id="hi-x">Close</button></div></div>`);
   document.getElementById('hi-x').onclick=closeModal;bindPn(document.getElementById('lg-hsheet'),draw);bindHist(draw)};draw()}
 // ---------- in-place exercise tray (the board's own tray panel, filters and search, moved into the logger) + create via custom-exercise form ----------
@@ -403,10 +407,30 @@ function trayPick(title,onPick){const panel=document.getElementById('tray').clos
 function createEx(onNew){const before=new Set(CUS.map(c=>c.id));openForm();pendingCreate={before,cb:onNew}}
 if(typeof syncCustom=='function'){const sc0=syncCustom;syncCustom=function(){const r=sc0.apply(this,arguments);if(pendingCreate){const n=CUS.find(c=>!pendingCreate.before.has(c.id));if(n){const cb=pendingCreate.cb;pendingCreate=null;setTimeout(()=>cb(n.id))}}return r}}
 if(typeof closeModal=='function'){const cm0=closeModal;closeModal=function(){pendingCreate=null;return cm0.apply(this,arguments)}}
+// ---------- v29 C: warm-up ramp (warmup.js = tools/warmup.py) ----------
+// working load = first working set of the entry (session unit); warm = prime mover done earlier in this session; loads from the gym profile
+function wuPlan(e){if(!cur||e.skipped)return[];const ss=setsOf(e.id);if(ss.some(s=>s.kind=='warmup'))return[];const w=ss.find(s=>s.kind=='working');if(!w||w.load==null||w.load==='')return[];
+  const id=resolve(e.exerciseId),before=entriesOf(cur.id).filter(q=>q.id!=e.id&&!q.skipped&&setsOf(q.id).some(s=>s.kind=='working'&&s.done)).map(q=>resolve(q.exerciseId));
+  const g=gymP();return warmupSets(id,+w.load,cur.unit,g,isWarm(id,before)).map(r=>({...r,load:Math.round(conv(r.load,g.unit||cur.unit,cur.unit)*1e6)/1e6}))}
+function wuBtn(e){const r=wuPlan(e);return r.length?`<button class="lg-wu" data-n="${r.length}" aria-label="Add warm-up sets">+ Warm-up · ${r.map(s=>`${fmt(conv(s.load,cur.unit,S.unit))}×${s.reps}`).join(', ')}</button>`:''}
+function addWarmups(e){const r=wuPlan(e);if(!r.length)return;const before=JSON.stringify(L.sets),ss=setsOf(e.id);ss.forEach(s=>s.idx+=r.length);
+  const ws=r.map((q,i)=>Object.assign(newSet(e,'warmup',i),{load:q.load,reps:q.reps}));L.sets.push(...ws);activeSet=ws[0].id;persist(cur.id);renderSession();
+  toast(`Added ${plural(ws.length,'warm-up set')}`,()=>{L.sets=JSON.parse(before);activeSet=firstOpenSet(e);persist(cur.id);renderSession()})}
+// ---------- v29 C: supersets (#11): entry.group links 2+ exercises; alternate, rest only after the last exercise of the group ----------
+const ssMembers=e=>e&&e.group?entriesOf(e.sessionId).filter(q=>q.group==e.group):[];
+const ssLive=e=>{const m=ssMembers(e);return m.length>=2?m.filter(q=>!q.skipped):[]};
+function ssLetter(e){const gs=[];entriesOf(e.sessionId).forEach(q=>{if(q.group&&ssMembers(q).length>=2&&!gs.includes(q.group))gs.push(q.group)});const k=gs.indexOf(e.group);return k<0?'':String.fromCharCode(65+k%26)}
+function ssLink(e){const es=entriesOf(e.sessionId),k=es.indexOf(e),nx=es[k+1];if(!nx)return;const g=e.group||nx.group||uid('g');
+  [e.group,nx.group].filter(x=>x&&x!=g).forEach(old=>es.forEach(q=>{if(q.group==old)q.group=g}));e.group=g;nx.group=g}
+function ssUnlink(e){const g=e.group;delete e.group;const rest=entriesOf(e.sessionId).filter(q=>q.group==g);if(rest.length<2)rest.forEach(q=>delete q.group)}
+// links carry to the next session of the same routine day (matched by exercise)
+function ssCarry(s){const prev=L.sessions.filter(q=>q.id!=s.id&&q.status!='active'&&q.dayIdx===s.dayIdx&&(q.routineId||null)===(s.routineId||null)).sort(byT).pop();if(!prev)return;
+  const gOf={};entriesOf(prev.id).forEach(q=>{if(q.group)gOf[resolve(q.exerciseId)]=q.group});const es=entriesOf(s.id),map={};
+  es.forEach(q=>{const g=gOf[resolve(q.exerciseId)];if(g){map[g]=map[g]||uid('g');q.group=map[g]}});es.forEach(q=>{if(q.group&&es.filter(z=>z.group==q.group).length<2)delete q.group})}
 // ---------- swap ----------
 function doSwap(e,nid){if(!cur||!EX[nid])return;const ss=setsOf(e.id),done=ss.filter(s=>s.done),rest=ss.filter(s=>!s.done);
   let ne;if(!done.length){if(!e.swappedFrom)e.swappedFrom=e.exerciseId;e.exerciseId=nid;e.nameSnapshot=EX[nid].name;e.repRange=[...repFor(nid)];e.restSec=restFor(nid,'working');e.notes=carryNote(nid);ne=e}
-  else{ne={id:uid('e'),sessionId:cur.id,order:e.order+1/2,exerciseId:nid,nameSnapshot:EX[nid].name,swappedFrom:e.swappedFrom||e.exerciseId,repRange:[...repFor(nid)],restSec:restFor(nid,'working'),notes:carryNote(nid),skipped:false};L.entries.push(ne);rest.forEach((s,i)=>{s.entryId=ne.id;s.idx=i});entriesOf(cur.id).forEach((q,i)=>q.order=i)}
+  else{ne={id:uid('e'),sessionId:cur.id,order:e.order+1/2,exerciseId:nid,nameSnapshot:EX[nid].name,swappedFrom:e.swappedFrom||e.exerciseId,repRange:[...repFor(nid)],restSec:restFor(nid,'working'),notes:carryNote(nid),skipped:false,...(e.group?{group:e.group}:{})};L.entries.push(ne);rest.forEach((s,i)=>{s.entryId=ne.id;s.idx=i});entriesOf(cur.id).forEach((q,i)=>q.order=i)}
   rest.forEach(s=>{s.load=null;s.reps=null;s.sug=false;delete s.prevLoad;delete s.prevReps});prefill(ne);openEntry=ne.id;activeSet=firstOpenSet(ne);closeModal();persist(cur.id);renderSession();toast(`Swapped to ${EX[nid].name}`,null)}
 function swapMenu(e){const id=resolve(e.exerciseId),list=swaps(id,null,6);modal(`<h3>Swap ${H(exName(e))}</h3><p class="cf-hint">Similar exercises</p><div class="lg-menu" id="sw-l">${list.map(c=>`<button data-id="${c.id}">${H(c.name)}${c.badge?' <em class="est">est.</em>':''}<small>${H(c.tags.join(' · '))}</small></button>`).join('')||'<p class="cf-hint">No close alternatives.</p>'}</div>
   <div class="lg-menu lg-more2"><button id="sw-all">Browse all exercises…</button><button id="sw-new">Create new exercise…</button></div><div class="cf-btns"><button id="sw-x">Cancel</button></div>`);
@@ -520,7 +544,7 @@ function buildBar(){if(!document.getElementById('lg')){const o=document.createEl
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={get L(){return L},get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={get L(){return L},wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();
