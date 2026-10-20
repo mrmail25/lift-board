@@ -16,10 +16,10 @@ function finishSummary(h,sid,o={}){const R=prRules(),al=o.aliases,fl=prFlatten(h
   fl[i].sets.forEach(x=>{if(!prSet(x))return;if(!by[x.ex]){order.push(x.ex);by[x.ex]=[]}by[x.ex].push(x)});
   return order.map(ex=>{const c=rvStats(by[ex],R),t=c.top;let prev=null,dl=null;
     for(let j=i-1;j>=0;j--){const ps=fl[j].sets.filter(x=>prSet(x)&&x.ex==ex);if(!ps.length)continue;
-      if(fl[j].s.deload){if(!dl)dl=[fl[j].s.id,rvStats(ps,R)];continue}/* skip deload sessions; only a deload earlier -> use it, labelled */
-      prev=[fl[j].s.id,rvStats(ps,R)];break}
+      if(fl[j].s.deload){if(!dl)dl=[fl[j].s.id,rvStats(ps,R),fl[j].s.unit||'lb'];continue}/* skip deload sessions; only a deload earlier -> use it, labelled */
+      prev=[fl[j].s.id,rvStats(ps,R),fl[j].s.unit||'lb'];break}
     const isdl=!prev&&!!dl;prev=prev||dl;
-    const row={exercise:ex,top_load_kg:t?rvR4(t.load_kg):null,top_reps:t?t.reps:null,top_set_id:t?t.id:null,volume_kg:rvR4(c.volume_kg),e1rm_kg:rvR4(c.e1rm_kg),sets:c.sets,
+    const row={exercise:ex,unit:fl[i].s.unit||'lb',top_added_kg:t?rvR4(t.added_kg):null,top_bw_kg:t?rvR4(t.bw_kg||0):null,top_load_kg:t?rvR4(t.load_kg):null,top_reps:t?t.reps:null,top_set_id:t?t.id:null,volume_kg:rvR4(c.volume_kg),e1rm_kg:rvR4(c.e1rm_kg),sets:c.sets,
       prs:PR_TYPES.filter(k=>(P[ex]||{})[k])};
     if(!prev)return Object.assign(row,{last_session:null,last_deload:false,status:'first'});
     const p=prev[1],pt=p.top;let basis,a,b;
@@ -28,9 +28,26 @@ function finishSummary(h,sid,o={}){const R=prRules(),al=o.aliases,fl=prFlatten(h
       else{basis='set_volume';a=t.load_kg*t.reps;b=pt.load_kg*pt.reps}}else{basis='volume';a=c.volume_kg;b=p.volume_kg}
     const d=a-b,pct=b>PRS_EPS?d/b*100:null,st=pct!=null?(Math.abs(pct)<=rvFlat()+1e-9?'flat':pct>0?'up':'down'):(d>PRS_EPS?'up':d<-PRS_EPS?'down':'flat');
     const de=c.e1rm_kg==null||p.e1rm_kg==null?null:c.e1rm_kg-p.e1rm_kg;
-    return Object.assign(row,{last_session:prev[0],last_deload:isdl,last_top_load_kg:pt?rvR4(pt.load_kg):null,last_top_reps:pt?pt.reps:null,last_volume_kg:rvR4(p.volume_kg),last_e1rm_kg:rvR4(p.e1rm_kg),
+    return Object.assign(row,{last_session:prev[0],last_unit:prev[2],last_top_added_kg:pt?rvR4(pt.added_kg):null,last_top_bw_kg:pt?rvR4(pt.bw_kg||0):null,last_deload:isdl,last_top_load_kg:pt?rvR4(pt.load_kg):null,last_top_reps:pt?pt.reps:null,last_volume_kg:rvR4(p.volume_kg),last_e1rm_kg:rvR4(p.e1rm_kg),
       d_load_kg:t&&pt?rvR4(t.load_kg-pt.load_kg):null,d_reps:t&&pt?t.reps-pt.reps:null,d_volume_kg:rvR4(c.volume_kg-p.volume_kg),d_e1rm_kg:rvR4(de),
       d_e1rm_pct:de==null||p.e1rm_kg<=PRS_EPS?null:rvR4(de/p.e1rm_kg*100),basis,d_basis_pct:rvR4(pct),status:st})})}
+// v29.2 (Coach rule, CoS): "vs last time" across units. When the earlier session was logged in the other unit, its top set's logged load is first snapped to
+// the nearest real load in this session's unit (same snap as v29.1 last-time loads: saved gym if in that unit, else logger.gym_profile_default[unit],
+// else load_step), then subtracted. Within the PR tie rule (|change| <= logger.prs.tie.step_fraction x smallest real step, prs.js prStepKg) the load
+// change is ±0 and the arrow comes from reps (as the D.1 tie); otherwise the change and the arrow use the snapped load. Same unit -> null (unchanged).
+// r = finishSummary row; prof = saved gym profile or null. Values in the session unit.
+function vsCrossUnit(r,prof,o={}){if(!r||r.status=='first'||!r.last_unit||r.last_unit==r.unit||r.top_load_kg==null||r.last_top_load_kg==null)return null;
+  if(r.top_load_kg<=PRS_EPS&&r.last_top_load_kg<=PRS_EPS)return null;
+  const R=prRules(),u=r.unit,T=(o&&o.exercises)||(typeof EX!='undefined'?EX:{}),m=T[r.exercise],eq=(m&&!m.custom&&m.equipment)||'default',asst=!!(m&&m.bodyweight_assisted),ku=v=>u=='lb'?v*R.lbPerKg:v;
+  const sp=prof&&prof.unit==u?prof:JSON.parse(JSON.stringify(((R.lg.gym_profile_default||{})[u])||{unit:u}));
+  const added=nearestRealLoad(ku(r.last_top_added_kg),sp,eq,u,r.exercise),bw=ku(r.last_top_bw_kg||0),last=asst?(r.last_top_bw_kg>PRS_EPS?Math.max(0,bw-added):0):bw+added/* prs.py flatten: assisted without a bodyweight = reps only */,top=ku(r.top_load_kg);
+  const d=top-last,step=ku(prStepKg({ex:r.exercise,added_kg:r.top_load_kg},u,R,prof,{exercises:T})),tie=Math.abs(d)<=R.sf*step+ku(PRS_EPS);let pct;
+  if(tie){if(r.basis=='e1rm'){const a=prE1(r.top_load_kg,r.top_reps,R),b=prE1(r.top_load_kg,r.last_top_reps,R);pct=b>PRS_EPS?(a-b)/b*100:null}
+    else if(r.basis=='set_volume'||r.basis=='reps')pct=r.last_top_reps>0?(r.top_reps-r.last_top_reps)/r.last_top_reps*100:null;else pct=r.d_basis_pct}
+  else if(r.basis=='e1rm'){const a=prE1(top,r.top_reps,R),b=prE1(last,r.last_top_reps,R);pct=b>1e-9?(a-b)/b*100:null}
+  else if(r.basis=='set_volume'){const a=top*r.top_reps,b=last*r.last_top_reps;pct=b>1e-9?(a-b)/b*100:null}else pct=r.d_basis_pct;
+  const st=pct==null?(tie?'flat':d>1e-9?'up':d<-1e-9?'down':'flat'):Math.abs(pct)<=rvFlat()+1e-9?'flat':pct>0?'up':'down';
+  return{unit:u,last_unit:r.last_unit,last_top_shown:rvR4(last),d_load:tie?0:rvR4(d),tie,pct:rvR4(pct),status:st}}
 // planned weekly sets per muscle for days of tiles {id, sets}, counted like the board (rating x sets, rating >= min_rating_to_count)
 function plannedSets(days,h,o={}){const R=prRules(),T=prExTable(h||{},o),mus=o.muscles||MUS,t={};mus.forEach(m=>t[m]=[]);
   days.flat().forEach(it=>{const e=T[it.id];if(!e)return;for(const m in e.muscles){const r=e.muscles[m];if(r>=R.mr&&m in t)t[m].push(r*it.sets)}});
@@ -49,15 +66,18 @@ function weekPlan(days,week,today,snaps,h,o={}){const R=prRules(),mus=o.muscles|
 // v29.1 (Coach review.block_exclude_deload): true -> weeks with a completed deload session are skipped and each window reaches back past them to keep
 // window_weeks training weeks (this window first, then the earlier one); false/missing -> contiguous weeks (v29 D). Skipped weeks are returned for the note.
 const rvExDl=()=>rvRV().block_exclude_deload===true;
+// v29.2 (CoS): the week containing `today` is still in progress (partly logged), so it is not a training week of the block either: skipped like a deload
+// week, windows reach back. Builder fallback true until Coach adds review.block_exclude_current_week (flagged).
+const rvExCur=()=>rvRV().block_exclude_current_week??true;
 function blockCompare(h,week,today,o={}){const n=((RU.logger||{}).progress_signals||{}).window_weeks,E=((RU.logger||{}).deload_signals||{}).eligible||{},ws=prWeekStart(String(week)),mus=o.muscles||MUS;
   const dlw=new Set(rvExDl()?(h.sessions||[]).filter(s=>s.status=='completed'&&s.deload).map(s=>prWeekStart(prDay(s.startedAt||s.date))):[]);
-  const Tw=[],Lw=[],skip=[];for(let w=ws;Lw.length<n;w=prAddDays(w,-7)){if(dlw.has(w))skip.push(w);else(Tw.length<n?Tw:Lw).push(w)}
+  const cw=rvExCur()?prWeekStart(String(today).slice(0,10)):null,Tw=[],Lw=[],skip=[];let curSk=null;for(let w=ws;Lw.length<n;w=prAddDays(w,-7)){if(dlw.has(w))skip.push(w);else if(w==cw)curSk=w;else(Tw.length<n?Tw:Lw).push(w)}
   const A={};[ws,...Tw,...Lw].forEach(w=>{if(!(w in A))A[w]=(o.weekA?o.weekA(w):completedAnalytics(h,w,o)).hard_sets.per_muscle});
   const S=ws_=>Object.fromEntries(mus.map(m=>[m,rvR4(prNsum(ws_.map(w=>A[w][m])))]));
   const comp=(h.sessions||[]).filter(s=>s.status=='completed').map(s=>prDay(s.startedAt||s.date)).sort(),td=String(today).slice(0,10),dd=(a,b)=>Math.round((Date.parse(a+'T00:00:00Z')-Date.parse(b+'T00:00:00Z'))/864e5);
   const gate=comp.length>0&&dd(td,comp[0])>=7*E.min_logged_weeks&&comp.length>=E.min_sessions,prior=Lw.filter(w=>comp.some(d=>w<=d&&d<prAddDays(w,7))).length;
   return{weeks:n,this_start:Tw[n-1],this_end_exclusive:prAddDays(ws,7),last_start:Lw[n-1],this:S(Tw),last:S(Lw),week:Object.fromEntries(mus.map(m=>[m,rvR4(A[ws][m])])),
-    gate,prior_weeks_logged:prior,shown:gate&&prior>=rvMinPrior(),deload_weeks_skipped:skip,this_weeks:Tw,last_weeks:Lw}}
+    gate,prior_weeks_logged:prior,shown:gate&&prior>=rvMinPrior(),deload_weeks_skipped:skip,current_week_skipped:curSk,this_weeks:Tw,last_weeks:Lw}}
 // dashboard: M = muscles with planned > 0; on plan = credited done >= planned - review.on_plan_margin; furthest behind = lowest done/planned, ties larger gap, then muscle order
 function planDash(pl,done,o={}){const R=prRules(),mg=rvMargin(),mus=(o.muscles||MUS).filter(m=>pl.per_muscle[m]>PRS_EPS),dn=m=>done[m]||0;
   const on=mus.filter(m=>dn(m)>=pl.per_muscle[m]-mg-PRS_EPS);let gap=null;

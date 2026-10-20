@@ -185,3 +185,4 @@ body:not([data-view=train]):has(#lg-kp) #lg-timer{bottom:calc(var(--tabh) + 8px)
 #dl-prompt .dl-evs{color:var(--lg-dim);font-size:.9em}
 #dl-prompt .dl-why{background:none;border:0;padding:4px 2px;min-height:32px;color:var(--lg-acc);font:inherit;text-decoration:underline;cursor:pointer}
 .an-dlx{display:block;margin-top:2px;color:var(--lg-acc)}
+.an-cwx{display:block;margin-top:2px;color:var(--lg-dim)}
