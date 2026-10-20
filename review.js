@@ -28,8 +28,10 @@ function finishSummary(h,sid,o={}){const R=prRules(),al=o.aliases,fl=prFlatten(h
       else{basis='set_volume';a=t.load_kg*t.reps;b=pt.load_kg*pt.reps}}else{basis='volume';a=c.volume_kg;b=p.volume_kg}
     const d=a-b,pct=b>PRS_EPS?d/b*100:null,st=pct!=null?(Math.abs(pct)<=rvFlat()+1e-9?'flat':pct>0?'up':'down'):(d>PRS_EPS?'up':d<-PRS_EPS?'down':'flat');
     const de=c.e1rm_kg==null||p.e1rm_kg==null?null:c.e1rm_kg-p.e1rm_kg;
+    /* v29.3: session-volume change (unsnapped, raw logged volume) is flat within review.flat_pct of the earlier session's volume, like the arrow */
+    const vp=p.volume_kg>PRS_EPS?(c.volume_kg-p.volume_kg)/p.volume_kg*100:null;
     return Object.assign(row,{last_session:prev[0],last_unit:prev[2],last_top_added_kg:pt?rvR4(pt.added_kg):null,last_top_bw_kg:pt?rvR4(pt.bw_kg||0):null,last_deload:isdl,last_top_load_kg:pt?rvR4(pt.load_kg):null,last_top_reps:pt?pt.reps:null,last_volume_kg:rvR4(p.volume_kg),last_e1rm_kg:rvR4(p.e1rm_kg),
-      d_load_kg:t&&pt?rvR4(t.load_kg-pt.load_kg):null,d_reps:t&&pt?t.reps-pt.reps:null,d_volume_kg:rvR4(c.volume_kg-p.volume_kg),d_e1rm_kg:rvR4(de),
+      d_load_kg:t&&pt?rvR4(t.load_kg-pt.load_kg):null,d_reps:t&&pt?t.reps-pt.reps:null,d_volume_kg:rvR4(c.volume_kg-p.volume_kg),d_volume_pct:rvR4(vp),d_volume_flat:vp!=null&&Math.abs(vp)<=rvFlat()+1e-9,d_e1rm_kg:rvR4(de),
       d_e1rm_pct:de==null||p.e1rm_kg<=PRS_EPS?null:rvR4(de/p.e1rm_kg*100),basis,d_basis_pct:rvR4(pct),status:st})})}
 // v29.2 (Coach rule, CoS): "vs last time" across units. When the earlier session was logged in the other unit, its top set's logged load is first snapped to
 // the nearest real load in this session's unit (same snap as v29.1 last-time loads: saved gym if in that unit, else logger.gym_profile_default[unit],
