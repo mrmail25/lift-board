@@ -1638,6 +1638,8 @@
     "flat_pct_note": "Finish-summary arrow is flat when the top-set e1RM (or volume) changes by no more than this percent.",
     "block_min_prior_weeks_note": "Block comparison stays hidden until the prior window has at least this many weeks with logs (on top of the Phase E gate).",
     "block_exclude_deload": true,
-    "block_exclude_deload_note": "4 wk vs Prev skips weeks that contain a deload session (same rule as progress_signals). Each window reaches back over skipped weeks to keep window_weeks training weeks; block_min_prior_weeks still applies. Show 'deload excluded' when a week was skipped."
+    "block_exclude_deload_note": "4 wk vs Prev skips weeks that contain a deload session (same rule as progress_signals). Each window reaches back over skipped weeks to keep window_weeks training weeks; block_min_prior_weeks still applies. Show 'deload excluded' when a week was skipped.",
+    "block_exclude_current_week": true,
+    "block_exclude_current_week_note": "4 wk vs Prev skips the in-progress week (a partial week would read as a drop). Windows reach back to keep window_weeks completed training weeks. Show 'This week is in progress and not counted'."
   }
 }
