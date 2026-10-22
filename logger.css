@@ -14,7 +14,7 @@ body{padding-bottom:80px}
 .lg-row.active{background:var(--lg-card2);min-height:60px}.lg-row.done .lg-ck{background:var(--lg-ok)}.lg-row.warm .lg-n{color:var(--lg-acc)}
 .lg-row button{min-height:44px;padding:2px}.lg-n{font-weight:700}.lg-prev{background:none;color:var(--lg-dim);font-size:12px;text-align:left;overflow:hidden;white-space:nowrap}
 .lg-fld{font-size:17px;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;align-items:center;justify-content:center}.lg-fld small{font-size:10px;color:var(--lg-dim)}
-.lg-fld.sug{color:var(--lg-acc)}.lg-rirb{font-size:12px;color:var(--lg-dim)}.lg-rirb.on{color:var(--lg-fg)}
+.lg-fld.sug{color:var(--lg-acc)}.lg-fld.kp-on{box-shadow:inset 0 0 0 2px var(--lg-acc)}.lg-rirb{font-size:12px;color:var(--lg-dim)}.lg-rirb.on{color:var(--lg-fg)}
 .lg-ck{min-width:56px;min-height:56px!important;font-size:22px;border-radius:10px}
 .lg-rir{display:flex;gap:4px;padding:4px 0 6px 48px}.lg-rir[hidden]{display:none}.lg-rir button{min-width:44px;min-height:44px}.lg-rir button.on{background:var(--lg-pri)}
 .lg-sugrow{padding:0 0 4px 48px}.lg-sugchip{font-size:12px;min-height:44px;color:var(--lg-acc);background:none;border:1px solid var(--lg-acc)}

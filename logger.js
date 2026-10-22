@@ -205,13 +205,15 @@ function startTraining(){if(cur)return openLogger();const p=publish(defaultRtNam
 function buildBtns(){const a=document.querySelector('header .actions');if(!a||document.getElementById('pb-btn'))return;a.insertAdjacentHTML('afterbegin','<button id="pb-btn" title="Save a versioned snapshot of this board to the Train library">Publish</button><button id="st-btn" class="pri" title="Publish, make it the active routine and start the session clock">Start training</button>');
   document.getElementById('pb-btn').onclick=publishSheet;document.getElementById('st-btn').onclick=startTraining}
 function cueHtml(e){const c=e.cue||{};const a=[];if(c.deload){const V=dlDS().deload_version;return`Deload: RIR ${V.rir_target[0]}–${V.rir_target[1]}, about ×${V.load_factor} of last time`}if(c.sugLoad!=null)a.push(`↑ Try ${fmt(c.sugLoad)}×${c.sugReps}`);else if(c.addRep)a.push(`Same load, aim for ${c.addRep} reps`);else if(c.max)a.push(exAsst(resolve(e.exerciseId))?'Least assistance on the stack: try a harder variation':'Top of your rack: try a harder variation');if(c.beat)a.push(H(c.beat));if(c.cut)a.push('Missed the range twice: consider −5%');return a.join(' · ')}
+// v29.4: the field the keypad is editing is marked (kp-on) and shows exactly what is typed (the keypad buffer: "11", "11.", "" after backspace)
+const kpOn=(x,f)=>!!(KP&&KP.x===x&&KP.f==f),kpTxt=(x,f,v)=>kpOn(x,f)&&KP.buf!=null?H(KP.buf):v;
 function rowHtml(e,x,n){const pv=x.kind=='working'?prevFor(resolve(e.exerciseId),'working',n.w,cur.id):prevFor(resolve(e.exerciseId),'warmup',n.u,cur.id);
   const pvs=pv?`${fmt(dLoad(pv))} × ${pv.reps}${pv.rir!=null?' @'+pv.rir:''}`:'—';const L_=conv(x.load,cur.unit,S.unit);
   const pt=prTypesOf(x.id,LP);const rirTxt=x.rir==null?(S.rpe?'RPE':'RIR'):(S.rpe?'RPE '+(10-x.rir):'@'+(x.rir==5?'5+':x.rir));const TG=tagDefs(),tg=x.tag&&TG[x.tag];
   return`<div class="lg-row${x.id==activeSet?' active':''}${x.done?' done':''}${x.kind=='warmup'?' warm':''}" data-s="${x.id}">
    <button class="lg-n" aria-label="${x.kind=='warmup'?'Warm-up set, not counted in stats. Tap to make it a working set':'Set type'}">${x.kind=='warmup'?'W':n.w+1}</button><button class="lg-prev" aria-label="Copy previous">${pvs}</button>
-   <button class="lg-fld lg-load${x.sug?' sug':''}" data-f="load">${L_==null?'':fmt(L_)}<small>${S.unit}</small></button>
-   <button class="lg-fld lg-reps" data-f="reps">${x.reps==null?'':x.reps}<small>reps</small></button>
+   <button class="lg-fld lg-load${x.sug?' sug':''}${x.af?' af':''}${kpOn(x,'load')?' kp-on':''}" data-f="load">${kpTxt(x,'load',L_==null?'':fmt(L_))}<small>${S.unit}</small></button>
+   <button class="lg-fld lg-reps${kpOn(x,'reps')?' kp-on':''}" data-f="reps">${kpTxt(x,'reps',x.reps==null?'':x.reps)}<small>reps</small></button>
    <button class="lg-rirb${x.rir==null&&!tg?'':' on'}">${rirTxt}${tg?`<small class="lg-tg" data-tag="${H(x.tag)}">${H(tagShort(tg))}</small>`:''}</button><button class="lg-ck" aria-label="Done">${pt.length?'🏆':'✓'}</button></div>${pt.length?`<div class="lg-prb" data-s="${x.id}" data-t="${pt.join(',')}">${pt.map(k=>`<span data-k="${k}">🏆 ${PRL[k]}</span>`).join('')}</div>`:''}
    ${x.sug&&!x.done?`<div class="lg-sugrow"><button class="lg-sugchip" data-s="${x.id}">↑ suggested · tap for last time</button></div>`:''}
    <div class="lg-rir" data-s="${x.id}" hidden>${[0,1,2,3,4,5].map(r=>`<button data-r="${r}" class="${x.rir===r?'on':''}">${S.rpe?10-r:(r==5?'5+':r)}</button>`).join('')}${x.kind=='working'?`<div class="lg-tags" role="group" aria-label="Set type">${Object.keys(TG).map(k=>`<button data-tag="${H(k)}" class="${x.tag==k?'on':''}" aria-pressed="${x.tag==k}">${H(TG[k].label)}</button>`).join('')}</div>`:''}</div>`}
@@ -240,30 +242,46 @@ function adjSheet(e){const id=e.exerciseId;const draw=()=>{modal(`<div id="lg-ad
 function beatHtml(e){const b=beatOf(e);return b?` <b class="lg-beat">${b}</b>`:''}
 function beatOf(e){const now=bestOf(setsOf(e.id).filter(x=>x.done));if(!now)return'';const h=hist(resolve(e.exerciseId),cur&&cur.id)[0];if(!h)return'';const prev=bestOf(h.sets);if(!prev)return'▲';
   if(Math.abs(now.v-prev.v)>1e-9)return now.v>prev.v?'▲':'▼';const a=volOf(setsOf(e.id).filter(x=>x.done)),b=volOf(h.sets);return a>b?'▲':a<b?'▼':'='}
-function renderSession(){const o=document.getElementById('lg');if(!o||!cur)return;LP=livePrs();const es=entriesOf(cur.id);
+function renderSession(){const o=document.getElementById('lg');if(!o||!cur)return;LP=livePrs();const es=entriesOf(cur.id);const ob=o.querySelector('.lg-body'),sy=ob?ob.scrollTop:null;
   o.innerHTML=`<div class="lg-top"><b class="lg-name">${H(cur.label)}</b><span class="lg-el" id="lg-el"></span><button class="pri" id="lg-fin">Finish</button></div>
   <div class="lg-clock"><button id="lg-pause" aria-pressed="${!!cur.pausedAt}">${cur.pausedAt?'▶ Resume':'⏸ Pause'}</button><button id="lg-tmb" aria-label="Move elapsed time back 1 minute">−1 min</button><button id="lg-tmf" aria-label="Move elapsed time forward 1 minute">+1 min</button>${cur.pausedAt?'<em>Paused: not counted</em>':''}</div>
   <div class="lg-body">${es.length?'':'<p class="cf-hint lg-empty">Empty workout: add exercises as you go.</p>'}${es.map(cardHtml).join('')}<button class="lg-addex" id="lg-addex">+ Exercise</button><button class="lg-hide" id="lg-hide">Back to Build (session keeps running)</button></div>`;
-  bindSession(o);tick();const a=o.querySelector('.lg-row.active');if(a&&!o._noScroll)a.scrollIntoView({block:'center'});clearTimer()}
+  if(sy!=null)o.querySelector('.lg-body').scrollTop=sy;/* v29.4: a full render keeps the list where it was */bindSession(o);tick();if(!o._noScroll)keepVisible();clearTimer()}
+// v29.4: the active set row stays on screen above the keypad and the rest timer; scrolls only by what is hidden, never re-centres
+function keepVisible(){const o=document.getElementById('lg'),bd=o&&o.querySelector('.lg-body'),a=bd&&bd.querySelector('.lg-row.active');if(!a)return;const r=a.getBoundingClientRect(),b=bd.getBoundingClientRect(),M=CFG.timerGapPx;
+  let bot=b.bottom;['lg-kp','lg-timer'].forEach(id=>{const k=document.getElementById(id);if(k&&k.getClientRects().length)/* fixed: no offsetParent */bot=Math.min(bot,k.getBoundingClientRect().top)});bot-=M;const top=b.top+M;
+  if(r.bottom>bot)bd.scrollTop+=Math.min(r.bottom-bot,r.top-top);else if(r.top<top)bd.scrollTop-=top-r.top}
+// v29.4: redraw only the changed exercise card(s) (set check-off, keypad open / Next) - the list, its scroll position and the other cards stay
+function patchCards(ids){const o=document.getElementById('lg');if(!o||!cur||!o.querySelector('.lg-body'))return renderSession();LP=livePrs();
+  [...new Set(ids.filter(Boolean))].forEach(id=>{const e=L.entries.find(q=>q.id==id),c=e&&o.querySelector(`.lg-card[data-e="${id}"]`);if(!c)return;const t=document.createElement('div');t.innerHTML=cardHtml(e);const n=t.firstElementChild;c.replaceWith(n);bindCard(o,n)});
+  tick();keepVisible();clearTimer()}
+// v29.4: a keystroke only rewrites the load / reps cells of that exercise's rows (typed set + auto-filled sets); nothing else is rebuilt or scrolled
+function patchVals(e){const o=document.getElementById('lg'),c=o&&o.querySelector(`.lg-card[data-e="${e.id}"]`);if(!c)return renderSession();const t=document.createElement('div');t.innerHTML=cardHtml(e);
+  t.querySelectorAll('.lg-row').forEach(n=>{const r=c.querySelector(`.lg-row[data-s="${n.dataset.s}"]`);if(!r)return;r.className=n.className;n.querySelectorAll('.lg-fld').forEach(f=>{const g=r.querySelector(`.lg-fld[data-f="${f.dataset.f}"]`);if(g&&(g.innerHTML!==f.innerHTML||g.className!==f.className)){g.className=f.className;g.innerHTML=f.innerHTML}})});
+  c.querySelectorAll('.lg-sugrow').forEach(s=>{const b=s.querySelector('[data-s]');if(b&&!t.querySelector(`.lg-sugchip[data-s="${b.dataset.s}"]`))s.remove()})}
+// v29.4 (#4): a weight entered on a working set fills the same weight into the later working sets of that exercise that are still empty.
+// Never: sets that already have a weight (typed, copied, last time, suggested, or filled from another set), warm-ups, completed sets, reps. A filled
+// set keeps af (= the source set id) so it follows further typing on that same set (1 -> 11) and clears with it; typing on it makes it the user's own.
+function autoFill(e,x){if(x.kind!='working')return[];const ss=setsOf(e.id),out=[];ss.slice(ss.indexOf(x)+1).forEach(y=>{if(y.kind!='working'||y.done)return;if(y.load==null||y.af==x.id){if(x.load==null){if(y.af==x.id){y.load=null;delete y.af;out.push(y)}return}y.load=x.load;y.af=x.id;y.sug=false;out.push(y)}});return out}
 function pauseToggle(){if(!cur)return;if(cur.pausedAt){cur.pausedMs=(cur.pausedMs||0)+Math.max(0,Date.now()-Date.parse(cur.pausedAt));delete cur.pausedAt}else cur.pausedAt=nowISO();persist(cur.id);renderSession()}
 function moveClock(min){if(!cur)return;const raw=elMs({...cur,adjMs:0});cur.adjMs=Math.max(-raw,(cur.adjMs||0)+min*60000);persist(cur.id);tick()}
 function moveEntry(e,to){const es=entriesOf(e.sessionId),k=es.indexOf(e);if(k<0||to<0||to>=es.length||to==k)return;es.splice(k,1);es.splice(to,0,e);es.forEach((q,i)=>q.order=i);persist(e.sessionId);renderSession()}
-function dragBind(o){o.querySelectorAll('.lg-drag').forEach(h=>{h.addEventListener('pointerdown',ev=>{ev.preventDefault();ev.stopPropagation();const card=h.closest('.lg-card'),e=L.entries.find(x=>x.id==card.dataset.e),y0=ev.clientY;try{h.setPointerCapture(ev.pointerId)}catch{}card.classList.add('dragging');
+function dragBind(o,root){(root||o).querySelectorAll('.lg-drag').forEach(h=>{h.addEventListener('pointerdown',ev=>{ev.preventDefault();ev.stopPropagation();const card=h.closest('.lg-card'),e=L.entries.find(x=>x.id==card.dataset.e),y0=ev.clientY;try{h.setPointerCapture(ev.pointerId)}catch{}card.classList.add('dragging');
   const mv=v=>{card.style.transform=`translateY(${v.clientY-y0}px)`},up=v=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);h.removeEventListener('pointercancel',up);card.classList.remove('dragging');card.style.transform='';
     const cs=[...o.querySelectorAll('.lg-card')].filter(c=>c!==card),mid=c=>{const r=c.getBoundingClientRect();return r.top+r.height/2},y=v.clientY;const to=cs.filter(c=>mid(c)<y).length;moveEntry(e,to)};
   h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up)});h.onclick=ev=>ev.stopPropagation()})}
-function bindSession(o){o.querySelector('#lg-fin').onclick=summary;o.querySelector('#lg-pause').onclick=pauseToggle;o.querySelector('#lg-tmb').onclick=()=>moveClock(-1);o.querySelector('#lg-tmf').onclick=()=>moveClock(1);dragBind(o);o.querySelector('#lg-addex').onclick=addExercise;o.querySelector('#lg-hide').onclick=()=>setView('build');
-  o.querySelectorAll('.lg-card').forEach(c=>{const e=L.entries.find(x=>x.id==c.dataset.e);
+function bindSession(o){o.querySelectorAll('.lg-card').forEach(c=>bindCard(o,c,true));o.querySelector('#lg-fin').onclick=summary;o.querySelector('#lg-pause').onclick=pauseToggle;o.querySelector('#lg-tmb').onclick=()=>moveClock(-1);o.querySelector('#lg-tmf').onclick=()=>moveClock(1);o.querySelector('#lg-addex').onclick=addExercise;o.querySelector('#lg-hide').onclick=()=>setView('build')}
+function bindCard(o,c){dragBind(o,c);{const e=L.entries.find(x=>x.id==c.dataset.e);
     c.querySelector('.lg-ch').onclick=ev=>{if(ev.target.closest('.lg-more')||ev.target.closest('.lg-drag')||ev.target.closest('.lg-title')&&e.id==openEntry)return;openEntry=e.id;activeSet=firstOpenSet(e);renderSession()};
     c.querySelector('.lg-title').addEventListener('click',ev=>{if(e.id==openEntry){ev.stopPropagation();history_(resolve(e.exerciseId),e)}});
     c.querySelector('.lg-more').onclick=ev=>{ev.stopPropagation();moreMenu(e)};
     c.querySelectorAll('.lg-chip').forEach(b=>b.onclick=ev=>{ev.stopPropagation();adjSheet(e)});bindPn(c,renderSession);
     const wn=c.querySelector('textarea[data-wn]');if(wn){wn.onclick=ev=>ev.stopPropagation();wn.oninput=()=>{e.notes=wn.value;mirror();clearTimeout(wn._t);wn._t=setTimeout(()=>persist(cur.id),400)}}const wu=c.querySelector('.lg-wu');if(wu)wu.onclick=ev=>{ev.stopPropagation();addWarmups(e)};const ad=c.querySelector('.lg-addset');if(ad)ad.onclick=()=>{const ss=setsOf(e.id),last=ss[ss.length-1],x=newSet(e,'working',(last?last.idx:-1)+1);if(last){x.load=last.load;x.reps=last.reps}L.sets.push(x);activeSet=x.id;persist(cur.id);renderSession()};
-    c.querySelectorAll('.lg-row').forEach(r=>bindRow(e,r))});
-  o.querySelectorAll('.lg-sugchip').forEach(b=>b.onclick=()=>{const x=L.sets.find(s=>s.id==b.dataset.s);x.load=x.prevLoad??null;x.reps=x.prevReps??x.reps;x.sug=false;persist(cur.id);renderSession()})}
+    c.querySelectorAll('.lg-row').forEach(r=>bindRow(e,r))}
+  c.querySelectorAll('.lg-sugchip').forEach(b=>b.onclick=()=>{const x=L.sets.find(s=>s.id==b.dataset.s);x.load=x.prevLoad??null;x.reps=x.prevReps??x.reps;x.sug=false;persist(cur.id);renderSession()})}
 function bindRow(e,r){const x=L.sets.find(s=>s.id==r.dataset.s);let sw=false;
   r.querySelector('.lg-n').onclick=()=>{if(sw)return;x.kind=x.kind=='warmup'?'working':'warmup';if(x.kind=='warmup')delete x.tag;renum(e);persist(cur.id);renderSession()};
-  r.querySelector('.lg-prev').onclick=()=>{const n=work(setsOf(e.id)).indexOf(x),pv=prevFor(resolve(e.exerciseId),x.kind,n<0?setsOf(e.id).filter(s=>s.kind==x.kind).indexOf(x):n,cur.id);if(pv&&!x.done){x.load=realIn(pv.load,sessUnit(pv.sessionId),cur.unit,e.exerciseId);x.reps=pv.reps;x.sug=false;persist(cur.id);renderSession()}};
+  r.querySelector('.lg-prev').onclick=()=>{const n=work(setsOf(e.id)).indexOf(x),pv=prevFor(resolve(e.exerciseId),x.kind,n<0?setsOf(e.id).filter(s=>s.kind==x.kind).indexOf(x):n,cur.id);if(pv&&!x.done){x.load=realIn(pv.load,sessUnit(pv.sessionId),cur.unit,e.exerciseId);x.reps=pv.reps;x.sug=false;delete x.af;persist(cur.id);renderSession()}};
   r.querySelectorAll('.lg-fld').forEach(b=>b.onclick=()=>{if(sw)return;activeSet=x.id;openKp(e,x,b.dataset.f)});
   r.querySelector('.lg-rirb').onclick=()=>{const p=document.querySelector(`.lg-rir[data-s="${x.id}"]`);p.hidden=!p.hidden};
   document.querySelectorAll(`.lg-rir[data-s="${x.id}"] button[data-r]`).forEach(b=>b.onclick=()=>{const v=+b.dataset.r;x.rir=x.rir===v?null:v;persist(cur.id);renderSession()});
@@ -275,14 +293,14 @@ function bindRow(e,r){const x=L.sets.find(s=>s.id==r.dataset.s);let sw=false;
   r.addEventListener('pointerup',ev=>{if(sx==null)return;const dx=ev.clientX-sx;sx=null;r.style.transform='';if(dx<-70&&Math.abs(ev.clientY-sy)<30){sw=true;delSet(e,x)}})}
 function renum(e){let w=0,u=0;setsOf(e.id).forEach((s,i)=>{s.idx=i})}
 function delSet(e,x){const before=JSON.stringify(L.sets);L.sets=L.sets.filter(s=>s.id!==x.id);renum(e);persist(cur.id);renderSession();toast('Set deleted',()=>{L.sets=JSON.parse(before);persist(cur.id);renderSession()})}
-function check(e,x){if(x.done){x.done=false;x.doneAt=null;delete x.pr;persist(cur.id);renderSession();return}if(x.reps==null||x.reps==='' ){activeSet=x.id;openKp(e,x,x.load==null?'load':'reps');return}
+function check(e,x){const oe=openEntry,rd=()=>patchCards([e.id,oe,openEntry]);if(x.done){x.done=false;x.doneAt=null;delete x.pr;persist(cur.id);rd();return}if(x.reps==null||x.reps==='' ){activeSet=x.id;openKp(e,x,x.load==null?'load':'reps');return}
   x.done=true;x.doneAt=nowISO();x.sug=false;delete x.pr;{const won=prTypesOf(x.id);if(won.length)celebrate(won)}
   const sm=x.kind=='working'?ssLive(e):[];if(sm.length){const open=q=>setsOf(q.id).some(s=>!s.done),later=sm.slice(sm.indexOf(e)+1).find(open);
-    if(later){openEntry=later.id;activeSet=firstOpenSet(later);persist(cur.id);renderSession();return}/* superset: straight to the partner, no rest */
-    startTimer(e.restSec);const first=sm.find(open);if(first){openEntry=first.id;activeSet=firstOpenSet(first);persist(cur.id);renderSession();return}}
+    if(later){openEntry=later.id;activeSet=firstOpenSet(later);persist(cur.id);rd();return}/* superset: straight to the partner, no rest */
+    startTimer(e.restSec);const first=sm.find(open);if(first){openEntry=first.id;activeSet=firstOpenSet(first);persist(cur.id);rd();return}}
   else startTimer(x.kind=='warmup'?restFor(e.exerciseId,'warmup'):e.restSec);
-  const nx=setsOf(e.id).find(s=>!s.done);if(nx)activeSet=nx.id;else{const es=entriesOf(cur.id).filter(q=>!q.skipped),k=es.indexOf(e),ne=es.slice(k+1).concat(es.slice(0,k)).find(q=>setsOf(q.id).some(s=>!s.done));if(ne){openEntry=ne.id;activeSet=firstOpenSet(ne)}else activeSet=null}
-  persist(cur.id);renderSession()}
+  const ss_=setsOf(e.id),nx=ss_.slice(ss_.indexOf(x)+1).find(s=>!s.done)||ss_.find(s=>!s.done)/* v29.4: the next open set below, not back up to an earlier one */;if(nx)activeSet=nx.id;else{const es=entriesOf(cur.id).filter(q=>!q.skipped),k=es.indexOf(e),ne=es.slice(k+1).concat(es.slice(0,k)).find(q=>setsOf(q.id).some(s=>!s.done));if(ne){openEntry=ne.id;activeSet=firstOpenSet(ne)}else activeSet=null}
+  persist(cur.id);rd()}
 // v28: PRs are derived from the logged history by prs.js (port of tools/prs.py) and recomputed after every change; nothing stored is a source of truth.
 let LP={};function hx(live){const ss=L.sessions.map(s=>live&&cur&&s.id==cur.id?{...s,status:'completed',endedAt:nowISO()}:s);return{schema:LOG_SCHEMA,plannedSessionsPerWeek:order().length||undefined,sessions:ss,entries:L.entries,sets:L.sets,bodyweights:BW,deloads:DLS.deloads||[],deloadPrompt:DLS.deloadPrompt||null,readiness:DLS.readiness||[]}}
 function livePrs(){return cur?(detectPrs(hx(true),ALIAS,{profile:prProf()})[cur.id]||{}):{}}
@@ -298,26 +316,26 @@ function editSet(e,x){modal(`<h3>Edit set</h3><div class="lg-ed"><label>Type <se
   <label>Load (${S.unit}) <input id="ed-l" inputmode="decimal" value="${fmt(conv(x.load,cur.unit,S.unit))}"></label><label>Reps <input id="ed-r" inputmode="numeric" value="${x.reps??''}"></label>
   <label>${S.rpe?'RPE':'RIR'} (optional) <input id="ed-i" inputmode="decimal" value="${x.rir==null?'':S.rpe?10-x.rir:x.rir}"></label><label>Note <input id="ed-n" value="${H(x.note||'')}"></label></div>
   <div class="cf-btns"><button class="pri" id="ed-ok">Save</button><button id="ed-x">Cancel</button></div>`);
-  document.getElementById('ed-x').onclick=closeModal;document.getElementById('ed-ok').onclick=()=>{const g=id=>document.getElementById(id).value.trim();x.kind=g('ed-k');x.load=g('ed-l')===''?null:conv(+g('ed-l'),S.unit,cur.unit);x.reps=g('ed-r')===''?null:+g('ed-r');
+  document.getElementById('ed-x').onclick=closeModal;document.getElementById('ed-ok').onclick=()=>{const g=id=>document.getElementById(id).value.trim();x.kind=g('ed-k');x.load=g('ed-l')===''?null:conv(+g('ed-l'),S.unit,cur.unit);x.reps=g('ed-r')===''?null:+g('ed-r');delete x.af;
     const i=g('ed-i');x.rir=i===''?null:S.rpe?10-(+i):+i;x.note=g('ed-n');x.sug=false;renum(e);closeModal();persist(cur.id);renderSession()}}
 // ---------- bottom keypad (load/reps) ----------
 let KP=null;
-function openKp(e,x,f){closeKp();KP={e,x,f,fresh:true,buf:null};const k=document.createElement('div');k.id='lg-kp';document.body.appendChild(k);kpSwipe(k);drawKp();renderSession()}
+function openKp(e,x,f){closeKp();KP={e,x,f,fresh:true,buf:null};const k=document.createElement('div');k.id='lg-kp';document.body.appendChild(k);kpSwipe(k);drawKp();patchCards([e.id])}
 function minKp(){if(cur)persist(cur.id);closeKp();renderSession()}
 function kpSwipe(k){let y0=null,x0=null;k.addEventListener('pointerdown',ev=>{y0=ev.clientY;x0=ev.clientX});k.addEventListener('pointerup',ev=>{if(y0==null)return;const dy=ev.clientY-y0,dx=Math.abs(ev.clientX-x0);y0=null;if(dy>CFG.kpSwipePx&&dx<dy)minKp()});k.addEventListener('pointercancel',()=>{y0=null})}
-function closeKp(){const k=document.getElementById('lg-kp');if(k)k.remove();KP=null}
+function closeKp(){const k=document.getElementById('lg-kp');if(k)k.remove();KP=null;document.querySelectorAll('#lg .lg-fld.kp-on').forEach(n=>n.classList.remove('kp-on'))}
 function drawKp(){const k=document.getElementById('lg-kp');if(!k||!KP)return;const{e,x,f}=KP,inc=f=='load'?incFor(resolve(e.exerciseId))||1:1,v=f=='load'?conv(x.load,cur.unit,S.unit):x.reps;
   k.innerHTML=`<div class="kp-top"><span>${f=='load'?'Load ('+S.unit+')':'Reps'} · ${H(exName(e))}</span><b class="kp-val">${KP.buf!=null?H(KP.buf):v==null?'':fmt(v)}</b><button id="kp-min" aria-label="Minimize keypad">▾</button></div>${f=='load'?kpChips(e,x,v):''}<div class="kp-grid">
   ${['1','2','3','⌫','4','5','6','−'+fmt(inc),'7','8','9','+'+fmt(inc),'.','0','Done','Next'].map(b=>`<button data-k="${b}" class="${b=='Next'?'pri':''}">${b}</button>`).join('')}</div>`;
   k.querySelector('#kp-min').onclick=minKp;kpChipBind(k,e,x);k.querySelectorAll('button[data-k]').forEach(b=>b.onclick=()=>{const t=b.dataset.k;let s=v==null?'':fmt(v);
     if(t=='Done'){closeKp();persist(cur.id);renderSession();return}
-    if(t=='Next'){persist(cur.id);if(f=='load'){KP.f='reps';KP.fresh=true;KP.buf=null;drawKp();renderSession();return}const ss=setsOf(e.id),i=ss.indexOf(x),nx=ss.slice(i+1).find(q=>!q.done);if(nx){activeSet=nx.id;KP.x=nx;KP.f='load';KP.fresh=true;KP.buf=null;drawKp();renderSession()}else{closeKp();renderSession()}return}
+    if(t=='Next'){persist(cur.id);if(f=='load'){KP.f='reps';KP.fresh=true;KP.buf=null;drawKp();patchCards([e.id]);return}const ss=setsOf(e.id),i=ss.indexOf(x),nx=ss.slice(i+1).find(q=>!q.done);if(nx){activeSet=nx.id;KP.x=nx;KP.f='load';KP.fresh=true;KP.buf=null;drawKp();patchCards([e.id])}else{closeKp();renderSession()}return}
     // v28: typed keys edit a text buffer (KP.buf), so a decimal point survives until the next digit (101.5 was logged as 1015)
     const base=KP.fresh?'':(KP.buf!=null?KP.buf:s);let n;
     if(t[0]=='−'||t[0]=='+'){n=Math.max(0,Math.round(((v||0)+(t[0]=='+'?inc:-inc))*1e6)/1e6);KP.buf=null}
     else if(t=='⌫'){const b=base.slice(0,-1);KP.buf=b;n=b===''||b==='.'?null:parseFloat(b)}
     else{if(t=='.'&&(f!='load'||base.includes('.')))return;if(f=='load'&&/\.\d\d$/.test(base))return;const b=(t=='.'&&base==='')?'0.':(base==='0'&&t!='.'?t:base+t);KP.buf=b;n=parseFloat(b)}KP.fresh=false;
-    if(f=='load'){x.load=n==null?null:conv(n,S.unit,cur.unit);x.sug=false}else x.reps=n==null?null:Math.round(n);drawKp();const o=document.getElementById('lg');if(o){o._noScroll=true;renderSession();o._noScroll=false}})}
+    if(f=='load'){x.load=n==null?null:conv(n,S.unit,cur.unit);x.sug=false;delete x.af;autoFill(e,x)}else x.reps=n==null?null:Math.round(n);drawKp();mirror();patchVals(e)})}
 // v29 A quick weight picker (#10) + plate calculator toggle (#6): one chip row on the load keypad. Every chip is a weight the gym has
 // (gym profile; the v8 load_step grid where the profile doesn't describe the equipment). Plates: loads.js plateBreakdown (= tools/loads.py).
 function kpPick(e,x,v){const id=resolve(e.exerciseId),c=e.cue||{},o=[],g=gymP(),last=x.prevLoad!=null?conv(x.prevLoad,cur.unit,S.unit):null;
@@ -328,7 +346,7 @@ function kpChips(e,x,v){const id=resolve(e.exerciseId),g=gymP(),pl=LD_PLATE.incl
   let pt='';if(pl&&S.kpPlates&&v!=null){const pb=plateBreakdown(Math.round(conv(v,S.unit,g.unit||S.unit)*1e6)/1e6,g,exEq(id),id),side=pb.per_side||pb.on_sleeve||[];
     pt=`<div class="kp-plates" data-exact="${pb.exact}" data-load="${pb.load}" data-side="${side.join(',')}">${pb.exact?'':`Can't build ${fmt(v)} · nearest below ${fmt(conv(pb.load,g.unit||S.unit,S.unit))} ${S.unit}: `}${pb.bar?`bar ${fmt(pb.bar)} + `:''}${side.length?(pb.per_side?'per side ':'on sleeve ')+side.map(fmt).join(' · '):'no plates'} <small>${H(g.unit||S.unit)}</small></div>`}
   return`<div class="kp-chips">${b}${pl?`<button class="kp-chip kp-pl${S.kpPlates?' on':''}" aria-pressed="${!!S.kpPlates}">Plates</button>`:''}</div>${pt}`}
-function kpChipBind(k,e,x){k.querySelectorAll('.kp-chip[data-w]').forEach(b=>b.onclick=()=>{x.load=conv(+b.dataset.w,S.unit,cur.unit);x.sug=false;KP.buf=null;KP.fresh=true;drawKp();const o=document.getElementById('lg');if(o){o._noScroll=true;renderSession();o._noScroll=false}});
+function kpChipBind(k,e,x){k.querySelectorAll('.kp-chip[data-w]').forEach(b=>b.onclick=()=>{x.load=conv(+b.dataset.w,S.unit,cur.unit);x.sug=false;delete x.af;autoFill(e,x);KP.buf=null;KP.fresh=true;drawKp();mirror();patchVals(e)});
   const pl=k.querySelector('.kp-pl');if(pl)pl.onclick=()=>{S.kpPlates=!S.kpPlates;saveS();drawKp()}}
 // v29 A gym profile sheet (#4): everything his gym has, in one sheet. Lists are typed as text: "5, 10, 15" and plates as "45×4, 25×2" (weight × pairs).
 const gpL=a=>(a||[]).join(', '),gpP=a=>(a||[]).map(p=>`${p.weight}×${p.pairs}`).join(', ');
@@ -478,10 +496,10 @@ function summary(){closeKp();const ot=document.getElementById('toast');if(ot)ot.
   <h4>Write back to routine</h4>${rows.length?`<p class="cf-hint">Structural changes only (loads, reps and RIR are never written back).</p><div class="lg-diff">${rows.map((r,i)=>`<label><input type="checkbox" data-i="${i}" checked> ${H(r.txt)}</label>`).join('')}</div>
    <div class="lg-wb">${m?`<label><input type="radio" name="wb" value="split"> Update loaded split '${H(m.name)}'</label>`:''}<label><input type="radio" name="wb" value="board"> Apply to this board only</label><label><input type="radio" name="wb" value="none" checked> Don't apply</label></div>`:'<p class="cf-hint">No structural changes.</p>'}
   <div class="cf-btns"><button class="pri" id="sm-ok">Save session</button><button id="sm-back">Keep logging</button><button id="sm-del" class="dng">Discard session</button></div></div>`);
-  document.getElementById('sm-back').onclick=()=>{closeModal();renderSession()};document.getElementById('sm-del').onclick=()=>{if(confirm('Discard this session? Logged sets will be deleted.'))discard()};
+  document.getElementById('sm-back').onclick=()=>{closeModal();renderSession()};document.getElementById('sm-del').onclick=()=>ask({title:'Discard this session?',body:'Every set logged in it is deleted. This cannot be undone.',ok:'Discard session',onOk:discard});
   document.getElementById('sm-ok').onclick=()=>{s.notes=document.getElementById('sm-n').value;const pick=(document.querySelector('input[name=wb]:checked')||{}).value||'none';const sel=rows.filter((r,i)=>{const c=document.querySelector(`.lg-diff input[data-i="${i}"]`);return c&&c.checked});
     if(s.pausedAt){s.pausedMs=(s.pausedMs||0)+Math.max(0,Date.now()-Date.parse(s.pausedAt));delete s.pausedAt}s.status='completed';s.endedAt=nowISO();s.writeBack=rows.length?pick:'none';
-    L.sets.filter(x=>x.sessionId==s.id).forEach(x=>{delete x.sug;delete x.prevLoad;delete x.prevReps});localStorage.removeItem(TKEY);const sid=s.id;cur=null;persist(sid);closeModal();closeLogger();
+    L.sets.filter(x=>x.sessionId==s.id).forEach(x=>{delete x.sug;delete x.prevLoad;delete x.prevReps;delete x.af});localStorage.removeItem(TKEY);const sid=s.id;cur=null;persist(sid);closeModal();closeLogger();
     vsSheet(sid);if(pick!='none'&&sel.length)writeBack(s,sel,pick);else toast('Session saved',null)}}
 // ---------- v29 D: "vs last time" finish summary (#8; review.js finishSummary = tests/v29d_ref.py on prs.py) ----------
 const sgn=(v,d=1)=>{const r=Math.round(v*10**d)/10**d;return(r>0?'+':r<0?'−':'±')+String(Math.abs(r))};
@@ -548,6 +566,12 @@ function writeBack(s,rows,pick){const i=s.dayIdx,prior=JSON.stringify(state),m=l
   state.days[i]=applyRows(state.days[i]||[],rows);if(pick=='split'&&m){m.days[i]=applyRows(m.days[i]||[],rows);m.saved=new Date().toISOString();saveMy()}
   upd();if(window.bar)bar();refreshBar();
   toast(pick=='split'?`Updated '${m.name}'`:'Applied to this board',()=>{state=JSON.parse(prior);if(pick=='split'&&m){Object.assign(m,JSON.parse(priorM));saveMy()}upd();if(window.bar)bar();refreshBar()})}
+// v29.4: Discard / Delete confirm step in the app. Root cause of 'discard / delete does nothing': both were gated on the browser's native confirm(),
+// which returns false without showing anything (or waiting) where in-page dialogs are ignored, e.g. an iPhone home-screen web app or an in-app browser;
+// false = cancel, so nothing was removed. ask() is a sheet above everything (the Finish / Resume sheet stays under it, untouched on Cancel).
+function ask(o){const old=document.getElementById('lg-ask');if(old)old.remove();const w=document.createElement('div');w.id='lg-ask';w.setAttribute('role','alertdialog');w.setAttribute('aria-modal','true');
+  w.innerHTML=`<div class="ask-box"><h3>${H(o.title)}</h3>${o.body?`<p>${H(o.body)}</p>`:''}<div class="cf-btns"><button id="ask-ok" class="dng">${H(o.ok)}</button><button id="ask-no">Cancel</button></div></div>`;document.body.appendChild(w);
+  const no=()=>{w.remove();o.onCancel&&o.onCancel()};w.onclick=ev=>{if(ev.target===w)no()};w.querySelector('#ask-no').onclick=no;w.querySelector('#ask-ok').onclick=()=>{w.remove();o.onOk()};return w}
 function discard(){const sid=cur.id;L.sessions=L.sessions.filter(x=>x.id!==sid);L.entries=L.entries.filter(x=>x.sessionId!==sid);L.sets=L.sets.filter(x=>x.sessionId!==sid);cur=null;localStorage.removeItem(TKEY);persist(sid);closeModal();closeLogger()}
 // ---------- week view: Planned / Done body map, counts, adherence; history; settings ----------
 function weekStart(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return d.getTime()}
@@ -605,7 +629,7 @@ async function boot(){for(let i=0;i<200&&(!Object.keys(EX).length||(typeof RU=='
   cur=L.sessions.find(s=>s.status=='active')||null;recomputePrs();ready=true;window.LG.ready=true;buildBar();
   if(cur){const e=entriesOf(cur.id);e.forEach(prefillKeep);openEntry=(e.find(q=>setsOf(q.id).some(s=>!s.done))||e[0]||{}).id;activeSet=firstOpenSet(e.find(q=>q.id==openEntry));
     modal(`<div id="lg-resume"><h3>Unfinished session</h3><p>${H(cur.label)} (started ${new Date(cur.startedAt).toLocaleString()})</p><div class="cf-btns"><button class="pri" id="rs-go">Resume</button><button id="rs-del" class="dng">Discard</button></div></div>`);
-    document.getElementById('rs-go').onclick=()=>openLogger();document.getElementById('rs-del').onclick=()=>{if(confirm('Discard the unfinished session? Logged sets will be deleted.'))discard()}}}
+    document.getElementById('rs-go').onclick=()=>openLogger();document.getElementById('rs-del').onclick=()=>ask({title:'Discard the unfinished session?',body:'Every set logged in it is deleted. This cannot be undone.',ok:'Discard session',onOk:discard})}}
 function prefillKeep(e){e.cue=progression(resolve(e.exerciseId),e.sessionId)}
 function buildBar(){if(!document.getElementById('lg')){const o=document.createElement('section');o.id='lg';o.className='lg-page';document.body.appendChild(o)}
   if(!document.getElementById('tabs')){const t=document.createElement('nav');t.id='tabs';t.setAttribute('role','tablist');t.innerHTML=[['build','Build'],['train','Train'],['log','Log'],['analytics','Analytics']].map(([v,n])=>`<button id="tab-${v}" data-v="${v}" role="tab">${n}<i class="tab-dot"></i></button>`).join('');document.body.appendChild(t);
@@ -614,7 +638,7 @@ function buildBar(){if(!document.getElementById('lg')){const o=document.createEl
 // keep the Continue label in sync with board edits
 function tileNotes(){document.querySelectorAll('#board .tile[data-id]').forEach(t=>{const n=exNote(t.dataset.id);let el=t.querySelector('.tnote');if(!n){if(el)el.remove();return}if(!el){el=document.createElement('div');el.className='tnote';t.appendChild(el)}el.textContent='📌 '+n})}
 if(typeof render=='function'){const r0=render;render=function(){const x=r0.apply(this,arguments);tileNotes();if(ready)refreshBar();return x}}
-window.LG={renderSession,realIn,get L(){return L},get DLS(){return DLS},dlHist:()=>hx(false),dlCheckNow,dlActive,dlReasons,vsTie,vsDisp,vsSheet,vsRows,planDays,planVsDone,planSnaps,todayYmd,wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
+window.LG={ask,keepVisible,renderSession,realIn,get L(){return L},get DLS(){return DLS},dlHist:()=>hx(false),dlCheckNow,dlActive,dlReasons,vsTie,vsDisp,vsSheet,vsRows,planDays,planVsDone,planSnaps,todayYmd,wuPlan,addWarmups,ssLink,ssUnlink,ssLetter,get BW(){return BW},bwSheet,effLb,setTag,tagDefs,gymP,gymSheet,realStep,kpPick,get DFX(){return DFX},saveDF,publishSheet,startTraining,routinePicker,get ROUT(){return ROUT},publish,setActive,activeRt,rtList,rtVers,elMs,durMs,startEmpty,moveEntry,pauseToggle,moveClock,set L(v){L=v},isHard,entriesOf,setsOf,exName,PRL,prVal,fmt,conv,H,sessUnit,loggedNote,weekKey,weekStart,get ALIAS(){return ALIAS},livePrs,recomputePrs,weekAnalytics,celebrate,hx,get S(){return S},get cur(){return cur},order,continueIdx,diffRows,applyRows,weekDone,countsFor,adherence,resolve,isArch,migrate,startSession,skipDays,weekView,history_,persistAll,ready:false,CFG,HR,LR,e1rm,e1Formula,setView,metricSeries,METRICS,get NOTES(){return NOTES},exNote,carryNote,get KP(){return KP},incFor};
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 boot();
 })();
