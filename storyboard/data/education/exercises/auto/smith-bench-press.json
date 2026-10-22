@@ -8,7 +8,7 @@
  "source": "auto",
  "source_label": "Auto-generated from the exercise library",
  "updated": "2026-10-21",
- "summary": "A flat press on a fixed bar path. It's easy to push close to failure safely without a spotter.",
+ "summary": "A flat press on a fixed bar path. With the safety stops set, you can take sets close to failure without a spotter.",
  "type": "primary",
  "equipment": "smith machine",
  "equipment_needs": {
@@ -134,12 +134,12 @@
   },
   {
    "topic": "safeties",
-   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "text": "Set safety arms or pins where a missed rep can be set down, or use a spotter, and use collars.",
    "evidence": "biomechanics"
   },
   {
    "topic": "setup",
-   "text": "Pick a variation and range you can train pain-free.",
+   "text": "Pick a variation and range you can train comfortably.",
    "evidence": "modeled"
   }
  ],

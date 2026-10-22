@@ -352,6 +352,32 @@
       "study_type": "training_study",
       "finding": "21 untrained adults, 12 weeks, one arm incline curl and the other preacher curl (MRI): biceps brachii grew more after incline (+22.1% vs +18.9%), brachialis and brachioradialis grew more after preacher; total elbow-flexor growth did not differ (+17.6% vs +19.2%). Heads of the biceps were not separated.",
       "verified": "Crossref works API and PubMed abstract (PMID 42829982), 2026-10-21; finding checked against the abstract. Published online 2026-10-04; volume and issue not yet assigned."
+    },
+    "lopez2021": {
+      "authors": "Lopez P, Radaelli R, Taaffe DR, Newton RU, Galvão DA, Trajano GS, et al.",
+      "year": 2021,
+      "title": "Resistance Training Load Effects on Muscle Hypertrophy and Strength Gain: Systematic Review and Network Meta-analysis",
+      "journal": "Medicine and Science in Sports and Exercise",
+      "volume": "53(6)",
+      "pages": "1206-1216",
+      "doi": "10.1249/MSS.0000000000002585",
+      "url": "https://doi.org/10.1249/MSS.0000000000002585",
+      "study_type": "meta_analysis",
+      "finding": "Network meta-analysis of 28 studies (747 adults) with sets to failure: muscle growth did not differ between low (>15RM), moderate (9-15RM) and high (<=8RM) loads; strength gains were larger with high and moderate loads than with low loads.",
+      "verified": "Crossref works API, 2026-10-22 (authors, year, journal, volume, pages); finding checked against the PubMed abstract (PMID 33433148)"
+    },
+    "schoenfeld2021rep": {
+      "authors": "Schoenfeld BJ, Grgic J, Van Every DW, Plotkin DL",
+      "year": 2021,
+      "title": "Loading Recommendations for Muscle Strength, Hypertrophy, and Local Endurance: A Re-Examination of the Repetition Continuum",
+      "journal": "Sports",
+      "volume": "9(2)",
+      "pages": "32",
+      "doi": "10.3390/sports9020032",
+      "url": "https://doi.org/10.3390/sports9020032",
+      "study_type": "review",
+      "finding": "Narrative review: current research fails to support parts of the classic repetition continuum; muscular adaptations can be obtained, and in some cases optimized, across a wide spectrum of loading zones, with heavy loads still best for maximal strength.",
+      "verified": "Crossref works API, 2026-10-22 (authors, year, journal, volume, pages); finding checked against the PubMed abstract (PMID 33671664)"
     }
   }
 }

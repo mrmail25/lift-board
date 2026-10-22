@@ -319,7 +319,7 @@
     },
     {
       "exercise_id": "machine-chest-press",
-      "why": "Guided path, easy to take close to failure safely; machines grow muscle about as well as free weights.",
+      "why": "Guided path, easy to take close to failure; machines grow muscle about as well as free weights.",
       "evidence": "supported",
       "citations": [
         "haugen2023"
@@ -405,6 +405,6 @@
     "Weekly target in the app: 10 to 20 chest sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
     "The upper/lower split on the map follows fibre direction plus one training study; any regional difference is modest.",
     "Chest-specific stretch and fly-vs-press growth comparisons are not on file, so those notes are biomechanics or modeled.",
-    "No medical claims; choose presses you can train through a full range without pain."
+    "No medical claims; choose presses you can train comfortably through a full range."
   ]
 }

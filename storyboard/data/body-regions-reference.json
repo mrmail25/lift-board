@@ -1,0 +1,2980 @@
+{
+ "description": "primary_region(exercise_id) for every exercise, with the rule that decided it. Regenerate with build_whiteboard.py.",
+ "muscles": {
+  "chest": "chest",
+  "front_delts": "shoulders",
+  "side_delts": "shoulders",
+  "rear_delts": "shoulders",
+  "lats": "back",
+  "upper_back": "back",
+  "traps": "back",
+  "lower_back": "back",
+  "biceps": "arms",
+  "triceps": "arms",
+  "forearms": "arms",
+  "quads": "legs",
+  "hamstrings": "legs",
+  "glutes": "legs",
+  "calves": "legs",
+  "adductors": "legs",
+  "abductors": "legs",
+  "abs": "core",
+  "obliques": "core"
+ },
+ "exercises": {
+  "barbell-bench-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.5
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.5
+   }
+  },
+  "incline-barbell-bench-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.6,
+    "arms": 0.5
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.6,
+    "arms": 0.5
+   }
+  },
+  "dumbbell-bench-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.4
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.4
+   }
+  },
+  "incline-dumbbell-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.6,
+    "arms": 0.4
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.6,
+    "arms": 0.4
+   }
+  },
+  "machine-chest-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.4,
+    "arms": 0.4
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.4,
+    "arms": 0.4
+   }
+  },
+  "weighted-dip": {
+   "region": "chest",
+   "decided_by": "tie: first pattern",
+   "top": {
+    "chest": 0.8,
+    "shoulders": 0.5,
+    "arms": 0.8
+   },
+   "sum": {
+    "chest": 0.8,
+    "shoulders": 0.5,
+    "arms": 0.8
+   }
+  },
+  "push-up": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.5,
+    "core": 0.2
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.5,
+    "core": 0.2
+   }
+  },
+  "cable-fly": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.3
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.3
+   }
+  },
+  "pec-deck": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.2
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.2
+   }
+  },
+  "dumbbell-fly": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.3
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.3
+   }
+  },
+  "overhead-press": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.3,
+    "arms": 0.6,
+    "core": 0.2
+   },
+   "sum": {
+    "shoulders": 1.5,
+    "back": 0.3,
+    "arms": 0.6,
+    "core": 0.35
+   }
+  },
+  "seated-dumbbell-shoulder-press": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 1.5,
+    "arms": 0.5
+   }
+  },
+  "machine-shoulder-press": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 1.4,
+    "arms": 0.5
+   }
+  },
+  "dumbbell-lateral-raise": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.3
+   },
+   "sum": {
+    "shoulders": 1,
+    "back": 0.3
+   }
+  },
+  "cable-lateral-raise": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.3
+   },
+   "sum": {
+    "shoulders": 1,
+    "back": 0.3
+   }
+  },
+  "upright-row": {
+   "region": "shoulders",
+   "decided_by": "tie: first pattern",
+   "top": {
+    "shoulders": 0.8,
+    "back": 0.8,
+    "arms": 0.3
+   },
+   "sum": {
+    "shoulders": 0.8,
+    "back": 0.8,
+    "arms": 0.3
+   }
+  },
+  "reverse-pec-deck": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.5
+   },
+   "sum": {
+    "shoulders": 1,
+    "back": 0.9
+   }
+  },
+  "face-pull": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.5
+   },
+   "sum": {
+    "shoulders": 1,
+    "back": 1.0
+   }
+  },
+  "dumbbell-rear-delt-fly": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.4
+   },
+   "sum": {
+    "shoulders": 1,
+    "back": 0.8
+   }
+  },
+  "front-raise": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1
+   },
+   "sum": {
+    "shoulders": 1
+   }
+  },
+  "pull-up": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.3,
+    "back": 1,
+    "arms": 0.6
+   },
+   "sum": {
+    "shoulders": 0.3,
+    "back": 1.5,
+    "arms": 0.9
+   }
+  },
+  "chin-up": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 1,
+    "arms": 0.8
+   },
+   "sum": {
+    "back": 1.4,
+    "arms": 1.1
+   }
+  },
+  "lat-pulldown": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.3,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.3,
+    "back": 1.4,
+    "arms": 0.5
+   }
+  },
+  "close-grip-pulldown": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 1,
+    "arms": 0.6
+   },
+   "sum": {
+    "back": 1.3,
+    "arms": 0.6
+   }
+  },
+  "barbell-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.5,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "back": 2.8,
+    "arms": 0.5
+   }
+  },
+  "pendlay-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.5,
+    "back": 1,
+    "arms": 0.4
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "back": 2.8,
+    "arms": 0.4
+   }
+  },
+  "one-arm-dumbbell-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.4,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.4,
+    "back": 2.1,
+    "arms": 0.5
+   }
+  },
+  "chest-supported-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.6,
+    "back": 1,
+    "arms": 0.4
+   },
+   "sum": {
+    "shoulders": 0.6,
+    "back": 2.2,
+    "arms": 0.4
+   }
+  },
+  "seated-cable-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.4,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.4,
+    "back": 2.3,
+    "arms": 0.5
+   }
+  },
+  "t-bar-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.4,
+    "back": 1,
+    "arms": 0.4
+   },
+   "sum": {
+    "shoulders": 0.4,
+    "back": 2.7,
+    "arms": 0.4
+   }
+  },
+  "straight-arm-pulldown": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 1,
+    "arms": 0.2
+   },
+   "sum": {
+    "back": 1,
+    "arms": 0.2
+   }
+  },
+  "barbell-shrug": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 1,
+    "arms": 0.3
+   },
+   "sum": {
+    "back": 1,
+    "arms": 0.3
+   }
+  },
+  "dumbbell-shrug": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 1,
+    "arms": 0.3
+   },
+   "sum": {
+    "back": 1,
+    "arms": 0.3
+   }
+  },
+  "barbell-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.4
+   }
+  },
+  "dumbbell-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.4
+   }
+  },
+  "hammer-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 0.8
+   },
+   "sum": {
+    "arms": 1.6
+   }
+  },
+  "incline-dumbbell-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.3
+   }
+  },
+  "preacher-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.3
+   }
+  },
+  "cable-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.3
+   }
+  },
+  "close-grip-bench-press": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.6,
+    "shoulders": 0.4,
+    "arms": 1
+   },
+   "sum": {
+    "chest": 0.6,
+    "shoulders": 0.4,
+    "arms": 1
+   }
+  },
+  "skull-crusher": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "triceps-pushdown": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "overhead-cable-triceps-extension": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "wrist-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "back-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 0.15,
+    "legs": 1,
+    "back": 0.4
+   },
+   "sum": {
+    "core": 0.15,
+    "legs": 2.55,
+    "back": 0.4
+   }
+  },
+  "front-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.4,
+    "core": 0.2,
+    "legs": 1
+   },
+   "sum": {
+    "back": 0.4,
+    "core": 0.2,
+    "legs": 2.0
+   }
+  },
+  "hack-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.9
+   }
+  },
+  "leg-press": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 2.1
+   }
+  },
+  "bulgarian-split-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 2.8
+   }
+  },
+  "walking-lunge": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.9
+   },
+   "sum": {
+    "legs": 3.0
+   }
+  },
+  "leg-extension": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1
+   }
+  },
+  "deadlift": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.9,
+    "arms": 0.6,
+    "legs": 0.8,
+    "core": 0.15
+   },
+   "sum": {
+    "back": 2.4,
+    "arms": 0.6,
+    "legs": 2.65,
+    "core": 0.15
+   }
+  },
+  "romanian-deadlift": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.7,
+    "arms": 0.5,
+    "legs": 1
+   },
+   "sum": {
+    "back": 1.5,
+    "arms": 0.5,
+    "legs": 2.35
+   }
+  },
+  "stiff-leg-dumbbell-deadlift": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 0.3,
+    "legs": 1,
+    "back": 0.6
+   },
+   "sum": {
+    "arms": 0.3,
+    "legs": 1.9,
+    "back": 0.6
+   }
+  },
+  "hip-thrust": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.9
+   }
+  },
+  "lying-leg-curl": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.2
+   }
+  },
+  "seated-leg-curl": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1
+   }
+  },
+  "back-extension": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.7,
+    "back": 0.8
+   },
+   "sum": {
+    "legs": 1.3,
+    "back": 0.8
+   }
+  },
+  "hip-adduction-machine": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1
+   }
+  },
+  "standing-calf-raise": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1
+   }
+  },
+  "seated-calf-raise": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1
+   }
+  },
+  "hanging-leg-raise": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 0.3,
+    "core": 1
+   },
+   "sum": {
+    "arms": 0.3,
+    "core": 1.5
+   }
+  },
+  "cable-crunch": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 1
+   },
+   "sum": {
+    "core": 1.4
+   }
+  },
+  "ab-wheel-rollout": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.2,
+    "core": 1
+   },
+   "sum": {
+    "back": 0.4,
+    "core": 1.6
+   }
+  },
+  "hip-abduction-machine": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.3
+   }
+  },
+  "cable-hip-abduction": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.3
+   }
+  },
+  "side-lying-hip-abduction": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 0.25,
+    "legs": 0.9
+   },
+   "sum": {
+    "core": 0.25,
+    "legs": 0.9
+   }
+  },
+  "banded-lateral-walk": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.8
+   },
+   "sum": {
+    "legs": 1.1
+   }
+  },
+  "dumbbell-step-up": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.9
+   },
+   "sum": {
+    "legs": 2.75
+   }
+  },
+  "smith-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1,
+    "back": 0.2
+   },
+   "sum": {
+    "legs": 2.2,
+    "back": 0.2
+   }
+  },
+  "smith-bench-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.5
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.5
+   }
+  },
+  "smith-incline-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.6,
+    "arms": 0.5
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.6,
+    "arms": 0.5
+   }
+  },
+  "smith-overhead-press": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.3,
+    "arms": 0.6
+   },
+   "sum": {
+    "shoulders": 1.5,
+    "back": 0.3,
+    "arms": 0.6
+   }
+  },
+  "smith-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.5,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "back": 2.6,
+    "arms": 0.5
+   }
+  },
+  "smith-rdl": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.4,
+    "arms": 0.2,
+    "legs": 1
+   },
+   "sum": {
+    "back": 1.2,
+    "arms": 0.2,
+    "legs": 2.35
+   }
+  },
+  "smith-split-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 2.55
+   }
+  },
+  "smith-calf-raise": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1
+   }
+  },
+  "smith-hip-thrust": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.9
+   }
+  },
+  "smith-shrug": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 1,
+    "arms": 0.3
+   },
+   "sum": {
+    "back": 1,
+    "arms": 0.3
+   }
+  },
+  "incline-cable-pullover": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.2,
+    "back": 1,
+    "arms": 0.3
+   },
+   "sum": {
+    "chest": 0.2,
+    "back": 1.2,
+    "arms": 0.3
+   }
+  },
+  "dumbbell-pullover": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.5,
+    "back": 0.8,
+    "arms": 0.3
+   },
+   "sum": {
+    "chest": 0.5,
+    "back": 1.0,
+    "arms": 0.3
+   }
+  },
+  "pullover-machine": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.15,
+    "back": 1,
+    "arms": 0.25
+   },
+   "sum": {
+    "chest": 0.15,
+    "back": 1.2,
+    "arms": 0.25
+   }
+  },
+  "landmine-t-bar-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.5,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "back": 2.4,
+    "arms": 0.8
+   }
+  },
+  "viking-press": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.2,
+    "shoulders": 1,
+    "back": 0.4,
+    "arms": 0.6
+   },
+   "sum": {
+    "chest": 0.2,
+    "shoulders": 1.4,
+    "back": 0.4,
+    "arms": 0.6
+   }
+  },
+  "landmine-press-one-arm": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.6,
+    "shoulders": 1,
+    "arms": 0.5,
+    "core": 0.2
+   },
+   "sum": {
+    "chest": 0.6,
+    "shoulders": 1.2,
+    "arms": 0.5,
+    "core": 0.2
+   }
+  },
+  "landmine-press-two-arm": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.6,
+    "shoulders": 1,
+    "arms": 0.6
+   },
+   "sum": {
+    "chest": 0.6,
+    "shoulders": 1.2,
+    "arms": 0.6
+   }
+  },
+  "meadows-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.5,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "back": 2.5,
+    "arms": 0.9
+   }
+  },
+  "landmine-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.1,
+    "core": 0.2,
+    "legs": 0.9
+   },
+   "sum": {
+    "back": 0.1,
+    "core": 0.2,
+    "legs": 2.0
+   }
+  },
+  "landmine-rdl": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.4,
+    "arms": 0.2,
+    "legs": 0.9
+   },
+   "sum": {
+    "back": 0.6,
+    "arms": 0.2,
+    "legs": 2.0
+   }
+  },
+  "landmine-rotation": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.3,
+    "core": 1,
+    "legs": 0.2
+   },
+   "sum": {
+    "shoulders": 0.3,
+    "core": 1.5,
+    "legs": 0.2
+   }
+  },
+  "machine-preacher-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.3
+   }
+  },
+  "seated-machine-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.3
+   }
+  },
+  "cable-rope-hammer-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 0.8
+   },
+   "sum": {
+    "arms": 1.5
+   }
+  },
+  "bayesian-cable-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.25
+   }
+  },
+  "high-cable-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "machine-triceps-extension": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "dip-machine": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.6,
+    "shoulders": 0.4,
+    "arms": 1
+   },
+   "sum": {
+    "chest": 0.6,
+    "shoulders": 0.4,
+    "arms": 1
+   }
+  },
+  "overhead-triceps-machine": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "plate-loaded-chest-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6
+   }
+  },
+  "incline-machine-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.6,
+    "arms": 0.6
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.6,
+    "arms": 0.6
+   }
+  },
+  "decline-machine-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.3,
+    "arms": 0.6
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.3,
+    "arms": 0.6
+   }
+  },
+  "iso-lateral-chest-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6
+   }
+  },
+  "iso-lateral-shoulder-press": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.2,
+    "shoulders": 1,
+    "back": 0.3,
+    "arms": 0.6
+   },
+   "sum": {
+    "chest": 0.2,
+    "shoulders": 1.4,
+    "back": 0.3,
+    "arms": 0.6
+   }
+  },
+  "lateral-raise-machine": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.15
+   },
+   "sum": {
+    "shoulders": 1.15,
+    "back": 0.15
+   }
+  },
+  "high-row-machine": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.4,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.4,
+    "back": 2.2,
+    "arms": 0.5
+   }
+  },
+  "low-row-machine": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.4,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.4,
+    "back": 2.4,
+    "arms": 0.5
+   }
+  },
+  "iso-lateral-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.5,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "back": 2.4,
+    "arms": 0.5
+   }
+  },
+  "wide-grip-lat-pulldown": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.3,
+    "back": 1,
+    "arms": 0.4
+   },
+   "sum": {
+    "shoulders": 0.3,
+    "back": 2.0,
+    "arms": 0.4
+   }
+  },
+  "neutral-grip-lat-pulldown": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 1,
+    "arms": 0.6
+   },
+   "sum": {
+    "back": 1.8,
+    "arms": 0.85
+   }
+  },
+  "single-arm-lat-pulldown": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "back": 1.7,
+    "arms": 0.5
+   }
+  },
+  "assisted-pull-up": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.3,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.3,
+    "back": 2.0,
+    "arms": 0.8
+   }
+  },
+  "assisted-dip": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.9
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.9
+   }
+  },
+  "pendulum-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 2.0
+   }
+  },
+  "belt-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 2.3
+   }
+  },
+  "v-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 2.1
+   }
+  },
+  "single-leg-press": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 2.0
+   }
+  },
+  "high-foot-leg-press": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.9
+   },
+   "sum": {
+    "legs": 2.5
+   }
+  },
+  "nordic-curl": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.45
+   }
+  },
+  "glute-kickback-machine": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.3
+   }
+  },
+  "hip-thrust-machine": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.85
+   }
+  },
+  "leg-press-calf-raise": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1
+   }
+  },
+  "ab-crunch-machine": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 1
+   },
+   "sum": {
+    "core": 1.3
+   }
+  },
+  "45-degree-hyperextension": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1,
+    "back": 0.3
+   },
+   "sum": {
+    "legs": 1.6,
+    "back": 0.3
+   }
+  },
+  "reverse-hyper": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.9,
+    "back": 0.5
+   },
+   "sum": {
+    "legs": 1.5,
+    "back": 0.5
+   }
+  },
+  "shrug-machine": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 1,
+    "arms": 0.3
+   },
+   "sum": {
+    "back": 1,
+    "arms": 0.3
+   }
+  },
+  "cable-crossover-low-to-high": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.4
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.4
+   }
+  },
+  "cable-crossover-high-to-low": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.25
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.25
+   }
+  },
+  "single-arm-cable-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.3,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.3,
+    "back": 2.1,
+    "arms": 0.5
+   }
+  },
+  "wide-grip-cable-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.6,
+    "back": 1,
+    "arms": 0.4
+   },
+   "sum": {
+    "shoulders": 0.6,
+    "back": 2.1,
+    "arms": 0.4
+   }
+  },
+  "dumbbell-rdl": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.4,
+    "arms": 0.3,
+    "legs": 1
+   },
+   "sum": {
+    "back": 0.6,
+    "arms": 0.3,
+    "legs": 2.1
+   }
+  },
+  "goblet-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.1,
+    "core": 0.2,
+    "legs": 1
+   },
+   "sum": {
+    "back": 0.1,
+    "core": 0.2,
+    "legs": 2.1
+   }
+  },
+  "dumbbell-reverse-lunge": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.8
+   },
+   "sum": {
+    "legs": 2.3
+   }
+  },
+  "arnold-press": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.3,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 1.5,
+    "back": 0.3,
+    "arms": 0.5
+   }
+  },
+  "cable-y-raise": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.5
+   },
+   "sum": {
+    "shoulders": 1.2,
+    "back": 0.5
+   }
+  },
+  "concentration-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "dumbbell-kickback": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "jm-press": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.3,
+    "shoulders": 0.2,
+    "arms": 1
+   },
+   "sum": {
+    "chest": 0.3,
+    "shoulders": 0.2,
+    "arms": 1
+   }
+  },
+  "sissy-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1
+   }
+  },
+  "inverted-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.5,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "back": 2.2,
+    "arms": 0.5
+   }
+  },
+  "pike-push-up": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.3,
+    "shoulders": 1,
+    "arms": 0.6
+   },
+   "sum": {
+    "chest": 0.3,
+    "shoulders": 1.3,
+    "arms": 0.6
+   }
+  },
+  "weighted-decline-crunch": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 1
+   },
+   "sum": {
+    "core": 1.3
+   }
+  },
+  "cable-woodchop": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 1
+   },
+   "sum": {
+    "core": 1.4
+   }
+  },
+  "pallof-press": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 0.7
+   },
+   "sum": {
+    "core": 1.2
+   }
+  },
+  "standing-cable-crunch": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 1
+   },
+   "sum": {
+    "core": 1.3
+   }
+  },
+  "dumbbell-incline-y-raise": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.6,
+    "back": 1
+   },
+   "sum": {
+    "shoulders": 1.1,
+    "back": 1
+   }
+  },
+  "cable-rear-delt-fly": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.4
+   },
+   "sum": {
+    "shoulders": 1,
+    "back": 0.8
+   }
+  },
+  "cable-overhead-rope-extension": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "cable-kickback": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.3
+   }
+  },
+  "incline-dumbbell-fly": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.4
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.4
+   }
+  },
+  "decline-bench-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.3,
+    "arms": 0.7
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.3,
+    "arms": 0.7
+   }
+  },
+  "ez-bar-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.3
+   }
+  },
+  "spider-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "reverse-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.6
+   }
+  },
+  "cable-preacher-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.25
+   }
+  },
+  "standing-leg-curl": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.3
+   }
+  },
+  "glute-ham-raise": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1,
+    "back": 0.2
+   },
+   "sum": {
+    "legs": 1.7,
+    "back": 0.2
+   }
+  },
+  "barbell-glute-bridge": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.6
+   }
+  },
+  "good-morning": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1,
+    "back": 0.6
+   },
+   "sum": {
+    "legs": 2.0,
+    "back": 0.6
+   }
+  },
+  "seated-dumbbell-lateral-raise": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.3
+   },
+   "sum": {
+    "shoulders": 1.2,
+    "back": 0.3
+   }
+  },
+  "deficit-push-up": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6
+   }
+  },
+  "seated-row-machine": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.45,
+    "back": 1,
+    "arms": 0.45
+   },
+   "sum": {
+    "shoulders": 0.45,
+    "back": 2.3,
+    "arms": 0.45
+   }
+  },
+  "high-to-low-row-machine": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.35,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.35,
+    "back": 2.3,
+    "arms": 0.5
+   }
+  },
+  "arc-lat-pulldown": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.25,
+    "back": 1,
+    "arms": 0.4
+   },
+   "sum": {
+    "shoulders": 0.25,
+    "back": 1.75,
+    "arms": 0.4
+   }
+  },
+  "standing-lateral-raise-machine": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.35
+   },
+   "sum": {
+    "shoulders": 1.25,
+    "back": 0.35
+   }
+  },
+  "converging-smith-bench-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.45,
+    "arms": 0.55
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.45,
+    "arms": 0.55
+   }
+  },
+  "converging-smith-incline-press": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.55,
+    "arms": 0.55
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.55,
+    "arms": 0.55
+   }
+  },
+  "converging-smith-shoulder-press": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.3,
+    "arms": 0.55
+   },
+   "sum": {
+    "shoulders": 1.4,
+    "back": 0.3,
+    "arms": 0.55
+   }
+  },
+  "selectorized-pulldown-machine": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.25,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.25,
+    "back": 1.85,
+    "arms": 0.5
+   }
+  },
+  "plate-loaded-chest-supported-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.6,
+    "back": 1,
+    "arms": 0.45
+   },
+   "sum": {
+    "shoulders": 0.6,
+    "back": 2.35,
+    "arms": 0.45
+   }
+  },
+  "rotary-torso-machine": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 1
+   },
+   "sum": {
+    "core": 1.3
+   }
+  },
+  "standing-cable-adduction": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1
+   }
+  },
+  "horizontal-leg-press": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.95
+   }
+  },
+  "reverse-hack-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.9,
+    "back": 0.2
+   },
+   "sum": {
+    "legs": 2.55,
+    "back": 0.2
+   }
+  },
+  "kneeling-leg-curl": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.25
+   }
+  },
+  "smith-squat-feet-forward": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.9
+   },
+   "sum": {
+    "legs": 2.5
+   }
+  },
+  "chest-supported-dumbbell-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.55,
+    "back": 1,
+    "arms": 0.45
+   },
+   "sum": {
+    "shoulders": 0.55,
+    "back": 2.3,
+    "arms": 0.45
+   }
+  },
+  "seal-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.55,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.55,
+    "back": 2.4,
+    "arms": 0.5
+   }
+  },
+  "yates-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.35,
+    "back": 1,
+    "arms": 0.65
+   },
+   "sum": {
+    "shoulders": 0.35,
+    "back": 2.65,
+    "arms": 0.95
+   }
+  },
+  "rack-pull": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 1,
+    "arms": 0.6,
+    "legs": 0.7
+   },
+   "sum": {
+    "back": 2.7,
+    "arms": 0.6,
+    "legs": 1.1
+   }
+  },
+  "trap-bar-deadlift": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.6,
+    "arms": 0.5,
+    "legs": 0.8
+   },
+   "sum": {
+    "back": 1.5,
+    "arms": 0.5,
+    "legs": 2.5
+   }
+  },
+  "captains-chair-knee-raise": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 0.8
+   },
+   "sum": {
+    "core": 1.1
+   }
+  },
+  "back-extension-machine": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.4,
+    "back": 1
+   },
+   "sum": {
+    "legs": 0.7,
+    "back": 1
+   }
+  },
+  "reverse-wrist-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1
+   }
+  },
+  "farmer-carry": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.8,
+    "arms": 1,
+    "core": 0.3
+   },
+   "sum": {
+    "back": 1.0,
+    "arms": 1,
+    "core": 0.5
+   }
+  },
+  "ring-dip": {
+   "region": "chest",
+   "decided_by": "tie: first pattern",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 1,
+    "core": 0.15
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 1,
+    "core": 0.15
+   }
+  },
+  "ring-push-up": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6,
+    "core": 0.2
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6,
+    "core": 0.2
+   }
+  },
+  "ring-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.5,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "back": 2.2,
+    "arms": 0.5
+   }
+  },
+  "ring-pull-up": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.3,
+    "back": 1,
+    "arms": 0.6
+   },
+   "sum": {
+    "shoulders": 0.3,
+    "back": 2.0,
+    "arms": 0.95
+   }
+  },
+  "ring-fly": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.4,
+    "core": 0.2
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.4,
+    "core": 0.2
+   }
+  },
+  "ring-face-pull": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.5
+   },
+   "sum": {
+    "shoulders": 1,
+    "back": 0.9
+   }
+  },
+  "ring-biceps-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.25
+   }
+  },
+  "ring-triceps-extension": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1,
+    "core": 0.2
+   },
+   "sum": {
+    "arms": 1,
+    "core": 0.2
+   }
+  },
+  "ring-l-sit": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 0.15,
+    "core": 0.6,
+    "legs": 0.3
+   },
+   "sum": {
+    "arms": 0.15,
+    "core": 0.6,
+    "legs": 0.3
+   }
+  },
+  "trx-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.5,
+    "back": 1,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "back": 2.15,
+    "arms": 0.5
+   }
+  },
+  "trx-push-up": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6,
+    "core": 0.2
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6,
+    "core": 0.2
+   }
+  },
+  "trx-y-t-raise": {
+   "region": "shoulders",
+   "decided_by": "tie: first pattern",
+   "top": {
+    "shoulders": 0.8,
+    "back": 0.8
+   },
+   "sum": {
+    "shoulders": 1.2,
+    "back": 1.2
+   }
+  },
+  "trx-biceps-curl": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1
+   },
+   "sum": {
+    "arms": 1.25
+   }
+  },
+  "trx-triceps-extension": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 1,
+    "core": 0.2
+   },
+   "sum": {
+    "arms": 1,
+    "core": 0.2
+   }
+  },
+  "trx-assisted-pistol": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 2.1
+   }
+  },
+  "trx-hamstring-curl": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.65
+   }
+  },
+  "trx-fallout": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.25,
+    "core": 1
+   },
+   "sum": {
+    "back": 0.25,
+    "core": 1.2
+   }
+  },
+  "trx-pike": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.2,
+    "core": 1
+   },
+   "sum": {
+    "shoulders": 0.2,
+    "core": 1.2
+   }
+  },
+  "kettlebell-swing": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.4,
+    "arms": 0.3,
+    "core": 0.2,
+    "legs": 0.8
+   },
+   "sum": {
+    "back": 0.6,
+    "arms": 0.3,
+    "core": 0.2,
+    "legs": 1.4
+   }
+  },
+  "kettlebell-front-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.2,
+    "core": 0.25,
+    "legs": 1
+   },
+   "sum": {
+    "back": 0.2,
+    "core": 0.25,
+    "legs": 2.1
+   }
+  },
+  "kettlebell-clean": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.4,
+    "arms": 0.4,
+    "legs": 0.6
+   },
+   "sum": {
+    "back": 0.7,
+    "arms": 0.4,
+    "legs": 1.1
+   }
+  },
+  "kettlebell-press": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.3,
+    "arms": 0.55,
+    "core": 0.2
+   },
+   "sum": {
+    "shoulders": 1.4,
+    "back": 0.3,
+    "arms": 0.55,
+    "core": 0.2
+   }
+  },
+  "kettlebell-push-press": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.9,
+    "back": 0.3,
+    "arms": 0.6,
+    "legs": 0.3,
+    "core": 0.2
+   },
+   "sum": {
+    "shoulders": 1.2,
+    "back": 0.3,
+    "arms": 0.6,
+    "legs": 0.3,
+    "core": 0.2
+   }
+  },
+  "kettlebell-snatch": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.3,
+    "back": 0.4,
+    "arms": 0.4,
+    "legs": 0.6
+   },
+   "sum": {
+    "shoulders": 0.3,
+    "back": 0.7,
+    "arms": 0.4,
+    "legs": 1.1
+   }
+  },
+  "turkish-get-up": {
+   "region": "core",
+   "decided_by": "tie: region sum",
+   "top": {
+    "shoulders": 0.5,
+    "arms": 0.2,
+    "core": 0.5,
+    "legs": 0.4
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "arms": 0.2,
+    "core": 0.9,
+    "legs": 0.7
+   }
+  },
+  "kettlebell-single-leg-rdl": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.9,
+    "back": 0.25
+   },
+   "sum": {
+    "legs": 2.35,
+    "back": 0.25
+   }
+  },
+  "kettlebell-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.4,
+    "back": 0.9,
+    "arms": 0.5
+   },
+   "sum": {
+    "shoulders": 0.4,
+    "back": 2.1,
+    "arms": 0.5
+   }
+  },
+  "kettlebell-windmill": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.3,
+    "core": 0.8,
+    "legs": 0.4
+   },
+   "sum": {
+    "shoulders": 0.3,
+    "core": 1.0,
+    "legs": 0.7
+   }
+  },
+  "suitcase-carry": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.6,
+    "arms": 0.9,
+    "core": 0.8,
+    "legs": 0.2
+   },
+   "sum": {
+    "back": 0.6,
+    "arms": 0.9,
+    "core": 1.1,
+    "legs": 0.2
+   }
+  },
+  "kettlebell-halo": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.3,
+    "back": 0.2,
+    "core": 0.2
+   },
+   "sum": {
+    "shoulders": 0.3,
+    "back": 0.2,
+    "core": 0.2
+   }
+  },
+  "muscle-up": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.4,
+    "back": 1,
+    "arms": 0.7
+   },
+   "sum": {
+    "chest": 0.4,
+    "back": 1.8,
+    "arms": 1.1
+   }
+  },
+  "archer-push-up": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6
+   },
+   "sum": {
+    "chest": 1,
+    "shoulders": 0.5,
+    "arms": 0.6
+   }
+  },
+  "pseudo-planche-push-up": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.8,
+    "shoulders": 0.9,
+    "arms": 0.7,
+    "core": 0.2
+   },
+   "sum": {
+    "chest": 0.8,
+    "shoulders": 0.9,
+    "arms": 0.9,
+    "core": 0.2
+   }
+  },
+  "wall-handstand-push-up": {
+   "region": "shoulders",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 1,
+    "back": 0.4,
+    "arms": 0.7
+   },
+   "sum": {
+    "shoulders": 1.4,
+    "back": 0.4,
+    "arms": 0.7
+   }
+  },
+  "pistol-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 0.2,
+    "legs": 1
+   },
+   "sum": {
+    "core": 0.2,
+    "legs": 2.1
+   }
+  },
+  "shrimp-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 1
+   },
+   "sum": {
+    "legs": 1.9
+   }
+  },
+  "front-lever-row": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.5,
+    "back": 1,
+    "arms": 0.4,
+    "core": 0.4
+   },
+   "sum": {
+    "shoulders": 0.5,
+    "back": 2.3,
+    "arms": 0.4,
+    "core": 0.4
+   }
+  },
+  "tuck-front-lever": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "shoulders": 0.25,
+    "back": 0.8,
+    "core": 0.5
+   },
+   "sum": {
+    "shoulders": 0.25,
+    "back": 1.1,
+    "core": 0.5
+   }
+  },
+  "dragon-flag": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.2,
+    "core": 1
+   },
+   "sum": {
+    "back": 0.2,
+    "core": 1.3
+   }
+  },
+  "hollow-body-hold": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "core": 0.6,
+    "legs": 0.2
+   },
+   "sum": {
+    "core": 0.6,
+    "legs": 0.2
+   }
+  },
+  "l-sit": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "arms": 0.15,
+    "core": 0.6,
+    "legs": 0.3
+   },
+   "sum": {
+    "arms": 0.15,
+    "core": 0.6,
+    "legs": 0.3
+   }
+  },
+  "box-jump": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.55
+   },
+   "sum": {
+    "legs": 1.65
+   }
+  },
+  "broad-jump": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.6
+   },
+   "sum": {
+    "legs": 1.85
+   }
+  },
+  "depth-jump": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.6
+   },
+   "sum": {
+    "legs": 1.8
+   }
+  },
+  "jump-squat": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.55
+   },
+   "sum": {
+    "legs": 1.4
+   }
+  },
+  "bounding": {
+   "region": "legs",
+   "decided_by": "top muscle",
+   "top": {
+    "legs": 0.55
+   },
+   "sum": {
+    "legs": 1.85
+   }
+  },
+  "plyo-push-up": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.55,
+    "shoulders": 0.35,
+    "arms": 0.4
+   },
+   "sum": {
+    "chest": 0.55,
+    "shoulders": 0.35,
+    "arms": 0.4
+   }
+  },
+  "med-ball-slam": {
+   "region": "back",
+   "decided_by": "tie: region order",
+   "top": {
+    "shoulders": 0.2,
+    "back": 0.4,
+    "arms": 0.2,
+    "core": 0.4
+   },
+   "sum": {
+    "shoulders": 0.2,
+    "back": 0.4,
+    "arms": 0.2,
+    "core": 0.4
+   }
+  },
+  "med-ball-chest-pass": {
+   "region": "chest",
+   "decided_by": "top muscle",
+   "top": {
+    "chest": 0.45,
+    "shoulders": 0.3,
+    "arms": 0.35
+   },
+   "sum": {
+    "chest": 0.45,
+    "shoulders": 0.3,
+    "arms": 0.35
+   }
+  },
+  "barbell-rollout": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.3,
+    "core": 1
+   },
+   "sum": {
+    "back": 0.3,
+    "core": 1.2
+   }
+  },
+  "stability-ball-rollout": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.2,
+    "core": 0.8
+   },
+   "sum": {
+    "back": 0.2,
+    "core": 1.0
+   }
+  },
+  "standing-ab-wheel-rollout": {
+   "region": "core",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.35,
+    "core": 1
+   },
+   "sum": {
+    "back": 0.35,
+    "core": 1.25
+   }
+  },
+  "dead-hang": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.2,
+    "arms": 0.5
+   },
+   "sum": {
+    "back": 0.2,
+    "arms": 0.5
+   }
+  },
+  "active-hang": {
+   "region": "arms",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.3,
+    "arms": 0.5
+   },
+   "sum": {
+    "back": 0.55,
+    "arms": 0.5
+   }
+  },
+  "scapular-pull-up": {
+   "region": "back",
+   "decided_by": "top muscle",
+   "top": {
+    "back": 0.5,
+    "arms": 0.4
+   },
+   "sum": {
+    "back": 0.8,
+    "arms": 0.4
+   }
+  }
+ }
+}

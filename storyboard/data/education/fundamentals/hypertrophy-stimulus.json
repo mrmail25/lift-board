@@ -39,7 +39,7 @@
      ]
     },
     {
-     "text": "The app's default rep ranges (6-10 for primary lifts, 8-12 for accessories, 10-15 for isolation) are practical choices for steady progress and joint comfort, not growth thresholds.",
+     "text": "The app's default rep ranges (6-10 for primary lifts, 8-12 for accessories, 10-15 for isolation) are practical choices for steady progress, not growth thresholds.",
      "evidence": "modeled",
      "app_key": "rules.json:logger.rep_range_by_type"
     }

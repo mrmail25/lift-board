@@ -253,7 +253,7 @@
       "heading": "Stability, isolation and one side at a time",
       "body": [
         "Stability is how much the equipment balances the load for you. Machines, cables and the Smith machine do the most; free weights less; rings, suspension trainers and single-leg free-weight work the least.",
-        "More stable exercises make it easier to push the target muscle close to failure safely and to repeat technique. Less stable ones train balance and coordination and may carry over better to free movement."
+        "More stable exercises make it easier to push the target muscle close to failure and to repeat technique. Less stable ones train balance and coordination and may carry over better to free movement."
       ],
       "points": [
         {
@@ -288,7 +288,7 @@
           ]
         },
         {
-          "text": "Grip width and neutral grip: the lines describe the grip (wider, narrower, palms facing in). In pulldown studies grip width changed lat activity little, so a grip line is not a claim of more growth. Many people find a neutral grip comfortable on the wrists and elbows; that is a comfort tendency.",
+          "text": "Grip width and neutral grip: the lines describe the grip (wider, narrower, palms facing in). In pulldown studies grip width changed lat activity little, so a grip line is not a claim of more growth. Many people prefer a neutral grip; that is a preference.",
           "evidence": "biomechanics",
           "swap_tags": [
             "grip_width",
@@ -410,12 +410,12 @@
       "id": "skill",
       "heading": "Skill demand",
       "body": [
-        "Some lifts need more practice before they can be trained hard safely: barbell squats, Olympic-style kettlebell work, rings and single-leg free-weight moves.",
+        "Some lifts need more practice before they can be trained hard with consistent technique: barbell squats, Olympic-style kettlebell work, rings and single-leg free-weight moves.",
         "A lower-skill swap lets a newer lifter train the same muscle hard from day one; the skilled lift can be practised alongside it."
       ],
       "points": [
         {
-          "text": "Skill demand: how much technique or practice the lift needs before it can be trained hard safely.",
+          "text": "Skill demand: how much technique or practice the lift needs before it can be trained hard with consistent technique.",
           "evidence": "modeled",
           "swap_tags": [
             "skill_demand"

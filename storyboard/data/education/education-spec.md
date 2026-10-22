@@ -63,7 +63,7 @@ Citations: add to references.json only after checking the DOI on Crossref (autho
 - Exercise ids only from data/exercises.json; region and group ids only from its `regions`/`regionGroup`/`muscles`.
 - Bias wording reuses the swap_tags ids and labels (e.g. "Biceps long-head stretch", "Lat width focus", "More stretch emphasis") so the Education page and the swap sheet say the same thing.
 - Plain, coach-like English; short sentences; no hype. Say "tends to", "coaches reason" where it is modeled.
-- No medical, injury-prevention or rehab claims. "Pick variations you can train pain-free" is the limit.
+- No medical, injury-prevention or rehab claims. "Pick variations you can train comfortably" is the limit; no wording about pain, protection or safety of joints.
 - Mainstream evidence only; say when studies are short, small or in untrained people.
 - Do not edit exercises.json, rules.json or targets.json from here. If a page needs a data change, raise it with Chief of Staff.
 

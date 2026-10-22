@@ -578,21 +578,23 @@ dd .tag{margin:0 3px 3px 0}
 /* ---------------------------------------------------------------- BUILD: the magnetic whiteboard (board.js) */
 body[data-route^="build"] #app{max-width:none}
 .bw .lt{padding-bottom:4px}
-.bname{display:flex;align-items:center;gap:10px;padding:0 var(--s4) 10px}
+.bname{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n a" "s s";align-items:center;column-gap:10px;padding:0 var(--s4) 10px}
+.bname .bn{grid-area:n;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bname .bstate{grid-area:s}.bname .bacts{grid-area:a}
 .bname .bn{font-size:var(--t-head);font-weight:700;letter-spacing:-.01em}
 .bstate{font-size:var(--t-foot);color:var(--text-2);margin-top:1px}.bstate b{font-weight:600}.bstate .draft{color:var(--accent-press)}.bstate .saved{color:var(--ink)}
-.blv{font-size:12px;font-weight:600;color:var(--text-2);background:var(--fill);border-radius:var(--r-pill);padding:4px 10px}
+.blv{color:var(--text-2)}
 .bstick{position:sticky;top:calc(-1*var(--safe-t) - 8px);z-index:6;background:var(--bg);padding:4px 0 8px}
 .astrip{display:flex;align-items:center;gap:6px;width:calc(100% - 2*var(--s4));margin:0 var(--s4);padding:6px 10px;background:var(--paper);border-radius:var(--r-md);
   box-shadow:0 0 0 .5px var(--line);text-align:left;transition:transform var(--t-fast)}
 .astrip:active{transform:scale(.985)}
-.amaps{display:flex;gap:1px;flex:none}.amaps .mmap{height:46px;width:auto;pointer-events:none}
+.amaps{display:flex;gap:2px;flex:none}.amaps .mmap{height:58px;width:auto;pointer-events:none}
 .ast{flex:1;display:flex;flex-direction:column;align-items:center;min-width:0}
 .ast b{font-size:17px;font-weight:700;line-height:1.1;letter-spacing:-.01em}.ast small{font-size:10.5px;color:var(--text-2);white-space:nowrap}
 .ast.chk.bad b{color:var(--accent-press)}
 .dstrip{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:8px var(--s4) 0}
 .dstrip button{display:flex;flex-direction:column;align-items:center;gap:0;height:40px;justify-content:center;border-radius:10px;background:transparent;font-size:11px;font-weight:600;color:var(--text-2)}
-.dstrip button .dn{font-size:14px;color:var(--ink);font-weight:600}
+.dstrip button>span{font-size:12px;color:var(--ink)}
+.dstrip button .dn{font-size:10.5px;color:var(--text-2);font-weight:500;white-space:nowrap;line-height:1.3}.dstrip button.rd .dn{color:var(--text-3)}
 .dstrip button.on{background:var(--paper);box-shadow:0 0 0 .5px var(--line),0 1px 2px rgba(0,0,0,.06)}
 .selbar{display:none;align-items:center;justify-content:space-between;gap:10px;margin:8px var(--s4) 0;height:40px;padding:0 14px;border-radius:10px;background:var(--ink);color:#fff;font-size:var(--t-foot);font-weight:500}
 .selbar .btn.plain{color:#fff;font-weight:600}
@@ -636,11 +638,15 @@ body.b-dragging .board{border-color:#cfd0d6}
 body.b-off .board{opacity:.55}
 body.b-dragging .tabs::after{content:"Drop off the board to remove";position:absolute;inset:0 0 auto;height:var(--tab-h);display:grid;place-items:center;font-size:var(--t-sub);font-weight:600;color:var(--danger);background:#fff;opacity:0;transition:opacity var(--t-fast)}
 body.b-off .tabs::after{opacity:1;background:#FDECEC}
-body.b-dragging .bacts{opacity:0;pointer-events:none;transition:opacity var(--t-fast)}
 .bhint{text-align:center;padding-top:10px}
-.bacts{position:sticky;bottom:calc(var(--tab-h) + var(--safe-b));z-index:4;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px var(--s4) 10px;margin-top:4px;
-  background:linear-gradient(180deg,rgba(242,242,244,0),var(--bg) 26%)}
-.bacts .btn{height:46px;font-size:var(--t-sub)}.bacts .btn svg{width:17px;height:17px}
+.bacts{display:flex;gap:6px}
+.bacts .btn{height:34px;padding:0 13px;font-size:14px;font-weight:600;gap:5px;border-radius:var(--r-pill)}.bacts .btn svg{width:15px;height:15px}
+.bacts .bl-l{display:none}
+.tabsbtn{display:none}
+.col header{cursor:pointer;border-radius:8px;margin:-2px -2px 0;padding-left:6px;padding-right:6px}.col header:active{background:rgba(0,0,0,.05)}
+.dsin{width:100%;height:40px;border:0;background:transparent;font:inherit;font-size:17px;color:var(--ink);outline:none}
+.dsrest .t1{color:var(--danger)}
+.dsheet .pad{padding-top:12px}
 body[data-route^="build"] .scroller{padding-bottom:calc(var(--tab-h) + var(--safe-b) + 6px)}
 /* undo bar */
 .bundo{position:absolute;left:50%;bottom:calc(var(--tab-h) + var(--safe-b) + 70px);transform:translate(-50%,40px);opacity:0;pointer-events:none;z-index:140;display:flex;align-items:center;gap:14px;
@@ -692,7 +698,7 @@ body[data-route^="build"] .scroller{padding-bottom:calc(var(--tab-h) + var(--saf
   .dstrip{display:none}
   .bstick{display:flex;align-items:center;gap:10px;padding:4px var(--s4) 8px}
   .bstick .astrip{margin:0;width:auto;flex:1}
-  .bacts{position:static;display:flex;justify-content:flex-end;padding:12px var(--s4)}.bacts .btn{padding:0 22px}
+  .bacts .bl-l{display:inline}.bacts .bl-s{display:none}.bacts .btn{padding:0 16px}
   .bhint{display:none}
   /* narrow week columns: glyph + sets on top, the name gets the full chit width */
   .chit{grid-template-columns:16px 1fr auto;grid-template-areas:"g . s" "n n n";row-gap:3px;align-items:start;padding:6px 6px 7px 9px}
@@ -700,12 +706,11 @@ body[data-route^="build"] .scroller{padding-bottom:calc(var(--tab-h) + var(--saf
 }
 @media (min-width:700px) and (max-height:500px){
   .bw .lt h1{font-size:22px}.bw .lt{padding-top:0}
-  .bname{position:absolute;top:calc(var(--safe-t) + 8px);left:118px;right:480px;padding:0}.bname .blv{display:none}.bstate{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bname{position:absolute;top:calc(var(--safe-t) + 8px);left:118px;right:212px;padding:0;grid-template-areas:"n a" "s a"}.bstate{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cols{min-height:0}.col{padding:6px 4px 8px}.col header{min-height:42px;padding-bottom:6px}.col header .cl{font-size:13px}
   .chits{gap:5px}.chit{min-height:38px;grid-template-columns:14px 1fr auto;gap:2px 4px;padding:4px 5px 5px 8px}.chit .cn{font-size:11.5px}.chit .cg{width:14px;height:14px;font-size:8px}
-  .astrip{padding:3px 10px}.amaps .mmap{height:30px}
-  .bacts{position:fixed;top:calc(var(--safe-t) + 10px);right:140px;bottom:auto;padding:0;z-index:7;background:none;margin:0}.bacts .btn{height:34px;padding:0 12px;font-size:13px}
-  .bacts .btn.ink span{display:none}
+  .astrip{padding:3px 10px}.amaps .mmap{height:38px}
+  .bacts .bl-l{display:none}.bacts .bl-s{display:inline}.bacts .btn{padding:0 13px}
 }
 
 .anv .vol .vrow,.group.vol .vrow{grid-template-columns:92px 1fr 80px}
@@ -716,3 +721,16 @@ body[data-route^="build"] .scroller{padding-bottom:calc(var(--tab-h) + var(--saf
 .andet[open]>summary::after{transform:rotate(90deg)}
 .smp{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:var(--r-pill);background:#FFF3D6;color:#8A5A00;font-size:11px;font-weight:600;letter-spacing:.02em;vertical-align:2px;text-transform:none}
 .group.asks .t2{white-space:normal}
+
+/* landscape phone: no tab bar on Build, the board takes the full height (other tabs: the tab-bar button in the header) */
+@media (orientation:landscape) and (max-height:500px){
+  body[data-route^="build"] .tabs{display:none}
+  body[data-route^="build"] .scroller{padding-bottom:0}
+  body[data-route^="build"] .tabsbtn{display:grid}
+  body[data-route^="build"] .bw{display:flex;flex-direction:column;height:100%}
+  body[data-route^="build"] .board{flex:1 1 auto;min-height:0;overflow-y:auto;margin-bottom:calc(var(--safe-b) + 6px)}
+  body[data-route^="build"] .cols{min-height:100%}
+  body[data-route^="build"] .bundo{bottom:calc(var(--safe-b) + 14px)}
+}
+.flag .ftl{font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--text-2);margin-bottom:2px}.flag.warn .ftl{color:var(--accent-press)}
+.rrn{font-size:12px}

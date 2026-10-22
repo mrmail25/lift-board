@@ -175,13 +175,13 @@
   },
   {
    "topic": "rir",
-   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure; stop when the elbows start bending more.",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Easy to push close to failure; stop when the elbows start bending more.",
    "evidence": "modeled",
    "app_key": "rules.json:logger.target_rir_by_type"
   },
   {
    "topic": "setup",
-   "text": "Pick a variation, range and setup you can train pain-free.",
+   "text": "Pick a variation, range and setup you can train comfortably.",
    "evidence": "modeled"
   }
  ],

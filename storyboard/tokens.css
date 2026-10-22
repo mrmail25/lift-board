@@ -25,7 +25,8 @@
   /* over-volume colours (functional, like --danger). Thresholds are NOT here: rules.json volume_bands */
   --vol-under:#B9B9BE; --vol-amber:#F0A830; --vol-red:#D93B30;
   /* Build chit edge: body region of the exercise's main muscle (functional, never brand) */
-  --mg-chest:#C4513F; --mg-back:#3F6FB0; --mg-shoulders:#8B68C4; --mg-arms:#2B9A8E; --mg-legs:#C99A2E; --mg-core:#7A7F89;
+  /* body-region edge colours (rules.json body_regions.order; names from body_regions.tokens_suggested) */
+  --region-chest:#C4513F; --region-back:#3F6FB0; --region-shoulders:#8B68C4; --region-arms:#2B9A8E; --region-legs:#C99A2E; --region-core:#7A7F89;
   /* Build whiteboard surface + magnet chits */
   --wb:#FBFBFC; --wb-frame:#D9DADF; --wb-line:rgba(0,0,0,.07);
   --chit-top:#FFFFFF; --chit-bot:#F3F3F6;

@@ -8,7 +8,7 @@
  "source": "auto",
  "source_label": "Auto-generated from the exercise library",
  "updated": "2026-10-21",
- "summary": "A seated selectorized leg press that pushes straight out. It's usually lighter and easier on the lower back than a 45-degree sled, but you can't go quite as deep.",
+ "summary": "A seated selectorized leg press that pushes straight out. It's usually lighter than a 45-degree sled, with the back fully supported, but you can't go quite as deep.",
  "type": "primary",
  "equipment": "machine",
  "equipment_needs": {
@@ -123,7 +123,7 @@
   },
   {
    "topic": "setup",
-   "text": "Pick a variation and range you can train pain-free.",
+   "text": "Pick a variation and range you can train comfortably.",
    "evidence": "modeled"
   }
  ],

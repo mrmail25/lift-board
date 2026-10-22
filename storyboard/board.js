@@ -5,35 +5,39 @@
 const X=window.SBX,PC=window.PCHECK,RANK=window.RANK,$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const DAYS=PC.ORDER,WD=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],WDL=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const RD=()=>X.RD,LEVELS=['beginner','intermediate','advanced'];
-// body region of a muscle -> chit edge colour (tokens.css --mg-*)
-const REGION={chest:'chest',front_delts:'shoulders',side_delts:'shoulders',rear_delts:'shoulders',lats:'back',upper_back:'back',traps:'back',
-  biceps:'arms',triceps:'arms',forearms:'arms',abs:'core',obliques:'core',lower_back:'core',quads:'legs',hamstrings:'legs',glutes:'legs',calves:'legs',adductors:'legs',abductors:'legs'};
-const SHORT=[[/\s*\(.*?\)/g,''],[/\bDumbbell\b/g,'DB'],[/\bBarbell\b/g,'BB'],[/\bOverhead\b/g,'OH'],[/\bTriceps\b/g,'Tri'],[/\bExtension\b/g,'Ext'],[/\bSingle-Arm\b/g,'1-Arm'],[/\bMachine\b/g,'Mach.']];
-const shortName=id=>SHORT.reduce((s,[a,b])=>s.replace(a,b),X.exNameP(id)).trim();
+// Coach's whiteboard data (logic/whiteboard.js = tools/whiteboard.py): short_name, primary body region (edge colour = tokens.css --region-*),
+// rep_range(id, goals)
+const WB=window.WHITEBOARD;
+const shortName=id=>WB.shortName(RD(),id);
 const ex=id=>RD().EX[id];
-const mainMuscle=id=>{const e=ex(id),M=RD().exl.muscles;let b=M[0];for(const m of M)if(e.muscles[m]>e.muscles[b])b=m;return b};
-const repsFor=id=>{const rr=RANK.meta(RD(),X.prefs()).rep_ranges[ex(id).type]||[8,12];return rr[0]+'–'+rr[1]};
+const repRange=id=>{const g=(X.prefs().goals||[]).filter(x=>x in RD().rules.rep_ranges.by_goal);return WB.repRange(RD(),id,g.length?g:null)};
+const repsFor=id=>repRange(id).display;
+const REP_STEP={reps:1,seconds:5,meters:5};
 const setsFor=id=>{const G=RD().rules.pattern_gap_fix.sets_by_kind;return ex(id).type==='isolation'?G.isolation:G.compound}; // rules.json pattern_gap_fix
 let UID=0;const T=(id,sets,reps)=>({u:'c'+(++UID),id,sets,reps:reps||null});
 // ------------------------------------------------------------- state
 const B={name:'',level:'intermediate',version:0,dirty:false,edited:0,days:[],sel:new Set(),hist:[]};
-function blankDays(){return DAYS.map(d=>({day:d,label:'',tiles:[]}))}
-function loadDays(list,name){const days=blankDays();for(const d of list){const k=DAYS.indexOf(d.day);days[k].label=d.label||'';days[k].tiles=d.tiles.filter(t=>ex(t.id)).map(t=>T(t.id,t.sets,t.reps))}B.days=days;if(name)B.name=name}
+function blankDays(){return DAYS.map(d=>({day:d,label:'',rest:true,tiles:[]}))}
+function loadDays(list,name){const days=blankDays();for(const d of list){const k=DAYS.indexOf(d.day);days[k].label=d.label||'';days[k].rest=false;days[k].tiles=d.tiles.filter(t=>ex(t.id)).map(t=>T(t.id,t.sets))}B.days=days;if(name)B.name=name}
 function initBoard(){ // Mr Dude's draft: his Upper / Lower with two edits since v3 (bench 6 sets, cable fly in for the Thursday incline press)
   const r=X.ROUTINES[0],dmap={Mon:'mon',Tue:'tue',Wed:'wed',Thu:'thu',Fri:'fri',Sat:'sat',Sun:'sun'};
   const list=r.days.map(d=>({day:dmap[d.d],label:d.n,tiles:d.ex.map(e=>({id:e.id,sets:e.s,reps:e.r}))}));
-  list[0].tiles[0].sets=6;list[0].tiles.splice(1,1,{id:'incline-dumbbell-press',sets:3,reps:'8–10'});list[2].tiles.splice(0,1,{id:'cable-fly',sets:3,reps:'12–15'});
+  list[0].tiles[0].sets=6;list[0].tiles.splice(1,1,{id:'incline-dumbbell-press',sets:3});list[2].tiles.splice(0,1,{id:'cable-fly',sets:3});
   loadDays(list,r.name);B.version=3;B.dirty=true;B.edited=Date.now()-2*60000;B.level='intermediate';B.sel.clear();B.hist=[]}
 const snap=()=>JSON.stringify({days:B.days,name:B.name,dirty:B.dirty,edited:B.edited,version:B.version,level:B.level});
 function restore(s){const o=JSON.parse(s);Object.assign(B,o);B.sel=new Set()}
-function commit(fn,undoText){B.hist.push(snap());fn();B.dirty=true;B.edited=Date.now();paint();if(undoText)undoBar(undoText)}
+const isRest=d=>!d.tiles.length&&d.rest!==false;
+const dayLabel=d=>d.label||(isRest(d)?'Rest':'Training day');
+const stripTxt=d=>isRest(d)?'Rest':`${sum(d.tiles.map(t=>t.sets))} sets`;
+function commit(fn,undoText){B.hist.push(snap());fn();B.days.forEach(d=>{if(d.tiles.length)d.rest=false});B.dirty=true;B.edited=Date.now();paint();if(undoText)undoBar(undoText)}
 function undo(){const s=B.hist.pop();if(!s)return;restore(s);paint();hideUndo();X.toast('Undone')}
 const checkDays=days=>(days||B.days).filter(d=>d.tiles.length).map(d=>({day:d.day,tiles:d.tiles.map(t=>({id:t.id,sets:t.sets}))}));
 const rankBoard=()=>B.days.filter(d=>d.tiles.length).map(d=>({day:d.day,label:d.label,tiles:d.tiles.map(t=>({id:t.id,sets:t.sets}))}));
 const sum=a=>a.reduce((x,y)=>x+y,0);
 const mins5=m=>Math.round(m/5)*5,hm=m=>{m=Math.round(m);const h=Math.floor(m/60);return h?`${h} h ${String(m%60).padStart(2,'0')} m`:`${m} min`};
-function stateLine(){if(!B.dirty)return `<b class="saved">Saved v${B.version}</b> · in your Library`;const s=Math.max(0,(Date.now()-B.edited)/1000);
-  const ago=s<60?'just now':Math.round(s/60)+' min ago';return `<b class="draft">Draft</b> · edited ${ago}${B.version?` · last saved v${B.version}`:' · not saved yet'}`}
+function stateLine(){if(!B.dirty)return `<b class="saved">Saved v${B.version}</b> · in your Library${LVL()}`;const s=Math.max(0,(Date.now()-B.edited)/1000);
+  const ago=s<60?'just now':Math.round(s/60)+' min ago';return `<b class="draft">Draft</b> · edited ${ago}${B.version?` · last saved v${B.version}`:' · not saved yet'}${LVL()}`}
+const LVL=()=>` · <span class="blv">${B.level[0].toUpperCase()+B.level.slice(1)}</span>`;
 // ------------------------------------------------------------- stats (live: board, or the drag preview)
 function stats(days){const d=checkDays(days),A=PC.analytics(RD(),d,B.level),C=PC.checks(RD(),d,B.level);return {A,C,d}}
 function volMap(A){const o={};for(const [m,v] of Object.entries(A.muscles))o[m]=v.raw>0?X.vStat(v.raw,v.min,v.max):null;return o}
@@ -44,27 +48,29 @@ function stripHtml(st){const {A,C,d}=st,avg=d.length?A.weekMinutes/d.length:0,fa
    <span class="ast chk ${fail?'bad':'ok'}"><b class="num" data-s="checks">${C.pass}/${C.total}</b><small>checks pass</small></span>`}
 function dayMeta(day){const n=sum(day.tiles.map(t=>t.sets));return day.tiles.length?`${n} sets · ≈ ${mins5(PC.sessionMinutes(RD(),day.tiles.map(t=>({id:t.id,sets:t.sets}))))} min`:''}
 function paintStats(days){days=days||B.days;const st=stats(days);const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);s.setAttribute('aria-label',`Analysis: ${st.A.weekSets} sets a week, ${st.C.pass} of ${st.C.total} checks pass`)}
-  days.forEach((d,i)=>{const n=sum(d.tiles.map(t=>t.sets));const b=$(`#dstrip [data-jump="${i}"] .dn`);if(b)b.textContent=d.tiles.length?n:'–';
+  days.forEach((d,i)=>{const n=sum(d.tiles.map(t=>t.sets));const b=$(`#dstrip [data-jump="${i}"] .dn`);if(b){b.textContent=stripTxt(d);b.parentNode.classList.toggle('rd',isRest(d))}
     const h=$(`.col[data-day="${d.day}"] .cm`);if(h)h.textContent=dayMeta(d)});
+  $$('.col').forEach((c,i)=>{const d=days[i];if(!d)return;c.classList.toggle('restday',isRest(d));const l=$('.cl',c);if(l)l.textContent=dayLabel(d)}); // preview days mid-drag
   const bs=$('#bstate');if(bs)bs.innerHTML=stateLine();return st}
 // ------------------------------------------------------------- view
-function chit(t){const e=ex(t.id),g=REGION[mainMuscle(t.id)]||'core',sel=B.sel.has(t.u)?' sel':'';
-  return `<div class="chit${sel}" data-u="${t.u}" data-id="${t.id}" style="--mc:var(--mg-${g})" role="button" tabindex="0" aria-label="${X.exNameP(t.id)}, ${t.sets} sets"><span class="cg ${e.type}" aria-hidden="true">${X.GLY[e.type]}</span><span class="cn">${shortName(t.id)}</span><span class="cs num">${t.sets}</span></div>`}
-function colHtml(d,i){return `<section class="col${d.tiles.length?'':' restday'}" data-day="${d.day}" data-i="${i}"><header><b>${WD[i]}</b><span class="cl">${d.label||(d.tiles.length?'':'Rest')}</span><span class="cm num">${dayMeta(d)}</span></header>
+function chit(t){const e=ex(t.id),g=WB.primaryRegion(RD(),t.id),sel=B.sel.has(t.u)?' sel':'';
+  return `<div class="chit${sel}" data-u="${t.u}" data-id="${t.id}" data-region="${g}" style="--mc:var(--region-${g})" role="button" tabindex="0" aria-label="${X.exNameP(t.id)}, ${t.sets} sets"><span class="cg ${e.type}" aria-hidden="true">${X.GLY[e.type]}</span><span class="cn">${shortName(t.id)}</span><span class="cs num">${t.sets}</span></div>`}
+function colHtml(d,i){return `<section class="col${isRest(d)?' restday':''}" data-day="${d.day}" data-i="${i}"><header data-b="dayh" data-day="${d.day}" role="button" tabindex="0" aria-label="${WDL[i]}: ${dayLabel(d)}. Rename or set Rest"><b>${WD[i]}</b><span class="cl">${dayLabel(d)}</span><span class="cm num">${dayMeta(d)}</span></header>
   <div class="chits" data-day="${d.day}">${d.tiles.map(chit).join('')}</div><button class="cadd" data-b="add" data-day="${d.day}" aria-label="Add exercise to ${WDL[i]}">${X.I('plus',2.2)}</button></section>`}
 function boardHtml(){return `<div class="cols">${B.days.map(colHtml).join('')}</div>`}
 X.V.build=()=>{if(!B.days.length)initBoard();
-  return `<div class="bw">${X.header('Build',`<button class="ibtn" data-b="new" aria-label="New routine">${X.I('plus',2.2)}</button>`+X.bookBtn+X.gearBtn)}
-  <div class="bname"><div class="grow"><div class="bn">${B.name||'New routine'}</div><div class="bstate" id="bstate">${stateLine()}</div></div><span class="blv">${B.level[0].toUpperCase()+B.level.slice(1)}</span></div>
+  return `<div class="bw">${X.header('Build',`<button class="ibtn tabsbtn" data-b="tabs" aria-label="Other tabs">${X.I('tabs',1.8)}</button><button class="ibtn" data-b="new" aria-label="New routine">${X.I('plus',2.2)}</button>`+X.bookBtn+X.gearBtn)}
+  <div class="bname"><div class="bn">${B.name||'New routine'}</div>
+   <div class="bacts"><button class="btn ink" data-b="push" aria-label="Push to Library">${X.I('up',2.2)}<span class="bl-l">Push to Library</span><span class="bl-s">Push</span></button><button class="btn accent" data-b="start" aria-label="Start training">${X.I('play')}<span class="bl-l">Start training</span><span class="bl-s">Start</span></button></div>
+   <div class="bstate" id="bstate">${stateLine()}</div></div>
   <div class="bstick"><button class="astrip" id="astrip" data-b="analysis"></button>
-   <div class="dstrip" id="dstrip">${WD.map((w,i)=>`<button data-jump="${i}" aria-label="Jump to ${WDL[i]}"><span>${w}</span><b class="dn num">–</b></button>`).join('')}</div>
+   <div class="dstrip" id="dstrip">${WD.map((w,i)=>`<button data-jump="${i}" aria-label="Jump to ${WDL[i]}"><span>${w}</span><small class="dn"></small></button>`).join('')}</div>
    <div class="selbar" id="selbar"><span id="selt"></span><button class="btn plain" data-b="seldone">Done</button></div></div>
   <div class="board" id="board">${boardHtml()}</div>
-  <p class="foot bhint">Hold a chit to lift it. Drag it to another day, or off the board to remove it.</p>
-  <div class="bacts"><button class="btn ink" data-b="push">${X.I('up',2.2)} Push to Library</button><button class="btn accent" data-b="start">${X.I('play')} Start training</button></div></div>`};
+  <p class="foot bhint">Hold a chit to lift it. Drag it to another day, or off the board to remove it. Tap a day's name to rename it or make it a Rest day.</p></div>`};
 X.AFTER.build=()=>{paint(true);const bd=$('#board');bd.addEventListener('scroll',markDay,{passive:true});markDay()};
 function paint(full){const bd=$('#board');if(!bd)return;const sl=bd.scrollLeft;if(!full)bd.innerHTML=boardHtml();bd.scrollLeft=sl;const bn=$('.bname .bn');if(bn)bn.textContent=B.name||'New routine';
-  const lv=$('.blv');if(lv)lv.textContent=B.level[0].toUpperCase()+B.level.slice(1);paintStats();paintSel();if(AN&&!AN.closed)renderAnalysis()}
+  paintStats();paintSel();if(AN&&!AN.closed)renderAnalysis()}
 let JMP=-1;function markDay(){const bd=$('#board');if(!bd)return;const cols=$$('.col',bd),o=cols[0].offsetLeft,x=bd.scrollLeft+8;let k=0;cols.forEach((c,i)=>{if(c.offsetLeft-o<=x)k=i});
   if(JMP>k&&bd.scrollLeft>=bd.scrollWidth-bd.clientWidth-2)k=JMP;$$('#dstrip button').forEach((b,i)=>b.classList.toggle('on',i===k))}
 function jump(i){const bd=$('#board'),c=$$('.col',bd)[i];if(!c)return;JMP=i;bd.scrollTo({left:c.offsetLeft-bd.firstElementChild.offsetLeft,behavior:'smooth'});$$('#dstrip button').forEach((b,j)=>b.classList.toggle('on',j===i))}
@@ -121,7 +127,10 @@ function moveDrag(x,y){const D=DRAG;if(!D)return;D.x=x;D.y=y;D.g.style.transform
   document.body.classList.toggle('b-off',!target&&!D.tray);$$('.col').forEach(c=>c.classList.toggle('over',!!target&&c.dataset.day===target.day));
   const key=JSON.stringify(target);if(key!==D.key){D.key=key;D.target=target;paintStats(previewDays(D.uids,target,D.add))}} // the strip previews the drop, mid-drag
 function autoScroll(){cancelAnimationFrame(RAF);const step=()=>{if(!DRAG)return;const bd=$('#board'),br=bd.getBoundingClientRect(),E=34;
-  if(DRAG.y>br.top&&DRAG.y<br.bottom){if(DRAG.x<br.left+E)bd.scrollLeft-=9;else if(DRAG.x>br.right-E)bd.scrollLeft+=9}RAF=requestAnimationFrame(step)};RAF=requestAnimationFrame(step)}
+  if(DRAG.y>br.top&&DRAG.y<br.bottom){if(DRAG.x<br.left+E)bd.scrollLeft-=9;else if(DRAG.x>br.right-E)bd.scrollLeft+=9}
+  const vs=bd.scrollHeight>bd.clientHeight+2?bd:document.getElementById('view'),vr=vs===bd?br:{top:0,bottom:innerHeight-(($('.tabs')||{}).offsetHeight||0)};
+  if(vs&&DRAG.x>br.left&&DRAG.x<br.right){if(DRAG.y>vr.bottom-E&&DRAG.y<vr.bottom+20)vs.scrollTop+=8;else if(vs===bd&&DRAG.y<vr.top+E&&DRAG.y>vr.top-10)vs.scrollTop-=8}
+  RAF=requestAnimationFrame(step)};RAF=requestAnimationFrame(step)}
 function settle(keepTray){const D=DRAG;DRAG=null;cancelAnimationFrame(RAF);if(!D)return null;D.g.remove();if(D.ph.parentNode)D.ph.remove();$$('.chit.src').forEach(c=>c.classList.remove('src'));
   document.body.classList.remove('b-dragging','b-off');$$('.col.over').forEach(c=>c.classList.remove('over'));if(TRAY&&!keepTray)TRAY.el.classList.remove('peek');return D}
 function drop(){const D=settle(false);if(!D)return;const t=D.target;
@@ -132,19 +141,36 @@ function tapChit(el){const u=el.dataset.u;if(B.sel.size){B.sel.has(u)?B.sel.dele
 // ------------------------------------------------------------- chit sheet
 let CS=null;
 function chitSheet(u){const f=findT(u);if(!f)return;const id=f.t.id,e=ex(id),day=f.d.day;
-  const body=()=>{const g=findT(u);if(!g)return '';const t=g.t,rp=t.reps||repsFor(t.id);
+  const body=()=>{const g=findT(u);if(!g)return '';const t=g.t,rr=repRange(t.id),rp=t.reps||rr.display;
     return `<div class="csh"><div class="csh-h">${X.gl(t.id)}<div class="grow"><div class="t1">${X.exNameP(t.id)}</div><div class="t2">${X.exSub(t.id)} · ${WDL[DAYS.indexOf(g.d.day)]}</div></div></div>
      <div class="group"><div class="row"><div class="grow t1">Sets</div><div class="step"><button data-b="sets-" aria-label="Fewer sets">−</button><b class="num" id="cs-sets">${t.sets}</b><button data-b="sets+" aria-label="More sets">+</button></div></div>
-      <div class="row"><div class="grow t1">Reps <span class="smp" title="No rep data in splits.json yet">sample</span></div><div class="step"><button data-b="reps-" aria-label="Lower reps">−</button><b class="num" id="cs-reps">${rp}</b><button data-b="reps+" aria-label="Higher reps">+</button></div></div></div>
+      <div class="row"><div class="grow"><div class="t1">${rr.unit==='reps'?'Reps':rr.unit==='seconds'?'Seconds':'Meters'}</div><div class="t2 rrn">${t.reps?'Your range':(X.prefs().goals||[]).length?'Typical for your goals':'Typical range'}${rr.per_side?' · per side':''}${rr.not_to_failure?' · stop well short of failure':''}</div></div><div class="step"><button data-b="reps-" aria-label="Lower reps">−</button><b class="num" id="cs-reps">${rp}</b><button data-b="reps+" aria-label="Higher reps">+</button></div></div></div>
      <div class="cacts"><button data-b="c-swap">${X.I('swap',1.8)}<span>Swap</span></button><button data-b="c-info">${X.I('info',1.8)}<span>Info</span></button><button data-b="c-dup">${X.I('plus',2)}<span>Duplicate</span></button><button data-b="c-del" class="dl">${X.I('trash',1.8)}<span>Delete</span></button></div></div>`};
   CS=X.sheet({title:'',cls:'grouped csheet',body:body(),onClose(){CS=null}});CS.u=u;CS.re=()=>{CS.body.innerHTML=body()};return CS}
 function chitAct(k){if(!CS)return;const u=CS.u,f=findT(u);if(!f)return;const t=f.t;
   if(k==='sets-'||k==='sets+'){const n=Math.max(1,Math.min(10,t.sets+(k==='sets+'?1:-1)));if(n!==t.sets)commit(()=>{findT(u).t.sets=n});CS.re();return}
-  if(k==='reps-'||k==='reps+'){const [a,b]=(t.reps||repsFor(t.id)).split('–').map(Number),d=k==='reps+'?1:-1;if(a+d<1)return;commit(()=>{findT(u).t.reps=(a+d)+'–'+(b+d)});CS.re();return}
+  if(k==='reps-'||k==='reps+'){const rr=repRange(t.id),m=/^(\d+)\u2013(\d+)(.*)$/.exec(t.reps||rr.display);if(!m)return;const st=REP_STEP[rr.unit]||1,d=(k==='reps+'?1:-1)*st,a=+m[1]+d,b=+m[2]+d;if(a<1)return;commit(()=>{findT(u).t.reps=`${a}\u2013${b}${m[3]}`});CS.re();return}
   if(k==='c-swap'){X.setSC({board:rankBoard(),day:f.d.day});const s=CS;s.close();X.swapSheet(t.id,{onPick:nid=>{commit(()=>{const g=findT(u);g.t.id=nid;g.t.reps=null},`Swapped in ${X.exNameP(nid)}`)}});return}
   if(k==='c-info'){CS.close();return X.go('#learn-ex-'+t.id)}
   if(k==='c-dup'){commit(()=>{const g=findT(u);g.d.tiles.splice(g.i+1,0,T(g.t.id,g.t.sets,g.t.reps))},`Duplicated ${X.exNameP(t.id)}`);CS.close();return}
   if(k==='c-del'){CS.close();commit(()=>removeU([u]),`Removed ${X.exNameP(t.id)}`)}}
+// ------------------------------------------------------------- day header sheet: rename, set Rest, back to training
+// Set Rest on a day with chits removes them in one step (the sheet says how many) and the Undo bar brings them back.
+let DS=null;
+function daySheet(day){const i=DAYS.indexOf(day),d=B.days[i];if(!d)return;const n=d.tiles.length,ns=sum(d.tiles.map(t=>t.sets)),rest=isRest(d);
+  DS=X.sheet({title:WDL[i],cls:'grouped dsheet',right:'<button class="btn plain" data-b="dsclose">Cancel</button>',onClose(){DS=null},
+    body:`<div class="ghead">Day name</div><div class="group"><div class="row"><input id="dsname" class="dsin" type="text" maxlength="24" enterkeyhint="done" autocomplete="off" value="${(d.label||'').replace(/"/g,'&quot;')}" placeholder="${rest?'e.g. Upper A (makes it a training day)':'e.g. Upper A'}"></div></div>
+     ${rest?`<div class="pad"><button class="btn accent block" data-b="dstrain" data-day="${day}">Make it a training day</button></div><p class="foot">Then add exercises with + or drag them in from the tray.</p>`
+      :`<div class="pad"><button class="btn accent block" data-b="dsrename" data-day="${day}">Save name</button></div>
+     <div class="group"><button class="row dsrest" data-b="dsrest" data-day="${day}"><div class="grow"><div class="t1">Make it a Rest day</div><div class="t2">${n?`Removes ${n} exercise${n>1?'s':''} (${ns} sets) from ${WD[i]}. You can undo.`:'Nothing on this day yet.'}</div></div></button></div>`}`});
+  DS.day=day;const inp=$('#dsname',DS.el);inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();dayAct(rest?'dstrain':'dsrename')}});return DS}
+function dayAct(k){if(!DS)return;const day=DS.day,i=DAYS.indexOf(day),v=($('#dsname',DS.el).value||'').trim().slice(0,24),s=DS;s.close();
+  if(k==='dsrename'){const d=B.days[i];if(v===(d.label||''))return;commit(()=>{B.days[i].label=v},v?`${WD[i]} renamed “${v}”`:`${WD[i]} name cleared`);return}
+  if(k==='dsrest'){const d=B.days[i],n=d.tiles.length;commit(()=>{const D=B.days[i];D.tiles=[];D.rest=true;D.label='';B.sel.clear()},n?`${WD[i]} is a Rest day · ${n} removed`:`${WD[i]} is a Rest day`);return}
+  if(k==='dstrain'){commit(()=>{const D=B.days[i];D.rest=false;D.label=v||'Training day'},`${WD[i]} is a training day`);return}}
+// other tabs while the tab bar is hidden (landscape phone)
+function tabsSheet(){const T4=[['train','Train'],['log','Log'],['build','Build'],['progress','Progress']];
+  const s=X.sheet({title:'Go to',cls:'grouped',body:`<div class="group">${T4.map(([k,l])=>`<button class="row" data-b="tabgo" data-to="${k}"><span class="ico gr">${X.I(k,1.7)}</span><div class="grow t1">${l}</div>${X.CHEV}</button>`).join('')}</div><p class="foot">The tab bar is hidden in landscape so the board gets the full height. Turn the phone upright to see it again.</p>`});return s}
 // ------------------------------------------------------------- tray (Suggested / Library, filter chips, drag or +)
 let TRAY=null;const TFB={mode:'sug',type:null,mus:null,day:'mon'};
 function trayRows(){const RDv=RD(),ids=Object.keys(RDv.EX).filter(i=>{const e=RDv.EX[i];return (!TFB.type||e.type===TFB.type)&&(!TFB.mus||(e.muscles[TFB.mus]||0)>=0.5)});
@@ -158,11 +184,11 @@ function traySheet(day){TFB.day=day||TFB.day;const ch=(k,v,l)=>`<button class="c
     <div class="tlist" id="btlist">${trayRows()}</div>`});return TRAY}
 function refreshTray(){if(TRAY){$('#btlist',TRAY.el).innerHTML=trayRows();const h=$('.sh-head .t',TRAY.el);if(h)h.textContent=`Add to ${WD[DAYS.indexOf(TFB.day)]}`}}
 // ------------------------------------------------------------- analysis sheet
-let AN=null,FIX=[];const RLAB=id=>id.replace(/_/g,' ').replace(/^./,c=>c.toUpperCase());
+let AN=null,FIX=[];const RLAB=id=>PC.ruleLabel(RD(),id); // rules.json rules[].short_label
 const LBL=m=>(RD().rules.ranking.labels.regions[m])||X.ML[m]||m.replace(/_/g,' ');
 function renderAnalysis(){if(!AN)return;const {A,C,d}=stats(),R=RD().rules,RU={};R.rules.forEach(r=>RU[r.id]=r);FIX=[];const lv=B.level;
   const warn=C.flags.filter(f=>f[0]==='warn'),info=C.flags.filter(f=>f[0]==='info'),fx=f=>{const list=PC.fixes(RD(),d,lv,f);return list.map(z=>{FIX.push(z);return `<div class="fxr"><span>${z.preview}${z.resolves?'':` <em>${R.partial_label}</em>`}</span><button class="btn sm grey" data-b="apply" data-k="${FIX.length-1}">Apply</button></div>`}).join('')||'<div class="fxr none">No one-tap fix passes the checks. Adjust it by hand.</div>'};
-  const flagRow=f=>`<div class="flag ${f[0]}" data-flag="${f[1]}" data-rule="${f[1].startsWith('spinal_load')?'spinal_load':f[1]}"><p>${PC.message(RD(),f,d,lv)}</p>${fx(f)}</div>`;
+  const flagRow=f=>`<div class="flag ${f[0]}" data-flag="${f[1]}" data-rule="${f[1].startsWith('spinal_load')?'spinal_load':f[1]}"><div class="ftl">${PC.shortLabel(RD(),f)}</div><p>${PC.message(RD(),f,d,lv)}</p>${fx(f)}</div>`;
   const passing=C.list.filter(c=>!c.warn.length).map(c=>RLAB(c.id));
   const T=Object.entries(A.muscles).filter(([m,v])=>v.raw>0||v.min>0),VB=X.VB;
   const vrow=([m,v])=>{const st=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',top=v.max*(VB.red_factor||1.25);return `<div class="row vrow" data-vs="${st}"><span class="vm">${X.ML[m]||m}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${+v.raw.toFixed(1)}<small>/${v.min}–${v.max}</small></span></div>`};
@@ -176,7 +202,7 @@ function renderAnalysis(){if(!AN)return;const {A,C,d}=stats(),R=RD().rules,RU={}
    <div class="group freq"><div class="row fqh"><span class="vm"></span><span class="fq">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>${FM.map(m=>`<div class="row"><span class="vm">${X.ML[m]}</span><span class="fq">${fq(m)}</span></div>`).join('')}</div>
    <div class="ghead">Session length <span class="gsub">info ${SL.info_min} · warn ${SL.warn_min} min</span></div>
    <div class="group sess">${A.day.map(x=>`<div class="row"><span class="vm">${WD[DAYS.indexOf(x.day)]}</span><span class="sbar"><i style="--w:${x.minutes/mx*100}%" class="${x.minutes>=SL.warn_min?'w':x.minutes>=SL.info_min?'i':''}"></i><b style="--x:${SL.info_min/mx*100}%"></b><b class="w" style="--x:${SL.warn_min/mx*100}%"></b></span><span class="vn num">${Math.round(x.minutes)}</span></div>`).join('')||'<div class="row sub">No training days yet</div>'}</div>
-   <div class="ghead">Fatigue and spinal load</div>
+   <div class="ghead">Fatigue and spinal load <span class="smp" title="Points until a saved baseline week">fatigue: sample</span></div>
    <div class="group sess">${A.day.map(x=>`<div class="row"><span class="vm">${WD[DAYS.indexOf(x.day)]}</span><span class="fz num">${x.cost.toFixed(1)} <small>fatigue</small></span><span class="fz num ${x.spinal>SP.session_max?'over':''}">${x.spinal}/${SP.session_max} <small>spine sets</small></span></div>`).join('')}
     <div class="row"><span class="vm"><b>Week</b></span><span class="fz num"><b>${A.weekCost.toFixed(1)}</b> <small>fatigue</small></span><span class="fz num ${SP.week>SP.week_max?'over':''}"><b>${SP.week}/${SP.week_max}</b> <small>spine sets</small></span></div></div>
    <p class="foot">Fatigue = sets × each exercise's fatigue rating (targets.json recovery). It becomes a % once you save a normal week. Heavy spine sets = heavy squats and hinges (rules.json spinal_load).</p>
@@ -185,9 +211,9 @@ function renderAnalysis(){if(!AN)return;const {A,C,d}=stats(),R=RD().rules,RU={}
    <div class="card curve">${curve(cm,A)}</div>
    <p class="foot">${A.curveModel}. ${A.disclaimer}</p>
    ${info.length?`<details class="andet" id="annotes"><summary class="ghead">${info.length} notes <span class="gsub">suggestions, not problems</span></summary><div class="flags">${info.map(flagRow).join('')}</div></details>`:''}
-   <div class="ghead">Sample data <span class="smp">sample</span></div><div class="group asks" id="anasks">${DATA_ASKS.map(t=>`<div class="row"><div class="grow t2">${t}</div></div>`).join('')}</div>
+   <div class="ghead">Still sample data <span class="smp">sample</span></div><div class="group asks" id="anasks">${DATA_ASKS.map(t=>`<div class="row"><div class="grow t2">${t}</div></div>`).join('')}</div>
    <details class="andet" id="anpass"><summary class="ghead">${passing.length} passing checks</summary><div class="pass">${passing.map(p=>`<span class="tag">✓ ${p}</span>`).join('')}</div></details><div style="height:24px"></div>`}
-const DATA_ASKS=['Rep ranges are sample values: splits.json tiles carry sets only.','Fatigue shows points, not %, until there is a baseline week (targets.json recovery).','Chit edge colours use a storyboard muscle → body-region map, not data.'];
+const DATA_ASKS=['Fatigue shows points, not %, until there is a saved baseline week (targets.json recovery).','The starting board and the library routines are mock routines.'];
 function curve(m,A){const v=A.muscles[m],k=v.k,x=v.x,Sx=z=>1-Math.exp(-z/k),Xm=Math.max(30,Math.ceil((Math.max(x,v.max)+4)/5)*5),W=320,H=168,px=z=>30+z/Xm*(W-40),py=z=>H-30-z*(H-44);
   let d='';for(let i=0;i<=60;i++){const z=i/60*Xm;d+=(i?'L':'M')+px(z).toFixed(1)+','+py(Sx(z)).toFixed(1)}const nx=Sx(x+1)-Sx(x),tk=[];for(let z=0;z<=Xm;z+=Xm>30?10:5)tk.push(`<text x="${px(z)}" y="${H-14}" text-anchor="middle">${z}</text>`);
   return `<svg class="ancurve" viewBox="0 0 ${W} ${H}" data-m="${m}"><rect x="${px(v.min)}" y="8" width="${px(v.max)-px(v.min)}" height="${H-38}" class="band"/>${[0,.5,1].map(z=>`<line x1="30" x2="${W-8}" y1="${py(z)}" y2="${py(z)}"/><text x="26" y="${py(z)+3}" text-anchor="end">${z*100}%</text>`).join('')}${tk.join('')}
@@ -208,7 +234,7 @@ function newBody(view){const SP=RD().splits.splits,PT=RD().patterns.templates;
      <p class="foot">Exercises from splits.json, slots from patterns.json. You can move anything after.</p>
      <div class="pad"><button class="btn accent block" data-b="nwtpl">Use this template</button></div></div>`}
   if(view==='lib')return `<div class="nwv"><button class="btn plain nwback" data-b="nwback">‹ New</button><div class="ghead">Your library</div>
-     <div class="group">${X.ROUTINES.map(r=>`<div class="row"><div class="grow"><div class="t1">${r.name}</div><div class="t2">${r.meta} · ${r.days.length} days</div></div><button class="btn sm grey" data-b="nwlib" data-id="${r.id}">Duplicate &amp; edit</button></div>`).join('')}</div>
+     <div class="group">${X.ROUTINES.map(r=>`<div class="row"><div class="grow"><div class="t1">${r.name} <span class="smp" title="Mock routine">sample</span></div><div class="t2">${r.meta} · ${r.days.length} days</div></div><button class="btn sm grey" data-b="nwlib" data-id="${r.id}">Duplicate &amp; edit</button></div>`).join('')}</div>
      <p class="foot">The copy opens as a draft. The original stays as it is until you push the copy.</p></div>`;
   return `<div class="nwv"><div class="group nwopts">
     <button class="row" data-b="nwblank"><span class="ico gr">${X.I('plus',2)}</span><div class="grow"><div class="t1">Blank board</div><div class="t2">Seven empty days</div></div>${X.CHEV}</button>
@@ -235,6 +261,8 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   const ns=e.target.closest('[data-ns]');if(ns&&NW){NS[ns.dataset.ns]=ns.dataset.v;nwView('tpl');return}
   const j=e.target.closest('[data-jump]');if(j)return jump(+j.dataset.jump);
   if(!b)return;const k=b.dataset.b;e.stopPropagation();
+  if(k==='dayh')return daySheet(b.dataset.day);if(k==='dsclose')return DS&&DS.close();if(k==='dsrename'||k==='dsrest'||k==='dstrain')return dayAct(k);
+  if(k==='tabs')return tabsSheet();if(k==='tabgo'){X.closeAll();return X.go('#'+b.dataset.to)}
   if(k==='analysis')return analysisSheet();if(k==='anclose')return AN&&AN.close();
   if(k==='apply'){const z=FIX[+b.dataset.k];if(!z)return;commit(()=>applyDays(z.days),`Applied: ${z.preview}`);return}
   if(k==='undo')return undo();
@@ -256,6 +284,7 @@ Object.assign(X.ROUTES,{
  'build-analysis':['build','build',0,0,()=>{},analysisSheet],
  'build-new':['build','build',0,0,()=>{},()=>newSheet()],
  'build-new-tpl':['build','build',0,0,()=>{},()=>newSheet('tpl')],
+ 'build-day':['build','build',0,0,()=>{},()=>daySheet('mon')],
 });
-window.BOARD={get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),undo};
+window.BOARD={get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
 })();

@@ -157,7 +157,7 @@
   },
   {
    "topic": "rir",
-   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure.",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Easy to push close to failure.",
    "evidence": "modeled",
    "app_key": "rules.json:logger.target_rir_by_type"
   },

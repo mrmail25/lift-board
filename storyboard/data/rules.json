@@ -440,7 +440,8 @@
       "fixes": [
         "merge_tiles",
         "remove_tile"
-      ]
+      ],
+      "short_label": "Many small exercise entries"
     },
     {
       "id": "session_hard_sets",
@@ -458,7 +459,11 @@
         "reduce_sets:lowest_priority_isolation",
         "move_tile",
         "remove_tile"
-      ]
+      ],
+      "short_label": "Too many hard sets",
+      "short_label_variants": {
+        "info": "Close to hard-set cap"
+      }
     },
     {
       "id": "session_length",
@@ -480,7 +485,11 @@
         "reduce_sets:lowest_priority_isolation",
         "move_tile",
         "remove_tile"
-      ]
+      ],
+      "short_label": "Session runs long",
+      "short_label_variants": {
+        "info": "Session getting long"
+      }
     },
     {
       "id": "spinal_load",
@@ -503,7 +512,12 @@
         "swap_exercise:lower_spinal",
         "move_tile",
         "reduce_sets:highest_contributor(lower_back)"
-      ]
+      ],
+      "short_label": "Heavy spinal load",
+      "short_label_variants": {
+        "session": "Heavy spinal load today",
+        "week": "Heavy spinal load this week"
+      }
     },
     {
       "id": "junk_volume_session",
@@ -515,7 +529,8 @@
         "reduce_sets:highest_contributor",
         "move_sets_to_day",
         "move_tile"
-      ]
+      ],
+      "short_label": "Muscle volume high in session"
     },
     {
       "id": "sets_per_exercise",
@@ -527,7 +542,8 @@
         "split_pattern",
         "move_sets_to_day",
         "reduce_sets(to 5)"
-      ]
+      ],
+      "short_label": "Too many sets, one exercise"
     },
     {
       "id": "low_frequency",
@@ -542,7 +558,11 @@
         "move_sets_to_day",
         "add_exercise(other day)"
       ],
-      "message_evidence": "Volume-matched studies find little growth difference by frequency (Schoenfeld 2019, Pelland 2026); see education/fundamentals/volume-frequency.json."
+      "message_evidence": "Volume-matched studies find little growth difference by frequency (Schoenfeld 2019, Pelland 2026); see education/fundamentals/volume-frequency.json.",
+      "short_label": "Muscle trained only once",
+      "short_label_variants": {
+        "indirect_only": "Only indirect muscle work"
+      }
     },
     {
       "id": "redundant_pattern",
@@ -555,7 +575,8 @@
         "reduce_sets:highest_contributor",
         "move_sets_to_day",
         "move_tile"
-      ]
+      ],
+      "short_label": "Same-pattern sets stack up"
     },
     {
       "id": "push_pull_imbalance",
@@ -563,7 +584,7 @@
       "scope": "week",
       "min_ratio": 0.75,
       "max_ratio": 2.0,
-      "message": "Pull-to-push sets are {ratio}:1 this week. Keep pulling at least about 75% of pushing, and no more than 2x, to protect the shoulders and balance the upper body.",
+      "message": "Pull-to-push sets are {ratio}:1 this week. A common programming guideline keeps pulling between about 75% of pushing and 2x pushing, so the upper body is trained evenly. The band is a coaching convention, not a tested threshold.",
       "fixes": {
         "ratio": [
           "add_sets(lagging side)",
@@ -581,7 +602,12 @@
       },
       "message_no_pull": "No pulling yet. Add a row or pulldown to balance your pressing.",
       "message_no_push": "No pushing yet. Add a press to balance your pulling.",
-      "ratio_note": "ratio = pull_sets / push_sets. If push_sets = 0 and pull_sets > 0, the checker emits ratio 99 and the app shows message_no_push. If pull_sets = 0 and push_sets > 0, the ratio is 0 and the app shows message_no_pull. If both are 0, no flag."
+      "ratio_note": "ratio = pull_sets / push_sets. If push_sets = 0 and pull_sets > 0, the checker emits ratio 99 and the app shows message_no_push. If pull_sets = 0 and push_sets > 0, the ratio is 0 and the app shows message_no_pull. If both are 0, no flag.",
+      "short_label": "Pull-to-push out of balance",
+      "short_label_variants": {
+        "no_pull": "No pulling this week",
+        "no_push": "No pushing this week"
+      }
     },
     {
       "id": "missing_stretch",
@@ -591,7 +617,8 @@
       "fixes": [
         "swap_exercise:stretch_biased",
         "add_exercise(stretch_biased)"
-      ]
+      ],
+      "short_label": "No stretch-biased exercise"
     },
     {
       "id": "hinge_before_squat",
@@ -602,7 +629,8 @@
         "move_tile(hinge)",
         "move_tile(squat)",
         "swap_exercise:lower_spinal(squat)"
-      ]
+      ],
+      "short_label": "Deadlift right before squats"
     },
     {
       "id": "consecutive_high_volume",
@@ -613,7 +641,8 @@
       "fixes": [
         "move_sets_to_day",
         "reduce_sets:highest_contributor"
-      ]
+      ],
+      "short_label": "Muscle trained back-to-back"
     },
     {
       "id": "beginner_squat_and_deadlift",
@@ -627,7 +656,8 @@
         "move_tile(hinge)",
         "move_tile(squat)",
         "swap_exercise:lower_spinal"
-      ]
+      ],
+      "short_label": "Squat and deadlift together"
     },
     {
       "id": "weekly_volume",
@@ -643,6 +673,11 @@
           "add_sets",
           "add_exercise"
         ]
+      },
+      "short_label": "Weekly volume off target",
+      "short_label_variants": {
+        "over": "Weekly volume above target",
+        "under": "Weekly volume below target"
       }
     },
     {
@@ -658,7 +693,8 @@
       "fixes": [
         "reduce_sets:highest_fatigue",
         "swap_exercise:lower_fatigue"
-      ]
+      ],
+      "short_label": "Recovery cost above normal"
     },
     {
       "id": "pattern_gap",
@@ -672,7 +708,11 @@
       "message_note": "{slot_lower} = slot name lowercased, e.g. 'No vertical pull this week.' {examples} = names of the top 2 slot_recommendations.",
       "fixes": [
         "add_slot_exercise"
-      ]
+      ],
+      "short_label": "Movement pattern missing",
+      "short_label_variants": {
+        "info": "Pattern below level minimum"
+      }
     }
   ],
   "fix_actions": {
@@ -2024,7 +2064,7 @@
         "label": "Skill demand",
         "label_higher": "More technical",
         "label_lower": "Easier to learn",
-        "meaning": "How much technique or practice the lift needs before it can be trained hard safely.",
+        "meaning": "How much technique or practice the lift needs before it can be trained hard with consistent technique.",
         "evidence": "modeled",
         "priority": 28
       },
@@ -2089,7 +2129,7 @@
         "kind": "flag",
         "label": "Neutral grip (palms facing in)",
         "label_lost": "Palms-up or palms-down grip",
-        "meaning": "Palms face each other (hammer grip, V-handle, neutral handles). Many people find it comfortable on the wrists and elbows; that is a comfort tendency, not a finding.",
+        "meaning": "Palms face each other (hammer grip, V-handle, neutral handles). Many people prefer it; that is a preference, not a finding.",
         "evidence": "biomechanics",
         "priority": 34
       },
@@ -2439,10 +2479,10 @@
         },
         "evidence": "modeled",
         "evidence_notes": {
-          "reps": "supported for growth: lighter loads taken close to failure grow muscle about as well as heavy loads (schoenfeld2017load). That they are easier on joints is coaching consensus (modeled).",
+          "reps": "supported for growth: lighter loads taken close to failure grow muscle about as well as heavy loads (schoenfeld2017load). Choosing them for this goal is a training preference (modeled); no joint or injury outcome is claimed.",
           "attr_pref": "modeled: preference, not a safety rating.",
           "spinal_cap_factor": "modeled: spinal-load session and week caps (rules spinal_load) are scaled by 0.75 for scoring.",
-          "disclaimer": "Not medical advice and not a treatment or injury-prevention claim. Pain or an injury needs a qualified professional."
+          "disclaimer": "Not medical advice and not a treatment or injury-prevention claim."
         },
         "citations": [
           "schoenfeld2017load"
@@ -3374,5 +3414,774 @@
     "example_profiles_note": "Starting templates only, not the user's gym. In Settings the user starts from one (or blank) and ticks what they actually have; never present a template as their equipment.",
     "source": "tools/equipment_needs_data.py via tools/build_equipment_needs.py",
     "evidence": "modeled"
-  }
+  },
+  "rep_ranges": {
+    "version": 1,
+    "note": "Typical ranges, not requirements. Muscle grows across a wide span of reps when sets end close to failure; strength favors heavier loads. Pick a weight that keeps you inside the range with steady technique, and treat the ends as guides.",
+    "units": {
+      "reps": "",
+      "seconds": " s",
+      "meters": " m"
+    },
+    "display": "display = f\"{low}–{high}\" + units[unit] (en dash). per_side true: the count is for each side (the app may append \" / side\"). not_to_failure true: end sets well before failure.",
+    "type_symbols": {
+      "primary": "star",
+      "accessory": "plus",
+      "isolation": "circle"
+    },
+    "default": {
+      "primary": {
+        "low": 6,
+        "high": 10,
+        "display": "6–10"
+      },
+      "accessory": {
+        "low": 8,
+        "high": 12,
+        "display": "8–12"
+      },
+      "isolation": {
+        "low": 10,
+        "high": 15,
+        "display": "10–15"
+      }
+    },
+    "by_goal": {
+      "strength": {
+        "primary": {
+          "low": 3,
+          "high": 6,
+          "display": "3–6"
+        },
+        "accessory": {
+          "low": 6,
+          "high": 10,
+          "display": "6–10"
+        },
+        "isolation": {
+          "low": 10,
+          "high": 15,
+          "display": "10–15"
+        }
+      },
+      "muscle_size": {
+        "primary": {
+          "low": 6,
+          "high": 10,
+          "display": "6–10"
+        },
+        "accessory": {
+          "low": 8,
+          "high": 12,
+          "display": "8–12"
+        },
+        "isolation": {
+          "low": 10,
+          "high": 15,
+          "display": "10–15"
+        }
+      },
+      "joint_friendly": {
+        "primary": {
+          "low": 8,
+          "high": 12,
+          "display": "8–12"
+        },
+        "accessory": {
+          "low": 10,
+          "high": 15,
+          "display": "10–15"
+        },
+        "isolation": {
+          "low": 12,
+          "high": 20,
+          "display": "12–20"
+        }
+      },
+      "maintain": {
+        "primary": {
+          "low": 6,
+          "high": 10,
+          "display": "6–10"
+        },
+        "accessory": {
+          "low": 8,
+          "high": 12,
+          "display": "8–12"
+        },
+        "isolation": {
+          "low": 10,
+          "high": 15,
+          "display": "10–15"
+        }
+      },
+      "aesthetic_v_taper": {
+        "primary": {
+          "low": 6,
+          "high": 10,
+          "display": "6–10"
+        },
+        "accessory": {
+          "low": 8,
+          "high": 12,
+          "display": "8–12"
+        },
+        "isolation": {
+          "low": 10,
+          "high": 15,
+          "display": "10–15"
+        }
+      },
+      "aesthetic_lower_emphasis": {
+        "primary": {
+          "low": 6,
+          "high": 10,
+          "display": "6–10"
+        },
+        "accessory": {
+          "low": 8,
+          "high": 12,
+          "display": "8–12"
+        },
+        "isolation": {
+          "low": 10,
+          "high": 15,
+          "display": "10–15"
+        }
+      },
+      "conditioning": {
+        "primary": {
+          "low": 8,
+          "high": 12,
+          "display": "8–12"
+        },
+        "accessory": {
+          "low": 10,
+          "high": 15,
+          "display": "10–15"
+        },
+        "isolation": {
+          "low": 12,
+          "high": 20,
+          "display": "12–20"
+        }
+      }
+    },
+    "votes": {
+      "strength": [
+        "primary",
+        "accessory"
+      ],
+      "joint_friendly": [
+        "primary",
+        "accessory",
+        "isolation"
+      ],
+      "conditioning": [
+        "primary",
+        "accessory",
+        "isolation"
+      ],
+      "muscle_size": [],
+      "maintain": [],
+      "aesthetic_v_taper": [],
+      "aesthetic_lower_emphasis": []
+    },
+    "goal_notes": {
+      "default": "No goal picked: the app's standing ranges (rules.logger.rep_range_by_type).",
+      "strength": "Heavier main lifts (3–6 reps; at most 6 on primary lifts) and 6–10 on accessories. Heavy loads give the most strength gain (supported: schoenfeld2017load, lopez2021). Isolation keeps the default 10–15 because it does not drive the main lifts (modeled).",
+      "muscle_size": "Default ranges. Growth is similar across a wide range of loads when sets end close to failure (supported: schoenfeld2017load, lopez2021, schoenfeld2021rep); the middle ranges are a practical choice (modeled), not a growth threshold.",
+      "joint_friendly": "Moderate-to-higher reps with moderate loads. Lighter loads near failure grow muscle about as well as heavy ones (supported: schoenfeld2017load, lopez2021); choosing them for this goal is a training preference (modeled). No health or injury claim is made.",
+      "maintain": "Default ranges with the weights kept heavy; maintenance studies kept loads near 8–12RM while cutting sets (bickel2011, spiering2021).",
+      "aesthetic_v_taper": "Default ranges; this goal changes which muscles get sets, not the reps (modeled).",
+      "aesthetic_lower_emphasis": "Default ranges; this goal changes which muscles get sets, not the reps (modeled).",
+      "conditioning": "Moderate-to-higher reps for denser sessions (modeled). Growth is similar across loads near failure (supported: schoenfeld2017load, lopez2021)."
+    },
+    "combine": "Several goals: per type, only goals that vote for that type (votes) count; low = round(mean of their lows), high = round(mean of highs), half up; no vote -> default (same rule as ranking.goal_combine.rep_range_by_type). An override with by_goal combines its goal entries the same way; goals without an entry do not vote, and no vote -> its default.",
+    "per_side": "Default: true when the exercise has the swap flag unilateral; an override may set it (per_side map or per_side_all).",
+    "overrides": [
+      {
+        "id": "calves",
+        "label": "Calf raises",
+        "exercises": [
+          "standing-calf-raise",
+          "seated-calf-raise",
+          "smith-calf-raise",
+          "leg-press-calf-raise"
+        ],
+        "by_goal": {
+          "default": {
+            "low": 10,
+            "high": 20,
+            "display": "10–20"
+          },
+          "strength": {
+            "low": 8,
+            "high": 15,
+            "display": "8–15"
+          },
+          "joint_friendly": {
+            "low": 12,
+            "high": 20,
+            "display": "12–20"
+          },
+          "conditioning": {
+            "low": 12,
+            "high": 20,
+            "display": "12–20"
+          }
+        },
+        "note": "Calves are usually trained with higher reps; the short range of motion makes low-rep sets end quickly.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "abs_flexion",
+        "label": "Crunches, leg raises and trunk rotation",
+        "exercises": [
+          "hanging-leg-raise",
+          "cable-crunch",
+          "ab-crunch-machine",
+          "weighted-decline-crunch",
+          "standing-cable-crunch",
+          "captains-chair-knee-raise",
+          "trx-pike",
+          "cable-woodchop",
+          "rotary-torso-machine"
+        ],
+        "per_side": {
+          "cable-woodchop": true,
+          "rotary-torso-machine": true
+        },
+        "by_goal": {
+          "default": {
+            "low": 10,
+            "high": 20,
+            "display": "10–20"
+          },
+          "strength": {
+            "low": 8,
+            "high": 15,
+            "display": "8–15"
+          },
+          "joint_friendly": {
+            "low": 12,
+            "high": 20,
+            "display": "12–20"
+          },
+          "conditioning": {
+            "low": 12,
+            "high": 20,
+            "display": "12–20"
+          }
+        },
+        "note": "Ab work is usually done for higher reps (coaching convention).",
+        "evidence": "modeled"
+      },
+      {
+        "id": "abs_rollout",
+        "label": "Rollouts and fallouts",
+        "exercises": [
+          "ab-wheel-rollout",
+          "barbell-rollout",
+          "stability-ball-rollout",
+          "trx-fallout"
+        ],
+        "range": {
+          "low": 6,
+          "high": 12,
+          "display": "6–12"
+        },
+        "note": "Long-lever rollouts are hard at full range, so sets stay moderate; shorten the range before adding reps.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "abs_lever",
+        "label": "Advanced lever drills",
+        "exercises": [
+          "standing-ab-wheel-rollout",
+          "dragon-flag"
+        ],
+        "range": {
+          "low": 3,
+          "high": 8,
+          "display": "3–8"
+        },
+        "note": "Very long levers: few, controlled reps.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "anti_rotation",
+        "label": "Anti-rotation and rotation presses",
+        "exercises": [
+          "pallof-press",
+          "landmine-rotation"
+        ],
+        "per_side_all": true,
+        "range": {
+          "low": 8,
+          "high": 12,
+          "display": "8–12"
+        },
+        "note": "Per side, slow and controlled.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "kb_controlled",
+        "label": "Controlled kettlebell drills",
+        "exercises": [
+          "kettlebell-halo"
+        ],
+        "per_side_all": true,
+        "not_to_failure": true,
+        "range": {
+          "low": 5,
+          "high": 10,
+          "display": "5–10"
+        },
+        "note": "Each direction; a technique and warm-up drill, not taken to failure.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "kb_windmill",
+        "label": "Windmill",
+        "exercises": [
+          "kettlebell-windmill"
+        ],
+        "not_to_failure": true,
+        "range": {
+          "low": 3,
+          "high": 8,
+          "display": "3–8"
+        },
+        "note": "Slow, technical reps; stop while every rep looks the same.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "get_up",
+        "label": "Turkish get-up",
+        "exercises": [
+          "turkish-get-up"
+        ],
+        "not_to_failure": true,
+        "range": {
+          "low": 1,
+          "high": 5,
+          "display": "1–5"
+        },
+        "note": "Each rep is a long multi-step movement; a few smooth reps per side.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "kb_swing",
+        "label": "Kettlebell swing",
+        "exercises": [
+          "kettlebell-swing"
+        ],
+        "not_to_failure": true,
+        "range": {
+          "low": 10,
+          "high": 20,
+          "display": "10–20"
+        },
+        "note": "Ballistic: end the set while hip snap and bell height stay crisp.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "kb_ballistic",
+        "label": "Kettlebell clean and snatch",
+        "exercises": [
+          "kettlebell-clean",
+          "kettlebell-snatch"
+        ],
+        "not_to_failure": true,
+        "range": {
+          "low": 5,
+          "high": 10,
+          "display": "5–10"
+        },
+        "note": "Ballistic: end the set while each rep is fast and clean.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "power",
+        "label": "Jumps and plyometrics",
+        "exercises": [
+          "box-jump",
+          "broad-jump",
+          "depth-jump",
+          "jump-squat",
+          "plyo-push-up"
+        ],
+        "not_to_failure": true,
+        "range": {
+          "low": 3,
+          "high": 6,
+          "display": "3–6"
+        },
+        "note": "Power drills: few fast reps with full rest, never to failure; stop when height, distance or speed drops.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "med_ball",
+        "label": "Medicine-ball throws",
+        "exercises": [
+          "med-ball-slam",
+          "med-ball-chest-pass"
+        ],
+        "not_to_failure": true,
+        "range": {
+          "low": 5,
+          "high": 10,
+          "display": "5–10"
+        },
+        "note": "Every throw at full speed; not taken to failure.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "bounding",
+        "label": "Bounding",
+        "exercises": [
+          "bounding"
+        ],
+        "not_to_failure": true,
+        "unit": "meters",
+        "range": {
+          "low": 20,
+          "high": 30,
+          "display": "20–30 m"
+        },
+        "note": "Distance per set; stop when bounds shorten.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "skill_bodyweight",
+        "label": "Bodyweight skill work",
+        "exercises": [
+          "muscle-up"
+        ],
+        "not_to_failure": true,
+        "range": {
+          "low": 3,
+          "high": 6,
+          "display": "3–6"
+        },
+        "note": "Skill-limited: stop while each rep is clean.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "hard_bodyweight",
+        "label": "Hard bodyweight strength moves",
+        "exercises": [
+          "wall-handstand-push-up",
+          "front-lever-row",
+          "pistol-squat",
+          "shrimp-squat",
+          "nordic-curl"
+        ],
+        "range": {
+          "low": 3,
+          "high": 8,
+          "display": "3–8"
+        },
+        "note": "Bodyweight load is fixed and heavy for these, so reps stay low; make the lever easier to add reps.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "archer",
+        "label": "Archer push-up",
+        "exercises": [
+          "archer-push-up"
+        ],
+        "range": {
+          "low": 5,
+          "high": 10,
+          "display": "5–10"
+        },
+        "note": "Per side.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "band_walk",
+        "label": "Band walks",
+        "exercises": [
+          "banded-lateral-walk"
+        ],
+        "per_side_all": true,
+        "range": {
+          "low": 10,
+          "high": 20,
+          "display": "10–20"
+        },
+        "note": "Steps per side.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "carry",
+        "label": "Loaded carries",
+        "exercises": [
+          "farmer-carry",
+          "suitcase-carry"
+        ],
+        "unit": "meters",
+        "range": {
+          "low": 20,
+          "high": 40,
+          "display": "20–40 m"
+        },
+        "note": "Distance per set (suitcase: per side). About 30–60 seconds of walking if distance is awkward to measure.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "hang",
+        "label": "Dead hang",
+        "exercises": [
+          "dead-hang"
+        ],
+        "unit": "seconds",
+        "range": {
+          "low": 20,
+          "high": 60,
+          "display": "20–60 s"
+        },
+        "note": "Time per set.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "active_hang",
+        "label": "Active hang",
+        "exercises": [
+          "active-hang"
+        ],
+        "unit": "seconds",
+        "range": {
+          "low": 10,
+          "high": 30,
+          "display": "10–30 s"
+        },
+        "note": "Time per set with the shoulders pulled down.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "hollow",
+        "label": "Hollow body hold",
+        "exercises": [
+          "hollow-body-hold"
+        ],
+        "unit": "seconds",
+        "range": {
+          "low": 20,
+          "high": 45,
+          "display": "20–45 s"
+        },
+        "note": "Time per set.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "l_sit",
+        "label": "L-sits",
+        "exercises": [
+          "l-sit",
+          "ring-l-sit"
+        ],
+        "unit": "seconds",
+        "range": {
+          "low": 10,
+          "high": 30,
+          "display": "10–30 s"
+        },
+        "note": "Time per set; tuck the knees to make it easier.",
+        "evidence": "modeled"
+      },
+      {
+        "id": "lever_hold",
+        "label": "Front lever hold",
+        "exercises": [
+          "tuck-front-lever"
+        ],
+        "unit": "seconds",
+        "range": {
+          "low": 5,
+          "high": 20,
+          "display": "5–20 s"
+        },
+        "note": "Time per set.",
+        "evidence": "modeled"
+      }
+    ],
+    "evidence": {
+      "hypertrophy_load_range": {
+        "level": "supported",
+        "citations": [
+          "schoenfeld2017load",
+          "lopez2021",
+          "schoenfeld2021rep"
+        ],
+        "note": "Muscle growth is similar across low, moderate and high loads when sets end at or near failure."
+      },
+      "strength_heavy": {
+        "level": "supported",
+        "citations": [
+          "schoenfeld2017load",
+          "lopez2021"
+        ],
+        "note": "Heavier loads give larger strength gains; the strength goal keeps primary lifts at 6 reps or fewer."
+      },
+      "exact_bounds": {
+        "level": "modeled",
+        "note": "The specific low and high numbers and every override are coaching conventions chosen for the app."
+      },
+      "not_to_failure": {
+        "level": "modeled",
+        "note": "Power, ballistic and skill drills end before failure so each rep keeps its speed and technique (coaching convention)."
+      }
+    },
+    "citations": {
+      "schoenfeld2017load": {
+        "authors": "Schoenfeld BJ, Grgic J, Ogborn D, Krieger JW",
+        "year": 2017,
+        "title": "Strength and Hypertrophy Adaptations Between Low- vs. High-Load Resistance Training: A Systematic Review and Meta-analysis",
+        "journal": "Journal of Strength and Conditioning Research",
+        "volume": "31(12)",
+        "pages": "3508-3523",
+        "doi": "10.1519/JSC.0000000000002200"
+      },
+      "lopez2021": {
+        "authors": "Lopez P, Radaelli R, Taaffe DR, Newton RU, Galvão DA, Trajano GS, et al.",
+        "year": 2021,
+        "title": "Resistance Training Load Effects on Muscle Hypertrophy and Strength Gain: Systematic Review and Network Meta-analysis",
+        "journal": "Medicine and Science in Sports and Exercise",
+        "volume": "53(6)",
+        "pages": "1206-1216",
+        "doi": "10.1249/MSS.0000000000002585"
+      },
+      "schoenfeld2021rep": {
+        "authors": "Schoenfeld BJ, Grgic J, Van Every DW, Plotkin DL",
+        "year": 2021,
+        "title": "Loading Recommendations for Muscle Strength, Hypertrophy, and Local Endurance: A Re-Examination of the Repetition Continuum",
+        "journal": "Sports",
+        "volume": "9(2)",
+        "pages": "32",
+        "doi": "10.3390/sports9020032"
+      }
+    },
+    "resolver": "tools/whiteboard.py rep_range(exercise_id, goal=None) -> {low, high, unit, display, per_side, not_to_failure, source}",
+    "fixture": "data/rep-ranges-reference.json (all 239 exercises x default + 7 goals)"
+  },
+  "body_regions": {
+    "version": 1,
+    "order": [
+      "chest",
+      "back",
+      "shoulders",
+      "arms",
+      "legs",
+      "core"
+    ],
+    "labels": {
+      "chest": "Chest",
+      "back": "Back",
+      "shoulders": "Shoulders",
+      "arms": "Arms",
+      "legs": "Legs",
+      "core": "Core"
+    },
+    "muscles": {
+      "chest": "chest",
+      "front_delts": "shoulders",
+      "side_delts": "shoulders",
+      "rear_delts": "shoulders",
+      "lats": "back",
+      "upper_back": "back",
+      "traps": "back",
+      "lower_back": "back",
+      "biceps": "arms",
+      "triceps": "arms",
+      "forearms": "arms",
+      "quads": "legs",
+      "hamstrings": "legs",
+      "glutes": "legs",
+      "calves": "legs",
+      "adductors": "legs",
+      "abductors": "legs",
+      "abs": "core",
+      "obliques": "core"
+    },
+    "heads": {
+      "chest_upper": "chest",
+      "chest_lower": "chest",
+      "front_delts": "shoulders",
+      "side_delts": "shoulders",
+      "rear_delts": "shoulders",
+      "lats": "back",
+      "upper_back": "back",
+      "traps_upper": "back",
+      "traps_mid_lower": "back",
+      "biceps": "arms",
+      "triceps_long": "arms",
+      "triceps_short": "arms",
+      "forearms": "arms",
+      "abs": "core",
+      "obliques": "core",
+      "quads_rf": "legs",
+      "quads_vasti": "legs",
+      "hamstrings": "legs",
+      "glutes": "legs",
+      "adductors": "legs",
+      "calves_gastroc": "legs",
+      "calves_soleus": "legs",
+      "lower_back": "back",
+      "abductors": "legs"
+    },
+    "edge_cases": {
+      "traps": "back: trained by shrugs, rows and deadlifts and sits on the upper back; the app's splits already put shrugs on pull/back days.",
+      "rear_delts": "shoulders: it is a deltoid head; face pulls and reverse flyes still read as shoulder work even though they are often done on back days.",
+      "lower_back": "back: the spinal erectors run the length of the back; core here means the front and side trunk (abs, obliques).",
+      "forearms": "arms: below the elbow, trained by curls, wrist work and grip; carries and hangs that rate forearms highest therefore show as arms.",
+      "glutes": "legs: hip extensors trained with squats, hinges and lunges; there is no separate hips region.",
+      "calves": "legs.",
+      "adductors": "legs: inner thigh.",
+      "abductors": "legs: outer hip (glute medius and minimus), trained with the leg work.",
+      "obliques": "core.",
+      "hip_flexors": "No muscle id in the library (hip-flexor work shows as the hip_flexor_work swap tag on abs exercises). A future hip_flexors id goes to core, where those exercises live.",
+      "neck": "No muscle id in the library. A future neck id goes to back, next to traps (rules.ranking already notes where a neck id would sit)."
+    },
+    "primary_rule": "An exercise's primary region is the region of its highest-rated muscle in exercises.json muscles. Tie-breaks, in order: 1) the region with the larger sum of the exercise's muscle ratings; 2) the region of the exercise's first listed pattern (pattern_region); 3) the earlier region in order.",
+    "pattern_region": {
+      "horizontal_push": "chest",
+      "chest_fly": "chest",
+      "vertical_push": "shoulders",
+      "side_delts": "shoulders",
+      "rear_delts": "shoulders",
+      "front_delts": "shoulders",
+      "vertical_pull": "back",
+      "horizontal_pull": "back",
+      "lat_iso": "back",
+      "traps": "back",
+      "biceps": "arms",
+      "triceps": "arms",
+      "forearms": "arms",
+      "squat": "legs",
+      "lunge": "legs",
+      "quads_iso": "legs",
+      "hinge": "legs",
+      "glute_iso": "legs",
+      "hamstring_curl": "legs",
+      "hip_iso": "legs",
+      "calves": "legs",
+      "abs": "core",
+      "carry_core": "core"
+    },
+    "tokens_suggested": {
+      "chest": "--region-chest",
+      "back": "--region-back",
+      "shoulders": "--region-shoulders",
+      "arms": "--region-arms",
+      "legs": "--region-legs",
+      "core": "--region-core"
+    },
+    "tokens_note": "Neutral token names only; the data sets no colors.",
+    "resolver": "tools/whiteboard.py primary_region(exercise_id) -> region id",
+    "fixture": "data/body-regions-reference.json"
+  },
+  "short_label_note": "rules[].short_label: 3-5 words (a hyphenated word counts as one) for compact chips. short_label_variants keys: message_* variant names (info, week, no_pull, no_push, indirect_only), the checker ids spinal_load_session/_week as session/week, and weekly_volume over/under (sets above max / below min)."
 }

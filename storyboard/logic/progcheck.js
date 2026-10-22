@@ -178,6 +178,15 @@ function message(dt,f,days,level){const {R,RU,PJ}=ctx(dt),DN=R.day_names,id=f[1]
   let msg=r.message;if(id==='low_frequency'&&f[3]===0&&r.message_indirect_only)msg=r.message_indirect_only;else if(id==='spinal_load_week')msg=r.message_week||msg;else if(f[0]==='info'&&r.message_info)msg=r.message_info;
   return fmtPy(msg,P)}
 const RULE_OF=id=>id.startsWith('spinal_load')?'spinal_load':id;
+// rules.json rules[].short_label, with short_label_variants picked the same way message() picks its variant
+function shortLabel(dt,f){const id=f[1],r=dt.rules.rules.find(x=>x.id===RULE_OF(id));if(!r)return id;const V=r.short_label_variants||{};let k=null;
+  if(id==='spinal_load_session')k='session';else if(id==='spinal_load_week')k='week';
+  else if(id==='push_pull_imbalance'&&(f[2]===0||f[2]===99))k=f[2]?'no_push':'no_pull';
+  else if(id==='low_frequency'&&f[3]===0&&r.message_indirect_only)k='indirect_only';
+  else if(id==='weekly_volume'){const T=ctx(dt).T[f[2]];k=T&&f[3]>T.max?'over':'under'}
+  else if(f[0]==='info'&&r.severity!=='info')k='info';
+  return (k&&V[k])||r.short_label||id}
+const ruleLabel=(dt,id)=>{const r=dt.rules.rules.find(x=>x.id===id);return (r&&r.short_label)||id};
 // the checks the board is scored on: every rules.json rule that applies (app_only rules need a saved baseline; `levels` limits a rule)
 function checks(dt,days,level){const [fl,week]=check(dt,days,level),rules=dt.rules.rules.filter(r=>!r.app_only&&(!r.levels||r.levels.includes(level)));
   const byRule={};rules.forEach(r=>byRule[r.id]={id:r.id,warn:[],info:[]});fl.forEach(f=>{const b=byRule[RULE_OF(f[1])];if(b)b[f[0]].push(f)});
@@ -192,6 +201,6 @@ function analytics(dt,days,level){const TT=dt.targets,C=TT.curve,A=TT.analytics,
   const day=days.map(d=>({day:d.day,minutes:sessionMinutes(dt,d.tiles),sets:total(d),cost:d.tiles.reduce((a,t)=>a+t.sets*fat(dt.EX[t.id]),0),spinal:d.tiles.reduce((a,t)=>a+(HEAVY.has(t.id)?t.sets:0),0)}));
   return {muscles,day,weekSets:days.reduce((a,d)=>a+total(d),0),weekMinutes:day.reduce((a,d)=>a+d.minutes,0),weekCost:day.reduce((a,d)=>a+d.cost,0),
     spinal:{week:day.reduce((a,d)=>a+d.spinal,0),week_max:RU.spinal_load.week_warn_above[level],session_max:RU.spinal_load.session_warn_above[level]},disclaimer:A.disclaimer,curveModel:C.model}}
-const API={check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,flagKey,ORDER};
+const API={check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,flagKey,ORDER,shortLabel,ruleLabel};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else root.PCHECK=API;
 })(typeof window!=='undefined'?window:this);

@@ -1,5 +1,5 @@
 {
- "version": 10,
+ "version": 11,
  "muscles": [
   "chest",
   "front_delts",
@@ -25,6 +25,7 @@
   {
    "id": "barbell-bench-press",
    "name": "Barbell Bench Press",
+   "short_name": "BB Bench Press",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -116,6 +117,7 @@
   {
    "id": "incline-barbell-bench-press",
    "name": "Incline Barbell Bench Press",
+   "short_name": "Incline BB Bench",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -209,6 +211,7 @@
   {
    "id": "dumbbell-bench-press",
    "name": "Dumbbell Bench Press",
+   "short_name": "DB Bench Press",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -298,6 +301,7 @@
   {
    "id": "incline-dumbbell-press",
    "name": "Incline Dumbbell Press",
+   "short_name": "Incline DB Press",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -389,6 +393,7 @@
   {
    "id": "machine-chest-press",
    "name": "Machine Chest Press",
+   "short_name": "Chest Press",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -477,6 +482,7 @@
   {
    "id": "weighted-dip",
    "name": "Weighted Dip",
+   "short_name": "Weighted Dip",
    "type": "primary",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -576,6 +582,7 @@
   {
    "id": "push-up",
    "name": "Push-Up",
+   "short_name": "Push-Up",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -668,6 +675,7 @@
   {
    "id": "cable-fly",
    "name": "Cable Fly",
+   "short_name": "Cable Fly",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -758,6 +766,7 @@
   {
    "id": "pec-deck",
    "name": "Pec Deck",
+   "short_name": "Pec Deck",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -848,6 +857,7 @@
   {
    "id": "dumbbell-fly",
    "name": "Dumbbell Fly",
+   "short_name": "Dumbbell Fly",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -937,6 +947,7 @@
   {
    "id": "overhead-press",
    "name": "Overhead Press",
+   "short_name": "Overhead Press",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -1030,6 +1041,7 @@
   {
    "id": "seated-dumbbell-shoulder-press",
    "name": "Seated Dumbbell Shoulder Press",
+   "short_name": "Seated DB Press",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -1121,6 +1133,7 @@
   {
    "id": "machine-shoulder-press",
    "name": "Machine Shoulder Press",
+   "short_name": "Shoulder Press",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -1211,6 +1224,7 @@
   {
    "id": "dumbbell-lateral-raise",
    "name": "Dumbbell Lateral Raise",
+   "short_name": "DB Lat Raise",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -1299,6 +1313,7 @@
   {
    "id": "cable-lateral-raise",
    "name": "Cable Lateral Raise",
+   "short_name": "Cable Lat Raise",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -1390,6 +1405,7 @@
   {
    "id": "upright-row",
    "name": "Upright Row",
+   "short_name": "Upright Row",
    "type": "accessory",
    "equipment": "barbell",
    "equipment_needs": [
@@ -1450,7 +1466,7 @@
     "Stop when your elbows are about shoulder height.",
     "Lower under control."
    ],
-   "tip": "A wider grip and stopping at shoulder height are usually easiest on the shoulders.",
+   "tip": "A wider grip and stopping at shoulder height are the setup most lifters find comfortable.",
    "youtube": "",
    "fatigue": 1.2,
    "howto": {
@@ -1482,6 +1498,7 @@
   {
    "id": "reverse-pec-deck",
    "name": "Reverse Pec Deck",
+   "short_name": "Reverse Pec Deck",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -1570,6 +1587,7 @@
   {
    "id": "face-pull",
    "name": "Face Pull",
+   "short_name": "Face Pull",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -1660,6 +1678,7 @@
   {
    "id": "dumbbell-rear-delt-fly",
    "name": "Dumbbell Rear Delt Fly",
+   "short_name": "DB Rear Delt Fly",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -1748,6 +1767,7 @@
   {
    "id": "front-raise",
    "name": "Front Raise",
+   "short_name": "Front Raise",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -1836,6 +1856,7 @@
   {
    "id": "pull-up",
    "name": "Pull-Up",
+   "short_name": "Pull-Up",
    "type": "primary",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -1933,6 +1954,7 @@
   {
    "id": "chin-up",
    "name": "Chin-Up",
+   "short_name": "Chin-Up",
    "type": "primary",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -2030,6 +2052,7 @@
   {
    "id": "lat-pulldown",
    "name": "Lat Pulldown",
+   "short_name": "Lat Pulldown",
    "type": "accessory",
    "equipment": "cable",
    "equipment_needs": [
@@ -2120,6 +2143,7 @@
   {
    "id": "close-grip-pulldown",
    "name": "Close-Grip Pulldown",
+   "short_name": "CG Pulldown",
    "type": "accessory",
    "equipment": "cable",
    "equipment_needs": [
@@ -2211,6 +2235,7 @@
   {
    "id": "barbell-row",
    "name": "Barbell Row",
+   "short_name": "Barbell Row",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -2304,6 +2329,7 @@
   {
    "id": "pendlay-row",
    "name": "Pendlay Row",
+   "short_name": "Pendlay Row",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -2398,6 +2424,7 @@
   {
    "id": "one-arm-dumbbell-row",
    "name": "One-Arm Dumbbell Row",
+   "short_name": "1-Arm DB Row",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -2491,6 +2518,7 @@
   {
    "id": "chest-supported-row",
    "name": "Chest-Supported Row",
+   "short_name": "Supported Row",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -2582,6 +2610,7 @@
   {
    "id": "seated-cable-row",
    "name": "Seated Cable Row",
+   "short_name": "Seated Cable Row",
    "type": "accessory",
    "equipment": "cable",
    "equipment_needs": [
@@ -2674,6 +2703,7 @@
   {
    "id": "t-bar-row",
    "name": "T-Bar Row",
+   "short_name": "T-Bar Row",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -2768,6 +2798,7 @@
   {
    "id": "straight-arm-pulldown",
    "name": "Straight-Arm Pulldown",
+   "short_name": "Str-Arm Pulldown",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -2858,6 +2889,7 @@
   {
    "id": "barbell-shrug",
    "name": "Barbell Shrug",
+   "short_name": "Barbell Shrug",
    "type": "isolation",
    "equipment": "barbell",
    "equipment_needs": [
@@ -2951,6 +2983,7 @@
   {
    "id": "dumbbell-shrug",
    "name": "Dumbbell Shrug",
+   "short_name": "Dumbbell Shrug",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -3043,6 +3076,7 @@
   {
    "id": "barbell-curl",
    "name": "Barbell Curl",
+   "short_name": "Barbell Curl",
    "type": "isolation",
    "equipment": "barbell",
    "equipment_needs": [
@@ -3132,6 +3166,7 @@
   {
    "id": "dumbbell-curl",
    "name": "Dumbbell Curl",
+   "short_name": "Dumbbell Curl",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -3220,6 +3255,7 @@
   {
    "id": "hammer-curl",
    "name": "Hammer Curl",
+   "short_name": "Hammer Curl",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -3311,6 +3347,7 @@
   {
    "id": "incline-dumbbell-curl",
    "name": "Incline Dumbbell Curl",
+   "short_name": "Incline DB Curl",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -3402,6 +3439,7 @@
   {
    "id": "preacher-curl",
    "name": "Preacher Curl",
+   "short_name": "Preacher Curl",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -3493,6 +3531,7 @@
   {
    "id": "cable-curl",
    "name": "Cable Curl",
+   "short_name": "Cable Curl",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -3583,6 +3622,7 @@
   {
    "id": "close-grip-bench-press",
    "name": "Close-Grip Bench Press",
+   "short_name": "CG Bench Press",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -3645,7 +3685,7 @@
     "Lower the bar to your lower chest, keeping your elbows close to your sides.",
     "Press until your arms are straight."
    ],
-   "tip": "Shoulder width is close enough. A grip that's too narrow just strains your wrists.",
+   "tip": "Shoulder width is close enough. A narrower grip bends the wrists more without adding triceps work.",
    "youtube": "",
    "fatigue": 1.2,
    "howto": {
@@ -3675,6 +3715,7 @@
   {
    "id": "skull-crusher",
    "name": "Skull Crusher",
+   "short_name": "Skull Crusher",
    "type": "isolation",
    "equipment": "barbell",
    "equipment_needs": [
@@ -3765,6 +3806,7 @@
   {
    "id": "triceps-pushdown",
    "name": "Triceps Pushdown",
+   "short_name": "Triceps Pushdown",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -3855,6 +3897,7 @@
   {
    "id": "overhead-cable-triceps-extension",
    "name": "Overhead Cable Triceps Extension",
+   "short_name": "OH Cable Ext",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -3946,6 +3989,7 @@
   {
    "id": "wrist-curl",
    "name": "Wrist Curl",
+   "short_name": "Wrist Curl",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -4034,6 +4078,7 @@
   {
    "id": "back-squat",
    "name": "Back Squat",
+   "short_name": "Back Squat",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -4126,6 +4171,7 @@
   {
    "id": "front-squat",
    "name": "Front Squat",
+   "short_name": "Front Squat",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -4219,6 +4265,7 @@
   {
    "id": "hack-squat",
    "name": "Hack Squat",
+   "short_name": "Hack Squat",
    "type": "primary",
    "equipment": "machine",
    "equipment_needs": [
@@ -4307,6 +4354,7 @@
   {
    "id": "leg-press",
    "name": "Leg Press",
+   "short_name": "Leg Press",
    "type": "primary",
    "equipment": "machine",
    "equipment_needs": [
@@ -4395,6 +4443,7 @@
   {
    "id": "bulgarian-split-squat",
    "name": "Bulgarian Split Squat",
+   "short_name": "Bulgarian Split",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -4486,6 +4535,7 @@
   {
    "id": "walking-lunge",
    "name": "Walking Lunge",
+   "short_name": "Walking Lunge",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -4576,6 +4626,7 @@
   {
    "id": "leg-extension",
    "name": "Leg Extension",
+   "short_name": "Leg Extension",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -4667,6 +4718,7 @@
   {
    "id": "deadlift",
    "name": "Deadlift",
+   "short_name": "Deadlift",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -4760,6 +4812,7 @@
   {
    "id": "romanian-deadlift",
    "name": "Romanian Deadlift",
+   "short_name": "Barbell RDL",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -4852,6 +4905,7 @@
   {
    "id": "stiff-leg-dumbbell-deadlift",
    "name": "Stiff-Leg Dumbbell Deadlift",
+   "short_name": "Stiff-Leg DB DL",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -4943,6 +4997,7 @@
   {
    "id": "hip-thrust",
    "name": "Hip Thrust",
+   "short_name": "Hip Thrust",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -5035,6 +5090,7 @@
   {
    "id": "lying-leg-curl",
    "name": "Lying Leg Curl",
+   "short_name": "Lying Leg Curl",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -5123,6 +5179,7 @@
   {
    "id": "seated-leg-curl",
    "name": "Seated Leg Curl",
+   "short_name": "Seated Leg Curl",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -5211,6 +5268,7 @@
   {
    "id": "back-extension",
    "name": "Back Extension",
+   "short_name": "Back Extension",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -5307,6 +5365,7 @@
   {
    "id": "hip-adduction-machine",
    "name": "Hip Adduction Machine",
+   "short_name": "Hip Adduction",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -5395,6 +5454,7 @@
   {
    "id": "standing-calf-raise",
    "name": "Standing Calf Raise",
+   "short_name": "Standing Calf",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -5486,6 +5546,7 @@
   {
    "id": "seated-calf-raise",
    "name": "Seated Calf Raise",
+   "short_name": "Seated Calf",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -5574,6 +5635,7 @@
   {
    "id": "hanging-leg-raise",
    "name": "Hanging Leg Raise",
+   "short_name": "Hang Leg Raise",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -5671,6 +5733,7 @@
   {
    "id": "cable-crunch",
    "name": "Cable Crunch",
+   "short_name": "Cable Crunch",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -5761,6 +5824,7 @@
   {
    "id": "ab-wheel-rollout",
    "name": "Ab Wheel Rollout",
+   "short_name": "Ab Wheel Rollout",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -5852,6 +5916,7 @@
   {
    "id": "hip-abduction-machine",
    "name": "Hip Abduction Machine",
+   "short_name": "Hip Abduction",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -5940,6 +6005,7 @@
   {
    "id": "cable-hip-abduction",
    "name": "Cable Hip Abduction",
+   "short_name": "Cable Abduction",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -6031,6 +6097,7 @@
   {
    "id": "side-lying-hip-abduction",
    "name": "Side-Lying Hip Abduction",
+   "short_name": "Lying Abduction",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -6125,6 +6192,7 @@
   {
    "id": "banded-lateral-walk",
    "name": "Banded Lateral Walk",
+   "short_name": "Banded Walk",
    "type": "isolation",
    "equipment": "band",
    "equipment_needs": [
@@ -6213,6 +6281,7 @@
   {
    "id": "dumbbell-step-up",
    "name": "Dumbbell Step-Up",
+   "short_name": "Dumbbell Step-Up",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -6304,6 +6373,7 @@
   {
    "id": "smith-squat",
    "name": "Smith Machine Squat",
+   "short_name": "Smith Squat",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -6364,7 +6434,7 @@
     "Sit down with your knees tracking over your toes until your hips are below your knees.",
     "Drive back up and re-hook the bar at the top."
    ],
-   "tip": "Feet a little forward shifts work toward the quads and keeps your knees comfortable.",
+   "tip": "Feet a little forward shifts work toward the quads; many lifters also find it more comfortable.",
    "youtube": "",
    "fatigue": 1.2,
    "howto": {
@@ -6395,6 +6465,7 @@
   {
    "id": "smith-bench-press",
    "name": "Smith Machine Bench Press",
+   "short_name": "Smith Bench",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -6449,7 +6520,7 @@
     "lower_back": 0,
     "abductors": 0
    },
-   "description": "A flat press on a fixed bar path. It's easy to push close to failure safely without a spotter.",
+   "description": "A flat press on a fixed bar path. With the safety stops set, you can take sets close to failure without a spotter.",
    "howTo": [
     "Set the bench so the bar lines up with your mid-chest.",
     "Grip just wider than shoulder width and unhook the bar.",
@@ -6485,6 +6556,7 @@
   {
    "id": "smith-incline-press",
    "name": "Smith Machine Incline Press",
+   "short_name": "Smith Incline",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -6577,6 +6649,7 @@
   {
    "id": "smith-overhead-press",
    "name": "Smith Machine Overhead Press",
+   "short_name": "Smith OH Press",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -6670,6 +6743,7 @@
   {
    "id": "smith-row",
    "name": "Smith Machine Row",
+   "short_name": "Smith Row",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -6762,6 +6836,7 @@
   {
    "id": "smith-rdl",
    "name": "Smith Machine Romanian Deadlift",
+   "short_name": "Smith RDL",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -6853,6 +6928,7 @@
   {
    "id": "smith-split-squat",
    "name": "Smith Machine Split Squat",
+   "short_name": "Smith Split",
    "type": "accessory",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -6944,6 +7020,7 @@
   {
    "id": "smith-calf-raise",
    "name": "Smith Machine Calf Raise",
+   "short_name": "Smith Calf Raise",
    "type": "isolation",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -7036,6 +7113,7 @@
   {
    "id": "smith-hip-thrust",
    "name": "Smith Machine Hip Thrust",
+   "short_name": "Smith Hip Thrust",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -7128,6 +7206,7 @@
   {
    "id": "smith-shrug",
    "name": "Smith Machine Shrug",
+   "short_name": "Smith Shrug",
    "type": "isolation",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -7219,6 +7298,7 @@
   {
    "id": "incline-cable-pullover",
    "name": "Incline-Bench Cable Pullover",
+   "short_name": "Cable Pullover",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -7310,6 +7390,7 @@
   {
    "id": "dumbbell-pullover",
    "name": "Dumbbell Pullover",
+   "short_name": "DB Pullover",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -7398,6 +7479,7 @@
   {
    "id": "pullover-machine",
    "name": "Pullover Machine",
+   "short_name": "Pullover Machine",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -7485,6 +7567,7 @@
   {
    "id": "landmine-t-bar-row",
    "name": "Chest-Supported T-Bar Row",
+   "short_name": "Supp T-Bar Row",
    "type": "primary",
    "equipment": "landmine",
    "equipment_needs": [
@@ -7578,6 +7661,7 @@
   {
    "id": "viking-press",
    "name": "Landmine Viking Press",
+   "short_name": "Viking Press",
    "type": "accessory",
    "equipment": "landmine",
    "equipment_needs": [
@@ -7632,7 +7716,7 @@
     "calves_soleus": 0,
     "lower_back": 0
    },
-   "description": "A two-handed overhead press using a landmine with a Viking handle, on a forward arc that is easier on the shoulders than a strict press.",
+   "description": "A two-handed overhead press using a landmine with a Viking handle, on a forward arc that many lifters find more comfortable than a strict press.",
    "howTo": [
     "Stand facing the handle with your feet hip width apart and the grips at shoulder height.",
     "Brace and press up and slightly forward until your arms are straight.",
@@ -7671,6 +7755,7 @@
   {
    "id": "landmine-press-one-arm",
    "name": "One-Arm Landmine Press",
+   "short_name": "1-Arm Landmine",
    "type": "accessory",
    "equipment": "landmine",
    "equipment_needs": [
@@ -7725,7 +7810,7 @@
     "calves_soleus": 0,
     "lower_back": 0
    },
-   "description": "A one-arm press up and forward along a landmine arc for the front delts and upper chest, and kind on cranky shoulders.",
+   "description": "A one-arm press up and forward along a landmine arc for the front delts and upper chest, on an angled path many lifters find comfortable.",
    "howTo": [
     "Stand in a split stance holding the end of the bar at your shoulder in one hand.",
     "Press up and forward until your arm is straight, reaching a little at the top.",
@@ -7765,6 +7850,7 @@
   {
    "id": "landmine-press-two-arm",
    "name": "Two-Arm Landmine Press",
+   "short_name": "Landmine Press",
    "type": "accessory",
    "equipment": "landmine",
    "equipment_needs": [
@@ -7858,6 +7944,7 @@
   {
    "id": "meadows-row",
    "name": "Meadows Row",
+   "short_name": "Meadows Row",
    "type": "accessory",
    "equipment": "landmine",
    "equipment_needs": [
@@ -7951,6 +8038,7 @@
   {
    "id": "landmine-squat",
    "name": "Landmine Squat",
+   "short_name": "Landmine Squat",
    "type": "accessory",
    "equipment": "landmine",
    "equipment_needs": [
@@ -8042,6 +8130,7 @@
   {
    "id": "landmine-rdl",
    "name": "Landmine Romanian Deadlift",
+   "short_name": "Landmine RDL",
    "type": "accessory",
    "equipment": "landmine",
    "equipment_needs": [
@@ -8131,6 +8220,7 @@
   {
    "id": "landmine-rotation",
    "name": "Landmine Rotation",
+   "short_name": "Landmine Twist",
    "type": "accessory",
    "equipment": "landmine",
    "equipment_needs": [
@@ -8220,6 +8310,7 @@
   {
    "id": "machine-preacher-curl",
    "name": "Preacher Curl Machine",
+   "short_name": "Preacher Machine",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -8309,6 +8400,7 @@
   {
    "id": "seated-machine-curl",
    "name": "Seated Curl Machine",
+   "short_name": "Curl Machine",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -8396,6 +8488,7 @@
   {
    "id": "cable-rope-hammer-curl",
    "name": "Cable Rope Hammer Curl",
+   "short_name": "Rope Hammer Curl",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -8487,6 +8580,7 @@
   {
    "id": "bayesian-cable-curl",
    "name": "Bayesian Cable Curl",
+   "short_name": "Bayesian Curl",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -8577,6 +8671,7 @@
   {
    "id": "high-cable-curl",
    "name": "High Cable Curl",
+   "short_name": "High Cable Curl",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -8667,6 +8762,7 @@
   {
    "id": "machine-triceps-extension",
    "name": "Triceps Extension Machine",
+   "short_name": "Triceps Machine",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -8754,6 +8850,7 @@
   {
    "id": "dip-machine",
    "name": "Seated Dip Machine",
+   "short_name": "Dip Machine",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -8844,6 +8941,7 @@
   {
    "id": "overhead-triceps-machine",
    "name": "Overhead Triceps Extension Machine",
+   "short_name": "OH Ext Machine",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -8933,6 +9031,7 @@
   {
    "id": "plate-loaded-chest-press",
    "name": "Plate-Loaded Chest Press",
+   "short_name": "Plate-Load Chest",
    "type": "accessory",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -9021,6 +9120,7 @@
   {
    "id": "incline-machine-press",
    "name": "Incline Chest Press Machine",
+   "short_name": "Incline Machine",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -9110,6 +9210,7 @@
   {
    "id": "decline-machine-press",
    "name": "Decline Chest Press Machine",
+   "short_name": "Decline Machine",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -9162,7 +9263,7 @@
     "calves_soleus": 0,
     "lower_back": 0
    },
-   "description": "A machine decline press that biases the lower chest and is gentle on the shoulders.",
+   "description": "A machine decline press that biases the lower chest on a short, guided path.",
    "howTo": [
     "Sit with the handles in line with your lower chest.",
     "Press down and forward until your arms are nearly straight.",
@@ -9199,6 +9300,7 @@
   {
    "id": "iso-lateral-chest-press",
    "name": "Iso-Lateral Chest Press",
+   "short_name": "Iso Chest Press",
    "type": "accessory",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -9289,6 +9391,7 @@
   {
    "id": "iso-lateral-shoulder-press",
    "name": "Iso-Lateral Shoulder Press",
+   "short_name": "Iso OH Press",
    "type": "accessory",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -9380,6 +9483,7 @@
   {
    "id": "lateral-raise-machine",
    "name": "Seated Lateral Raise Machine (Elbow Pads)",
+   "short_name": "Lat Raise Mach",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -9467,6 +9571,7 @@
   {
    "id": "high-row-machine",
    "name": "High Row Machine",
+   "short_name": "High Row Machine",
    "type": "accessory",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -9555,6 +9660,7 @@
   {
    "id": "low-row-machine",
    "name": "Low Row Machine",
+   "short_name": "Low Row Machine",
    "type": "accessory",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -9645,6 +9751,7 @@
   {
    "id": "iso-lateral-row",
    "name": "Iso-Lateral Row",
+   "short_name": "Iso-Lateral Row",
    "type": "accessory",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -9736,6 +9843,7 @@
   {
    "id": "wide-grip-lat-pulldown",
    "name": "Wide-Grip Lat Pulldown",
+   "short_name": "Wide Pulldown",
    "type": "accessory",
    "equipment": "cable",
    "equipment_needs": [
@@ -9826,6 +9934,7 @@
   {
    "id": "neutral-grip-lat-pulldown",
    "name": "Neutral-Grip Lat Pulldown",
+   "short_name": "Neutral Pulldown",
    "type": "accessory",
    "equipment": "cable",
    "equipment_needs": [
@@ -9916,6 +10025,7 @@
   {
    "id": "single-arm-lat-pulldown",
    "name": "Single-Arm Lat Pulldown",
+   "short_name": "1-Arm Pulldown",
    "type": "accessory",
    "equipment": "cable",
    "equipment_needs": [
@@ -10006,6 +10116,7 @@
   {
    "id": "assisted-pull-up",
    "name": "Assisted Pull-Up",
+   "short_name": "Assisted Pull-Up",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -10099,6 +10210,7 @@
   {
    "id": "assisted-dip",
    "name": "Assisted Dip",
+   "short_name": "Assisted Dip",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -10193,6 +10305,7 @@
   {
    "id": "pendulum-squat",
    "name": "Pendulum Squat",
+   "short_name": "Pendulum Squat",
    "type": "primary",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -10281,6 +10394,7 @@
   {
    "id": "belt-squat",
    "name": "Belt Squat",
+   "short_name": "Belt Squat",
    "type": "primary",
    "equipment": "machine",
    "equipment_needs": [
@@ -10368,6 +10482,7 @@
   {
    "id": "v-squat",
    "name": "V-Squat",
+   "short_name": "V-Squat",
    "type": "primary",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -10456,6 +10571,7 @@
   {
    "id": "single-leg-press",
    "name": "Single-Leg Leg Press",
+   "short_name": "SL Leg Press",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -10546,6 +10662,7 @@
   {
    "id": "high-foot-leg-press",
    "name": "High-Foot Leg Press",
+   "short_name": "High-Foot Press",
    "type": "primary",
    "equipment": "machine",
    "equipment_needs": [
@@ -10635,6 +10752,7 @@
   {
    "id": "nordic-curl",
    "name": "Nordic Curl",
+   "short_name": "Nordic Curl",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -10726,6 +10844,7 @@
   {
    "id": "glute-kickback-machine",
    "name": "Glute Kickback Machine",
+   "short_name": "Kickback Machine",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -10816,6 +10935,7 @@
   {
    "id": "hip-thrust-machine",
    "name": "Hip Thrust Machine",
+   "short_name": "Hip Thrust Mach",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -10905,6 +11025,7 @@
   {
    "id": "leg-press-calf-raise",
    "name": "Calf Raise on Leg Press",
+   "short_name": "Leg Press Calf",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -10994,6 +11115,7 @@
   {
    "id": "ab-crunch-machine",
    "name": "Ab Crunch Machine",
+   "short_name": "Crunch Machine",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -11081,6 +11203,7 @@
   {
    "id": "45-degree-hyperextension",
    "name": "45° Glute Hyperextension",
+   "short_name": "45° Glute Hyper",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -11174,6 +11297,7 @@
   {
    "id": "reverse-hyper",
    "name": "Reverse Hyperextension",
+   "short_name": "Reverse Hyper",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -11261,6 +11385,7 @@
   {
    "id": "shrug-machine",
    "name": "Shrug Machine",
+   "short_name": "Shrug Machine",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -11350,6 +11475,7 @@
   {
    "id": "cable-crossover-low-to-high",
    "name": "Low-to-High Cable Fly",
+   "short_name": "Low-to-High Fly",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -11440,6 +11566,7 @@
   {
    "id": "cable-crossover-high-to-low",
    "name": "High-to-Low Cable Fly",
+   "short_name": "High-to-Low Fly",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -11530,6 +11657,7 @@
   {
    "id": "single-arm-cable-row",
    "name": "Single-Arm Cable Row",
+   "short_name": "1-Arm Cable Row",
    "type": "accessory",
    "equipment": "cable",
    "equipment_needs": [
@@ -11620,6 +11748,7 @@
   {
    "id": "wide-grip-cable-row",
    "name": "Wide-Grip Cable Row",
+   "short_name": "Wide Cable Row",
    "type": "accessory",
    "equipment": "cable",
    "equipment_needs": [
@@ -11710,6 +11839,7 @@
   {
    "id": "dumbbell-rdl",
    "name": "Dumbbell Romanian Deadlift",
+   "short_name": "DB RDL",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -11800,6 +11930,7 @@
   {
    "id": "goblet-squat",
    "name": "Goblet Squat",
+   "short_name": "Goblet Squat",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -11890,6 +12021,7 @@
   {
    "id": "dumbbell-reverse-lunge",
    "name": "Dumbbell Reverse Lunge",
+   "short_name": "DB Reverse Lunge",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -11942,7 +12074,7 @@
     "calves_soleus": 0,
     "lower_back": 0
    },
-   "description": "A reverse lunge with dumbbells, gentler on the knees than a forward lunge.",
+   "description": "A reverse lunge with dumbbells; stepping back is easier to control than a forward lunge for many lifters.",
    "howTo": [
     "Stand holding dumbbells at your sides.",
     "Step one foot back and lower until your back knee nearly touches the floor.",
@@ -11979,6 +12111,7 @@
   {
    "id": "arnold-press",
    "name": "Arnold Press",
+   "short_name": "Arnold Press",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -12070,6 +12203,7 @@
   {
    "id": "cable-y-raise",
    "name": "Cable Y-Raise",
+   "short_name": "Cable Y-Raise",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -12160,6 +12294,7 @@
   {
    "id": "concentration-curl",
    "name": "Concentration Curl",
+   "short_name": "Concentration",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -12251,6 +12386,7 @@
   {
    "id": "dumbbell-kickback",
    "name": "Dumbbell Triceps Kickback",
+   "short_name": "DB Tri Kickback",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -12340,6 +12476,7 @@
   {
    "id": "jm-press",
    "name": "JM Press",
+   "short_name": "JM Press",
    "type": "accessory",
    "equipment": "barbell",
    "equipment_needs": [
@@ -12431,6 +12568,7 @@
   {
    "id": "sissy-squat",
    "name": "Sissy Squat",
+   "short_name": "Sissy Squat",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -12524,6 +12662,7 @@
   {
    "id": "inverted-row",
    "name": "Inverted Row",
+   "short_name": "Inverted Row",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -12619,6 +12758,7 @@
   {
    "id": "pike-push-up",
    "name": "Pike Push-Up",
+   "short_name": "Pike Push-Up",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -12712,6 +12852,7 @@
   {
    "id": "weighted-decline-crunch",
    "name": "Weighted Decline Crunch",
+   "short_name": "Decline Crunch",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -12803,6 +12944,7 @@
   {
    "id": "cable-woodchop",
    "name": "Cable Woodchop",
+   "short_name": "Cable Woodchop",
    "type": "accessory",
    "equipment": "cable",
    "equipment_needs": [
@@ -12892,6 +13034,7 @@
   {
    "id": "pallof-press",
    "name": "Pallof Press",
+   "short_name": "Pallof Press",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -12983,6 +13126,7 @@
   {
    "id": "standing-cable-crunch",
    "name": "Standing Cable Crunch",
+   "short_name": "Standing Crunch",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -13072,6 +13216,7 @@
   {
    "id": "dumbbell-incline-y-raise",
    "name": "Incline Dumbbell Y-Raise",
+   "short_name": "Incline Y-Raise",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -13160,6 +13305,7 @@
   {
    "id": "cable-rear-delt-fly",
    "name": "Cable Rear Delt Fly",
+   "short_name": "Cable Rear Fly",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -13249,6 +13395,7 @@
   {
    "id": "cable-overhead-rope-extension",
    "name": "Overhead Rope Triceps Extension (Low Cable)",
+   "short_name": "OH Rope Ext",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -13339,6 +13486,7 @@
   {
    "id": "cable-kickback",
    "name": "Cable Glute Kickback",
+   "short_name": "Cable Kickback",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -13430,6 +13578,7 @@
   {
    "id": "incline-dumbbell-fly",
    "name": "Incline Dumbbell Fly",
+   "short_name": "Incline DB Fly",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -13520,6 +13669,7 @@
   {
    "id": "decline-bench-press",
    "name": "Decline Barbell Bench Press",
+   "short_name": "Decline BB Bench",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -13611,6 +13761,7 @@
   {
    "id": "ez-bar-curl",
    "name": "EZ-Bar Curl",
+   "short_name": "EZ-Bar Curl",
    "type": "isolation",
    "equipment": "barbell",
    "equipment_needs": [
@@ -13664,7 +13815,7 @@
     "calves_soleus": 0,
     "lower_back": 0
    },
-   "description": "A curl with an angled EZ bar, which is easier on the wrists than a straight bar.",
+   "description": "A curl with an angled EZ bar, whose angled grip many lifters find more comfortable than a straight bar.",
    "howTo": [
     "Stand holding the EZ bar on the angled grips, arms straight.",
     "Curl it up, keeping your elbows by your sides.",
@@ -13699,6 +13850,7 @@
   {
    "id": "spider-curl",
    "name": "Spider Curl",
+   "short_name": "Spider Curl",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -13789,6 +13941,7 @@
   {
    "id": "reverse-curl",
    "name": "EZ-Bar Reverse Curl",
+   "short_name": "Reverse Curl",
    "type": "isolation",
    "equipment": "barbell",
    "equipment_needs": [
@@ -13880,6 +14033,7 @@
   {
    "id": "cable-preacher-curl",
    "name": "Cable Preacher Curl",
+   "short_name": "Cable Preacher",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -13971,6 +14125,7 @@
   {
    "id": "standing-leg-curl",
    "name": "Standing Single-Leg Curl",
+   "short_name": "Stand Leg Curl",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -14060,6 +14215,7 @@
   {
    "id": "glute-ham-raise",
    "name": "Glute-Ham Raise",
+   "short_name": "Glute-Ham Raise",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -14147,6 +14303,7 @@
   {
    "id": "barbell-glute-bridge",
    "name": "Barbell Glute Bridge",
+   "short_name": "Glute Bridge",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -14237,6 +14394,7 @@
   {
    "id": "good-morning",
    "name": "Good Morning",
+   "short_name": "Good Morning",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -14328,6 +14486,7 @@
   {
    "id": "seated-dumbbell-lateral-raise",
    "name": "Seated Dumbbell Lateral Raise",
+   "short_name": "Seated Lat Raise",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -14416,6 +14575,7 @@
   {
    "id": "deficit-push-up",
    "name": "Deficit Push-Up",
+   "short_name": "Deficit Push-Up",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -14507,6 +14667,7 @@
   {
    "id": "seated-row-machine",
    "name": "Seated Row Machine (Selectorized)",
+   "short_name": "Row Machine",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -14596,6 +14757,7 @@
   {
    "id": "high-to-low-row-machine",
    "name": "High-to-Low Row Machine",
+   "short_name": "High-to-Low Row",
    "type": "accessory",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -14684,6 +14846,7 @@
   {
    "id": "arc-lat-pulldown",
    "name": "Converging Arc Lat Pulldown",
+   "short_name": "Arc Pulldown",
    "type": "accessory",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -14772,6 +14935,7 @@
   {
    "id": "standing-lateral-raise-machine",
    "name": "Standing Lateral Raise Machine",
+   "short_name": "Stand Lat Mach",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -14859,6 +15023,7 @@
   {
    "id": "converging-smith-bench-press",
    "name": "Converging Smith Bench Press",
+   "short_name": "Conv Smith Bench",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -14947,6 +15112,7 @@
   {
    "id": "converging-smith-incline-press",
    "name": "Converging Smith Incline Press",
+   "short_name": "Conv Smith Inc",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -15037,6 +15203,7 @@
   {
    "id": "converging-smith-shoulder-press",
    "name": "Converging Smith Shoulder Press",
+   "short_name": "Conv Smith OHP",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -15127,6 +15294,7 @@
   {
    "id": "selectorized-pulldown-machine",
    "name": "Pulldown Machine (Selectorized)",
+   "short_name": "Pulldown Machine",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -15214,6 +15382,7 @@
   {
    "id": "plate-loaded-chest-supported-row",
    "name": "Plate-Loaded Chest-Supported Row",
+   "short_name": "Plate Supp Row",
    "type": "accessory",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -15304,6 +15473,7 @@
   {
    "id": "rotary-torso-machine",
    "name": "Rotary Torso Machine",
+   "short_name": "Rotary Torso",
    "type": "accessory",
    "equipment": "machine",
    "equipment_needs": [
@@ -15391,6 +15561,7 @@
   {
    "id": "standing-cable-adduction",
    "name": "Standing Cable Hip Adduction",
+   "short_name": "Cable Adduction",
    "type": "isolation",
    "equipment": "cable",
    "equipment_needs": [
@@ -15481,6 +15652,7 @@
   {
    "id": "horizontal-leg-press",
    "name": "Horizontal Leg Press",
+   "short_name": "Horizontal Press",
    "type": "primary",
    "equipment": "machine",
    "equipment_needs": [
@@ -15533,7 +15705,7 @@
     "calves_soleus": 0,
     "lower_back": 0
    },
-   "description": "A seated selectorized leg press that pushes straight out. It's usually lighter and easier on the lower back than a 45-degree sled, but you can't go quite as deep.",
+   "description": "A seated selectorized leg press that pushes straight out. It's usually lighter than a 45-degree sled, with the back fully supported, but you can't go quite as deep.",
    "howTo": [
     "Sit with your back flat on the pad and your feet shoulder width on the platform.",
     "Bend your knees toward your chest as far as your hips allow.",
@@ -15568,6 +15740,7 @@
   {
    "id": "reverse-hack-squat",
    "name": "Reverse Hack Squat",
+   "short_name": "Reverse Hack",
    "type": "primary",
    "equipment": "plate-loaded machine",
    "equipment_needs": [
@@ -15658,6 +15831,7 @@
   {
    "id": "kneeling-leg-curl",
    "name": "Kneeling Leg Curl",
+   "short_name": "Kneeling Curl",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -15747,6 +15921,7 @@
   {
    "id": "smith-squat-feet-forward",
    "name": "Smith Squat (Feet Forward)",
+   "short_name": "Smith Squat Fwd",
    "type": "primary",
    "equipment": "smith machine",
    "equipment_needs": [
@@ -15837,6 +16012,7 @@
   {
    "id": "chest-supported-dumbbell-row",
    "name": "Chest-Supported Dumbbell Row",
+   "short_name": "Supp DB Row",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -15927,6 +16103,7 @@
   {
    "id": "seal-row",
    "name": "Seal Row",
+   "short_name": "Seal Row",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -16018,6 +16195,7 @@
   {
    "id": "yates-row",
    "name": "Yates Row",
+   "short_name": "Yates Row",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -16109,6 +16287,7 @@
   {
    "id": "rack-pull",
    "name": "Rack Pull",
+   "short_name": "Rack Pull",
    "type": "primary",
    "equipment": "barbell",
    "equipment_needs": [
@@ -16202,6 +16381,7 @@
   {
    "id": "trap-bar-deadlift",
    "name": "Trap-Bar Deadlift",
+   "short_name": "Trap-Bar DL",
    "type": "primary",
    "equipment": "trap bar",
    "equipment_needs": [
@@ -16296,6 +16476,7 @@
   {
    "id": "captains-chair-knee-raise",
    "name": "Captain's Chair Knee Raise",
+   "short_name": "Captain's Chair",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -16391,6 +16572,7 @@
   {
    "id": "back-extension-machine",
    "name": "Back Extension Machine (Selectorized)",
+   "short_name": "Back Ext Machine",
    "type": "isolation",
    "equipment": "machine",
    "equipment_needs": [
@@ -16480,6 +16662,7 @@
   {
    "id": "reverse-wrist-curl",
    "name": "Reverse Wrist Curl",
+   "short_name": "Rev Wrist Curl",
    "type": "isolation",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -16570,6 +16753,7 @@
   {
    "id": "farmer-carry",
    "name": "Farmer Carry",
+   "short_name": "Farmer Carry",
    "type": "accessory",
    "equipment": "dumbbell",
    "equipment_needs": [
@@ -16662,6 +16846,7 @@
   {
    "id": "ring-dip",
    "name": "Ring Dip",
+   "short_name": "Ring Dip",
    "type": "accessory",
    "equipment": "rings",
    "equipment_needs": [
@@ -16758,6 +16943,7 @@
   {
    "id": "ring-push-up",
    "name": "Ring Push-Up",
+   "short_name": "Ring Push-Up",
    "type": "accessory",
    "equipment": "rings",
    "equipment_needs": [
@@ -16851,6 +17037,7 @@
   {
    "id": "ring-row",
    "name": "Ring Row",
+   "short_name": "Ring Row",
    "type": "accessory",
    "equipment": "rings",
    "equipment_needs": [
@@ -16945,6 +17132,7 @@
   {
    "id": "ring-pull-up",
    "name": "Ring Pull-Up",
+   "short_name": "Ring Pull-Up",
    "type": "accessory",
    "equipment": "rings",
    "equipment_needs": [
@@ -16997,7 +17185,7 @@
     "calves_soleus": 0,
     "lower_back": 0
    },
-   "description": "A pull-up on rings, where your grip turns freely from overhand to neutral. Most people find that easier on the elbows and shoulders than a fixed bar.",
+   "description": "A pull-up on rings, where your grip turns freely from overhand to neutral. Many people find that more comfortable than a fixed bar.",
    "howTo": [
     "Hang from the rings with your arms straight.",
     "Pull your chest up toward the rings, letting your palms turn in.",
@@ -17041,6 +17229,7 @@
   {
    "id": "ring-fly",
    "name": "Ring Fly",
+   "short_name": "Ring Fly",
    "type": "isolation",
    "equipment": "rings",
    "equipment_needs": [
@@ -17131,6 +17320,7 @@
   {
    "id": "ring-face-pull",
    "name": "Ring Face Pull",
+   "short_name": "Ring Face Pull",
    "type": "isolation",
    "equipment": "rings",
    "equipment_needs": [
@@ -17221,6 +17411,7 @@
   {
    "id": "ring-biceps-curl",
    "name": "Ring Biceps Curl",
+   "short_name": "Ring Biceps Curl",
    "type": "isolation",
    "equipment": "rings",
    "equipment_needs": [
@@ -17311,6 +17502,7 @@
   {
    "id": "ring-triceps-extension",
    "name": "Ring Triceps Extension",
+   "short_name": "Ring Triceps Ext",
    "type": "isolation",
    "equipment": "rings",
    "equipment_needs": [
@@ -17401,6 +17593,7 @@
   {
    "id": "ring-l-sit",
    "name": "Ring L-Sit",
+   "short_name": "Ring L-Sit",
    "type": "isolation",
    "equipment": "rings",
    "equipment_needs": [
@@ -17494,6 +17687,7 @@
   {
    "id": "trx-row",
    "name": "Suspension Row",
+   "short_name": "Suspension Row",
    "type": "accessory",
    "equipment": "suspension",
    "equipment_needs": [
@@ -17588,6 +17782,7 @@
   {
    "id": "trx-push-up",
    "name": "Suspension Push-Up",
+   "short_name": "Susp Push-Up",
    "type": "accessory",
    "equipment": "suspension",
    "equipment_needs": [
@@ -17681,6 +17876,7 @@
   {
    "id": "trx-y-t-raise",
    "name": "Suspension Y/T Raise",
+   "short_name": "Susp Y/T Raise",
    "type": "isolation",
    "equipment": "suspension",
    "equipment_needs": [
@@ -17773,6 +17969,7 @@
   {
    "id": "trx-biceps-curl",
    "name": "Suspension Biceps Curl",
+   "short_name": "Susp Biceps Curl",
    "type": "isolation",
    "equipment": "suspension",
    "equipment_needs": [
@@ -17863,6 +18060,7 @@
   {
    "id": "trx-triceps-extension",
    "name": "Suspension Triceps Extension",
+   "short_name": "Susp Triceps Ext",
    "type": "isolation",
    "equipment": "suspension",
    "equipment_needs": [
@@ -17953,6 +18151,7 @@
   {
    "id": "trx-assisted-pistol",
    "name": "Suspension Pistol Squat (Assisted)",
+   "short_name": "Assisted Pistol",
    "type": "accessory",
    "equipment": "suspension",
    "equipment_needs": [
@@ -18047,6 +18246,7 @@
   {
    "id": "trx-hamstring-curl",
    "name": "Suspension Hamstring Curl",
+   "short_name": "Susp Ham Curl",
    "type": "isolation",
    "equipment": "suspension",
    "equipment_needs": [
@@ -18137,6 +18337,7 @@
   {
    "id": "trx-fallout",
    "name": "Suspension Fallout",
+   "short_name": "Susp Fallout",
    "type": "isolation",
    "equipment": "suspension",
    "equipment_needs": [
@@ -18227,6 +18428,7 @@
   {
    "id": "trx-pike",
    "name": "Suspension Pike",
+   "short_name": "Suspension Pike",
    "type": "isolation",
    "equipment": "suspension",
    "equipment_needs": [
@@ -18319,6 +18521,7 @@
   {
    "id": "kettlebell-swing",
    "name": "Kettlebell Swing",
+   "short_name": "Kettlebell Swing",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -18408,6 +18611,7 @@
   {
    "id": "kettlebell-front-squat",
    "name": "Double Kettlebell Front Squat",
+   "short_name": "KB Front Squat",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -18497,6 +18701,7 @@
   {
    "id": "kettlebell-clean",
    "name": "Kettlebell Clean",
+   "short_name": "Kettlebell Clean",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -18586,6 +18791,7 @@
   {
    "id": "kettlebell-press",
    "name": "Kettlebell Press",
+   "short_name": "Kettlebell Press",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -18676,6 +18882,7 @@
   {
    "id": "kettlebell-push-press",
    "name": "Kettlebell Push Press",
+   "short_name": "KB Push Press",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -18767,6 +18974,7 @@
   {
    "id": "kettlebell-snatch",
    "name": "Kettlebell Snatch",
+   "short_name": "KB Snatch",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -18857,6 +19065,7 @@
   {
    "id": "turkish-get-up",
    "name": "Turkish Get-Up",
+   "short_name": "Turkish Get-Up",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -18948,6 +19157,7 @@
   {
    "id": "kettlebell-single-leg-rdl",
    "name": "Kettlebell Single-Leg RDL",
+   "short_name": "KB SL RDL",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -19037,6 +19247,7 @@
   {
    "id": "kettlebell-row",
    "name": "Kettlebell Row",
+   "short_name": "Kettlebell Row",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -19129,6 +19340,7 @@
   {
    "id": "kettlebell-windmill",
    "name": "Kettlebell Windmill",
+   "short_name": "KB Windmill",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -19220,6 +19432,7 @@
   {
    "id": "suitcase-carry",
    "name": "Suitcase Carry",
+   "short_name": "Suitcase Carry",
    "type": "accessory",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -19312,6 +19525,7 @@
   {
    "id": "kettlebell-halo",
    "name": "Kettlebell Halo",
+   "short_name": "Kettlebell Halo",
    "type": "isolation",
    "equipment": "kettlebell",
    "equipment_needs": [
@@ -19399,6 +19613,7 @@
   {
    "id": "muscle-up",
    "name": "Muscle-Up",
+   "short_name": "Muscle-Up",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -19494,6 +19709,7 @@
   {
    "id": "archer-push-up",
    "name": "Archer Push-Up",
+   "short_name": "Archer Push-Up",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -19585,6 +19801,7 @@
   {
    "id": "pseudo-planche-push-up",
    "name": "Pseudo-Planche Push-Up",
+   "short_name": "Planche Push-Up",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -19676,6 +19893,7 @@
   {
    "id": "wall-handstand-push-up",
    "name": "Wall Handstand Push-Up",
+   "short_name": "Wall HS Push-Up",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -19769,6 +19987,7 @@
   {
    "id": "pistol-squat",
    "name": "Pistol Squat",
+   "short_name": "Pistol Squat",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -19862,6 +20081,7 @@
   {
    "id": "shrimp-squat",
    "name": "Shrimp Squat",
+   "short_name": "Shrimp Squat",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -19955,6 +20175,7 @@
   {
    "id": "front-lever-row",
    "name": "Tuck Front Lever Row",
+   "short_name": "Front Lever Row",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -20050,6 +20271,7 @@
   {
    "id": "tuck-front-lever",
    "name": "Tuck Front Lever Hold",
+   "short_name": "Tuck Front Lever",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -20143,6 +20365,7 @@
   {
    "id": "dragon-flag",
    "name": "Dragon Flag",
+   "short_name": "Dragon Flag",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -20233,6 +20456,7 @@
   {
    "id": "hollow-body-hold",
    "name": "Hollow Body Hold",
+   "short_name": "Hollow Body Hold",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -20323,6 +20547,7 @@
   {
    "id": "l-sit",
    "name": "L-Sit (Floor or Parallettes)",
+   "short_name": "L-Sit",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -20416,6 +20641,7 @@
   {
    "id": "box-jump",
    "name": "Box Jump",
+   "short_name": "Box Jump",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -20506,6 +20732,7 @@
   {
    "id": "broad-jump",
    "name": "Broad Jump",
+   "short_name": "Broad Jump",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -20594,6 +20821,7 @@
   {
    "id": "depth-jump",
    "name": "Depth Jump",
+   "short_name": "Depth Jump",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -20684,6 +20912,7 @@
   {
    "id": "jump-squat",
    "name": "Jump Squat",
+   "short_name": "Jump Squat",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -20772,6 +21001,7 @@
   {
    "id": "bounding",
    "name": "Bounding",
+   "short_name": "Bounding",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -20860,6 +21090,7 @@
   {
    "id": "plyo-push-up",
    "name": "Plyometric Push-Up",
+   "short_name": "Plyo Push-Up",
    "type": "accessory",
    "equipment": "bodyweight",
    "equipment_needs": [],
@@ -20948,6 +21179,7 @@
   {
    "id": "med-ball-slam",
    "name": "Medicine Ball Slam",
+   "short_name": "Med Ball Slam",
    "type": "accessory",
    "equipment": "medicine ball",
    "equipment_needs": [
@@ -21038,6 +21270,7 @@
   {
    "id": "med-ball-chest-pass",
    "name": "Medicine Ball Chest Pass",
+   "short_name": "Med Ball Pass",
    "type": "accessory",
    "equipment": "medicine ball",
    "equipment_needs": [
@@ -21128,6 +21361,7 @@
   {
    "id": "barbell-rollout",
    "name": "Barbell Rollout",
+   "short_name": "Barbell Rollout",
    "type": "isolation",
    "equipment": "barbell",
    "equipment_needs": [
@@ -21216,6 +21450,7 @@
   {
    "id": "stability-ball-rollout",
    "name": "Stability Ball Rollout",
+   "short_name": "Ball Rollout",
    "type": "isolation",
    "equipment": "stability ball",
    "equipment_needs": [
@@ -21303,6 +21538,7 @@
   {
    "id": "standing-ab-wheel-rollout",
    "name": "Standing Ab-Wheel Rollout",
+   "short_name": "Standing Rollout",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -21393,6 +21629,7 @@
   {
    "id": "dead-hang",
    "name": "Dead Hang",
+   "short_name": "Dead Hang",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -21445,7 +21682,7 @@
     "calves_soleus": 0,
     "lower_back": 0
    },
-   "description": "A passive hang from a bar for grip endurance and shoulder decompression. It builds little muscle.",
+   "description": "A passive hang from a bar for grip endurance and time spent at full overhead reach. It builds little muscle.",
    "howTo": [
     "Grip the bar about shoulder width apart.",
     "Let your body hang with your arms straight and shoulders relaxed.",
@@ -21486,6 +21723,7 @@
   {
    "id": "active-hang",
    "name": "Active (Scapular) Hang",
+   "short_name": "Active Hang",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -21580,6 +21818,7 @@
   {
    "id": "scapular-pull-up",
    "name": "Scapular Pull-Up",
+   "short_name": "Scapular Pull-Up",
    "type": "isolation",
    "equipment": "bodyweight",
    "equipment_needs": [
@@ -21731,5 +21970,6 @@
  "swap_note": "v7: swap = attributes for swap difference lines (rules.json swap_tags). Ordinals are 1-3 on the swap_tags scale; flags list the flag tags that apply. Method: defaults by equipment and type (machine/cable/Smith stability 3, free weight 2, rings/suspension 1; loading primary 3, accessory 2, isolation 1; systemic fatigue from type plus the fatigue field; stretch 3 if in rules.json stretch_biased, else 2; isolation 3 for guided single-joint, 2 free single-joint, 1 compound), then hand overrides per exercise. Tags describe tendencies, not guarantees, and make no medical claims. See data/swaptags-spec.md.",
  "equipment_needs_note": "v8: equipment_needs = list of required items from rules.json equipment_items; each item is one token or \"a|b\" (any one of them); all items are needed together; [] = bodyweight only (floor or wall). Hand-reviewed from each exercise's equipment, name and howto (tools/equipment_needs_data.py); `equipment` is unchanged and still drives swap scoring, logging and load steps. Small improvised accessories (handles, ankle cuffs, a step) are not listed.",
  "swap_regiontags_note": "v9 (2026-10-22): swap_tags v2 adds region/head and grip tags to every swap block: ordinal grip_width (1 close, 2 about shoulder width or not grip-specific, 3 wide) and the flags brachialis_brachioradialis_bias, upper_chest_bias, lower_chest_bias, rectus_femoris_bias, gastrocnemius_bias, glute_bias, neutral_grip, independent_arms, static_hold and leg_drive. Chest, rectus femoris and calf flags come from the existing heads ratings; grip and the rest from each exercise's own description. Five v1 data gaps were fixed (kneeling leg curl one side at a time; rack pull stretch 1; horizontal leg press loading 2; rollouts stretch 3; standing ab-wheel rollout skill 3). Ids and all other fields are unchanged. Build: tools/build_swaptags.py.",
- "swap_gaptags_note": "v10 (2026-10-22): swap_tags v3 fills the remaining data-gap swap pairs with the flags lower_back_focus, wrist_extensor_focus, hip_flexor_work, active_shoulders, front_loaded, dead_stop_reps, overhead_finish and anti_rotation. glute_bias now covers only the squat and leg-press setups (45-degree-hyperextension moved to the lower_back_focus contrast). kettlebell-push-press is now a one-arm, one-bell lift (description, howTo, howto, obliques 0.2 like kettlebell-press; unilateral). Ids and all other fields are unchanged. Build: tools/build_swaptags.py."
+ "swap_gaptags_note": "v10 (2026-10-22): swap_tags v3 fills the remaining data-gap swap pairs with the flags lower_back_focus, wrist_extensor_focus, hip_flexor_work, active_shoulders, front_loaded, dead_stop_reps, overhead_finish and anti_rotation. glute_bias now covers only the squat and leg-press setups (45-degree-hyperextension moved to the lower_back_focus contrast). kettlebell-push-press is now a one-arm, one-bell lift (description, howTo, howto, obliques 0.2 like kettlebell-press; unilateral). Ids and all other fields are unchanged. Build: tools/build_swaptags.py.",
+ "short_name_note": "short_name (whiteboard, 2026-10-22): present on every exercise, at most 16 characters, unique. It equals name when the name already fits; otherwise it is a hand-written short form (abbreviations: DB, BB, KB, SL single-leg, OH overhead, CG close-grip, RDL, DL deadlift, HS handstand, Susp suspension, Supp chest-supported, Mach machine, Conv converging, and the shortened words Str-Arm, Rev, Stand, Fwd, Ham, Tri, Iso, Lat for lateral). Custom exercises without short_name fall back to name."
 }
