@@ -1,92 +1,69 @@
-# Ape-Chit rebuild of Lift Board: architecture (one page)
+# Lift Board rebuild: architecture (Expo, React Native + TypeScript, iOS and Android)
 
-The storyboard at `storyboard/` is a mock (fixed data, no real logic). This page describes the **rebuild** it previews, and notes where the storyboard already works that way.
+This is one page. The web storyboard (`storyboard/`) previews the screens, and its old web plan is kept in `ARCHITECTURE-web-storyboard.md`.
+The live web app (v29.x) stays as it is until the import below has moved Mr Dude's data across.
 
-## Layout: one bundle, no build step
+## Layers (each one depends only on the layers above it)
 ```
-index.html          viewport no-zoom, loads tokens.css, app.css, then the scripts in order below (plain <script>, no bundler)
-tokens.css          design tokens (colour, type, space, radii, motion); the only place colours and the logo path live
-logic/              pure functions, no DOM. Each sets one global (window.LB.loads, …) so node tests can call it
-  loads.js prs.js warmup.js deload.js review.js volume.js   ported UNCHANGED from the current app; diff-tested (below)
-  rank.js           ONE ranker: line-for-line port of Coach's tools/rank.py (+ the swap.py / patterns.py parts it calls).
-                    BUILT in the storyboard (storyboard/logic/rank.js). Reads every weight, goal label/short/label_note, reason
-                    string, favorite boost/margin (0.10), day-theme weight (contexts.*.weights.theme: tray/empty 0.08, swap/preset 0)
-                    and volume_bands from rules.json/targets.json/patterns.json/splits.json. Spec order: hard filters (excluded,
-                    gym equipment, same day, swap/slot eligibility) -> score -> tie-break -> 1-2 reasons. Swap, tray, empty
-                    workout and preset slots all call rank(); the "why" line is r.reasons joined, shown under each row.
-                    Parity: `node storyboard/test/rank.diff.js` = 0 mismatches on all 58 ranking-reference.json cases, neutral
-                    swap == swap.py swaps() for all 239 exercises, neutral preset == patterns.py slot_recommendations() (72).
-                    Python semantics ported exactly (round() ties-to-even on the binary value, stable tuple sorts, dict order).
-  swaptags.js       port of tools/swaptags.py diff_tags (swap-sheet lines, priority order, max swap_tags.compare.max_lines)
-components/         sheet.js (THE bottom sheet: grab handle, swipe-down close, snap-back), keypad.js (0-9 . ⌫, edits in place,
-                    no reflow), swipe.js (swipe-left delete), calendar.js, plates.js (bar picker), musclemap.js (MIT SVG paths)
-screens/            train, workout, log, build, progress, settings, learn (index, muscle, fundamental, exercise), style
-data/               loaders only: exercises.json, rules.json, targets.json, education/** are read, never written
+logic/        pure TypeScript, no React, no I/O. Ported from the current JS, one file per module:
+              rank.ts (+ swap, preset), swaptags.ts, volumeBands.ts, prs.ts, e1rm.ts, loads.ts, warmup.ts, deload.ts, review.ts
+data/         read side: Coach's JSON (exercises, rules, targets, patterns, splits, education/**), bundled read-only
+              write side: repositories over SQLite (sessions, entries, sets, prs, routines, settings, bodyweights, notes)
+store/        ONE Zustand store (slices: session, log, routines, prefs). Actions call logic/ and then data/; screens never touch SQL
+ui/           design system: tokens.ts + shared components Sheet, Keypad, Swipe, Calendar, Plates, MuscleMap, Chip, Row
+app/          thin screens (Expo Router files): layout and wiring only, no rules, no maths
 ```
-Router: hash routes (`#train`, `#workout`, `#learn-biceps`, `#learn-ex-<id>` …), one delegated click handler, one render per route.
+- **logic/** is ported 1:1, with types added and behaviour unchanged. The existing parity diffs come across as Jest tests:
+  `rank` vs `ranking-reference.json` (67 cases), neutral swap vs `swap.py` for all 239 exercises, preset vs `patterns.py`
+  (72 slots), and the PR, e1RM, loads and deload references from Coach's `gen_*_reference.py`. A port counts as done only at 0 mismatches.
+- **Coach's data** ships in the app bundle as frozen JSON, copied from `lift-board/data` (the only source) by a sync script.
+  The app never writes to it. A data update is a new app build (or an EAS Update), never an edit on the device.
+- **Store: Zustand.** One small store with no boilerplate, selectors so the active-set row re-renders alone while typing,
+  and it's easy to test outside React. Redux is heavier than this app needs, and Context re-renders too much on the workout screen.
+- **Design system.** `ui/tokens.ts` is generated from `tokens.css`, which stays the single source: Ember **#E8430C**
+  (press #C2380A, tint #FDECE6), ink and paper, danger #E5242B, volume amber/red, type 34/22/17/15/13/11, the 4-pt space grid,
+  radii 8/12/16/22 and the sheet ease. Components read tokens only. Writing a hex value inside a screen fails lint.
+  Sheet: one bottom sheet that closes on swipe-down. Keypad: digits plus backspace, edits in place with no reflow.
+  Swipe: swipe left to delete. Also Calendar, Plates (bar picker) and MuscleMap (SVG).
+- **Navigation.** Expo Router with tabs **Train · Log · Build · Progress**. Settings (gear) and Learn (book) sit in the header and open as stacks.
+  The workout, keypad and swap screens are sheets or modals over the tabs.
 
-## Design tokens (`tokens.css`)
-Black, white and one accent, **Ember #E8430C** (pressed/small text #C2380A, tint #FDECE6). Functional colours: delete red #E5242B,
-over-volume amber #F0A830 / red #D93B30 (from targets.json gradient colours). System font stack, type 34/22/17/15/13/11,
-spacing 4–32, radii 8/12/16/22, ease cubic-bezier(.32,.72,0,1), 120/240/380 ms. Logo: `--logo-icon`, `--logo-lockup` only
-(assets/logo/*-v3, copied from ape-chit-logo/out/).
+## Shared rules keys stay data-driven
+`volume_bands` (amber > max, red > max × red_factor; one function feeds both the volume panel and the body map), `swap_tags`
+(chip wording, priority, max_lines, plus a proposed `compare.empty_line`), `ranking` (weights, goal labels, reasons,
+favorite margin, day-theme) and `equipment_items` (tokens, templates; unticked equipment is a hard filter).
+No threshold, label or weight is a literal in TypeScript. Tests rewrite a key (for example red_factor 1.5) and check that the UI follows it.
 
-## Shared rules keys (single source of truth)
-- **`rules.json volume_bands`** (CoS, 2026-10-21): amber when weekly sets > max, red when > max × `red_factor` (1.25 today).
-  The **volume panel and the body map share this one key** through one function (`vStat` in the storyboard, `logic/volume.js`
-  in the rebuild). No factor is hardcoded; if the key is missing nothing turns red. Test `volumeFactorChangeFlipsPanel` rewrites
-  the factor to 1.5/1.1 and checks both surfaces follow.
-- `rules.json swap_tags` — swap-sheet wording ("Typical differences, not guarantees.").
-- Display bands for ratings (Coach, a model): main ≥ 0.75, helper 0.4–<0.75, minor 0.25–<0.4, not counted < 0.25.
+## On-device storage: SQLite (expo-sqlite)
+- One database file, `liftboard.db`. Tables: sessions, entries, sets, prs, routines, settings (key/JSON), bodyweights, notes, meta.
+- **Versioned migrations:** `data/migrations/001_init.sql`, `002_…` run in order inside one transaction and are tracked with
+  `PRAGMA user_version`. They're forward-only: never edit a shipped migration, add a new one.
+- Tests: each migration runs on a fresh database and on a copy of the previous schema with data in it. The test checks
+  that the schema matches `schema.snapshot.sql` and that no rows were lost.
 
-## Suggestions UI (ranking-spec §8b, approved by CoS)
-- Tray: segmented **Suggested** (default, `rank('tray', candidates)`) / **Library** (exercises.json order). Search and filter chips are
-  hard filters in both modes and stay on `equipment` labels. Each suggestion has a 1–2 reason line directly under it, never a popup.
-- Settings goals: multi-select up to `goal_combine.max_goals` (3) with Coach's labels and `label_note` footnotes from rules.json;
-  `goal_conflicts` show as a flag with Coach's message and evidence badge.
-- Gym profile `equipment: {token: bool}` over **rules.json `equipment_items`** (36 tokens, labels, groups, `implies`, `legacy`):
-  Settings > Gyms > Home gym shows one checkbox per token, grouped, with Coach's labels; the full map is saved on the first edit.
-  "Start from: **Home template** / **Commercial template**" (`example_profiles`) only pre-ticks boxes; the user ticks what the gym
-  actually has, and the templates' example loads (e.g. their dumbbell sets) are never copied into the user's gym.
-  rank.js `needsStatus` = rank.py `needs_status`: with no map, or an exercise without `equipment_needs`, the old `equipment` status
-  applies (neutral parity); otherwise every need must be met, `a|b` = either, a token is met if ticked, implied by a ticked broader
-  token (adjustable_bench -> flat_bench, ghd -> hyperextension_bench) or, if unset, by the loads fields via `legacy`; unknown tokens
-  keep the exercise with note `equipment_unknown`. Unavailable = hard filter in every context. Chips and labels keep using `equipment`.
-  Exercise pages show Coach's "Needs:" line (`equipment_needs.text`). Template check: Home leaves 60 of 239 exercises, Commercial 220.
-- Data freeze: the storyboard reads its own copies in `storyboard/data/` first. `sync-education.sh` copies Education only;
-  `sync-ranking-data.sh` copies rules/exercises/targets/patterns/splits/ranking-reference **once per Coach "done" post**, then rerun the diffs.
+## One-time import from the web app
+- The web app's Backup export is one JSON file (`logBackup()`, schema 2): sessions, entries, sets, prs,
+  routines, settings, bodyweights, deloads, readiness, exNotes, decimalFix. He shares the file to the app (Files or AirDrop).
+- `data/import/webBackup.ts` validates the file, runs the web `migrate()` step (ported), and writes everything in one transaction.
+- **Idempotent:** rows keep their web ids, and the file's hash is saved in `meta`. Importing the same file again changes nothing.
+- **Parity check after import:** counts of sessions, entries and sets must match the file. PRs are recomputed with `logic/prs`
+  and must equal the PRs in the file, and total volume per week must match. Any difference stops the import and shows a diff list; the database rolls back.
 
-## Education (Learn) — data-driven, no per-page code
-- Book icon in the Train/Build/Progress headers (no 5th tab). Entries: tap the muscle map, the (i) on an exercise, exercise links.
-- `education/index.json` drives the index: `status:"final"` pages render, `"planned"` show "Coming soon". All 23 pages (19 muscles,
-  4 fundamentals) are final. Every map path resolves to a page; heads (`region_ids`) are drawn either as their own path or via the
-  group path (`g:chest`, `g:triceps`, `g:calves`, as in the live map). The two back `ABDUCTOR_*` paths have no region in the live map
-  either and are drawn as non-interactive outline.
-- Citations resolve in `references.json`, then `references-exercises.json`; badges Supported / Mechanics / Model; DOI links.
-- **Exercise pages** (`#learn-ex-<id>`, Coach's exercise-pages-spec.md): `education/exercises/index.json` lists authored pages; a
-  `final` entry loads `exercises/<path>`, otherwise the **fallback is `exercises/auto/<id>.json`**, shown with its
-  "Auto-generated from the exercise library" banner. Live ratings come from exercises.json; alternatives link to their own pages.
-  All 56 preset exercises have authored pages (index all final; test `allPresetExercisesOpenAuthoredPage`); the other exercises use
-  auto pages. **Storyboard: ships Coach's static auto/*.json files as-is (no runtime generation).** **Rebuild: ports `tools/gen_exercise_autopages.py auto_page()`
-  (with exercise_pages.py, swaptags.py, swap.py) to `logic/exercise-pages.js` and generates auto pages at runtime from
-  exercises.json; Coach's auto/*.json become test fixtures only — a test generates all of them and deep-compares (0 mismatches),
-  and the auto files are no longer shipped.** Authored pages always win.
+## Testing
+- **Every change:** Jest (jest-expo) runs logic/ unit tests, the parity diffs above, store actions, migrations
+  (against node SQLite) and the import fixtures (a real exported backup, anonymised). The target is a full run in under a minute.
+- **Before a release only:** device E2E with **Maestro**. Its flows are short YAML, it drives a real iOS or Android build
+  with no app instrumentation, and it handles taps, swipes and the keypad well. Detox needs native test setup
+  and has more flake for the size of this app. Flows: log a set with the keypad (no jump, auto-fill only fills later
+  empty sets), discard, delete, swap, finish, and import.
 
-## State and storage
-localStorage, existing keys kept so nobody loses data: `liftboard.logs`, `.routines`, `.mysplits`, `.logSettings`, `.logActive`,
-`.logTimer`, `.custom`, `.exNotes`, `.bodyweights`, `.deload`, `.staged`, … New: favourites (ordered), goals, bias muscles
-(storyboard mock keys `apechit.sb.favs|goals|bias`). One `storage.js` owns reads/writes, **export/import** (single JSON file with a
-schema version) and **migration** on load: `LOG_SCHEMA=2` logs and the legacy `liftboard.v1` blob are upgraded in place, once,
-with a backup key written first.
+## Getting it on his phone
+1. **Expo Go:** scan a QR code from `npx expo start` for same-day previews (only works while no custom native modules are used).
+2. **Development build (EAS):** `eas build --profile development` gives an installable app with expo-sqlite, haptics and the file picker.
+   It still live-reloads from the dev server.
+3. **TestFlight:** `eas build --profile preview` then `eas submit`, for his day-to-day app. On Android, use the Play Console internal
+   testing track with the same profile.
+Releases: run Jest (must be green), then the Maestro flows on both platforms, then the build. Data-only changes can go out as an EAS Update.
 
-## Tests
-- `tests/run-all.sh` keeps running; the parity diffs (`*diff.js`, e1rm, logger, swapc …) call the logic globals instead of the old
-  page, so ported modules must match the current app byte-for-byte on the fuzz boards. `mutate.sh` mutants must still be caught.
-- New reference diffs: `rank.js` vs ranking-reference.json + swap.py/patterns.py neutral (done, 0 mismatches), `swaptags.js` vs tools/swaptags.py,
-  (rebuild) exercise-pages.js vs the auto/ fixtures (deep-compare all, 0 mismatches).
-- UI tests are rewritten against the new screens (Playwright WebKit, iPhone 13), like `storyboard/test/sb.test.js`.
-- Coach's validators stay the gate for data: `tools/check_education.py`, `tools/check_exercise_pages.py` must print PASS.
-
-## Clean-up
-Delete the ~67 versioned / `pre-*` / `bak-*` / `*.vNN.*` files in the app root (and the old vNN test files); git history in
-lift-board-site keeps them. sw.js cache list shrinks to the bundle.
+## Not in scope yet
+No app code has been written. Accounts, cloud sync and Apple Health/Google Fit wait for a separate decision.

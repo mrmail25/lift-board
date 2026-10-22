@@ -451,13 +451,15 @@ function swapSheet(id,opt={}){
   // rank('swap'): hard filters (swap eligibility, same day, equipment) then the shared score; tag lines = swaptags diff_tags
   const pos=(SC.board.find(d=>d.day===SC.day)||{tiles:[]}).tiles.findIndex(t=>t.id===id);
   const alts=RD?rk('swap',null,{current:id,position:pos<0?null:pos},opt.n||6):(SWAPS[id]||[]).map(a=>({id:a.id,reasons:[],notes:[],tags:a.tags}));
-  const lines=a=>a.tags||(RD&&RD.EX[id]&&RD.EX[a.id]?SWAPDIFF.diffTags(RD.EX[id],RD.EX[a.id],RD.rules):[]);
+  // difference chips (swaptags diff_tags); when none differ, one honest line instead of a blank (SWAPDIFF.emptyLine)
+  const lines=a=>a.tags?{tags:a.tags,empty:a.tags.length?null:SWAPDIFF.NO_DIFF}:RD&&RD.EX[id]&&RD.EX[a.id]?SWAPDIFF.display(RD.EX[id],RD.EX[a.id],RD.rules):{tags:[],empty:SWAPDIFF.emptyLine(RD&&RD.rules)};
+  const diffRow=a=>{const d=lines(a);return d.tags.length?`<div class="tags">${d.tags.slice(0,3).map(x=>`<span class="tag">${x}</span>`).join('')}</div>`:`<div class="tags none"><span class="nodiff">${d.empty}</span></div>`};
   const s=sheet({title:'Swap exercise',cls:'grouped',right:`<button class="btn plain" data-x="close">Cancel</button>`,body:`
     <div class="cur card">${gl(id)}<div class="grow"><div class="eyebrow">Replacing</div><b>${exName(id)}</b><div class="t2">${exSub(id)}</div></div></div>
     ${SC.note?`<div class="scnote">${SC.note}</div>`:''}
     <div class="pad"><div class="seg"><button class="on">Similar</button><button>Browse all</button><button>Create new</button></div></div>
-    <div class="group">${alts.map(a=>`<div class="row alt" data-x="pick" data-id="${a.id}" data-score="${a.score!=null?a.score:''}" role="button" tabindex="0">${gl(a.id)}<div class="grow"><div class="t1">${exName(a.id)}</div><div class="t2">${exSub(a.id)} · ${(EX[a.id]||{}).eq}</div>
-      ${lines(a).length?`<div class="tags">${lines(a).slice(0,3).map(x=>`<span class="tag">${x}</span>`).join('')}</div>`:''}${a.reasons&&a.reasons.length?whyR(a):''}${opt.debug&&a.score!=null?`<div class="dbg num">score ${a.score} · fit ${a.fit}</div>`:''}</div><span class="altb">${starBtn(a.id)}<button class="ib-i" data-act="exinfo" data-id="${a.id}" aria-label="Learn">${I('info',1.7)}</button></span></div>`).join('')}</div>
+    <div class="group">${alts.map(a=>`<div class="row alt" data-x="pick" data-id="${a.id}" data-score="${a.score!=null?a.score:''}" role="button" tabindex="0">${gl(a.id)}<div class="grow"><div class="t1">${exName(a.id)}</div>${exSub(a.id)?`<div class="t2">${exSub(a.id)}</div>`:''}</div><span class="altb">${starBtn(a.id)}<button class="ib-i" data-act="exinfo" data-id="${a.id}" aria-label="Learn">${I('info',1.7)}</button></span>
+      <div class="altx">${diffRow(a)}${a.reasons&&a.reasons.length?whyR(a):''}${opt.debug&&a.score!=null?`<div class="dbg num">score ${a.score} · fit ${a.fit}</div>`:''}</div></div>`).join('')}</div>
     <p class="foot">Typical differences, not guarantees.</p>
     <div class="group" style="margin-top:16px"><div class="row"><div class="grow"><div class="t1">Only this workout</div><div class="t2">Keep the routine unchanged</div></div><span class="tg" data-act="tg"></span></div></div>`});
   s.el.addEventListener('click',e=>{if(e.target.closest('[data-act]'))return;const x=e.target.closest('[data-x]');if(!x)return;s.close();if(x.dataset.x==='pick')toast('Swapped')});return s;
