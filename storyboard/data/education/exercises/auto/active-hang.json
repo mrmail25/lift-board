@@ -132,19 +132,9 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "scapular-pull-up",
-   "why": "Similar muscles; bodyweight instead of bodyweight.",
-   "differences": [],
-   "evidence": "biomechanics"
-  },
-  {
-   "goal": "heavier_loading",
-   "goal_label": "Heavier loading",
-   "exercise_id": "barbell-shrug",
-   "why": "Swap sheet: More upper-trap work, Loads the spine, Heavier loading potential.",
+   "why": "Swap sheet: Moving reps.",
    "differences": [
-    "More upper-trap work",
-    "Loads the spine",
-    "Heavier loading potential"
+    "Moving reps"
    ],
    "evidence": "biomechanics"
   },
@@ -152,22 +142,35 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "dumbbell-shrug",
-   "why": "Swap sheet: More upper-trap work, Heavier loading potential.",
+   "why": "Swap sheet: Shoulders not actively pulled down, More upper-trap work, Moving reps.",
    "differences": [
+    "Shoulders not actively pulled down",
     "More upper-trap work",
-    "Heavier loading potential"
+    "Moving reps"
    ],
    "evidence": "biomechanics"
   },
   {
-   "goal": "more_stable",
-   "goal_label": "More stable",
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
    "exercise_id": "shrug-machine",
-   "why": "Swap sheet: More upper-trap work, Better isolation, More stable.",
+   "why": "Swap sheet: Shoulders not actively pulled down, More upper-trap work, Better isolation.",
    "differences": [
+    "Shoulders not actively pulled down",
     "More upper-trap work",
-    "Better isolation",
-    "More stable"
+    "Better isolation"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_grip",
+   "goal_label": "Less grip demand",
+   "exercise_id": "wrist-curl",
+   "why": "Swap sheet: Shoulders not actively pulled down, Moving reps, Less grip demand.",
+   "differences": [
+    "Shoulders not actively pulled down",
+    "Moving reps",
+    "Less grip demand"
    ],
    "evidence": "biomechanics"
   }
@@ -179,7 +182,10 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
+   "active_shoulders",
+   "static_hold",
    "grip_demand"
   ]
  },

@@ -118,7 +118,7 @@
   {
    "goal": "one_side",
    "goal_label": "One side at a time",
-   "exercise_id": "standing-leg-curl",
+   "exercise_id": "kneeling-leg-curl",
    "why": "Swap sheet: Less stretch emphasis, One side at a time.",
    "differences": [
     "Less stretch emphasis",
@@ -170,6 +170,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

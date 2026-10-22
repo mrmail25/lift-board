@@ -234,8 +234,8 @@
    "why": "Grew the rectus femoris where squats did not.",
    "differences": [
     "Less stretch emphasis",
-    "Peak-contraction focus",
-    "Better isolation"
+    "Rectus femoris bias",
+    "Peak-contraction focus"
    ],
    "evidence": "supported",
    "citations": [
@@ -250,6 +250,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 2,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": [
    "unilateral"
   ]

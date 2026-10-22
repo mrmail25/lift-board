@@ -173,18 +173,6 @@
     "Heavier loading potential"
    ],
    "evidence": "biomechanics"
-  },
-  {
-   "goal": "easier_to_learn",
-   "goal_label": "Easier to learn",
-   "exercise_id": "iso-lateral-chest-press",
-   "why": "Swap sheet: More stable, Heavier loading potential, Easier to learn.",
-   "differences": [
-    "More stable",
-    "Heavier loading potential",
-    "Easier to learn"
-   ],
-   "evidence": "modeled"
   }
  ],
  "swap": {
@@ -194,7 +182,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 1,
   "skill_demand": 2,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "lower_chest_bias"
+  ]
  },
  "app_values": {},
  "notes": [

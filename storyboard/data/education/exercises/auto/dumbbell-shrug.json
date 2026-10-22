@@ -130,10 +130,11 @@
    "goal": "heavier_loading",
    "goal_label": "Heavier loading",
    "exercise_id": "barbell-shrug",
-   "why": "Swap sheet: Loads the spine, Heavier loading potential.",
+   "why": "Swap sheet: Loads the spine, Heavier loading potential, Palms-up or palms-down grip.",
    "differences": [
     "Loads the spine",
-    "Heavier loading potential"
+    "Heavier loading potential",
+    "Palms-up or palms-down grip"
    ],
    "evidence": "biomechanics"
   },
@@ -162,14 +163,14 @@
    "evidence": "biomechanics"
   },
   {
-   "goal": "less_grip",
-   "goal_label": "Less grip demand",
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
    "exercise_id": "dumbbell-incline-y-raise",
-   "why": "Swap sheet: Less upper-trap work, Lower loading potential, Less grip demand.",
+   "why": "Swap sheet: Less upper-trap work, Lower loading potential, Palms-up or palms-down grip.",
    "differences": [
     "Less upper-trap work",
     "Lower loading potential",
-    "Less grip demand"
+    "Palms-up or palms-down grip"
    ],
    "evidence": "biomechanics"
   }
@@ -181,8 +182,10 @@
   "systemic_fatigue": 1,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "upper_trap_involvement",
+   "neutral_grip",
    "grip_demand"
   ]
  },

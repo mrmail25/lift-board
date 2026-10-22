@@ -129,31 +129,32 @@
  ],
  "alternatives": [
   {
-   "goal": "more_stable",
-   "goal_label": "More stable",
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
    "exercise_id": "cable-crossover-low-to-high",
-   "why": "Swap sheet: Less stretch emphasis, Better isolation, More stable.",
+   "why": "Swap sheet: Less stretch emphasis, Upper-chest bias, Better isolation.",
    "differences": [
     "Less stretch emphasis",
-    "Better isolation",
-    "More stable"
+    "Upper-chest bias",
+    "Better isolation"
    ],
    "evidence": "biomechanics"
   },
   {
-   "goal": "easier_to_learn",
-   "goal_label": "Easier to learn",
+   "goal": "more_stable",
+   "goal_label": "More stable",
    "exercise_id": "incline-dumbbell-fly",
-   "why": "Swap sheet: More stable, Easier to learn.",
+   "why": "Swap sheet: Upper-chest bias, More stable, Easier to learn.",
    "differences": [
+    "Upper-chest bias",
     "More stable",
     "Easier to learn"
    ],
-   "evidence": "modeled"
+   "evidence": "biomechanics"
   },
   {
-   "goal": "more_isolation",
-   "goal_label": "Better isolation",
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
    "exercise_id": "cable-fly",
    "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
    "differences": [
@@ -164,15 +165,15 @@
    "evidence": "biomechanics"
   },
   {
-   "goal": "home_dumbbells",
-   "goal_label": "Home gym: dumbbells",
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
    "exercise_id": "dumbbell-fly",
    "why": "Swap sheet: More stable, Easier to learn.",
    "differences": [
     "More stable",
     "Easier to learn"
    ],
-   "evidence": "biomechanics"
+   "evidence": "modeled"
   }
  ],
  "swap": {
@@ -182,6 +183,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

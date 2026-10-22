@@ -406,7 +406,9 @@
    "goal_label": "More upper chest",
    "exercise_id": "incline-barbell-bench-press",
    "why": "Upper chest is rated 1 instead of 0.7; incline pressing grew the upper chest more in one study.",
-   "differences": [],
+   "differences": [
+    "Upper-chest bias"
+   ],
    "evidence": "supported",
    "citations": [
     "chaves2020"
@@ -417,7 +419,9 @@
    "goal_label": "More triceps lateral/medial heads",
    "exercise_id": "close-grip-bench-press",
    "why": "A narrower grip makes the triceps the main mover (triceps 1, chest 0.6).",
-   "differences": [],
+   "differences": [
+    "Narrower grip"
+   ],
    "evidence": "biomechanics",
    "citations": [
     "lehman2005"
@@ -465,6 +469,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {

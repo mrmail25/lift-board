@@ -220,7 +220,9 @@
    "goal_label": "More glutes",
    "exercise_id": "back-squat",
    "why": "Back squat: more glutes and more load.",
-   "differences": [],
+   "differences": [
+    "Load not held in front"
+   ],
    "evidence": "biomechanics"
   },
   {
@@ -254,8 +256,8 @@
    "why": "Grew the rectus femoris where squats did not.",
    "differences": [
     "Less stretch emphasis",
-    "Peak-contraction focus",
-    "Better isolation"
+    "Rectus femoris bias",
+    "Peak-contraction focus"
    ],
    "evidence": "supported",
    "citations": [
@@ -270,8 +272,10 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
-   "spinal_load"
+   "spinal_load",
+   "front_loaded"
   ]
  },
  "app_values": {

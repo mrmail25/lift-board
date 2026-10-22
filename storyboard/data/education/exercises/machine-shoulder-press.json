@@ -191,9 +191,9 @@
    "exercise_id": "landmine-press-one-arm",
    "why": "One-arm angled press.",
    "differences": [
+    "Upper-chest bias",
     "Less stable",
-    "One side at a time",
-    "More systemic fatigue"
+    "One side at a time"
    ],
    "evidence": "biomechanics"
   }
@@ -205,7 +205,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "overhead_finish"
+  ]
  },
  "app_values": {
   "exercises.json:@machine-shoulder-press.muscles.side_delts": 0.4,

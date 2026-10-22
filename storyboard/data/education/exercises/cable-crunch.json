@@ -163,9 +163,9 @@
    "exercise_id": "hanging-leg-raise",
    "why": "Bar only; curl the hips up.",
    "differences": [
+    "More hip-flexor work (legs lift)",
     "Less isolation",
-    "Less stable",
-    "Less constant tension"
+    "Less stable"
    ],
    "evidence": "biomechanics"
   },
@@ -175,9 +175,9 @@
    "exercise_id": "ab-wheel-rollout",
    "why": "Anti-extension work with more obliques (0.6).",
    "differences": [
+    "More stretch emphasis",
     "Less isolation",
-    "Less stable",
-    "Less constant tension"
+    "Less stable"
    ],
    "evidence": "biomechanics"
   },
@@ -201,6 +201,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "constant_tension"
   ]

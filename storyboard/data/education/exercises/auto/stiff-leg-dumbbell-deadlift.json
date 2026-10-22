@@ -194,6 +194,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 2,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": [
    "spinal_load",
    "grip_demand"

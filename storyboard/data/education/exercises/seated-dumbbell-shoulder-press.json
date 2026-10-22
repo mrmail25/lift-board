@@ -254,7 +254,10 @@
   "systemic_fatigue": 3,
   "loading_potential": 2,
   "skill_demand": 2,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "overhead_finish"
+  ]
  },
  "app_values": {
   "exercises.json:@seated-dumbbell-shoulder-press.muscles.side_delts": 0.5,

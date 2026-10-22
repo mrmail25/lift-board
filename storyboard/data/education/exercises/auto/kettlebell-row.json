@@ -155,10 +155,11 @@
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "meadows-row",
-   "why": "Swap sheet: More stretch emphasis, More systemic fatigue.",
+   "why": "Swap sheet: More stretch emphasis, More systemic fatigue, Palms-up or palms-down grip.",
    "differences": [
     "More stretch emphasis",
-    "More systemic fatigue"
+    "More systemic fatigue",
+    "Palms-up or palms-down grip"
    ],
    "evidence": "supported",
    "citations": [
@@ -202,8 +203,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": [
    "unilateral",
+   "neutral_grip",
    "grip_demand"
   ]
  },

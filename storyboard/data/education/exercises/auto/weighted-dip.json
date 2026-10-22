@@ -166,8 +166,9 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "archer-push-up",
-   "why": "Swap sheet: Lower loading potential, More technical.",
+   "why": "Swap sheet: Less lower-chest bias, Lower loading potential, More technical.",
    "differences": [
+    "Less lower-chest bias",
     "Lower loading potential",
     "More technical"
    ],
@@ -193,7 +194,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 2,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "lower_chest_bias"
+  ]
  },
  "app_values": {},
  "notes": [

@@ -194,8 +194,8 @@
   {
    "goal": "heavier_loading",
    "goal_label": "Heavier loading",
-   "exercise_id": "barbell-bench-press",
-   "why": "Barbell bench: more load.",
+   "exercise_id": "decline-bench-press",
+   "why": "Decline barbell bench: the same lower-chest bias with more load.",
    "differences": [
     "Less stretch emphasis",
     "More systemic fatigue",
@@ -222,6 +222,7 @@
    "why": "Push-ups: grew the pecs similarly to light bench when taken hard.",
    "differences": [
     "Less stretch emphasis",
+    "Less lower-chest bias",
     "Lower loading potential"
    ],
    "evidence": "supported",
@@ -235,9 +236,9 @@
    "exercise_id": "cable-fly",
    "why": "Chest fly, low fatigue.",
    "differences": [
+    "Less lower-chest bias",
     "Better isolation",
-    "More stable",
-    "Less systemic fatigue"
+    "More stable"
    ],
    "evidence": "biomechanics"
   }
@@ -249,7 +250,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 2,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "lower_chest_bias"
+  ]
  },
  "app_values": {
   "exercises.json:@weighted-dip.heads.chest_lower": 0.8,

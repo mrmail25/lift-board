@@ -148,9 +148,10 @@
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "iso-lateral-chest-press",
-   "why": "Swap sheet: More stretch emphasis, Lower loading potential.",
+   "why": "Swap sheet: More stretch emphasis, Independent arm levers, Lower loading potential.",
    "differences": [
     "More stretch emphasis",
+    "Independent arm levers",
     "Lower loading potential"
    ],
    "evidence": "supported",
@@ -195,6 +196,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 3,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

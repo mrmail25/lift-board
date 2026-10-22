@@ -115,41 +115,33 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "wrist-curl",
-   "why": "Similar muscles; dumbbell instead of dumbbell.",
-   "differences": [],
+   "why": "Swap sheet: Less wrist-extensor work.",
+   "differences": [
+    "Less wrist-extensor work"
+   ],
    "evidence": "biomechanics"
   },
   {
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "dead-hang",
-   "why": "Swap sheet: More grip demand.",
+   "why": "Swap sheet: Less wrist-extensor work, Static hold, More grip demand.",
    "differences": [
+    "Less wrist-extensor work",
+    "Static hold",
     "More grip demand"
    ],
    "evidence": "biomechanics"
   },
   {
-   "goal": "more_stable",
-   "goal_label": "More stable",
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
    "exercise_id": "cable-rope-hammer-curl",
-   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "why": "Swap sheet: Brachialis & brachioradialis bias, Less wrist-extensor work, Better isolation.",
    "differences": [
-    "Better isolation",
-    "More stable",
-    "Steadier cable tension"
-   ],
-   "evidence": "biomechanics"
-  },
-  {
-   "goal": "one_side",
-   "goal_label": "One side at a time",
-   "exercise_id": "suitcase-carry",
-   "why": "Swap sheet: More upper-trap work, Less isolation, One side at a time.",
-   "differences": [
-    "More upper-trap work",
-    "Less isolation",
-    "One side at a time"
+    "Brachialis & brachioradialis bias",
+    "Less wrist-extensor work",
+    "Better isolation"
    ],
    "evidence": "biomechanics"
   }
@@ -161,7 +153,10 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "wrist_extensor_focus"
+  ]
  },
  "app_values": {},
  "notes": [

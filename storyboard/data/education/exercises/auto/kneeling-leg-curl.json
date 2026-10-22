@@ -122,22 +122,13 @@
  ],
  "alternatives": [
   {
-   "goal": "one_side",
-   "goal_label": "One side at a time",
-   "exercise_id": "standing-leg-curl",
-   "why": "Swap sheet: One side at a time.",
-   "differences": [
-    "One side at a time"
-   ],
-   "evidence": "biomechanics"
-  },
-  {
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "seated-leg-curl",
-   "why": "Swap sheet: More stretch emphasis.",
+   "why": "Swap sheet: More stretch emphasis, Both sides together.",
    "differences": [
-    "More stretch emphasis"
+    "More stretch emphasis",
+    "Both sides together"
    ],
    "evidence": "supported",
    "citations": [
@@ -181,7 +172,10 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "unilateral"
+  ]
  },
  "app_values": {},
  "notes": [

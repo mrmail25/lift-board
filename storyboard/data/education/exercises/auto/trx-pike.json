@@ -125,11 +125,31 @@
  ],
  "alternatives": [
   {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "trx-fallout",
+   "why": "Swap sheet: More stretch emphasis, Less hip-flexor work.",
+   "differences": [
+    "More stretch emphasis",
+    "Less hip-flexor work"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "weighted-decline-crunch",
-   "why": "Swap sheet: More stable, Easier to learn.",
+   "why": "Swap sheet: Less hip-flexor work, More stable, Easier to learn.",
    "differences": [
+    "Less hip-flexor work",
     "More stable",
     "Easier to learn"
    ],
@@ -139,8 +159,9 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "dragon-flag",
-   "why": "Swap sheet: More stable, More technical.",
+   "why": "Swap sheet: Less hip-flexor work, More stable, More technical.",
    "differences": [
+    "Less hip-flexor work",
     "More stable",
     "More technical"
    ],
@@ -149,25 +170,14 @@
   {
    "goal": "easier_to_learn",
    "goal_label": "Easier to learn",
-   "exercise_id": "standing-ab-wheel-rollout",
-   "why": "Swap sheet: More stable, Easier to learn.",
+   "exercise_id": "hanging-leg-raise",
+   "why": "Swap sheet: More stable, Easier to learn, More grip demand.",
    "differences": [
     "More stable",
-    "Easier to learn"
+    "Easier to learn",
+    "More grip demand"
    ],
    "evidence": "modeled"
-  },
-  {
-   "goal": "more_isolation",
-   "goal_label": "Better isolation",
-   "exercise_id": "ab-crunch-machine",
-   "why": "Swap sheet: Better isolation, More stable, Easier to learn.",
-   "differences": [
-    "Better isolation",
-    "More stable",
-    "Easier to learn"
-   ],
-   "evidence": "biomechanics"
   }
  ],
  "swap": {
@@ -177,7 +187,10 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 2,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "hip_flexor_work"
+  ]
  },
  "app_values": {},
  "notes": [

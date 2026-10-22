@@ -132,44 +132,55 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "active-hang",
-   "why": "Similar muscles; bodyweight instead of bodyweight.",
-   "differences": [],
+   "why": "Swap sheet: Static hold.",
+   "differences": [
+    "Static hold"
+   ],
    "evidence": "biomechanics"
   },
   {
    "goal": "heavier_loading",
    "goal_label": "Heavier loading",
-   "exercise_id": "barbell-shrug",
-   "why": "Swap sheet: More upper-trap work, Loads the spine, Heavier loading potential.",
-   "differences": [
-    "More upper-trap work",
-    "Loads the spine",
-    "Heavier loading potential"
-   ],
-   "evidence": "biomechanics"
-  },
-  {
-   "goal": "home_dumbbells",
-   "goal_label": "Home gym: dumbbells",
    "exercise_id": "dumbbell-shrug",
-   "why": "Swap sheet: More upper-trap work, Heavier loading potential.",
+   "why": "Swap sheet: Shoulders not actively pulled down, More upper-trap work, Heavier loading potential.",
    "differences": [
+    "Shoulders not actively pulled down",
     "More upper-trap work",
     "Heavier loading potential"
    ],
    "evidence": "biomechanics"
   },
   {
-   "goal": "more_stable",
-   "goal_label": "More stable",
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
    "exercise_id": "shrug-machine",
-   "why": "Swap sheet: More upper-trap work, Better isolation, More stable.",
+   "why": "Swap sheet: Shoulders not actively pulled down, More upper-trap work, Better isolation.",
    "differences": [
+    "Shoulders not actively pulled down",
     "More upper-trap work",
-    "Better isolation",
-    "More stable"
+    "Better isolation"
    ],
    "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "ring-pull-up",
+   "why": "Swap sheet: More stretch emphasis, Shoulders not actively pulled down, Less isolation.",
+   "differences": [
+    "More stretch emphasis",
+    "Shoulders not actively pulled down",
+    "Less isolation"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
   }
  ],
  "swap": {
@@ -179,7 +190,9 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
+   "active_shoulders",
    "grip_demand"
   ]
  },

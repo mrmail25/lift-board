@@ -183,10 +183,11 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "chest-supported-dumbbell-row",
-   "why": "Swap sheet: Less constant tension, More technical.",
+   "why": "Swap sheet: Less constant tension, More technical, Wider grip.",
    "differences": [
     "Less constant tension",
-    "More technical"
+    "More technical",
+    "Wider grip"
    ],
    "evidence": "biomechanics"
   },
@@ -210,9 +211,11 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 1,
   "flags": [
    "upper_back_thickness_bias",
-   "constant_tension"
+   "constant_tension",
+   "neutral_grip"
   ]
  },
  "app_values": {},

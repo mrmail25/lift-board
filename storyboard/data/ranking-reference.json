@@ -4792,6 +4792,34 @@
    },
    "expected": [
     {
+     "id": "horizontal-leg-press",
+     "score": 1.0241,
+     "fit": 0.8647,
+     "reasons": [
+      "Fills a quads gap",
+      "Fits your longevity goal"
+     ],
+     "reason_keys": [
+      "gap",
+      "goal_attr"
+     ],
+     "parts": {
+      "fit": 0.8647,
+      "priority": 0.0,
+      "goal_attr": 0.07,
+      "bias": 0.0,
+      "gap": 0.0844,
+      "theme": 0.0,
+      "prefatigue": -0.02,
+      "systemic": -0.0,
+      "spinal": 0.025,
+      "coverage": 0.0,
+      "favorite": 0.0,
+      "conflict": 0.0
+     },
+     "notes": []
+    },
+    {
      "id": "belt-squat",
      "score": 1.0214,
      "fit": 0.8849,
@@ -4893,34 +4921,6 @@
       "goal_attr": 0.05,
       "bias": 0.0,
       "gap": 0.0831,
-      "theme": 0.0,
-      "prefatigue": -0.02,
-      "systemic": -0.0,
-      "spinal": 0.025,
-      "coverage": 0.0,
-      "favorite": 0.0,
-      "conflict": 0.0
-     },
-     "notes": []
-    },
-    {
-     "id": "horizontal-leg-press",
-     "score": 1.0041,
-     "fit": 0.8647,
-     "reasons": [
-      "Fills a quads gap",
-      "Fits your longevity goal"
-     ],
-     "reason_keys": [
-      "gap",
-      "goal_attr"
-     ],
-     "parts": {
-      "fit": 0.8647,
-      "priority": 0.0,
-      "goal_attr": 0.05,
-      "bias": 0.0,
-      "gap": 0.0844,
       "theme": 0.0,
       "prefatigue": -0.02,
       "systemic": -0.0,
@@ -5838,7 +5838,7 @@
     },
     {
      "id": "rack-pull",
-     "score": 0.3714,
+     "score": 0.3514,
      "fit": 0.4105,
      "reasons": [
       "Similar muscles"
@@ -5849,7 +5849,7 @@
      "parts": {
       "fit": 0.4105,
       "priority": 0.0009,
-      "goal_attr": -0.04,
+      "goal_attr": -0.06,
       "bias": 0.0,
       "gap": 0.0,
       "theme": 0.0,
@@ -12485,7 +12485,8 @@
       "leg_curl_lying": false,
       "pec_deck": false,
       "gym_machine": false
-     }
+     },
+     "template": true
     }
    },
    "expected": {
@@ -12870,7 +12871,8 @@
       "leg_curl_lying": true,
       "pec_deck": true,
       "gym_machine": true
-     }
+     },
+     "template": true
     }
    },
    "expected": {
@@ -13950,7 +13952,8 @@
        "leg_curl_lying": false,
        "pec_deck": false,
        "gym_machine": false
-      }
+      },
+      "template": true
      }
     },
     "n": 6
@@ -14185,7 +14188,8 @@
        "leg_curl_lying": false,
        "pec_deck": false,
        "gym_machine": false
-      }
+      },
+      "template": true
      }
     },
     "n": 6
@@ -14495,7 +14499,8 @@
        "leg_curl_lying": true,
        "pec_deck": true,
        "gym_machine": true
-      }
+      },
+      "template": true
      }
     },
     "n": 6
@@ -14730,7 +14735,8 @@
        "leg_curl_lying": false,
        "pec_deck": false,
        "gym_machine": false
-      }
+      },
+      "template": true
      }
     },
     "n": 6

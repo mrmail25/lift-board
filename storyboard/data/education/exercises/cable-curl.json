@@ -182,9 +182,9 @@
    "exercise_id": "hammer-curl",
    "why": "Palms in for more brachioradialis.",
    "differences": [
+    "Brachialis & brachioradialis bias",
     "Less isolation",
-    "Less stable",
-    "Less constant tension"
+    "Less stable"
    ],
    "evidence": "biomechanics"
   },
@@ -220,6 +220,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "constant_tension"
   ]

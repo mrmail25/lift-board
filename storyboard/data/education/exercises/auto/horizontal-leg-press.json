@@ -132,9 +132,10 @@
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "hack-squat",
-   "why": "Swap sheet: More stretch emphasis.",
+   "why": "Swap sheet: More stretch emphasis, Heavier loading potential.",
    "differences": [
-    "More stretch emphasis"
+    "More stretch emphasis",
+    "Heavier loading potential"
    ],
    "evidence": "supported",
    "citations": [
@@ -147,13 +148,22 @@
    ]
   },
   {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "leg-press",
+   "why": "Swap sheet: Heavier loading potential.",
+   "differences": [
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
    "goal": "one_side",
    "goal_label": "One side at a time",
    "exercise_id": "single-leg-press",
-   "why": "Swap sheet: One side at a time, Lower loading potential.",
+   "why": "Swap sheet: One side at a time.",
    "differences": [
-    "One side at a time",
-    "Lower loading potential"
+    "One side at a time"
    ],
    "evidence": "biomechanics"
   }
@@ -163,8 +173,9 @@
   "muscle_isolation": 1,
   "stability": 3,
   "systemic_fatigue": 2,
-  "loading_potential": 3,
+  "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

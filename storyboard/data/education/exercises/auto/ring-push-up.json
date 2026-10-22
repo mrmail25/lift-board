@@ -161,25 +161,25 @@
    "evidence": "biomechanics"
   },
   {
-   "goal": "easier_to_learn",
-   "goal_label": "Easier to learn",
-   "exercise_id": "iso-lateral-chest-press",
-   "why": "Swap sheet: More stable, Heavier loading potential, Easier to learn.",
-   "differences": [
-    "More stable",
-    "Heavier loading potential",
-    "Easier to learn"
-   ],
-   "evidence": "modeled"
-  },
-  {
    "goal": "heavier_loading",
    "goal_label": "Heavier loading",
-   "exercise_id": "plate-loaded-chest-press",
-   "why": "Swap sheet: Less stretch emphasis, More stable, Heavier loading potential.",
+   "exercise_id": "iso-lateral-chest-press",
+   "why": "Swap sheet: More stable, Independent arm levers, Heavier loading potential.",
    "differences": [
-    "Less stretch emphasis",
     "More stable",
+    "Independent arm levers",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-bench-press",
+   "why": "Swap sheet: More stable, More systemic fatigue, Heavier loading potential.",
+   "differences": [
+    "More stable",
+    "More systemic fatigue",
     "Heavier loading potential"
    ],
    "evidence": "biomechanics"
@@ -192,6 +192,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 1,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

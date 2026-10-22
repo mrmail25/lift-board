@@ -257,6 +257,7 @@
    "exercise_id": "incline-barbell-bench-press",
    "why": "Lying on a bench: no standing balance; more chest.",
    "differences": [
+    "Upper-chest bias",
     "Less spinal loading",
     "Easier to learn"
    ],
@@ -268,9 +269,9 @@
    "exercise_id": "landmine-press-one-arm",
    "why": "One-arm press on an angle.",
    "differences": [
+    "Upper-chest bias",
     "One side at a time",
-    "Less spinal loading",
-    "Lower loading potential"
+    "Less spinal loading"
    ],
    "evidence": "biomechanics"
   }
@@ -282,8 +283,10 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
-   "spinal_load"
+   "spinal_load",
+   "overhead_finish"
   ]
  },
  "app_values": {

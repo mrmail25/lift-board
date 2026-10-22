@@ -179,11 +179,11 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "tuck-front-lever",
-   "why": "Swap sheet: Less stretch emphasis, More technical, More grip demand.",
+   "why": "Swap sheet: Less stretch emphasis, Static hold, More technical.",
    "differences": [
     "Less stretch emphasis",
-    "More technical",
-    "More grip demand"
+    "Static hold",
+    "More technical"
    ],
    "evidence": "biomechanics"
   }
@@ -195,6 +195,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

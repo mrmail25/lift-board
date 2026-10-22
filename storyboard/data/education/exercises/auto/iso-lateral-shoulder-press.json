@@ -155,11 +155,11 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "pike-push-up",
-   "why": "Swap sheet: Less stable, Lower loading potential, More technical.",
+   "why": "Swap sheet: Less stable, Linked arm levers, Lower loading potential.",
    "differences": [
     "Less stable",
-    "Lower loading potential",
-    "More technical"
+    "Linked arm levers",
+    "Lower loading potential"
    ],
    "evidence": "biomechanics"
   },
@@ -167,11 +167,11 @@
    "goal": "one_side",
    "goal_label": "One side at a time",
    "exercise_id": "kettlebell-press",
-   "why": "Swap sheet: Less stable, One side at a time, More systemic fatigue.",
+   "why": "Swap sheet: Less stable, One side at a time, Linked arm levers.",
    "differences": [
     "Less stable",
     "One side at a time",
-    "More systemic fatigue"
+    "Linked arm levers"
    ],
    "evidence": "biomechanics"
   },
@@ -179,11 +179,11 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "arnold-press",
-   "why": "Swap sheet: Less stable, More systemic fatigue, More technical.",
+   "why": "Swap sheet: Less stable, Linked arm levers, More systemic fatigue.",
    "differences": [
     "Less stable",
-    "More systemic fatigue",
-    "More technical"
+    "Linked arm levers",
+    "More systemic fatigue"
    ],
    "evidence": "biomechanics"
   },
@@ -191,8 +191,9 @@
    "goal": "heavier_loading",
    "goal_label": "Heavier loading",
    "exercise_id": "smith-overhead-press",
-   "why": "Swap sheet: Loads the spine, Heavier loading potential.",
+   "why": "Swap sheet: Linked arm levers, Loads the spine, Heavier loading potential.",
    "differences": [
+    "Linked arm levers",
     "Loads the spine",
     "Heavier loading potential"
    ],
@@ -206,7 +207,11 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "independent_arms",
+   "overhead_finish"
+  ]
  },
  "app_values": {},
  "notes": [

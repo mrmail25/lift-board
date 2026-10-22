@@ -164,7 +164,10 @@
    "goal_label": "More biceps",
    "exercise_id": "dumbbell-curl",
    "why": "Palms up: more biceps.",
-   "differences": [],
+   "differences": [
+    "Less brachialis & brachioradialis bias",
+    "Palms-up or palms-down grip"
+   ],
    "evidence": "biomechanics"
   },
   {
@@ -184,7 +187,9 @@
    "goal_label": "More forearms",
    "exercise_id": "reverse-curl",
    "why": "Palms down: even more brachioradialis.",
-   "differences": [],
+   "differences": [
+    "Palms-up or palms-down grip"
+   ],
    "evidence": "biomechanics"
   },
   {
@@ -194,7 +199,8 @@
    "why": "Arm behind the body for a long-length biceps curl.",
    "differences": [
     "More stretch emphasis",
-    "Biceps long-head stretch"
+    "Biceps long-head stretch",
+    "Less brachialis & brachioradialis bias"
    ],
    "evidence": "biomechanics"
   }
@@ -206,7 +212,11 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "brachialis_brachioradialis_bias",
+   "neutral_grip"
+  ]
  },
  "app_values": {
   "exercises.json:@hammer-curl.muscles.biceps": 0.8,

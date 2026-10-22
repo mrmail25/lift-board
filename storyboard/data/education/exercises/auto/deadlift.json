@@ -222,9 +222,10 @@
    "goal": "easier_to_learn",
    "goal_label": "Easier to learn",
    "exercise_id": "trap-bar-deadlift",
-   "why": "Swap sheet: Easier to learn.",
+   "why": "Swap sheet: Easier to learn, Neutral grip (palms facing in).",
    "differences": [
-    "Easier to learn"
+    "Easier to learn",
+    "Neutral grip (palms facing in)"
    ],
    "evidence": "modeled"
   },
@@ -260,6 +261,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
    "upper_trap_involvement",
    "spinal_load",

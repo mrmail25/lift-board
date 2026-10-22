@@ -164,9 +164,10 @@
    "goal": "less_grip",
    "goal_label": "Less grip demand",
    "exercise_id": "kettlebell-snatch",
-   "why": "Swap sheet: One side at a time, Less grip demand.",
+   "why": "Swap sheet: One side at a time, Finishes overhead, Less grip demand.",
    "differences": [
     "One side at a time",
+    "Finishes overhead",
     "Less grip demand"
    ],
    "evidence": "biomechanics"
@@ -211,6 +212,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 2,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
    "grip_demand"
   ]

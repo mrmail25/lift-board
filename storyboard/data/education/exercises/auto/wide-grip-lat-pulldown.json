@@ -146,10 +146,11 @@
    "goal": "one_side",
    "goal_label": "One side at a time",
    "exercise_id": "single-arm-lat-pulldown",
-   "why": "Swap sheet: Less lat-width focus, One side at a time.",
+   "why": "Swap sheet: Less lat-width focus, One side at a time, Narrower grip.",
    "differences": [
     "Less lat-width focus",
-    "One side at a time"
+    "One side at a time",
+    "Narrower grip"
    ],
    "evidence": "biomechanics"
   },
@@ -173,6 +174,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 3,
   "flags": [
    "lat_width_bias",
    "constant_tension"

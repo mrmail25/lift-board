@@ -198,7 +198,9 @@
    "goal_label": "More biceps",
    "exercise_id": "barbell-row",
    "why": "Standard bent row with more biceps.",
-   "differences": [],
+   "differences": [
+    "Continuous reps"
+   ],
    "evidence": "biomechanics"
   },
   {
@@ -233,9 +235,11 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
    "upper_back_thickness_bias",
    "spinal_load",
+   "dead_stop_reps",
    "grip_demand"
   ]
  },

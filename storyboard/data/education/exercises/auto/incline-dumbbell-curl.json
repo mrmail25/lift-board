@@ -161,12 +161,12 @@
   {
    "goal": "more_stable",
    "goal_label": "More stable",
-   "exercise_id": "machine-preacher-curl",
-   "why": "Swap sheet: Less biceps long-head stretch, Better isolation, More stable.",
+   "exercise_id": "bayesian-cable-curl",
+   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
    "differences": [
-    "Less biceps long-head stretch",
     "Better isolation",
-    "More stable"
+    "More stable",
+    "Steadier cable tension"
    ],
    "evidence": "biomechanics"
   }
@@ -178,6 +178,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "biceps_long_head_bias"
   ]

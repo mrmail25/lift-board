@@ -165,11 +165,11 @@
    "goal": "less_spinal_load",
    "goal_label": "Less spinal load",
    "exercise_id": "iso-lateral-shoulder-press",
-   "why": "Swap sheet: More stable, Less spinal loading, Heavier loading potential.",
+   "why": "Swap sheet: More stable, Independent arm levers, Less spinal loading.",
    "differences": [
     "More stable",
-    "Less spinal loading",
-    "Heavier loading potential"
+    "Independent arm levers",
+    "Less spinal loading"
    ],
    "evidence": "biomechanics"
   },
@@ -193,8 +193,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 1,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
-   "spinal_load"
+   "spinal_load",
+   "overhead_finish"
   ]
  },
  "app_values": {},

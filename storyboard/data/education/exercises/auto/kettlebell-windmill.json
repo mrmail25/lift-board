@@ -142,10 +142,11 @@
    "goal": "easier_to_learn",
    "goal_label": "Easier to learn",
    "exercise_id": "landmine-rotation",
-   "why": "Swap sheet: Both sides together, Easier to learn.",
+   "why": "Swap sheet: Both sides together, Easier to learn, Doesn't finish overhead.",
    "differences": [
     "Both sides together",
-    "Easier to learn"
+    "Easier to learn",
+    "Doesn't finish overhead"
    ],
    "evidence": "modeled"
   },
@@ -193,8 +194,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
-   "unilateral"
+   "unilateral",
+   "overhead_finish"
   ]
  },
  "app_values": {},

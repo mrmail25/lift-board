@@ -136,8 +136,9 @@
    "goal": "easier_to_learn",
    "goal_label": "Easier to learn",
    "exercise_id": "hollow-body-hold",
-   "why": "Swap sheet: Easier to learn.",
+   "why": "Swap sheet: Less hip-flexor work, Easier to learn.",
    "differences": [
+    "Less hip-flexor work",
     "Easier to learn"
    ],
    "evidence": "modeled"
@@ -146,21 +147,42 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "captains-chair-knee-raise",
-   "why": "Swap sheet: Easier to learn.",
+   "why": "Swap sheet: Moving reps, Easier to learn.",
    "differences": [
+    "Moving reps",
     "Easier to learn"
    ],
    "evidence": "biomechanics"
   },
   {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "standing-ab-wheel-rollout",
+   "why": "Swap sheet: More stretch emphasis, Less hip-flexor work, Moving reps.",
+   "differences": [
+    "More stretch emphasis",
+    "Less hip-flexor work",
+    "Moving reps"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "ab-crunch-machine",
-   "why": "Swap sheet: Better isolation, More stable, Easier to learn.",
+   "why": "Swap sheet: Less hip-flexor work, Better isolation, More stable.",
    "differences": [
+    "Less hip-flexor work",
     "Better isolation",
-    "More stable",
-    "Easier to learn"
+    "More stable"
    ],
    "evidence": "biomechanics"
   }
@@ -172,7 +194,11 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 3,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "hip_flexor_work",
+   "static_hold"
+  ]
  },
  "app_values": {},
  "notes": [

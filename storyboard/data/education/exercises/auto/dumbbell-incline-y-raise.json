@@ -165,11 +165,11 @@
    "goal": "heavier_loading",
    "goal_label": "Heavier loading",
    "exercise_id": "dumbbell-shrug",
-   "why": "Swap sheet: More upper-trap work, Heavier loading potential, More grip demand.",
+   "why": "Swap sheet: More upper-trap work, Heavier loading potential, Neutral grip (palms facing in).",
    "differences": [
     "More upper-trap work",
     "Heavier loading potential",
-    "More grip demand"
+    "Neutral grip (palms facing in)"
    ],
    "evidence": "biomechanics"
   }
@@ -181,6 +181,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

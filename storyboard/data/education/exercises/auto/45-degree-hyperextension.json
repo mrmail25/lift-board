@@ -128,8 +128,10 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "back-extension",
-   "why": "Similar muscles; bodyweight instead of bodyweight.",
-   "differences": [],
+   "why": "Swap sheet: Lower-back focus.",
+   "differences": [
+    "Lower-back focus"
+   ],
    "evidence": "biomechanics"
   },
   {
@@ -175,6 +177,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

@@ -187,11 +187,11 @@
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "iso-lateral-chest-press",
-   "why": "Swap sheet: More stretch emphasis, More stable, Heavier loading potential.",
+   "why": "Swap sheet: More stretch emphasis, More stable, Independent arm levers.",
    "differences": [
     "More stretch emphasis",
     "More stable",
-    "Heavier loading potential"
+    "Independent arm levers"
    ],
    "evidence": "biomechanics"
   }
@@ -203,6 +203,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 1,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

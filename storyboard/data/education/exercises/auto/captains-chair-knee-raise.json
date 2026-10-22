@@ -121,19 +121,40 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "weighted-decline-crunch",
-   "why": "Similar muscles; bodyweight instead of bodyweight.",
-   "differences": [],
+   "why": "Swap sheet: Less hip-flexor work.",
+   "differences": [
+    "Less hip-flexor work"
+   ],
    "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "ab-wheel-rollout",
+   "why": "Swap sheet: More stretch emphasis, Less hip-flexor work.",
+   "differences": [
+    "More stretch emphasis",
+    "Less hip-flexor work"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
   },
   {
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "cable-crunch",
-   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "why": "Swap sheet: Less hip-flexor work, Better isolation, More stable.",
    "differences": [
+    "Less hip-flexor work",
     "Better isolation",
-    "More stable",
-    "Steadier cable tension"
+    "More stable"
    ],
    "evidence": "biomechanics"
   }
@@ -145,7 +166,10 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "hip_flexor_work"
+  ]
  },
  "app_values": {},
  "notes": [

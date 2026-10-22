@@ -134,16 +134,19 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "standing-ab-wheel-rollout",
-   "why": "Similar muscles; bodyweight instead of barbell.",
-   "differences": [],
+   "why": "Swap sheet: More technical.",
+   "differences": [
+    "More technical"
+   ],
    "evidence": "biomechanics"
   },
   {
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "ab-crunch-machine",
-   "why": "Swap sheet: Better isolation, More stable.",
+   "why": "Swap sheet: Less stretch emphasis, Better isolation, More stable.",
    "differences": [
+    "Less stretch emphasis",
     "Better isolation",
     "More stable"
    ],
@@ -153,34 +156,23 @@
    "goal": "more_isolation",
    "goal_label": "Better isolation",
    "exercise_id": "standing-cable-crunch",
-   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "why": "Swap sheet: Less stretch emphasis, Better isolation, More stable.",
    "differences": [
+    "Less stretch emphasis",
     "Better isolation",
-    "More stable",
-    "Steadier cable tension"
-   ],
-   "evidence": "biomechanics"
-  },
-  {
-   "goal": "constant_tension",
-   "goal_label": "Steadier tension",
-   "exercise_id": "cable-crunch",
-   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
-   "differences": [
-    "Better isolation",
-    "More stable",
-    "Steadier cable tension"
+    "More stable"
    ],
    "evidence": "biomechanics"
   }
  ],
  "swap": {
-  "stretch_emphasis": 2,
+  "stretch_emphasis": 3,
   "muscle_isolation": 2,
   "stability": 2,
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

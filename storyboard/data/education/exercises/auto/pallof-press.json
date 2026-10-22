@@ -121,10 +121,11 @@
    "goal": "heavier_loading",
    "goal_label": "Heavier loading",
    "exercise_id": "cable-woodchop",
-   "why": "Swap sheet: Less isolation, Heavier loading potential.",
+   "why": "Swap sheet: Less isolation, Heavier loading potential, No anti-rotation demand.",
    "differences": [
     "Less isolation",
-    "Heavier loading potential"
+    "Heavier loading potential",
+    "No anti-rotation demand"
    ],
    "evidence": "biomechanics"
   },
@@ -141,14 +142,34 @@
    "evidence": "biomechanics"
   },
   {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "ab-wheel-rollout",
+   "why": "Swap sheet: More stretch emphasis, Less isolation, Less stable.",
+   "differences": [
+    "More stretch emphasis",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
-   "exercise_id": "ab-wheel-rollout",
-   "why": "Swap sheet: Less isolation, Less stable, Less constant tension.",
+   "exercise_id": "hanging-leg-raise",
+   "why": "Swap sheet: More hip-flexor work (legs lift), Less isolation, Less stable.",
    "differences": [
+    "More hip-flexor work (legs lift)",
     "Less isolation",
-    "Less stable",
-    "Less constant tension"
+    "Less stable"
    ],
    "evidence": "biomechanics"
   }
@@ -160,8 +181,10 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
-   "constant_tension"
+   "constant_tension",
+   "anti_rotation"
   ]
  },
  "app_values": {},

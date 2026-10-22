@@ -137,11 +137,11 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "scapular-pull-up",
-   "why": "Swap sheet: Less upper-trap work, Less isolation, Less stable.",
+   "why": "Swap sheet: Shoulders pulled down and back, Less upper-trap work, Less isolation.",
    "differences": [
+    "Shoulders pulled down and back",
     "Less upper-trap work",
-    "Less isolation",
-    "Less stable"
+    "Less isolation"
    ],
    "evidence": "biomechanics"
   }
@@ -153,6 +153,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 3,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "upper_trap_involvement"
   ]

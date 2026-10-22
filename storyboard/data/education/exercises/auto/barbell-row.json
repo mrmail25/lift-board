@@ -224,6 +224,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
    "upper_back_thickness_bias",
    "spinal_load",

@@ -152,16 +152,24 @@
    "evidence": "biomechanics"
   },
   {
-   "goal": "home_bodyweight",
-   "goal_label": "Home gym: no equipment / bar only",
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
    "exercise_id": "ab-wheel-rollout",
-   "why": "Swap sheet: Better isolation, Less stable, Lower loading potential.",
+   "why": "Swap sheet: More stretch emphasis, Better isolation, Less stable.",
    "differences": [
+    "More stretch emphasis",
     "Better isolation",
-    "Less stable",
-    "Lower loading potential"
+    "Less stable"
    ],
-   "evidence": "biomechanics"
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
   }
  ],
  "swap": {
@@ -171,6 +179,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

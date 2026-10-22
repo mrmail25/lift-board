@@ -128,6 +128,26 @@
     "Less constant tension"
    ],
    "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "trx-fallout",
+   "why": "Swap sheet: More stretch emphasis, Less isolation, Less stable.",
+   "differences": [
+    "More stretch emphasis",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
   }
  ],
  "swap": {
@@ -137,6 +157,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "constant_tension"
   ]

@@ -149,18 +149,6 @@
     "Less isolation"
    ],
    "evidence": "modeled"
-  },
-  {
-   "goal": "heavier_loading",
-   "goal_label": "Heavier loading",
-   "exercise_id": "dip-machine",
-   "why": "Swap sheet: Less isolation, More systemic fatigue, Heavier loading potential.",
-   "differences": [
-    "Less isolation",
-    "More systemic fatigue",
-    "Heavier loading potential"
-   ],
-   "evidence": "biomechanics"
   }
  ],
  "swap": {
@@ -170,6 +158,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "constant_tension"
   ]

@@ -174,11 +174,11 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "weighted-dip",
-   "why": "Swap sheet: More stretch emphasis, Less stable, Lower loading potential.",
+   "why": "Swap sheet: More stretch emphasis, Less upper-chest bias, Lower-chest bias.",
    "differences": [
     "More stretch emphasis",
-    "Less stable",
-    "Lower loading potential"
+    "Less upper-chest bias",
+    "Lower-chest bias"
    ],
    "evidence": "biomechanics"
   }
@@ -190,7 +190,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 3,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "upper_chest_bias"
+  ]
  },
  "app_values": {},
  "notes": [

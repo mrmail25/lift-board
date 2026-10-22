@@ -419,7 +419,8 @@ function editSheet(d){
 // 7. BUILD
 const SPLITS=['Full Body','Upper/Lower','PPL','Custom'];
 let WEEK=['Upper A','Lower A',null,'Upper B','Lower B',null,null];
-V.build=()=>{const r=ROUTINES[0],d=r.days[S.buildDay];
+// Legacy list Build (kept at #build-list for reference; the whiteboard Build lives in board.js)
+V.buildList=()=>{const r=ROUTINES[0],d=r.days[S.buildDay];
  return header('Build',bookBtn+gearBtn)+
  `<div class="pad"><div class="seg" id="splitseg">${SPLITS.map((s,i)=>`<button class="${i===S.split?'on':''}" data-split="${i}">${s}</button>`).join('')}</div></div>
   <div class="bhead"><div class="grow"><div class="eyebrow">Draft · edited 2 min ago</div><div class="bn">Upper / Lower</div><div class="sub num">4 days · 64 sets · ≈ 3 h 41 m a week</div></div></div>
@@ -438,7 +439,7 @@ V.build=()=>{const r=ROUTINES[0],d=r.days[S.buildDay];
   <div class="group vol">${VOL.slice(0,8).map(([m,n,lo,hi])=>{const st=vStat(n,lo,hi);return `<button class="row vrow" data-go="#learn-${m}" data-vs="${st}"><span class="vm">${ML[m]}</span><span class="vb"><i style="--w:${Math.min(1,n/(hi*(VB.red_factor||1)))*100}%" class="vs-${st}"></i><b style="--x:${hi/(hi*(VB.red_factor||1))*100}%"></b></span><span class="vn num">${n}<small>/${lo}–${hi}</small></span></button>`}).join('')}</div>
   ${volLegend()}
   <p class="foot">Tap a muscle to learn about it.</p>`};
-function afterBuild(){bindSwipes($('#view'));
+function afterBuildList(){bindSwipes($('#view'));
   $$('#week .lbl').forEach(l=>l.addEventListener('pointerdown',e=>{e.preventDefault();const from=+l.dataset.lbl,ghost=l.cloneNode(true);ghost.classList.add('ghost');
     $('#app').appendChild(ghost);const ar=$('#app').getBoundingClientRect();
     const mv=ev=>{ghost.style.left=ev.clientX-ar.left-26+'px';ghost.style.top=ev.clientY-ar.top-30+'px';
@@ -451,9 +452,9 @@ function swapSheet(id,opt={}){
   // rank('swap'): hard filters (swap eligibility, same day, equipment) then the shared score; tag lines = swaptags diff_tags
   const pos=(SC.board.find(d=>d.day===SC.day)||{tiles:[]}).tiles.findIndex(t=>t.id===id);
   const alts=RD?rk('swap',null,{current:id,position:pos<0?null:pos},opt.n||6):(SWAPS[id]||[]).map(a=>({id:a.id,reasons:[],notes:[],tags:a.tags}));
-  // difference chips (swaptags diff_tags); when none differ, one honest line instead of a blank (SWAPDIFF.emptyLine)
-  const lines=a=>a.tags?{tags:a.tags,empty:a.tags.length?null:SWAPDIFF.NO_DIFF}:RD&&RD.EX[id]&&RD.EX[a.id]?SWAPDIFF.display(RD.EX[id],RD.EX[a.id],RD.rules):{tags:[],empty:SWAPDIFF.emptyLine(RD&&RD.rules)};
-  const diffRow=a=>{const d=lines(a);return d.tags.length?`<div class="tags">${d.tags.slice(0,3).map(x=>`<span class="tag">${x}</span>`).join('')}</div>`:`<div class="tags none"><span class="nodiff">${d.empty}</span></div>`};
+  // difference chips (swaptags diff_tags); when none differ, rules.json compare.empty_line once (SWAPDIFF.display = display_lines)
+  const lines=a=>a.tags?{tags:a.tags,empty:a.tags.length?null:SWAPDIFF.emptyLine(RD&&RD.rules)}:RD&&RD.EX[id]&&RD.EX[a.id]?SWAPDIFF.display(RD.EX[id],RD.EX[a.id],RD.rules):{tags:[],empty:SWAPDIFF.emptyLine(RD&&RD.rules)};
+  const diffRow=a=>{const d=lines(a);if(!d.tags.length&&!d.empty)return '';return d.tags.length?`<div class="tags">${d.tags.slice(0,3).map(x=>`<span class="tag">${x}</span>`).join('')}</div>`:`<div class="tags none"><span class="nodiff">${d.empty}</span></div>`};
   const s=sheet({title:'Swap exercise',cls:'grouped',right:`<button class="btn plain" data-x="close">Cancel</button>`,body:`
     <div class="cur card">${gl(id)}<div class="grow"><div class="eyebrow">Replacing</div><b>${exName(id)}</b><div class="t2">${exSub(id)}</div></div></div>
     ${SC.note?`<div class="scnote">${SC.note}</div>`:''}
@@ -462,7 +463,7 @@ function swapSheet(id,opt={}){
       <div class="altx">${diffRow(a)}${a.reasons&&a.reasons.length?whyR(a):''}${opt.debug&&a.score!=null?`<div class="dbg num">score ${a.score} · fit ${a.fit}</div>`:''}</div></div>`).join('')}</div>
     <p class="foot">Typical differences, not guarantees.</p>
     <div class="group" style="margin-top:16px"><div class="row"><div class="grow"><div class="t1">Only this workout</div><div class="t2">Keep the routine unchanged</div></div><span class="tg" data-act="tg"></span></div></div>`});
-  s.el.addEventListener('click',e=>{if(e.target.closest('[data-act]'))return;const x=e.target.closest('[data-x]');if(!x)return;s.close();if(x.dataset.x==='pick')toast('Swapped')});return s;
+  s.el.addEventListener('click',e=>{if(e.target.closest('[data-act]'))return;const x=e.target.closest('[data-x]');if(!x)return;s.close();if(x.dataset.x==='pick'){if(opt.onPick)opt.onPick(x.dataset.id);else toast('Swapped')}});return s;
 }
 
 // 8. PLATES
@@ -729,7 +730,7 @@ let RD=null;
 async function loadRank(){if(RD)return RD;
   for(const b of ['data/','../data/']){try{const f=n=>fetch(b+n,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(n);return r.json()});
     const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(f));
-    RD=RANK.makeData({exercises,rules,targets,patterns,splits});RD.base=b;return RD}catch(e){}}
+    RD=RANK.makeData({exercises,rules,targets,patterns,splits});RD.splits=splits;RD.base=b;return RD}catch(e){}}
   console.warn('ranking data missing: suggestions fall back to library order');return null}
 const LSK2={equip:'apechit.sb.equip'};
 let EQUIP=ld(LSK2.equip,{});                                  // gym profile `equipment` {name: bool} (ranking-spec §5, Builder items)
@@ -830,11 +831,11 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  'swap-d':['build','build',0,0,()=>{SC.day='mon';SC.note='Worked example (d): bias upper chest; incline presses count as related pattern.';PREFS_OVR.p={goals:[],bias_muscles:['chest_upper'],favorites:[]}},()=>swapSheet('barbell-bench-press',{n:8,debug:1})],
  log:['log','log'],'log-month':['log','log',0,0,null,monthSheet],'log-edit':['log','log',0,0,null,()=>editSheet(15)],'log-add':['log','log',0,0,()=>{S.logSel=14},()=>editSheet(14)],
  'log-swipe':['log','log',0,0,null,()=>{const r=$$('#view .swipe')[0];r&&r.classList.add('open')}],
- build:['build','build',0,0,()=>{SC.day='mon'}],swap:['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('barbell-bench-press')],'swap-curl':['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('ez-bar-curl')],
+ build:['build','build',0,0,()=>{SC.day='mon'}],'build-list':['buildList','build',0,0,()=>{SC.day='mon'}],swap:['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('barbell-bench-press')],'swap-curl':['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('ez-bar-curl')],
  settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress'],style:['style','build'],
  learn:['learn',''],'tray-fav':['empty','',1,1,()=>{TF.fav=true},traySheet],'settings-favs':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#favs').offsetTop-60}],'settings-goals':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#profile').offsetTop-40}],'learn-fundamental':['learnFund',''],
 };
-const AFTER={train:afterTrain,workout:afterWorkout,finish:afterFinish,log:afterLog,build:afterBuild,progress:afterMap,learn:afterLearn};
+const AFTER={train:afterTrain,workout:afterWorkout,finish:afterFinish,log:afterLog,buildList:afterBuildList,progress:afterMap,learn:afterLearn};
 let NAV=0;
 function go(h){if(location.hash===h)route();else location.hash=h}
 function route(){
@@ -894,6 +895,9 @@ document.addEventListener('click',e=>{
   if(KP&&!e.target.closest('.sheet'))KP.close(); // tapping away from fields closes the keypad
 });
 window.SB={sheet,S,WK,closeAll,get sheets(){return SHEETS},get keypad(){return KP}};
+// internals for board.js (the Build whiteboard): same sheet, swap sheet, ranking scenario, muscle map, volume_bands
+window.SBX={V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,VB,VFILL,VLAB,volLegend,
+  get RD(){return RD},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in
 })();

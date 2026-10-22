@@ -144,11 +144,11 @@
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "dip-machine",
-   "why": "Swap sheet: More stable, Heavier loading potential, Easier to learn.",
+   "why": "Swap sheet: Lower-chest bias, More stable, Heavier loading potential.",
    "differences": [
+    "Lower-chest bias",
     "More stable",
-    "Heavier loading potential",
-    "Easier to learn"
+    "Heavier loading potential"
    ],
    "evidence": "biomechanics"
   },
@@ -156,8 +156,9 @@
    "goal": "heavier_loading",
    "goal_label": "Heavier loading",
    "exercise_id": "landmine-press-two-arm",
-   "why": "Swap sheet: More systemic fatigue, Heavier loading potential.",
+   "why": "Swap sheet: Upper-chest bias, More systemic fatigue, Heavier loading potential.",
    "differences": [
+    "Upper-chest bias",
     "More systemic fatigue",
     "Heavier loading potential"
    ],
@@ -167,11 +168,11 @@
    "goal": "one_side",
    "goal_label": "One side at a time",
    "exercise_id": "landmine-press-one-arm",
-   "why": "Swap sheet: One side at a time, More systemic fatigue, Heavier loading potential.",
+   "why": "Swap sheet: Upper-chest bias, One side at a time, More systemic fatigue.",
    "differences": [
+    "Upper-chest bias",
     "One side at a time",
-    "More systemic fatigue",
-    "Heavier loading potential"
+    "More systemic fatigue"
    ],
    "evidence": "biomechanics"
   }
@@ -183,6 +184,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 1,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

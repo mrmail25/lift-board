@@ -181,7 +181,7 @@
   {
    "goal": "easier_to_learn",
    "goal_label": "Easier to learn",
-   "exercise_id": "iso-lateral-row",
+   "exercise_id": "chest-supported-row",
    "why": "Swap sheet: More stable, Heavier loading potential, Easier to learn.",
    "differences": [
     "More stable",
@@ -198,6 +198,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 1,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": [
    "upper_back_thickness_bias"
   ]

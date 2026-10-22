@@ -153,9 +153,9 @@
    "exercise_id": "cable-crunch",
    "why": "Loadable spinal flexion on a cable.",
    "differences": [
+    "Less stretch emphasis",
     "Better isolation",
-    "More stable",
-    "Steadier cable tension"
+    "More stable"
    ],
    "evidence": "biomechanics"
   },
@@ -165,6 +165,8 @@
    "exercise_id": "hanging-leg-raise",
    "why": "Bar only; curl the hips up.",
    "differences": [
+    "Less stretch emphasis",
+    "More hip-flexor work (legs lift)",
     "More grip demand"
    ],
    "evidence": "biomechanics"
@@ -174,17 +176,20 @@
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "weighted-decline-crunch",
    "why": "Decline bench crunch with a plate.",
-   "differences": [],
+   "differences": [
+    "Less stretch emphasis"
+   ],
    "evidence": "biomechanics"
   }
  ],
  "swap": {
-  "stretch_emphasis": 2,
+  "stretch_emphasis": 3,
   "muscle_isolation": 2,
   "stability": 2,
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {

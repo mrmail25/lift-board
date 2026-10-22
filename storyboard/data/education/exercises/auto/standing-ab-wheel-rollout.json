@@ -128,18 +128,30 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "dragon-flag",
-   "why": "Swap sheet: More technical.",
+   "why": "Swap sheet: Less stretch emphasis.",
    "differences": [
-    "More technical"
+    "Less stretch emphasis"
    ],
    "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "weighted-decline-crunch",
+   "why": "Swap sheet: Less stretch emphasis, Easier to learn.",
+   "differences": [
+    "Less stretch emphasis",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
   },
   {
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "ab-crunch-machine",
-   "why": "Swap sheet: Better isolation, More stable.",
+   "why": "Swap sheet: Less stretch emphasis, Better isolation, More stable.",
    "differences": [
+    "Less stretch emphasis",
     "Better isolation",
     "More stable"
    ],
@@ -149,22 +161,23 @@
    "goal": "more_isolation",
    "goal_label": "Better isolation",
    "exercise_id": "standing-cable-crunch",
-   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "why": "Swap sheet: Less stretch emphasis, Better isolation, More stable.",
    "differences": [
+    "Less stretch emphasis",
     "Better isolation",
-    "More stable",
-    "Steadier cable tension"
+    "More stable"
    ],
    "evidence": "biomechanics"
   }
  ],
  "swap": {
-  "stretch_emphasis": 2,
+  "stretch_emphasis": 3,
   "muscle_isolation": 2,
   "stability": 2,
   "systemic_fatigue": 1,
   "loading_potential": 1,
-  "skill_demand": 1,
+  "skill_demand": 3,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

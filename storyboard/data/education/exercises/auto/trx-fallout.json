@@ -128,10 +128,10 @@
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "standing-ab-wheel-rollout",
-   "why": "Swap sheet: More stable, Easier to learn.",
+   "why": "Swap sheet: More stable, More technical.",
    "differences": [
     "More stable",
-    "Easier to learn"
+    "More technical"
    ],
    "evidence": "biomechanics"
   },
@@ -139,8 +139,9 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "dragon-flag",
-   "why": "Swap sheet: More stable, More technical.",
+   "why": "Swap sheet: Less stretch emphasis, More stable, More technical.",
    "differences": [
+    "Less stretch emphasis",
     "More stable",
     "More technical"
    ],
@@ -150,8 +151,9 @@
    "goal": "easier_to_learn",
    "goal_label": "Easier to learn",
    "exercise_id": "weighted-decline-crunch",
-   "why": "Swap sheet: More stable, Easier to learn.",
+   "why": "Swap sheet: Less stretch emphasis, More stable, Easier to learn.",
    "differences": [
+    "Less stretch emphasis",
     "More stable",
     "Easier to learn"
    ],
@@ -161,22 +163,23 @@
    "goal": "more_isolation",
    "goal_label": "Better isolation",
    "exercise_id": "ab-crunch-machine",
-   "why": "Swap sheet: Better isolation, More stable, Easier to learn.",
+   "why": "Swap sheet: Less stretch emphasis, Better isolation, More stable.",
    "differences": [
+    "Less stretch emphasis",
     "Better isolation",
-    "More stable",
-    "Easier to learn"
+    "More stable"
    ],
    "evidence": "biomechanics"
   }
  ],
  "swap": {
-  "stretch_emphasis": 2,
+  "stretch_emphasis": 3,
   "muscle_isolation": 2,
   "stability": 1,
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

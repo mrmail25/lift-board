@@ -260,7 +260,8 @@
    "why": "A horizontal pull with more mid-back (upper back 1).",
    "differences": [
     "Less stretch emphasis",
-    "Upper-back thickness focus"
+    "Upper-back thickness focus",
+    "Narrower grip"
    ],
    "evidence": "biomechanics"
   }
@@ -272,6 +273,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "constant_tension"
   ]

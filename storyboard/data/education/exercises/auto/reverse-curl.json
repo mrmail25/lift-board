@@ -127,8 +127,11 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "reverse-wrist-curl",
-   "why": "Similar muscles; dumbbell instead of barbell.",
-   "differences": [],
+   "why": "Swap sheet: Less brachialis & brachioradialis bias, Wrist-extensor focus (back of forearm).",
+   "differences": [
+    "Less brachialis & brachioradialis bias",
+    "Wrist-extensor focus (back of forearm)"
+   ],
    "evidence": "biomechanics"
   },
   {
@@ -147,10 +150,11 @@
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "incline-dumbbell-curl",
-   "why": "Swap sheet: More stretch emphasis, Biceps long-head stretch.",
+   "why": "Swap sheet: More stretch emphasis, Biceps long-head stretch, Less brachialis & brachioradialis bias.",
    "differences": [
     "More stretch emphasis",
-    "Biceps long-head stretch"
+    "Biceps long-head stretch",
+    "Less brachialis & brachioradialis bias"
    ],
    "evidence": "supported",
    "citations": [
@@ -166,8 +170,10 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "dead-hang",
-   "why": "Swap sheet: More grip demand.",
+   "why": "Swap sheet: Less brachialis & brachioradialis bias, Static hold, More grip demand.",
    "differences": [
+    "Less brachialis & brachioradialis bias",
+    "Static hold",
     "More grip demand"
    ],
    "evidence": "biomechanics"
@@ -180,7 +186,10 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "brachialis_brachioradialis_bias"
+  ]
  },
  "app_values": {},
  "notes": [

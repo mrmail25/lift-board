@@ -125,25 +125,25 @@
    "evidence": "biomechanics"
   },
   {
-   "goal": "one_side",
-   "goal_label": "One side at a time",
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "shrimp-squat",
-   "why": "Swap sheet: Less isolation, Less stable, One side at a time.",
+   "why": "Swap sheet: Less rectus femoris work, Less isolation, Less stable.",
    "differences": [
+    "Less rectus femoris work",
     "Less isolation",
-    "Less stable",
-    "One side at a time"
+    "Less stable"
    ],
    "evidence": "biomechanics"
   },
   {
-   "goal": "home_bodyweight",
-   "goal_label": "Home gym: no equipment / bar only",
-   "exercise_id": "pistol-squat",
-   "why": "Swap sheet: Less isolation, Less stable, One side at a time.",
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "trx-assisted-pistol",
+   "why": "Swap sheet: Less rectus femoris work, Less isolation, One side at a time.",
    "differences": [
+    "Less rectus femoris work",
     "Less isolation",
-    "Less stable",
     "One side at a time"
    ],
    "evidence": "biomechanics"
@@ -152,11 +152,11 @@
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "hack-squat",
-   "why": "Swap sheet: Less isolation, More stable, More systemic fatigue.",
+   "why": "Swap sheet: Less rectus femoris work, Less isolation, More stable.",
    "differences": [
+    "Less rectus femoris work",
     "Less isolation",
-    "More stable",
-    "More systemic fatigue"
+    "More stable"
    ],
    "evidence": "biomechanics"
   }
@@ -168,7 +168,10 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 2,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "rectus_femoris_bias"
+  ]
  },
  "app_values": {},
  "notes": [

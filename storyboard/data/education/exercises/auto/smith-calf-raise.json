@@ -143,7 +143,9 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
+   "gastrocnemius_bias",
    "spinal_load"
   ]
  },

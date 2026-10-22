@@ -156,28 +156,36 @@
    "evidence": "modeled"
   },
   {
-   "goal": "more_isolation",
-   "goal_label": "Better isolation",
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
    "exercise_id": "standing-ab-wheel-rollout",
-   "why": "Swap sheet: Better isolation, Less systemic fatigue, Easier to learn.",
+   "why": "Swap sheet: More stretch emphasis, Better isolation, Less systemic fatigue.",
    "differences": [
+    "More stretch emphasis",
     "Better isolation",
-    "Less systemic fatigue",
-    "Easier to learn"
+    "Less systemic fatigue"
    ],
-   "evidence": "biomechanics"
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
   },
   {
-   "goal": "easier_to_learn",
-   "goal_label": "Easier to learn",
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
    "exercise_id": "barbell-rollout",
-   "why": "Swap sheet: Better isolation, Less systemic fatigue, Easier to learn.",
+   "why": "Swap sheet: More stretch emphasis, Better isolation, Less systemic fatigue.",
    "differences": [
+    "More stretch emphasis",
     "Better isolation",
-    "Less systemic fatigue",
-    "Easier to learn"
+    "Less systemic fatigue"
    ],
-   "evidence": "modeled"
+   "evidence": "biomechanics"
   }
  ],
  "swap": {
@@ -187,6 +195,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 1,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

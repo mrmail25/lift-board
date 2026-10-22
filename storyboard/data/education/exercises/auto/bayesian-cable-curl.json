@@ -149,6 +149,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "biceps_long_head_bias",
    "constant_tension"

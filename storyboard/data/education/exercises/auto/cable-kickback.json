@@ -153,11 +153,11 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "back-extension",
-   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Less isolation.",
+   "why": "Swap sheet: More stretch emphasis, Lower-back focus, Less peak-contraction focus.",
    "differences": [
     "More stretch emphasis",
-    "Less peak-contraction focus",
-    "Less isolation"
+    "Lower-back focus",
+    "Less peak-contraction focus"
    ],
    "evidence": "biomechanics"
   }
@@ -169,6 +169,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "peak_contraction_focus",
    "unilateral",

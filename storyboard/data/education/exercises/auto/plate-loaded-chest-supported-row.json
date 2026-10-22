@@ -188,9 +188,10 @@
    "goal": "constant_tension",
    "goal_label": "Steadier tension",
    "exercise_id": "wide-grip-cable-row",
-   "why": "Swap sheet: Steadier cable tension.",
+   "why": "Swap sheet: Steadier cable tension, Wider grip.",
    "differences": [
-    "Steadier cable tension"
+    "Steadier cable tension",
+    "Wider grip"
    ],
    "evidence": "biomechanics"
   }
@@ -202,6 +203,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "upper_back_thickness_bias"
   ]

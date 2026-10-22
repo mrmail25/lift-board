@@ -166,9 +166,11 @@
    "goal": "constant_tension",
    "goal_label": "Steadier tension",
    "exercise_id": "seated-cable-row",
-   "why": "Swap sheet: Steadier cable tension.",
+   "why": "Swap sheet: Steadier cable tension, Narrower grip, Neutral grip (palms facing in).",
    "differences": [
-    "Steadier cable tension"
+    "Steadier cable tension",
+    "Narrower grip",
+    "Neutral grip (palms facing in)"
    ],
    "evidence": "biomechanics"
   },
@@ -202,6 +204,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "upper_back_thickness_bias"
   ]

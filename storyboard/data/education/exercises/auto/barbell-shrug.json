@@ -136,10 +136,11 @@
    "goal": "less_spinal_load",
    "goal_label": "Less spinal load",
    "exercise_id": "dumbbell-shrug",
-   "why": "Swap sheet: Less spinal loading, Lower loading potential.",
+   "why": "Swap sheet: Less spinal loading, Lower loading potential, Neutral grip (palms facing in).",
    "differences": [
     "Less spinal loading",
-    "Lower loading potential"
+    "Lower loading potential",
+    "Neutral grip (palms facing in)"
    ],
    "evidence": "biomechanics"
   },
@@ -187,6 +188,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 3,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "upper_trap_involvement",
    "spinal_load",

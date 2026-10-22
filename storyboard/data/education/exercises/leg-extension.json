@@ -207,8 +207,8 @@
    "why": "Compound quad work from a deep knee bend.",
    "differences": [
     "More stretch emphasis",
-    "Less peak-contraction focus",
-    "Less isolation"
+    "Less rectus femoris work",
+    "Less peak-contraction focus"
    ],
    "evidence": "biomechanics"
   },
@@ -218,9 +218,9 @@
    "exercise_id": "leg-press",
    "why": "Heavier, compound quad training (vasti 1).",
    "differences": [
+    "Less rectus femoris work",
     "Less peak-contraction focus",
-    "Less isolation",
-    "More systemic fatigue"
+    "Less isolation"
    ],
    "evidence": "biomechanics"
   },
@@ -243,8 +243,8 @@
    "why": "Dumbbell quad and glute work, one leg at a time.",
    "differences": [
     "More stretch emphasis",
-    "Less peak-contraction focus",
-    "Less isolation"
+    "Less rectus femoris work",
+    "Less peak-contraction focus"
    ],
    "evidence": "biomechanics"
   }
@@ -256,7 +256,9 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
+   "rectus_femoris_bias",
    "peak_contraction_focus"
   ]
  },

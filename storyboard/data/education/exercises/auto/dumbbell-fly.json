@@ -131,8 +131,10 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "incline-dumbbell-fly",
-   "why": "Similar muscles; dumbbell instead of dumbbell.",
-   "differences": [],
+   "why": "Swap sheet: Upper-chest bias.",
+   "differences": [
+    "Upper-chest bias"
+   ],
    "evidence": "biomechanics"
   },
   {
@@ -151,11 +153,11 @@
    "goal": "more_isolation",
    "goal_label": "Better isolation",
    "exercise_id": "cable-crossover-high-to-low",
-   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "why": "Swap sheet: Lower-chest bias, Better isolation, More stable.",
    "differences": [
+    "Lower-chest bias",
     "Better isolation",
-    "More stable",
-    "Steadier cable tension"
+    "More stable"
    ],
    "evidence": "biomechanics"
   },
@@ -179,6 +181,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

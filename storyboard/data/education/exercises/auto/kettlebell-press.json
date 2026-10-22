@@ -157,20 +157,20 @@
    "evidence": "biomechanics"
   },
   {
-   "goal": "less_fatigue",
-   "goal_label": "Less fatigue",
+   "goal": "more_stable",
+   "goal_label": "More stable",
    "exercise_id": "iso-lateral-shoulder-press",
-   "why": "Swap sheet: More stable, Both sides together, Less systemic fatigue.",
+   "why": "Swap sheet: More stable, Both sides together, Independent arm levers.",
    "differences": [
     "More stable",
     "Both sides together",
-    "Less systemic fatigue"
+    "Independent arm levers"
    ],
-   "evidence": "modeled"
+   "evidence": "biomechanics"
   },
   {
-   "goal": "more_stable",
-   "goal_label": "More stable",
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
    "exercise_id": "machine-shoulder-press",
    "why": "Swap sheet: More stable, Both sides together, Less systemic fatigue.",
    "differences": [
@@ -178,7 +178,7 @@
     "Both sides together",
     "Less systemic fatigue"
    ],
-   "evidence": "biomechanics"
+   "evidence": "modeled"
   },
   {
    "goal": "home_bodyweight",
@@ -200,8 +200,10 @@
   "systemic_fatigue": 3,
   "loading_potential": 2,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": [
-   "unilateral"
+   "unilateral",
+   "overhead_finish"
   ]
  },
  "app_values": {},

@@ -166,11 +166,10 @@
   {
    "goal": "more_stretch",
    "goal_label": "More stretch",
-   "exercise_id": "romanian-deadlift",
-   "why": "Swap sheet: More stretch emphasis, Less upper-trap work.",
+   "exercise_id": "deadlift",
+   "why": "Swap sheet: More stretch emphasis.",
    "differences": [
-    "More stretch emphasis",
-    "Less upper-trap work"
+    "More stretch emphasis"
    ],
    "evidence": "supported",
    "citations": [
@@ -186,9 +185,11 @@
    "goal": "easier_to_learn",
    "goal_label": "Easier to learn",
    "exercise_id": "trap-bar-deadlift",
-   "why": "Swap sheet: Easier to learn.",
+   "why": "Swap sheet: More stretch emphasis, Easier to learn, Neutral grip (palms facing in).",
    "differences": [
-    "Easier to learn"
+    "More stretch emphasis",
+    "Easier to learn",
+    "Neutral grip (palms facing in)"
    ],
    "evidence": "modeled"
   },
@@ -218,12 +219,13 @@
   }
  ],
  "swap": {
-  "stretch_emphasis": 2,
+  "stretch_emphasis": 1,
   "muscle_isolation": 1,
   "stability": 2,
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
    "upper_trap_involvement",
    "spinal_load",

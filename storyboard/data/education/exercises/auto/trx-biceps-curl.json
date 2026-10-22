@@ -138,20 +138,20 @@
    ]
   },
   {
-   "goal": "more_stable",
-   "goal_label": "More stable",
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
    "exercise_id": "cable-preacher-curl",
-   "why": "Swap sheet: More stretch emphasis, Better isolation, More stable.",
+   "why": "Swap sheet: More stretch emphasis, Brachialis & brachioradialis bias, Better isolation.",
    "differences": [
     "More stretch emphasis",
-    "Better isolation",
-    "More stable"
+    "Brachialis & brachioradialis bias",
+    "Better isolation"
    ],
    "evidence": "biomechanics"
   },
   {
-   "goal": "more_isolation",
-   "goal_label": "Better isolation",
+   "goal": "more_stable",
+   "goal_label": "More stable",
    "exercise_id": "cable-curl",
    "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
    "differences": [
@@ -180,6 +180,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

@@ -123,9 +123,10 @@
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "leg-press-calf-raise",
-   "why": "Swap sheet: More stretch emphasis.",
+   "why": "Swap sheet: More stretch emphasis, Gastrocnemius bias (knee straight).",
    "differences": [
-    "More stretch emphasis"
+    "More stretch emphasis",
+    "Gastrocnemius bias (knee straight)"
    ],
    "evidence": "supported",
    "citations": [
@@ -145,6 +146,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

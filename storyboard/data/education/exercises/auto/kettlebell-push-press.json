@@ -8,7 +8,7 @@
  "source": "auto",
  "source_label": "Auto-generated from the exercise library",
  "updated": "2026-10-21",
- "summary": "An overhead press driven by a short knee dip, so you can handle more weight than strict.",
+ "summary": "A one-arm overhead press with one kettlebell, driven by a short knee dip, so you can handle more weight than a strict press.",
  "type": "accessory",
  "equipment": "kettlebell",
  "equipment_needs": {
@@ -64,11 +64,18 @@
    },
    "why": "Library rating 0.3 for quads (minor): each working set adds 0.3 of a set to the weekly quads total.",
    "evidence": "modeled"
+  },
+  {
+   "muscle_id": "obliques",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for obliques: below the counting floor, so it adds nothing to the weekly obliques total.",
+   "evidence": "modeled"
   }
  ],
  "setup": [
   {
-   "text": "Rack the bell, dip your knees slightly.",
+   "text": "Rack one bell at your shoulder and dip your knees slightly.",
    "evidence": "modeled",
    "from_library": true
   },
@@ -78,7 +85,7 @@
    "from_library": true
   },
   {
-   "text": "Lower to the rack under control.",
+   "text": "Lower to the rack under control, then switch arms.",
    "evidence": "modeled",
    "from_library": true
   }
@@ -103,7 +110,7 @@
    "from_library": true
   },
   {
-   "cue": "Dip straight down. Don't lean forward.",
+   "cue": "Dip straight down. Don't lean forward or to the side.",
    "why": "Library tip for this exercise.",
    "evidence": "modeled",
    "from_library": true
@@ -151,46 +158,51 @@
  ],
  "alternatives": [
   {
-   "goal": "one_side",
-   "goal_label": "One side at a time",
-   "exercise_id": "kettlebell-press",
-   "why": "Swap sheet: One side at a time.",
-   "differences": [
-    "One side at a time"
-   ],
-   "evidence": "biomechanics"
-  },
-  {
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "arnold-press",
-   "why": "Similar muscles; dumbbell instead of kettlebell.",
-   "differences": [],
+   "why": "Swap sheet: Both sides together, Strict press, no leg drive.",
+   "differences": [
+    "Both sides together",
+    "Strict press, no leg drive"
+   ],
    "evidence": "biomechanics"
   },
   {
-   "goal": "less_fatigue",
-   "goal_label": "Less fatigue",
+   "goal": "more_stable",
+   "goal_label": "More stable",
    "exercise_id": "iso-lateral-shoulder-press",
-   "why": "Swap sheet: More stable, Less systemic fatigue, Easier to learn.",
+   "why": "Swap sheet: More stable, Both sides together, Independent arm levers.",
    "differences": [
     "More stable",
-    "Less systemic fatigue",
-    "Easier to learn"
+    "Both sides together",
+    "Independent arm levers"
    ],
-   "evidence": "modeled"
+   "evidence": "biomechanics"
   },
   {
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "wall-handstand-push-up",
-   "why": "Swap sheet: Less stable, Less systemic fatigue, Loads the spine.",
+   "why": "Swap sheet: Less stable, Both sides together, Strict press, no leg drive.",
    "differences": [
     "Less stable",
-    "Less systemic fatigue",
-    "Loads the spine"
+    "Both sides together",
+    "Strict press, no leg drive"
    ],
    "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "pike-push-up",
+   "why": "Swap sheet: Both sides together, Strict press, no leg drive, Less systemic fatigue.",
+   "differences": [
+    "Both sides together",
+    "Strict press, no leg drive",
+    "Less systemic fatigue"
+   ],
+   "evidence": "modeled"
   }
  ],
  "swap": {
@@ -200,7 +212,12 @@
   "systemic_fatigue": 3,
   "loading_potential": 2,
   "skill_demand": 2,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "unilateral",
+   "leg_drive",
+   "overhead_finish"
+  ]
  },
  "app_values": {},
  "notes": [

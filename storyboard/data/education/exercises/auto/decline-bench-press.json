@@ -143,11 +143,11 @@
    "goal": "less_fatigue",
    "goal_label": "Less fatigue",
    "exercise_id": "converging-smith-bench-press",
-   "why": "Swap sheet: More stable, Less systemic fatigue, Easier to learn.",
+   "why": "Swap sheet: Less lower-chest bias, More stable, Less systemic fatigue.",
    "differences": [
+    "Less lower-chest bias",
     "More stable",
-    "Less systemic fatigue",
-    "Easier to learn"
+    "Less systemic fatigue"
    ],
    "evidence": "modeled"
   },
@@ -155,11 +155,11 @@
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "smith-bench-press",
-   "why": "Swap sheet: More stable, Less systemic fatigue, Easier to learn.",
+   "why": "Swap sheet: Less lower-chest bias, More stable, Less systemic fatigue.",
    "differences": [
+    "Less lower-chest bias",
     "More stable",
-    "Less systemic fatigue",
-    "Easier to learn"
+    "Less systemic fatigue"
    ],
    "evidence": "biomechanics"
   },
@@ -167,9 +167,10 @@
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "dumbbell-bench-press",
-   "why": "Swap sheet: More stretch emphasis, Lower loading potential.",
+   "why": "Swap sheet: More stretch emphasis, Less lower-chest bias, Lower loading potential.",
    "differences": [
     "More stretch emphasis",
+    "Less lower-chest bias",
     "Lower loading potential"
    ],
    "evidence": "supported",
@@ -186,11 +187,11 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "archer-push-up",
-   "why": "Swap sheet: More stretch emphasis, Less systemic fatigue, Lower loading potential.",
+   "why": "Swap sheet: More stretch emphasis, Less lower-chest bias, Less systemic fatigue.",
    "differences": [
     "More stretch emphasis",
-    "Less systemic fatigue",
-    "Lower loading potential"
+    "Less lower-chest bias",
+    "Less systemic fatigue"
    ],
    "evidence": "biomechanics"
   }
@@ -202,7 +203,10 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 2,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "lower_chest_bias"
+  ]
  },
  "app_values": {},
  "notes": [

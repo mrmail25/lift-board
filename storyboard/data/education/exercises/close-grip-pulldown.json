@@ -187,7 +187,9 @@
    "exercise_id": "single-arm-lat-pulldown",
    "why": "One arm at a time.",
    "differences": [
-    "One side at a time"
+    "One side at a time",
+    "Wider grip",
+    "Palms-up or palms-down grip"
    ],
    "evidence": "biomechanics"
   },
@@ -208,7 +210,10 @@
    "goal_label": "More upper back",
    "exercise_id": "lat-pulldown",
    "why": "Wider overhand grip: more upper back (0.4).",
-   "differences": [],
+   "differences": [
+    "Wider grip",
+    "Palms-up or palms-down grip"
+   ],
    "evidence": "biomechanics"
   }
  ],
@@ -219,8 +224,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 1,
   "flags": [
-   "constant_tension"
+   "constant_tension",
+   "neutral_grip"
   ]
  },
  "app_values": {

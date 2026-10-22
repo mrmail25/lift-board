@@ -166,8 +166,8 @@
    "why": "Incline press: more upper chest.",
    "differences": [
     "More stretch emphasis",
-    "Less peak-contraction focus",
-    "Less isolation"
+    "Upper-chest bias",
+    "Less peak-contraction focus"
    ],
    "evidence": "supported",
    "citations": [
@@ -206,6 +206,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "peak_contraction_focus"
   ]

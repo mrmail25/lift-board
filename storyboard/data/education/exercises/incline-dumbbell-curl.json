@@ -324,14 +324,14 @@
    ]
   },
   {
-   "goal": "more_stable",
-   "goal_label": "More stable",
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
    "exercise_id": "preacher-curl",
    "why": "Arm braced on a pad; it grew the brachialis and brachioradialis more than incline curls, with the same total elbow-flexor growth.",
    "differences": [
     "Less biceps long-head stretch",
-    "Better isolation",
-    "More stable"
+    "Brachialis & brachioradialis bias",
+    "Better isolation"
    ],
    "evidence": "supported",
    "citations": [
@@ -345,7 +345,8 @@
    "why": "A neutral grip makes the brachioradialis work harder (forearms 0.8 vs 0.3).",
    "differences": [
     "Less stretch emphasis",
-    "Less biceps long-head stretch"
+    "Less biceps long-head stretch",
+    "Brachialis & brachioradialis bias"
    ],
    "evidence": "biomechanics"
   },
@@ -384,6 +385,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "biceps_long_head_bias"
   ]

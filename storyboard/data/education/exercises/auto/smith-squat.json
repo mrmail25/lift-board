@@ -176,6 +176,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 3,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "spinal_load"
   ]

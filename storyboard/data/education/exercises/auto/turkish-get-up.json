@@ -171,11 +171,10 @@
   {
    "goal": "easier_to_learn",
    "goal_label": "Easier to learn",
-   "exercise_id": "landmine-rotation",
-   "why": "Swap sheet: Both sides together, Less systemic fatigue, Easier to learn.",
+   "exercise_id": "kettlebell-push-press",
+   "why": "Swap sheet: Leg drive helps the press, Easier to learn.",
    "differences": [
-    "Both sides together",
-    "Less systemic fatigue",
+    "Leg drive helps the press",
     "Easier to learn"
    ],
    "evidence": "modeled"
@@ -212,8 +211,10 @@
   "systemic_fatigue": 3,
   "loading_potential": 2,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
-   "unilateral"
+   "unilateral",
+   "overhead_finish"
   ]
  },
  "app_values": {},

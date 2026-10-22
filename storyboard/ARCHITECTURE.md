@@ -15,7 +15,7 @@ app/          thin screens (Expo Router files): layout and wiring only, no rules
 ```
 - **logic/** is ported 1:1, with types added and behaviour unchanged. The existing parity diffs come across as Jest tests:
   `rank` vs `ranking-reference.json` (67 cases), neutral swap vs `swap.py` for all 239 exercises, preset vs `patterns.py`
-  (72 slots), and the PR, e1RM, loads and deload references from Coach's `gen_*_reference.py`. A port counts as done only at 0 mismatches.
+  (72 slots), and the PR, e1RM, loads and deload references from Coach's `gen_*_reference.py`. `progcheck` (Build analysis, fixes) vs `check_program.py` (92 boards). A port counts as done only at 0 mismatches.
 - **Coach's data** ships in the app bundle as frozen JSON, copied from `lift-board/data` (the only source) by a sync script.
   The app never writes to it. A data update is a new app build (or an EAS Update), never an edit on the device.
 - **Store: Zustand.** One small store with no boilerplate, selectors so the active-set row re-renders alone while typing,
@@ -25,6 +25,7 @@ app/          thin screens (Expo Router files): layout and wiring only, no rules
   radii 8/12/16/22 and the sheet ease. Components read tokens only. Writing a hex value inside a screen fails lint.
   Sheet: one bottom sheet that closes on swipe-down. Keypad: digits plus backspace, edits in place with no reflow.
   Swipe: swipe left to delete. Also Calendar, Plates (bar picker) and MuscleMap (SVG).
+  Build board: chit long-press, drag and multi-select on react-native-gesture-handler + reanimated (UI-thread drag, haptic on lift).
 - **Navigation.** Expo Router with tabs **Train · Log · Build · Progress**. Settings (gear) and Learn (book) sit in the header and open as stacks.
   The workout, keypad and swap screens are sheets or modals over the tabs.
 

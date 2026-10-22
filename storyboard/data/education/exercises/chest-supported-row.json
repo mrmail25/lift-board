@@ -208,7 +208,9 @@
    "exercise_id": "seated-cable-row",
    "why": "Cable row with more lat work (lats 0.8).",
    "differences": [
-    "Steadier cable tension"
+    "Steadier cable tension",
+    "Narrower grip",
+    "Neutral grip (palms facing in)"
    ],
    "evidence": "biomechanics"
   },
@@ -252,6 +254,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "upper_back_thickness_bias"
   ]

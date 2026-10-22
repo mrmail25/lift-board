@@ -208,8 +208,8 @@
    "why": "Dip: chest and triceps.",
    "differences": [
     "More stretch emphasis",
-    "Less systemic fatigue",
-    "Lower loading potential"
+    "Lower-chest bias",
+    "Less systemic fatigue"
    ],
    "evidence": "biomechanics"
   },
@@ -233,6 +233,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 2,
+  "grip_width": 1,
   "flags": []
  },
  "app_values": {

@@ -47,7 +47,7 @@ Data keys: `file.json:dot.path`; `exercises.json:@<exercise-id>.path`; inside a 
 - `{text, example: true}`: a worked-example input (e.g. "4 sets"), not a data value. Results derived from it must use `expr`.
 The validator fails on a quote that does not match the files, a quote whose text is not in the point, or any number in the point text outside every quote.
 
-**exercise-selection** must explain all 16 swap tags (validator check), using the rules.json labels.
+**exercise-selection** must explain all 35 swap tags (swap_tags v3, 2026-10-22; validator check), using the rules.json labels.
 
 ## 5. Evidence rules
 Same three levels as rules.json `swap_tags.evidence_levels`. Every claim item (head, action, relationship, bias, best exercise, mistake, cue, point) carries one.

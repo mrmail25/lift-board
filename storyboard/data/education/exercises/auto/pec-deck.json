@@ -130,11 +130,11 @@
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "cable-crossover-high-to-low",
-   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Steadier cable tension.",
+   "why": "Swap sheet: More stretch emphasis, Lower-chest bias, Less peak-contraction focus.",
    "differences": [
     "More stretch emphasis",
-    "Less peak-contraction focus",
-    "Steadier cable tension"
+    "Lower-chest bias",
+    "Less peak-contraction focus"
    ],
    "evidence": "supported",
    "citations": [
@@ -178,6 +178,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
    "peak_contraction_focus"
   ]

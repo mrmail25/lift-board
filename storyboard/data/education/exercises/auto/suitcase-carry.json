@@ -170,11 +170,11 @@
    "goal": "more_isolation",
    "goal_label": "Better isolation",
    "exercise_id": "reverse-wrist-curl",
-   "why": "Swap sheet: Less upper-trap work, Better isolation, Both sides together.",
+   "why": "Swap sheet: Wrist-extensor focus (back of forearm), Less upper-trap work, Better isolation.",
    "differences": [
+    "Wrist-extensor focus (back of forearm)",
     "Less upper-trap work",
-    "Better isolation",
-    "Both sides together"
+    "Better isolation"
    ],
    "evidence": "biomechanics"
   },
@@ -198,9 +198,11 @@
   "systemic_fatigue": 3,
   "loading_potential": 2,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": [
    "upper_trap_involvement",
    "unilateral",
+   "neutral_grip",
    "grip_demand"
   ]
  },

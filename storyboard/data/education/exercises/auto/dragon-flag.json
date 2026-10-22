@@ -125,9 +125,27 @@
  ],
  "alternatives": [
   {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "standing-ab-wheel-rollout",
+   "why": "Swap sheet: More stretch emphasis.",
+   "differences": [
+    "More stretch emphasis"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
    "goal": "easier_to_learn",
    "goal_label": "Easier to learn",
-   "exercise_id": "standing-ab-wheel-rollout",
+   "exercise_id": "weighted-decline-crunch",
    "why": "Swap sheet: Easier to learn.",
    "differences": [
     "Easier to learn"
@@ -137,9 +155,10 @@
   {
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
-   "exercise_id": "weighted-decline-crunch",
-   "why": "Swap sheet: Easier to learn.",
+   "exercise_id": "ab-wheel-rollout",
+   "why": "Swap sheet: More stretch emphasis, Easier to learn.",
    "differences": [
+    "More stretch emphasis",
     "Easier to learn"
    ],
    "evidence": "biomechanics"
@@ -155,18 +174,6 @@
     "Easier to learn"
    ],
    "evidence": "biomechanics"
-  },
-  {
-   "goal": "more_isolation",
-   "goal_label": "Better isolation",
-   "exercise_id": "standing-cable-crunch",
-   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
-   "differences": [
-    "Better isolation",
-    "More stable",
-    "Steadier cable tension"
-   ],
-   "evidence": "biomechanics"
   }
  ],
  "swap": {
@@ -176,6 +183,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

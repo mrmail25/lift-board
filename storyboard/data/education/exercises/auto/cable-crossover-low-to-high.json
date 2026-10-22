@@ -125,9 +125,10 @@
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "cable-fly",
-   "why": "Swap sheet: More stretch emphasis.",
+   "why": "Swap sheet: More stretch emphasis, Less upper-chest bias.",
    "differences": [
-    "More stretch emphasis"
+    "More stretch emphasis",
+    "Less upper-chest bias"
    ],
    "evidence": "supported",
    "citations": [
@@ -155,24 +156,13 @@
    "goal": "peak_contraction",
    "goal_label": "Peak-contraction focus",
    "exercise_id": "pec-deck",
-   "why": "Swap sheet: Peak-contraction focus, Less constant tension.",
+   "why": "Swap sheet: Less upper-chest bias, Peak-contraction focus, Less constant tension.",
    "differences": [
+    "Less upper-chest bias",
     "Peak-contraction focus",
     "Less constant tension"
    ],
    "evidence": "modeled"
-  },
-  {
-   "goal": "heavier_loading",
-   "goal_label": "Heavier loading",
-   "exercise_id": "machine-chest-press",
-   "why": "Swap sheet: Less isolation, More systemic fatigue, Heavier loading potential.",
-   "differences": [
-    "Less isolation",
-    "More systemic fatigue",
-    "Heavier loading potential"
-   ],
-   "evidence": "biomechanics"
   }
  ],
  "swap": {
@@ -182,7 +172,9 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
+   "upper_chest_bias",
    "constant_tension"
   ]
  },

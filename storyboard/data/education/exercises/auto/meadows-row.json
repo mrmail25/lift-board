@@ -167,10 +167,11 @@
    "goal": "less_fatigue",
    "goal_label": "Less fatigue",
    "exercise_id": "kettlebell-row",
-   "why": "Swap sheet: Less stretch emphasis, Less systemic fatigue.",
+   "why": "Swap sheet: Less stretch emphasis, Less systemic fatigue, Neutral grip (palms facing in).",
    "differences": [
     "Less stretch emphasis",
-    "Less systemic fatigue"
+    "Less systemic fatigue",
+    "Neutral grip (palms facing in)"
    ],
    "evidence": "modeled"
   },
@@ -178,10 +179,11 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "one-arm-dumbbell-row",
-   "why": "Swap sheet: Less stretch emphasis, Less systemic fatigue.",
+   "why": "Swap sheet: Less stretch emphasis, Less systemic fatigue, Neutral grip (palms facing in).",
    "differences": [
     "Less stretch emphasis",
-    "Less systemic fatigue"
+    "Less systemic fatigue",
+    "Neutral grip (palms facing in)"
    ],
    "evidence": "biomechanics"
   },
@@ -217,6 +219,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 2,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": [
    "unilateral",
    "grip_demand"

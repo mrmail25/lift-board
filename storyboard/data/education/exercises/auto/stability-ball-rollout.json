@@ -128,11 +128,31 @@
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "captains-chair-knee-raise",
-   "why": "Swap sheet: More stable.",
+   "why": "Swap sheet: More hip-flexor work (legs lift), More stable.",
    "differences": [
+    "More hip-flexor work (legs lift)",
     "More stable"
    ],
    "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "trx-fallout",
+   "why": "Swap sheet: More stretch emphasis, More technical.",
+   "differences": [
+    "More stretch emphasis",
+    "More technical"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
   },
   {
    "goal": "home_bodyweight",
@@ -155,18 +175,6 @@
     "More stable"
    ],
    "evidence": "biomechanics"
-  },
-  {
-   "goal": "constant_tension",
-   "goal_label": "Steadier tension",
-   "exercise_id": "standing-cable-crunch",
-   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
-   "differences": [
-    "Better isolation",
-    "More stable",
-    "Steadier cable tension"
-   ],
-   "evidence": "biomechanics"
   }
  ],
  "swap": {
@@ -176,6 +184,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

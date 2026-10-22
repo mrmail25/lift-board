@@ -1,0 +1,1321 @@
+{
+ "version": 3,
+ "generated_by": "tools/gen_swaptags_reference.py",
+ "rules": "rules.json swap_tags v3",
+ "exercises": "exercises.json v10",
+ "n": 5,
+ "note": "differences = diff_tags(current, alt) (max 3, priority order). display = display_lines (diff_tags, or [compare.empty_line] when both have swap blocks and nothing differs). evidence = tag_evidence(tag, exercise). swap_lists = swap_list(id, n=5): ranking, score and tags come from data/swap.json (tools/swap.py) unchanged.",
+ "pairs": [
+  {
+   "current": "barbell-bench-press",
+   "alt": "machine-chest-press",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Lower loading potential"
+   ]
+  },
+  {
+   "current": "barbell-bench-press",
+   "alt": "dumbbell-bench-press",
+   "differences": [
+    "More stretch emphasis",
+    "Lower loading potential"
+   ]
+  },
+  {
+   "current": "barbell-bench-press",
+   "alt": "cable-fly",
+   "differences": [
+    "More stretch emphasis",
+    "Better isolation",
+    "More stable"
+   ]
+  },
+  {
+   "current": "triceps-pushdown",
+   "alt": "overhead-cable-triceps-extension",
+   "differences": [
+    "More stretch emphasis",
+    "Triceps long-head bias"
+   ]
+  },
+  {
+   "current": "overhead-cable-triceps-extension",
+   "alt": "triceps-pushdown",
+   "differences": [
+    "Less stretch emphasis",
+    "Less triceps long-head bias"
+   ]
+  },
+  {
+   "current": "triceps-pushdown",
+   "alt": "dumbbell-kickback",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Less isolation"
+   ]
+  },
+  {
+   "current": "lying-leg-curl",
+   "alt": "seated-leg-curl",
+   "differences": [
+    "More stretch emphasis"
+   ]
+  },
+  {
+   "current": "ez-bar-curl",
+   "alt": "incline-dumbbell-curl",
+   "differences": [
+    "More stretch emphasis",
+    "Biceps long-head stretch"
+   ]
+  },
+  {
+   "current": "ez-bar-curl",
+   "alt": "preacher-curl",
+   "differences": [
+    "More stretch emphasis",
+    "Brachialis & brachioradialis bias",
+    "Better isolation"
+   ]
+  },
+  {
+   "current": "ez-bar-curl",
+   "alt": "spider-curl",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Better isolation"
+   ]
+  },
+  {
+   "current": "lat-pulldown",
+   "alt": "wide-grip-lat-pulldown",
+   "differences": [
+    "Lat width focus",
+    "Wider grip"
+   ]
+  },
+  {
+   "current": "lat-pulldown",
+   "alt": "barbell-row",
+   "differences": [
+    "Less stretch emphasis",
+    "Upper-back thickness focus",
+    "Less stable"
+   ]
+  },
+  {
+   "current": "lat-pulldown",
+   "alt": "pull-up",
+   "differences": [
+    "Lat width focus",
+    "Less stable",
+    "Less constant tension"
+   ]
+  },
+  {
+   "current": "barbell-row",
+   "alt": "chest-supported-row",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Less spinal loading"
+   ]
+  },
+  {
+   "current": "back-squat",
+   "alt": "bulgarian-split-squat",
+   "differences": [
+    "Less stable",
+    "One side at a time",
+    "Less spinal loading"
+   ]
+  },
+  {
+   "current": "back-squat",
+   "alt": "leg-press",
+   "differences": [
+    "Less stretch emphasis",
+    "More stable",
+    "Less systemic fatigue"
+   ]
+  },
+  {
+   "current": "deadlift",
+   "alt": "romanian-deadlift",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work"
+   ]
+  },
+  {
+   "current": "deadlift",
+   "alt": "hip-thrust",
+   "differences": [
+    "Less stretch emphasis",
+    "Less upper-trap work",
+    "Peak-contraction focus"
+   ]
+  },
+  {
+   "current": "barbell-shrug",
+   "alt": "dumbbell-shrug",
+   "differences": [
+    "Less spinal loading",
+    "Lower loading potential",
+    "Neutral grip (palms facing in)"
+   ]
+  },
+  {
+   "current": "dumbbell-lateral-raise",
+   "alt": "upright-row",
+   "differences": [
+    "More upper-trap work",
+    "Less isolation",
+    "More systemic fatigue"
+   ]
+  },
+  {
+   "current": "standing-calf-raise",
+   "alt": "seated-calf-raise",
+   "differences": [
+    "Less stretch emphasis",
+    "Less gastrocnemius (knee bent)",
+    "Less spinal loading"
+   ]
+  },
+  {
+   "current": "barbell-bench-press",
+   "alt": "decline-bench-press",
+   "differences": [
+    "Lower-chest bias"
+   ]
+  },
+  {
+   "current": "decline-bench-press",
+   "alt": "barbell-bench-press",
+   "differences": [
+    "Less lower-chest bias"
+   ]
+  },
+  {
+   "current": "barbell-bench-press",
+   "alt": "incline-barbell-bench-press",
+   "differences": [
+    "Upper-chest bias"
+   ]
+  },
+  {
+   "current": "incline-barbell-bench-press",
+   "alt": "barbell-bench-press",
+   "differences": [
+    "Less upper-chest bias"
+   ]
+  },
+  {
+   "current": "barbell-bench-press",
+   "alt": "close-grip-bench-press",
+   "differences": [
+    "Narrower grip"
+   ]
+  },
+  {
+   "current": "decline-bench-press",
+   "alt": "close-grip-bench-press",
+   "differences": [
+    "Less lower-chest bias",
+    "Narrower grip"
+   ]
+  },
+  {
+   "current": "dumbbell-fly",
+   "alt": "incline-dumbbell-fly",
+   "differences": [
+    "Upper-chest bias"
+   ]
+  },
+  {
+   "current": "cable-fly",
+   "alt": "cable-crossover-high-to-low",
+   "differences": [
+    "Lower-chest bias"
+   ]
+  },
+  {
+   "current": "dip-machine",
+   "alt": "incline-machine-press",
+   "differences": [
+    "Upper-chest bias",
+    "Less lower-chest bias"
+   ]
+  },
+  {
+   "current": "lat-pulldown",
+   "alt": "close-grip-pulldown",
+   "differences": [
+    "Narrower grip",
+    "Neutral grip (palms facing in)"
+   ]
+  },
+  {
+   "current": "lat-pulldown",
+   "alt": "neutral-grip-lat-pulldown",
+   "differences": [
+    "Neutral grip (palms facing in)"
+   ]
+  },
+  {
+   "current": "close-grip-pulldown",
+   "alt": "lat-pulldown",
+   "differences": [
+    "Wider grip",
+    "Palms-up or palms-down grip"
+   ]
+  },
+  {
+   "current": "close-grip-pulldown",
+   "alt": "neutral-grip-lat-pulldown",
+   "differences": [
+    "Wider grip"
+   ]
+  },
+  {
+   "current": "neutral-grip-lat-pulldown",
+   "alt": "lat-pulldown",
+   "differences": [
+    "Palms-up or palms-down grip"
+   ]
+  },
+  {
+   "current": "seated-cable-row",
+   "alt": "wide-grip-cable-row",
+   "differences": [
+    "Wider grip",
+    "Palms-up or palms-down grip"
+   ]
+  },
+  {
+   "current": "barbell-row",
+   "alt": "t-bar-row",
+   "differences": [
+    "Narrower grip",
+    "Neutral grip (palms facing in)"
+   ]
+  },
+  {
+   "current": "barbell-curl",
+   "alt": "dumbbell-curl",
+   "differences": []
+  },
+  {
+   "current": "barbell-curl",
+   "alt": "ez-bar-curl",
+   "differences": []
+  },
+  {
+   "current": "barbell-curl",
+   "alt": "hammer-curl",
+   "differences": [
+    "Brachialis & brachioradialis bias",
+    "Neutral grip (palms facing in)"
+   ]
+  },
+  {
+   "current": "hammer-curl",
+   "alt": "barbell-curl",
+   "differences": [
+    "Less brachialis & brachioradialis bias",
+    "Palms-up or palms-down grip"
+   ]
+  },
+  {
+   "current": "dumbbell-curl",
+   "alt": "hammer-curl",
+   "differences": [
+    "Brachialis & brachioradialis bias",
+    "Neutral grip (palms facing in)"
+   ]
+  },
+  {
+   "current": "hammer-curl",
+   "alt": "dumbbell-curl",
+   "differences": [
+    "Less brachialis & brachioradialis bias",
+    "Palms-up or palms-down grip"
+   ]
+  },
+  {
+   "current": "incline-dumbbell-curl",
+   "alt": "preacher-curl",
+   "differences": [
+    "Less biceps long-head stretch",
+    "Brachialis & brachioradialis bias",
+    "Better isolation"
+   ]
+  },
+  {
+   "current": "cable-curl",
+   "alt": "cable-rope-hammer-curl",
+   "differences": [
+    "Brachialis & brachioradialis bias",
+    "Neutral grip (palms facing in)"
+   ]
+  },
+  {
+   "current": "wrist-curl",
+   "alt": "reverse-curl",
+   "differences": [
+    "Brachialis & brachioradialis bias"
+   ]
+  },
+  {
+   "current": "hack-squat",
+   "alt": "leg-extension",
+   "differences": [
+    "Less stretch emphasis",
+    "Rectus femoris bias",
+    "Peak-contraction focus"
+   ]
+  },
+  {
+   "current": "hack-squat",
+   "alt": "reverse-hack-squat",
+   "differences": [
+    "Glute bias"
+   ]
+  },
+  {
+   "current": "back-extension",
+   "alt": "45-degree-hyperextension",
+   "differences": [
+    "Less lower-back work"
+   ]
+  },
+  {
+   "current": "seated-calf-raise",
+   "alt": "standing-calf-raise",
+   "differences": [
+    "More stretch emphasis",
+    "Gastrocnemius bias (knee straight)",
+    "Loads the spine"
+   ]
+  },
+  {
+   "current": "machine-shoulder-press",
+   "alt": "iso-lateral-shoulder-press",
+   "differences": [
+    "Independent arm levers"
+   ]
+  },
+  {
+   "current": "seated-dumbbell-shoulder-press",
+   "alt": "kettlebell-push-press",
+   "differences": [
+    "One side at a time",
+    "Leg drive helps the press"
+   ]
+  },
+  {
+   "current": "captains-chair-knee-raise",
+   "alt": "hollow-body-hold",
+   "differences": [
+    "Less hip-flexor work",
+    "Static hold"
+   ]
+  },
+  {
+   "current": "lying-leg-curl",
+   "alt": "kneeling-leg-curl",
+   "differences": [
+    "One side at a time"
+   ]
+  },
+  {
+   "current": "deadlift",
+   "alt": "rack-pull",
+   "differences": [
+    "Less stretch emphasis"
+   ]
+  },
+  {
+   "current": "leg-press",
+   "alt": "horizontal-leg-press",
+   "differences": [
+    "Lower loading potential"
+   ]
+  },
+  {
+   "current": "wrist-curl",
+   "alt": "reverse-wrist-curl",
+   "differences": [
+    "Wrist-extensor focus (back of forearm)"
+   ]
+  },
+  {
+   "current": "reverse-wrist-curl",
+   "alt": "wrist-curl",
+   "differences": [
+    "Less wrist-extensor work"
+   ]
+  },
+  {
+   "current": "weighted-decline-crunch",
+   "alt": "captains-chair-knee-raise",
+   "differences": [
+    "More hip-flexor work (legs lift)"
+   ]
+  },
+  {
+   "current": "captains-chair-knee-raise",
+   "alt": "weighted-decline-crunch",
+   "differences": [
+    "Less hip-flexor work"
+   ]
+  },
+  {
+   "current": "back-squat",
+   "alt": "front-squat",
+   "differences": [
+    "Load in front, more upright torso"
+   ]
+  },
+  {
+   "current": "front-squat",
+   "alt": "back-squat",
+   "differences": [
+    "Load not held in front"
+   ]
+  },
+  {
+   "current": "barbell-row",
+   "alt": "pendlay-row",
+   "differences": [
+    "Dead-stop reps (reset on the floor)"
+   ]
+  },
+  {
+   "current": "pendlay-row",
+   "alt": "barbell-row",
+   "differences": [
+    "Continuous reps"
+   ]
+  },
+  {
+   "current": "reverse-hyper",
+   "alt": "back-extension-machine",
+   "differences": [
+    "Lower-back focus"
+   ]
+  },
+  {
+   "current": "back-extension-machine",
+   "alt": "reverse-hyper",
+   "differences": [
+    "Less lower-back work"
+   ]
+  },
+  {
+   "current": "kettlebell-clean",
+   "alt": "kettlebell-snatch",
+   "differences": [
+    "Finishes overhead"
+   ]
+  },
+  {
+   "current": "kettlebell-snatch",
+   "alt": "kettlebell-clean",
+   "differences": [
+    "Doesn't finish overhead"
+   ]
+  },
+  {
+   "current": "dead-hang",
+   "alt": "active-hang",
+   "differences": [
+    "Shoulders pulled down and back"
+   ]
+  },
+  {
+   "current": "active-hang",
+   "alt": "dead-hang",
+   "differences": [
+    "Shoulders not actively pulled down"
+   ]
+  },
+  {
+   "current": "pallof-press",
+   "alt": "cable-crunch",
+   "differences": [
+    "No anti-rotation demand"
+   ]
+  },
+  {
+   "current": "kettlebell-press",
+   "alt": "kettlebell-push-press",
+   "differences": [
+    "Leg drive helps the press"
+   ]
+  },
+  {
+   "current": "kettlebell-push-press",
+   "alt": "kettlebell-press",
+   "differences": [
+    "Strict press, no leg drive"
+   ]
+  },
+  {
+   "current": "high-foot-leg-press",
+   "alt": "leg-press",
+   "differences": [
+    "Less stretch emphasis",
+    "More quad-focused"
+   ]
+  }
+ ],
+ "display": [
+  {
+   "current": "barbell-curl",
+   "alt": "dumbbell-curl",
+   "lines": [
+    "Very similar to your current exercise"
+   ]
+  },
+  {
+   "current": "barbell-row",
+   "alt": "pendlay-row",
+   "lines": [
+    "Dead-stop reps (reset on the floor)"
+   ]
+  },
+  {
+   "current": "back-squat",
+   "alt": "front-squat",
+   "lines": [
+    "Load in front, more upright torso"
+   ]
+  },
+  {
+   "current": "smith-bench-press",
+   "alt": "converging-smith-bench-press",
+   "lines": [
+    "Very similar to your current exercise"
+   ]
+  },
+  {
+   "current": "barbell-bench-press",
+   "alt": "decline-bench-press",
+   "lines": [
+    "Lower-chest bias"
+   ]
+  },
+  {
+   "current": "lat-pulldown",
+   "alt": "close-grip-pulldown",
+   "lines": [
+    "Narrower grip",
+    "Neutral grip (palms facing in)"
+   ]
+  }
+ ],
+ "evidence": [
+  {
+   "tag": "upper_chest_bias",
+   "exercise": "incline-barbell-bench-press",
+   "level": "supported"
+  },
+  {
+   "tag": "upper_chest_bias",
+   "exercise": "incline-dumbbell-fly",
+   "level": "biomechanics"
+  },
+  {
+   "tag": "lower_chest_bias",
+   "exercise": "decline-bench-press",
+   "level": "biomechanics"
+  },
+  {
+   "tag": "brachialis_brachioradialis_bias",
+   "exercise": "preacher-curl",
+   "level": "supported"
+  },
+  {
+   "tag": "brachialis_brachioradialis_bias",
+   "exercise": "hammer-curl",
+   "level": "biomechanics"
+  },
+  {
+   "tag": "rectus_femoris_bias",
+   "exercise": "leg-extension",
+   "level": "supported"
+  },
+  {
+   "tag": "rectus_femoris_bias",
+   "exercise": "sissy-squat",
+   "level": "biomechanics"
+  },
+  {
+   "tag": "gastrocnemius_bias",
+   "exercise": "standing-calf-raise",
+   "level": "supported"
+  },
+  {
+   "tag": "grip_width",
+   "exercise": "close-grip-pulldown",
+   "level": "biomechanics"
+  },
+  {
+   "tag": "neutral_grip",
+   "exercise": "hammer-curl",
+   "level": "biomechanics"
+  },
+  {
+   "tag": "front_loaded",
+   "exercise": "front-squat",
+   "level": "biomechanics"
+  },
+  {
+   "tag": "lower_back_focus",
+   "exercise": "back-extension-machine",
+   "level": "biomechanics"
+  }
+ ],
+ "swap_lists": {
+  "barbell-bench-press": [
+   {
+    "id": "decline-bench-press",
+    "name": "Decline Barbell Bench Press",
+    "score": 97.36,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": [
+     "Lower-chest bias"
+    ]
+   },
+   {
+    "id": "close-grip-bench-press",
+    "name": "Close-Grip Bench Press",
+    "score": 91.52,
+    "tags": [
+     "same equipment",
+     "more triceps"
+    ],
+    "differences": [
+     "Narrower grip"
+    ]
+   },
+   {
+    "id": "smith-bench-press",
+    "name": "Smith Machine Bench Press",
+    "score": 90.0,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ],
+    "differences": [
+     "More stable",
+     "Less systemic fatigue",
+     "Easier to learn"
+    ]
+   },
+   {
+    "id": "converging-smith-bench-press",
+    "name": "Converging Smith Bench Press",
+    "score": 89.46,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ],
+    "differences": [
+     "More stable",
+     "Less systemic fatigue",
+     "Easier to learn"
+    ]
+   },
+   {
+    "id": "dumbbell-bench-press",
+    "name": "Dumbbell Bench Press",
+    "score": 84.43,
+    "tags": [
+     "more stretch"
+    ],
+    "differences": [
+     "More stretch emphasis",
+     "Lower loading potential"
+    ]
+   }
+  ],
+  "barbell-row": [
+   {
+    "id": "pendlay-row",
+    "name": "Pendlay Row",
+    "score": 99.71,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": [
+     "Dead-stop reps (reset on the floor)"
+    ]
+   },
+   {
+    "id": "t-bar-row",
+    "name": "T-Bar Row",
+    "score": 99.14,
+    "tags": [
+     "less fatigue",
+     "same equipment"
+    ],
+    "differences": [
+     "Narrower grip",
+     "Neutral grip (palms facing in)"
+    ]
+   },
+   {
+    "id": "seal-row",
+    "name": "Seal Row",
+    "score": 97.11,
+    "tags": [
+     "less fatigue",
+     "same equipment"
+    ],
+    "differences": [
+     "More stable",
+     "Less systemic fatigue",
+     "Less spinal loading"
+    ]
+   },
+   {
+    "id": "yates-row",
+    "name": "Yates Row",
+    "score": 96.7,
+    "tags": [
+     "less fatigue",
+     "same equipment"
+    ],
+    "differences": [
+     "Less upper-back focus"
+    ]
+   },
+   {
+    "id": "landmine-t-bar-row",
+    "name": "Chest-Supported T-Bar Row",
+    "score": 91.83,
+    "tags": [
+     "less fatigue",
+     "less lower back"
+    ],
+    "differences": [
+     "More stable",
+     "Less systemic fatigue",
+     "Less spinal loading"
+    ]
+   }
+  ],
+  "lat-pulldown": [
+   {
+    "id": "single-arm-lat-pulldown",
+    "name": "Single-Arm Lat Pulldown",
+    "score": 98.5,
+    "tags": [
+     "less fatigue",
+     "same equipment"
+    ],
+    "differences": [
+     "One side at a time"
+    ]
+   },
+   {
+    "id": "close-grip-pulldown",
+    "name": "Close-Grip Pulldown",
+    "score": 98.32,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": [
+     "Narrower grip",
+     "Neutral grip (palms facing in)"
+    ]
+   },
+   {
+    "id": "wide-grip-lat-pulldown",
+    "name": "Wide-Grip Lat Pulldown",
+    "score": 97.72,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": [
+     "Lat width focus",
+     "Wider grip"
+    ]
+   },
+   {
+    "id": "neutral-grip-lat-pulldown",
+    "name": "Neutral-Grip Lat Pulldown",
+    "score": 97.31,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": [
+     "Neutral grip (palms facing in)"
+    ]
+   },
+   {
+    "id": "selectorized-pulldown-machine",
+    "name": "Pulldown Machine (Selectorized)",
+    "score": 88.98,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ],
+    "differences": [
+     "Less constant tension"
+    ]
+   }
+  ],
+  "back-squat": [
+   {
+    "id": "front-squat",
+    "name": "Front Squat",
+    "score": 95.76,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": [
+     "Load in front, more upright torso"
+    ]
+   },
+   {
+    "id": "smith-squat",
+    "name": "Smith Machine Squat",
+    "score": 88.71,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ],
+    "differences": [
+     "More stable",
+     "Less systemic fatigue",
+     "Easier to learn"
+    ]
+   },
+   {
+    "id": "belt-squat",
+    "name": "Belt Squat",
+    "score": 88.49,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ],
+    "differences": [
+     "More stable",
+     "Less systemic fatigue",
+     "Less spinal loading"
+    ]
+   },
+   {
+    "id": "leg-press",
+    "name": "Leg Press",
+    "score": 87.41,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ],
+    "differences": [
+     "Less stretch emphasis",
+     "More stable",
+     "Less systemic fatigue"
+    ]
+   },
+   {
+    "id": "v-squat",
+    "name": "V-Squat",
+    "score": 87.41,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ],
+    "differences": [
+     "More stable",
+     "Less systemic fatigue",
+     "Less spinal loading"
+    ]
+   }
+  ],
+  "ez-bar-curl": [
+   {
+    "id": "barbell-curl",
+    "name": "Barbell Curl",
+    "score": 99.9,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": []
+   },
+   {
+    "id": "incline-dumbbell-curl",
+    "name": "Incline Dumbbell Curl",
+    "score": 95.0,
+    "tags": [
+     "more stretch"
+    ],
+    "differences": [
+     "More stretch emphasis",
+     "Biceps long-head stretch"
+    ]
+   },
+   {
+    "id": "dumbbell-curl",
+    "name": "Dumbbell Curl",
+    "score": 94.9,
+    "tags": [],
+    "differences": []
+   },
+   {
+    "id": "concentration-curl",
+    "name": "Concentration Curl",
+    "score": 93.95,
+    "tags": [],
+    "differences": [
+     "Peak-contraction focus",
+     "Better isolation",
+     "More stable"
+    ]
+   },
+   {
+    "id": "spider-curl",
+    "name": "Spider Curl",
+    "score": 93.95,
+    "tags": [],
+    "differences": [
+     "Less stretch emphasis",
+     "Peak-contraction focus",
+     "Better isolation"
+    ]
+   }
+  ],
+  "triceps-pushdown": [
+   {
+    "id": "cable-overhead-rope-extension",
+    "name": "Overhead Rope Triceps Extension (Low Cable)",
+    "score": 100.0,
+    "tags": [
+     "more stretch",
+     "same equipment"
+    ],
+    "differences": [
+     "More stretch emphasis",
+     "Triceps long-head bias"
+    ]
+   },
+   {
+    "id": "overhead-cable-triceps-extension",
+    "name": "Overhead Cable Triceps Extension",
+    "score": 100.0,
+    "tags": [
+     "more stretch",
+     "same equipment"
+    ],
+    "differences": [
+     "More stretch emphasis",
+     "Triceps long-head bias"
+    ]
+   },
+   {
+    "id": "dumbbell-kickback",
+    "name": "Dumbbell Triceps Kickback",
+    "score": 90.0,
+    "tags": [
+     "free weight"
+    ],
+    "differences": [
+     "Less stretch emphasis",
+     "Peak-contraction focus",
+     "Less isolation"
+    ]
+   },
+   {
+    "id": "machine-triceps-extension",
+    "name": "Triceps Extension Machine",
+    "score": 90.0,
+    "tags": [
+     "machine"
+    ],
+    "differences": [
+     "Less constant tension"
+    ]
+   },
+   {
+    "id": "overhead-triceps-machine",
+    "name": "Overhead Triceps Extension Machine",
+    "score": 90.0,
+    "tags": [
+     "more stretch",
+     "machine"
+    ],
+    "differences": [
+     "More stretch emphasis",
+     "Triceps long-head bias",
+     "Less constant tension"
+    ]
+   }
+  ],
+  "lying-leg-curl": [
+   {
+    "id": "kneeling-leg-curl",
+    "name": "Kneeling Leg Curl",
+    "score": 99.97,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": [
+     "One side at a time"
+    ]
+   },
+   {
+    "id": "standing-leg-curl",
+    "name": "Standing Single-Leg Curl",
+    "score": 99.89,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": [
+     "One side at a time"
+    ]
+   },
+   {
+    "id": "seated-leg-curl",
+    "name": "Seated Leg Curl",
+    "score": 99.51,
+    "tags": [
+     "more stretch",
+     "same equipment"
+    ],
+    "differences": [
+     "More stretch emphasis"
+    ]
+   },
+   {
+    "id": "nordic-curl",
+    "name": "Nordic Curl",
+    "score": 89.51,
+    "tags": [
+     "more stretch",
+     "bodyweight"
+    ],
+    "differences": [
+     "More stretch emphasis",
+     "Less isolation",
+     "Less stable"
+    ]
+   },
+   {
+    "id": "trx-hamstring-curl",
+    "name": "Suspension Hamstring Curl",
+    "score": 88.28,
+    "tags": [
+     "bodyweight"
+    ],
+    "differences": [
+     "Less isolation",
+     "Less stable",
+     "More technical"
+    ]
+   }
+  ],
+  "barbell-curl": [
+   {
+    "id": "ez-bar-curl",
+    "name": "EZ-Bar Curl",
+    "score": 99.9,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": []
+   },
+   {
+    "id": "dumbbell-curl",
+    "name": "Dumbbell Curl",
+    "score": 95.0,
+    "tags": [],
+    "differences": []
+   },
+   {
+    "id": "incline-dumbbell-curl",
+    "name": "Incline Dumbbell Curl",
+    "score": 94.9,
+    "tags": [
+     "more stretch"
+    ],
+    "differences": [
+     "More stretch emphasis",
+     "Biceps long-head stretch"
+    ]
+   },
+   {
+    "id": "concentration-curl",
+    "name": "Concentration Curl",
+    "score": 93.21,
+    "tags": [],
+    "differences": [
+     "Peak-contraction focus",
+     "Better isolation",
+     "More stable"
+    ]
+   },
+   {
+    "id": "spider-curl",
+    "name": "Spider Curl",
+    "score": 93.21,
+    "tags": [],
+    "differences": [
+     "Less stretch emphasis",
+     "Peak-contraction focus",
+     "Better isolation"
+    ]
+   }
+  ],
+  "decline-bench-press": [
+   {
+    "id": "barbell-bench-press",
+    "name": "Barbell Bench Press",
+    "score": 97.86,
+    "tags": [
+     "same equipment"
+    ],
+    "differences": [
+     "Less lower-chest bias"
+    ]
+   },
+   {
+    "id": "close-grip-bench-press",
+    "name": "Close-Grip Bench Press",
+    "score": 92.66,
+    "tags": [
+     "same equipment",
+     "less chest"
+    ],
+    "differences": [
+     "Less lower-chest bias",
+     "Narrower grip"
+    ]
+   },
+   {
+    "id": "converging-smith-bench-press",
+    "name": "Converging Smith Bench Press",
+    "score": 88.52,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ],
+    "differences": [
+     "Less lower-chest bias",
+     "More stable",
+     "Less systemic fatigue"
+    ]
+   },
+   {
+    "id": "smith-bench-press",
+    "name": "Smith Machine Bench Press",
+    "score": 87.86,
+    "tags": [
+     "less fatigue",
+     "machine"
+    ],
+    "differences": [
+     "Less lower-chest bias",
+     "More stable",
+     "Less systemic fatigue"
+    ]
+   },
+   {
+    "id": "dumbbell-bench-press",
+    "name": "Dumbbell Bench Press",
+    "score": 81.7,
+    "tags": [
+     "more stretch",
+     "less triceps"
+    ],
+    "differences": [
+     "More stretch emphasis",
+     "Less lower-chest bias",
+     "Lower loading potential"
+    ]
+   }
+  ],
+  "hammer-curl": [
+   {
+    "id": "dumbbell-curl",
+    "name": "Dumbbell Curl",
+    "score": 93.48,
+    "tags": [
+     "same equipment",
+     "less forearms"
+    ],
+    "differences": [
+     "Less brachialis & brachioradialis bias",
+     "Palms-up or palms-down grip"
+    ]
+   },
+   {
+    "id": "incline-dumbbell-curl",
+    "name": "Incline Dumbbell Curl",
+    "score": 91.76,
+    "tags": [
+     "more stretch",
+     "same equipment"
+    ],
+    "differences": [
+     "More stretch emphasis",
+     "Biceps long-head stretch",
+     "Less brachialis & brachioradialis bias"
+    ]
+   },
+   {
+    "id": "cable-rope-hammer-curl",
+    "name": "Cable Rope Hammer Curl",
+    "score": 89.19,
+    "tags": [],
+    "differences": [
+     "Better isolation",
+     "More stable",
+     "Steadier cable tension"
+    ]
+   },
+   {
+    "id": "barbell-curl",
+    "name": "Barbell Curl",
+    "score": 88.48,
+    "tags": [
+     "less forearms"
+    ],
+    "differences": [
+     "Less brachialis & brachioradialis bias",
+     "Palms-up or palms-down grip"
+    ]
+   },
+   {
+    "id": "ez-bar-curl",
+    "name": "EZ-Bar Curl",
+    "score": 86.76,
+    "tags": [
+     "less forearms"
+    ],
+    "differences": [
+     "Less brachialis & brachioradialis bias",
+     "Palms-up or palms-down grip"
+    ]
+   }
+  ]
+ },
+ "tagless": {
+  "method": "For every exercise (239), its top-6 swap candidates from swap_list(id, n=6) (= tools/swap.py swaps(id, n=6) = rank.py swap context with no state or prefs, self excluded). Exercises with fewer than 6 candidates give fewer pairs (v1/v2: 11 exercises, 1,399 pairs; v3: 10 exercises, 1,400 pairs, because the one-arm kettlebell push press now joins the Turkish get-up candidates). tagless = pairs whose diff_tags is empty.",
+  "pairs": 1400,
+  "tagless": 108,
+  "tagless_v1": 219,
+  "tagless_v2": 123,
+  "pairs_v1_v2": 1399
+ }
+}

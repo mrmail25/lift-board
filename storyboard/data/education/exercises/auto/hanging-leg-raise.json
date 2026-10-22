@@ -130,11 +130,32 @@
  ],
  "alternatives": [
   {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "ab-wheel-rollout",
+   "why": "Swap sheet: More stretch emphasis, Less hip-flexor work, Less grip demand.",
+   "differences": [
+    "More stretch emphasis",
+    "Less hip-flexor work",
+    "Less grip demand"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
    "goal": "less_grip",
    "goal_label": "Less grip demand",
-   "exercise_id": "ab-wheel-rollout",
-   "why": "Swap sheet: Less grip demand.",
+   "exercise_id": "weighted-decline-crunch",
+   "why": "Swap sheet: Less hip-flexor work, Less grip demand.",
    "differences": [
+    "Less hip-flexor work",
     "Less grip demand"
    ],
    "evidence": "biomechanics"
@@ -142,9 +163,11 @@
   {
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
-   "exercise_id": "weighted-decline-crunch",
-   "why": "Swap sheet: Less grip demand.",
+   "exercise_id": "dragon-flag",
+   "why": "Swap sheet: Less hip-flexor work, More technical, Less grip demand.",
    "differences": [
+    "Less hip-flexor work",
+    "More technical",
     "Less grip demand"
    ],
    "evidence": "biomechanics"
@@ -153,23 +176,11 @@
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "cable-crunch",
-   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "why": "Swap sheet: Less hip-flexor work, Better isolation, More stable.",
    "differences": [
+    "Less hip-flexor work",
     "Better isolation",
-    "More stable",
-    "Steadier cable tension"
-   ],
-   "evidence": "biomechanics"
-  },
-  {
-   "goal": "more_isolation",
-   "goal_label": "Better isolation",
-   "exercise_id": "ab-crunch-machine",
-   "why": "Swap sheet: Better isolation, More stable, Less grip demand.",
-   "differences": [
-    "Better isolation",
-    "More stable",
-    "Less grip demand"
+    "More stable"
    ],
    "evidence": "biomechanics"
   }
@@ -181,7 +192,9 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
+   "hip_flexor_work",
    "grip_demand"
   ]
  },

@@ -201,6 +201,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": [
    "peak_contraction_focus"
   ]

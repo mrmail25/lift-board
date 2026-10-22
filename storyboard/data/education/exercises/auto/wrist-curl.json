@@ -119,16 +119,19 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "reverse-wrist-curl",
-   "why": "Similar muscles; dumbbell instead of dumbbell.",
-   "differences": [],
+   "why": "Swap sheet: Wrist-extensor focus (back of forearm).",
+   "differences": [
+    "Wrist-extensor focus (back of forearm)"
+   ],
    "evidence": "biomechanics"
   },
   {
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "dead-hang",
-   "why": "Swap sheet: More grip demand.",
+   "why": "Swap sheet: Static hold, More grip demand.",
    "differences": [
+    "Static hold",
     "More grip demand"
    ],
    "evidence": "biomechanics"
@@ -137,11 +140,11 @@
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "cable-rope-hammer-curl",
-   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "why": "Swap sheet: Brachialis & brachioradialis bias, Better isolation, More stable.",
    "differences": [
+    "Brachialis & brachioradialis bias",
     "Better isolation",
-    "More stable",
-    "Steadier cable tension"
+    "More stable"
    ],
    "evidence": "biomechanics"
   },
@@ -165,6 +168,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

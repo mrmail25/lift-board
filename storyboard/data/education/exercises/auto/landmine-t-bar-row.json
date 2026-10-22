@@ -155,24 +155,13 @@
    "goal": "easier_to_learn",
    "goal_label": "Easier to learn",
    "exercise_id": "seal-row",
-   "why": "Swap sheet: Easier to learn, Less grip demand.",
+   "why": "Swap sheet: Easier to learn, Wider grip, Palms-up or palms-down grip.",
    "differences": [
     "Easier to learn",
-    "Less grip demand"
+    "Wider grip",
+    "Palms-up or palms-down grip"
    ],
    "evidence": "modeled"
-  },
-  {
-   "goal": "less_grip",
-   "goal_label": "Less grip demand",
-   "exercise_id": "smith-row",
-   "why": "Swap sheet: Loads the spine, Easier to learn, Less grip demand.",
-   "differences": [
-    "Loads the spine",
-    "Easier to learn",
-    "Less grip demand"
-   ],
-   "evidence": "biomechanics"
   },
   {
    "goal": "more_stretch",
@@ -198,10 +187,23 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "chest-supported-dumbbell-row",
-   "why": "Swap sheet: Lower loading potential, Less grip demand.",
+   "why": "Swap sheet: Lower loading potential, Wider grip, Palms-up or palms-down grip.",
    "differences": [
     "Lower loading potential",
-    "Less grip demand"
+    "Wider grip",
+    "Palms-up or palms-down grip"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "kettlebell-row",
+   "why": "Swap sheet: Less upper-back focus, Less stable, One side at a time.",
+   "differences": [
+    "Less upper-back focus",
+    "Less stable",
+    "One side at a time"
    ],
    "evidence": "biomechanics"
   }
@@ -213,8 +215,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 3,
   "skill_demand": 2,
+  "grip_width": 1,
   "flags": [
    "upper_back_thickness_bias",
+   "neutral_grip",
    "grip_demand"
   ]
  },

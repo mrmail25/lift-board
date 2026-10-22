@@ -193,8 +193,8 @@
    "why": "Incline: more upper chest.",
    "differences": [
     "More stretch emphasis",
-    "Less stable",
-    "More systemic fatigue"
+    "Upper-chest bias",
+    "Less stable"
    ],
    "evidence": "supported",
    "citations": [
@@ -221,6 +221,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {

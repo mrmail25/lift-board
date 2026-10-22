@@ -1644,7 +1644,7 @@
     "block_exclude_current_week_note": "4 wk vs Prev skips the in-progress week (a partial week would read as a drop). Windows reach back to keep window_weeks completed training weeks. Show 'This week is in progress and not counted'."
   },
   "swap_tags": {
-    "version": 1,
+    "version": 3,
     "description": "Tag vocabulary for exercise-swap difference lines. Each exercise in exercises.json carries swap attributes; an alternative's difference lines come from comparing its attributes with the current exercise's.",
     "reference": "tools/swaptags.py",
     "evidence_levels": {
@@ -1703,22 +1703,158 @@
         "priority": 3
       },
       {
+        "id": "brachialis_brachioradialis_bias",
+        "kind": "flag",
+        "label": "Brachialis & brachioradialis bias",
+        "label_lost": "Less brachialis & brachioradialis bias",
+        "meaning": "More of the elbow-flexing work goes to the brachialis and brachioradialis: a neutral (hammer) or overhand (reverse) forearm puts the biceps at a mechanical disadvantage, and on a preacher pad the upper arm sits in front of the body, which slackens the biceps long head. Hammer and reverse curls: biomechanics. Preacher curls: supported, but only against incline curls (Kobayashi 2026); a straight comparison with standing curls has not been tested.",
+        "evidence": "biomechanics",
+        "priority": 4,
+        "evidence_overrides": [
+          {
+            "level": "supported",
+            "exercises": [
+              "preacher-curl",
+              "machine-preacher-curl",
+              "cable-preacher-curl"
+            ],
+            "note": "Kobayashi 2026 (MRI, 12 weeks): dumbbell preacher curls grew the brachialis and brachioradialis more than incline curls, while incline curls grew the biceps more and total elbow-flexor growth was similar. Machine and cable preacher curls share the arm position. Evidence is preacher vs incline only.",
+            "citations": [
+              "kobayashi2026"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "upper_chest_bias",
+        "kind": "flag",
+        "label": "Upper-chest bias",
+        "label_lost": "Less upper-chest bias",
+        "meaning": "An incline bench or a low-to-high path presses up and in, in line with the upper (clavicular) chest fibres. Incline presses: supported (Chaves 2020: more upper-chest thickness after incline than flat pressing; small study in untrained men). Incline flies, low-to-high cable flies and angled landmine presses: biomechanics.",
+        "evidence": "biomechanics",
+        "priority": 5,
+        "evidence_overrides": [
+          {
+            "level": "supported",
+            "exercises": [
+              "incline-barbell-bench-press",
+              "incline-dumbbell-press",
+              "smith-incline-press",
+              "incline-machine-press",
+              "converging-smith-incline-press"
+            ],
+            "note": "Chaves 2020: incline barbell pressing grew upper-chest muscle thickness more than flat pressing (8 weeks, untrained men, once a week). Dumbbell, Smith and machine incline presses use the same angle.",
+            "citations": [
+              "chaves2020"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lower_chest_bias",
+        "kind": "flag",
+        "label": "Lower-chest bias",
+        "label_lost": "Less lower-chest bias",
+        "meaning": "A decline bench, dips or a high-to-low cable path bring the arms down and in, in line with the lower (sternal and costal) chest fibres. Mechanics and EMG only; no growth study compares them with flat pressing.",
+        "evidence": "biomechanics",
+        "priority": 6
+      },
+      {
+        "id": "rectus_femoris_bias",
+        "kind": "flag",
+        "label": "Rectus femoris bias",
+        "label_lost": "Less rectus femoris work",
+        "meaning": "Knee extension with the hip open, so the two-joint rectus femoris (front of the thigh) does a big share. Leg extensions: supported (Zabaleta-Korta 2021: leg extensions grew the rectus femoris, Smith squats did not; Kubo 2019: squats did not grow it). Sissy squats: biomechanics (hip stays extended while the knee bends).",
+        "evidence": "biomechanics",
+        "priority": 7,
+        "evidence_overrides": [
+          {
+            "level": "supported",
+            "exercises": [
+              "leg-extension"
+            ],
+            "note": "Zabaleta-Korta 2021: leg extensions grew the rectus femoris in all measured regions, Smith-machine squats did not. Kubo 2019: full and half squats did not grow the rectus femoris.",
+            "citations": [
+              "zabaletakorta2021",
+              "kubo2019"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "gastrocnemius_bias",
+        "kind": "flag",
+        "label": "Gastrocnemius bias (knee straight)",
+        "label_lost": "Less gastrocnemius (knee bent)",
+        "meaning": "Calf raise with the knee straight, so the two-joint gastrocnemius stays long and does a big share. Kinoshita 2023: standing raises grew the gastrocnemius far more than seated raises, and the soleus grew about the same with both, so there is no separate soleus tag.",
+        "evidence": "supported",
+        "priority": 8,
+        "citations": [
+          "kinoshita2023"
+        ]
+      },
+      {
+        "id": "glute_bias",
+        "kind": "flag",
+        "label": "Glute bias",
+        "label_lost": "More quad-focused",
+        "meaning": "A squat or leg-press setup that shifts work from the quads toward the glutes: feet high on the platform, or facing the pad with the hips pushed back. Mechanics (more hip bend, less knee bend); growth has not been compared directly.",
+        "evidence": "biomechanics",
+        "priority": 9
+      },
+      {
+        "id": "lower_back_focus",
+        "kind": "flag",
+        "label": "Lower-back focus",
+        "label_lost": "Less lower-back work",
+        "meaning": "A back extension where the lower back (spinal erectors) is the main target: the spine bends and straightens, or the pad sits so the hips barely move. A hip extension that keeps the spine still (45-degree glute hyperextension, reverse hyper, hip thrust) puts the work on the glutes and hamstrings instead.",
+        "evidence": "biomechanics",
+        "priority": 10
+      },
+      {
+        "id": "wrist_extensor_focus",
+        "kind": "flag",
+        "label": "Wrist-extensor focus (back of forearm)",
+        "label_lost": "Less wrist-extensor work",
+        "meaning": "The wrist bends back against the load (palms down), so the extensors on the back of the forearm move it. A palms-up wrist curl and most grip work load the flexors on the palm side instead. The library rates the forearm as one region, so this tag carries the split.",
+        "evidence": "biomechanics",
+        "priority": 11
+      },
+      {
+        "id": "hip_flexor_work",
+        "kind": "flag",
+        "label": "More hip-flexor work (legs lift)",
+        "label_lost": "Less hip-flexor work",
+        "meaning": "The legs are raised or held up, so the hip flexors do much of the lifting while the abs control the pelvis. A crunch curls the spine with the legs still.",
+        "evidence": "biomechanics",
+        "priority": 12
+      },
+      {
+        "id": "active_shoulders",
+        "kind": "flag",
+        "label": "Shoulders pulled down and back",
+        "label_lost": "Shoulders not actively pulled down",
+        "meaning": "Hang type: you actively pull the shoulder blades down and back and hold or move them there (active hang, scapular pull-up), rather than hanging relaxed (dead hang), shrugging them up, or pulling with the arms.",
+        "evidence": "biomechanics",
+        "priority": 13
+      },
+      {
         "id": "lat_width_bias",
         "kind": "flag",
         "label": "Lat width focus",
         "label_lost": "Less lat-width focus",
         "meaning": "Wide overhand vertical pull, elbows out to the side. Coaches use it for upper lats and teres; the lat is one muscle, so this is a tendency.",
         "evidence": "modeled",
-        "priority": 4
+        "priority": 14
       },
       {
         "id": "upper_back_thickness_bias",
         "kind": "flag",
         "label": "Upper-back thickness focus",
         "label_lost": "Less upper-back focus",
-        "meaning": "Horizontal row that hits the mid-back (rhomboids, mid traps, rear delts) as much as or more than the lats.",
+        "meaning": "Horizontal row that hits the mid-back (rhomboids, mid traps, rear delts) as much as or more than the lats. A row without it is more lat-focused, shown as \"Less upper-back focus\".",
         "evidence": "modeled",
-        "priority": 5
+        "priority": 15
       },
       {
         "id": "upper_trap_involvement",
@@ -1727,7 +1863,7 @@
         "label_lost": "Less upper-trap work",
         "meaning": "Heavy shoulder elevation or upward rotation, or holding heavy loads at the sides, so the upper traps work hard.",
         "evidence": "biomechanics",
-        "priority": 6
+        "priority": 16
       },
       {
         "id": "peak_contraction_focus",
@@ -1736,7 +1872,7 @@
         "label_lost": "Less peak-contraction focus",
         "meaning": "Hardest at the fully shortened position (the squeeze). Popular for mind-muscle work; no growth advantage shown.",
         "evidence": "modeled",
-        "priority": 7
+        "priority": 17
       },
       {
         "id": "muscle_isolation",
@@ -1756,7 +1892,7 @@
         "label_lower": "Less isolation",
         "meaning": "How well the move keeps the work on one target muscle. 3 = supported single-joint, 1 = multi-joint compound.",
         "evidence": "biomechanics",
-        "priority": 8
+        "priority": 18
       },
       {
         "id": "stability",
@@ -1776,7 +1912,7 @@
         "label_lower": "Less stable",
         "meaning": "How much the equipment balances the load for you. Machines, cables and Smith 3, free weights 2, rings, suspension and single-leg free weights 1.",
         "evidence": "biomechanics",
-        "priority": 9
+        "priority": 19
       },
       {
         "id": "unilateral",
@@ -1785,7 +1921,34 @@
         "label_lost": "Both sides together",
         "meaning": "Works one arm or leg at a time: evens out sides, needs more time per set.",
         "evidence": "biomechanics",
-        "priority": 10
+        "priority": 20
+      },
+      {
+        "id": "independent_arms",
+        "kind": "flag",
+        "label": "Independent arm levers",
+        "label_lost": "Linked arm levers",
+        "meaning": "Machine with a separate lever for each arm (iso-lateral): each side moves its own load, and one arm can work alone.",
+        "evidence": "biomechanics",
+        "priority": 21
+      },
+      {
+        "id": "static_hold",
+        "kind": "flag",
+        "label": "Static hold",
+        "label_lost": "Moving reps",
+        "meaning": "Held position (isometric) rather than reps through a range of motion.",
+        "evidence": "biomechanics",
+        "priority": 22
+      },
+      {
+        "id": "leg_drive",
+        "kind": "flag",
+        "label": "Leg drive helps the press",
+        "label_lost": "Strict press, no leg drive",
+        "meaning": "A short knee dip and drive start the weight, so more load moves overhead than in a strict press.",
+        "evidence": "biomechanics",
+        "priority": 23
       },
       {
         "id": "systemic_fatigue",
@@ -1805,7 +1968,7 @@
         "label_lower": "Less systemic fatigue",
         "meaning": "Whole-body fatigue per hard set (breathing, bracing, recovery cost). Coach consensus, tied to the existing fatigue field.",
         "evidence": "modeled",
-        "priority": 11
+        "priority": 24
       },
       {
         "id": "spinal_load",
@@ -1814,7 +1977,7 @@
         "label_lost": "Less spinal loading",
         "meaning": "The spine carries the load (bar on the back or overhead, heavy bent-over or hinge positions, heavy carries).",
         "evidence": "biomechanics",
-        "priority": 12
+        "priority": 25
       },
       {
         "id": "loading_potential",
@@ -1834,7 +1997,7 @@
         "label_lower": "Lower loading potential",
         "meaning": "How much absolute load you can use and progress over time. 3 = big compound lifts, 1 = light isolation or bodyweight-only.",
         "evidence": "biomechanics",
-        "priority": 13
+        "priority": 26
       },
       {
         "id": "constant_tension",
@@ -1843,7 +2006,7 @@
         "label_lost": "Less constant tension",
         "meaning": "A cable keeps resistance on through more of the range than gravity-loaded free weights.",
         "evidence": "biomechanics",
-        "priority": 14
+        "priority": 27
       },
       {
         "id": "skill_demand",
@@ -1863,7 +2026,72 @@
         "label_lower": "Easier to learn",
         "meaning": "How much technique or practice the lift needs before it can be trained hard safely.",
         "evidence": "modeled",
-        "priority": 15
+        "priority": 28
+      },
+      {
+        "id": "front_loaded",
+        "kind": "flag",
+        "label": "Load in front, more upright torso",
+        "label_lost": "Load not held in front",
+        "meaning": "The load sits in front of the body (bar on the front of the shoulders, a bell or bar end at the chest), so the torso stays more upright than with a bar on the back. Gullett 2009 and Yavuz 2015 (context references, EMG and kinematics) found less trunk lean and similar or slightly higher quad activity; no growth study, so the line names the posture only.",
+        "evidence": "biomechanics",
+        "priority": 29
+      },
+      {
+        "id": "dead_stop_reps",
+        "kind": "flag",
+        "label": "Dead-stop reps (reset on the floor)",
+        "label_lost": "Continuous reps",
+        "meaning": "Every rep starts from the floor at a dead stop, with no bounce out of the bottom, and you reset your position between reps.",
+        "evidence": "biomechanics",
+        "priority": 30
+      },
+      {
+        "id": "overhead_finish",
+        "kind": "flag",
+        "label": "Finishes overhead",
+        "label_lost": "Doesn't finish overhead",
+        "meaning": "Each rep ends with the arms locked out overhead (relative to the torso): overhead presses, the snatch, the get-up and the windmill. Angled landmine presses and a clean to the rack do not.",
+        "evidence": "biomechanics",
+        "priority": 31
+      },
+      {
+        "id": "anti_rotation",
+        "kind": "flag",
+        "label": "Anti-rotation (resist twisting)",
+        "label_lost": "No anti-rotation demand",
+        "meaning": "The trunk holds still while the load tries to twist it, rather than curling or rotating against it.",
+        "evidence": "biomechanics",
+        "priority": 32
+      },
+      {
+        "id": "grip_width",
+        "kind": "ordinal",
+        "scale": [
+          1,
+          2,
+          3
+        ],
+        "levels": {
+          "1": "close",
+          "2": "about shoulder width, or not grip-specific",
+          "3": "wide"
+        },
+        "label": "Grip width",
+        "label_higher": "Wider grip",
+        "label_lower": "Narrower grip",
+        "meaning": "How far apart the hands are on a bar or handle. 1 = close (V-handle, close-grip bar), 2 = about shoulder width or not grip-specific, 3 = wide. EMG studies (Andersen 2014, Lusk 2010; context references) found that grip width changes lat activity little, so the line describes the grip, not a growth difference.",
+        "evidence": "biomechanics",
+        "priority": 33
+      },
+      {
+        "id": "neutral_grip",
+        "kind": "flag",
+        "label": "Neutral grip (palms facing in)",
+        "label_lost": "Palms-up or palms-down grip",
+        "meaning": "Palms face each other (hammer grip, V-handle, neutral handles). Many people find it comfortable on the wrists and elbows; that is a comfort tendency, not a finding.",
+        "evidence": "biomechanics",
+        "priority": 34
       },
       {
         "id": "grip_demand",
@@ -1872,7 +2100,7 @@
         "label_lost": "Less grip demand",
         "meaning": "Grip (forearms) is a real limit on load or reps.",
         "evidence": "biomechanics",
-        "priority": 16
+        "priority": 35
       }
     ],
     "citations": {
@@ -1935,9 +2163,79 @@
         "pages": "",
         "doi": "10.47206/ijsc.v3i1.182",
         "finding": "Across studies, training at long muscle lengths tends to match or modestly beat full range for growth; the effect is small and uncertain."
+      },
+      "chaves2020": {
+        "authors": "Chaves SFN, Rocha-Júnior VA, Encarnação IGA, et al.",
+        "year": 2020,
+        "title": "Effects of Horizontal and Incline Bench Press on Neuromuscular Adaptations in Untrained Young Men",
+        "journal": "International Journal of Exercise Science",
+        "volume": "13(6)",
+        "pages": "859-872",
+        "doi": "10.70252/fdnb1158",
+        "finding": "Untrained men, 8 weeks, once a week, equal sets: the incline bench press grew upper-chest muscle thickness (second intercostal site) more than the flat press; the other sites and strength gains did not differ. Small study; ultrasound muscle thickness."
+      },
+      "kobayashi2026": {
+        "authors": "Kobayashi Y, Maeo S, Eihara Y, et al.",
+        "year": 2026,
+        "title": "Exercise-specific preferential hypertrophy of individual elbow flexor muscles after incline versus preacher dumbbell curl training",
+        "journal": "Journal of Sports Sciences",
+        "volume": "online ahead of print",
+        "pages": "1-14",
+        "doi": "10.1080/02640414.2026.2741751",
+        "finding": "MRI, 12 weeks, one arm each way: preacher curls grew the brachialis and brachioradialis more than incline curls, incline curls grew the biceps more; total elbow-flexor growth was similar. Compared with incline curls only."
+      },
+      "kinoshita2023": {
+        "authors": "Kinoshita M, Maeo S, Kobayashi Y, et al.",
+        "year": 2023,
+        "title": "Triceps surae muscle hypertrophy is greater after standing versus seated calf-raise training",
+        "journal": "Frontiers in Physiology",
+        "volume": "14",
+        "pages": "1272106",
+        "doi": "10.3389/fphys.2023.1272106",
+        "finding": "Standing (knee straight) calf raises grew the gastrocnemius far more than seated (knee bent) raises; soleus growth was similar in both."
+      },
+      "zabaletakorta2021": {
+        "authors": "Zabaleta-Korta A, Fernández-Peña E, Torres-Unda J, et al.",
+        "year": 2021,
+        "title": "The role of exercise selection in regional Muscle Hypertrophy: A randomized controlled trial",
+        "journal": "Journal of Sports Sciences",
+        "volume": "39(20)",
+        "pages": "2298-2304",
+        "doi": "10.1080/02640414.2021.1929736",
+        "finding": "With equal volume and intensity, leg extensions grew the rectus femoris in all measured regions, while Smith-machine squats did not."
+      },
+      "kubo2019": {
+        "authors": "Kubo K, Ikebukuro T, Yata H",
+        "year": 2019,
+        "title": "Effects of squat training with different depths on lower limb muscle volumes",
+        "journal": "European Journal of Applied Physiology",
+        "volume": "119(9)",
+        "pages": "1933-1942",
+        "doi": "10.1007/s00421-019-04181-y",
+        "finding": "Full and half squats grew the vasti similarly and neither grew the rectus femoris (MRI, 10 weeks)."
       }
     },
     "context_references": {
+      "gullett2009": {
+        "authors": "Gullett JC, Tillman MD, Gutierrez GM, Chow JW",
+        "year": 2009,
+        "title": "A Biomechanical Comparison of Back and Front Squats in Healthy Trained Individuals",
+        "journal": "Journal of Strength and Conditioning Research",
+        "volume": "23(1)",
+        "pages": "284-292",
+        "doi": "10.1519/JSC.0b013e31818546bb",
+        "finding": "EMG and kinetics, 15 trained lifters: muscle activity was similar in front and back squats; the back squat had higher knee compressive forces and knee extensor moments. Not a growth study."
+      },
+      "yavuz2015": {
+        "authors": "Yavuz HU, Erdağ D, Amca AM, Aritan S",
+        "year": 2015,
+        "title": "Kinematic and EMG activities during front and back squat variations in maximum loads",
+        "journal": "Journal of Sports Sciences",
+        "volume": "33(10)",
+        "pages": "1058-1066",
+        "doi": "10.1080/02640414.2014.984240",
+        "finding": "EMG and kinematics at maximal loads, 12 lifters: more trunk lean in the back squat; vastus medialis EMG was higher in the front squat and semitendinosus EMG higher in the back squat on the way up. Not a growth study."
+      },
       "nunes2020": {
         "authors": "Nunes JP, Jacinto JL, Ribeiro AS, et al.",
         "year": 2020,
@@ -1947,18 +2245,40 @@
         "pages": "5859",
         "doi": "10.3390/ijerph17165859",
         "finding": "Cable (short-length torque) and barbell (long-length torque) preacher curls gave similar biceps growth. This is why peak_contraction_focus stays modeled."
+      },
+      "andersen2014": {
+        "authors": "Andersen V, Fimland MS, Wiik E, Skoglund A, Saeterbakken AH",
+        "year": 2014,
+        "title": "Effects of Grip Width on Muscle Strength and Activation in the Lat Pull-Down",
+        "journal": "Journal of Strength and Conditioning Research",
+        "volume": "28(4)",
+        "pages": "1135-1142",
+        "doi": "10.1097/JSC.0000000000000232",
+        "finding": "EMG: narrow, medium and wide overhand pulldown grips gave similar lat activation; the wide grip allowed slightly less load."
+      },
+      "lusk2010": {
+        "authors": "Lusk SJ, Hale BD, Russell DM",
+        "year": 2010,
+        "title": "Grip Width and Forearm Orientation Effects on Muscle Activity During the Lat Pull-Down",
+        "journal": "Journal of Strength and Conditioning Research",
+        "volume": "24(7)",
+        "pages": "1895-1900",
+        "doi": "10.1519/JSC.0b013e3181ddb0ab",
+        "finding": "EMG: an overhand pulldown grip gave slightly more lat activation than an underhand grip; grip width made no difference."
       }
     },
     "compare": {
       "ordinal": "If alt[tag] > cur[tag], show label_higher; if lower, show label_lower; if equal, nothing.",
       "flag": "If the flag is on the alternative only, show label; if on the current exercise only, show label_lost; if on both or neither, nothing.",
-      "order": "Sort candidate lines by the tag priority (1 first). Muscle-specific tags come first, then isolation, stability and side, then fatigue, spine, loading, tension, skill and grip.",
+      "order": "Sort candidate lines by the tag priority (1 first). Muscle-specific tags come first (stretch, long heads, brachialis, upper and lower chest, rectus femoris, gastrocnemius, glutes, lower back, wrist extensors, hip flexors, active shoulders, lat width, upper back, traps, peak), then isolation, stability, side, independent arms, holds and leg drive, then fatigue, spine, loading, tension and skill, then the set-up lines (front-loaded, dead-stop reps, overhead finish, anti-rotation), and last the grip lines (width, neutral grip, grip demand), which describe the grip rather than a muscle difference.",
       "max_lines": 3,
-      "empty": "If no tag differs, show no difference lines (the swap list still shows the existing short tags).",
+      "empty": "If no tag differs and both exercises have swap attributes, show empty_line once instead of difference lines (the swap list still shows the existing short tags).",
+      "empty_line": "Very similar to your current exercise",
       "missing": "A custom exercise without swap attributes gets no difference lines.",
       "disclaimer": "Tags describe how an exercise usually loads muscles, not what any one person will feel or grow. No medical claims.",
       "disclaimer_short": "Typical differences, not guarantees."
-    }
+    },
+    "evidence_overrides": "Optional per-tag list [{level, exercises, citations, note}]. The tag's `evidence` is the level for every exercise not listed (its floor); a listed exercise carries `level`, backed by the listed citations. Use tools/swaptags.py tag_evidence(tag, exercise_id)."
   },
   "ranking": {
     "version": 1,

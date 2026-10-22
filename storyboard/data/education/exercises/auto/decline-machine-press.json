@@ -136,9 +136,11 @@
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "iso-lateral-chest-press",
-   "why": "Swap sheet: More stretch emphasis.",
+   "why": "Swap sheet: More stretch emphasis, Less lower-chest bias, Independent arm levers.",
    "differences": [
-    "More stretch emphasis"
+    "More stretch emphasis",
+    "Less lower-chest bias",
+    "Independent arm levers"
    ],
    "evidence": "supported",
    "citations": [
@@ -154,11 +156,11 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "archer-push-up",
-   "why": "Swap sheet: More stretch emphasis, Less stable, Lower loading potential.",
+   "why": "Swap sheet: More stretch emphasis, Less lower-chest bias, Less stable.",
    "differences": [
     "More stretch emphasis",
-    "Less stable",
-    "Lower loading potential"
+    "Less lower-chest bias",
+    "Less stable"
    ],
    "evidence": "biomechanics"
   },
@@ -166,11 +168,11 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "dumbbell-bench-press",
-   "why": "Swap sheet: More stretch emphasis, Less stable, More systemic fatigue.",
+   "why": "Swap sheet: More stretch emphasis, Less lower-chest bias, Less stable.",
    "differences": [
     "More stretch emphasis",
-    "Less stable",
-    "More systemic fatigue"
+    "Less lower-chest bias",
+    "Less stable"
    ],
    "evidence": "biomechanics"
   },
@@ -178,8 +180,9 @@
    "goal": "heavier_loading",
    "goal_label": "Heavier loading",
    "exercise_id": "converging-smith-bench-press",
-   "why": "Swap sheet: Heavier loading potential.",
+   "why": "Swap sheet: Less lower-chest bias, Heavier loading potential.",
    "differences": [
+    "Less lower-chest bias",
     "Heavier loading potential"
    ],
    "evidence": "biomechanics"
@@ -192,7 +195,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "lower_chest_bias"
+  ]
  },
  "app_values": {},
  "notes": [

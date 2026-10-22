@@ -140,26 +140,14 @@
    ]
   },
   {
-   "goal": "one_side",
-   "goal_label": "One side at a time",
-   "exercise_id": "single-leg-press",
-   "why": "Swap sheet: Less peak-contraction focus, Less isolation, One side at a time.",
-   "differences": [
-    "Less peak-contraction focus",
-    "Less isolation",
-    "One side at a time"
-   ],
-   "evidence": "biomechanics"
-  },
-  {
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "shrimp-squat",
-   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Less isolation.",
+   "why": "Swap sheet: More stretch emphasis, Less rectus femoris work, Less peak-contraction focus.",
    "differences": [
     "More stretch emphasis",
-    "Less peak-contraction focus",
-    "Less isolation"
+    "Less rectus femoris work",
+    "Less peak-contraction focus"
    ],
    "evidence": "biomechanics"
   }
@@ -171,7 +159,9 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
+   "rectus_femoris_bias",
    "peak_contraction_focus"
   ]
  },

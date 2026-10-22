@@ -197,9 +197,9 @@
    "exercise_id": "cable-crunch",
    "why": "Loadable spinal flexion on a cable; easy to progress in small steps.",
    "differences": [
+    "Less hip-flexor work",
     "Better isolation",
-    "More stable",
-    "Steadier cable tension"
+    "More stable"
    ],
    "evidence": "biomechanics"
   },
@@ -209,6 +209,8 @@
    "exercise_id": "ab-wheel-rollout",
    "why": "Needs only a wheel; anti-extension work that trains the abs and obliques (obliques 0.6).",
    "differences": [
+    "More stretch emphasis",
+    "Less hip-flexor work",
     "Less grip demand"
    ],
    "evidence": "biomechanics"
@@ -221,7 +223,9 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
+   "hip_flexor_work",
    "grip_demand"
   ]
  },

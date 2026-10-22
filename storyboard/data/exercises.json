@@ -1,5 +1,5 @@
 {
- "version": 8,
+ "version": 10,
  "muscles": [
   "chest",
   "front_delts",
@@ -109,6 +109,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -199,7 +200,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "upper_chest_bias"
+    ]
    }
   },
   {
@@ -287,6 +291,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -375,7 +380,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "upper_chest_bias"
+    ]
    }
   },
   {
@@ -462,6 +470,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -558,7 +567,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "lower_chest_bias"
+    ]
    }
   },
   {
@@ -649,6 +661,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -736,6 +749,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -825,6 +839,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus"
     ]
@@ -915,6 +930,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -1004,8 +1020,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
-     "spinal_load"
+     "spinal_load",
+     "overhead_finish"
     ]
    }
   },
@@ -1094,7 +1112,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
    }
   },
   {
@@ -1181,7 +1202,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
    }
   },
   {
@@ -1268,6 +1292,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -1355,6 +1380,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "unilateral",
      "constant_tension"
@@ -1447,6 +1473,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement"
     ]
@@ -1536,6 +1563,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -1623,6 +1651,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -1712,6 +1741,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -1799,6 +1829,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -1892,6 +1923,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "lat_width_bias",
      "grip_demand"
@@ -1989,6 +2021,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "grip_demand"
     ]
@@ -2078,6 +2111,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -2167,8 +2201,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 1,
     "flags": [
-     "constant_tension"
+     "constant_tension",
+     "neutral_grip"
     ]
    }
   },
@@ -2257,6 +2293,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias",
      "spinal_load",
@@ -2349,9 +2386,11 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias",
      "spinal_load",
+     "dead_stop_reps",
      "grip_demand"
     ]
    }
@@ -2441,8 +2480,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "unilateral",
+     "neutral_grip",
      "grip_demand"
     ]
    }
@@ -2532,6 +2573,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias"
     ]
@@ -2621,9 +2663,11 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 1,
     "flags": [
      "upper_back_thickness_bias",
-     "constant_tension"
+     "constant_tension",
+     "neutral_grip"
     ]
    }
   },
@@ -2712,9 +2756,11 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 1,
     "flags": [
      "upper_back_thickness_bias",
      "spinal_load",
+     "neutral_grip",
      "grip_demand"
     ]
    }
@@ -2803,6 +2849,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -2893,6 +2940,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement",
      "spinal_load",
@@ -2984,8 +3032,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement",
+     "neutral_grip",
      "grip_demand"
     ]
    }
@@ -3075,6 +3125,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -3162,6 +3213,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -3249,7 +3301,11 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "brachialis_brachioradialis_bias",
+     "neutral_grip"
+    ]
    }
   },
   {
@@ -3337,6 +3393,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "biceps_long_head_bias"
     ]
@@ -3427,7 +3484,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "brachialis_brachioradialis_bias"
+    ]
    }
   },
   {
@@ -3514,6 +3574,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -3607,6 +3668,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 2,
+    "grip_width": 1,
     "flags": []
    }
   },
@@ -3696,6 +3758,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -3783,6 +3846,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -3872,6 +3936,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "triceps_long_head_bias",
      "constant_tension"
@@ -3962,6 +4027,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -4051,6 +4117,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "spinal_load"
     ]
@@ -4142,8 +4209,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
-     "spinal_load"
+     "spinal_load",
+     "front_loaded"
     ]
    }
   },
@@ -4231,6 +4300,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -4318,6 +4388,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -4406,6 +4477,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -4495,6 +4567,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -4584,7 +4657,9 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
+     "rectus_femoris_bias",
      "peak_contraction_focus"
     ]
    }
@@ -4674,6 +4749,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement",
      "spinal_load",
@@ -4766,6 +4842,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "spinal_load",
      "grip_demand"
@@ -4856,6 +4933,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "spinal_load",
      "grip_demand"
@@ -4948,6 +5026,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus"
     ]
@@ -5037,6 +5116,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -5124,6 +5204,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -5217,7 +5298,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "lower_back_focus"
+    ]
    }
   },
   {
@@ -5304,6 +5388,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -5391,7 +5476,9 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
+     "gastrocnemius_bias",
      "spinal_load"
     ]
    }
@@ -5480,6 +5567,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -5573,7 +5661,9 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
+     "hip_flexor_work",
      "grip_demand"
     ]
    }
@@ -5662,6 +5752,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -5748,12 +5839,13 @@
     "abs"
    ],
    "swap": {
-    "stretch_emphasis": 2,
+    "stretch_emphasis": 3,
     "muscle_isolation": 2,
     "stability": 2,
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -5841,6 +5933,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -5928,6 +6021,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "unilateral",
      "constant_tension"
@@ -6022,6 +6116,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -6111,6 +6206,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -6199,6 +6295,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -6289,6 +6386,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "spinal_load"
     ]
@@ -6380,6 +6478,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -6469,7 +6568,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "upper_chest_bias"
+    ]
    }
   },
   {
@@ -6558,8 +6660,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
-     "spinal_load"
+     "spinal_load",
+     "overhead_finish"
     ]
    }
   },
@@ -6648,6 +6752,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias",
      "spinal_load"
@@ -6739,6 +6844,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "spinal_load"
     ]
@@ -6829,6 +6935,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -6919,7 +7026,9 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
+     "gastrocnemius_bias",
      "spinal_load"
     ]
    }
@@ -7010,6 +7119,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus"
     ]
@@ -7100,6 +7210,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement"
     ]
@@ -7190,6 +7301,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -7279,6 +7391,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -7365,6 +7478,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -7453,8 +7567,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 2,
+    "grip_width": 1,
     "flags": [
      "upper_back_thickness_bias",
+     "neutral_grip",
      "grip_demand"
     ]
    }
@@ -7544,8 +7660,11 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
-     "spinal_load"
+     "spinal_load",
+     "overhead_finish",
+     "neutral_grip"
     ]
    }
   },
@@ -7636,7 +7755,9 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
+     "upper_chest_bias",
      "unilateral"
     ]
    }
@@ -7728,7 +7849,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "upper_chest_bias"
+    ]
    }
   },
   {
@@ -7817,6 +7941,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "unilateral",
      "grip_demand"
@@ -7908,7 +8033,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "front_loaded"
+    ]
    }
   },
   {
@@ -7996,6 +8124,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -8084,6 +8213,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -8170,7 +8300,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "brachialis_brachioradialis_bias"
+    ]
    }
   },
   {
@@ -8256,6 +8389,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -8342,8 +8476,11 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
-     "constant_tension"
+     "brachialis_brachioradialis_bias",
+     "constant_tension",
+     "neutral_grip"
     ]
    }
   },
@@ -8430,6 +8567,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "biceps_long_head_bias",
      "constant_tension"
@@ -8519,6 +8657,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus",
      "constant_tension"
@@ -8608,6 +8747,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -8695,7 +8835,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "lower_chest_bias"
+    ]
    }
   },
   {
@@ -8781,6 +8924,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "triceps_long_head_bias"
     ]
@@ -8870,6 +9014,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -8956,7 +9101,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "upper_chest_bias"
+    ]
    }
   },
   {
@@ -9042,7 +9190,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "lower_chest_bias"
+    ]
    }
   },
   {
@@ -9129,7 +9280,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "independent_arms"
+    ]
    }
   },
   {
@@ -9216,7 +9370,11 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "independent_arms",
+     "overhead_finish"
+    ]
    }
   },
   {
@@ -9302,6 +9460,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -9389,6 +9548,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -9476,6 +9636,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias"
     ]
@@ -9565,8 +9726,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
-     "upper_back_thickness_bias"
+     "upper_back_thickness_bias",
+     "independent_arms"
     ]
    }
   },
@@ -9653,6 +9816,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 3,
     "flags": [
      "lat_width_bias",
      "constant_tension"
@@ -9742,8 +9906,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
-     "constant_tension"
+     "constant_tension",
+     "neutral_grip"
     ]
    }
   },
@@ -9830,6 +9996,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "unilateral",
      "constant_tension"
@@ -9923,6 +10090,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "lat_width_bias"
     ]
@@ -10016,7 +10184,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "lower_chest_bias"
+    ]
    }
   },
   {
@@ -10103,6 +10274,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -10189,6 +10361,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -10276,6 +10449,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -10363,6 +10537,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -10451,7 +10626,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "glute_bias"
+    ]
    }
   },
   {
@@ -10541,6 +10719,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -10627,6 +10806,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus",
      "unilateral"
@@ -10716,6 +10896,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus"
     ]
@@ -10804,7 +10985,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "gastrocnemius_bias"
+    ]
    }
   },
   {
@@ -10890,6 +11074,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -10982,6 +11167,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -11068,6 +11254,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -11154,6 +11341,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement"
     ]
@@ -11242,7 +11430,9 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
+     "upper_chest_bias",
      "constant_tension"
     ]
    }
@@ -11330,7 +11520,9 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
+     "lower_chest_bias",
      "constant_tension"
     ]
    }
@@ -11418,6 +11610,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "unilateral",
      "constant_tension"
@@ -11507,6 +11700,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 3,
     "flags": [
      "upper_back_thickness_bias",
      "constant_tension"
@@ -11596,6 +11790,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "spinal_load",
      "grip_demand"
@@ -11686,7 +11881,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "front_loaded"
+    ]
    }
   },
   {
@@ -11772,6 +11970,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -11862,7 +12061,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
    }
   },
   {
@@ -11948,6 +12150,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement",
      "constant_tension"
@@ -12038,6 +12241,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus",
      "unilateral"
@@ -12127,6 +12331,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus"
     ]
@@ -12219,6 +12424,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 1,
     "flags": []
    }
   },
@@ -12309,7 +12515,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "rectus_femoris_bias"
+    ]
    }
   },
   {
@@ -12401,6 +12610,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias"
     ]
@@ -12493,7 +12703,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
    }
   },
   {
@@ -12583,6 +12796,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -12669,6 +12883,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -12758,8 +12973,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
-     "constant_tension"
+     "constant_tension",
+     "anti_rotation"
     ]
    }
   },
@@ -12846,6 +13063,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -12935,6 +13153,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -13021,6 +13240,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "constant_tension"
     ]
@@ -13109,6 +13329,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "triceps_long_head_bias",
      "constant_tension"
@@ -13198,6 +13419,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus",
      "unilateral",
@@ -13289,7 +13511,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "upper_chest_bias"
+    ]
    }
   },
   {
@@ -13377,7 +13602,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "lower_chest_bias"
+    ]
    }
   },
   {
@@ -13464,6 +13692,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -13551,6 +13780,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus"
     ]
@@ -13641,7 +13871,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "brachialis_brachioradialis_bias"
+    ]
    }
   },
   {
@@ -13728,7 +13961,9 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
+     "brachialis_brachioradialis_bias",
      "constant_tension"
     ]
    }
@@ -13816,6 +14051,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -13904,6 +14140,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -13991,6 +14228,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "peak_contraction_focus"
     ]
@@ -14081,6 +14319,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "spinal_load"
     ]
@@ -14170,6 +14409,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -14260,6 +14500,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -14346,6 +14587,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias"
     ]
@@ -14435,6 +14677,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -14522,6 +14765,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -14608,6 +14852,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -14695,6 +14940,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -14782,7 +15028,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "upper_chest_bias"
+    ]
    }
   },
   {
@@ -14869,7 +15118,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
    }
   },
   {
@@ -14955,6 +15207,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -15042,6 +15295,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias"
     ]
@@ -15130,6 +15384,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -15216,6 +15471,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "unilateral",
      "constant_tension"
@@ -15303,8 +15559,9 @@
     "muscle_isolation": 1,
     "stability": 3,
     "systemic_fatigue": 2,
-    "loading_potential": 3,
+    "loading_potential": 2,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -15392,7 +15649,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "glute_bias"
+    ]
    }
   },
   {
@@ -15478,7 +15738,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
    }
   },
   {
@@ -15565,6 +15828,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "spinal_load"
     ]
@@ -15654,6 +15918,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias"
     ]
@@ -15744,6 +16009,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 3,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias"
     ]
@@ -15833,6 +16099,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "spinal_load",
      "grip_demand"
@@ -15918,12 +16185,13 @@
     "hinge"
    ],
    "swap": {
-    "stretch_emphasis": 2,
+    "stretch_emphasis": 1,
     "muscle_isolation": 1,
     "stability": 2,
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement",
      "spinal_load",
@@ -16016,9 +16284,11 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement",
      "spinal_load",
+     "neutral_grip",
      "grip_demand"
     ]
    }
@@ -16112,7 +16382,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "hip_flexor_work"
+    ]
    }
   },
   {
@@ -16198,7 +16471,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "lower_back_focus"
+    ]
    }
   },
   {
@@ -16285,7 +16561,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "wrist_extensor_focus"
+    ]
    }
   },
   {
@@ -16371,9 +16650,11 @@
     "systemic_fatigue": 3,
     "loading_potential": 3,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement",
      "spinal_load",
+     "neutral_grip",
      "grip_demand"
     ]
    }
@@ -16468,7 +16749,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "lower_chest_bias"
+    ]
    }
   },
   {
@@ -16560,6 +16844,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -16651,6 +16936,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias"
     ]
@@ -16745,7 +17031,9 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
+     "neutral_grip",
      "grip_demand"
     ]
    }
@@ -16836,6 +17124,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -16925,6 +17214,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -17014,6 +17304,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -17103,6 +17394,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -17192,7 +17484,11 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 3,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "hip_flexor_work",
+     "static_hold"
+    ]
    }
   },
   {
@@ -17283,6 +17579,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "upper_back_thickness_bias"
     ]
@@ -17377,6 +17674,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -17466,6 +17764,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement"
     ]
@@ -17557,6 +17856,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -17646,6 +17946,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -17737,6 +18038,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -17828,6 +18130,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -17911,12 +18214,13 @@
     "abs"
    ],
    "swap": {
-    "stretch_emphasis": 2,
+    "stretch_emphasis": 3,
     "muscle_isolation": 2,
     "stability": 1,
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -18006,7 +18310,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "hip_flexor_work"
+    ]
    }
   },
   {
@@ -18092,6 +18399,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "grip_demand"
     ]
@@ -18180,7 +18488,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "front_loaded"
+    ]
    }
   },
   {
@@ -18266,6 +18577,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -18354,8 +18666,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
-     "unilateral"
+     "unilateral",
+     "overhead_finish"
     ]
    }
   },
@@ -18385,7 +18699,7 @@
     "calves": 0,
     "adductors": 0,
     "lower_back": 0,
-    "obliques": 0,
+    "obliques": 0.2,
     "abductors": 0
    },
    "heads": {
@@ -18403,7 +18717,7 @@
     "triceps_short": 0.6,
     "forearms": 0,
     "abs": 0,
-    "obliques": 0,
+    "obliques": 0.2,
     "quads_rf": 0.2,
     "quads_vasti": 0.3,
     "hamstrings": 0,
@@ -18414,17 +18728,17 @@
     "calves_soleus": 0,
     "lower_back": 0
    },
-   "description": "An overhead press driven by a short knee dip, so you can handle more weight than strict.",
+   "description": "A one-arm overhead press with one kettlebell, driven by a short knee dip, so you can handle more weight than a strict press.",
    "howTo": [
-    "Rack the bell, dip your knees slightly.",
+    "Rack one bell at your shoulder and dip your knees slightly.",
     "Drive up with your legs and press the bell overhead in one move.",
-    "Lower to the rack under control."
+    "Lower to the rack under control, then switch arms."
    ],
-   "tip": "Dip straight down. Don't lean forward.",
+   "tip": "Dip straight down. Don't lean forward or to the side.",
    "youtube": "",
    "fatigue": 1.2,
    "howto": {
-    "setup": "Start with the bell in the rack position.",
+    "setup": "Start with one bell in the rack position.",
     "cues": [
      "Dip with the knees",
      "Drive up and press",
@@ -18442,7 +18756,12 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "unilateral",
+     "leg_drive",
+     "overhead_finish"
+    ]
    }
   },
   {
@@ -18528,8 +18847,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
-     "unilateral"
+     "unilateral",
+     "overhead_finish"
     ]
    }
   },
@@ -18617,8 +18938,10 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
-     "unilateral"
+     "unilateral",
+     "overhead_finish"
     ]
    }
   },
@@ -18705,6 +19028,7 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -18794,8 +19118,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "unilateral",
+     "neutral_grip",
      "grip_demand"
     ]
    }
@@ -18884,8 +19210,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 2,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
-     "unilateral"
+     "unilateral",
+     "overhead_finish"
     ]
    }
   },
@@ -18972,9 +19300,11 @@
     "systemic_fatigue": 3,
     "loading_potential": 2,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": [
      "upper_trap_involvement",
      "unilateral",
+     "neutral_grip",
      "grip_demand"
     ]
    }
@@ -19062,6 +19392,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -19154,6 +19485,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "grip_demand"
     ]
@@ -19246,6 +19578,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -19336,6 +19669,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -19425,8 +19759,10 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
-     "spinal_load"
+     "spinal_load",
+     "overhead_finish"
     ]
    }
   },
@@ -19517,6 +19853,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -19609,6 +19946,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "unilateral"
     ]
@@ -19703,6 +20041,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
      "grip_demand"
     ]
@@ -19794,7 +20133,9 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": [
+     "static_hold",
      "grip_demand"
     ]
    }
@@ -19885,6 +20226,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -19972,7 +20314,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "static_hold"
+    ]
    }
   },
   {
@@ -20061,7 +20406,11 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 3,
-    "flags": []
+    "grip_width": 2,
+    "flags": [
+     "hip_flexor_work",
+     "static_hold"
+    ]
    }
   },
   {
@@ -20150,6 +20499,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -20237,6 +20587,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -20326,6 +20677,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -20413,6 +20765,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -20500,6 +20853,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 3,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -20587,6 +20941,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -20676,6 +21031,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -20765,6 +21121,7 @@
     "systemic_fatigue": 2,
     "loading_potential": 1,
     "skill_demand": 2,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -20846,12 +21203,13 @@
     "abs"
    ],
    "swap": {
-    "stretch_emphasis": 2,
+    "stretch_emphasis": 3,
     "muscle_isolation": 2,
     "stability": 2,
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -20938,6 +21296,7 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -21021,12 +21380,13 @@
     "abs"
    ],
    "swap": {
-    "stretch_emphasis": 2,
+    "stretch_emphasis": 3,
     "muscle_isolation": 2,
     "stability": 2,
     "systemic_fatigue": 1,
     "loading_potential": 1,
-    "skill_demand": 1,
+    "skill_demand": 3,
+    "grip_width": 2,
     "flags": []
    }
   },
@@ -21116,7 +21476,9 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
+     "static_hold",
      "grip_demand"
     ]
    }
@@ -21207,7 +21569,10 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
+     "active_shoulders",
+     "static_hold",
      "grip_demand"
     ]
    }
@@ -21301,7 +21666,9 @@
     "systemic_fatigue": 1,
     "loading_potential": 1,
     "skill_demand": 1,
+    "grip_width": 2,
     "flags": [
+     "active_shoulders",
      "grip_demand"
     ]
    }
@@ -21362,5 +21729,7 @@
  "patterns_note": "v5: `patterns` = movement-slot ids from patterns.json (first = main slot). Model choice, not measured.",
  "bodyweight_note": "v6: bodyweight_fraction = share of body mass the exercise moves (0-1; omitted = external load only). effective load = fraction x bodyweight + added load (bodyweight_assisted machines: minus assistance). basis: measured (force plate, Ebben 2011 doi:10.1519/JSC.0b013e31820c8587), derived (from segment masses, Plagenhoef 1983 doi:10.1080/02701367.1983.10605290, men), modeling (our estimate). Holds, jumps, rollouts and angle-dependent suspension isolation moves are left without a fraction. A model, not a measurement.",
  "swap_note": "v7: swap = attributes for swap difference lines (rules.json swap_tags). Ordinals are 1-3 on the swap_tags scale; flags list the flag tags that apply. Method: defaults by equipment and type (machine/cable/Smith stability 3, free weight 2, rings/suspension 1; loading primary 3, accessory 2, isolation 1; systemic fatigue from type plus the fatigue field; stretch 3 if in rules.json stretch_biased, else 2; isolation 3 for guided single-joint, 2 free single-joint, 1 compound), then hand overrides per exercise. Tags describe tendencies, not guarantees, and make no medical claims. See data/swaptags-spec.md.",
- "equipment_needs_note": "v8: equipment_needs = list of required items from rules.json equipment_items; each item is one token or \"a|b\" (any one of them); all items are needed together; [] = bodyweight only (floor or wall). Hand-reviewed from each exercise's equipment, name and howto (tools/equipment_needs_data.py); `equipment` is unchanged and still drives swap scoring, logging and load steps. Small improvised accessories (handles, ankle cuffs, a step) are not listed."
+ "equipment_needs_note": "v8: equipment_needs = list of required items from rules.json equipment_items; each item is one token or \"a|b\" (any one of them); all items are needed together; [] = bodyweight only (floor or wall). Hand-reviewed from each exercise's equipment, name and howto (tools/equipment_needs_data.py); `equipment` is unchanged and still drives swap scoring, logging and load steps. Small improvised accessories (handles, ankle cuffs, a step) are not listed.",
+ "swap_regiontags_note": "v9 (2026-10-22): swap_tags v2 adds region/head and grip tags to every swap block: ordinal grip_width (1 close, 2 about shoulder width or not grip-specific, 3 wide) and the flags brachialis_brachioradialis_bias, upper_chest_bias, lower_chest_bias, rectus_femoris_bias, gastrocnemius_bias, glute_bias, neutral_grip, independent_arms, static_hold and leg_drive. Chest, rectus femoris and calf flags come from the existing heads ratings; grip and the rest from each exercise's own description. Five v1 data gaps were fixed (kneeling leg curl one side at a time; rack pull stretch 1; horizontal leg press loading 2; rollouts stretch 3; standing ab-wheel rollout skill 3). Ids and all other fields are unchanged. Build: tools/build_swaptags.py.",
+ "swap_gaptags_note": "v10 (2026-10-22): swap_tags v3 fills the remaining data-gap swap pairs with the flags lower_back_focus, wrist_extensor_focus, hip_flexor_work, active_shoulders, front_loaded, dead_stop_reps, overhead_finish and anti_rotation. glute_bias now covers only the squat and leg-press setups (45-degree-hyperextension moved to the lower_back_focus contrast). kettlebell-push-press is now a one-arm, one-bell lift (description, howTo, howto, obliques 0.2 like kettlebell-press; unilateral). Ids and all other fields are unchanged. Build: tools/build_swaptags.py."
 }

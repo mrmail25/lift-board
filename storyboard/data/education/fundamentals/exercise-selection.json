@@ -4,7 +4,7 @@
   "kind": "fundamental",
   "title": "Choosing exercises: stretch, stability, fatigue, loading and skill",
   "status": "final",
-  "updated": "2026-10-21",
+  "updated": "2026-10-22",
   "summary": "Most well-chosen exercises build muscle when sets are hard and volume is enough. Exercise choice decides which muscles and regions get the work, how much fatigue each set costs, how easily load can rise, and how much skill it takes. The swap sheet describes these trade-offs with a fixed set of tags.",
   "app_link": {
     "features": [
@@ -37,6 +37,11 @@
         {
           "text": "Which muscles an exercise credits, and how much, comes from its library ratings, shown in the swap sheet's muscle chips, not from the tags.",
           "evidence": "modeled"
+        },
+        {
+          "text": "Very similar to your current exercise: shown when no tag differs, for example barbell and dumbbell curls.",
+          "evidence": "modeled",
+          "app_key": "rules.json:swap_tags.compare.empty_line"
         }
       ]
     },
@@ -74,12 +79,13 @@
           ]
         },
         {
-          "text": "Standing (knee straight) calf raises grew the gastrocnemius far more than seated raises, because the knee position keeps that muscle long.",
+          "text": "Gastrocnemius bias (knee straight): standing calf raises grew the gastrocnemius far more than seated raises, because the straight knee keeps that muscle long. The soleus grew about the same either way, so there is no separate soleus line.",
           "evidence": "supported",
           "citations": [
             "kinoshita2023"
           ],
           "swap_tags": [
+            "gastrocnemius_bias",
             "stretch_emphasis"
           ]
         },
@@ -133,18 +139,24 @@
       ],
       "points": [
         {
-          "text": "Leg extensions grew all measured regions of the rectus femoris, while squats grew it little.",
+          "text": "Rectus femoris bias: leg extensions grew all measured regions of the rectus femoris, while squats grew it little. Sissy squats get the same line from mechanics (the hip stays open while the knee bends).",
           "evidence": "supported",
           "citations": [
             "zabaletakorta2021",
             "kubo2019"
+          ],
+          "swap_tags": [
+            "rectus_femoris_bias"
           ]
         },
         {
-          "text": "Incline pressing grew the upper chest site most in untrained men; the other chest sites did not differ between flat and incline.",
+          "text": "Upper-chest bias: incline pressing grew the upper chest site most in untrained men; the other chest sites did not differ between flat and incline. Incline flies, low-to-high cable flies and angled landmine presses get the line from mechanics only.",
           "evidence": "supported",
           "citations": [
             "chaves2020"
+          ],
+          "swap_tags": [
+            "upper_chest_bias"
           ]
         },
         {
@@ -152,6 +164,58 @@
           "evidence": "supported",
           "citations": [
             "kubo2019"
+          ]
+        },
+        {
+          "text": "Lower-chest bias: decline presses, dips and high-to-low cable flies bring the arms down and in, in line with the lower chest fibres. This is mechanics and EMG; no growth study compares them with flat pressing.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "lower_chest_bias"
+          ]
+        },
+        {
+          "text": "Brachialis & brachioradialis bias: preacher curls grew the brachialis and brachioradialis more than incline curls did, while incline curls grew the biceps more; total arm-flexor growth was similar. Hammer and reverse curls get the line from mechanics: a neutral or overhand forearm puts the biceps at a disadvantage.",
+          "evidence": "supported",
+          "citations": [
+            "kobayashi2026"
+          ],
+          "swap_tags": [
+            "brachialis_brachioradialis_bias"
+          ]
+        },
+        {
+          "text": "Glute bias: feet high on a leg press or a reverse hack squat facing the pad shift work from the quads toward the glutes. This is mechanics (more hip bend, less knee bend); growth has not been compared directly.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "glute_bias"
+          ]
+        },
+        {
+          "text": "Lower-back focus: back extensions where the spine bends and straightens target the lower back; hip extensions that keep the spine still (45-degree hyperextension, reverse hyper) put the work on the glutes and hamstrings instead.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "lower_back_focus"
+          ]
+        },
+        {
+          "text": "Wrist-extensor focus: a palms-down reverse wrist curl works the extensors on the back of the forearm; a palms-up wrist curl and most grip work load the flexors on the palm side.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "wrist_extensor_focus"
+          ]
+        },
+        {
+          "text": "More hip-flexor work: leg and knee raises and L-sits lift or hold the legs, so the hip flexors do much of the work while the abs control the pelvis. A crunch curls the spine with the legs still.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "hip_flexor_work"
+          ]
+        },
+        {
+          "text": "Shoulders pulled down and back: an active hang or scapular pull-up trains pulling the shoulder blades down and holding them there, unlike a relaxed dead hang.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "active_shoulders"
           ]
         },
         {
@@ -221,6 +285,51 @@
           "evidence": "biomechanics",
           "swap_tags": [
             "unilateral"
+          ]
+        },
+        {
+          "text": "Grip width and neutral grip: the lines describe the grip (wider, narrower, palms facing in). In pulldown studies grip width changed lat activity little, so a grip line is not a claim of more growth. Many people find a neutral grip comfortable on the wrists and elbows; that is a comfort tendency.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "grip_width",
+            "neutral_grip"
+          ]
+        },
+        {
+          "text": "Independent arm levers: iso-lateral machines give each arm its own lever, so each side moves its own load and one arm can work alone.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "independent_arms"
+          ]
+        },
+        {
+          "text": "Static hold and leg drive: holds (hangs, L-sits, hollow holds) work without moving through a range, and a push press uses a short knee dip and drive to move more load overhead than a strict press.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "static_hold",
+            "leg_drive"
+          ]
+        },
+        {
+          "text": "Load in front, more upright torso: a front, goblet or landmine squat holds the load at the front, so the torso stays more upright than with a bar on the back. EMG studies found similar or slightly higher quad activity, not a proven growth difference, so the line names the posture only.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "front_loaded"
+          ]
+        },
+        {
+          "text": "Dead-stop reps and finishing overhead: a Pendlay row resets each rep on the floor with no bounce, and lifts like the snatch, get-up and overhead presses end with the arms locked out overhead, unlike a clean to the shoulder or an angled landmine press.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "dead_stop_reps",
+            "overhead_finish"
+          ]
+        },
+        {
+          "text": "Anti-rotation: in a Pallof press the trunk holds still while the cable tries to twist it, instead of curling or rotating against the load.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "anti_rotation"
           ]
         }
       ]
@@ -349,10 +458,11 @@
   "app_values": {
     "rules.json:swap_tags.compare.max_lines": 3,
     "rules.json:swap_tags.compare.disclaimer_short": "Typical differences, not guarantees.",
-    "targets.json:analytics.stretch_share_flag_below": 0.25
+    "targets.json:analytics.stretch_share_flag_below": 0.25,
+    "rules.json:swap_tags.compare.empty_line": "Very similar to your current exercise"
   },
   "notes": [
     "Tag meanings and evidence levels follow rules.json swap_tags; a point can be supported when it cites a study even if the tag itself is mechanics or a model.",
-    "All sixteen swap tags are explained here; check_education enforces that."
+    "All 35 swap tags (v3) are explained here; check_education enforces that."
   ]
 }

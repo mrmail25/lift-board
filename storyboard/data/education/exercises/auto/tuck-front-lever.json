@@ -152,34 +152,38 @@
    ]
   },
   {
-   "goal": "easier_to_learn",
-   "goal_label": "Easier to learn",
+   "goal": "less_grip",
+   "goal_label": "Less grip demand",
    "exercise_id": "standing-ab-wheel-rollout",
-   "why": "Swap sheet: Easier to learn, Less grip demand.",
+   "why": "Swap sheet: More stretch emphasis, Moving reps, Less grip demand.",
    "differences": [
-    "Easier to learn",
+    "More stretch emphasis",
+    "Moving reps",
     "Less grip demand"
    ],
-   "evidence": "modeled"
+   "evidence": "biomechanics"
   },
   {
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "front-lever-row",
-   "why": "Swap sheet: Less isolation, More systemic fatigue.",
+   "why": "Swap sheet: Less isolation, Moving reps, More systemic fatigue.",
    "differences": [
     "Less isolation",
+    "Moving reps",
     "More systemic fatigue"
    ],
    "evidence": "biomechanics"
   },
   {
-   "goal": "less_grip",
-   "goal_label": "Less grip demand",
-   "exercise_id": "dragon-flag",
-   "why": "Swap sheet: Less grip demand.",
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "pullover-machine",
+   "why": "Swap sheet: More stretch emphasis, Better isolation, More stable.",
    "differences": [
-    "Less grip demand"
+    "More stretch emphasis",
+    "Better isolation",
+    "More stable"
    ],
    "evidence": "biomechanics"
   }
@@ -191,7 +195,9 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
+   "static_hold",
    "grip_demand"
   ]
  },

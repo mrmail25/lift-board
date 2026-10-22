@@ -139,11 +139,11 @@
    "goal": "one_side",
    "goal_label": "One side at a time",
    "exercise_id": "single-leg-press",
-   "why": "Swap sheet: Less stretch emphasis, One side at a time, Lower loading potential.",
+   "why": "Swap sheet: Less stretch emphasis, More quad-focused, One side at a time.",
    "differences": [
     "Less stretch emphasis",
-    "One side at a time",
-    "Lower loading potential"
+    "More quad-focused",
+    "One side at a time"
    ],
    "evidence": "biomechanics"
   }
@@ -155,7 +155,10 @@
   "systemic_fatigue": 2,
   "loading_potential": 3,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "glute_bias"
+  ]
  },
  "app_values": {},
  "notes": [

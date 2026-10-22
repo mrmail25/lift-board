@@ -125,11 +125,11 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "dumbbell-fly",
-   "why": "Swap sheet: Less isolation, Less stable, Less constant tension.",
+   "why": "Swap sheet: Less lower-chest bias, Less isolation, Less stable.",
    "differences": [
+    "Less lower-chest bias",
     "Less isolation",
-    "Less stable",
-    "Less constant tension"
+    "Less stable"
    ],
    "evidence": "biomechanics"
   },
@@ -137,11 +137,11 @@
    "goal": "peak_contraction",
    "goal_label": "Peak-contraction focus",
    "exercise_id": "pec-deck",
-   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus, Less constant tension.",
+   "why": "Swap sheet: Less stretch emphasis, Less lower-chest bias, Peak-contraction focus.",
    "differences": [
     "Less stretch emphasis",
-    "Peak-contraction focus",
-    "Less constant tension"
+    "Less lower-chest bias",
+    "Peak-contraction focus"
    ],
    "evidence": "modeled"
   }
@@ -153,7 +153,9 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
+   "lower_chest_bias",
    "constant_tension"
   ]
  },

@@ -122,9 +122,10 @@
    "goal": "peak_contraction",
    "goal_label": "Peak-contraction focus",
    "exercise_id": "high-cable-curl",
-   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus.",
+   "why": "Swap sheet: Less stretch emphasis, Less brachialis & brachioradialis bias, Peak-contraction focus.",
    "differences": [
     "Less stretch emphasis",
+    "Less brachialis & brachioradialis bias",
     "Peak-contraction focus"
    ],
    "evidence": "modeled"
@@ -133,11 +134,11 @@
    "goal": "home_dumbbells",
    "goal_label": "Home gym: dumbbells",
    "exercise_id": "incline-dumbbell-curl",
-   "why": "Swap sheet: Biceps long-head stretch, Less isolation, Less stable.",
+   "why": "Swap sheet: Biceps long-head stretch, Less brachialis & brachioradialis bias, Less isolation.",
    "differences": [
     "Biceps long-head stretch",
-    "Less isolation",
-    "Less stable"
+    "Less brachialis & brachioradialis bias",
+    "Less isolation"
    ],
    "evidence": "biomechanics"
   }
@@ -149,7 +150,9 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
+   "brachialis_brachioradialis_bias",
    "constant_tension"
   ]
  },

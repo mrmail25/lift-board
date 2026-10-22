@@ -206,9 +206,9 @@
    "exercise_id": "weighted-dip",
    "why": "Bodyweight pressing with lots of triceps.",
    "differences": [
+    "Lower-chest bias",
     "Less isolation",
-    "More systemic fatigue",
-    "Heavier loading potential"
+    "More systemic fatigue"
    ],
    "evidence": "biomechanics"
   }
@@ -220,6 +220,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {

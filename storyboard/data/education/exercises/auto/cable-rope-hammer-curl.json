@@ -121,10 +121,11 @@
    "goal": "more_stretch",
    "goal_label": "More stretch",
    "exercise_id": "bayesian-cable-curl",
-   "why": "Swap sheet: More stretch emphasis, Biceps long-head stretch.",
+   "why": "Swap sheet: More stretch emphasis, Biceps long-head stretch, Less brachialis & brachioradialis bias.",
    "differences": [
     "More stretch emphasis",
-    "Biceps long-head stretch"
+    "Biceps long-head stretch",
+    "Less brachialis & brachioradialis bias"
    ],
    "evidence": "supported",
    "citations": [
@@ -152,9 +153,10 @@
    "goal": "peak_contraction",
    "goal_label": "Peak-contraction focus",
    "exercise_id": "high-cable-curl",
-   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus.",
+   "why": "Swap sheet: Less stretch emphasis, Less brachialis & brachioradialis bias, Peak-contraction focus.",
    "differences": [
     "Less stretch emphasis",
+    "Less brachialis & brachioradialis bias",
     "Peak-contraction focus"
    ],
    "evidence": "modeled"
@@ -167,8 +169,11 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": [
-   "constant_tension"
+   "brachialis_brachioradialis_bias",
+   "constant_tension",
+   "neutral_grip"
   ]
  },
  "app_values": {},

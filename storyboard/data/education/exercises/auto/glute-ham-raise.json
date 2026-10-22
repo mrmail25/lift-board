@@ -148,9 +148,21 @@
    "evidence": "biomechanics"
   },
   {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "kneeling-leg-curl",
+   "why": "Swap sheet: Less stretch emphasis, Better isolation, One side at a time.",
+   "differences": [
+    "Less stretch emphasis",
+    "Better isolation",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
    "goal": "less_fatigue",
    "goal_label": "Less fatigue",
-   "exercise_id": "kneeling-leg-curl",
+   "exercise_id": "lying-leg-curl",
    "why": "Swap sheet: Less stretch emphasis, Better isolation, Less systemic fatigue.",
    "differences": [
     "Less stretch emphasis",
@@ -170,18 +182,6 @@
     "Less systemic fatigue"
    ],
    "evidence": "biomechanics"
-  },
-  {
-   "goal": "home_dumbbells",
-   "goal_label": "Home gym: dumbbells",
-   "exercise_id": "stiff-leg-dumbbell-deadlift",
-   "why": "Swap sheet: Less stable, More systemic fatigue, Loads the spine.",
-   "differences": [
-    "Less stable",
-    "More systemic fatigue",
-    "Loads the spine"
-   ],
-   "evidence": "biomechanics"
   }
  ],
  "swap": {
@@ -191,6 +191,7 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {},

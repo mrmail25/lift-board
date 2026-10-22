@@ -133,16 +133,19 @@
    "goal": "home_bodyweight",
    "goal_label": "Home gym: no equipment / bar only",
    "exercise_id": "45-degree-hyperextension",
-   "why": "Similar muscles; bodyweight instead of bodyweight.",
-   "differences": [],
+   "why": "Swap sheet: Less lower-back work.",
+   "differences": [
+    "Less lower-back work"
+   ],
    "evidence": "biomechanics"
   },
   {
    "goal": "more_stable",
    "goal_label": "More stable",
    "exercise_id": "reverse-hyper",
-   "why": "Swap sheet: Better isolation, More stable.",
+   "why": "Swap sheet: Less lower-back work, Better isolation, More stable.",
    "differences": [
+    "Less lower-back work",
     "Better isolation",
     "More stable"
    ],
@@ -163,11 +166,11 @@
    "goal": "peak_contraction",
    "goal_label": "Peak-contraction focus",
    "exercise_id": "cable-kickback",
-   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus, Better isolation.",
+   "why": "Swap sheet: Less stretch emphasis, Less lower-back work, Peak-contraction focus.",
    "differences": [
     "Less stretch emphasis",
-    "Peak-contraction focus",
-    "Better isolation"
+    "Less lower-back work",
+    "Peak-contraction focus"
    ],
    "evidence": "modeled"
   }
@@ -179,7 +182,10 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "lower_back_focus"
+  ]
  },
  "app_values": {},
  "notes": [

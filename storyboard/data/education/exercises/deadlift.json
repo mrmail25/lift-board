@@ -244,7 +244,8 @@
    "exercise_id": "trap-bar-deadlift",
    "why": "Trap bar: more upright, easier to learn.",
    "differences": [
-    "Easier to learn"
+    "Easier to learn",
+    "Neutral grip (palms facing in)"
    ],
    "evidence": "biomechanics"
   },
@@ -272,14 +273,14 @@
    "evidence": "biomechanics"
   },
   {
-   "goal": "less_fatigue",
-   "goal_label": "Less fatigue",
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
    "exercise_id": "back-extension",
-   "why": "Bodyweight hip extension.",
+   "why": "Bodyweight back and hip extension with far less load.",
    "differences": [
+    "Lower-back focus",
     "Less upper-trap work",
-    "Better isolation",
-    "Less systemic fatigue"
+    "Better isolation"
    ],
    "evidence": "biomechanics"
   }
@@ -291,6 +292,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 3,
+  "grip_width": 2,
   "flags": [
    "upper_trap_involvement",
    "spinal_load",

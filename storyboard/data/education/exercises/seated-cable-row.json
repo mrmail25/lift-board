@@ -205,7 +205,9 @@
    "exercise_id": "chest-supported-row",
    "why": "More rear delts; chest supported.",
    "differences": [
-    "Less constant tension"
+    "Less constant tension",
+    "Wider grip",
+    "Palms-up or palms-down grip"
    ],
    "evidence": "biomechanics"
   },
@@ -228,7 +230,8 @@
    "why": "Lying barbell row; heavier, no lower back.",
    "differences": [
     "Heavier loading potential",
-    "Less constant tension"
+    "Less constant tension",
+    "Wider grip"
    ],
    "evidence": "biomechanics"
   },
@@ -252,9 +255,11 @@
   "systemic_fatigue": 2,
   "loading_potential": 2,
   "skill_demand": 1,
+  "grip_width": 1,
   "flags": [
    "upper_back_thickness_bias",
-   "constant_tension"
+   "constant_tension",
+   "neutral_grip"
   ]
  },
  "app_values": {

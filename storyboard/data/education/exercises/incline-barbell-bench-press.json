@@ -245,7 +245,9 @@
    "goal_label": "More mid/lower chest",
    "exercise_id": "barbell-bench-press",
    "why": "Flat: more mid/lower chest.",
-   "differences": [],
+   "differences": [
+    "Less upper-chest bias"
+   ],
    "evidence": "biomechanics"
   },
   {
@@ -255,8 +257,8 @@
    "why": "Chest fly with low fatigue.",
    "differences": [
     "More stretch emphasis",
-    "Better isolation",
-    "More stable"
+    "Less upper-chest bias",
+    "Better isolation"
    ],
    "evidence": "biomechanics"
   }
@@ -268,7 +270,10 @@
   "systemic_fatigue": 3,
   "loading_potential": 3,
   "skill_demand": 2,
-  "flags": []
+  "grip_width": 2,
+  "flags": [
+   "upper_chest_bias"
+  ]
  },
  "app_values": {
   "exercises.json:@barbell-bench-press.heads.chest_upper": 0.7,

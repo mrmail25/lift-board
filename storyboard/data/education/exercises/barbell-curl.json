@@ -192,7 +192,10 @@
    "goal_label": "More forearms",
    "exercise_id": "hammer-curl",
    "why": "Palms in: more brachioradialis.",
-   "differences": [],
+   "differences": [
+    "Brachialis & brachioradialis bias",
+    "Neutral grip (palms facing in)"
+   ],
    "evidence": "biomechanics"
   },
   {
@@ -215,6 +218,7 @@
   "systemic_fatigue": 1,
   "loading_potential": 1,
   "skill_demand": 1,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {

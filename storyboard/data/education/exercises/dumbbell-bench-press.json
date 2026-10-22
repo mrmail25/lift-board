@@ -214,7 +214,9 @@
    "goal_label": "More upper chest",
    "exercise_id": "incline-dumbbell-press",
    "why": "Incline version, more upper chest.",
-   "differences": [],
+   "differences": [
+    "Upper-chest bias"
+   ],
    "evidence": "supported",
    "citations": [
     "chaves2020"
@@ -255,6 +257,7 @@
   "systemic_fatigue": 3,
   "loading_potential": 2,
   "skill_demand": 2,
+  "grip_width": 2,
   "flags": []
  },
  "app_values": {
