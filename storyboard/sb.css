@@ -552,7 +552,7 @@ dd .tag{margin:0 3px 3px 0}
 .cav{font-size:12px;color:var(--text-3);margin:6px 0 0!important;line-height:1.4}
 .m1x{margin:0 0 6px!important}
 .vb b{position:absolute;top:-2px;bottom:-2px;left:var(--x);width:2px;margin-left:-1px;background:var(--paper);box-shadow:0 0 0 .5px rgba(0,0,0,.25)}
-.vb i.vs-under{background:var(--vol-under)}.vb i.vs-in{background:var(--ink)}.vb i.vs-amber{background:var(--vol-amber)}.vb i.vs-red{background:var(--vol-red)}
+.vb i.vs-under{background:var(--vol-under)}.vb i.vs-in{background:var(--vol-in-range)}.vb i.vs-amber{background:var(--vol-amber)}.vb i.vs-red{background:var(--vol-red)}
 .vleg{padding:10px var(--s4) 0;flex-wrap:wrap;gap:6px 14px}.mapcard .vleg{padding:8px 0 0}.vfoot{padding-top:4px!important}.mapcard .vfoot{text-align:center;margin:2px 0 0}
 .autob{display:flex;gap:8px;align-items:center;margin:0 var(--s4) 12px;padding:10px 12px;border-radius:var(--r-m,12px);background:var(--fill);color:var(--text-2);font-size:var(--t-foot);font-weight:500}.autob svg{width:16px;height:16px;flex:none}
 .mb.nc i{background:#dcdce0}.rate.nc{color:var(--text-3)}

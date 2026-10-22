@@ -549,15 +549,20 @@ V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#b
 
 // PROGRESS + muscle map (10. ape-head placeholder slot)
 const REG2M=r=>!r?null:r.startsWith('g:')?r.slice(2):((window.REGION_GROUP||{})[r]||r); // map region -> muscle group (exercises.json regionGroup)
-const VFILL={under:'var(--vol-under)',in:'var(--ink)',amber:'var(--vol-amber)',red:'var(--vol-red)'};
+const VFILL={under:'var(--vol-under)',in:'var(--vol-in-range)',amber:'var(--vol-amber)',red:'var(--vol-red)'};
+// In range shades like the live app's week map (targets.json gradient.week: light at min, darker toward max), driven by the ONE token:
+// at min the fill is exactly var(--vol-in-range); toward max it is mixed with ink, up to IN_DARK %. Other bands are flat (VFILL).
+const IN_DARK=40;
+const volFill=(n,min,max)=>{const st=vStat(n,min,max);if(st!=='in')return VFILL[st];const p=max>min?Math.min(1,Math.max(0,(n-min)/(max-min))):0,k=Math.round(p*IN_DARK);
+  return k?`color-mix(in oklch, var(--vol-in-range), var(--ink) ${k}%)`:VFILL.in};
 const volLegend=()=>`<div class="legend vleg">${['under','in','amber','red'].map(k=>`<span><i style="background:${VFILL[k]}"></i>${VLAB[k]}</span>`).join('')}</div><p class="foot vfoot">Amber above max, red above ${VB.red_factor!=null?VB.red_factor+'×':'(factor pending)'} max · rules.json volume_bands</p>`;
-const FILL=v=>typeof v==='string'?VFILL[v]:v==null?'#dcdce0':v>=.95?'#0b0b0c':v>=.75?'#5a5a5f':v>=.45?'#a8a8ad':'#c4c4c9';
+const FILL=v=>typeof v==='string'?(VFILL[v]||v):v==null?'#dcdce0':v>=.95?'#0b0b0c':v>=.75?'#5a5a5f':v>=.45?'#a8a8ad':'#c4c4c9';
 function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
   return `<svg viewBox="0 0 ${w} ${h}" class="mmap" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="#ececef" stroke="#d6d6da" stroke-width="3"/>
    ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="#ececef" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */return `<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'#d9d9dd'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"/>`}).join('')}
    ${side==='front'&&opt.ape?`<g class="ape-head"><circle cx="512" cy="148" r="92" fill="#fff" stroke="var(--accent)" stroke-width="7" stroke-dasharray="18 13"/><text x="512" y="138" text-anchor="middle" font-size="46" font-weight="800" fill="var(--accent-press)" font-family="-apple-system,sans-serif">APE</text><text x="512" y="186" text-anchor="middle" font-size="32" fill="#6b6b70" font-family="-apple-system,sans-serif">head slot</text></g>`:''}</svg>`}
 const VOL_X=[['traps',8,6,12],['forearms',6,4,12],['obliques',4,4,10],['lower_back',6,4,10],['adductors',4,4,10],['abductors',3,4,10]];
-const volMap=()=>{const o={};[...VOL,...VOL_X].forEach(([m,n,lo,hi])=>o[m]=vStat(n,lo,hi));return o}; // same vStat as the panel
+const volMap=()=>{const o={};[...VOL,...VOL_X].forEach(([m,n,lo,hi])=>o[m]=volFill(n,lo,hi));return o}; // same vStat bands as the panel, in-range shaded from --vol-in-range
 V.progress=()=>header('Progress',bookBtn)+
   `<div class="pad"><div class="seg"><button class="on">This week</button><button>4 weeks</button><button>Block</button></div></div>
    <div class="card mapcard"><div class="maps">${map('front',volMap(),{ape:true})}${map('back',volMap())}</div>
@@ -897,7 +902,7 @@ document.addEventListener('click',e=>{
 });
 window.SB={sheet,S,WK,closeAll,get sheets(){return SHEETS},get keypad(){return KP}};
 // internals for board.js (the Build whiteboard): same sheet, swap sheet, ranking scenario, muscle map, volume_bands
-window.SBX={V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,VB,VFILL,VLAB,volLegend,
+window.SBX={V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,VB,VFILL,VLAB,volLegend,
   get RD(){return RD},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

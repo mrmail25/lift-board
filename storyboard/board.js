@@ -40,7 +40,7 @@ function stateLine(){if(!B.dirty)return `<b class="saved">Saved v${B.version}</b
 const LVL=()=>` · <span class="blv">${B.level[0].toUpperCase()+B.level.slice(1)}</span>`;
 // ------------------------------------------------------------- stats (live: board, or the drag preview)
 function stats(days){const d=checkDays(days),A=PC.analytics(RD(),d,B.level),C=PC.checks(RD(),d,B.level);return {A,C,d}}
-function volMap(A){const o={};for(const [m,v] of Object.entries(A.muscles))o[m]=v.raw>0?X.vStat(v.raw,v.min,v.max):null;return o}
+function volMap(A){const o={};for(const [m,v] of Object.entries(A.muscles))o[m]=v.raw>0?X.volFill(v.raw,v.min,v.max):null;return o} // same fill as the Progress map
 function stripHtml(st){const {A,C,d}=st,avg=d.length?A.weekMinutes/d.length:0,fail=C.total-C.pass;
   return `<span class="amaps">${X.map('front',volMap(A))}${X.map('back',volMap(A))}</span>
    <span class="ast"><b class="num" data-s="sets">${A.weekSets}</b><small>sets / wk</small></span>
