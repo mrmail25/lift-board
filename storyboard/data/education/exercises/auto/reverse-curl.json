@@ -1,0 +1,189 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "reverse-curl",
+ "kind": "exercise",
+ "exercise_id": "reverse-curl",
+ "title": "EZ-Bar Reverse Curl",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "An overhand-grip curl for the brachioradialis and forearm extensors.",
+ "type": "isolation",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "ez_bar|barbell",
+   "plates"
+  ],
+  "text": "Needs: EZ curl bar or barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "forearms",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for forearms (main mover): each working set adds 1 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for biceps (helper): each working set adds 0.6 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hold an EZ bar overhand at shoulder width, arms straight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Curl it up, keeping your wrists straight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower slowly.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep elbows pinned",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Curl to shoulder height",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Use less weight than a regular curl and keep the wrists neutral.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the wrists bend back.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "reverse-wrist-curl",
+   "why": "Similar muscles; dumbbell instead of barbell.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "cable-rope-hammer-curl",
+   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "incline-dumbbell-curl",
+   "why": "Swap sheet: More stretch emphasis, Biceps long-head stretch.",
+   "differences": [
+    "More stretch emphasis",
+    "Biceps long-head stretch"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "dead-hang",
+   "why": "Swap sheet: More grip demand.",
+   "differences": [
+    "More grip demand"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

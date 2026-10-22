@@ -1,0 +1,185 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "stability-ball-rollout",
+ "kind": "exercise",
+ "exercise_id": "stability-ball-rollout",
+ "title": "Stability Ball Rollout",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "An easier rollout with your forearms on a stability ball, a good starting point before the ab wheel.",
+ "type": "isolation",
+ "equipment": "stability ball",
+ "equipment_needs": {
+  "items": [
+   "stability_ball"
+  ],
+  "text": "Needs: stability (Swiss) ball."
+ },
+ "muscles": [
+  {
+   "muscle_id": "abs",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for abs (main mover): each working set adds 0.8 of a set to the weekly abs total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for lats: below the counting floor, so it adds nothing to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "obliques",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for obliques: below the counting floor, so it adds nothing to the weekly obliques total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Kneel with your forearms on a ball.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Roll it forward, extending your body.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull it back with your abs.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Roll the ball forward",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the back flat",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pull back with the abs",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep a straight line from your knees to your shoulders.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the hips sag.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "captains-chair-knee-raise",
+   "why": "Swap sheet: More stable.",
+   "differences": [
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "dragon-flag",
+   "why": "Swap sheet: More stable, More technical.",
+   "differences": [
+    "More stable",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "ab-crunch-machine",
+   "why": "Swap sheet: Better isolation, More stable.",
+   "differences": [
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "standing-cable-crunch",
+   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 1,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

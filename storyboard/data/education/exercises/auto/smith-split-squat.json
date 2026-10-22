@@ -1,0 +1,221 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "smith-split-squat",
+ "kind": "exercise",
+ "exercise_id": "smith-split-squat",
+ "title": "Smith Machine Split Squat",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A single-leg squat on a fixed bar path for the quads and glutes, with less balance demand.",
+ "type": "accessory",
+ "equipment": "smith machine",
+ "equipment_needs": {
+  "items": [
+   "smith_machine",
+   "plates"
+  ],
+  "text": "Needs: Smith machine; weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 0.4,
+    "quads_vasti": 1
+   },
+   "why": "Library rating 1 for quads (main mover): each working set adds 1 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for glutes (main mover): each working set adds 0.8 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for adductors (helper): each working set adds 0.5 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Library rating 0.25 for abductors (minor): each working set adds 0.25 of a set to the weekly abductors total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bar on your upper back and step one foot forward and one back.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower straight down until your back knee nearly touches the floor.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Keep most of your weight on the front foot.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive up through the front foot, finish all reps, then switch sides.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Drop the back knee straight down",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your weight on the front foot",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive up to the start",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "A longer stride shifts work to the glutes, and a shorter one to the quads.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Using a stance so short the front heel lifts.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "bulgarian-split-squat",
+   "why": "Swap sheet: More stretch emphasis, Less stable, More systemic fatigue.",
+   "differences": [
+    "More stretch emphasis",
+    "Less stable",
+    "More systemic fatigue"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "walking-lunge",
+   "why": "Swap sheet: Less stable, More systemic fatigue, More technical.",
+   "differences": [
+    "Less stable",
+    "More systemic fatigue",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "pistol-squat",
+   "why": "Swap sheet: More stretch emphasis, Less stable, Lower loading potential.",
+   "differences": [
+    "More stretch emphasis",
+    "Less stable",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "smith-squat-feet-forward",
+   "why": "Swap sheet: Both sides together, Loads the spine, Heavier loading potential.",
+   "differences": [
+    "Both sides together",
+    "Loads the spine",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 1,
+  "flags": [
+   "unilateral"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

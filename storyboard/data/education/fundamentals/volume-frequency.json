@@ -1,0 +1,188 @@
+{
+  "schema": "lift-board.education.fundamental/1",
+  "id": "volume-frequency",
+  "kind": "fundamental",
+  "title": "Volume and frequency",
+  "status": "final",
+  "updated": "2026-10-21",
+  "summary": "Weekly hard sets per muscle are the main dial for growth: more sets help, with diminishing returns. How you spread those sets across the week matters much less once the weekly total is the same, so frequency is mostly a tool for fitting volume in and keeping sessions productive.",
+  "app_link": {
+    "features": [
+      "Weekly targets per muscle (targets.json targets)",
+      "Stimulus curve and session discount (targets.json curve)",
+      "Frequency and per-session program checks (rules.json rules: low_frequency, junk_volume_session, session_hard_sets)"
+    ],
+    "explains": "Why the board counts weekly sets per muscle, why the targets have a minimum and a maximum, and how to think about training a muscle once, twice or more each week."
+  },
+  "sections": [
+    {
+      "id": "volume",
+      "heading": "Weekly volume drives growth",
+      "body": [
+        "Volume here means hard sets per muscle per week. Across many studies, more weekly sets went with more growth, but each extra set added less than the one before.",
+        "That is why each muscle has a target range rather than a single number, and why the stimulus curve flattens as sets climb."
+      ],
+      "points": [
+        {
+          "text": "A meta-analysis found a graded dose-response: more weekly sets per muscle went with more growth, and the highest category (ten or more sets) grew most.",
+          "evidence": "supported",
+          "citations": [
+            "schoenfeld2017dose"
+          ]
+        },
+        {
+          "text": "A larger, newer meta-regression found growth kept rising with weekly volume, with diminishing returns.",
+          "evidence": "supported",
+          "citations": [
+            "pelland2026"
+          ]
+        },
+        {
+          "text": "The app's per-muscle minimum and maximum are coaching choices built on these pooled findings; only a few muscles have their own dose-response data.",
+          "evidence": "modeled",
+          "citations": [
+            "schoenfeld2017dose",
+            "pelland2026"
+          ],
+          "app_key": "targets.json:curve.evidence_tags"
+        },
+        {
+          "text": "Past the maximum, extra sets add recovery cost faster than they add growth for most people. The exact turning point is individual and not measured.",
+          "evidence": "modeled"
+        },
+        {
+          "text": "Beginners usually grow on less volume, so the app lowers the minimum for Beginner and Intermediate levels.",
+          "evidence": "modeled",
+          "app_key": "targets.json:levelMinFactor"
+        }
+      ]
+    },
+    {
+      "id": "counting-indirect",
+      "heading": "Counting indirect work",
+      "body": [
+        "Compound lifts work several muscles. Counting every muscle as a full set would overstate volume; ignoring helpers would understate it.",
+        "The app gives each muscle a fraction of a set based on how much it works in that exercise."
+      ],
+      "points": [
+        {
+          "text": "Counting indirect sets as half a set fit the pooled growth data better than counting them fully or not at all.",
+          "evidence": "supported",
+          "citations": [
+            "pelland2026"
+          ]
+        },
+        {
+          "text": "The app refines this with per-exercise ratings and ignores very small ratings. The ratings are coaching estimates.",
+          "evidence": "modeled",
+          "citations": [
+            "pelland2026"
+          ],
+          "app_key": "targets.json:counting.min_rating_to_count"
+        }
+      ]
+    },
+    {
+      "id": "frequency",
+      "heading": "Frequency: how often each muscle is trained",
+      "body": [
+        "Frequency is how many days a week a muscle gets meaningful work. Older analyses favoured twice a week over once, but many of the studies behind that gave the higher-frequency groups more total sets.",
+        "When studies matched weekly volume, frequency made little difference to growth. Spread sets in whatever way lets you keep every set hard; for most people that means two or more sessions for muscles with higher targets."
+      ],
+      "points": [
+        {
+          "text": "When weekly volume was equated, studies found no meaningful difference in growth between training a muscle more or less often. Where higher frequency did better, it was mostly because it came with more sets.",
+          "evidence": "supported",
+          "citations": [
+            "schoenfeld2019freq"
+          ]
+        },
+        {
+          "text": "The newer meta-regression found the effect of frequency on growth was compatible with being negligible, while strength gains rose with frequency.",
+          "evidence": "supported",
+          "citations": [
+            "pelland2026"
+          ]
+        },
+        {
+          "text": "An earlier analysis of fewer studies favoured twice a week over once a week with volume equated; later, larger analyses did not confirm a clear difference.",
+          "evidence": "supported",
+          "citations": [
+            "schoenfeld2016freq",
+            "schoenfeld2019freq"
+          ]
+        },
+        {
+          "text": "Frequency helps in practice by splitting a large weekly total into sessions short enough to stay productive.",
+          "evidence": "modeled"
+        },
+        {
+          "text": "In the same analysis, strength gains rose with frequency, so training a lift more often may help when getting stronger at it is a goal.",
+          "evidence": "supported",
+          "citations": [
+            "pelland2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sessions",
+      "heading": "Per-session limits",
+      "body": [
+        "Within one session, sets for the same muscle seem to give diminishing returns, and fatigue builds. The app models this two ways: a discount on the stimulus curve and program warnings when a day gets crowded.",
+        "These are rules of thumb. No study has set an exact per-session ceiling."
+      ],
+      "points": [
+        {
+          "text": "In the stimulus curve, effective sets for one muscle past a per-session cap count at a discount.",
+          "evidence": "modeled",
+          "app_key": "targets.json:curve.session_discount"
+        },
+        {
+          "text": "The program checks warn when one muscle gets too many effective sets in a day, and when a day has too many hard sets in total for your level.",
+          "evidence": "modeled",
+          "app_key": "rules.json:rules.#junk_volume_session.threshold"
+        },
+        {
+          "text": "A note also appears when the same muscle gets two solid sessions too close together.",
+          "evidence": "modeled",
+          "app_key": "rules.json:rules.#consecutive_high_volume.message"
+        }
+      ]
+    },
+    {
+      "id": "app-frequency-note",
+      "heading": "About the app's frequency note",
+      "body": [
+        "The low-frequency program check shows an info note when a muscle gets meaningful work on only one day. Its wording says twice a week usually grows muscle better for the same total sets.",
+        "That wording reflects the older analysis. The newer evidence says the weekly total matters far more than the split. Treat the note as a scheduling suggestion: splitting sets over two days makes high targets easier to reach with good effort, not because the second day is special."
+      ],
+      "points": [
+        {
+          "text": "The note's claim that twice a week grows muscle better for the same total sets is not supported by the volume-equated analyses on file.",
+          "evidence": "supported",
+          "citations": [
+            "schoenfeld2019freq",
+            "pelland2026"
+          ],
+          "app_key": "rules.json:rules.#low_frequency.message"
+        },
+        {
+          "text": "Moving some sets to a second day is still a sensible fix when one session is long or one muscle gets many sets in a day.",
+          "evidence": "modeled",
+          "app_key": "rules.json:rules.#low_frequency.fixes"
+        }
+      ]
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.chest.min": 10,
+    "targets.json:targets.chest.max": 20,
+    "targets.json:curve.session_discount.cap": 10,
+    "rules.json:rules.#low_frequency.threshold": 2
+  },
+  "notes": [
+    "The low-frequency note text in rules.json is not changed by this page; the page explains it. Updating the wording is a product decision.",
+    "Pelland 2026 is a meta-regression; its frequency result is about growth with volume matched, not about any one schedule."
+  ]
+}

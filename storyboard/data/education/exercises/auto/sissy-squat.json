@@ -1,0 +1,177 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "sissy-squat",
+ "kind": "exercise",
+ "exercise_id": "sissy-squat",
+ "title": "Sissy Squat",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A knee-dominant squat where you lean back as your knees go forward, stretching the quads including the rectus femoris.",
+ "type": "isolation",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [],
+  "text": "No equipment needed."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 1,
+    "quads_vasti": 0.9
+   },
+   "why": "Library rating 1 for quads (main mover): each working set adds 1 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hold a support with one hand and rise onto the balls of your feet.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lean back as you bend your knees forward and down, keeping your hips straight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Go as low as you can control, then push back up.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lean back as the knees move forward",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep hips extended",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Rise back up with the quads",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep a straight line from your knees to your shoulders.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Bending at the hips into a regular squat.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "leg-extension",
+   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus, Better isolation.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Better isolation"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "shrimp-squat",
+   "why": "Swap sheet: Less isolation, Less stable, One side at a time.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "pistol-squat",
+   "why": "Swap sheet: Less isolation, Less stable, One side at a time.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "hack-squat",
+   "why": "Swap sheet: Less isolation, More stable, More systemic fatigue.",
+   "differences": [
+    "Less isolation",
+    "More stable",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

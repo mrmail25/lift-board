@@ -1,0 +1,235 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "barbell-curl",
+ "kind": "exercise",
+ "exercise_id": "barbell-curl",
+ "title": "Barbell Curl",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Standing barbell curl: biceps 1, forearms 0.4. The most loadable curl.",
+ "type": "isolation",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "biceps",
+   "rating": 1,
+   "band": "main",
+   "why": "The biceps bend the elbow and turn the palm up; with a fixed bar the palms stay up.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "The forearms hold the bar and the brachioradialis helps flex (0.4).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Shoulder-width underhand grip.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Stand tall, elbows at your sides.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep elbows at your sides",
+   "why": "Elbows still.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Curl the bar to your shoulders",
+   "why": "Full extension at the bottom.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to straight arms",
+   "why": "Curling to the shoulders.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Use an EZ bar if your wrists prefer it",
+   "why": "Turns the palms in slightly; same muscles.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "EZ bar",
+   "target_muscle_ids": [
+    "biceps"
+   ],
+   "effect": "Comfort; a little more brachioradialis.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "caveat": "Comfort choice."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "biceps"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Swinging the hips to throw the bar up.",
+   "fix": "Lighten until the torso stays still.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Swinging the hips.",
+   "fix": "Stand tall.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Elbows drifting forward.",
+   "fix": "Keep them at your sides.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  },
+  {
+   "myth": "Only heavy weights build muscle.",
+   "reality": "Light and heavy loads gave similar growth when sets were taken close to failure. Heavy loads build more strength.",
+   "evidence": "supported",
+   "citations": [
+    "schoenfeld2017load"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "incline-dumbbell-curl",
+   "why": "Arm behind the body; grew the biceps more than preacher curls.",
+   "differences": [
+    "More stretch emphasis",
+    "Biceps long-head stretch"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "kobayashi2026"
+   ]
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "cable-curl",
+   "why": "Cable curl: steady tension.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:forearms",
+   "goal_label": "More forearms",
+   "exercise_id": "hammer-curl",
+   "why": "Palms in: more brachioradialis.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "peak_contraction",
+   "goal_label": "Peak-contraction focus",
+   "exercise_id": "spider-curl",
+   "why": "Chest on an incline bench: hardest at the top.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Better isolation"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@barbell-curl.muscles.forearms": 0.4,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Curl variations: see the biceps page for growth findings.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

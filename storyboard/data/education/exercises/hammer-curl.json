@@ -1,0 +1,227 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "hammer-curl",
+ "kind": "exercise",
+ "exercise_id": "hammer-curl",
+ "title": "Hammer Curl",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Dumbbell curl with palms facing in: biceps and forearms 0.8. The neutral grip shares the work with the brachialis and brachioradialis.",
+ "type": "isolation",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell"
+  ],
+  "text": "Needs: dumbbells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "biceps",
+   "rating": 0.8,
+   "band": "main",
+   "why": "The elbow flexors bend the elbow. With palms in, the biceps has less leverage, so the brachialis and brachioradialis do more; the app groups them as biceps and forearms (0.8).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.8,
+   "band": "main",
+   "why": "The brachioradialis, a forearm muscle, flexes the elbow best with a neutral grip (0.8).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand with dumbbells at your sides, palms facing in.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Elbows at your sides.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep the neutral grip throughout",
+   "why": "Keeping the thumbs up holds the neutral grip.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Curl toward your shoulder",
+   "why": "Elbows still keeps the work on the elbow flexors.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lower under control",
+   "why": "Full extension at the bottom is the stretch.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Curl across the body if it feels smoother",
+   "why": "A small path change, same muscles.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "stance",
+   "change": "Alternate arms",
+   "target_muscle_ids": [
+    "biceps",
+    "forearms"
+   ],
+   "effect": "A short rest for each arm; may allow a slightly heavier load.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "caveat": "Same sets either way."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "biceps",
+    "forearms"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Swinging the dumbbells across the body.",
+   "fix": "Lighten until the torso stays still.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Swinging the torso.",
+   "fix": "Stand tall, elbows still.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Cutting the bottom range.",
+   "fix": "Straighten the arm fully.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Hammer curls don't work the biceps.",
+   "reality": "The biceps still helps; it is rated 0.8.",
+   "evidence": "biomechanics"
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "bias:biceps",
+   "goal_label": "More biceps",
+   "exercise_id": "dumbbell-curl",
+   "why": "Palms up: more biceps.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "cable-rope-hammer-curl",
+   "why": "Same grip on a cable.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:forearms",
+   "goal_label": "More forearms",
+   "exercise_id": "reverse-curl",
+   "why": "Palms down: even more brachioradialis.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "incline-dumbbell-curl",
+   "why": "Arm behind the body for a long-length biceps curl.",
+   "differences": [
+    "More stretch emphasis",
+    "Biceps long-head stretch"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@hammer-curl.muscles.biceps": 0.8,
+  "exercises.json:@hammer-curl.muscles.forearms": 0.8,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.dumbbell": 2,
+  "rules.json:logger.load_step.lb.dumbbell": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Grip effects on curl growth have not been compared in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

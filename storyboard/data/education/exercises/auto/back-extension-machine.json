@@ -1,0 +1,196 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "back-extension-machine",
+ "kind": "exercise",
+ "exercise_id": "back-extension-machine",
+ "title": "Back Extension Machine (Selectorized)",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A seated selectorized back extension that trains the lower back directly with very little load on the hips.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lower_back",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for lower back (main mover): each working set adds 1 of a set to the weekly lower back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for glutes (helper): each working set adds 0.4 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for hamstrings (minor): each working set adds 0.3 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Sit with the pad across your upper back and your feet braced.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Extend your spine back against the pad.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Return slowly forward.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Push back against the pad",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Extend until upright",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Return slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Move through a comfortable range. Don't snap into extension.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Overarching past upright.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "back-extension",
+   "why": "Swap sheet: Less isolation, Less stable.",
+   "differences": [
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "glute-kickback-machine",
+   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus, One side at a time.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "peak_contraction",
+   "goal_label": "Peak-contraction focus",
+   "exercise_id": "cable-kickback",
+   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus, One side at a time.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "One side at a time"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "romanian-deadlift",
+   "why": "Swap sheet: More stretch emphasis, Less isolation, Less stable.",
+   "differences": [
+    "More stretch emphasis",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

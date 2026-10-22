@@ -1,0 +1,263 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "cable-fly",
+ "kind": "exercise",
+ "exercise_id": "cable-fly",
+ "title": "Cable Fly",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Standing cable fly: bring the handles together in front of the chest. Chest 1, with a steady pull through the whole range.",
+ "type": "isolation",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "cable"
+  ],
+  "text": "Needs: cable station with an adjustable pulley."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "chest_upper": 0.7,
+    "chest_lower": 1
+   },
+   "why": "The pecs bring the upper arm across the body (horizontal adduction). With mid-height cables, the line favors the mid/lower chest (1) over the upper chest (0.7).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "The front delts help bring the arm forward: minor.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set both pulleys at about shoulder height.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Take a handle in each hand and step forward into a split stance.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Slight bend in the elbows; arms open with a stretch across the chest.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep a slight, fixed bend in the elbows",
+   "why": "Hugging motion, arc not press, keeps the work on the chest.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Open wide to a deep chest stretch",
+   "why": "A fixed elbow bend stops it turning into a press.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Bring hands together in a hugging arc",
+   "why": "The hands meeting in front is the chest's shortest point.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the elbow bend fixed. This is a hug, not a press.",
+   "why": "Pulley height sets which part of the chest the line of pull favors.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the chest up",
+   "why": "Rounding forward shortens the range.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "angle",
+   "change": "Pulleys low, pull up and in (low-to-high)",
+   "target_muscle_ids": [
+    "chest"
+   ],
+   "effect": "The line follows the upper chest fibers.",
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "cable-crossover-low-to-high"
+   ],
+   "evidence": "biomechanics",
+   "caveat": "Not tested for growth directly."
+  },
+  {
+   "kind": "angle",
+   "change": "Pulleys high, pull down and in (high-to-low)",
+   "target_muscle_ids": [
+    "chest"
+   ],
+   "effect": "The line follows the lower chest fibers.",
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "cable-crossover-high-to-low"
+   ],
+   "evidence": "biomechanics",
+   "caveat": "Not tested for growth directly."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "chest"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Bending and straightening the elbows so it turns into a press.",
+   "fix": "Lighten the load until the elbow bend stays the same throughout.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Letting the elbows bend more to press it.",
+   "fix": "Keep a fixed slight bend.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Losing the stretch by stepping too far forward.",
+   "fix": "Stand where the arms can open fully.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Flies 'shape' the inner chest.",
+   "reality": "The pec can't be trained 'inner' or 'outer'; flies train the chest through a big range with low fatigue.",
+   "evidence": "modeled"
+  },
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure; stop when the elbows start bending more.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "peak_contraction",
+   "goal_label": "Peak-contraction focus",
+   "exercise_id": "pec-deck",
+   "why": "Machine fly with the most tension where the arms meet.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Less constant tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:chest_upper",
+   "goal_label": "More upper chest",
+   "exercise_id": "cable-crossover-low-to-high",
+   "why": "Low-to-high cable path for the upper chest.",
+   "differences": [
+    "Less stretch emphasis"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-fly",
+   "why": "Dumbbell fly: tension is highest in the stretch, light at the top.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "Less constant tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:front_delts",
+   "goal_label": "More front delts",
+   "exercise_id": "dumbbell-bench-press",
+   "why": "A press: more load, plus front delts and triceps.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "constant_tension"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@cable-fly.heads.chest_lower": 1,
+  "exercises.json:@cable-fly.heads.chest_upper": 0.7,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.cable": 2.5,
+  "rules.json:logger.load_step.lb.cable": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Fly variations have not been compared for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

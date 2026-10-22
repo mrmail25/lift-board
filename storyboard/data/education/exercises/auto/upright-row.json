@@ -1,0 +1,206 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "upright-row",
+ "kind": "exercise",
+ "exercise_id": "upright-row",
+ "title": "Upright Row",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A barbell or cable pull up the front of the body for the side delts and upper traps.",
+ "type": "accessory",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell|ez_bar",
+   "plates"
+  ],
+  "text": "Needs: barbell (Olympic bar) or EZ curl bar; weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "side_delts",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for side delts (main mover): each working set adds 0.8 of a set to the weekly side delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.8,
+   "band": "main",
+   "regions": {
+    "traps_upper": 0.8,
+    "traps_mid_lower": 0.32
+   },
+   "why": "Library rating 0.8 for traps (main mover): each working set adds 0.8 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for biceps (minor): each working set adds 0.3 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hold the bar with your hands about shoulder width apart, or wider.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull it up close to your body, leading with your elbows.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Stop when your elbows are about shoulder height.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower under control.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the bar up close to your body",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lead with the elbows",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stop when elbows reach shoulder height",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "A wider grip and stopping at shoulder height are usually easiest on the shoulders.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Using a very narrow grip and yanking the bar to the chin.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "dumbbell-lateral-raise",
+   "why": "Swap sheet: Less upper-trap work, Better isolation, Less systemic fatigue.",
+   "differences": [
+    "Less upper-trap work",
+    "Better isolation",
+    "Less systemic fatigue"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "seated-dumbbell-lateral-raise",
+   "why": "Swap sheet: Less upper-trap work, Better isolation, Less systemic fatigue.",
+   "differences": [
+    "Less upper-trap work",
+    "Better isolation",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "cable-y-raise",
+   "why": "Swap sheet: Better isolation, More stable, Less systemic fatigue.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-incline-y-raise",
+   "why": "Swap sheet: Less upper-trap work, Better isolation, Less systemic fatigue.",
+   "differences": [
+    "Less upper-trap work",
+    "Better isolation",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "upper_trap_involvement"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

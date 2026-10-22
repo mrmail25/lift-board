@@ -1,0 +1,189 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "pec-deck",
+ "kind": "exercise",
+ "exercise_id": "pec-deck",
+ "title": "Pec Deck",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A machine fly for the chest that's easy to control and push close to failure.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "pec_deck"
+  ],
+  "text": "Needs: pec deck / rear-delt fly machine."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "chest_upper": 0.7,
+    "chest_lower": 1
+   },
+   "why": "Library rating 1 for chest (main mover): each working set adds 1 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for front delts: below the counting floor, so it adds nothing to the weekly front delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the seat so the handles are at chest height when you hold them.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Sit tall with your shoulder blades back.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Bring the handles together in front of you.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Let them open slowly until you feel a stretch in your chest.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep your back against the pad",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Squeeze the handles together in front",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Open slowly to a full stretch",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Don't let your shoulders shrug forward as the handles meet.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Shrugging the shoulders up as you bring the handles in.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "cable-crossover-high-to-low",
+   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Steadier cable tension.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Steadier cable tension"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "cable-fly",
+   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Steadier cable tension.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-fly",
+   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Less isolation.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "peak_contraction_focus"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

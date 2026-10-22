@@ -1,0 +1,223 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "one-arm-dumbbell-row",
+ "kind": "exercise",
+ "exercise_id": "one-arm-dumbbell-row",
+ "title": "One-Arm Dumbbell Row",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A one-arm dumbbell row with a hand on a bench for support, which allows a long stretch for the lats.",
+ "type": "accessory",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell",
+   "flat_bench"
+  ],
+  "text": "Needs: dumbbells; flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for lats (main mover): each working set adds 1 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for upper back (main mover): each working set adds 0.8 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for biceps (helper): each working set adds 0.5 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for rear delts (helper): each working set adds 0.4 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.3,
+   "band": "minor",
+   "regions": {
+    "traps_upper": 0.12,
+    "traps_mid_lower": 0.3
+   },
+   "why": "Library rating 0.3 for traps (minor): each working set adds 0.3 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Put one hand and knee on a bench, with the dumbbell in your other hand.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Let the weight hang so your shoulder stretches forward.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Row it toward your hip, keeping your elbow close.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower slowly back to the full stretch.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the dumbbell toward your hip",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your torso square to the floor",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to a full stretch",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pull toward your hip, not your armpit, to keep the work on the lats.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Twisting the torso open to raise the dumbbell higher.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "chest-supported-dumbbell-row",
+   "why": "Swap sheet: Upper-back thickness focus, More stable, Both sides together.",
+   "differences": [
+    "Upper-back thickness focus",
+    "More stable",
+    "Both sides together"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "meadows-row",
+   "why": "Swap sheet: More stretch emphasis, More systemic fatigue.",
+   "differences": [
+    "More stretch emphasis",
+    "More systemic fatigue"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "single-arm-cable-row",
+   "why": "Swap sheet: More stretch emphasis, More stable, Steadier cable tension.",
+   "differences": [
+    "More stretch emphasis",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "front-lever-row",
+   "why": "Swap sheet: Both sides together, Lower loading potential, More technical.",
+   "differences": [
+    "Both sides together",
+    "Lower loading potential",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "unilateral",
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

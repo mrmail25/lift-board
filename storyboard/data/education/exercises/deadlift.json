@@ -1,0 +1,315 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "deadlift",
+ "kind": "exercise",
+ "exercise_id": "deadlift",
+ "title": "Deadlift",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Conventional barbell deadlift from the floor: lower back 0.9, glutes 0.8, hamstrings 0.7, with quads, traps and grip helping. Very loadable and very fatiguing.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.9,
+   "band": "main",
+   "why": "Spinal erectors hold the back flat against a heavy load.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.8,
+   "band": "main",
+   "why": "The glutes extend the hip.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.7,
+   "band": "helper",
+   "why": "The hamstrings extend the hip.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "quads",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "quads_rf": 0.2,
+    "quads_vasti": 0.5
+   },
+   "why": "The quads straighten the knees off the floor.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.6,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.6,
+    "traps_mid_lower": 0.42
+   },
+   "why": "The traps hold the shoulders under load.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Grip holds the bar.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The upper back holds the shoulders in place.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "The lats keep the bar close.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "The adductor magnus extends the hip.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Hip abductors keep the knees out: minor.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "obliques",
+   "rating": 0.15,
+   "band": "not_counted",
+   "why": "The trunk braces: below the floor.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Bar over mid-foot, feet hip width.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Grip just outside the legs.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Shins to the bar, back flat, brace.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the slack out of the bar",
+   "why": "Pushing the floor away.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Push the floor away with your legs",
+   "why": "Bar close to the legs.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lock out with hips and knees together",
+   "why": "Hips and shoulders rise together.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Take the slack out before you pull",
+   "why": "Pulls the bar tight so the lift starts smoothly.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "Straps or mixed grip",
+   "target_muscle_ids": [
+    "forearms"
+   ],
+   "effect": "Grip stops being the limit.",
+   "swap_tags": [
+    "grip_demand"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Less forearm work."
+  },
+  {
+   "kind": "stance",
+   "change": "Trap bar",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "More quads, more upright.",
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "trap-bar-deadlift"
+   ],
+   "evidence": "biomechanics",
+   "caveat": "Mechanics only."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Letting the hips shoot up first so the back rounds.",
+   "fix": "Lighten until the back stays flat.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Rounding the back.",
+   "fix": "Brace and lighten.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Hips shooting up first.",
+   "fix": "Rise together.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Bar drifting away.",
+   "fix": "Keep it close.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Ramp up before your first working set. For primary lifts the app suggests 50% x 8, 70% x 4 and 85% x 2 when the first working load is 60 kg or more, and 50% x 8 then 75% x 3 below that.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp",
+   "note": "High-load warm-ups improved strength performance in a systematic review; the percentages are coaching convention.",
+   "citations": [
+    "mccrary2015"
+   ]
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 6-10 rep range. Keep sets a few reps short of failure; the deadlift is very fatiguing.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Use bumper plates or a platform if you need to set the bar down quickly.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "trap-bar-deadlift",
+   "why": "Trap bar: more upright, easier to learn.",
+   "differences": [
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:hamstrings",
+   "goal_label": "More hamstrings",
+   "exercise_id": "romanian-deadlift",
+   "why": "From the top: more hamstrings.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "stiff-leg-dumbbell-deadlift",
+   "why": "Dumbbell hinge.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "back-extension",
+   "why": "Bodyweight hip extension.",
+   "differences": [
+    "Less upper-trap work",
+    "Better isolation",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 3,
+  "flags": [
+   "upper_trap_involvement",
+   "spinal_load",
+   "grip_demand"
+  ]
+ },
+ "app_values": {
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.rep_range_by_type.primary.0": 6,
+  "rules.json:logger.rep_range_by_type.primary.1": 10,
+  "rules.json:logger.target_rir_by_type.primary": 3,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three_from_kg": 60
+ },
+ "notes": [
+  "Deadlift variations have not been compared for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

@@ -1,0 +1,245 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "close-grip-pulldown",
+ "kind": "exercise",
+ "exercise_id": "close-grip-pulldown",
+ "title": "Close-Grip Pulldown",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Lat pulldown with a close neutral handle: lats 1, biceps 0.6. Strong elbow position and a big stretch.",
+ "type": "accessory",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "lat_pulldown"
+  ],
+  "text": "Needs: lat pulldown station (seat and thigh pad)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 1,
+   "band": "main",
+   "why": "The lats pull the upper arm down and back; a close grip adds shoulder extension.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "A neutral grip gives the elbow flexors good leverage (0.6).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Mid-back helps pull the shoulder blades down: minor.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "V-handle on the high pulley.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Thighs under the pad, chest up.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Slight lean back.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the handle to your upper chest",
+   "why": "Elbows down to the ribs.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep elbows close to your sides",
+   "why": "Full extension at the top is the stretch.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Reach up to a full stretch",
+   "why": "Pulling to the upper chest is the full range.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Don't lean back far",
+   "why": "A big lean turns it into a row.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "Wide overhand bar",
+   "target_muscle_ids": [
+    "lats"
+   ],
+   "effect": "Coaches use it for 'width'.",
+   "swap_tags": [
+    "lat_width_bias"
+   ],
+   "example_exercise_ids": [
+    "wide-grip-lat-pulldown"
+   ],
+   "evidence": "modeled",
+   "citations": [
+    "andersen2014"
+   ],
+   "caveat": "EMG similar across grip widths."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "lats"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Rocking the torso to start each rep.",
+   "fix": "Stay nearly upright.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Rocking.",
+   "fix": "Use a load you can pull with a still torso.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Short top range.",
+   "fix": "Let the arms straighten.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds up to 2 ramp-up sets only when the first working load is at least 40 kg (95 lb) and the main muscle is not already warm from an earlier lift. Otherwise start with a slightly lighter first set.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to.accessory"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 8-12 rep range. Easy to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "chin-up",
+   "why": "Bodyweight version with palms up.",
+   "differences": [
+    "Less stable",
+    "Less constant tension",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "single-arm-lat-pulldown",
+   "why": "One arm at a time.",
+   "differences": [
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "straight-arm-pulldown",
+   "why": "Lats without the biceps.",
+   "differences": [
+    "Better isolation",
+    "Less systemic fatigue",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:upper_back",
+   "goal_label": "More upper back",
+   "exercise_id": "lat-pulldown",
+   "why": "Wider overhand grip: more upper back (0.4).",
+   "differences": [],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 1,
+  "flags": [
+   "constant_tension"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@close-grip-pulldown.muscles.biceps": 0.6,
+  "exercises.json:@lat-pulldown.muscles.upper_back": 0.4,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.accessory": 7.5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.cable": 2.5,
+  "rules.json:logger.load_step.lb.cable": 5,
+  "rules.json:logger.rep_range_by_type.accessory.0": 8,
+  "rules.json:logger.rep_range_by_type.accessory.1": 12,
+  "rules.json:logger.target_rir_by_type.accessory": 3,
+  "rules.json:logger.warmup_ramp.accessory_max_sets": 2,
+  "rules.json:logger.warmup_ramp.accessory_min_load.default.kg": 40,
+  "rules.json:logger.warmup_ramp.accessory_min_load.default.lb": 95
+ },
+ "notes": [
+  "Grip findings are EMG only.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

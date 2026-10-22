@@ -1,0 +1,154 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "smith-calf-raise",
+ "kind": "exercise",
+ "exercise_id": "smith-calf-raise",
+ "title": "Smith Machine Calf Raise",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A standing calf raise with the bar on your back, done on a step for full range.",
+ "type": "isolation",
+ "equipment": "smith machine",
+ "equipment_needs": {
+  "items": [
+   "smith_machine",
+   "plates"
+  ],
+  "text": "Needs: Smith machine; weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "calves",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "calves_gastroc": 1,
+    "calves_soleus": 0.7
+   },
+   "why": "Library rating 1 for calves (main mover): each working set adds 1 of a set to the weekly calves total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bar on your upper back and stand with the balls of your feet on a step or plate.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower your heels as far as you can and pause in the stretch.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Rise as high as you can onto your toes.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Repeat under control without bouncing.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower the heels to a full stretch",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Rise onto the balls of your feet",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pause at the top",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pause for a second at the bottom. The stretch is where calves grow most.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Bending the knees to bounce the weight.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "leg-press-calf-raise",
+   "why": "Swap sheet: Less spinal loading.",
+   "differences": [
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "spinal_load"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

@@ -1,0 +1,261 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "preacher-curl",
+ "kind": "exercise",
+ "exercise_id": "preacher-curl",
+ "title": "Preacher Curl",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Curl with the upper arms on a preacher pad: biceps 1. The pad fixes the arm in front of the body, so the curl is hardest near the bottom. In the app it is logged as a machine exercise; use an EZ bar, dumbbells or a preacher machine.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "preacher_bench",
+   "ez_bar|dumbbell"
+  ],
+  "text": "Needs: preacher bench or curl pad; EZ curl bar or dumbbells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "biceps",
+   "rating": 1,
+   "band": "main",
+   "why": "The elbow flexors bend the elbow; with the arm in front, the biceps is shorter at the shoulder than in an incline curl. The brachialis and brachioradialis do a large share here.",
+   "evidence": "biomechanics",
+   "citations": [
+    "kobayashi2026"
+   ]
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "The forearms help (0.3).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Seat height so the armpits sit at the top of the pad.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Upper arms flat on the pad.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "EZ bar, dumbbells, or the machine handles.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower until arms are nearly straight",
+   "why": "Lowering until the arm is nearly straight.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Curl up without lifting your elbows",
+   "why": "Upper arms stay on the pad.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Stop just before the forearms go vertical",
+   "why": "Controlled bottom range.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Control the bottom of each rep. Don't drop into it.",
+   "why": "Training the long-length (arm nearly straight) half of the preacher curl grew the biceps more than the short-length half.",
+   "evidence": "supported",
+   "from_library": true,
+   "citations": [
+    "sato2021",
+    "pedrosa2023"
+   ]
+  },
+  {
+   "cue": "Don't lift the elbows off the pad",
+   "why": "It takes tension off at the top.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "range",
+   "change": "Bias the bottom half at the end of a set",
+   "target_muscle_ids": [
+    "biceps"
+   ],
+   "effect": "Long-length partials grew the elbow flexors more than short-length partials.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "supported",
+   "citations": [
+    "sato2021",
+    "pedrosa2023"
+   ],
+   "caveat": "Full range stays the default; full and lengthened partials gave similar growth in another study."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "biceps"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Dropping fast into the bottom of the rep.",
+   "fix": "Lower under control; stop just short of locking out hard.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Bouncing out of the bottom.",
+   "fix": "Control the last few degrees.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Seat too low.",
+   "fix": "Armpits at the top of the pad.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Preacher curls are best for the biceps.",
+   "reality": "In a 2026 MRI study, incline curls grew the biceps more than preacher curls.",
+   "evidence": "supported",
+   "citations": [
+    "kobayashi2026"
+   ]
+  },
+  {
+   "myth": "Cables beat bars on the preacher bench.",
+   "reality": "Cable and barbell preacher curls gave similar growth.",
+   "evidence": "supported",
+   "citations": [
+    "nunes2020"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure; control the bottom on the last reps.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "incline-dumbbell-curl",
+   "why": "Arm behind the body; grew the biceps more than preacher curls.",
+   "differences": [
+    "Biceps long-head stretch",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "kobayashi2026"
+   ]
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "bayesian-cable-curl",
+   "why": "Cable curl facing away; long-length biceps work.",
+   "differences": [
+    "Biceps long-head stretch",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:forearms",
+   "goal_label": "More forearms",
+   "exercise_id": "hammer-curl",
+   "why": "Palms in, more brachioradialis.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "peak_contraction",
+   "goal_label": "Peak-contraction focus",
+   "exercise_id": "concentration-curl",
+   "why": "Hardest at the top.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@preacher-curl.muscles.forearms": 0.3,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Equipment note: the app logs this as a machine exercise (equipment 'machine'); its equipment needs are a preacher bench plus an EZ bar or dumbbells, and every version is logged the same way.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

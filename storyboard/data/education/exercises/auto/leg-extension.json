@@ -1,0 +1,182 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "leg-extension",
+ "kind": "exercise",
+ "exercise_id": "leg-extension",
+ "title": "Leg Extension",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A machine knee extension, the best exercise for isolating the quads, including the rectus femoris.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "leg_extension"
+  ],
+  "text": "Needs: leg extension machine or attachment."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 1,
+    "quads_vasti": 0.8
+   },
+   "why": "Library rating 1 for quads (main mover): each working set adds 1 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Adjust the seat so your knees line up with the machine's pivot point.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Hook the pad just above your ankles.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Straighten your legs fully.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower slowly until your knees are bent past 90°.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Extend the legs to full lockout",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pause at the top",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower under control",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Leaning back slightly stretches the rectus femoris more.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Using momentum and lifting the hips off the seat.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "sissy-squat",
+   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Less isolation.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "single-leg-press",
+   "why": "Swap sheet: Less peak-contraction focus, Less isolation, One side at a time.",
+   "differences": [
+    "Less peak-contraction focus",
+    "Less isolation",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "shrimp-squat",
+   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Less isolation.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "peak_contraction_focus"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

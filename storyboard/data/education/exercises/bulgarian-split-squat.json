@@ -1,0 +1,276 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "bulgarian-split-squat",
+ "kind": "exercise",
+ "exercise_id": "bulgarian-split-squat",
+ "title": "Bulgarian Split Squat",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Rear-foot-elevated split squat with dumbbells: quads 1, glutes 0.8. One leg at a time, little load on the spine.",
+ "type": "accessory",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell",
+   "flat_bench"
+  ],
+  "text": "Needs: dumbbells; flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 0.4,
+    "quads_vasti": 1
+   },
+   "why": "The front leg's quads straighten the knee; vasti rated 1, rectus femoris 0.4.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.8,
+   "band": "main",
+   "why": "The front leg's glutes extend the hip from a deep bend; more with a forward lean.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The adductor magnus helps extend the hip.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Hip abductors keep the pelvis level on one leg.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Rear foot on a bench, laces down.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Hop the front foot forward until the front shin is about vertical at the bottom.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Dumbbells at your sides.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Drop the back knee straight down",
+   "why": "Dropping straight down keeps the load on the front leg.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep front foot flat",
+   "why": "Front knee over the toes is normal.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Drive up through the front heel",
+   "why": "Pushing through the front foot keeps the back leg as a balance only.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lean forward slightly for more glutes, stay upright for more quads",
+   "why": "Torso angle changes how much the hip bends.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "stance",
+   "change": "Longer stance and forward lean",
+   "target_muscle_ids": [
+    "glutes"
+   ],
+   "effect": "More hip bend, more glute work.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Mechanics only."
+  },
+  {
+   "kind": "stance",
+   "change": "Shorter stance, upright torso",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "More knee bend, more quad work.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Mechanics only."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "quads",
+    "glutes"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Standing too close to the bench so the front heel lifts.",
+   "fix": "Start with bodyweight to learn balance, then add dumbbells.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pushing off the back foot.",
+   "fix": "The back foot is for balance.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Stance too short so the heel lifts.",
+   "fix": "Move the front foot forward.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Split squats are just a lighter squat.",
+   "reality": "They load one leg at a time with little spinal load; a full-depth squat pattern without a heavy bar.",
+   "evidence": "biomechanics"
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds up to 2 ramp-up sets only when the first working load is at least 18 kg (40 lb) per hand and the main muscle is not already warm from an earlier lift. Otherwise start with a slightly lighter first set.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to.accessory"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 8-12 rep range. Balance is often the limit; stop the set when you start wobbling.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "back-squat",
+   "why": "Both legs, barbell: much heavier loading.",
+   "differences": [
+    "More stable",
+    "Both sides together",
+    "Loads the spine"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "smith-split-squat",
+   "why": "Same pattern on a Smith machine: no balance needed.",
+   "differences": [
+    "Less stretch emphasis",
+    "More stable",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "walking-lunge",
+   "why": "Dumbbell lunges, no bench.",
+   "differences": [
+    "Less stretch emphasis"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:quads_rf",
+   "goal_label": "More rectus femoris",
+   "exercise_id": "leg-extension",
+   "why": "Grew the rectus femoris where squats did not.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Better isolation"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "zabaletakorta2021"
+   ]
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 1,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "unilateral"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@bulgarian-split-squat.heads.quads_rf": 0.4,
+  "exercises.json:@bulgarian-split-squat.heads.quads_vasti": 1,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.accessory": 7.5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.dumbbell": 2,
+  "rules.json:logger.load_step.lb.dumbbell": 5,
+  "rules.json:logger.rep_range_by_type.accessory.0": 8,
+  "rules.json:logger.rep_range_by_type.accessory.1": 12,
+  "rules.json:logger.target_rir_by_type.accessory": 3,
+  "rules.json:logger.warmup_ramp.accessory_max_sets": 2,
+  "rules.json:logger.warmup_ramp.accessory_min_load.dumbbell.kg": 18,
+  "rules.json:logger.warmup_ramp.accessory_min_load.dumbbell.lb": 40
+ },
+ "notes": [
+  "Split-squat variations have not been compared for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

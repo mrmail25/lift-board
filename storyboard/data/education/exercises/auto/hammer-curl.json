@@ -1,0 +1,190 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "hammer-curl",
+ "kind": "exercise",
+ "exercise_id": "hammer-curl",
+ "title": "Hammer Curl",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A curl with your palms facing each other, for the brachialis, the forearm and the biceps.",
+ "type": "isolation",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell"
+  ],
+  "text": "Needs: dumbbells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "biceps",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for biceps (main mover): each working set adds 0.8 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for forearms (main mover): each working set adds 0.8 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hold the dumbbells at your sides with your palms facing in.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Keep your elbows at your sides.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Curl the weights up, keeping the neutral grip.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower slowly.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep the neutral grip throughout",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Curl toward your shoulder",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower under control",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your wrists straight and in line with your forearms.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Swinging the dumbbells across the body.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-curl",
+   "why": "Similar muscles; dumbbell instead of dumbbell.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "incline-dumbbell-curl",
+   "why": "Swap sheet: More stretch emphasis, Biceps long-head stretch.",
+   "differences": [
+    "More stretch emphasis",
+    "Biceps long-head stretch"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "cable-rope-hammer-curl",
+   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "concentration-curl",
+   "why": "Swap sheet: Peak-contraction focus, Better isolation, More stable.",
+   "differences": [
+    "Peak-contraction focus",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

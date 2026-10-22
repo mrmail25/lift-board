@@ -1,0 +1,237 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "rack-pull",
+ "kind": "exercise",
+ "exercise_id": "rack-pull",
+ "title": "Rack Pull",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A deadlift from pins at about knee height that trains heavy lockouts for the back, traps and glutes.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "squat_rack"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; rack with J-hooks (power rack, squat stands or bench uprights)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "traps",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "traps_upper": 1,
+    "traps_mid_lower": 0.6
+   },
+   "why": "Library rating 1 for traps (main mover): each working set adds 1 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for lower back (main mover): each working set adds 0.8 of a set to the weekly lower back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.7,
+   "band": "helper",
+   "why": "Library rating 0.7 for glutes (helper): each working set adds 0.7 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for upper back (helper): each working set adds 0.6 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for forearms (helper): each working set adds 0.6 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for hamstrings (helper): each working set adds 0.4 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for lats (minor): each working set adds 0.3 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bar on pins just below or at your knees and grip it just outside your legs.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Brace, then drive your hips forward to stand tall.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower back to the pins under control.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Brace and pull the slack out",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive the hips forward to lockout",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower under control",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Don't lean back at the top. Stand tall and stop.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Leaning back hard at lockout.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "romanian-deadlift",
+   "why": "Swap sheet: More stretch emphasis, Less upper-trap work.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "trap-bar-deadlift",
+   "why": "Swap sheet: Easier to learn.",
+   "differences": [
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "less_grip",
+   "goal_label": "Less grip demand",
+   "exercise_id": "good-morning",
+   "why": "Swap sheet: More stretch emphasis, Less upper-trap work, Less grip demand.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work",
+    "Less grip demand"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "smith-rdl",
+   "why": "Swap sheet: More stretch emphasis, Less upper-trap work, More stable.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 3,
+  "flags": [
+   "upper_trap_involvement",
+   "spinal_load",
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

@@ -1,0 +1,190 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "scapular-pull-up",
+ "kind": "exercise",
+ "exercise_id": "scapular-pull-up",
+ "title": "Scapular Pull-Up",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "Small reps of pulling your shoulders down from a dead hang, for scapular strength and control.",
+ "type": "isolation",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [
+   "pull_up_bar"
+  ],
+  "text": "Needs: pull-up bar."
+ },
+ "muscles": [
+  {
+   "muscle_id": "traps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0,
+    "traps_mid_lower": 0.5
+   },
+   "why": "Library rating 0.5 for traps (helper): each working set adds 0.5 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for forearms (helper): each working set adds 0.4 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for lats (minor): each working set adds 0.3 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hang from the bar with your arms straight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull your shoulder blades down so your body rises an inch or two.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower back to the hang.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the shoulders down",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lift the body slightly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your elbows locked.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Bending the elbows during the rep.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "active-hang",
+   "why": "Similar muscles; bodyweight instead of bodyweight.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "barbell-shrug",
+   "why": "Swap sheet: More upper-trap work, Loads the spine, Heavier loading potential.",
+   "differences": [
+    "More upper-trap work",
+    "Loads the spine",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-shrug",
+   "why": "Swap sheet: More upper-trap work, Heavier loading potential.",
+   "differences": [
+    "More upper-trap work",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "shrug-machine",
+   "why": "Swap sheet: More upper-trap work, Better isolation, More stable.",
+   "differences": [
+    "More upper-trap work",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

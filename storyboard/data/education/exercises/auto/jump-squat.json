@@ -1,0 +1,199 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "jump-squat",
+ "kind": "exercise",
+ "exercise_id": "jump-squat",
+ "title": "Jump Squat",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A squat into a jump for lower-body power. It builds little muscle.",
+ "type": "accessory",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [],
+  "text": "No equipment needed."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 0.55,
+   "band": "helper",
+   "regions": {
+    "quads_rf": 0.25,
+    "quads_vasti": 0.55
+   },
+   "why": "Library rating 0.55 for quads (helper): each working set adds 0.55 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for glutes (helper): each working set adds 0.5 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "calves",
+   "rating": 0.35,
+   "band": "minor",
+   "regions": {
+    "calves_gastroc": 0.35,
+    "calves_soleus": 0.2
+   },
+   "why": "Library rating 0.35 for calves (minor): each working set adds 0.35 of a set to the weekly calves total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Squat to about parallel.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Explode up into a jump.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Land softly and sink into the next rep.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Squat down quickly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Jump explosively",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Land softly into the next rep",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Quality over quantity. Stop when the jumps get lower.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Landing stiff-legged.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "box-jump",
+   "why": "Similar muscles; bodyweight instead of bodyweight.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "shrimp-squat",
+   "why": "Swap sheet: More stretch emphasis, Less stable, One side at a time.",
+   "differences": [
+    "More stretch emphasis",
+    "Less stable",
+    "One side at a time"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "pistol-squat",
+   "why": "Swap sheet: More stretch emphasis, Less stable, One side at a time.",
+   "differences": [
+    "More stretch emphasis",
+    "Less stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "single-leg-press",
+   "why": "Swap sheet: More stable, One side at a time, Heavier loading potential.",
+   "differences": [
+    "More stable",
+    "One side at a time",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

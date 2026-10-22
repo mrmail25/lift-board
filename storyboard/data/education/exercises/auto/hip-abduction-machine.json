@@ -1,0 +1,162 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "hip-abduction-machine",
+ "kind": "exercise",
+ "exercise_id": "hip-abduction-machine",
+ "title": "Hip Abduction Machine",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A seated machine that pushes the legs apart, for the glute medius, glute minimus and TFL.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "abductors",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for abductors (main mover): each working set adds 1 of a set to the weekly abductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for glutes (minor): each working set adds 0.3 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Sit with the pads on the outside of your knees.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Push your knees out as far as you can.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pause briefly.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Return slowly.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Push the knees out against the pads",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pause at the widest point",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Return slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Leaning forward slightly works the glute medius more.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Rocking the torso to push the pads out.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "cable-hip-abduction",
+   "why": "Swap sheet: One side at a time, Steadier cable tension.",
+   "differences": [
+    "One side at a time",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "side-lying-hip-abduction",
+   "why": "Swap sheet: Less isolation, Less stable, One side at a time.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

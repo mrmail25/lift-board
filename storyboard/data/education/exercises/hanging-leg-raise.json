@@ -1,0 +1,241 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "hanging-leg-raise",
+ "kind": "exercise",
+ "exercise_id": "hanging-leg-raise",
+ "title": "Hanging Leg Raise",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Hang from a bar and curl the hips up toward the chest. Abs 1, obliques 0.5, with grip as a limit.",
+ "type": "isolation",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [
+   "pull_up_bar"
+  ],
+  "text": "Needs: pull-up bar."
+ },
+ "muscles": [
+  {
+   "muscle_id": "abs",
+   "rating": 1,
+   "band": "main",
+   "why": "The rectus abdominis flexes the spine. It only works hard here when the pelvis curls up (posterior tilt); just lifting the legs is mostly hip-flexor work.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "obliques",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The obliques help flex the spine and keep the body from swinging.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "You hang by your hands for the whole set (swap tag 'More grip demand').",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hang from a bar with a shoulder-width overhand grip, arms straight.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Pull the shoulders slightly down so you are not hanging loose.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Start with bent knees if straight legs are too hard.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Curl the pelvis up as the legs rise",
+   "why": "Curling the pelvis is the spinal flexion that trains the abs.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Raise legs to at least hip height",
+   "why": "Hip height is the minimum range for the hips to start curling.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower without swinging",
+   "why": "A swing turns the rep into momentum.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Curling your pelvis up is what works the abs. Just lifting your legs mostly works the hip flexors.",
+   "why": "The pelvis curl is the ab part of the rep; leg lift alone is the hip flexors.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Exhale as you curl up",
+   "why": "Many lifters find it easier to round the spine on the exhale.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "range",
+   "change": "Bent knees, then straight legs as you get stronger",
+   "target_muscle_ids": [
+    "abs"
+   ],
+   "effect": "Straight legs lengthen the lever and make the same curl harder.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Only harder if the pelvis still curls; otherwise it just loads the hip flexors."
+  },
+  {
+   "kind": "angle",
+   "change": "Raise the knees toward one shoulder, then the other",
+   "target_muscle_ids": [
+    "obliques"
+   ],
+   "effect": "Adds trunk rotation and side bending, so the obliques work more.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Same total sets; the app still credits obliques at the library rating."
+  },
+  {
+   "kind": "grip",
+   "change": "Use straps or ab slings",
+   "target_muscle_ids": [
+    "abs"
+   ],
+   "effect": "Removes grip as the limit.",
+   "swap_tags": [
+    "grip_demand"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Or switch to a captain's chair (no grip demand)."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Swinging the legs instead of curling the hips.",
+   "fix": "Pause at the bottom and start each rep from a still hang.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Only lifting the legs without curling the pelvis.",
+   "fix": "Think 'show your belt buckle to your chin'.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Dropping the legs fast between reps.",
+   "fix": "Lower in 2-3 seconds.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Leg raises train the 'lower abs' and crunches the 'upper abs'.",
+   "reality": "The rectus abdominis is one muscle. Regional differences in growth have not been shown well; pick the movement you can load and progress.",
+   "evidence": "modeled"
+  },
+  {
+   "myth": "Ab training removes belly fat.",
+   "reality": "Training a muscle doesn't selectively reduce the fat over it; visible abs mostly depend on body-fat level. The app does not model fat loss.",
+   "evidence": "modeled"
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "When you add load, the app suggests one bodyweight-only set of 5 first (assisted machines: one set with one step more assistance). Without added load the first working set is its own warm-up.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.bodyweight"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app counts your effective load (bodyweight share plus added load) and suggests more weight only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Stop the set when you can no longer curl the pelvis or start to swing.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "If hanging is hard on your hands or shoulders, use a captain's chair or ab slings.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_grip",
+   "goal_label": "Less grip demand",
+   "exercise_id": "captains-chair-knee-raise",
+   "why": "Same knee raise with forearm pads, so grip is not a limit.",
+   "differences": [
+    "Less grip demand"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "cable-crunch",
+   "why": "Loadable spinal flexion on a cable; easy to progress in small steps.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "ab-wheel-rollout",
+   "why": "Needs only a wheel; anti-extension work that trains the abs and obliques (obliques 0.6).",
+   "differences": [
+    "Less grip demand"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "grip_demand"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@ab-wheel-rollout.muscles.obliques": 0.6,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Ab-exercise comparisons for growth are scarce; the choices here are biomechanics or modeled.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

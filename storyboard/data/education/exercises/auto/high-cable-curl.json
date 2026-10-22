@@ -1,0 +1,172 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "high-cable-curl",
+ "kind": "exercise",
+ "exercise_id": "high-cable-curl",
+ "title": "High Cable Curl",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A curl with both arms out to the sides from high pulleys, hitting the biceps in the shortened position.",
+ "type": "isolation",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "cable"
+  ],
+  "text": "Needs: cable station with an adjustable pulley."
+ },
+ "muscles": [
+  {
+   "muscle_id": "biceps",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for biceps (main mover): each working set adds 1 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand between two high pulleys holding a handle in each hand, arms out at shoulder height.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Curl your hands toward your ears, keeping your elbows high.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Straighten back out slowly.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep upper arms level",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Curl the handles toward your head",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Extend back slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your upper arms still. Only your forearms move.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Dropping the elbows as you curl.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "bayesian-cable-curl",
+   "why": "Swap sheet: More stretch emphasis, Biceps long-head stretch, Less peak-contraction focus.",
+   "differences": [
+    "More stretch emphasis",
+    "Biceps long-head stretch",
+    "Less peak-contraction focus"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "concentration-curl",
+   "why": "Swap sheet: More stretch emphasis, One side at a time, Less constant tension.",
+   "differences": [
+    "More stretch emphasis",
+    "One side at a time",
+    "Less constant tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "spider-curl",
+   "why": "Swap sheet: Less constant tension.",
+   "differences": [
+    "Less constant tension"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 1,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "peak_contraction_focus",
+   "constant_tension"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

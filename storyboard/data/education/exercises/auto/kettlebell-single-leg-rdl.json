@@ -1,0 +1,192 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "kettlebell-single-leg-rdl",
+ "kind": "exercise",
+ "exercise_id": "kettlebell-single-leg-rdl",
+ "title": "Kettlebell Single-Leg RDL",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A one-leg hinge with a kettlebell, which loads the hamstrings and glutes at long length and challenges your balance.",
+ "type": "accessory",
+ "equipment": "kettlebell",
+ "equipment_needs": {
+  "items": [
+   "kettlebell"
+  ],
+  "text": "Needs: kettlebells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.9,
+   "band": "main",
+   "why": "Library rating 0.9 for hamstrings (main mover): each working set adds 0.9 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.9,
+   "band": "main",
+   "why": "Library rating 0.9 for glutes (main mover): each working set adds 0.9 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for abductors (minor): each working set adds 0.3 of a set to the weekly abductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Library rating 0.25 for adductors (minor): each working set adds 0.25 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Library rating 0.25 for lower back (minor): each working set adds 0.25 of a set to the weekly lower back total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand on one leg with a bell in the opposite hand.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Hinge forward as your free leg reaches back, until your hamstring stretches.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive your hips forward to stand tall.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Hinge forward as the free leg rises",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the hips square",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stand by driving the hip forward",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your hips square to the floor.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Opening the hips toward the ceiling.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "landmine-rdl",
+   "why": "Swap sheet: More stable, Both sides together.",
+   "differences": [
+    "More stable",
+    "Both sides together"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-rdl",
+   "why": "Swap sheet: More stable, Both sides together, Loads the spine.",
+   "differences": [
+    "More stable",
+    "Both sides together",
+    "Loads the spine"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "smith-rdl",
+   "why": "Swap sheet: More stable, Both sides together, Less systemic fatigue.",
+   "differences": [
+    "More stable",
+    "Both sides together",
+    "Less systemic fatigue"
+   ],
+   "evidence": "modeled"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 1,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "unilateral"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

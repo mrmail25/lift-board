@@ -1,0 +1,211 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "seal-row",
+ "kind": "exercise",
+ "exercise_id": "seal-row",
+ "title": "Seal Row",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A barbell row lying face down on a high flat bench, so the row is strict and your lower back is completely out of it.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "flat_bench"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "upper_back",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for upper back (main mover): each working set adds 1 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for lats (main mover): each working set adds 0.8 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.6,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.15,
+    "traps_mid_lower": 0.6
+   },
+   "why": "Library rating 0.6 for traps (helper): each working set adds 0.6 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.55,
+   "band": "helper",
+   "why": "Library rating 0.55 for rear delts (helper): each working set adds 0.55 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for biceps (helper): each working set adds 0.5 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Lie face down on a high bench with the barbell underneath and your arms straight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Row the bar up to the underside of the bench.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower to a full stretch.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the bar to the bench",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the chest on the pad",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to straight arms",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Use a cambered bar or blocks if the bench is too low for a full range.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Kicking the legs to jerk the bar up.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "chest-supported-dumbbell-row",
+   "why": "Swap sheet: Lower loading potential, More technical.",
+   "differences": [
+    "Lower loading potential",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "kettlebell-row",
+   "why": "Swap sheet: Less upper-back focus, Less stable, One side at a time.",
+   "differences": [
+    "Less upper-back focus",
+    "Less stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "meadows-row",
+   "why": "Swap sheet: More stretch emphasis, Less upper-back focus, Less stable.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-back focus",
+    "Less stable"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 3,
+  "skill_demand": 1,
+  "flags": [
+   "upper_back_thickness_bias"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

@@ -1,0 +1,176 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "plyo-push-up",
+ "kind": "exercise",
+ "exercise_id": "plyo-push-up",
+ "title": "Plyometric Push-Up",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "An explosive push-up where your hands leave the floor. It's for upper-body power, not size.",
+ "type": "accessory",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [],
+  "text": "No equipment needed."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 0.55,
+   "band": "helper",
+   "regions": {
+    "chest_upper": 0.4,
+    "chest_lower": 0.55
+   },
+   "why": "Library rating 0.55 for chest (helper): each working set adds 0.55 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.4,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.2,
+    "triceps_short": 0.4
+   },
+   "why": "Library rating 0.4 for triceps (helper): each working set adds 0.4 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.35,
+   "band": "minor",
+   "why": "Library rating 0.35 for front delts (minor): each working set adds 0.35 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Get into a push-up position.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower, then push up explosively so your hands leave the floor.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Land softly and go into the next rep.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower your chest",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Push explosively so hands leave the floor",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Land softly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Land with soft elbows.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the hips sag on landing.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "bounding",
+   "why": "Swap sheet: More technical.",
+   "differences": [
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "archer-push-up",
+   "why": "Swap sheet: More stretch emphasis, More technical.",
+   "differences": [
+    "More stretch emphasis",
+    "More technical"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

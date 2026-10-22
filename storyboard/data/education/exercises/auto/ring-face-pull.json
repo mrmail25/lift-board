@@ -1,0 +1,191 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "ring-face-pull",
+ "kind": "exercise",
+ "exercise_id": "ring-face-pull",
+ "title": "Ring Face Pull",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A bodyweight face pull on rings for the rear delts and mid traps.",
+ "type": "isolation",
+ "equipment": "rings",
+ "equipment_needs": {
+  "items": [
+   "rings"
+  ],
+  "text": "Needs: gymnastic rings."
+ },
+ "muscles": [
+  {
+   "muscle_id": "rear_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for rear delts (main mover): each working set adds 1 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.1,
+    "traps_mid_lower": 0.5
+   },
+   "why": "Library rating 0.5 for traps (helper): each working set adds 0.5 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for upper back (helper): each working set adds 0.4 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hold the rings and lean back with your body straight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull your hands toward your forehead, elbows high and wide.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower with control.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the rings toward your face",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Spread the hands apart",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your body straight",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your elbows at shoulder height or higher.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Bending at the hips to cheat.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "face-pull",
+   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "cable-rear-delt-fly",
+   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "dumbbell-rear-delt-fly",
+   "why": "Swap sheet: More stable, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-incline-y-raise",
+   "why": "Swap sheet: More stable, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 1,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

@@ -1,0 +1,212 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "incline-cable-pullover",
+ "kind": "exercise",
+ "exercise_id": "incline-cable-pullover",
+ "title": "Incline-Bench Cable Pullover",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A lat isolation done lying on an incline bench, pulling a cable from behind your head down to your hips, so the lats are loaded hard at full stretch.",
+ "type": "isolation",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "cable",
+   "adjustable_bench"
+  ],
+  "text": "Needs: cable station with an adjustable pulley; adjustable (incline) bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for lats (main mover): each working set adds 1 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.3,
+   "band": "minor",
+   "regions": {
+    "triceps_long": 0.3,
+    "triceps_short": 0
+   },
+   "why": "Library rating 0.3 for triceps (minor): each working set adds 0.3 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "chest",
+   "rating": 0.2,
+   "band": "not_counted",
+   "regions": {
+    "chest_upper": 0.2,
+    "chest_lower": 0.2
+   },
+   "why": "Library rating 0.2 for chest: below the counting floor, so it adds nothing to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for upper back: below the counting floor, so it adds nothing to the weekly upper back total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set an incline bench with its head end facing a low cable, and take a rope or straight bar with your arms overhead.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lie back with a slight elbow bend and let the cable pull your arms back until your lats are stretched.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Sweep the handle down in an arc to your hips, driving with your elbows.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Return slowly to the full stretch.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep arms nearly straight",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pull the bar over to your hips",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Return to a deep lat stretch",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the elbow angle fixed. If your elbows bend and straighten, it turns into a triceps press.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Bending the elbows into a triceps extension.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-pullover",
+   "why": "Swap sheet: Less isolation, Less stable, Less constant tension.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "Less constant tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "lat-pulldown",
+   "why": "Swap sheet: Less isolation, More systemic fatigue, Heavier loading potential.",
+   "differences": [
+    "Less isolation",
+    "More systemic fatigue",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "single-arm-lat-pulldown",
+   "why": "Swap sheet: Less isolation, One side at a time, More systemic fatigue.",
+   "differences": [
+    "Less isolation",
+    "One side at a time",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "tuck-front-lever",
+   "why": "Swap sheet: Less stretch emphasis, Less isolation, Less stable.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "constant_tension"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

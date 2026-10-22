@@ -1,0 +1,221 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "landmine-press-one-arm",
+ "kind": "exercise",
+ "exercise_id": "landmine-press-one-arm",
+ "title": "One-Arm Landmine Press",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A one-arm press up and forward along a landmine arc for the front delts and upper chest, and kind on cranky shoulders.",
+ "type": "accessory",
+ "equipment": "landmine",
+ "equipment_needs": {
+  "items": [
+   "landmine",
+   "barbell",
+   "plates"
+  ],
+  "text": "Needs: landmine attachment; barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "front_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for front delts (main mover): each working set adds 1 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "chest",
+   "rating": 0.6,
+   "band": "helper",
+   "regions": {
+    "chest_upper": 0.6,
+    "chest_lower": 0.2
+   },
+   "why": "Library rating 0.6 for chest (helper): each working set adds 0.6 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.3,
+    "triceps_short": 0.5
+   },
+   "why": "Library rating 0.5 for triceps (helper): each working set adds 0.5 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "side_delts",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for side delts: below the counting floor, so it adds nothing to the weekly side delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "obliques",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for obliques: below the counting floor, so it adds nothing to the weekly obliques total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand in a split stance holding the end of the bar at your shoulder in one hand.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Press up and forward until your arm is straight, reaching a little at the top.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower back to your shoulder under control.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Press up and forward",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the torso from twisting",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower back to the shoulder",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your hips square. Don't twist to get the bar up.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Rotating the torso to push the bar up.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "incline-dumbbell-press",
+   "why": "Swap sheet: More stretch emphasis, Both sides together.",
+   "differences": [
+    "More stretch emphasis",
+    "Both sides together"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "incline-machine-press",
+   "why": "Swap sheet: More stable, Both sides together, Less systemic fatigue.",
+   "differences": [
+    "More stable",
+    "Both sides together",
+    "Less systemic fatigue"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "incline-barbell-bench-press",
+   "why": "Swap sheet: Both sides together, Heavier loading potential.",
+   "differences": [
+    "Both sides together",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "smith-incline-press",
+   "why": "Swap sheet: More stable, Both sides together, Less systemic fatigue.",
+   "differences": [
+    "More stable",
+    "Both sides together",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "unilateral"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

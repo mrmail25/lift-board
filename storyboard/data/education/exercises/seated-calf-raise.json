@@ -1,0 +1,244 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "seated-calf-raise",
+ "kind": "exercise",
+ "exercise_id": "seated-calf-raise",
+ "title": "Seated Calf Raise",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Calf raises with the knees bent: the soleus does most of the work (rated 1), while the gastrocnemius can't help much (rated 0.4).",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "calves",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "calves_gastroc": 0.4,
+    "calves_soleus": 1
+   },
+   "why": "The calves point the foot (plantar flexion). With the knee bent, the gastrocnemius is slack, so the soleus does most of the work (1 vs 0.4).",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "calves_gastroc",
+     "rating": 0.4,
+     "text": "Seated raises grew the gastrocnemius very little, while standing raises grew it far more; soleus growth was similar.",
+     "evidence": "supported",
+     "citations": [
+      "kinoshita2023"
+     ]
+    }
+   ]
+  }
+ ],
+ "setup": [
+  {
+   "text": "Sit with the pad on your lower thighs, just above the knees.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Balls of the feet on the step, heels free to drop.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Release the safety lever before the first rep.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower the heels to a full stretch",
+   "why": "The deep stretch at the bottom is part of the range.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Press up onto your toes",
+   "why": "A short pause at the bottom stops the Achilles from bouncing the weight up.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Hold the top for a second",
+   "why": "Full height at the top finishes the range.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Push through the big toe",
+   "why": "Keeps the ankle from rolling out.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "range",
+   "change": "Bias the bottom half at the end of a set",
+   "target_muscle_ids": [
+    "calves"
+   ],
+   "effect": "Partials at long calf lengths grew the calves more than partials near the top (in standing raises).",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "kassiano2023"
+   ],
+   "caveat": "That study measured gastrocnemius with standing raises; seated is modeled from it."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "calves"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Rushing through the bottom stretch.",
+   "fix": "Pause at the bottom and lift without bouncing.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Short, bouncy reps.",
+   "fix": "Use the full range with a pause at the bottom.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Only doing seated raises and expecting full calves.",
+   "fix": "Add a standing raise for the gastrocnemius.",
+   "evidence": "supported",
+   "citations": [
+    "kinoshita2023"
+   ]
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Seated and standing calf raises work the same.",
+   "reality": "Standing raises grew the gastrocnemius far more; seated raises mainly train the soleus.",
+   "evidence": "supported",
+   "citations": [
+    "kinoshita2023"
+   ]
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "bias:calves_gastroc",
+   "goal_label": "More gastrocnemius",
+   "exercise_id": "standing-calf-raise",
+   "why": "Knee straight, so the gastrocnemius works fully.",
+   "differences": [
+    "More stretch emphasis",
+    "Loads the spine"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "kinoshita2023"
+   ]
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "leg-press-calf-raise",
+   "why": "Calf raises on the leg press with the knee straight.",
+   "differences": [
+    "More stretch emphasis"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "smith-calf-raise",
+   "why": "Standing raises with the Smith bar: knee straight, heavy loading.",
+   "differences": [
+    "More stretch emphasis",
+    "Loads the spine"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@seated-calf-raise.heads.calves_gastroc": 0.4,
+  "exercises.json:@seated-calf-raise.heads.calves_soleus": 1,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "The standing vs seated finding is one 12-week study in 14 untrained adults.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

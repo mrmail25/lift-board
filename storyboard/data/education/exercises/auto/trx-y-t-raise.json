@@ -1,0 +1,202 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "trx-y-t-raise",
+ "kind": "exercise",
+ "exercise_id": "trx-y-t-raise",
+ "title": "Suspension Y/T Raise",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A bodyweight raise into a Y or T shape on suspension straps, for the rear delts and lower and mid traps.",
+ "type": "isolation",
+ "equipment": "suspension",
+ "equipment_needs": {
+  "items": [
+   "suspension_trainer"
+  ],
+  "text": "Needs: suspension trainer (TRX)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for rear delts (main mover): each working set adds 0.8 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.8,
+   "band": "main",
+   "regions": {
+    "traps_upper": 0.1,
+    "traps_mid_lower": 0.8
+   },
+   "why": "Library rating 0.8 for traps (main mover): each working set adds 0.8 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "side_delts",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for side delts (helper): each working set adds 0.4 of a set to the weekly side delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for upper back (helper): each working set adds 0.4 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hold the handles and lean back with your arms straight in front of you.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Raise your arms out into a Y or a T, pulling your body up.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower with control.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Raise the arms into a Y or T",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep elbows nearly straight",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Return slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your arms straight. The lean angle sets the load.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Bending the arms to pull.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "dumbbell-incline-y-raise",
+   "why": "Swap sheet: Less upper-trap work, More stable, Easier to learn.",
+   "differences": [
+    "Less upper-trap work",
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "face-pull",
+   "why": "Swap sheet: Less upper-trap work, Better isolation, More stable.",
+   "differences": [
+    "Less upper-trap work",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "dumbbell-rear-delt-fly",
+   "why": "Swap sheet: Less upper-trap work, More stable, Easier to learn.",
+   "differences": [
+    "Less upper-trap work",
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "barbell-shrug",
+   "why": "Swap sheet: More stable, Loads the spine, Heavier loading potential.",
+   "differences": [
+    "More stable",
+    "Loads the spine",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 1,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": [
+   "upper_trap_involvement"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

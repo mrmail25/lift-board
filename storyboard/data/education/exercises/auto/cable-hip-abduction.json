@@ -1,0 +1,154 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "cable-hip-abduction",
+ "kind": "exercise",
+ "exercise_id": "cable-hip-abduction",
+ "title": "Cable Hip Abduction",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A standing cable leg raise out to the side, for the glute medius.",
+ "type": "isolation",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "cable"
+  ],
+  "text": "Needs: cable station with an adjustable pulley."
+ },
+ "muscles": [
+  {
+   "muscle_id": "abductors",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for abductors (main mover): each working set adds 1 of a set to the weekly abductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for glutes (minor): each working set adds 0.3 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Attach an ankle cuff on a low pulley and stand side-on with the cuffed leg away from the machine.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Hold the machine for balance.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Raise your leg out to the side without leaning.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower slowly.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Stand tall holding the frame",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lift the leg out to the side",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Return slowly across",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your toes pointing forward. Rotating them up shifts the work to the hip flexors.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Leaning the torso away to lift the leg higher.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "side-lying-hip-abduction",
+   "why": "Swap sheet: Less isolation, Less stable, Less constant tension.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "Less constant tension"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "unilateral",
+   "constant_tension"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

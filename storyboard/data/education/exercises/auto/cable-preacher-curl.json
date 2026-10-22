@@ -1,0 +1,160 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "cable-preacher-curl",
+ "kind": "exercise",
+ "exercise_id": "cable-preacher-curl",
+ "title": "Cable Preacher Curl",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A preacher curl with a cable, so the biceps stay loaded at the stretched bottom.",
+ "type": "isolation",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "cable",
+   "preacher_bench"
+  ],
+  "text": "Needs: cable station with an adjustable pulley; preacher bench or curl pad."
+ },
+ "muscles": [
+  {
+   "muscle_id": "biceps",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for biceps (main mover): each working set adds 1 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Library rating 0.25 for forearms (minor): each working set adds 0.25 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set a preacher bench in front of a low cable and take a bar or handle.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Curl up until your forearms are nearly vertical.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower to almost straight.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower to nearly straight arms",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Curl up without lifting the elbows",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Squeeze at the top",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Control the bottom, where the stretch is.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Lifting the elbows off the pad.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "peak_contraction",
+   "goal_label": "Peak-contraction focus",
+   "exercise_id": "high-cable-curl",
+   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "incline-dumbbell-curl",
+   "why": "Swap sheet: Biceps long-head stretch, Less isolation, Less stable.",
+   "differences": [
+    "Biceps long-head stretch",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "constant_tension"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

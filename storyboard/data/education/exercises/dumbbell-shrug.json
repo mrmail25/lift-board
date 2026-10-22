@@ -1,0 +1,225 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "dumbbell-shrug",
+ "kind": "exercise",
+ "exercise_id": "dumbbell-shrug",
+ "title": "Dumbbell Shrug",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Dumbbell shrug: upper traps 1, with dumbbells at your sides.",
+ "type": "isolation",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell"
+  ],
+  "text": "Needs: dumbbells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "traps",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "traps_upper": 1,
+    "traps_mid_lower": 0.4
+   },
+   "why": "Upper traps raise the shoulder blades; mid/lower steady them (0.4).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "You hold the dumbbells (0.3).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Dumbbells at your sides, palms in.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Stand tall with straight arms.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lift the shoulders toward your ears",
+   "why": "Straight up toward the ears.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep arms straight",
+   "why": "Pausing at the top.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pause and lower slowly",
+   "why": "Arms straight.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Use straps when grip fails first",
+   "why": "Lets the traps reach the end of the set.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "Straps",
+   "target_muscle_ids": [
+    "traps"
+   ],
+   "effect": "Grip stops being the limit.",
+   "swap_tags": [
+    "grip_demand"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Less forearm work."
+  },
+  {
+   "kind": "tempo",
+   "change": "Hold 1 second at the top",
+   "target_muscle_ids": [
+    "traps"
+   ],
+   "effect": "More time at the shortest point.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Tempo itself changes growth little."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Bending the elbows to help lift the weight.",
+   "fix": "Lighten until you can pause at the top.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Rolling the shoulders.",
+   "fix": "Straight up and down.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Bending the elbows.",
+   "fix": "Arms straight.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "barbell-shrug",
+   "why": "Barbell version: heavier.",
+   "differences": [
+    "Loads the spine",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "shrug-machine",
+   "why": "Machine shrug.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:forearms",
+   "goal_label": "More forearms",
+   "exercise_id": "farmer-carry",
+   "why": "Walking with heavy weights.",
+   "differences": [
+    "Less isolation",
+    "More systemic fatigue",
+    "Loads the spine"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 2,
+  "skill_demand": 1,
+  "flags": [
+   "upper_trap_involvement",
+   "grip_demand"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@dumbbell-shrug.heads.traps_mid_lower": 0.4,
+  "exercises.json:@dumbbell-shrug.muscles.forearms": 0.3,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.dumbbell": 2,
+  "rules.json:logger.load_step.lb.dumbbell": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Shrug variations have not been compared for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

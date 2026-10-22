@@ -1,0 +1,224 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "kettlebell-snatch",
+ "kind": "exercise",
+ "exercise_id": "kettlebell-snatch",
+ "title": "Kettlebell Snatch",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A one-arm swing that finishes with the bell locked out overhead. It's a power and conditioning lift.",
+ "type": "accessory",
+ "equipment": "kettlebell",
+ "equipment_needs": {
+  "items": [
+   "kettlebell"
+  ],
+  "text": "Needs: kettlebells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "glutes",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for glutes (helper): each working set adds 0.6 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for hamstrings (helper): each working set adds 0.5 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.4,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.4,
+    "traps_mid_lower": 0.3
+   },
+   "why": "Library rating 0.4 for traps (helper): each working set adds 0.4 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for forearms (helper): each working set adds 0.4 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for front delts (minor): each working set adds 0.3 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for lower back (minor): each working set adds 0.3 of a set to the weekly lower back total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hike the bell back between your legs.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive your hips and pull the bell up close to your body.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Punch your hand through as it passes your head and lock out overhead.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Swing the bell back",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive the hips and pull high",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Punch through to lockout overhead",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Learn the swing and clean first.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the bell flop over and crash onto the wrist.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "kettlebell-single-leg-rdl",
+   "why": "Swap sheet: More stretch emphasis, Less stable, Easier to learn.",
+   "differences": [
+    "More stretch emphasis",
+    "Less stable",
+    "Easier to learn"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "landmine-rdl",
+   "why": "Swap sheet: More stretch emphasis, Both sides together, Easier to learn.",
+   "differences": [
+    "More stretch emphasis",
+    "Both sides together",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-rdl",
+   "why": "Swap sheet: More stretch emphasis, Both sides together, Loads the spine.",
+   "differences": [
+    "More stretch emphasis",
+    "Both sides together",
+    "Loads the spine"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "hip-thrust-machine",
+   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus, Better isolation.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Better isolation"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 3,
+  "flags": [
+   "unilateral"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

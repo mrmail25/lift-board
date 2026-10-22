@@ -1,0 +1,157 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "belt-squat",
+ "kind": "exercise",
+ "exercise_id": "belt-squat",
+ "title": "Belt Squat",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A squat with the load hung from a hip belt, which trains the legs hard without loading your spine.",
+ "type": "primary",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 0.35,
+    "quads_vasti": 1
+   },
+   "why": "Library rating 1 for quads (main mover): each working set adds 1 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.7,
+   "band": "helper",
+   "why": "Library rating 0.7 for glutes (helper): each working set adds 0.7 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for adductors (helper): each working set adds 0.6 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand on the platform with the belt around your hips.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Squat down between your hips, holding the rails lightly.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Go deep, then drive back up.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep your torso upright",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Sit straight down",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive through the whole foot",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your torso upright. Your hands are for balance, not for pulling.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the hips shoot back so the belt swings.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "single-leg-press",
+   "why": "Swap sheet: Less stretch emphasis, One side at a time, Lower loading potential.",
+   "differences": [
+    "Less stretch emphasis",
+    "One side at a time",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 3,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

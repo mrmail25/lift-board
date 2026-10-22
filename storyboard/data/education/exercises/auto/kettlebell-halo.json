@@ -1,0 +1,189 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "kettlebell-halo",
+ "kind": "exercise",
+ "exercise_id": "kettlebell-halo",
+ "title": "Kettlebell Halo",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A slow circle of a light bell around your head. It's mainly a shoulder warm-up and builds little muscle.",
+ "type": "isolation",
+ "equipment": "kettlebell",
+ "equipment_needs": {
+  "items": [
+   "kettlebell"
+  ],
+  "text": "Needs: kettlebells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for front delts (minor): each working set adds 0.3 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.2,
+   "band": "not_counted",
+   "regions": {
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.1
+   },
+   "why": "Library rating 0.2 for traps: below the counting floor, so it adds nothing to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abs",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for abs: below the counting floor, so it adds nothing to the weekly abs total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hold the bell by the horns upside down at your chest.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Circle it around your head, keeping it close.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Reverse direction each rep.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Circle the bell around your head",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep it close",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the ribs down",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your ribs down and stay tall.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Arching the back as the bell passes behind you.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "kettlebell-windmill",
+   "why": "Swap sheet: Less isolation, One side at a time, More systemic fatigue.",
+   "differences": [
+    "Less isolation",
+    "One side at a time",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "landmine-rotation",
+   "why": "Swap sheet: Less isolation, More systemic fatigue, Heavier loading potential.",
+   "differences": [
+    "Less isolation",
+    "More systemic fatigue",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "pallof-press",
+   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "front-raise",
+   "why": "Similar muscles; dumbbell instead of kettlebell.",
+   "differences": [],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

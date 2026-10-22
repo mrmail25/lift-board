@@ -1,0 +1,283 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "dumbbell-lateral-raise",
+ "kind": "exercise",
+ "exercise_id": "dumbbell-lateral-raise",
+ "title": "Dumbbell Lateral Raise",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "The standard side-delt isolation: raise the dumbbells out to the sides to about shoulder height. Side delts 1, traps 0.3.",
+ "type": "isolation",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell"
+  ],
+  "text": "Needs: dumbbells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "side_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "The side (lateral) delt lifts the arm out to the side (shoulder abduction). It has the best leverage for that between roughly 30 and 90 degrees, which is the range this raise loads.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.3,
+   "band": "minor",
+   "regions": {
+    "traps_upper": 0.21,
+    "traps_mid_lower": 0.3
+   },
+   "why": "The traps rotate the shoulder blade upward as the arm rises, more if you shrug or lift above shoulder height; minor (0.3).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand tall with the dumbbells at your sides, palms facing in, elbows slightly bent.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Lean the torso forward a few degrees so the dumbbells hang slightly in front of your thighs.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Pick a weight you can lift without swinging; side delts are small.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Raise the bells out to the sides",
+   "why": "Out to the sides, in line with or slightly in front of your body, keeps the work on the side delt.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lead with the elbows",
+   "why": "Leading with the elbows keeps the arm path wide and the load on the delt, not the forearm.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stop around shoulder height",
+   "why": "Above shoulder height the upper traps take more of the work.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Think 'push the weights out' rather than 'up' so your traps stay out of it.",
+   "why": "Pushing out rather than up keeps the shoulders from shrugging.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the shoulders down",
+   "why": "A shrug turns the lift into an upper-trap exercise.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "angle",
+   "change": "Raise slightly forward of the body (in the scapular plane, about 20-30 degrees forward)",
+   "target_muscle_ids": [
+    "side_delts"
+   ],
+   "effect": "Many lifters find this path more comfortable and keep tension better; the side delt still does the lifting.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "caveat": "Not tested for growth."
+  },
+  {
+   "kind": "angle",
+   "change": "Lean toward a fixed support (one arm at a time)",
+   "target_muscle_ids": [
+    "side_delts"
+   ],
+   "effect": "Starts the arm further across the body, so the side delt is loaded earlier in the range.",
+   "swap_tags": [
+    "unilateral",
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [
+    "cable-lateral-raise"
+   ],
+   "evidence": "biomechanics",
+   "caveat": "A cable does this better: it loads the bottom of the range that a dumbbell leaves light."
+  },
+  {
+   "kind": "range",
+   "change": "Stop at shoulder height",
+   "target_muscle_ids": [
+    "side_delts",
+    "traps"
+   ],
+   "effect": "Going higher shifts work toward the upper traps.",
+   "swap_tags": [
+    "upper_trap_involvement"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Raising higher is fine if you want trap work too."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "side_delts"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Swinging the torso to heave the weight up.",
+   "fix": "Use a weight you can lift with the torso still; a little body English on the last rep is the limit.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Shrugging as the weights rise.",
+   "fix": "Keep the shoulders down and push the weights out.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Bending the elbows more as the set gets hard.",
+   "fix": "Fix the elbow bend from the first rep.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Dropping the weights from the top.",
+   "fix": "Lower in 2-3 seconds.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Pouring the jug (thumbs down) isolates the side delt.",
+   "reality": "Turning the thumb down adds internal rotation; it changes little for the side delt and many lifters find it less comfortable. A neutral grip is the default.",
+   "evidence": "modeled"
+  },
+  {
+   "myth": "Only heavy weights build muscle.",
+   "reality": "Light and heavy loads gave similar growth when sets were taken close to failure. Heavy loads build more strength.",
+   "evidence": "supported",
+   "citations": [
+    "schoenfeld2017load"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Raises are low risk to push close to failure; stop when you need to swing.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Lower under control; the dumbbell is lightest at the bottom, so don't let it crash into your thighs.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "cable-lateral-raise",
+   "why": "The cable loads the bottom of the range that a dumbbell leaves light, and keeps the tension steadier.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "lateral-raise-machine",
+   "why": "Pads at the elbows guide the arm, so you can push close to failure with no swing.",
+   "differences": [
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "seated-dumbbell-lateral-raise",
+   "why": "Same raise seated, which makes cheating harder.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:traps_mid_lower",
+   "goal_label": "More mid/lower traps",
+   "exercise_id": "cable-y-raise",
+   "why": "Raising up and out in a Y adds more trap work.",
+   "differences": [
+    "More upper-trap work",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@dumbbell-lateral-raise.muscles.traps": 0.3,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.dumbbell": 2,
+  "rules.json:logger.load_step.lb.dumbbell": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Side-delt growth has not been compared between raise variations in a study the app cites; variation choices are biomechanics or modeled.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

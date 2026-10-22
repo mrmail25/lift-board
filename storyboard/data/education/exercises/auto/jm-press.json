@@ -1,0 +1,213 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "jm-press",
+ "kind": "exercise",
+ "exercise_id": "jm-press",
+ "title": "JM Press",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A hybrid of a close-grip bench press and a skull crusher that lets you load the triceps heavy.",
+ "type": "accessory",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "squat_rack",
+   "flat_bench"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; rack with J-hooks (power rack, squat stands or bench uprights); flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "triceps",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "triceps_long": 0.8,
+    "triceps_short": 1
+   },
+   "why": "Library rating 1 for triceps (main mover): each working set adds 1 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "chest",
+   "rating": 0.3,
+   "band": "minor",
+   "regions": {
+    "chest_upper": 0.25,
+    "chest_lower": 0.3
+   },
+   "why": "Library rating 0.3 for chest (minor): each working set adds 0.3 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for front delts: below the counting floor, so it adds nothing to the weekly front delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Lie on a bench holding the bar with a close grip over your chest.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower by bending your elbows and letting the bar travel toward your upper chest or chin.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Press back up to straight arms.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower the bar toward your chin by bending elbows forward",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the elbows tucked",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Press back to lockout",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Start light. The hybrid path takes a few sessions to learn.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting it turn into a regular bench press.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "skull-crusher",
+   "why": "Swap sheet: More stretch emphasis, Better isolation, Less systemic fatigue.",
+   "differences": [
+    "More stretch emphasis",
+    "Better isolation",
+    "Less systemic fatigue"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "dumbbell-kickback",
+   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus, Better isolation.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Better isolation"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "machine-triceps-extension",
+   "why": "Swap sheet: Better isolation, More stable, Less systemic fatigue.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Less systemic fatigue"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "triceps-pushdown",
+   "why": "Swap sheet: Better isolation, More stable, Less systemic fatigue.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

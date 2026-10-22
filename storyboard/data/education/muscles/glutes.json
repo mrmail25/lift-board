@@ -1,0 +1,365 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "glutes",
+  "kind": "muscle",
+  "title": "Glutes",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "glutes"
+  ],
+  "summary": "The gluteus maximus, the large muscle of the buttock. It extends and externally rotates the hip. Deep squats grew it more than half squats, and hip thrusts and squats grew it about the same when sets were matched.",
+  "what_it_is": {
+    "overview": "The app's glutes region is the gluteus maximus. The gluteus medius and minimus sit on the side of the hip and live on the Abductors page.",
+    "heads": [
+      {
+        "id": "upper_fibres",
+        "name": "Gluteus maximus, upper fibres",
+        "origin": "The back of the pelvic rim (ilium) and the lower-back fascia.",
+        "insertion": "The iliotibial band on the outer thigh.",
+        "fiber_direction": "Run down and outward, above the hip joint's axis.",
+        "crosses_joints": [
+          "hip"
+        ],
+        "tracked_region": "glutes",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "lower_fibres",
+        "name": "Gluteus maximus, lower fibres",
+        "origin": "The sacrum and tailbone and the ligament between sacrum and sitting bone.",
+        "insertion": "The gluteal tuberosity on the back of the thigh bone.",
+        "fiber_direction": "Run down and outward, below the hip joint's axis.",
+        "crosses_joints": [
+          "hip"
+        ],
+        "tracked_region": "glutes",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "upper_fibres",
+        "lower_fibres"
+      ],
+      "joint": "hip",
+      "action": "Hip extension.",
+      "detail": "The job in squats, hinges, lunges and hip thrusts.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "upper_fibres",
+        "lower_fibres"
+      ],
+      "joint": "hip",
+      "action": "External rotation of the thigh.",
+      "detail": "Why 'knees out' cues bring them in.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "upper_fibres"
+      ],
+      "joint": "hip",
+      "action": "Helps abduct the hip (move the thigh out to the side).",
+      "detail": "Why abduction machines credit glutes a little (0.3).",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "lower_fibres"
+      ],
+      "joint": "hip",
+      "action": "Helps adduct the hip when the thigh is flexed.",
+      "detail": "Minor in training.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Hamstrings",
+        "role": "Extend the hip.",
+        "evidence": "biomechanics",
+        "muscle_id": "hamstrings"
+      },
+      {
+        "name": "Adductor magnus",
+        "role": "Extends the hip, especially from deep flexion.",
+        "evidence": "biomechanics",
+        "muscle_id": "adductors"
+      },
+      {
+        "name": "Glute medius and minimus",
+        "role": "Abduct and steady the hip.",
+        "evidence": "biomechanics",
+        "muscle_id": "abductors"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Hip flexors",
+        "role": "Flex the hip; not tracked.",
+        "evidence": "biomechanics"
+      },
+      {
+        "name": "Rectus femoris (at the hip)",
+        "role": "Flexes the hip.",
+        "evidence": "biomechanics",
+        "muscle_id": "quads"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In single-leg work the glutes steady the pelvis and thigh; Bulgarian split squats are rated 0.8.",
+        "evidence": "biomechanics"
+      },
+      {
+        "text": "In standing exercises the glutes keep the pelvis level; not counted.",
+        "evidence": "modeled"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "back-squat",
+        "rating": 0.7,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "deadlift",
+        "rating": 0.8,
+        "role": "main"
+      },
+      {
+        "exercise_id": "romanian-deadlift",
+        "rating": 0.7,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "leg-press",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "hack-squat",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "front-squat",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "kettlebell-swing",
+        "rating": 0.8,
+        "role": "main"
+      },
+      {
+        "exercise_id": "hip-abduction-machine",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "glute-ham-raise",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "seated-leg-curl",
+        "rating": 0,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 3 sets of hip thrust (1.0), 4 sets of back squat (0.7) and 3 sets of Romanian deadlift (0.7) give 3 + 2.8 + 2.1 = 7.9, which the panel shows as 8 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "all",
+      "goal": "Deep hip flexion under load",
+      "how": {
+        "joint_angle": "Squat or lunge to full depth so the hip bends deeply.",
+        "stretch_position": "Bottom of a deep squat or split squat."
+      },
+      "swap_tags": [
+        "stretch_emphasis"
+      ],
+      "example_exercise_ids": [
+        "back-squat",
+        "bulgarian-split-squat",
+        "high-foot-leg-press"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "kubo2019"
+      ],
+      "caveat": "Full squats grew the glute max 6.7% vs 2.2% for half squats over 10 weeks."
+    },
+    {
+      "target": "all",
+      "goal": "Hip thrusts and bridges",
+      "how": {
+        "joint_angle": "Hip extension with the knees bent, hardest at lockout.",
+        "stance": "Upper back on a bench, feet flat."
+      },
+      "swap_tags": [
+        "peak_contraction_focus",
+        "loading_potential"
+      ],
+      "example_exercise_ids": [
+        "hip-thrust",
+        "smith-hip-thrust",
+        "hip-thrust-machine"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "plotkin2023"
+      ],
+      "caveat": "Grew the glute max about as much as back squats with sets matched, with less quad and adductor growth. Higher glute EMG in the thrust did not mean more growth."
+    },
+    {
+      "target": "all",
+      "goal": "Hip-hinge options",
+      "how": {
+        "joint_angle": "Hip hinge with knees nearly straight.",
+        "stretch_position": "Bottom of an RDL or 45-degree hip extension."
+      },
+      "swap_tags": [
+        "stretch_emphasis",
+        "spinal_load"
+      ],
+      "example_exercise_ids": [
+        "romanian-deadlift",
+        "45-degree-hyperextension",
+        "reverse-hyper"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Hinges share the work with the hamstrings."
+    },
+    {
+      "target": "upper_fibres",
+      "goal": "Upper glute fibres",
+      "how": {
+        "joint_angle": "Hip abduction or kickbacks out to the side."
+      },
+      "swap_tags": [
+        "muscle_isolation"
+      ],
+      "example_exercise_ids": [
+        "cable-kickback",
+        "glute-kickback-machine"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "Separate growth of upper vs lower fibres is a model; the map has one glute region."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "hip-thrust",
+      "why": "Heavy, simple hip extension; matched back squats for glute growth.",
+      "evidence": "supported",
+      "citations": [
+        "plotkin2023"
+      ]
+    },
+    {
+      "exercise_id": "back-squat",
+      "why": "Deep squats grew the glutes more than half squats.",
+      "evidence": "supported",
+      "citations": [
+        "kubo2019"
+      ]
+    },
+    {
+      "exercise_id": "bulgarian-split-squat",
+      "why": "Deep single-leg hip flexion; glutes 0.8.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "high-foot-leg-press",
+      "why": "Feet high for more hip bend; stretch-biased for glutes in the app.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "45-degree-hyperextension",
+      "why": "Hip extension with the hip loaded long; glutes 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "romanian-deadlift",
+      "why": "Hinge in the stretch; glutes 0.7, hamstrings 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "walking-lunge",
+      "why": "Long-step lunge; glutes 0.8.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Half squats when glutes are the goal; depth mattered.",
+      "evidence": "supported",
+      "citations": [
+        "kubo2019"
+      ]
+    },
+    {
+      "text": "Picking exercises by how hard the glutes 'feel' or by EMG alone.",
+      "evidence": "supported",
+      "citations": [
+        "plotkin2023"
+      ]
+    },
+    {
+      "text": "Arching the lower back at the top of hip thrusts instead of finishing with the hips.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Short steps on lunges, which keep the hip from bending deeply.",
+      "evidence": "modeled"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Sit down and back to full depth.",
+      "why": "Bends the hip deeply.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Chin tucked, ribs down, hips up.",
+      "why": "Finishes the hip thrust with the hips, not the back.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Long stride, lean slightly forward.",
+      "why": "More hip bend in lunges and split squats.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Push through the whole foot.",
+      "why": "Steady base for hip extension.",
+      "evidence": "modeled"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.glutes.min": 8,
+    "targets.json:targets.glutes.max": 16,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@hip-abduction-machine.muscles.glutes": 0.3,
+    "exercises.json:@bulgarian-split-squat.muscles.glutes": 0.8
+  },
+  "notes": [
+    "Weekly target in the app: 8 to 16 glutes sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "Plotkin 2023 studied untrained adults for 9 weeks; hip thrusts and squats were similar for glutes, but squats also grew quads and adductors.",
+    "Kubo 2019 tested 17 men over 10 weeks."
+  ]
+}

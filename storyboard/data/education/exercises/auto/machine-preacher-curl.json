@@ -1,0 +1,169 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "machine-preacher-curl",
+ "kind": "exercise",
+ "exercise_id": "machine-preacher-curl",
+ "title": "Preacher Curl Machine",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A machine preacher curl that keeps the biceps loaded right down to the stretched, arms-straight position.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "biceps",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for biceps (main mover): each working set adds 1 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for forearms (minor): each working set adds 0.3 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the seat so your armpits sit at the top of the pad.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Curl the handles up until your forearms are vertical.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower all the way until your arms are nearly straight.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Start from nearly straight arms",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Curl the handles up",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "The bottom half is the valuable part. Don't cut it short.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Lifting the elbows off the pad.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "cable-curl",
+   "why": "Swap sheet: Less stretch emphasis, Steadier cable tension.",
+   "differences": [
+    "Less stretch emphasis",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "incline-dumbbell-curl",
+   "why": "Swap sheet: Biceps long-head stretch, Less isolation, Less stable.",
+   "differences": [
+    "Biceps long-head stretch",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "concentration-curl",
+   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus, One side at a time.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

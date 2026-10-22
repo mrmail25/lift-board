@@ -1,0 +1,388 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "back-squat",
+ "kind": "exercise",
+ "exercise_id": "back-squat",
+ "title": "Back Squat",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "The barbell squat with the bar on the upper back: quads are the main mover, with glutes and adductors helping. One of the most loadable and most fatiguing lifts in the library.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "squat_rack"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; rack with J-hooks (power rack, squat stands or bench uprights)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 0.4,
+    "quads_vasti": 1
+   },
+   "why": "The quads straighten the knee out of a deep knee bend. The vasti (the three single-joint heads) are rated 1; the rectus femoris crosses the hip too, shortening at the hip as it lengthens at the knee, so it changes length little and is rated 0.4.",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "quads_rf",
+     "rating": 0.4,
+     "text": "Squats did not grow the rectus femoris in a 10-week MRI study, and leg extensions grew it where Smith-machine squats did not.",
+     "evidence": "supported",
+     "citations": [
+      "kubo2019",
+      "zabaletakorta2021"
+     ]
+    }
+   ]
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.7,
+   "band": "helper",
+   "why": "The glutes extend the hip out of the hole; they work hardest when you squat deep.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "The adductor magnus is a strong hip extender in a deep squat.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "The spinal erectors hold the torso against the bar's weight; isometric work.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Hip abductors keep the knees tracking over the toes: minor.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "abs",
+   "rating": 0.15,
+   "band": "not_counted",
+   "why": "The abs brace the trunk, but rated below the counting floor (0.15).",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bar in a rack at mid-chest height and the safety arms just below your bottom position.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Bar on the upper traps (high bar) or across the rear delts (low bar); grip just outside the shoulders.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Walk it out in two or three short steps; feet about shoulder width, toes slightly out.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Breathe in, brace your abs and keep the brace for the whole rep.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Brace before each rep",
+   "why": "A fresh brace each rep keeps the trunk stiff under the bar.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Sit down between your hips with knees tracking toes",
+   "why": "Knees tracking over the toes lets the hips sit down between the legs.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Drive up through the whole foot",
+   "why": "Pressing through the whole foot keeps the bar over mid-foot, where you are balanced.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Depth matters. Deep squats build more quad and glute than half reps.",
+   "why": "Full-depth squats grew the glutes and adductors more than half squats in an MRI study; quad growth was similar.",
+   "evidence": "supported",
+   "from_library": true,
+   "citations": [
+    "kubo2019"
+   ]
+  },
+  {
+   "cue": "Keep the bar over mid-foot",
+   "why": "Any drift forward or back adds load to the lower back.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "range",
+   "change": "Squat to full depth (hip crease below the knee)",
+   "target_muscle_ids": [
+    "glutes",
+    "adductors"
+   ],
+   "effect": "More glute and adductor growth than half squats; similar quad growth.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "supported",
+   "citations": [
+    "kubo2019"
+   ],
+   "caveat": "One 10-week study in 17 men. Go as deep as you can with a neutral back."
+  },
+  {
+   "kind": "stance",
+   "change": "High bar, upright torso, knees forward",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "More knee bend, so the quads do a larger share.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Depends a lot on your build."
+  },
+  {
+   "kind": "stance",
+   "change": "Low bar, wider stance, more forward lean",
+   "target_muscle_ids": [
+    "glutes",
+    "lower_back"
+   ],
+   "effect": "More hip bend, so more glute and back work and usually more load.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "More spinal loading, and harder to learn."
+  },
+  {
+   "kind": "tempo",
+   "change": "Pause one second at the bottom",
+   "target_muscle_ids": [
+    "quads",
+    "glutes"
+   ],
+   "effect": "Removes the bounce, builds control at depth; costs load.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Tempo itself makes little difference to growth in normal ranges."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Letting the knees cave in on the way up.",
+   "fix": "Push the knees out over the toes on the way up; lighten the load if they still cave.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Losing depth as the weight goes up.",
+   "fix": "Use the same depth every rep so your logged loads compare.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Heels lifting.",
+   "fix": "Shift the weight to mid-foot; lifting shoes or small plates under the heels help some lifters.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Hips shooting up first out of the hole.",
+   "fix": "Drive the chest and hips up together.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Squats are the best quad builder.",
+   "reality": "Squats grew the vasti well but not the rectus femoris; leg extensions filled that gap in two studies.",
+   "evidence": "supported",
+   "citations": [
+    "kubo2019",
+    "zabaletakorta2021"
+   ]
+  },
+  {
+   "myth": "Squats are bad for your knees if they go past your toes.",
+   "reality": "Knees travelling forward is a normal part of a deep squat. Use the depth and stance you can train comfortably.",
+   "evidence": "modeled"
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Ramp up before your first working set. For primary lifts the app suggests 50% x 8, 70% x 4 and 85% x 2 when the first working load is 60 kg or more, and 50% x 8 then 75% x 3 below that.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp",
+   "note": "High-load warm-ups improved strength performance in a systematic review; the percentages are coaching convention.",
+   "citations": [
+    "mccrary2015"
+   ]
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 6-10 rep range. Keep heavy squat sets a few reps short of failure, and always squat with safeties set or a spotter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "safeties",
+   "text": "Squat inside a rack with the safety arms just below your bottom position, so a missed rep can be set down. Use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "rom",
+   "text": "Control the descent; don't drop and bounce out of the hole.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "hack-squat",
+   "why": "Machine-guided quad work with no bar on the spine.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "leg-press",
+   "why": "Heavy quad training with far less whole-body fatigue.",
+   "differences": [
+    "Less stretch emphasis",
+    "More stable",
+    "Less systemic fatigue"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "smith-squat",
+   "why": "Fixed bar path, easier to learn, still loadable.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "goblet-squat",
+   "why": "Needs one dumbbell; upright and easy to learn, but loading is limited.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less systemic fatigue",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:quads_rf",
+   "goal_label": "More rectus femoris",
+   "exercise_id": "leg-extension",
+   "why": "Grew the rectus femoris where squats did not.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Better isolation"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "zabaletakorta2021"
+   ]
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "bulgarian-split-squat",
+   "why": "One leg at a time, no heavy bar on the back, more glute work.",
+   "differences": [
+    "Less stable",
+    "One side at a time",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 3,
+  "flags": [
+   "spinal_load"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@back-squat.heads.quads_rf": 0.4,
+  "exercises.json:@back-squat.heads.quads_vasti": 1,
+  "exercises.json:@back-squat.muscles.abs": 0.15,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.rep_range_by_type.primary.0": 6,
+  "rules.json:logger.rep_range_by_type.primary.1": 10,
+  "rules.json:logger.target_rir_by_type.primary": 3,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three_from_kg": 60
+ },
+ "notes": [
+  "Squat-depth results come from one 10-week MRI study in 17 men.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

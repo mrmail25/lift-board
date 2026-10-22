@@ -1,0 +1,216 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "incline-barbell-bench-press",
+ "kind": "exercise",
+ "exercise_id": "incline-barbell-bench-press",
+ "title": "Incline Barbell Bench Press",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A barbell press on a 30–45° bench that shifts work toward the upper chest.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "squat_rack",
+   "adjustable_bench"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; rack with J-hooks (power rack, squat stands or bench uprights); adjustable (incline) bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "chest_upper": 1,
+    "chest_lower": 0.7
+   },
+   "why": "Library rating 1 for chest (main mover): each working set adds 1 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for front delts (helper): each working set adds 0.6 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.25,
+    "triceps_short": 0.5
+   },
+   "why": "Library rating 0.5 for triceps (helper): each working set adds 0.5 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bench at 30–45° and sit with your eyes just in front of the bar.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull your shoulder blades back and grip a little wider than your shoulders.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower the bar to your upper chest, just below your collarbones.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Press up until your arms are straight over your shoulders.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower the bar to your upper chest",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep shoulder blades pinned to the bench",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Press straight up over the shoulders",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "A lower incline (around 30°) keeps more of the work on the chest instead of the shoulders.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Setting the bench so steep the lift turns into a shoulder press.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "smith-incline-press",
+   "why": "Swap sheet: More stable, Less systemic fatigue, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "converging-smith-incline-press",
+   "why": "Swap sheet: More stable, Less systemic fatigue, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "incline-dumbbell-press",
+   "why": "Swap sheet: More stretch emphasis, Lower loading potential.",
+   "differences": [
+    "More stretch emphasis",
+    "Lower loading potential"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "landmine-press-one-arm",
+   "why": "Swap sheet: One side at a time, Lower loading potential.",
+   "differences": [
+    "One side at a time",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

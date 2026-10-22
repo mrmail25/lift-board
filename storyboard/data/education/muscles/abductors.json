@@ -1,0 +1,303 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "abductors",
+  "kind": "muscle",
+  "title": "Abductors",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "abductors"
+  ],
+  "summary": "The muscles on the side of the hip: gluteus medius, gluteus minimus and the tensor fasciae latae (TFL). They move the thigh out to the side and, more often, keep the pelvis level on one leg. Squats and hip thrusts grew the glute medius and minimus little.",
+  "what_it_is": {
+    "overview": "One region in the app, the upper outer hip above the thigh. It covers the gluteus medius and minimus and the TFL.",
+    "heads": [
+      {
+        "id": "glute_medius",
+        "name": "Gluteus medius",
+        "origin": "The outer surface of the pelvic rim (ilium), above the glute max.",
+        "insertion": "The greater trochanter, the bony point on the outer upper thigh bone.",
+        "fiber_direction": "Fan-shaped; front fibres run down and back, rear fibres down and forward.",
+        "crosses_joints": [
+          "hip"
+        ],
+        "tracked_region": "abductors",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "glute_minimus",
+        "name": "Gluteus minimus",
+        "origin": "The outer pelvic rim, below and under the glute medius.",
+        "insertion": "The front of the greater trochanter.",
+        "fiber_direction": "Fan-shaped, deep to the glute medius.",
+        "crosses_joints": [
+          "hip"
+        ],
+        "tracked_region": "abductors",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "tfl",
+        "name": "Tensor fasciae latae (TFL)",
+        "origin": "The front of the pelvic rim (anterior superior iliac spine).",
+        "insertion": "The iliotibial band, which runs down the outer thigh to the shin.",
+        "fiber_direction": "Short muscle at the front side of the hip, running down and back.",
+        "crosses_joints": [
+          "hip",
+          "knee"
+        ],
+        "tracked_region": "abductors",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "glute_medius",
+        "glute_minimus",
+        "tfl"
+      ],
+      "joint": "hip",
+      "action": "Hip abduction (moving the thigh out to the side).",
+      "detail": "The job in abduction machines and side-lying raises.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "glute_medius",
+        "glute_minimus"
+      ],
+      "joint": "hip",
+      "action": "Keep the pelvis level when standing on one leg.",
+      "detail": "Why split squats, lunges and step-ups credit abductors 0.5.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "glute_medius",
+        "glute_minimus",
+        "tfl"
+      ],
+      "joint": "hip",
+      "action": "Front fibres turn the thigh inward; rear fibres of the glute medius turn it outward.",
+      "detail": "Explains why foot position changes the feel of abduction work.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "glute_medius",
+        "glute_minimus"
+      ],
+      "joint": "hip",
+      "action": "Grew little from squats or hip thrusts.",
+      "detail": "In a set-matched comparison, neither hip thrusts nor back squats grew them much.",
+      "evidence": "supported",
+      "citations": [
+        "plotkin2023"
+      ]
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Glute max, upper fibres",
+        "role": "Help abduct the thigh.",
+        "evidence": "biomechanics",
+        "muscle_id": "glutes"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Adductors",
+        "role": "Pull the thigh in.",
+        "evidence": "biomechanics",
+        "muscle_id": "adductors"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In single-leg exercises and walking the abductors stop the pelvis from dropping on the free side.",
+        "evidence": "biomechanics"
+      },
+      {
+        "text": "In squats they help keep the knees out; two-leg squats are rated 0.25 or less for abductors.",
+        "evidence": "modeled"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "bulgarian-split-squat",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "walking-lunge",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "dumbbell-step-up",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "hip-thrust",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "deadlift",
+        "rating": 0.25,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "romanian-deadlift",
+        "rating": 0.25,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "back-squat",
+        "rating": 0.25,
+        "role": "minor"
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 3 sets of hip abduction machine (1.0), 3 sets of Bulgarian split squat (0.5) and 3 sets of hip thrust (0.3) give 3 + 1.5 + 0.9 = 5.4, which the panel shows as 5.5 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "glute_medius",
+      "goal": "Direct abduction",
+      "how": {
+        "joint_angle": "Move the thigh out to the side.",
+        "stretch_position": "Thighs together at the start.",
+        "stance": "Seated in a machine, standing at a cable, or lying on your side."
+      },
+      "swap_tags": [
+        "muscle_isolation"
+      ],
+      "example_exercise_ids": [
+        "hip-abduction-machine",
+        "cable-hip-abduction",
+        "side-lying-hip-abduction"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Direct work is the clearest way to train these muscles, since squats and hip thrusts grew them little."
+    },
+    {
+      "target": "glute_medius",
+      "goal": "Single-leg stability work",
+      "how": {
+        "stance": "One leg working, pelvis kept level."
+      },
+      "swap_tags": [
+        "unilateral",
+        "stability"
+      ],
+      "example_exercise_ids": [
+        "bulgarian-split-squat",
+        "dumbbell-step-up",
+        "walking-lunge"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Credited at 0.5; less stable swaps ask more of these muscles."
+    },
+    {
+      "target": "glute_medius",
+      "goal": "Seat angle on abduction machines",
+      "how": {
+        "joint_angle": "Lean forward in the seat (hip flexed) or sit upright."
+      },
+      "swap_tags": [],
+      "example_exercise_ids": [
+        "hip-abduction-machine"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "Coaches lean forward to shift work toward the glutes; a growth difference is a model."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "hip-abduction-machine",
+      "why": "Direct, easy to load in small steps; abductors 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "cable-hip-abduction",
+      "why": "One side at a time with cable tension; abductors 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "side-lying-hip-abduction",
+      "why": "No equipment; abductors 0.9.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "banded-lateral-walk",
+      "why": "Light work, abductors 0.8.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "bulgarian-split-squat",
+      "why": "Abductors keep the pelvis level; rated 0.5.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "dumbbell-step-up",
+      "why": "Single-leg stance under load; abductors 0.5.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Assuming squats and hip thrusts cover the glute medius and minimus.",
+      "evidence": "supported",
+      "citations": [
+        "plotkin2023"
+      ]
+    },
+    {
+      "text": "Leaning the trunk sideways on side-lying or cable abduction instead of moving the thigh.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Rushing abduction reps with momentum.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Lead with the heel, toes slightly in or forward.",
+      "why": "Keeps the work on the side of the hip.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Hips stacked, don't roll back.",
+      "why": "Stops the hip flexors taking over on side-lying raises.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Keep the pelvis level.",
+      "why": "Makes single-leg work an abductor drill.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.abductors.min": 3,
+    "targets.json:targets.abductors.max": 12,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@bulgarian-split-squat.muscles.abductors": 0.5,
+    "exercises.json:@hip-thrust.muscles.abductors": 0.3
+  },
+  "notes": [
+    "Weekly target in the app: 3 to 12 abductors sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "Plotkin 2023 is the only growth study on file for these muscles; it shows what squats and hip thrusts do not do, not which direct exercise is best.",
+    "Targets are low and marked extrapolated.",
+    "No knee or hip pain claims."
+  ]
+}

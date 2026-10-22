@@ -1,0 +1,271 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "standing-calf-raise",
+ "kind": "exercise",
+ "exercise_id": "standing-calf-raise",
+ "title": "Standing Calf Raise",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "A calf raise with straight knees, so the gastrocnemius works from a deep stretch. The library rates gastrocnemius 1 and soleus 0.7.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "calves",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "calves_gastroc": 1,
+    "calves_soleus": 0.7
+   },
+   "why": "Both calf muscles point the foot (plantarflexion). The gastrocnemius also crosses the knee, so with straight legs it stays long and does most of the work (gastroc 1, soleus 0.7).",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "calves_gastroc",
+     "rating": 1,
+     "text": "Standing calf raises grew the gastrocnemius far more than seated raises in a 12-week study; soleus growth was similar.",
+     "evidence": "supported",
+     "citations": [
+      "kinoshita2023"
+     ]
+    }
+   ]
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the shoulder pads so your legs are straight with the balls of your feet on the edge of the platform.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Feet about hip width, toes forward or slightly out.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Hold the handles and stand tall with your knees straight but not forced back.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower to a deep heel stretch",
+   "why": "The bottom stretch is where the gastrocnemius is longest.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Pause at the bottom",
+   "why": "A one-second pause removes the stretch reflex bounce, so the muscle does the work.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Rise as high as you can",
+   "why": "Full height finishes the rep through the whole range.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Pause in the bottom stretch for a second. Bouncing skips most of the benefit.",
+   "why": "Bounce reps shorten the hard part of the range.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Push through the big toe",
+   "why": "Keeps the ankle from rolling out to the little toe at the top.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "range",
+   "change": "Bias the bottom half (lengthened partials) at the end of a set",
+   "target_muscle_ids": [
+    "calves"
+   ],
+   "effect": "Calf-raise partials in the stretched range grew the gastrocnemius more than partials near the top.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "supported",
+   "citations": [
+    "kassiano2023"
+   ],
+   "caveat": "Full range with a pause is still the default."
+  },
+  {
+   "kind": "angle",
+   "change": "Bend the knees (seated calf raise) to shift work to the soleus",
+   "target_muscle_ids": [
+    "calves"
+   ],
+   "effect": "A bent knee slackens the gastrocnemius, so the soleus does more.",
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "seated-calf-raise"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "kinoshita2023"
+   ],
+   "caveat": "Seated raises barely grew the gastrocnemius in that study, so keep standing raises for it."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "calves"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Bouncing quick half reps.",
+   "fix": "Slow down, pause in the stretch and use the full height every rep.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Bending the knees to push the weight up.",
+   "fix": "Keep the knees straight; reduce the load.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Heels never dropping below the platform.",
+   "fix": "Stand far enough back that the heel can drop into a stretch.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Toes in or out builds the inner or outer calf.",
+   "reality": "Foot angle changes EMG a little; there is no solid growth evidence for it. Pick a comfortable stance.",
+   "evidence": "modeled"
+  },
+  {
+   "myth": "Seated and standing calf raises do the same thing.",
+   "reality": "Standing raises grew the gastrocnemius far more; soleus growth was similar.",
+   "evidence": "supported",
+   "citations": [
+    "kinoshita2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Calf sets feel brutal near failure; keep the pause and the depth even on the last reps.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Lower slowly into the stretch and pause; don't drop into it.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "The shoulder pads load the spine (swap tag 'Loads the spine'). If that doesn't suit you, use the leg-press calf raise.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "leg-press-calf-raise",
+   "why": "Same straight-knee calf work without the load on your shoulders.",
+   "differences": [
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "seated-calf-raise",
+   "why": "No spinal load, but bent knees shift the work to the soleus.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less spinal loading"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "kinoshita2023"
+   ]
+  },
+  {
+   "goal": "bias:calves_soleus",
+   "goal_label": "More soleus",
+   "exercise_id": "seated-calf-raise",
+   "why": "Soleus rated 1 vs 0.7 here.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less spinal loading"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "kinoshita2023"
+   ]
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "spinal_load"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@seated-calf-raise.heads.calves_soleus": 1,
+  "exercises.json:@standing-calf-raise.heads.calves_gastroc": 1,
+  "exercises.json:@standing-calf-raise.heads.calves_soleus": 0.7,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "The standing-vs-seated result is one 12-week study in 14 untrained adults.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

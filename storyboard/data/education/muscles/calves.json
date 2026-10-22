@@ -1,0 +1,342 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "calves",
+  "kind": "muscle",
+  "title": "Calves",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "calves_gastroc",
+    "calves_soleus"
+  ],
+  "summary": "The gastrocnemius (the visible two-headed calf) and the soleus underneath. Both point the foot; only the gastrocnemius crosses the knee. Standing raises grew the gastrocnemius far more than seated raises, and the bottom (stretched) half of the raise grew it most.",
+  "what_it_is": {
+    "overview": "The app splits calves into two map regions: gastrocnemius and soleus. Weekly targets count both together.",
+    "heads": [
+      {
+        "id": "gastroc_medial",
+        "name": "Gastrocnemius, medial head",
+        "origin": "The back of the inner thigh bone, just above the knee.",
+        "insertion": "The heel bone, through the Achilles tendon.",
+        "fiber_direction": "Runs down the inner calf; the bigger of the two heads.",
+        "crosses_joints": [
+          "knee",
+          "ankle"
+        ],
+        "tracked_region": "calves_gastroc",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "gastroc_lateral",
+        "name": "Gastrocnemius, lateral head",
+        "origin": "The back of the outer thigh bone, just above the knee.",
+        "insertion": "The heel bone, through the Achilles tendon.",
+        "fiber_direction": "Runs down the outer calf.",
+        "crosses_joints": [
+          "knee",
+          "ankle"
+        ],
+        "tracked_region": "calves_gastroc",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "soleus",
+        "name": "Soleus",
+        "origin": "The back of the upper shin and fibula.",
+        "insertion": "The heel bone, through the Achilles tendon.",
+        "fiber_direction": "Broad, flat muscle under the gastrocnemius, visible at the sides of the lower calf.",
+        "crosses_joints": [
+          "ankle"
+        ],
+        "tracked_region": "calves_soleus",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "gastroc_medial",
+        "gastroc_lateral",
+        "soleus"
+      ],
+      "joint": "ankle",
+      "action": "Plantarflexion (pointing the foot, rising onto the toes).",
+      "detail": "The job in every calf raise and jump.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "gastroc_medial",
+        "gastroc_lateral"
+      ],
+      "joint": "knee",
+      "action": "Helps bend the knee.",
+      "detail": "Why bent-knee raises slacken the gastrocnemius.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "gastroc_medial",
+        "gastroc_lateral"
+      ],
+      "joint": "ankle",
+      "action": "Grew far more in standing (knee straight) than seated raises.",
+      "detail": "Lateral head 12.4% vs 1.7%, medial 9.2% vs 0.6% over 12 weeks; soleus growth was similar either way.",
+      "evidence": "supported",
+      "citations": [
+        "kinoshita2023"
+      ]
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Hamstrings",
+        "role": "Bend the knee with the gastrocnemius.",
+        "evidence": "biomechanics",
+        "muscle_id": "hamstrings"
+      },
+      {
+        "name": "Deep calf muscles and peroneals",
+        "role": "Help point the foot; not tracked.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Tibialis anterior",
+        "role": "Lifts the foot (dorsiflexion); not tracked.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In regular squats and lunges the calves steady the ankle; rated below 0.25 for calves.",
+        "evidence": "biomechanics"
+      },
+      {
+        "text": "Jumps load the calves hard and fast; jumps are rated 0.4 to 0.5.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "box-jump",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "depth-jump",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "bounding",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "nordic-curl",
+        "rating": 0.25,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "standing-leg-curl",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "glute-ham-raise",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "back-squat",
+        "rating": 0,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      },
+      {
+        "exercise_id": "walking-lunge",
+        "rating": 0,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 4 sets of standing calf raise (1.0), 3 sets of seated calf raise (1.0) and 3 sets of box jump (0.4) give 4 + 3 + 1.2 = 8.2, which the panel shows as 8 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "gastroc_medial",
+      "goal": "Gastrocnemius: knee straight",
+      "how": {
+        "joint_angle": "Knee straight or nearly straight.",
+        "stretch_position": "Heel dropped below the step at the bottom.",
+        "stance": "Standing, Smith machine or leg-press calf raise."
+      },
+      "swap_tags": [
+        "stretch_emphasis"
+      ],
+      "example_exercise_ids": [
+        "standing-calf-raise",
+        "smith-calf-raise",
+        "leg-press-calf-raise"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "kinoshita2023"
+      ],
+      "caveat": "Knee-straight raises keep the gastrocnemius long at the knee. The map rates these gastrocnemius 1.0."
+    },
+    {
+      "target": "all",
+      "goal": "Bottom half of the range",
+      "how": {
+        "stretch_position": "Deep heel drop; pause in the stretch; partials in the bottom half late in a set."
+      },
+      "swap_tags": [
+        "stretch_emphasis"
+      ],
+      "example_exercise_ids": [
+        "standing-calf-raise",
+        "leg-press-calf-raise"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "kassiano2023"
+      ],
+      "caveat": "Bottom-half partials grew the medial gastrocnemius 15.2% vs 6.7% for full range and 3.4% for top-half partials in 8 weeks (young women)."
+    },
+    {
+      "target": "soleus",
+      "goal": "Soleus: knee bent",
+      "how": {
+        "joint_angle": "Knee bent about 90 degrees.",
+        "stance": "Seated calf raise."
+      },
+      "swap_tags": [
+        "muscle_isolation"
+      ],
+      "example_exercise_ids": [
+        "seated-calf-raise"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "kinoshita2023"
+      ],
+      "caveat": "Soleus growth was similar seated or standing, so seated raises add soleus work but little gastrocnemius growth."
+    },
+    {
+      "target": "all",
+      "goal": "Less spinal load",
+      "how": {
+        "stance": "Leg-press or seated calf raise instead of a loaded standing raise."
+      },
+      "swap_tags": [
+        "spinal_load"
+      ],
+      "example_exercise_ids": [
+        "leg-press-calf-raise",
+        "seated-calf-raise"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Standing and Smith raises carry the 'Spinal loading' flag."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "standing-calf-raise",
+      "why": "Knee straight with a deep heel drop; grew the gastrocnemius far more than seated raises.",
+      "evidence": "supported",
+      "citations": [
+        "kinoshita2023",
+        "kassiano2023"
+      ]
+    },
+    {
+      "exercise_id": "smith-calf-raise",
+      "why": "Same knee-straight position, easy to load; stretch-biased in the app.",
+      "evidence": "supported",
+      "citations": [
+        "kinoshita2023"
+      ]
+    },
+    {
+      "exercise_id": "leg-press-calf-raise",
+      "why": "Knee-straight raise without load on the spine.",
+      "evidence": "supported",
+      "citations": [
+        "kinoshita2023"
+      ]
+    },
+    {
+      "exercise_id": "seated-calf-raise",
+      "why": "Soleus work with the knee bent; gastrocnemius rated 0.4 on the map.",
+      "evidence": "supported",
+      "citations": [
+        "kinoshita2023"
+      ]
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Bouncing out of the bottom, so the stretched range gets no controlled work.",
+      "evidence": "supported",
+      "citations": [
+        "kassiano2023"
+      ]
+    },
+    {
+      "text": "Doing only seated raises.",
+      "evidence": "supported",
+      "citations": [
+        "kinoshita2023"
+      ]
+    },
+    {
+      "text": "Tiny reps near the top.",
+      "evidence": "supported",
+      "citations": [
+        "kassiano2023"
+      ]
+    },
+    {
+      "text": "Bending the knees on standing raises so the quads help.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Drop the heel all the way, pause, then rise.",
+      "why": "Uses the stretched range, where the extra growth was seen.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Straight knees.",
+      "why": "Keeps the gastrocnemius long at the knee.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Push through the big toe.",
+      "why": "Keeps the ankle from rolling out.",
+      "evidence": "modeled"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.calves.min": 6,
+    "targets.json:targets.calves.max": 16,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@seated-calf-raise.heads.calves_gastroc": 0.4,
+    "exercises.json:@standing-calf-raise.heads.calves_gastroc": 1,
+    "exercises.json:@box-jump.muscles.calves": 0.4
+  },
+  "notes": [
+    "Weekly target in the app: 6 to 16 calves sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "The library has four dedicated calf exercises, so this page lists four best exercises.",
+    "Kinoshita 2023 and Kassiano 2023 were small, untrained-sample trials; directions agree."
+  ]
+}

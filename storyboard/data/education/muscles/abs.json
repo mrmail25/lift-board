@@ -1,0 +1,314 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "abs",
+  "kind": "muscle",
+  "title": "Abs",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "abs"
+  ],
+  "summary": "The rectus abdominis, the 'six-pack' muscle from the breastbone to the pubic bone. It curls the ribcage toward the pelvis and resists the spine being arched. Loaded crunches, leg raises done with a pelvic curl, and rollouts train it.",
+  "what_it_is": {
+    "overview": "The app's abs region is the rectus abdominis only; the obliques and serratus are a separate group. The 'six-pack' lines are tendon bands across one muscle, not separate muscles.",
+    "heads": [
+      {
+        "id": "rectus_abdominis",
+        "name": "Rectus abdominis",
+        "origin": "The top of the pubic bone at the front of the pelvis.",
+        "insertion": "The bottom of the breastbone and the cartilage of the fifth to seventh ribs.",
+        "fiber_direction": "Vertical, running straight up the front of the belly, crossed by three or four tendon bands.",
+        "crosses_joints": [
+          "spine"
+        ],
+        "tracked_region": "abs",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "rectus_abdominis"
+      ],
+      "joint": "spine",
+      "action": "Spinal flexion (curling the ribcage toward the pelvis).",
+      "detail": "The job in crunches and cable crunches.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "rectus_abdominis"
+      ],
+      "joint": "spine",
+      "action": "Posterior pelvic tilt (curling the pelvis toward the ribs).",
+      "detail": "What makes a leg raise an ab exercise instead of only a hip-flexor exercise.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "rectus_abdominis"
+      ],
+      "joint": "spine",
+      "action": "Resists arching of the spine (anti-extension).",
+      "detail": "The job in rollouts, planks and hollow holds.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "rectus_abdominis"
+      ],
+      "joint": "spine",
+      "action": "Helps brace the trunk with the obliques and deeper abdominal muscles.",
+      "detail": "Part of how the trunk stiffens under heavy squats and deadlifts.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Obliques",
+        "role": "Help flex and brace the trunk.",
+        "evidence": "biomechanics",
+        "muscle_id": "obliques"
+      },
+      {
+        "name": "Hip flexors",
+        "role": "Lift the legs in leg raises; not tracked.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Lower back (erector spinae)",
+        "role": "Extends the spine, the opposite of a crunch.",
+        "evidence": "biomechanics",
+        "muscle_id": "lower_back"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In squats, deadlifts and overhead presses the abs brace isometrically; the library rates most of these below 0.25 for abs, so they add no ab sets.",
+        "evidence": "modeled"
+      },
+      {
+        "text": "Rollouts and front levers load the abs at long length against arching; ab-wheel rollouts are rated 1.0.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "front-lever-row",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "cable-woodchop",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "turkish-get-up",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "med-ball-slam",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "suitcase-carry",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "kettlebell-front-squat",
+        "rating": 0.25,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "front-squat",
+        "rating": 0.2,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      },
+      {
+        "exercise_id": "overhead-press",
+        "rating": 0.2,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      },
+      {
+        "exercise_id": "back-squat",
+        "rating": 0.15,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 3 sets of cable crunch (1.0), 3 sets of hanging leg raise (1.0) and 3 sets of cable woodchop (0.4) give 3 + 3 + 1.2 = 7.2, which the panel shows as 7 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "rectus_abdominis",
+      "goal": "Loaded spinal flexion",
+      "how": {
+        "joint_angle": "Curl the ribcage down toward the pelvis; the hips stay still.",
+        "stretch_position": "Let the spine extend at the top of a cable crunch.",
+        "grip": "Rope or machine handles.",
+        "stance": "Kneeling at a cable or seated in a machine."
+      },
+      "swap_tags": [
+        "loading_potential",
+        "constant_tension"
+      ],
+      "example_exercise_ids": [
+        "cable-crunch",
+        "ab-crunch-machine",
+        "standing-cable-crunch"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Load can be added in small steps, like any other muscle."
+    },
+    {
+      "target": "rectus_abdominis",
+      "goal": "Leg raises that hit the abs",
+      "how": {
+        "joint_angle": "Lift the legs, then curl the pelvis up at the top.",
+        "grip": "Bar or captain's chair.",
+        "stance": "Hanging or on arm pads."
+      },
+      "swap_tags": [
+        "grip_demand"
+      ],
+      "example_exercise_ids": [
+        "hanging-leg-raise",
+        "captains-chair-knee-raise"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Without the pelvic curl, the hip flexors do most of the lift."
+    },
+    {
+      "target": "rectus_abdominis",
+      "goal": "Anti-extension at long length",
+      "how": {
+        "joint_angle": "Roll out until the body is long, without letting the low back sag.",
+        "stretch_position": "Arms overhead and body extended."
+      },
+      "swap_tags": [],
+      "example_exercise_ids": [
+        "ab-wheel-rollout",
+        "barbell-rollout",
+        "standing-ab-wheel-rollout"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Rollouts are hard where the abs are long. A stretch-growth benefit for abs is not tested."
+    },
+    {
+      "target": "rectus_abdominis",
+      "goal": "Upper vs lower abs",
+      "how": {
+        "joint_angle": "Crunches move the ribcage; reverse crunches and leg raises move the pelvis."
+      },
+      "swap_tags": [],
+      "example_exercise_ids": [
+        "cable-crunch",
+        "hanging-leg-raise"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "It is one muscle. Coaches use both styles for variety; separate upper or lower growth is a model."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "cable-crunch",
+      "why": "Loadable spinal flexion with cable tension.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "ab-crunch-machine",
+      "why": "Guided crunch with easy load steps.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "weighted-decline-crunch",
+      "why": "Free-weight crunch through a long range.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "hanging-leg-raise",
+      "why": "Pelvis-to-ribs curl; abs 1.0, obliques 0.5, needs grip.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "ab-wheel-rollout",
+      "why": "Anti-extension at long length; abs 1.0, obliques 0.6.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "standing-cable-crunch",
+      "why": "Standing variation for those who dislike kneeling.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Pulling with the arms or hips on cable crunches instead of curling the spine.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Swinging leg raises with no pelvic curl, so the hip flexors do the work.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Letting the low back sag at the end of a rollout.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Doing endless light reps; abs respond to hard sets like other muscles.",
+      "evidence": "modeled"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Ribs to hips.",
+      "why": "Describes spinal flexion.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Curl your tailbone up.",
+      "why": "Turns a leg raise into an ab exercise.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Squeeze your glutes and keep your ribs down on rollouts.",
+      "why": "Prevents arching.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Exhale as you curl.",
+      "why": "Helps full flexion.",
+      "evidence": "modeled"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.abs.min": 4,
+    "targets.json:targets.abs.max": 16,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@hanging-leg-raise.muscles.obliques": 0.5,
+    "exercises.json:@ab-wheel-rollout.muscles.obliques": 0.6,
+    "exercises.json:@ab-wheel-rollout.muscles.abs": 1
+  },
+  "notes": [
+    "Weekly target in the app: 4 to 16 abs sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "No ab growth study by exercise choice is on file, so nothing here is marked supported.",
+    "Visible abs depend mostly on body fat; this page is about training the muscle only.",
+    "No back-pain claims."
+  ]
+}

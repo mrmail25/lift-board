@@ -1,0 +1,164 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "dumbbell-kickback",
+ "kind": "exercise",
+ "exercise_id": "dumbbell-kickback",
+ "title": "Dumbbell Triceps Kickback",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A bent-over triceps extension with a dumbbell, hardest at the fully straightened position.",
+ "type": "isolation",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell"
+  ],
+  "text": "Needs: dumbbells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "triceps",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "triceps_long": 0.8,
+    "triceps_short": 1
+   },
+   "why": "Library rating 1 for triceps (main mover): each working set adds 1 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hinge forward with your upper arm pinned at your side, elbow bent.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Straighten your arm back until it's fully locked.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower slowly to 90 degrees.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep the upper arm fixed",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Extend the elbow fully",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Return slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Raise the elbow a little higher than your torso to keep tension on.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Swinging the upper arm.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "skull-crusher",
+   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "machine-triceps-extension",
+   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Better isolation.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Better isolation"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 1,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "peak_contraction_focus"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

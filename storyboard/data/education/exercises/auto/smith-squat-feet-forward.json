@@ -1,0 +1,201 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "smith-squat-feet-forward",
+ "kind": "exercise",
+ "exercise_id": "smith-squat-feet-forward",
+ "title": "Smith Squat (Feet Forward)",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A Smith squat with your feet set ahead of the bar, so you can sit back and down. Compared with the standard Smith squat, it moves some of the work to the glutes.",
+ "type": "primary",
+ "equipment": "smith machine",
+ "equipment_needs": {
+  "items": [
+   "smith_machine",
+   "plates"
+  ],
+  "text": "Needs: Smith machine; weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 0.9,
+   "band": "main",
+   "regions": {
+    "quads_rf": 0.3,
+    "quads_vasti": 0.9
+   },
+   "why": "Library rating 0.9 for quads (main mover): each working set adds 0.9 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for glutes (main mover): each working set adds 0.8 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for adductors (helper): each working set adds 0.6 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for hamstrings: below the counting floor, so it adds nothing to the weekly hamstrings total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bar on your upper back and put your feet about a foot in front of it.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Sit down and slightly back until your thighs are at least parallel.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive up through your whole foot.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Sit straight down",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your back upright",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive through the heels",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Wider and further forward means more glutes. Narrower and under the bar means more quads.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Going so shallow the quads barely bend.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "smith-squat",
+   "why": "Swap sheet: More stretch emphasis.",
+   "differences": [
+    "More stretch emphasis"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "belt-squat",
+   "why": "Swap sheet: More stretch emphasis, Less spinal loading.",
+   "differences": [
+    "More stretch emphasis",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "single-leg-press",
+   "why": "Swap sheet: One side at a time, Less spinal loading, Lower loading potential.",
+   "differences": [
+    "One side at a time",
+    "Less spinal loading",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 3,
+  "skill_demand": 1,
+  "flags": [
+   "spinal_load"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

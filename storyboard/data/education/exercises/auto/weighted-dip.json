@@ -1,0 +1,202 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "weighted-dip",
+ "kind": "exercise",
+ "exercise_id": "weighted-dip",
+ "title": "Weighted Dip",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A bodyweight press on parallel bars, adding weight once bodyweight reps get easy, for the lower chest and triceps.",
+ "type": "primary",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [
+   "dip_station",
+   "dip_belt",
+   "plates|dumbbell|kettlebell"
+  ],
+  "text": "Needs: dip bars or power tower; dip belt; weight plates or dumbbells or kettlebells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 0.8,
+   "band": "main",
+   "regions": {
+    "chest_upper": 0.32,
+    "chest_lower": 0.8
+   },
+   "why": "Library rating 0.8 for chest (main mover): each working set adds 0.8 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.8,
+   "band": "main",
+   "regions": {
+    "triceps_long": 0.4,
+    "triceps_short": 0.8
+   },
+   "why": "Library rating 0.8 for triceps (main mover): each working set adds 0.8 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for front delts (helper): each working set adds 0.5 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Support yourself on the bars with your arms straight, adding a belt or dumbbell if needed.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lean your torso forward slightly to work the chest more.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower until your shoulders are a little below your elbows, or as low as feels comfortable.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Press back up to straight arms.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lean your torso slightly forward",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower until shoulders are just below elbows",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive back up to lockout",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stop the descent at a depth your shoulders handle comfortably, and add depth over time.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Swinging the legs to kick the weight up.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "assisted-dip",
+   "why": "Swap sheet: More stable, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "dip-machine",
+   "why": "Swap sheet: Less stretch emphasis, More stable, Easier to learn.",
+   "differences": [
+    "Less stretch emphasis",
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "archer-push-up",
+   "why": "Swap sheet: Lower loading potential, More technical.",
+   "differences": [
+    "Lower loading potential",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "decline-bench-press",
+   "why": "Swap sheet: Less stretch emphasis, More systemic fatigue, Heavier loading potential.",
+   "differences": [
+    "Less stretch emphasis",
+    "More systemic fatigue",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

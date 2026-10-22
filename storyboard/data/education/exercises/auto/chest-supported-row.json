@@ -1,0 +1,218 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "chest-supported-row",
+ "kind": "exercise",
+ "exercise_id": "chest-supported-row",
+ "title": "Chest-Supported Row",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A row with your chest on a pad, so your lower back stays out of it and the upper back does the work.",
+ "type": "accessory",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine|adjustable_bench",
+   "gym_machine|dumbbell"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine) or adjustable (incline) bench; commercial gym machine (this exercise's own machine) or dumbbells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "upper_back",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for upper back (main mover): each working set adds 1 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.7,
+   "band": "helper",
+   "why": "Library rating 0.7 for lats (helper): each working set adds 0.7 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for rear delts (helper): each working set adds 0.6 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.5
+   },
+   "why": "Library rating 0.5 for traps (helper): each working set adds 0.5 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for biceps (helper): each working set adds 0.4 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Lie face-down on an incline bench or row machine pad.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Let the weights or handles hang at arm's length.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Row your elbows back until your upper arms are level with your torso.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower slowly.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep your chest on the pad",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Row the elbows back past your torso",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower until arms are straight",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your chest on the pad. Lifting off turns it into a cheat row.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Lifting the chest off the pad to cheat the weight up.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "high-to-low-row-machine",
+   "why": "Swap sheet: More stretch emphasis, Less upper-back focus.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-back focus"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "inverted-row",
+   "why": "Swap sheet: Less stable, Lower loading potential, More technical.",
+   "differences": [
+    "Less stable",
+    "Lower loading potential",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "chest-supported-dumbbell-row",
+   "why": "Swap sheet: More technical.",
+   "differences": [
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "wide-grip-cable-row",
+   "why": "Swap sheet: Steadier cable tension.",
+   "differences": [
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 1,
+  "flags": [
+   "upper_back_thickness_bias"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

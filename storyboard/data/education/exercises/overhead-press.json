@@ -1,0 +1,309 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "overhead-press",
+ "kind": "exercise",
+ "exercise_id": "overhead-press",
+ "title": "Overhead Press",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Standing barbell overhead press: front delts 1, triceps 0.6, side delts 0.5. The heaviest way to train overhead pressing.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "squat_rack"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; rack with J-hooks (power rack, squat stands or bench uprights)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "front_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "The front delts raise the arm overhead.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "side_delts",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The side delts help (0.5).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.6,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.3,
+    "triceps_short": 0.6
+   },
+   "why": "The triceps lock out the elbow; short heads 0.6, long head 0.3.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.3,
+   "band": "minor",
+   "regions": {
+    "traps_upper": 0.3,
+    "traps_mid_lower": 0.12
+   },
+   "why": "Upper traps rotate the shoulder blades up at the top.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "abs",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "The trunk braces to stay upright; below the counting floor (0.2).",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "obliques",
+   "rating": 0.15,
+   "band": "not_counted",
+   "why": "The obliques help brace; below the counting floor (0.15).",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Bar in a rack at upper-chest height.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Grip just outside the shoulders; elbows slightly in front of the bar.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Feet hip width, glutes and abs tight.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Squeeze glutes and brace your abs",
+   "why": "Moving the head back lets the bar travel in a straight line.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Move your head back as the bar passes your face",
+   "why": "Bar over mid-foot at the top is balanced.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Finish with the bar over mid-foot",
+   "why": "Squeezing the glutes stops the lower back arching.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Squeeze your glutes so you don't lean back into the lift.",
+   "why": "Standing presses gave higher delt EMG but a lower 1RM than seated presses.",
+   "evidence": "biomechanics",
+   "from_library": true,
+   "citations": [
+    "saeterbakken2013"
+   ]
+  },
+  {
+   "cue": "Head through at the top",
+   "why": "Finishes with the bar over the shoulders and mid-foot.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "stance",
+   "change": "Press seated",
+   "target_muscle_ids": [
+    "front_delts"
+   ],
+   "effect": "More load, a little less delt EMG, less balance demand.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "citations": [
+    "saeterbakken2013"
+   ],
+   "caveat": "EMG and 1RM, not growth."
+  },
+  {
+   "kind": "grip",
+   "change": "Slightly narrower grip",
+   "target_muscle_ids": [
+    "triceps"
+   ],
+   "effect": "More triceps work.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Mechanics only."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "front_delts"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Leaning back hard and turning it into an incline press.",
+   "fix": "Lighten the load until you can press without leaning back.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Leaning far back.",
+   "fix": "Squeeze the glutes and abs.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Pressing the bar forward around the face.",
+   "fix": "Move the head, not the bar.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Overhead pressing builds the side delts as well as raises.",
+   "reality": "Pressing works the front delts most; side delts are rated 0.5.",
+   "evidence": "biomechanics"
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Ramp up before your first working set. For primary lifts the app suggests 50% x 8, 70% x 4 and 85% x 2 when the first working load is 60 kg or more, and 50% x 8 then 75% x 3 below that.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp",
+   "note": "High-load warm-ups improved strength performance in a systematic review; the percentages are coaching convention.",
+   "citations": [
+    "mccrary2015"
+   ]
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 6-10 rep range. Stop the set before you lean back to finish reps.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "machine-shoulder-press",
+   "why": "Machine path: low fatigue, easy to push close to failure.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "seated-dumbbell-shoulder-press",
+   "why": "Seated dumbbell version.",
+   "differences": [
+    "Less spinal loading",
+    "Lower loading potential",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "incline-barbell-bench-press",
+   "why": "Lying on a bench: no standing balance; more chest.",
+   "differences": [
+    "Less spinal loading",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "landmine-press-one-arm",
+   "why": "One-arm press on an angle.",
+   "differences": [
+    "One side at a time",
+    "Less spinal loading",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 3,
+  "flags": [
+   "spinal_load"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@overhead-press.heads.triceps_long": 0.3,
+  "exercises.json:@overhead-press.heads.triceps_short": 0.6,
+  "exercises.json:@overhead-press.muscles.abs": 0.2,
+  "exercises.json:@overhead-press.muscles.obliques": 0.15,
+  "exercises.json:@overhead-press.muscles.side_delts": 0.5,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.rep_range_by_type.primary.0": 6,
+  "rules.json:logger.rep_range_by_type.primary.1": 10,
+  "rules.json:logger.target_rir_by_type.primary": 3,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three_from_kg": 60
+ },
+ "notes": [
+  "Overhead press findings are EMG and 1RM only.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

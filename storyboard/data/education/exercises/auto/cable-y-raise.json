@@ -1,0 +1,171 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "cable-y-raise",
+ "kind": "exercise",
+ "exercise_id": "cable-y-raise",
+ "title": "Cable Y-Raise",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A raise from crossed low cables up into a Y shape, for the side delts and lower traps.",
+ "type": "isolation",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "cable"
+  ],
+  "text": "Needs: cable station with an adjustable pulley."
+ },
+ "muscles": [
+  {
+   "muscle_id": "side_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for side delts (main mover): each working set adds 1 of a set to the weekly side delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.3,
+    "traps_mid_lower": 0.5
+   },
+   "why": "Library rating 0.5 for traps (helper): each working set adds 0.5 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for front delts: below the counting floor, so it adds nothing to the weekly front delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand between two low pulleys and cross the cables so each hand holds the opposite handle.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Raise your arms up and out into a Y above shoulder height.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower slowly back across your body.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Raise the arms up in a Y shape",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep elbows slightly bent",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Use light weight. Your shoulders should do this, not your back.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Shrugging the traps up as the arms rise.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "cable-lateral-raise",
+   "why": "Swap sheet: Less upper-trap work, One side at a time.",
+   "differences": [
+    "Less upper-trap work",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "seated-dumbbell-lateral-raise",
+   "why": "Swap sheet: Less upper-trap work, Less isolation, Less stable.",
+   "differences": [
+    "Less upper-trap work",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "upper_trap_involvement",
+   "constant_tension"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

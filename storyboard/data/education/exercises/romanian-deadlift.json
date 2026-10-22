@@ -1,0 +1,349 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "romanian-deadlift",
+ "kind": "exercise",
+ "exercise_id": "romanian-deadlift",
+ "title": "Romanian Deadlift",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "A hip hinge from standing with soft knees: the hamstrings work from a deep stretch with the glutes and lower back helping. Hamstrings 1, glutes and lower back 0.7.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "hamstrings",
+   "rating": 1,
+   "band": "main",
+   "why": "Pushing the hips back bends the hip with the knee almost fixed, so the hamstrings lengthen under load and then extend the hip to stand up.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.7,
+   "band": "helper",
+   "why": "The glutes extend the hip with the hamstrings, most near the bottom where the hip is most bent.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.7,
+   "band": "helper",
+   "why": "The spinal erectors hold the back flat against a long lever; isometric but hard work, rated 0.7.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "You hold the bar the whole set, so grip is real work and can limit the set (swap tag 'More grip demand').",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "The adductor magnus also extends the hip, so it helps.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.3,
+   "band": "minor",
+   "regions": {
+    "traps_upper": 0.3,
+    "traps_mid_lower": 0.2
+   },
+   "why": "Upper traps hold the shoulders against the bar's pull: minor.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "The lats keep the bar close to the legs: minor.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Mid-back holds the shoulders set: minor.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Hip muscles steady the pelvis: minor.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Start from a rack or deadlift the bar up first, feet hip width.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Grip just outside the thighs; straps are fine if grip runs out first.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Stand tall, soften the knees and set your back flat.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Push the hips back",
+   "why": "The hips moving back is what lengthens the hamstrings.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the bar close to your legs",
+   "why": "A close bar keeps the lever arm short for the lower back.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Stop at a deep hamstring stretch and stand up",
+   "why": "Stopping where your back stays flat keeps the stretch in the hamstrings.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "The movement is hips back, not bending down. Your knee angle barely changes.",
+   "why": "If the knees bend more, it becomes a deadlift and the hamstrings get shorter.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Shoulders over the bar",
+   "why": "Keeps the bar path vertical and close.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "range",
+   "change": "Go deeper only as far as the back stays flat",
+   "target_muscle_ids": [
+    "hamstrings",
+    "glutes"
+   ],
+   "effect": "More hip bend, more hamstring stretch.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Depth is limited by hamstring length; mid-shin is typical."
+  },
+  {
+   "kind": "stance",
+   "change": "Slightly more knee bend",
+   "target_muscle_ids": [
+    "glutes"
+   ],
+   "effect": "Lets you go deeper at the hip, with more glute and less hamstring stretch.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "caveat": "Too much knee bend turns it into a conventional deadlift."
+  },
+  {
+   "kind": "grip",
+   "change": "Use straps",
+   "target_muscle_ids": [
+    "hamstrings"
+   ],
+   "effect": "Removes grip as the limit so the hamstrings reach a hard set.",
+   "swap_tags": [
+    "grip_demand"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Train grip separately if you want it."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Rounding the back to reach the bar lower.",
+   "fix": "Stop where your back starts to round; that is your current depth.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "text": "Squatting the bar down by bending the knees a lot.",
+   "fix": "Keep the knee angle almost fixed; hips back.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Letting the bar drift forward away from the legs.",
+   "fix": "Drag the bar down the thighs.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Looking up hard and over-arching at the top.",
+   "fix": "Neutral neck; finish standing tall.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "The RDL is a lower-back exercise.",
+   "reality": "The hamstrings and glutes are the main movers; the lower back holds position (rated 0.7).",
+   "evidence": "modeled"
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Ramp up before your first working set. For primary lifts the app suggests 50% x 8, 70% x 4 and 85% x 2 when the first working load is 60 kg or more, and 50% x 8 then 75% x 3 below that.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp",
+   "note": "High-load warm-ups improved strength performance in a systematic review; the percentages are coaching convention.",
+   "citations": [
+    "mccrary2015"
+   ]
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 6-10 rep range. With a heavy barbell hinge, stay a little further from failure; end the set when you can't keep the back flat.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Lower under control to your flat-back depth every rep; no bouncing at the bottom.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Start from a rack at hip height or pull from the floor with good form; set the bar down rather than dropping it from a rounded position.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "landmine-rdl",
+   "why": "The landmine path takes some load off the spine and is easier to learn.",
+   "differences": [
+    "Less spinal loading",
+    "Lower loading potential",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "dumbbell-rdl",
+   "why": "Same hinge with dumbbells; less load to handle.",
+   "differences": [
+    "Lower loading potential",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "seated-leg-curl",
+   "why": "Hamstrings at the knee with no back or grip demand; grew the hamstrings well when the hip is bent.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Less systemic fatigue"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021"
+   ]
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "45-degree-hyperextension",
+   "why": "Hip-extension work with far less load and fatigue; hip-extension training grew the hamstrings in a 10-week study.",
+   "differences": [
+    "Less stretch emphasis",
+    "Better isolation",
+    "Less systemic fatigue"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "bourne2017"
+   ]
+  },
+  {
+   "goal": "less_grip",
+   "goal_label": "Less grip demand",
+   "exercise_id": "good-morning",
+   "why": "Bar on the back, so grip is not a limit; harder to learn.",
+   "differences": [
+    "Less grip demand"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 3,
+  "flags": [
+   "spinal_load",
+   "grip_demand"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@romanian-deadlift.muscles.lower_back": 0.7,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.rep_range_by_type.primary.0": 6,
+  "rules.json:logger.rep_range_by_type.primary.1": 10,
+  "rules.json:logger.target_rir_by_type.primary": 3,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three_from_kg": 60
+ },
+ "notes": [
+  "Hinge ratings are a model; hamstring growth from RDLs specifically is not compared to curls in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

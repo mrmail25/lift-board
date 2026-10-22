@@ -1,0 +1,256 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "close-grip-bench-press",
+ "kind": "exercise",
+ "exercise_id": "close-grip-bench-press",
+ "title": "Close-Grip Bench Press",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Bench press with a shoulder-width grip: triceps 1, chest 0.6. The heaviest triceps press.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "squat_rack",
+   "flat_bench"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; rack with J-hooks (power rack, squat stands or bench uprights); flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "triceps",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "triceps_long": 0.5,
+    "triceps_short": 1
+   },
+   "why": "A narrower grip adds elbow bend, so the triceps do more; short heads 1, long head 0.5.",
+   "evidence": "biomechanics",
+   "citations": [
+    "lehman2005"
+   ]
+  },
+  {
+   "muscle_id": "chest",
+   "rating": 0.6,
+   "band": "helper",
+   "regions": {
+    "chest_upper": 0.42,
+    "chest_lower": 0.6
+   },
+   "why": "The chest still helps press (0.6).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Front delts help.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Grip about shoulder width.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Shoulder blades back, feet planted.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Elbows close to the body.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep elbows tucked close to your sides",
+   "why": "Lowering to the lower chest.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to your lower chest",
+   "why": "Elbows close.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Press to lockout",
+   "why": "Full lockout.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Not too narrow",
+   "why": "Shoulder width is enough; narrower adds stress at the wrists without more triceps.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "triceps"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Gripping so narrow that the wrists bend back.",
+   "fix": "Set the shoulder blades back before you unrack.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Grip too narrow.",
+   "fix": "Shoulder width.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Elbows flaring.",
+   "fix": "Keep them close.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Ramp up before your first working set. For primary lifts the app suggests 50% x 8, 70% x 4 and 85% x 2 when the first working load is 60 kg or more, and 50% x 8 then 75% x 3 below that.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp",
+   "note": "High-load warm-ups improved strength performance in a systematic review; the percentages are coaching convention.",
+   "citations": [
+    "mccrary2015"
+   ]
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 6-10 rep range. Keep heavy sets a few reps short of failure without a spotter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "safeties",
+   "text": "Bench with a spotter or with safety arms set just above chest height.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "bias:triceps_long",
+   "goal_label": "More triceps long head",
+   "exercise_id": "overhead-cable-triceps-extension",
+   "why": "Overhead: grew the long head more than pushdowns.",
+   "differences": [
+    "More stretch emphasis",
+    "Triceps long-head bias",
+    "Better isolation"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2023"
+   ]
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "triceps-pushdown",
+   "why": "Cable pushdown: low fatigue.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "weighted-dip",
+   "why": "Dip: chest and triceps.",
+   "differences": [
+    "More stretch emphasis",
+    "Less systemic fatigue",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "skull-crusher",
+   "why": "Lying extension.",
+   "differences": [
+    "More stretch emphasis",
+    "Better isolation",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@close-grip-bench-press.heads.triceps_long": 0.5,
+  "exercises.json:@close-grip-bench-press.heads.triceps_short": 1,
+  "exercises.json:@close-grip-bench-press.muscles.chest": 0.6,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.rep_range_by_type.primary.0": 6,
+  "rules.json:logger.rep_range_by_type.primary.1": 10,
+  "rules.json:logger.target_rir_by_type.primary": 3,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three_from_kg": 60
+ },
+ "notes": [
+  "Grip findings are EMG only.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

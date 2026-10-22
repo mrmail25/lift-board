@@ -1,0 +1,253 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "lying-leg-curl",
+ "kind": "exercise",
+ "exercise_id": "lying-leg-curl",
+ "title": "Lying Leg Curl",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Face-down leg curl: hamstrings 1. With the hip straight, the hamstrings work at a shorter length than in the seated curl.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "leg_curl_lying"
+  ],
+  "text": "Needs: lying leg curl machine or attachment."
+ },
+ "muscles": [
+  {
+   "muscle_id": "hamstrings",
+   "rating": 1,
+   "band": "main",
+   "why": "The hamstrings bend the knee. Lying flat keeps the hip straight, so they are shorter than when seated, where the hip is bent.",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "hamstrings",
+     "rating": 1,
+     "text": "Seated leg curls grew the hamstrings more than lying leg curls.",
+     "evidence": "supported",
+     "citations": [
+      "maeo2021"
+     ]
+    }
+   ]
+  },
+  {
+   "muscle_id": "calves",
+   "rating": 0.2,
+   "band": "not_counted",
+   "regions": {
+    "calves_gastroc": 0.2,
+    "calves_soleus": 0.0
+   },
+   "why": "The gastrocnemius crosses the knee and helps bend it; below the counting floor (0.2).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Line your knees up with the machine's pivot, just off the end of the pad.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Pad on the lower calves, just above the heels.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Hold the handles and keep the hips pressed down.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep hips pressed into the pad",
+   "why": "Hips down keeps the hamstrings, not the lower back, doing the lift.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Curl the heels toward your glutes",
+   "why": "Curling fully brings the heels close to the glutes.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lower slowly to straight legs",
+   "why": "Lowering to near-straight knees is the stretch.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Point the toes slightly down if your calves cramp",
+   "why": "The gastrocnemius helps bend the knee; pointing the foot takes some of it out.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "angle",
+   "change": "A pillow or wedge under the hips, or a machine with an angled pad",
+   "target_muscle_ids": [
+    "hamstrings"
+   ],
+   "effect": "Bends the hip a little, which lengthens the hamstrings.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Seated curls do this more."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "hamstrings"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Lifting the hips to start the curl.",
+   "fix": "Keep the hips pinned; lighten the load if they lift.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Hips lifting to start the curl.",
+   "fix": "Press the hips into the pad.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Stopping halfway down.",
+   "fix": "Lower until the knees are nearly straight.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Lying and seated leg curls work the hamstrings equally.",
+   "reality": "Seated curls grew the hamstrings more.",
+   "evidence": "supported",
+   "citations": [
+    "maeo2021"
+   ]
+  },
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Machine isolation; low-risk to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "seated-leg-curl",
+   "why": "Hip bent, so the hamstrings work longer; grew them more.",
+   "differences": [
+    "More stretch emphasis"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021"
+   ]
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "standing-leg-curl",
+   "why": "One leg at a time standing.",
+   "differences": [
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "nordic-curl",
+   "why": "Bodyweight knee curl, lowering only; very hard.",
+   "differences": [
+    "More stretch emphasis",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "stiff-leg-dumbbell-deadlift",
+   "why": "Hip hinge with dumbbells for the hamstrings.",
+   "differences": [
+    "More stretch emphasis",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@lying-leg-curl.muscles.calves": 0.2,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Seated vs lying curl finding is one 12-week MRI study.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

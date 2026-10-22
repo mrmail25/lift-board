@@ -1,0 +1,250 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "trap-bar-deadlift",
+ "kind": "exercise",
+ "exercise_id": "trap-bar-deadlift",
+ "title": "Trap-Bar Deadlift",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A deadlift inside a hexagonal bar with neutral handles, which keeps you more upright and shares the work between the quads and hips.",
+ "type": "primary",
+ "equipment": "trap bar",
+ "equipment_needs": {
+  "items": [
+   "trap_bar",
+   "plates"
+  ],
+  "text": "Needs: trap (hex) bar; weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "glutes",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for glutes (main mover): each working set adds 0.8 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "quads",
+   "rating": 0.7,
+   "band": "helper",
+   "regions": {
+    "quads_rf": 0.25,
+    "quads_vasti": 0.7
+   },
+   "why": "Library rating 0.7 for quads (helper): each working set adds 0.7 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.6,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.6,
+    "traps_mid_lower": 0.3
+   },
+   "why": "Library rating 0.6 for traps (helper): each working set adds 0.6 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for lower back (helper): each working set adds 0.6 of a set to the weekly lower back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for forearms (helper): each working set adds 0.5 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for hamstrings (helper): each working set adds 0.5 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for adductors (helper): each working set adds 0.5 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for upper back (minor): each working set adds 0.3 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand in the centre of the bar and grip the handles.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Sit your hips down until your shoulders are over the handles, then brace.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive the floor away and stand tall.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower by pushing your hips back.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Brace and push through the floor",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stand up with hips and knees together",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower under control",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Use the high handles to start if your mobility is limited.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the hips rise before the bar moves.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "romanian-deadlift",
+   "why": "Swap sheet: More stretch emphasis, Less upper-trap work, More technical.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work",
+    "More technical"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "smith-rdl",
+   "why": "Swap sheet: More stretch emphasis, Less upper-trap work, More stable.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "landmine-rdl",
+   "why": "Swap sheet: More stretch emphasis, Less upper-trap work, Less spinal loading.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-rdl",
+   "why": "Swap sheet: More stretch emphasis, Less upper-trap work, Lower loading potential.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 2,
+  "flags": [
+   "upper_trap_involvement",
+   "spinal_load",
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

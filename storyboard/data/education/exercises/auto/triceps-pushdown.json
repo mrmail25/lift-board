@@ -1,0 +1,181 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "triceps-pushdown",
+ "kind": "exercise",
+ "exercise_id": "triceps-pushdown",
+ "title": "Triceps Pushdown",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A cable pushdown for the triceps.",
+ "type": "isolation",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "cable"
+  ],
+  "text": "Needs: cable station with an adjustable pulley."
+ },
+ "muscles": [
+  {
+   "muscle_id": "triceps",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "triceps_long": 0.6,
+    "triceps_short": 1
+   },
+   "why": "Library rating 1 for triceps (main mover): each working set adds 1 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Face a high pulley holding a bar or rope.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pin your elbows to your sides.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Push down until your arms are straight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Let it rise slowly until your forearms pass parallel to the floor.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep upper arms still",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Push down to full lockout",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Return until forearms pass parallel",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your elbows still. Only your forearms should move.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Leaning over the stack and pushing with body weight.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "cable-overhead-rope-extension",
+   "why": "Swap sheet: More stretch emphasis, Triceps long-head bias.",
+   "differences": [
+    "More stretch emphasis",
+    "Triceps long-head bias"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "peak_contraction",
+   "goal_label": "Peak-contraction focus",
+   "exercise_id": "dumbbell-kickback",
+   "why": "Swap sheet: Less stretch emphasis, Peak-contraction focus, Less isolation.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "dip-machine",
+   "why": "Swap sheet: Less isolation, More systemic fatigue, Heavier loading potential.",
+   "differences": [
+    "Less isolation",
+    "More systemic fatigue",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "constant_tension"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

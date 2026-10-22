@@ -1,0 +1,337 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "adductors",
+  "kind": "muscle",
+  "title": "Adductors",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "adductors"
+  ],
+  "summary": "The inner-thigh muscles. They pull the thigh toward the midline, and the large adductor magnus is also a strong hip extender. Deep squats grew them more than half squats, and squats grew them more than hip thrusts.",
+  "what_it_is": {
+    "overview": "One region in the app, the inner thigh. It covers the adductor magnus, longus and brevis, gracilis and pectineus.",
+    "heads": [
+      {
+        "id": "magnus",
+        "name": "Adductor magnus",
+        "origin": "The lower pubic bone and the sitting bone.",
+        "insertion": "The back of the thigh bone and the inner knee (adductor tubercle).",
+        "fiber_direction": "Large, fan-shaped; its rear part runs vertically like a hamstring.",
+        "crosses_joints": [
+          "hip"
+        ],
+        "tracked_region": "adductors",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "longus_brevis",
+        "name": "Adductor longus and brevis",
+        "origin": "The front of the pubic bone.",
+        "insertion": "The back of the thigh bone (linea aspera), upper to middle.",
+        "fiber_direction": "Run down and outward across the upper inner thigh.",
+        "crosses_joints": [
+          "hip"
+        ],
+        "tracked_region": "adductors",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "gracilis",
+        "name": "Gracilis",
+        "origin": "The lower pubic bone.",
+        "insertion": "The inner top of the shin (pes anserinus).",
+        "fiber_direction": "Long and thin, down the inner thigh.",
+        "crosses_joints": [
+          "hip",
+          "knee"
+        ],
+        "tracked_region": "adductors",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "pectineus",
+        "name": "Pectineus",
+        "origin": "The top of the pubic bone.",
+        "insertion": "Just below the lesser trochanter at the top of the thigh bone.",
+        "fiber_direction": "Short, at the top of the inner thigh.",
+        "crosses_joints": [
+          "hip"
+        ],
+        "tracked_region": "adductors",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "magnus",
+        "longus_brevis",
+        "gracilis",
+        "pectineus"
+      ],
+      "joint": "hip",
+      "action": "Hip adduction (pulling the thigh in).",
+      "detail": "The job in adduction machines and cable adduction.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "magnus"
+      ],
+      "joint": "hip",
+      "action": "Hip extension, strongest from deep hip flexion.",
+      "detail": "Why deep squats and lunges load the adductors.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "magnus"
+      ],
+      "joint": "hip",
+      "action": "Grew more with full squats than half squats, and more with squats than hip thrusts.",
+      "detail": "Full squats 6.2% vs 2.7% for half squats; in a set-matched comparison, squats grew the adductors more than hip thrusts.",
+      "evidence": "supported",
+      "citations": [
+        "kubo2019",
+        "plotkin2023"
+      ]
+    },
+    {
+      "head_ids": [
+        "longus_brevis",
+        "pectineus"
+      ],
+      "joint": "hip",
+      "action": "Help flex the hip from an extended position.",
+      "detail": "Minor in training.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "gracilis"
+      ],
+      "joint": "knee",
+      "action": "Helps bend the knee.",
+      "detail": "Minor in training.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Glutes and hamstrings",
+        "role": "Extend the hip with the adductor magnus.",
+        "evidence": "biomechanics",
+        "muscle_id": "glutes"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Abductors (glute medius and minimus)",
+        "role": "Move the thigh out to the side.",
+        "evidence": "biomechanics",
+        "muscle_id": "abductors"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In squats and lunges the adductors control the knees and hips; most squats are rated 0.4 to 0.6.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "back-squat",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "belt-squat",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "high-foot-leg-press",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "leg-press",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "bulgarian-split-squat",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "romanian-deadlift",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "deadlift",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "hip-thrust",
+        "rating": 0,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      },
+      {
+        "exercise_id": "leg-extension",
+        "rating": 0,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 4 sets of back squat (0.6), 3 sets of Romanian deadlift (0.4) and 2 sets of hip adduction machine (1.0) give 2.4 + 1.2 + 2 = 5.6, which the panel shows as 5.5 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "magnus",
+      "goal": "Adductor magnus: deep squats",
+      "how": {
+        "joint_angle": "Full-depth squat or deep leg press.",
+        "stretch_position": "Bottom of the squat with the hips deeply bent.",
+        "stance": "Shoulder width or slightly wider, toes turned out."
+      },
+      "swap_tags": [
+        "stretch_emphasis",
+        "loading_potential"
+      ],
+      "example_exercise_ids": [
+        "back-squat",
+        "belt-squat",
+        "high-foot-leg-press"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "kubo2019",
+        "plotkin2023"
+      ],
+      "caveat": "Stance width was not tested in these studies."
+    },
+    {
+      "target": "longus_brevis",
+      "goal": "Direct adduction",
+      "how": {
+        "joint_angle": "Pull the thighs together from a wide position.",
+        "stretch_position": "Legs wide at the start."
+      },
+      "swap_tags": [
+        "muscle_isolation"
+      ],
+      "example_exercise_ids": [
+        "hip-adduction-machine",
+        "standing-cable-adduction"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Isolation adds adductor sets without spinal load."
+    },
+    {
+      "target": "all",
+      "goal": "Wide-stance compounds",
+      "how": {
+        "stance": "Wider stance, toes out."
+      },
+      "swap_tags": [],
+      "example_exercise_ids": [
+        "smith-squat-feet-forward",
+        "belt-squat"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "A wider stance is commonly used for adductors; the size of the shift is a model."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "hip-adduction-machine",
+      "why": "Direct adductor isolation; adductors 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "standing-cable-adduction",
+      "why": "One leg at a time with cable tension; adductors 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "back-squat",
+      "why": "Deep squats grew the adductors more than half squats and more than hip thrusts.",
+      "evidence": "supported",
+      "citations": [
+        "kubo2019",
+        "plotkin2023"
+      ]
+    },
+    {
+      "exercise_id": "belt-squat",
+      "why": "Deep squat without spinal load; adductors 0.6.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "high-foot-leg-press",
+      "why": "Feet high, deep hip bend; adductors 0.6.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "smith-squat-feet-forward",
+      "why": "Feet-forward squat; adductors 0.6.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Half squats when the adductors are a goal.",
+      "evidence": "supported",
+      "citations": [
+        "kubo2019"
+      ]
+    },
+    {
+      "text": "Swinging into the end of range on adduction machines.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Starting adductor isolation at a wide, heavy stretch without building up to it.",
+      "evidence": "modeled"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Knees track over the toes, sit deep.",
+      "why": "Keeps the hips bending deeply.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Squeeze the pads together slowly; open with control.",
+      "why": "Controls both ends of the range.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Spread the floor apart.",
+      "why": "Loads the hips in squats.",
+      "evidence": "modeled"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.adductors.min": 3,
+    "targets.json:targets.adductors.max": 12,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@back-squat.muscles.adductors": 0.6
+  },
+  "notes": [
+    "Weekly target in the app: 3 to 12 adductors sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "Kubo 2019 and Plotkin 2023 measured adductors as a group; head-level data are not separated here.",
+    "Targets are low and marked extrapolated because squats and lunges give lots of indirect work."
+  ]
+}

@@ -1,0 +1,178 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "standing-lateral-raise-machine",
+ "kind": "exercise",
+ "exercise_id": "standing-lateral-raise-machine",
+ "title": "Standing Lateral Raise Machine",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A standing machine lateral raise with handles, which feels like a dumbbell raise on a fixed path with more even tension.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "side_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for side delts (main mover): each working set adds 1 of a set to the weekly side delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.35,
+   "band": "minor",
+   "regions": {
+    "traps_upper": 0.35,
+    "traps_mid_lower": 0.1
+   },
+   "why": "Library rating 0.35 for traps (minor): each working set adds 0.35 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Library rating 0.25 for front delts (minor): each working set adds 0.25 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand side-on or facing the machine with the pivot lined up with your shoulders, and take the handles.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Raise your arms out to the sides up to shoulder height.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower slowly until the stack nearly touches down.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Raise the arms out to the sides",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stop at shoulder height",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Gripping handles lets the traps help more than elbow pads do, so keep your shoulders down.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Shrugging up to lift the pads.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "seated-dumbbell-lateral-raise",
+   "why": "Swap sheet: Less isolation, Less stable.",
+   "differences": [
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "cable-y-raise",
+   "why": "Swap sheet: More upper-trap work, Steadier cable tension.",
+   "differences": [
+    "More upper-trap work",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "cable-lateral-raise",
+   "why": "Swap sheet: One side at a time, Steadier cable tension.",
+   "differences": [
+    "One side at a time",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

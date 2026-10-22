@@ -1,0 +1,192 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "med-ball-chest-pass",
+ "kind": "exercise",
+ "exercise_id": "med-ball-chest-pass",
+ "title": "Medicine Ball Chest Pass",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "An explosive two-hand pass from the chest against a wall, for upper-body power.",
+ "type": "accessory",
+ "equipment": "medicine ball",
+ "equipment_needs": {
+  "items": [
+   "medicine_ball"
+  ],
+  "text": "Needs: medicine ball or slam ball."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 0.45,
+   "band": "helper",
+   "regions": {
+    "chest_upper": 0.35,
+    "chest_lower": 0.45
+   },
+   "why": "Library rating 0.45 for chest (helper): each working set adds 0.45 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.35,
+   "band": "minor",
+   "regions": {
+    "triceps_long": 0.15,
+    "triceps_short": 0.35
+   },
+   "why": "Library rating 0.35 for triceps (minor): each working set adds 0.35 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for front delts (minor): each working set adds 0.3 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hold the ball at your chest facing a wall.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Throw it hard into the wall from your chest.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Catch it and repeat.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Push the ball explosively",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Follow through",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Catch with soft arms",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Throw it fast. The throw is the point.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Throwing with the arms only and no leg drive.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "plyo-push-up",
+   "why": "Similar muscles; bodyweight instead of medicine ball.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "dip-machine",
+   "why": "Swap sheet: More stable, Heavier loading potential, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Heavier loading potential",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "landmine-press-two-arm",
+   "why": "Swap sheet: More systemic fatigue, Heavier loading potential.",
+   "differences": [
+    "More systemic fatigue",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "landmine-press-one-arm",
+   "why": "Swap sheet: One side at a time, More systemic fatigue, Heavier loading potential.",
+   "differences": [
+    "One side at a time",
+    "More systemic fatigue",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

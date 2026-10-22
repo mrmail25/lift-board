@@ -1,0 +1,204 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "smith-bench-press",
+ "kind": "exercise",
+ "exercise_id": "smith-bench-press",
+ "title": "Smith Machine Bench Press",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A flat press on a fixed bar path. It's easy to push close to failure safely without a spotter.",
+ "type": "primary",
+ "equipment": "smith machine",
+ "equipment_needs": {
+  "items": [
+   "smith_machine",
+   "plates",
+   "flat_bench"
+  ],
+  "text": "Needs: Smith machine; weight plates; flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "chest_upper": 0.7,
+    "chest_lower": 1
+   },
+   "why": "Library rating 1 for chest (main mover): each working set adds 1 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for front delts (helper): each working set adds 0.5 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.25,
+    "triceps_short": 0.5
+   },
+   "why": "Library rating 0.5 for triceps (helper): each working set adds 0.5 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bench so the bar lines up with your mid-chest.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Grip just wider than shoulder width and unhook the bar.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower it under control to your mid-chest.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Press back up and re-hook at the top.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Unrack with shoulder blades pulled back",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Touch the bar to your mid-chest",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Press to lockout",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Use the safety stops so you can take sets close to failure alone.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Positioning the bench so the bar lands on your neck or stomach.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "iso-lateral-chest-press",
+   "why": "Swap sheet: More stretch emphasis, Lower loading potential.",
+   "differences": [
+    "More stretch emphasis",
+    "Lower loading potential"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "push-up",
+   "why": "Swap sheet: Less stable, Lower loading potential, More technical.",
+   "differences": [
+    "Less stable",
+    "Lower loading potential",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-bench-press",
+   "why": "Swap sheet: More stretch emphasis, Less stable, More systemic fatigue.",
+   "differences": [
+    "More stretch emphasis",
+    "Less stable",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 3,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

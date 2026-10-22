@@ -1,0 +1,431 @@
+{
+ "schema": "lift-board.education.muscle/1",
+ "id": "biceps",
+ "kind": "muscle",
+ "title": "Biceps",
+ "status": "final",
+ "updated": "2026-10-21",
+ "region_ids": [
+  "biceps"
+ ],
+ "summary": "The front of the upper arm: the two-headed biceps plus the brachialis underneath it. They bend the elbow, and the biceps also turns the palm up. Curls with the elbow straight and loaded in the stretch are the best-supported way to grow them.",
+ "what_it_is": {
+  "overview": "In the app the biceps region covers the biceps brachii (long and short heads) and the visible strip of brachialis next to it. The map does not split the heads, because the evidence for choosing exercises by head is thin. The brachioradialis, the big muscle on top of the forearm near the elbow, is counted under forearms.",
+  "heads": [
+   {
+    "id": "biceps_long",
+    "name": "Biceps, long head (outer)",
+    "origin": "A small bump just above the shoulder socket (the supraglenoid tubercle). Its tendon runs over the top of the upper-arm bone and down a groove at the front of the shoulder.",
+    "insertion": "Joins the short head in one tendon onto the radius just below the elbow (the radial tuberosity), plus a flat band into the forearm fascia (the bicipital aponeurosis).",
+    "fiber_direction": "Long, parallel fibres running straight down the front of the arm.",
+    "crosses_joints": [
+     "shoulder",
+     "elbow",
+     "radioulnar"
+    ],
+    "tracked_region": "biceps",
+    "evidence": "biomechanics"
+   },
+   {
+    "id": "biceps_short",
+    "name": "Biceps, short head (inner)",
+    "origin": "The coracoid process, a hook of the shoulder blade that sticks forward under the collarbone.",
+    "insertion": "Same shared tendon as the long head: the radial tuberosity and the bicipital aponeurosis.",
+    "fiber_direction": "Long, parallel fibres running straight down the inner front of the arm.",
+    "crosses_joints": [
+     "shoulder",
+     "elbow",
+     "radioulnar"
+    ],
+    "tracked_region": "biceps",
+    "evidence": "biomechanics"
+   },
+   {
+    "id": "brachialis",
+    "name": "Brachialis",
+    "origin": "The front of the lower half of the upper-arm bone (humerus), under the biceps.",
+    "insertion": "The ulna just below the elbow (the coronoid process and ulnar tuberosity).",
+    "fiber_direction": "Runs straight down the arm under the biceps and shows as a strip on the outer arm between biceps and triceps.",
+    "crosses_joints": [
+     "elbow"
+    ],
+    "tracked_region": "biceps",
+    "evidence": "biomechanics"
+   }
+  ]
+ },
+ "what_it_does": [
+  {
+   "head_ids": [
+    "biceps_long",
+    "biceps_short",
+    "brachialis"
+   ],
+   "joint": "elbow",
+   "action": "Elbow flexion (bending the elbow).",
+   "detail": "The main job of every curl. The brachialis works in every grip because it pulls on the ulna, which does not rotate.",
+   "evidence": "biomechanics"
+  },
+  {
+   "head_ids": [
+    "biceps_long",
+    "biceps_short"
+   ],
+   "joint": "radioulnar",
+   "action": "Supination (turning the palm up).",
+   "detail": "Strongest with the elbow bent near 90 degrees. With the palm turned down the biceps is at a mechanical disadvantage, so curls with a palms-down grip shift work to the brachialis and brachioradialis.",
+   "evidence": "biomechanics"
+  },
+  {
+   "head_ids": [
+    "biceps_long",
+    "biceps_short"
+   ],
+   "joint": "shoulder",
+   "action": "Helps with shoulder flexion (raising the arm forward).",
+   "detail": "A minor role next to the front delts. Because both heads cross the shoulder, where the upper arm sits changes how stretched they are: arm behind the body lengthens them, arm in front shortens them.",
+   "evidence": "biomechanics"
+  },
+  {
+   "head_ids": [
+    "biceps_long"
+   ],
+   "joint": "shoulder",
+   "action": "Helps steady the top of the upper-arm bone in the socket.",
+   "detail": "The long-head tendon runs over the top of the joint. This is a support role, not something you train for size.",
+   "evidence": "biomechanics"
+  },
+  {
+   "head_ids": [
+    "biceps_short"
+   ],
+   "joint": "shoulder",
+   "action": "Helps bring the arm across the body (horizontal adduction).",
+   "detail": "Minor, alongside the chest and coracobrachialis.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "relationships": {
+  "synergists": [
+   {
+    "name": "Brachialis",
+    "muscle_id": "biceps",
+    "role": "Elbow flexion in every grip.",
+    "evidence": "biomechanics"
+   },
+   {
+    "name": "Brachioradialis",
+    "muscle_id": "forearms",
+    "role": "Elbow flexion, strongest with a neutral (thumbs-up) grip, as in hammer curls.",
+    "evidence": "biomechanics"
+   },
+   {
+    "name": "Front delts",
+    "muscle_id": "front_delts",
+    "role": "Shoulder flexion, where the biceps only helps.",
+    "evidence": "biomechanics"
+   }
+  ],
+  "antagonists": [
+   {
+    "name": "Triceps",
+    "muscle_id": "triceps",
+    "role": "Straightens the elbow; the direct opposite of a curl.",
+    "evidence": "biomechanics"
+   },
+   {
+    "name": "Pronators (forearm)",
+    "muscle_id": "forearms",
+    "role": "Turn the palm down, the opposite of supination.",
+    "evidence": "biomechanics"
+   }
+  ],
+  "stabilizer_roles": [
+   {
+    "text": "In rows and pulldowns the biceps and brachialis bend the elbow while the back muscles move the upper arm, so they are working helpers, not just stabilizers. That is why the library credits pulls with 0.4 to 0.8 for biceps.",
+    "evidence": "biomechanics"
+   },
+   {
+    "text": "The library rates biceps at 0 for deadlifts and carries. Holding a bar with straight arms is mostly a grip and forearm job, so no biceps sets are credited.",
+    "evidence": "modeled"
+   }
+  ],
+  "indirect": [
+   {
+    "exercise_id": "chin-up",
+    "rating": 0.8,
+    "role": "main",
+    "note": "Palms-up grip puts the biceps in a strong pulling position; rated as a main mover, the highest compound for biceps."
+   },
+   {
+    "exercise_id": "yates-row",
+    "rating": 0.65,
+    "role": "helper",
+    "note": "Underhand row."
+   },
+   {
+    "exercise_id": "pull-up",
+    "rating": 0.6,
+    "role": "helper"
+   },
+   {
+    "exercise_id": "neutral-grip-lat-pulldown",
+    "rating": 0.6,
+    "role": "helper"
+   },
+   {
+    "exercise_id": "close-grip-pulldown",
+    "rating": 0.6,
+    "role": "helper"
+   },
+   {
+    "exercise_id": "lat-pulldown",
+    "rating": 0.5,
+    "role": "helper"
+   },
+   {
+    "exercise_id": "barbell-row",
+    "rating": 0.5,
+    "role": "helper"
+   },
+   {
+    "exercise_id": "seated-cable-row",
+    "rating": 0.5,
+    "role": "helper"
+   },
+   {
+    "exercise_id": "one-arm-dumbbell-row",
+    "rating": 0.5,
+    "role": "helper"
+   },
+   {
+    "exercise_id": "wide-grip-lat-pulldown",
+    "rating": 0.4,
+    "role": "helper"
+   },
+   {
+    "exercise_id": "upright-row",
+    "rating": 0.3,
+    "role": "minor"
+   },
+   {
+    "exercise_id": "pseudo-planche-push-up",
+    "rating": 0.2,
+    "role": "not_counted",
+    "note": "Below the 0.25 cut-off, so it adds nothing to biceps sets."
+   }
+  ],
+  "indirect_note": "Each working set adds the exercise's biceps rating to your weekly biceps total, and ratings under 0.25 count as 0. So 4 sets of chin-ups (0.8), 3 sets of lat pulldowns (0.5) and 6 sets of curls (1.0) give 3.2 + 1.5 + 6 = 10.7, which the panel shows as 10.5 (rounded to the nearest 0.5). The full list of exercises that credit biceps comes live from exercises.json; the rows above are examples. The ratings are coaching estimates.",
+  "indirect_evidence": "modeled"
+ },
+ "bias": [
+  {
+   "target": "biceps_long",
+   "goal": "Load the long head in its stretch",
+   "how": {
+    "joint_angle": "Upper arm behind the body (shoulder extended) while you curl.",
+    "stretch_position": "Elbow fully straight with the arm back, so the long head is lengthened across both the shoulder and the elbow.",
+    "grip": "Palms up (supinated).",
+    "stance": "Lie back on an incline bench, or face away from a low cable."
+   },
+   "swap_tags": [
+    "biceps_long_head_bias",
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [
+    "incline-dumbbell-curl",
+    "bayesian-cable-curl"
+   ],
+   "evidence": "biomechanics",
+   "citations": [
+    "kobayashi2026"
+   ],
+   "caveat": "The mechanics are clear (the long head crosses the shoulder). In a 12-week MRI study in untrained adults (one arm each way), incline curls grew the biceps brachii more than preacher curls (+22.1% vs +18.9%), while preacher curls grew the brachialis and brachioradialis more; total elbow-flexor growth was similar. The long head was not measured separately, so long-head bias itself stays biomechanics. Same wording as the swap tag: 'Biceps long-head stretch'."
+  },
+  {
+   "target": "biceps_short",
+   "goal": "Short-head emphasis",
+   "how": {
+    "joint_angle": "Upper arm in front of the body (shoulder flexed), as on a preacher pad or a spider-curl bench.",
+    "stretch_position": "With the arm forward the long head is slack at the shoulder, so coaches reason the short head does relatively more.",
+    "grip": "Palms up, sometimes a slightly wider grip on a bar.",
+    "stance": "Chest or arm supported on a pad."
+   },
+   "swap_tags": [
+    "muscle_isolation",
+    "stability"
+   ],
+   "example_exercise_ids": [
+    "preacher-curl",
+    "spider-curl"
+   ],
+   "evidence": "modeled",
+   "citations": [],
+   "caveat": "A coaching model. Head-specific growth from arm position has not been shown for the biceps."
+  },
+  {
+   "target": "all",
+   "goal": "Train all elbow flexors at long length",
+   "how": {
+    "joint_angle": "Hardest part of the rep near a straight elbow.",
+    "stretch_position": "Lower all the way to a straight (not locked-out-and-relaxed) elbow every rep; preacher curls with a dumbbell, barbell or plate-loaded machine are hardest there.",
+    "grip": "Palms up.",
+    "stance": "Arm on a preacher pad."
+   },
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [
+    "preacher-curl",
+    "machine-preacher-curl",
+    "ez-bar-curl"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "sato2021",
+    "wolf2023",
+    "wolf2025"
+   ],
+   "caveat": "Sato 2021 compared two partial ranges in untrained people. A cable preacher curl that is hardest near the top grew the biceps about as well as a barbell preacher curl (Nunes 2020), so stretch emphasis helps but is not the only way."
+  },
+  {
+   "target": "brachialis",
+   "goal": "More brachialis and brachioradialis",
+   "how": {
+    "joint_angle": "Normal curl path.",
+    "stretch_position": "Full range; the brachialis is stretched with a straight elbow regardless of grip.",
+    "grip": "Neutral (thumbs up) for hammer curls, or palms down for reverse curls. Both take the biceps out of its best supination position.",
+    "stance": "Standing or seated."
+   },
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "hammer-curl",
+    "cable-rope-hammer-curl",
+    "reverse-curl"
+   ],
+   "evidence": "biomechanics",
+   "citations": [],
+   "caveat": "The library credits these to forearms as well (hammer curl: biceps 0.8, forearms 0.8; reverse curl: biceps 0.6, forearms 1.0)."
+  }
+ ],
+ "best_exercises": [
+  {
+   "exercise_id": "preacher-curl",
+   "why": "Arm fixed on the pad and hardest near the straight-elbow stretch, the range that grew the elbow flexors most in a direct comparison; it grew the brachialis and brachioradialis more than incline curls.",
+   "evidence": "supported",
+   "citations": [
+    "sato2021",
+    "kobayashi2026"
+   ]
+  },
+  {
+   "exercise_id": "incline-dumbbell-curl",
+   "why": "Arm behind the body stretches the long head at the bottom; in a 12-week MRI study it grew the biceps brachii more than preacher curls, with similar total elbow-flexor growth.",
+   "evidence": "supported",
+   "citations": [
+    "kobayashi2026"
+   ]
+  },
+  {
+   "exercise_id": "bayesian-cable-curl",
+   "why": "Long-head stretch like the incline curl, with steady cable tension; lengthened partials of it grew the biceps as well as full reps.",
+   "evidence": "supported",
+   "citations": [
+    "wolf2025"
+   ]
+  },
+  {
+   "exercise_id": "ez-bar-curl",
+   "why": "The most loadable curl and easy to progress in small steps; the angled grip is more comfortable for many wrists.",
+   "evidence": "biomechanics"
+  },
+  {
+   "exercise_id": "cable-preacher-curl",
+   "why": "Preacher support with tension kept on near the top; grew the biceps about as well as a barbell preacher curl.",
+   "evidence": "supported",
+   "citations": [
+    "nunes2020"
+   ]
+  },
+  {
+   "exercise_id": "hammer-curl",
+   "why": "Neutral grip shares the work with the brachialis and brachioradialis, so it also credits forearms 0.8.",
+   "evidence": "biomechanics"
+  },
+  {
+   "exercise_id": "chin-up",
+   "why": "A heavy compound pull that credits biceps 0.8 while training the lats; it covers a good share of weekly biceps volume.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Swinging the torso or hips to start the rep. The load moves, but the biceps skip the hardest part.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Stopping short of a straight elbow at the bottom. That cuts out the stretched range, the part with the best growth evidence.",
+   "evidence": "supported",
+   "citations": [
+    "sato2021"
+   ]
+  },
+  {
+   "text": "Letting the elbows drift far forward at the top, which turns the end of the curl into a front raise and takes tension off the biceps.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Curling with the wrist and losing the palm-up position as you tire.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Assuming rows and pulldowns cover the biceps. They help (0.4 to 0.8 per set), but most people still need some direct curls to reach their weekly biceps minimum.",
+   "evidence": "modeled"
+  }
+ ],
+ "coach_cues": [
+  {
+   "cue": "Pin your elbows to your sides.",
+   "why": "Keeps the work on elbow flexion.",
+   "evidence": "biomechanics"
+  },
+  {
+   "cue": "All the way down, no bounce.",
+   "why": "Gets the stretched range under control.",
+   "evidence": "biomechanics"
+  },
+  {
+   "cue": "Turn your pinkies up.",
+   "why": "Full supination uses the biceps' second job.",
+   "evidence": "biomechanics"
+  },
+  {
+   "cue": "Two seconds down.",
+   "why": "Control the lowering so the stretch is loaded, not dropped.",
+   "evidence": "modeled"
+  },
+  {
+   "cue": "Stop when the bar stops moving.",
+   "why": "Ends the set near failure without cheating it up.",
+   "evidence": "modeled"
+  }
+ ],
+ "app_values": {
+  "targets.json:targets.biceps.min": 8,
+  "targets.json:targets.biceps.max": 18,
+  "targets.json:counting.min_rating_to_count": 0.25,
+  "targets.json:counting.round_to": 0.5,
+  "targets.json:levelMinFactor.beginner": 0.6,
+  "targets.json:levelMinFactor.intermediate": 0.8,
+  "exercises.json:@chin-up.muscles.biceps": 0.8,
+  "exercises.json:@hammer-curl.muscles.forearms": 0.8,
+  "exercises.json:@reverse-curl.muscles.forearms": 1,
+  "exercises.json:@reverse-curl.muscles.biceps": 0.6
+ },
+ "notes": [
+  "Weekly target in the app: 8 to 18 biceps sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+  "The heads are not split on the map. Incline curls grew the biceps brachii more and preacher curls grew the brachialis and brachioradialis more (Kobayashi 2026, untrained adults, 12 weeks, MRI), but no study has measured the long and short heads separately, so head-level bias notes stay biomechanics or modeled.",
+  "Supported claims here come from elbow-flexor studies that measured biceps and brachialis together, often in untrained people over a few weeks.",
+  "Anatomy varies between people (tendon lengths, extra heads). This page describes the typical layout and makes no medical or injury claims."
+ ]
+}

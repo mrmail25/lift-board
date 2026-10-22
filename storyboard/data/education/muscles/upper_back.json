@@ -1,0 +1,376 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "upper_back",
+  "kind": "muscle",
+  "title": "Upper back",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "upper_back"
+  ],
+  "summary": "The muscles around the shoulder blades below the traps: the rhomboids, the rotator-cuff muscles on the back of the blade (infraspinatus, teres minor) and the teres major. Rows are the main tool; they move and steady the shoulder blades and turn the arm.",
+  "what_it_is": {
+    "overview": "In the app, 'upper back' is the region under the traps from the shoulder blade out to the rear delt and down to the lats. The mid and lower traps are in the traps group, and the teres major is drawn here even though it works with the lats.",
+    "heads": [
+      {
+        "id": "rhomboids",
+        "name": "Rhomboids (major and minor)",
+        "origin": "The spines of the lowest neck vertebra and the upper four or five mid-back vertebrae (about C7 to T5).",
+        "insertion": "The inner edge of the shoulder blade.",
+        "fiber_direction": "Run down and out from the spine to the shoulder blade.",
+        "crosses_joints": [
+          "scapulothoracic"
+        ],
+        "tracked_region": "upper_back",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "infraspinatus",
+        "name": "Infraspinatus",
+        "origin": "The back of the shoulder blade below its spine.",
+        "insertion": "The back of the top of the upper-arm bone (the greater tubercle).",
+        "fiber_direction": "Converge from the blade toward the shoulder.",
+        "crosses_joints": [
+          "shoulder"
+        ],
+        "tracked_region": "upper_back",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "teres_minor",
+        "name": "Teres minor",
+        "origin": "The outer edge of the shoulder blade.",
+        "insertion": "Just below the infraspinatus on the greater tubercle.",
+        "fiber_direction": "Run up and out along the outer edge of the blade.",
+        "crosses_joints": [
+          "shoulder"
+        ],
+        "tracked_region": "upper_back",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "teres_major",
+        "name": "Teres major",
+        "origin": "The lower outer corner of the shoulder blade.",
+        "insertion": "The front of the upper-arm bone, next to the lat tendon.",
+        "fiber_direction": "Run up and out to the armpit alongside the lats.",
+        "crosses_joints": [
+          "shoulder"
+        ],
+        "tracked_region": "upper_back",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "rhomboids"
+      ],
+      "joint": "scapulothoracic",
+      "action": "Retraction (pulling the shoulder blades together) and turning them downward.",
+      "detail": "The squeeze at the end of a row.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "infraspinatus",
+        "teres_minor"
+      ],
+      "joint": "shoulder",
+      "action": "External rotation (turning the upper arm out) and holding the ball of the shoulder centred.",
+      "detail": "The main job in face pulls; a steadying role in presses and pulls.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "teres_major"
+      ],
+      "joint": "shoulder",
+      "action": "Extension, adduction and internal rotation, like the lats.",
+      "detail": "Works in every row and pulldown.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Mid and lower traps",
+        "role": "Retract and steady the shoulder blades with the rhomboids.",
+        "evidence": "biomechanics",
+        "muscle_id": "traps"
+      },
+      {
+        "name": "Rear delts",
+        "role": "Pull the arm back in rows and face pulls.",
+        "evidence": "biomechanics",
+        "muscle_id": "rear_delts"
+      },
+      {
+        "name": "Lats",
+        "role": "Shoulder extension with the teres major.",
+        "evidence": "biomechanics",
+        "muscle_id": "lats"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Serratus anterior",
+        "role": "Pulls the shoulder blades forward around the ribs (push-ups, punches).",
+        "evidence": "biomechanics",
+        "muscle_id": "obliques"
+      },
+      {
+        "name": "Chest and pec minor",
+        "role": "Bring the arm and shoulder forward.",
+        "evidence": "biomechanics",
+        "muscle_id": "chest"
+      },
+      {
+        "name": "Internal rotators (subscapularis, chest, lats)",
+        "role": "Turn the arm in, opposing the infraspinatus.",
+        "evidence": "biomechanics",
+        "muscle_id": "lats"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "During bench presses and squats the rhomboids hold the shoulder blades back as a base; the library credits front squats 0.4 for upper back.",
+        "evidence": "modeled"
+      },
+      {
+        "text": "The infraspinatus and teres minor help keep the shoulder centred during pressing and pulling; that is a steadying role, not a size stimulus.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "one-arm-dumbbell-row",
+        "rating": 0.8,
+        "role": "main"
+      },
+      {
+        "exercise_id": "pull-up",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "deadlift",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "face-pull",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "reverse-pec-deck",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "lat-pulldown",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "front-squat",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "chin-up",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "romanian-deadlift",
+        "rating": 0.25,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "farmer-carry",
+        "rating": 0.2,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 4 sets of chest-supported row (1.0), 4 sets of pull-up (0.5) and 3 sets of face pull (0.5) give 4 + 2 + 1.5 = 7.5, which the panel shows as 7.5 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "rhomboids",
+      "goal": "Mid-back thickness",
+      "how": {
+        "joint_angle": "Elbows out about 45 to 90 degrees, pulling to the lower chest.",
+        "stretch_position": "Let the shoulder blades spread forward at the start.",
+        "grip": "Wide overhand or a wide neutral bar.",
+        "stance": "Chest supported or a stable hinge."
+      },
+      "swap_tags": [
+        "upper_back_thickness_bias"
+      ],
+      "example_exercise_ids": [
+        "chest-supported-row",
+        "seated-cable-row",
+        "seal-row"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "Same wording as the swap tag 'Upper-back thickness focus'. Width vs thickness is a coaching model."
+    },
+    {
+      "target": "infraspinatus",
+      "goal": "External-rotation work",
+      "how": {
+        "joint_angle": "Arm out to the side, rotating the hand back.",
+        "grip": "Rope or handles.",
+        "stance": "Standing at a cable at face height."
+      },
+      "swap_tags": [
+        "constant_tension"
+      ],
+      "example_exercise_ids": [
+        "face-pull",
+        "ring-face-pull"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Face pulls train rear delts and rotator cuff together."
+    },
+    {
+      "target": "all",
+      "goal": "Rows without lower-back fatigue",
+      "how": {
+        "stance": "Chest on a pad or a machine seat."
+      },
+      "swap_tags": [
+        "spinal_load",
+        "stability",
+        "systemic_fatigue"
+      ],
+      "example_exercise_ids": [
+        "chest-supported-row",
+        "seal-row",
+        "iso-lateral-row"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Swapping a bent-over row for a supported row shows 'Less spinal loading'."
+    },
+    {
+      "target": "teres_major",
+      "goal": "Teres major with the lats",
+      "how": {
+        "joint_angle": "Pulldowns and pull-ups, arm moving down from overhead.",
+        "grip": "Any."
+      },
+      "swap_tags": [
+        "lat_width_bias"
+      ],
+      "example_exercise_ids": [
+        "wide-grip-lat-pulldown",
+        "pull-up"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "The teres works in every vertical pull; the 'Lat width focus' idea includes it."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "chest-supported-row",
+      "why": "Upper back 1.0 with no lower-back fatigue.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "seated-cable-row",
+      "why": "Upper back 1.0 with steady cable tension.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "seal-row",
+      "why": "Lying on a bench removes cheating and spinal load.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "barbell-row",
+      "why": "Heavy free-weight row; upper back 1.0, but more fatigue and spinal load.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "wide-grip-cable-row",
+      "why": "Elbows-out row aimed at the mid-back and rear delts.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "iso-lateral-row",
+      "why": "Plate-loaded, each arm independent.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "inverted-row",
+      "why": "Bodyweight row that scales by body angle.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "face-pull",
+      "why": "Rotator cuff, rear delts and mid-back together; upper back 0.5.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Heaving the torso so momentum moves the weight.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Shrugging the shoulders up instead of pulling them back.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Never letting the shoulder blades spread at the start of the rep.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Treating face pulls as a heavy lift rather than a controlled one.",
+      "evidence": "modeled"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Shoulder blades back and down to finish.",
+      "why": "Uses the rhomboids and mid traps.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Let your shoulders reach forward at the start.",
+      "why": "Uses the full range.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Chest stays on the pad.",
+      "why": "Removes body swing.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Pull your hands apart on face pulls.",
+      "why": "Adds external rotation.",
+      "evidence": "modeled"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.upper_back.min": 10,
+    "targets.json:targets.upper_back.max": 20,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@front-squat.muscles.upper_back": 0.4
+  },
+  "notes": [
+    "Weekly target in the app: 10 to 20 upper back sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "No growth study on rhomboids or the rotator cuff by exercise choice is on file, so nothing here is marked supported.",
+    "The app's upper-back region groups several small muscles; targets come from pooled data."
+  ]
+}

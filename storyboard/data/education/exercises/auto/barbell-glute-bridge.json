@@ -1,0 +1,204 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "barbell-glute-bridge",
+ "kind": "exercise",
+ "exercise_id": "barbell-glute-bridge",
+ "title": "Barbell Glute Bridge",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A hip thrust done with your back on the floor, with a shorter range but quick to set up.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "glutes",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for glutes (main mover): each working set adds 1 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for hamstrings (minor): each working set adds 0.3 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for adductors (minor): each working set adds 0.3 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Lie on the floor with a padded bar across your hips and your knees bent.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive through your heels to raise your hips until they're in line with your body.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Squeeze, then lower.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Drive the hips up",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Squeeze the glutes at the top",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower until the plates touch",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Tuck your chin and keep your ribs down.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Pushing through the toes.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "smith-hip-thrust",
+   "why": "Swap sheet: More stable, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "hip-thrust-machine",
+   "why": "Swap sheet: Better isolation, More stable, Lower loading potential.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "cable-kickback",
+   "why": "Swap sheet: Better isolation, More stable, One side at a time.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "45-degree-hyperextension",
+   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Less systemic fatigue.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less systemic fatigue"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 1,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 3,
+  "skill_demand": 2,
+  "flags": [
+   "peak_contraction_focus"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

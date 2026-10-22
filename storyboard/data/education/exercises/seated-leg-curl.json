@@ -1,0 +1,269 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "seated-leg-curl",
+ "kind": "exercise",
+ "exercise_id": "seated-leg-curl",
+ "title": "Seated Leg Curl",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "A machine leg curl sitting up, so the hamstrings work with the hips bent and stay long. The app's main hamstring isolation: hamstrings 1.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "leg_curl_seated"
+  ],
+  "text": "Needs: seated leg curl machine or attachment."
+ },
+ "muscles": [
+  {
+   "muscle_id": "hamstrings",
+   "rating": 1,
+   "band": "main",
+   "why": "The hamstrings bend the knee. Three of the four also cross the hip; sitting bends the hip and lengthens them, so they work from a longer length than in a lying curl.",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "hamstrings",
+     "rating": 1,
+     "text": "Seated leg curls grew the hamstrings more than lying leg curls in a 12-week study.",
+     "evidence": "supported",
+     "citations": [
+      "maeo2021"
+     ]
+    }
+   ]
+  }
+ ],
+ "setup": [
+  {
+   "text": "Line your knees up with the machine's pivot.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Lower pad just above the heels, thigh pad snug so your hips can't lift.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Hold the handles and sit tall, then lean forward a little.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lean slightly forward",
+   "why": "Leaning forward bends the hip more, lengthening the hamstrings further.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Curl the pad down and under",
+   "why": "Pull the heels down and back under the seat.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Return to nearly straight legs",
+   "why": "Nearly straight at the top keeps the muscle long at the start of each rep.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Leaning forward adds stretch. Research suggests seated curls build more than lying curls.",
+   "why": "The tip reflects the seated-vs-lying study cited above.",
+   "evidence": "supported",
+   "from_library": true,
+   "citations": [
+    "maeo2021"
+   ]
+  },
+  {
+   "cue": "Point the toes up (ankle flexed)",
+   "why": "Coaches find it easier to keep tension on the hamstrings this way; not tested for growth.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "angle",
+   "change": "Lean the torso forward",
+   "target_muscle_ids": [
+    "hamstrings"
+   ],
+   "effect": "More hip flexion, so the hamstrings are longer throughout.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "The extra lean has not been tested on its own."
+  },
+  {
+   "kind": "range",
+   "change": "Finish hard sets with partials near straight legs",
+   "target_muscle_ids": [
+    "hamstrings"
+   ],
+   "effect": "Keeps working in the lengthened range after full reps run out.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "wolf2023"
+   ],
+   "caveat": "The edge for lengthened partials across studies is small and uncertain."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "hamstrings"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Letting the weight snap back up between reps.",
+   "fix": "Control the return to nearly straight legs; reduce the load if the stack slams.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Thigh pad too loose, so the hips rise.",
+   "fix": "Snug the pad before the first set.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Short reps that never reach the stretch.",
+   "fix": "Return to nearly straight legs every rep.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Lying and seated curls are interchangeable.",
+   "reality": "Seated curls grew the hamstrings more, likely because the hip is bent and the muscle is longer.",
+   "evidence": "supported",
+   "citations": [
+    "maeo2021"
+   ]
+  },
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Machine curls are easy to push close to failure; stop when the hips lift or the range shrinks.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "standing-leg-curl",
+   "why": "One leg at a time to even out sides.",
+   "differences": [
+    "Less stretch emphasis",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "nordic-curl",
+   "why": "No machine; very hard eccentric hamstring work. Start with assisted or partial reps.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-rdl",
+   "why": "Trains the hamstrings at the hip instead of the knee, with a long stretch.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "glute-ham-raise",
+   "why": "Hip and knee work together, with more total load and fatigue.",
+   "differences": [
+    "Less isolation",
+    "More systemic fatigue",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "The seated-vs-lying finding is from one 12-week study.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

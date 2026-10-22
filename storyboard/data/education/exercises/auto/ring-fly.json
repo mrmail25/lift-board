@@ -1,0 +1,191 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "ring-fly",
+ "kind": "exercise",
+ "exercise_id": "ring-fly",
+ "title": "Ring Fly",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A bodyweight chest fly on rings that loads the chest heavily at long length. You adjust the difficulty with your body angle.",
+ "type": "isolation",
+ "equipment": "rings",
+ "equipment_needs": {
+  "items": [
+   "rings"
+  ],
+  "text": "Needs: gymnastic rings."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "chest_upper": 0.7,
+    "chest_lower": 1
+   },
+   "why": "Library rating 1 for chest (main mover): each working set adds 1 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for front delts (helper): each working set adds 0.4 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abs",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for abs: below the counting floor, so it adds nothing to the weekly abs total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hold the rings at chest height and lean forward with your arms straight and slightly bent.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Let your arms open wide as your chest lowers.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Squeeze your arms back together to rise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Open the arms wide",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep elbows slightly bent",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Squeeze back to the start",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Start very upright. It gets hard quickly as you lean further forward.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Going wider than you can bring back with control.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "cable-crossover-low-to-high",
+   "why": "Swap sheet: Less stretch emphasis, Better isolation, More stable.",
+   "differences": [
+    "Less stretch emphasis",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "incline-dumbbell-fly",
+   "why": "Swap sheet: More stable, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "cable-fly",
+   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-fly",
+   "why": "Swap sheet: More stable, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 2,
+  "stability": 1,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

@@ -1,0 +1,221 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "smith-hip-thrust",
+ "kind": "exercise",
+ "exercise_id": "smith-hip-thrust",
+ "title": "Smith Machine Hip Thrust",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A hip thrust on a fixed bar path, which is easier to set up than with a barbell.",
+ "type": "primary",
+ "equipment": "smith machine",
+ "equipment_needs": {
+  "items": [
+   "smith_machine",
+   "plates",
+   "flat_bench"
+  ],
+  "text": "Needs: Smith machine; weight plates; flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "glutes",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for glutes (main mover): each working set adds 1 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for hamstrings (helper): each working set adds 0.4 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for abductors (minor): each working set adds 0.3 of a set to the weekly abductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "quads",
+   "rating": 0.2,
+   "band": "not_counted",
+   "regions": {
+    "quads_rf": 0.08,
+    "quads_vasti": 0.2
+   },
+   "why": "Library rating 0.2 for quads: below the counting floor, so it adds nothing to the weekly quads total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Sit with your upper back against a bench and the padded bar across your hips.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Plant your feet flat, about hip width apart.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive your hips up until your body is straight from knees to shoulders.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Squeeze your glutes at the top, then lower under control.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Drive the hips up",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Finish with shins vertical",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Squeeze glutes before lowering",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your chin tucked and ribs down so the glutes, not your lower back, finish the rep.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Pushing through the toes instead of the heels.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "glute-kickback-machine",
+   "why": "Swap sheet: Better isolation, One side at a time, Less systemic fatigue.",
+   "differences": [
+    "Better isolation",
+    "One side at a time",
+    "Less systemic fatigue"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "hip-thrust-machine",
+   "why": "Swap sheet: Better isolation, Lower loading potential.",
+   "differences": [
+    "Better isolation",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "reverse-hyper",
+   "why": "Swap sheet: More stretch emphasis, Less peak-contraction focus, Better isolation.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Better isolation"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "cable-kickback",
+   "why": "Swap sheet: Better isolation, One side at a time, Less systemic fatigue.",
+   "differences": [
+    "Better isolation",
+    "One side at a time",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 1,
+  "muscle_isolation": 2,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 3,
+  "skill_demand": 1,
+  "flags": [
+   "peak_contraction_focus"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

@@ -1,0 +1,506 @@
+{
+ "schema": "lift-board.education.muscle/1",
+ "id": "lats",
+ "kind": "muscle",
+ "title": "Lats",
+ "status": "final",
+ "updated": "2026-10-21",
+ "region_ids": [
+  "lats"
+ ],
+ "summary": "The latissimus dorsi is the widest muscle of the back, running from the lower spine and pelvis to the front of the upper-arm bone. It pulls the arm down and back. Vertical pulls, rows with the elbow kept near the body and pullovers all train it; full stretch at the top of the rep is the main lever you control.",
+ "what_it_is": {
+  "overview": "The app tracks the lats as one region. The parts below are anatomical regions, not separate map areas. The teres major, which works with the lats in every pull, is counted under upper back for drawing reasons (see regions.md).",
+  "heads": [
+   {
+    "id": "lats_thoracic",
+    "name": "Upper (thoracic) fibres",
+    "origin": "The spines of roughly the lower six vertebrae of the mid-back (about T7 to T12), and often a small slip from the bottom tip of the shoulder blade (inferior angle).",
+    "insertion": "The floor of the groove at the front of the upper-arm bone (the intertubercular groove), between the pec tendon and the teres major. The tendon twists, so the upper fibres attach lowest.",
+    "fiber_direction": "Close to horizontal, running out from the spine across the bottom of the shoulder blade to the armpit.",
+    "crosses_joints": [
+     "shoulder"
+    ],
+    "tracked_region": "lats",
+    "evidence": "biomechanics"
+   },
+   {
+    "id": "lats_lumbar",
+    "name": "Middle (lumbar) fibres",
+    "origin": "The thoracolumbar fascia, the thick sheet over the lower back that anchors to the lumbar and sacral spine.",
+    "insertion": "Same shared tendon in the intertubercular groove.",
+    "fiber_direction": "Diagonal, running up and out from the lower back to the armpit.",
+    "crosses_joints": [
+     "shoulder"
+    ],
+    "tracked_region": "lats",
+    "evidence": "biomechanics"
+   },
+   {
+    "id": "lats_iliac_costal",
+    "name": "Lower (iliac and rib) fibres",
+    "origin": "The back of the pelvic rim (iliac crest) and the outside of the lowest three or four ribs.",
+    "insertion": "Same shared tendon; because of the twist these fibres attach highest in the groove.",
+    "fiber_direction": "Nearly vertical, running up the side of the torso to the armpit. These fibres make the lower flare of the 'V'.",
+    "crosses_joints": [
+     "shoulder"
+    ],
+    "tracked_region": "lats",
+    "evidence": "biomechanics"
+   }
+  ]
+ },
+ "what_it_does": [
+  {
+   "head_ids": [
+    "lats_thoracic",
+    "lats_lumbar",
+    "lats_iliac_costal"
+   ],
+   "joint": "shoulder",
+   "action": "Shoulder extension (pulling the arm down and back from in front or overhead).",
+   "detail": "The job in pulldowns, pull-ups, rows and pullovers. The lats have the most leverage when the arm starts high or out in front.",
+   "evidence": "biomechanics"
+  },
+  {
+   "head_ids": [
+    "lats_thoracic",
+    "lats_lumbar",
+    "lats_iliac_costal"
+   ],
+   "joint": "shoulder",
+   "action": "Shoulder adduction (pulling the arm down to the side).",
+   "detail": "The main job in a wide-grip pulldown, where the elbows travel down from out to the side.",
+   "evidence": "biomechanics"
+  },
+  {
+   "head_ids": [
+    "lats_thoracic",
+    "lats_lumbar",
+    "lats_iliac_costal"
+   ],
+   "joint": "shoulder",
+   "action": "Internal rotation of the upper arm.",
+   "detail": "A secondary action. It is why the lat stretches more with the arm overhead and turned slightly out.",
+   "evidence": "biomechanics"
+  },
+  {
+   "head_ids": [
+    "lats_lumbar",
+    "lats_iliac_costal"
+   ],
+   "joint": "scapulothoracic",
+   "action": "Pulls the shoulder girdle down (depression) through the upper arm.",
+   "detail": "The 'shoulders away from the ears' part of a pull-up or dip.",
+   "evidence": "biomechanics"
+  },
+  {
+   "head_ids": [
+    "lats_lumbar",
+    "lats_iliac_costal"
+   ],
+   "joint": "spine",
+   "action": "With the arms fixed, pulls the trunk and pelvis toward the arms and helps stiffen the lower back through the fascia.",
+   "detail": "What happens at the top of a pull-up, and part of why the lats stay tense in deadlifts and rollouts.",
+   "evidence": "biomechanics"
+  },
+  {
+   "head_ids": [
+    "lats_thoracic"
+   ],
+   "joint": "shoulder",
+   "action": "Upper fibres help pull the arm back when the elbow is out to the side, as in a wide row.",
+   "detail": "Coaches link the upper lats with wide-grip and flared-elbow pulls and the lower lats with elbows-to-hips pulls. Regional differences are plausible from fibre direction, but not shown to change growth.",
+   "evidence": "modeled"
+  }
+ ],
+ "relationships": {
+  "synergists": [
+   {
+    "name": "Teres major",
+    "muscle_id": "upper_back",
+    "role": "Same actions as the lats from the shoulder blade; works in every pull.",
+    "evidence": "biomechanics"
+   },
+   {
+    "name": "Rear delts",
+    "muscle_id": "rear_delts",
+    "role": "Shoulder extension, most in rows with the elbow out.",
+    "evidence": "biomechanics"
+   },
+   {
+    "name": "Triceps long head",
+    "muscle_id": "triceps",
+    "role": "Shoulder extension in straight-arm pulldowns and pullovers.",
+    "evidence": "biomechanics"
+   },
+   {
+    "name": "Lower (sternal) pecs",
+    "muscle_id": "chest",
+    "role": "Pull the arm down from overhead, as in pullovers.",
+    "evidence": "biomechanics"
+   },
+   {
+    "name": "Rhomboids and mid/lower traps",
+    "muscle_id": "upper_back",
+    "role": "Pull the shoulder blades back and down while the lats move the arm.",
+    "evidence": "biomechanics"
+   },
+   {
+    "name": "Biceps, brachialis and brachioradialis",
+    "muscle_id": "biceps",
+    "role": "Bend the elbow in every row and bent-arm pull.",
+    "evidence": "biomechanics"
+   }
+  ],
+  "antagonists": [
+   {
+    "name": "Front delts and upper (clavicular) pecs",
+    "muscle_id": "front_delts",
+    "role": "Raise the arm forward, the opposite of extension.",
+    "evidence": "biomechanics"
+   },
+   {
+    "name": "Side delts",
+    "muscle_id": "side_delts",
+    "role": "Raise the arm out to the side, the opposite of adduction.",
+    "evidence": "biomechanics"
+   },
+   {
+    "name": "Rotator cuff external rotators",
+    "muscle_id": "upper_back",
+    "role": "Turn the arm out, the opposite of internal rotation.",
+    "evidence": "biomechanics"
+   }
+  ],
+  "stabilizer_roles": [
+   {
+    "text": "In deadlifts and Romanian deadlifts the lats keep the bar close to the legs and help brace the trunk. The library credits deadlifts 0.4 and Romanian deadlifts 0.25 for lats.",
+    "evidence": "biomechanics"
+   },
+   {
+    "text": "In rollouts the lats resist the arms being pulled overhead. Most rollouts are rated below 0.25 for lats and are not counted; the barbell and standing versions are rated 0.3 and 0.35.",
+    "evidence": "biomechanics"
+   },
+   {
+    "text": "Hangs train shoulder control more than lat size: active hangs are rated 0.25 for lats and dead hangs 0.2, which counts as 0.",
+    "evidence": "modeled"
+   }
+  ],
+  "indirect": [
+   {
+    "exercise_id": "barbell-row",
+    "rating": 0.8,
+    "role": "main",
+    "note": "Rated as a main lat mover, with upper back at 1.0."
+   },
+   {
+    "exercise_id": "seated-cable-row",
+    "rating": 0.8,
+    "role": "main"
+   },
+   {
+    "exercise_id": "chest-supported-row",
+    "rating": 0.7,
+    "role": "helper",
+    "note": "Upper back leads at 1.0."
+   },
+   {
+    "exercise_id": "wide-grip-cable-row",
+    "rating": 0.5,
+    "role": "helper",
+    "note": "Elbows-out row, mostly upper back."
+   },
+   {
+    "exercise_id": "deadlift",
+    "rating": 0.4,
+    "role": "helper"
+   },
+   {
+    "exercise_id": "med-ball-slam",
+    "rating": 0.4,
+    "role": "helper"
+   },
+   {
+    "exercise_id": "standing-ab-wheel-rollout",
+    "rating": 0.35,
+    "role": "minor"
+   },
+   {
+    "exercise_id": "scapular-pull-up",
+    "rating": 0.3,
+    "role": "minor"
+   },
+   {
+    "exercise_id": "romanian-deadlift",
+    "rating": 0.25,
+    "role": "minor"
+   },
+   {
+    "exercise_id": "active-hang",
+    "rating": 0.25,
+    "role": "minor"
+   },
+   {
+    "exercise_id": "dead-hang",
+    "rating": 0.2,
+    "role": "not_counted",
+    "note": "Below the 0.25 cut-off."
+   },
+   {
+    "exercise_id": "ab-wheel-rollout",
+    "rating": 0.2,
+    "role": "not_counted",
+    "note": "Below the 0.25 cut-off."
+   }
+  ],
+  "indirect_note": "Most vertical pulls and many rows rate lats at 1.0, so the lats get much of their volume from 'back day' compounds. Each working set adds the exercise's lat rating, and ratings under 0.25 count as 0. So 4 sets of pull-ups (1.0), 3 sets of barbell rows (0.8), 3 sets of straight-arm pulldowns (1.0) and 2 sets of deadlifts (0.4) give 4 + 2.4 + 3 + 0.8 = 10.2, which the panel shows as 10 (rounded to the nearest 0.5). The full list comes live from exercises.json; the ratings are coaching estimates.",
+  "indirect_evidence": "modeled"
+ },
+ "bias": [
+  {
+   "target": "all",
+   "goal": "Load the lats in their stretch",
+   "how": {
+    "joint_angle": "Arm fully overhead (vertical pulls) or reaching far forward (rows, pullovers).",
+    "stretch_position": "Let the shoulder blade ride up or forward at the start of each rep; the arm overhead and slightly turned out is the lat's longest position.",
+    "grip": "Any grip that lets you reach fully; a neutral or single handle often allows more reach.",
+    "stance": "Seated with thighs braced for pulldowns; a slight forward lean of the torso on rows lengthens the lat further."
+   },
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [
+    "lat-pulldown",
+    "pullover-machine",
+    "single-arm-cable-row",
+    "meadows-row"
+   ],
+   "evidence": "biomechanics",
+   "citations": [],
+   "caveat": "That these positions lengthen the lats is mechanics. Better lat growth from them is extrapolated from stretch studies on other muscles (see the hypertrophy fundamentals page); no study has measured lat size this way."
+  },
+  {
+   "target": "lats_iliac_costal",
+   "goal": "Lower-lat emphasis",
+   "how": {
+    "joint_angle": "Elbow travels down and back close to the body, toward the hip.",
+    "stretch_position": "Arm reaching up and slightly in front at the start.",
+    "grip": "Neutral or single handle; a narrower grip keeps the elbow tight.",
+    "stance": "One arm at a time lets the torso lean and the arm follow the fibre line."
+   },
+   "swap_tags": [
+    "unilateral"
+   ],
+   "example_exercise_ids": [
+    "single-arm-lat-pulldown",
+    "single-arm-cable-row",
+    "neutral-grip-lat-pulldown"
+   ],
+   "evidence": "modeled",
+   "citations": [],
+   "caveat": "Based on fibre direction. Regional lat growth by exercise has not been shown."
+  },
+  {
+   "target": "lats_thoracic",
+   "goal": "Upper-lat and teres emphasis (the 'width' idea)",
+   "how": {
+    "joint_angle": "Elbows travel down from out to the side (adduction).",
+    "stretch_position": "Arms overhead and wide at the top.",
+    "grip": "Wide overhand.",
+    "stance": "Torso fairly upright."
+   },
+   "swap_tags": [
+    "lat_width_bias"
+   ],
+   "example_exercise_ids": [
+    "wide-grip-lat-pulldown",
+    "pull-up"
+   ],
+   "evidence": "modeled",
+   "citations": [],
+   "caveat": "Same wording as the swap tag 'Lat width focus', and modeled for the same reason. In EMG studies grip width barely changed lat activity (Andersen 2014; Lusk 2010), and a wide grip cost about 4% load. The lat is one muscle; any width or thickness effect is a tendency."
+  },
+  {
+   "target": "all",
+   "goal": "Lats without the biceps as the weak link",
+   "how": {
+    "joint_angle": "Elbow kept straight or fixed so only the shoulder moves.",
+    "stretch_position": "Arms overhead at the start.",
+    "grip": "Bar, rope or machine handles.",
+    "stance": "Hinged slightly forward at a cable, or seated in a pullover machine."
+   },
+   "swap_tags": [
+    "muscle_isolation",
+    "stability"
+   ],
+   "example_exercise_ids": [
+    "straight-arm-pulldown",
+    "pullover-machine",
+    "incline-cable-pullover"
+   ],
+   "evidence": "biomechanics",
+   "citations": [],
+   "caveat": "Useful when arms or grip tire before the back. Loads are lighter, so these suit higher reps."
+  },
+  {
+   "target": "all",
+   "goal": "Rows for lats rather than upper back",
+   "how": {
+    "joint_angle": "Elbow close to the side, pulling toward the hip rather than the chest.",
+    "stretch_position": "Let the arm reach forward and the shoulder blade move around the ribs at the start.",
+    "grip": "Neutral or underhand; a narrow handle.",
+    "stance": "Chest supported or one hand braced so the lower back does not limit the set."
+   },
+   "swap_tags": [
+    "upper_back_thickness_bias"
+   ],
+   "example_exercise_ids": [
+    "one-arm-dumbbell-row",
+    "high-to-low-row-machine",
+    "yates-row"
+   ],
+   "evidence": "modeled",
+   "citations": [],
+   "caveat": "Rows flagged 'Upper-back thickness focus' in the swap sheet load the mid-back as much as the lats or more. Swapping away from them shows 'Less upper-back focus'."
+  },
+  {
+   "target": "all",
+   "goal": "Grip choice on pulldowns",
+   "how": {
+    "joint_angle": "Normal pulldown path.",
+    "stretch_position": "Full reach at the top.",
+    "grip": "Overhand gave slightly more lat EMG than underhand; underhand brings the biceps in more (chin-up biceps 0.8 vs pull-up 0.6 in the library).",
+    "stance": "Seated."
+   },
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "pull-up",
+    "chin-up"
+   ],
+   "evidence": "biomechanics",
+   "citations": [
+    "lusk2010"
+   ],
+   "caveat": "An EMG finding with small differences. It describes muscle activity, not growth, so choose the grip you can train hard and pain-free through a full range."
+  }
+ ],
+ "best_exercises": [
+  {
+   "exercise_id": "pull-up",
+   "why": "Full overhead stretch with heavy loading potential; lats 1.0, plus biceps 0.6 and upper back 0.5.",
+   "evidence": "biomechanics"
+  },
+  {
+   "exercise_id": "lat-pulldown",
+   "why": "The same pull as a pull-up with the load adjustable in small steps, so you can reach failure with good form at any strength level.",
+   "evidence": "biomechanics"
+  },
+  {
+   "exercise_id": "neutral-grip-lat-pulldown",
+   "why": "Neutral handles let the elbows stay in front and drive to the hips, a comfortable way to load the lats hard.",
+   "evidence": "biomechanics"
+  },
+  {
+   "exercise_id": "single-arm-lat-pulldown",
+   "why": "One arm at a time allows a longer reach and a path that follows the fibres; it evens out sides.",
+   "evidence": "biomechanics"
+  },
+  {
+   "exercise_id": "single-arm-cable-row",
+   "why": "A row with more lat stretch than a two-handed row, rated lats 1.0 with steady cable tension.",
+   "evidence": "biomechanics"
+  },
+  {
+   "exercise_id": "pullover-machine",
+   "why": "Trains shoulder extension from full stretch with no biceps or grip limit; lats 1.0.",
+   "evidence": "biomechanics"
+  },
+  {
+   "exercise_id": "straight-arm-pulldown",
+   "why": "Cheap, easy isolation from a long position; a good finisher or pre-exhaust when arms give out first.",
+   "evidence": "biomechanics"
+  },
+  {
+   "exercise_id": "meadows-row",
+   "why": "One-arm landmine row with a long stretch at the bottom; heavy, but grip-demanding and more fatiguing.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Cutting the top of the rep short, so the shoulder blades never rise and the lats skip their stretch.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Pulling with the hands and biceps, so the arms fail before the back is worked.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Leaning far back on pulldowns until the pull becomes a row. Fine on purpose, but it changes the exercise.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Shrugging the shoulders up toward the ears as the bar comes down.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Heaving the torso on rows so the lower back and momentum do the work.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Believing a wider grip automatically builds width; grip width barely changed lat activity in studies.",
+   "evidence": "biomechanics",
+   "citations": [
+    "andersen2014",
+    "lusk2010"
+   ]
+  }
+ ],
+ "coach_cues": [
+  {
+   "cue": "Reach tall at the top and let your shoulder blades ride up.",
+   "why": "Loads the lat in its stretch.",
+   "evidence": "biomechanics"
+  },
+  {
+   "cue": "Drive your elbows down to your back pockets.",
+   "why": "Moves the arm with the lat instead of the hands.",
+   "evidence": "modeled"
+  },
+  {
+   "cue": "Pull the elbow to your hip, not your hand to your chest.",
+   "why": "Keeps rows on the lats rather than the mid-back.",
+   "evidence": "modeled"
+  },
+  {
+   "cue": "Chest up to the bar.",
+   "why": "Finishes the pull with the shoulder blades down, not shrugged.",
+   "evidence": "modeled"
+  },
+  {
+   "cue": "Use straps when grip fails before your back.",
+   "why": "Removes the grip limit so the lats reach a hard set.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "app_values": {
+  "targets.json:targets.lats.min": 10,
+  "targets.json:targets.lats.max": 20,
+  "targets.json:counting.min_rating_to_count": 0.25,
+  "targets.json:counting.round_to": 0.5,
+  "exercises.json:@pull-up.muscles.biceps": 0.6,
+  "exercises.json:@chin-up.muscles.biceps": 0.8,
+  "exercises.json:@pull-up.muscles.upper_back": 0.5,
+  "exercises.json:@barbell-row.muscles.upper_back": 1,
+  "exercises.json:@chest-supported-row.muscles.upper_back": 1,
+  "exercises.json:@barbell-rollout.muscles.lats": 0.3,
+  "exercises.json:@standing-ab-wheel-rollout.muscles.lats": 0.35
+ },
+ "notes": [
+  "Weekly target in the app: 10 to 20 lat sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6. Render the numbers from targets.json.",
+  "No training study has measured lat growth by exercise choice, so nothing on this page is marked supported. Upper vs lower lat, width vs thickness and grip choices are modeled or biomechanics.",
+  "The EMG studies cited show muscle activity in one session, not growth. They are listed as biomechanics.",
+  "No medical or injury claims. Pick variations you can train through a full range without pain."
+ ]
+}

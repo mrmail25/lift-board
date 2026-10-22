@@ -1,0 +1,216 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "viking-press",
+ "kind": "exercise",
+ "exercise_id": "viking-press",
+ "title": "Landmine Viking Press",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A two-handed overhead press using a landmine with a Viking handle, on a forward arc that is easier on the shoulders than a strict press.",
+ "type": "accessory",
+ "equipment": "landmine",
+ "equipment_needs": {
+  "items": [
+   "landmine",
+   "barbell",
+   "plates"
+  ],
+  "text": "Needs: landmine attachment; barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "front_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for front delts (main mover): each working set adds 1 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.6,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.4,
+    "triceps_short": 0.6
+   },
+   "why": "Library rating 0.6 for triceps (helper): each working set adds 0.6 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "side_delts",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for side delts (helper): each working set adds 0.4 of a set to the weekly side delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.4,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.4,
+    "traps_mid_lower": 0.2
+   },
+   "why": "Library rating 0.4 for traps (helper): each working set adds 0.4 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "chest",
+   "rating": 0.2,
+   "band": "not_counted",
+   "regions": {
+    "chest_upper": 0.2,
+    "chest_lower": 0
+   },
+   "why": "Library rating 0.2 for chest: below the counting floor, so it adds nothing to the weekly chest total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand facing the handle with your feet hip width apart and the grips at shoulder height.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Brace and press up and slightly forward until your arms are straight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower back to your shoulders under control.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Brace your core",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Press up to lockout",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to shoulder height",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Don't lean back to finish the rep. Ribs down, glutes tight.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Leaning back to turn it into an incline press.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "kettlebell-press",
+   "why": "Swap sheet: One side at a time, Less spinal loading.",
+   "differences": [
+    "One side at a time",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "arnold-press",
+   "why": "Swap sheet: Less spinal loading.",
+   "differences": [
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "iso-lateral-shoulder-press",
+   "why": "Swap sheet: More stable, Less systemic fatigue, Less spinal loading.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Less spinal loading"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "wall-handstand-push-up",
+   "why": "Swap sheet: Less stable, Less systemic fatigue, Lower loading potential.",
+   "differences": [
+    "Less stable",
+    "Less systemic fatigue",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "spinal_load"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

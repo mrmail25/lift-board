@@ -1,0 +1,228 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "back-squat",
+ "kind": "exercise",
+ "exercise_id": "back-squat",
+ "title": "Back Squat",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A barbell back squat for the quads, glutes and adductors, and the main lower-body strength lift.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "squat_rack"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; rack with J-hooks (power rack, squat stands or bench uprights)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 0.4,
+    "quads_vasti": 1
+   },
+   "why": "Library rating 1 for quads (main mover): each working set adds 1 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.7,
+   "band": "helper",
+   "why": "Library rating 0.7 for glutes (helper): each working set adds 0.7 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for adductors (helper): each working set adds 0.6 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for lower back (helper): each working set adds 0.4 of a set to the weekly lower back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Library rating 0.25 for abductors (minor): each working set adds 0.25 of a set to the weekly abductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abs",
+   "rating": 0.15,
+   "band": "not_counted",
+   "why": "Library rating 0.15 for abs: below the counting floor, so it adds nothing to the weekly abs total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bar on your upper back, step out and stand with your feet about shoulder width apart and your toes slightly out.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Brace your core and sit down between your hips, with your knees tracking over your toes.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Go as deep as you can while keeping your back neutral, ideally with your hip crease below your knee.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive back up through your mid-foot.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Brace before each rep",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Sit down between your hips with knees tracking toes",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive up through the whole foot",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Depth matters. Deep squats build more quad and glute than half reps.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the knees cave in on the way up.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "smith-squat",
+   "why": "Swap sheet: More stable, Less systemic fatigue, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "belt-squat",
+   "why": "Swap sheet: More stable, Less systemic fatigue, Less spinal loading.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "v-squat",
+   "why": "Swap sheet: More stable, Less systemic fatigue, Less spinal loading.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "goblet-squat",
+   "why": "Swap sheet: Less stretch emphasis, Less systemic fatigue, Less spinal loading.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less systemic fatigue",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 3,
+  "flags": [
+   "spinal_load"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

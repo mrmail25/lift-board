@@ -1,0 +1,110 @@
+{
+ "schema": "lift-board.education.references/1",
+ "note": "Citations added for exercise pages (education/exercises/). Same schema as references.json; keys never repeat a references.json key. Pages may cite keys from either file. Every entry was checked against Crossref (DOI, authors, year, journal, volume, pages) and the finding against the PubMed abstract on 2026-10-21.",
+ "references": {
+  "saeterbakken2021": {
+   "authors": "Saeterbakken AH, Stien N, Pedersen H, Solstad TEJ, Cumming KT, Andersen V",
+   "year": 2021,
+   "title": "The Effect of Grip Width on Muscle Strength and Electromyographic Activity in Bench Press among Novice- and Resistance-Trained Men",
+   "journal": "International Journal of Environmental Research and Public Health",
+   "volume": "18(12)",
+   "pages": "6444",
+   "doi": "10.3390/ijerph18126444",
+   "url": "https://doi.org/10.3390/ijerph18126444",
+   "study_type": "emg",
+   "finding": "EMG at 6RM in 28 men: biceps activity rose with grip width, the wide grip gave lower triceps activity than medium and narrow, anterior deltoid was higher with medium than narrow, other muscles were similar. Narrow grip allowed lower 6RM loads.",
+   "verified": "Crossref works API and PubMed abstract (PMID 34198674), 2026-10-21"
+  },
+  "lehman2005": {
+   "authors": "Lehman GJ",
+   "year": 2005,
+   "title": "The influence of grip width and forearm pronation/supination on upper-body myoelectric activity during the flat bench press",
+   "journal": "Journal of Strength and Conditioning Research",
+   "volume": "19(3)",
+   "pages": "587-591",
+   "doi": "10.1519/R-15024.1",
+   "url": "https://doi.org/10.1519/R-15024.1",
+   "study_type": "emg",
+   "finding": "EMG during isometric bench holds in 12 men: narrower grips raised triceps activity and lowered sternal pec activity; a supinated grip raised clavicular pec and biceps activity. The author judged the changes small.",
+   "verified": "Crossref works API and PubMed abstract (PMID 16095407), 2026-10-21. Crossref also lists a duplicate DOI 10.1519/00124278-200508000-00017; PubMed uses this one."
+  },
+  "martinezcava2022": {
+   "authors": "Martínez-Cava A, Hernández-Belmonte A, Courel-Ibáñez J, Morán-Navarro R, González-Badillo JJ, Pallarés JG",
+   "year": 2022,
+   "title": "Bench Press at Full Range of Motion Produces Greater Neuromuscular Adaptations Than Partial Executions After Prolonged Resistance Training",
+   "journal": "Journal of Strength and Conditioning Research",
+   "volume": "36(1)",
+   "pages": "10-15",
+   "doi": "10.1519/JSC.0000000000003391",
+   "url": "https://doi.org/10.1519/JSC.0000000000003391",
+   "study_type": "training_study",
+   "finding": "50 trained men, 10 weeks: full-range bench gave the largest 1RM and bar-speed gains on all three bench variations tested; 2/3 and 1/3 range gave smaller gains as range shrank. Strength only; muscle size was not measured.",
+   "verified": "Crossref works API and PubMed abstract (PMID 31567719), 2026-10-21"
+  },
+  "pedrosa2023": {
+   "authors": "Pedrosa GF, Simões MG, Figueiredo MOC, et al.",
+   "year": 2023,
+   "title": "Training in the Initial Range of Motion Promotes Greater Muscle Adaptations Than at Final in the Arm Curl",
+   "journal": "Sports",
+   "volume": "11(2)",
+   "pages": "39",
+   "doi": "10.3390/sports11020039",
+   "url": "https://doi.org/10.3390/sports11020039",
+   "study_type": "training_study",
+   "finding": "19 untrained women, 8 weeks, one arm each way on a dumbbell preacher curl: training the extended-elbow half (0-68 deg) grew the distal biceps (70% site) more than the flexed half (68-135 deg); the 50% site and summed CSA were similar; 1RM rose more.",
+   "verified": "Crossref works API and PubMed abstract (PMID 36828324), 2026-10-21"
+  },
+  "schoenfeld2015tempo": {
+   "authors": "Schoenfeld BJ, Ogborn DI, Krieger JW",
+   "year": 2015,
+   "title": "Effect of Repetition Duration During Resistance Training on Muscle Hypertrophy: A Systematic Review and Meta-Analysis",
+   "journal": "Sports Medicine",
+   "volume": "45(4)",
+   "pages": "577-585",
+   "doi": "10.1007/s40279-015-0304-0",
+   "url": "https://doi.org/10.1007/s40279-015-0304-0",
+   "study_type": "meta_analysis",
+   "finding": "Meta-analysis of 8 studies (sets to failure): repetition durations from 0.5 to 8 s gave similar growth; very slow reps (>10 s) looked inferior, with few studies.",
+   "verified": "Crossref works API and PubMed abstract (PMID 25601394), 2026-10-21"
+  },
+  "mccrary2015": {
+   "authors": "McCrary JM, Ackermann BJ, Halaki M",
+   "year": 2015,
+   "title": "A systematic review of the effects of upper body warm-up on performance and injury",
+   "journal": "British Journal of Sports Medicine",
+   "volume": "49(14)",
+   "pages": "935-942",
+   "doi": "10.1136/bjsports-2014-094228",
+   "url": "https://doi.org/10.1136/bjsports-2014-094228",
+   "study_type": "systematic_review",
+   "finding": "31 trials: strong evidence that high-load dynamic warm-ups improve strength and power performance. No studies of warm-up and injury outcomes were found.",
+   "verified": "Crossref works API and PubMed abstract (PMID 25694615), 2026-10-21"
+  },
+  "kikuchi2017": {
+   "authors": "Kikuchi N, Nakazato K",
+   "year": 2017,
+   "title": "Low-load bench press and push-up induce similar muscle hypertrophy and strength gain",
+   "journal": "Journal of Exercise Science & Fitness",
+   "volume": "15(1)",
+   "pages": "37-42",
+   "doi": "10.1016/j.jesf.2017.06.003",
+   "url": "https://doi.org/10.1016/j.jesf.2017.06.003",
+   "study_type": "training_study",
+   "finding": "18 men, 8 weeks, twice a week: push-ups (adjusted to the same load) and bench press at 40% 1RM grew the pecs and triceps and raised bench 1RM similarly.",
+   "verified": "Crossref works API and PubMed abstract (PMID 29541130), 2026-10-21"
+  },
+  "saeterbakken2013": {
+   "authors": "Saeterbakken AH, Fimland MS",
+   "year": 2013,
+   "title": "Effects of Body Position and Loading Modality on Muscle Activity and Strength in Shoulder Presses",
+   "journal": "Journal of Strength and Conditioning Research",
+   "volume": "27(7)",
+   "pages": "1824-1831",
+   "doi": "10.1519/JSC.0b013e318276b873",
+   "url": "https://doi.org/10.1519/JSC.0b013e318276b873",
+   "study_type": "emg",
+   "finding": "EMG in 15 men at 80% 1RM: standing and dumbbell presses gave the highest deltoid activity but the lowest 1RM; seated presses lowered deltoid activity; seated dumbbell 1RM was about 10% higher than standing dumbbell.",
+   "verified": "Crossref works API and PubMed abstract (PMID 23096062), 2026-10-21"
+  }
+ }
+}

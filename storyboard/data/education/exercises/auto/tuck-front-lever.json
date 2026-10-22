@@ -1,0 +1,202 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "tuck-front-lever",
+ "kind": "exercise",
+ "exercise_id": "tuck-front-lever",
+ "title": "Tuck Front Lever Hold",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A straight-arm hold with your body horizontal and knees tucked, working the lats and abs.",
+ "type": "isolation",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [
+   "pull_up_bar|rings"
+  ],
+  "text": "Needs: pull-up bar or gymnastic rings."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for lats (main mover): each working set adds 0.8 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abs",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for abs (helper): each working set adds 0.5 of a set to the weekly abs total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for upper back (minor): each working set adds 0.3 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Library rating 0.25 for rear delts (minor): each working set adds 0.25 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hang from the bar.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull your shoulders down and tuck your knees, lifting your hips until your back is level.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Hold for time.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Press the bar down with straight arms",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Hold the back horizontal",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the tuck tight",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Arms stay straight. Pull down with the lats.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Bending the arms to hold the position.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "straight-arm-pulldown",
+   "why": "Swap sheet: More stretch emphasis, Better isolation, More stable.",
+   "differences": [
+    "More stretch emphasis",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "standing-ab-wheel-rollout",
+   "why": "Swap sheet: Easier to learn, Less grip demand.",
+   "differences": [
+    "Easier to learn",
+    "Less grip demand"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "front-lever-row",
+   "why": "Swap sheet: Less isolation, More systemic fatigue.",
+   "differences": [
+    "Less isolation",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_grip",
+   "goal_label": "Less grip demand",
+   "exercise_id": "dragon-flag",
+   "why": "Swap sheet: Less grip demand.",
+   "differences": [
+    "Less grip demand"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 3,
+  "flags": [
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

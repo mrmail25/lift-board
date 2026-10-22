@@ -1,0 +1,212 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "dumbbell-rdl",
+ "kind": "exercise",
+ "exercise_id": "dumbbell-rdl",
+ "title": "Dumbbell Romanian Deadlift",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A Romanian deadlift with dumbbells, for the hamstrings and glutes at long length.",
+ "type": "accessory",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell"
+  ],
+  "text": "Needs: dumbbells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "hamstrings",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for hamstrings (main mover): each working set adds 1 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for glutes (main mover): each working set adds 0.8 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for lower back (helper): each working set adds 0.4 of a set to the weekly lower back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for forearms (minor): each working set adds 0.3 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for adductors (minor): each working set adds 0.3 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.2,
+   "band": "not_counted",
+   "regions": {
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.1
+   },
+   "why": "Library rating 0.2 for traps: below the counting floor, so it adds nothing to the weekly traps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand holding dumbbells in front of your thighs with soft knees.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Push your hips back, sliding the weights down your legs, until your hamstrings stretch.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive your hips forward to stand tall.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Push the hips back",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the dumbbells close to your legs",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stand by squeezing the glutes",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the dumbbells close to your legs the whole way.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Rounding the back to reach the floor.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "stiff-leg-dumbbell-deadlift",
+   "why": "Similar muscles; dumbbell instead of dumbbell.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "landmine-rdl",
+   "why": "Swap sheet: Less spinal loading, Less grip demand.",
+   "differences": [
+    "Less spinal loading",
+    "Less grip demand"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "kettlebell-single-leg-rdl",
+   "why": "Swap sheet: Less stable, One side at a time, Less spinal loading.",
+   "differences": [
+    "Less stable",
+    "One side at a time",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "good-morning",
+   "why": "Swap sheet: Heavier loading potential, More technical, Less grip demand.",
+   "differences": [
+    "Heavier loading potential",
+    "More technical",
+    "Less grip demand"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "spinal_load",
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

@@ -1,0 +1,179 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "seated-leg-curl",
+ "kind": "exercise",
+ "exercise_id": "seated-leg-curl",
+ "title": "Seated Leg Curl",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A seated machine leg curl. Your hips are bent, so the hamstrings work from a longer stretch.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "leg_curl_seated"
+  ],
+  "text": "Needs: seated leg curl machine or attachment."
+ },
+ "muscles": [
+  {
+   "muscle_id": "hamstrings",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for hamstrings (main mover): each working set adds 1 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Sit with your knees lined up with the pivot, the pad behind your lower legs, and the thigh pad snug.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lean your torso forward slightly.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Curl your heels down and back.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Return slowly until your legs are straight.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lean slightly forward",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Curl the pad down and under",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Return to nearly straight legs",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Leaning forward adds stretch. Research suggests seated curls build more than lying curls.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the weight snap back up between reps.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "standing-leg-curl",
+   "why": "Swap sheet: Less stretch emphasis, One side at a time.",
+   "differences": [
+    "Less stretch emphasis",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "nordic-curl",
+   "why": "Swap sheet: Less isolation, Less stable, More technical.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "glute-ham-raise",
+   "why": "Swap sheet: Less isolation, More systemic fatigue, Heavier loading potential.",
+   "differences": [
+    "Less isolation",
+    "More systemic fatigue",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "stiff-leg-dumbbell-deadlift",
+   "why": "Swap sheet: Less isolation, Less stable, More systemic fatigue.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

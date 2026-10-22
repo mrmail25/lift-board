@@ -1,0 +1,211 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "suitcase-carry",
+ "kind": "exercise",
+ "exercise_id": "suitcase-carry",
+ "title": "Suitcase Carry",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A one-hand carry that makes your trunk resist leaning, for the obliques, grip and traps.",
+ "type": "accessory",
+ "equipment": "kettlebell",
+ "equipment_needs": {
+  "items": [
+   "kettlebell|dumbbell"
+  ],
+  "text": "Needs: kettlebells or dumbbells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "forearms",
+   "rating": 0.9,
+   "band": "main",
+   "why": "Library rating 0.9 for forearms (main mover): each working set adds 0.9 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "obliques",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for obliques (main mover): each working set adds 0.8 of a set to the weekly obliques total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.6,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.6,
+    "traps_mid_lower": 0.2
+   },
+   "why": "Library rating 0.6 for traps (helper): each working set adds 0.6 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abs",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for abs (minor): each working set adds 0.3 of a set to the weekly abs total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for abductors: below the counting floor, so it adds nothing to the weekly abductors total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Pick up a heavy bell in one hand.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Walk tall for a set distance without leaning.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Switch hands.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Stand tall",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep shoulders level",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Walk with control",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stand as if you were carrying nothing.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Leaning toward the weight.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "farmer-carry",
+   "why": "Swap sheet: Both sides together, Loads the spine, Heavier loading potential.",
+   "differences": [
+    "Both sides together",
+    "Loads the spine",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "cable-woodchop",
+   "why": "Swap sheet: Less upper-trap work, More stable, Both sides together.",
+   "differences": [
+    "Less upper-trap work",
+    "More stable",
+    "Both sides together"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "reverse-wrist-curl",
+   "why": "Swap sheet: Less upper-trap work, Better isolation, Both sides together.",
+   "differences": [
+    "Less upper-trap work",
+    "Better isolation",
+    "Both sides together"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "wrist-curl",
+   "why": "Swap sheet: Less upper-trap work, Better isolation, Both sides together.",
+   "differences": [
+    "Less upper-trap work",
+    "Better isolation",
+    "Both sides together"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "upper_trap_involvement",
+   "unilateral",
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

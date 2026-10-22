@@ -1,0 +1,324 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "obliques",
+  "kind": "muscle",
+  "title": "Obliques",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "obliques"
+  ],
+  "summary": "The muscles on the sides of the trunk: the external and internal obliques, plus the serratus anterior along the ribs under the armpit, which the app shows in the same region. They rotate and side-bend the trunk, resist twisting, and (serratus) move the shoulder blade forward.",
+  "what_it_is": {
+    "overview": "In the app the obliques region is the external obliques and serratus, from the outer edge of the six-pack to the side of the torso. The internal obliques sit underneath and work with them.",
+    "heads": [
+      {
+        "id": "external_oblique",
+        "name": "External obliques",
+        "origin": "The outer surfaces of the lower eight ribs.",
+        "insertion": "The front half of the pelvic rim and a broad sheet that meets the six-pack in the midline.",
+        "fiber_direction": "Run down and forward, like hands in front pockets.",
+        "crosses_joints": [
+          "spine"
+        ],
+        "tracked_region": "obliques",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "internal_oblique",
+        "name": "Internal obliques",
+        "origin": "The lower-back fascia, the pelvic rim and the groin ligament.",
+        "insertion": "The lower ribs and the midline sheet.",
+        "fiber_direction": "Run up and forward, at right angles to the external obliques.",
+        "crosses_joints": [
+          "spine"
+        ],
+        "tracked_region": "obliques",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "serratus_anterior",
+        "name": "Serratus anterior",
+        "origin": "The outer surfaces of the upper eight or nine ribs, in finger-like slips.",
+        "insertion": "The inner edge of the shoulder blade, on its rib-facing side.",
+        "fiber_direction": "Wrap around the ribcage from the front to the shoulder blade.",
+        "crosses_joints": [
+          "scapulothoracic"
+        ],
+        "tracked_region": "obliques",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "external_oblique",
+        "internal_oblique"
+      ],
+      "joint": "spine",
+      "action": "Trunk rotation (the external oblique on one side works with the internal oblique on the other).",
+      "detail": "The job in woodchops and landmine rotations.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "external_oblique",
+        "internal_oblique"
+      ],
+      "joint": "spine",
+      "action": "Side bending, and resisting side bending and twisting.",
+      "detail": "Why suitcase carries and Pallof presses train them.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "external_oblique",
+        "internal_oblique"
+      ],
+      "joint": "spine",
+      "action": "Help flex the spine and brace the trunk.",
+      "detail": "Why crunches and leg raises credit them a little.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "serratus_anterior"
+      ],
+      "joint": "scapulothoracic",
+      "action": "Pulls the shoulder blade forward around the ribs and rotates it upward.",
+      "detail": "Active at the top of push-ups, in punches and when reaching overhead.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Abs",
+        "role": "Flex and brace the trunk with the obliques.",
+        "evidence": "biomechanics",
+        "muscle_id": "abs"
+      },
+      {
+        "name": "Quadratus lumborum",
+        "role": "Side-bends the trunk from the back; not tracked.",
+        "evidence": "biomechanics"
+      },
+      {
+        "name": "Upper and lower traps (for the serratus)",
+        "role": "Rotate the shoulder blade upward together.",
+        "evidence": "biomechanics",
+        "muscle_id": "traps"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Opposite-side obliques",
+        "role": "Rotate and side-bend the other way.",
+        "evidence": "biomechanics",
+        "muscle_id": "obliques"
+      },
+      {
+        "name": "Rhomboids (for the serratus)",
+        "role": "Pull the shoulder blade back.",
+        "evidence": "biomechanics",
+        "muscle_id": "upper_back"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In one-arm carries and presses the obliques resist side bending; suitcase carries are rated 0.8.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "ab-wheel-rollout",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "hanging-leg-raise",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "turkish-get-up",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "cable-crunch",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "farmer-carry",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "captains-chair-knee-raise",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "side-lying-hip-abduction",
+        "rating": 0.25,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "deadlift",
+        "rating": 0.15,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      },
+      {
+        "exercise_id": "overhead-press",
+        "rating": 0.15,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 3 sets of cable woodchop (1.0), 2 sets of suitcase carry (0.8) and 3 sets of hanging leg raise (0.5) give 3 + 1.6 + 1.5 = 6.1, which the panel shows as 6 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "external_oblique",
+      "goal": "Rotation under load",
+      "how": {
+        "joint_angle": "Turn the trunk against a cable or landmine, with the hips mostly still.",
+        "grip": "Two hands on a handle or bar end.",
+        "stance": "Standing side-on, feet about shoulder width."
+      },
+      "swap_tags": [
+        "constant_tension"
+      ],
+      "example_exercise_ids": [
+        "cable-woodchop",
+        "landmine-rotation",
+        "rotary-torso-machine"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Rotation machines make loading easy and stable."
+    },
+    {
+      "target": "internal_oblique",
+      "goal": "Anti-rotation and anti-side-bend",
+      "how": {
+        "joint_angle": "Hold the trunk still while a load tries to twist or tip it.",
+        "stance": "Standing tall."
+      },
+      "swap_tags": [
+        "unilateral",
+        "grip_demand"
+      ],
+      "example_exercise_ids": [
+        "pallof-press",
+        "suitcase-carry",
+        "kettlebell-windmill"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Isometric work; progress by load or time."
+    },
+    {
+      "target": "serratus_anterior",
+      "goal": "Serratus",
+      "how": {
+        "joint_angle": "Push the shoulder blades forward at the end of a press or push-up."
+      },
+      "swap_tags": [],
+      "example_exercise_ids": [
+        "push-up",
+        "ring-push-up"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "The library has no dedicated serratus exercise and does not credit push-ups to obliques; any serratus work there is a model."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "cable-woodchop",
+      "why": "Loadable rotation with cable tension; obliques 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "landmine-rotation",
+      "why": "Rotation with a long lever; obliques 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "rotary-torso-machine",
+      "why": "Stable, guided rotation with easy load steps.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "suitcase-carry",
+      "why": "Resists side bending; obliques 0.8 plus grip.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "kettlebell-windmill",
+      "why": "Side bend and hip hinge under load; obliques 0.8.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "pallof-press",
+      "why": "Anti-rotation hold; obliques 0.7.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "ab-wheel-rollout",
+      "why": "Anti-extension that also loads the obliques (0.6).",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Turning the hips with the shoulders so the trunk barely rotates.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Leaning toward the weight on suitcase carries.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Rushing rotations with momentum.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Turn from the ribs, hips quiet.",
+      "why": "Keeps rotation in the trunk.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Stand tall; don't lean toward the weight.",
+      "why": "Makes the carry an anti-side-bend drill.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Press out and hold; don't let the handle pull you round.",
+      "why": "Anti-rotation on the Pallof press.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.obliques.min": 2,
+    "targets.json:targets.obliques.max": 12,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@suitcase-carry.muscles.obliques": 0.8,
+    "exercises.json:@push-up.muscles.obliques": 0
+  },
+  "notes": [
+    "Weekly target in the app: 2 to 12 obliques sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "No oblique or serratus growth study by exercise choice is on file, so nothing here is marked supported.",
+    "Targets are low and marked extrapolated; most people get oblique work from carries, leg raises and rollouts."
+  ]
+}

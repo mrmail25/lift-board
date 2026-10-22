@@ -1,0 +1,298 @@
+{
+  "schema": "lift-board.education.index/1",
+  "version": 1,
+  "updated": "2026-10-21",
+  "author": "Lift Board Coach",
+  "description": "Education section content (data only). One JSON file per page; muscle page ids are the muscle-group ids in exercises.json and region_ids are the map regions. See education-spec.md.",
+  "references": "references.json",
+  "evidence_levels_from": "rules.json swap_tags.evidence_levels",
+  "swap_tags_from": "rules.json swap_tags.vocabulary",
+  "disclaimer": "Education content describes typical anatomy and training evidence. It is not medical advice.",
+  "pages": [
+    {
+      "id": "chest",
+      "kind": "muscle",
+      "title": "Chest",
+      "region_ids": [
+        "chest_upper",
+        "chest_lower"
+      ],
+      "region_names": {
+        "chest_upper": "Upper chest",
+        "chest_lower": "Mid/lower chest"
+      },
+      "path": "muscles/chest.json",
+      "status": "final"
+    },
+    {
+      "id": "front_delts",
+      "kind": "muscle",
+      "title": "Front delts",
+      "region_ids": [
+        "front_delts"
+      ],
+      "region_names": {
+        "front_delts": "Front delts"
+      },
+      "path": "muscles/front_delts.json",
+      "status": "final"
+    },
+    {
+      "id": "side_delts",
+      "kind": "muscle",
+      "title": "Side delts",
+      "region_ids": [
+        "side_delts"
+      ],
+      "region_names": {
+        "side_delts": "Side delts"
+      },
+      "path": "muscles/side_delts.json",
+      "status": "final"
+    },
+    {
+      "id": "rear_delts",
+      "kind": "muscle",
+      "title": "Rear delts",
+      "region_ids": [
+        "rear_delts"
+      ],
+      "region_names": {
+        "rear_delts": "Rear delts"
+      },
+      "path": "muscles/rear_delts.json",
+      "status": "final"
+    },
+    {
+      "id": "lats",
+      "kind": "muscle",
+      "title": "Lats",
+      "region_ids": [
+        "lats"
+      ],
+      "region_names": {
+        "lats": "Lats"
+      },
+      "path": "muscles/lats.json",
+      "status": "final"
+    },
+    {
+      "id": "upper_back",
+      "kind": "muscle",
+      "title": "Upper back",
+      "region_ids": [
+        "upper_back"
+      ],
+      "region_names": {
+        "upper_back": "Upper back"
+      },
+      "path": "muscles/upper_back.json",
+      "status": "final"
+    },
+    {
+      "id": "traps",
+      "kind": "muscle",
+      "title": "Traps",
+      "region_ids": [
+        "traps_upper",
+        "traps_mid_lower"
+      ],
+      "region_names": {
+        "traps_upper": "Upper traps",
+        "traps_mid_lower": "Mid/lower traps"
+      },
+      "path": "muscles/traps.json",
+      "status": "final"
+    },
+    {
+      "id": "biceps",
+      "kind": "muscle",
+      "title": "Biceps",
+      "region_ids": [
+        "biceps"
+      ],
+      "region_names": {
+        "biceps": "Biceps"
+      },
+      "path": "muscles/biceps.json",
+      "status": "final"
+    },
+    {
+      "id": "triceps",
+      "kind": "muscle",
+      "title": "Triceps",
+      "region_ids": [
+        "triceps_long",
+        "triceps_short"
+      ],
+      "region_names": {
+        "triceps_long": "Triceps long head",
+        "triceps_short": "Triceps lateral/medial heads"
+      },
+      "path": "muscles/triceps.json",
+      "status": "final"
+    },
+    {
+      "id": "forearms",
+      "kind": "muscle",
+      "title": "Forearms",
+      "region_ids": [
+        "forearms"
+      ],
+      "region_names": {
+        "forearms": "Forearms"
+      },
+      "path": "muscles/forearms.json",
+      "status": "final"
+    },
+    {
+      "id": "abs",
+      "kind": "muscle",
+      "title": "Abs",
+      "region_ids": [
+        "abs"
+      ],
+      "region_names": {
+        "abs": "Abs"
+      },
+      "path": "muscles/abs.json",
+      "status": "final"
+    },
+    {
+      "id": "quads",
+      "kind": "muscle",
+      "title": "Quads",
+      "region_ids": [
+        "quads_rf",
+        "quads_vasti"
+      ],
+      "region_names": {
+        "quads_rf": "Rectus femoris",
+        "quads_vasti": "Vasti (outer and inner quad)"
+      },
+      "path": "muscles/quads.json",
+      "status": "final"
+    },
+    {
+      "id": "hamstrings",
+      "kind": "muscle",
+      "title": "Hamstrings",
+      "region_ids": [
+        "hamstrings"
+      ],
+      "region_names": {
+        "hamstrings": "Hamstrings"
+      },
+      "path": "muscles/hamstrings.json",
+      "status": "final"
+    },
+    {
+      "id": "glutes",
+      "kind": "muscle",
+      "title": "Glutes",
+      "region_ids": [
+        "glutes"
+      ],
+      "region_names": {
+        "glutes": "Glutes"
+      },
+      "path": "muscles/glutes.json",
+      "status": "final"
+    },
+    {
+      "id": "calves",
+      "kind": "muscle",
+      "title": "Calves",
+      "region_ids": [
+        "calves_gastroc",
+        "calves_soleus"
+      ],
+      "region_names": {
+        "calves_gastroc": "Gastrocnemius",
+        "calves_soleus": "Soleus"
+      },
+      "path": "muscles/calves.json",
+      "status": "final"
+    },
+    {
+      "id": "adductors",
+      "kind": "muscle",
+      "title": "Adductors",
+      "region_ids": [
+        "adductors"
+      ],
+      "region_names": {
+        "adductors": "Adductors"
+      },
+      "path": "muscles/adductors.json",
+      "status": "final"
+    },
+    {
+      "id": "lower_back",
+      "kind": "muscle",
+      "title": "Lower back",
+      "region_ids": [
+        "lower_back"
+      ],
+      "region_names": {
+        "lower_back": "Lower back"
+      },
+      "path": "muscles/lower_back.json",
+      "status": "final"
+    },
+    {
+      "id": "obliques",
+      "kind": "muscle",
+      "title": "Obliques",
+      "region_ids": [
+        "obliques"
+      ],
+      "region_names": {
+        "obliques": "Obliques"
+      },
+      "path": "muscles/obliques.json",
+      "status": "final"
+    },
+    {
+      "id": "abductors",
+      "kind": "muscle",
+      "title": "Abductors",
+      "region_ids": [
+        "abductors"
+      ],
+      "region_names": {
+        "abductors": "Abductors"
+      },
+      "path": "muscles/abductors.json",
+      "status": "final"
+    },
+    {
+      "id": "hypertrophy-stimulus",
+      "kind": "fundamental",
+      "title": "What makes a muscle grow",
+      "path": "fundamentals/hypertrophy-stimulus.json",
+      "status": "final"
+    },
+    {
+      "id": "volume-frequency",
+      "kind": "fundamental",
+      "title": "Volume and frequency",
+      "path": "fundamentals/volume-frequency.json",
+      "status": "final"
+    },
+    {
+      "id": "set-crediting-targets",
+      "kind": "fundamental",
+      "title": "Set crediting and weekly targets",
+      "path": "fundamentals/set-crediting-targets.json",
+      "status": "final"
+    },
+    {
+      "id": "exercise-selection",
+      "kind": "fundamental",
+      "title": "Choosing exercises: stretch, stability, fatigue, loading and skill",
+      "path": "fundamentals/exercise-selection.json",
+      "status": "final"
+    }
+  ]
+}

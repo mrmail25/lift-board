@@ -1,0 +1,173 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "banded-lateral-walk",
+ "kind": "exercise",
+ "exercise_id": "banded-lateral-walk",
+ "title": "Banded Lateral Walk",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "Side steps with a resistance band around the legs, for the glute medius.",
+ "type": "isolation",
+ "equipment": "band",
+ "equipment_needs": {
+  "items": [
+   "bands"
+  ],
+  "text": "Needs: resistance bands."
+ },
+ "muscles": [
+  {
+   "muscle_id": "abductors",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for abductors (main mover): each working set adds 0.8 of a set to the weekly abductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for glutes (minor): each working set adds 0.3 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Put a band above your knees or around your ankles and sink into a quarter squat.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Step sideways, keeping tension on the band.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Bring your trailing foot in without letting your feet touch.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Take the same number of steps in each direction.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Step sideways with control",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep tension on the band",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep toes pointing forward",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stay low and keep your knees pushed out the whole time.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Standing up tall and letting the feet snap together.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "cable-hip-abduction",
+   "why": "Swap sheet: Better isolation, More stable, One side at a time.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "hip-abduction-machine",
+   "why": "Swap sheet: Better isolation, More stable.",
+   "differences": [
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "side-lying-hip-abduction",
+   "why": "Swap sheet: More stable, One side at a time.",
+   "differences": [
+    "More stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 1,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

@@ -1,0 +1,204 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "kettlebell-windmill",
+ "kind": "exercise",
+ "exercise_id": "kettlebell-windmill",
+ "title": "Kettlebell Windmill",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A side hinge with a bell held overhead, for the obliques and shoulder stability.",
+ "type": "accessory",
+ "equipment": "kettlebell",
+ "equipment_needs": {
+  "items": [
+   "kettlebell"
+  ],
+  "text": "Needs: kettlebells."
+ },
+ "muscles": [
+  {
+   "muscle_id": "obliques",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for obliques (main mover): each working set adds 0.8 of a set to the weekly obliques total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for glutes (helper): each working set adds 0.4 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for front delts (minor): each working set adds 0.3 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for hamstrings (minor): each working set adds 0.3 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abs",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for abs: below the counting floor, so it adds nothing to the weekly abs total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Press a bell overhead and turn your feet away from it.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Push your hip out and hinge sideways, sliding your free hand down your leg.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Return to standing, keeping your arm vertical.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep the arm vertical",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Hinge sideways down the other leg",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Return by driving the hips",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your eyes on the bell and your arm locked.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Bending the elbow of the top arm.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "landmine-rotation",
+   "why": "Swap sheet: Both sides together, Easier to learn.",
+   "differences": [
+    "Both sides together",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "rotary-torso-machine",
+   "why": "Swap sheet: More stable, Both sides together, Less systemic fatigue.",
+   "differences": [
+    "More stable",
+    "Both sides together",
+    "Less systemic fatigue"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "cable-woodchop",
+   "why": "Swap sheet: More stable, Both sides together, Less systemic fatigue.",
+   "differences": [
+    "More stable",
+    "Both sides together",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "pallof-press",
+   "why": "Swap sheet: Better isolation, More stable, Both sides together.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Both sides together"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 3,
+  "flags": [
+   "unilateral"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

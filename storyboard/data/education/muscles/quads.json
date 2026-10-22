@@ -1,0 +1,406 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "quads",
+  "kind": "muscle",
+  "title": "Quads",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "quads_rf",
+    "quads_vasti"
+  ],
+  "summary": "The four muscles on the front of the thigh. All four straighten the knee; the rectus femoris also crosses the hip. Squats and presses grow the three vasti well, but the rectus femoris grew little from squats, and leg extensions filled that gap in direct comparisons.",
+  "what_it_is": {
+    "overview": "The app splits the quads into two map regions: the rectus femoris (centre stripe) and the vasti (outer and inner quad, with the vastus intermedius underneath). Weekly targets count the whole group.",
+    "heads": [
+      {
+        "id": "rectus_femoris",
+        "name": "Rectus femoris",
+        "origin": "The front of the pelvis, just above the hip socket (anterior inferior iliac spine).",
+        "insertion": "The kneecap and, through the patellar tendon, the top of the shin.",
+        "fiber_direction": "Runs straight down the middle of the front thigh; feather-shaped (bipennate).",
+        "crosses_joints": [
+          "hip",
+          "knee"
+        ],
+        "tracked_region": "quads_rf",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "vastus_lateralis",
+        "name": "Vastus lateralis",
+        "origin": "The upper outer thigh bone.",
+        "insertion": "The outer kneecap and the shared quad tendon.",
+        "fiber_direction": "Runs down and slightly inward on the outside of the thigh; the biggest quad muscle.",
+        "crosses_joints": [
+          "knee"
+        ],
+        "tracked_region": "quads_vasti",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "vastus_medialis",
+        "name": "Vastus medialis",
+        "origin": "The inner thigh bone, along its length.",
+        "insertion": "The inner kneecap and the shared quad tendon.",
+        "fiber_direction": "Runs down and outward, forming the 'teardrop' above the inner knee.",
+        "crosses_joints": [
+          "knee"
+        ],
+        "tracked_region": "quads_vasti",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "vastus_intermedius",
+        "name": "Vastus intermedius",
+        "origin": "The front and outer surface of the thigh bone.",
+        "insertion": "The shared quad tendon.",
+        "fiber_direction": "Vertical, deep under the rectus femoris.",
+        "crosses_joints": [
+          "knee"
+        ],
+        "tracked_region": "quads_vasti",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "rectus_femoris",
+        "vastus_lateralis",
+        "vastus_medialis",
+        "vastus_intermedius"
+      ],
+      "joint": "knee",
+      "action": "Knee extension (straightening the knee).",
+      "detail": "The job in squats, leg presses, lunges and leg extensions.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "rectus_femoris"
+      ],
+      "joint": "hip",
+      "action": "Hip flexion (lifting the thigh).",
+      "detail": "Because it crosses the hip, the rectus femoris is short when the hip is bent deeply, as at the bottom of a squat.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "rectus_femoris"
+      ],
+      "joint": "knee",
+      "action": "Grew little in squats compared with the vasti.",
+      "detail": "In MRI studies, full and half squats grew the vasti but not the rectus femoris; leg extensions grew all its measured regions.",
+      "evidence": "supported",
+      "citations": [
+        "kubo2019",
+        "zabaletakorta2021"
+      ]
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Glutes and adductors",
+        "role": "Extend the hip while the quads straighten the knee in squats and lunges.",
+        "evidence": "biomechanics",
+        "muscle_id": "glutes"
+      },
+      {
+        "name": "Hip flexors",
+        "role": "Help the rectus femoris lift the thigh; not tracked.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Hamstrings",
+        "role": "Bend the knee, the direct opposite.",
+        "evidence": "biomechanics",
+        "muscle_id": "hamstrings"
+      },
+      {
+        "name": "Glutes (for the rectus femoris at the hip)",
+        "role": "Extend the hip.",
+        "evidence": "biomechanics",
+        "muscle_id": "glutes"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In deadlifts the quads start the lift off the floor; deadlifts are rated 0.5 for quads.",
+        "evidence": "biomechanics"
+      },
+      {
+        "text": "In hip thrusts the quads hold the knee angle; rated below 0.25 for quads.",
+        "evidence": "modeled"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "back-squat",
+        "rating": 1,
+        "role": "main"
+      },
+      {
+        "exercise_id": "leg-press",
+        "rating": 1,
+        "role": "main"
+      },
+      {
+        "exercise_id": "bulgarian-split-squat",
+        "rating": 1,
+        "role": "main"
+      },
+      {
+        "exercise_id": "walking-lunge",
+        "rating": 0.9,
+        "role": "main"
+      },
+      {
+        "exercise_id": "high-foot-leg-press",
+        "rating": 0.7,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "trap-bar-deadlift",
+        "rating": 0.7,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "deadlift",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "box-jump",
+        "rating": 0.55,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "hip-thrust",
+        "rating": 0.2,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      },
+      {
+        "exercise_id": "romanian-deadlift",
+        "rating": 0,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 4 sets of back squat (1.0), 3 sets of walking lunge (0.9) and 3 sets of leg extension (1.0) give 4 + 2.7 + 3 = 9.7, which the panel shows as 9.5 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "rectus_femoris",
+      "goal": "Rectus femoris bias: knee extension without deep hip flexion",
+      "how": {
+        "joint_angle": "Knee straightening with the hip open or only partly bent, as in leg extensions and sissy squats.",
+        "stretch_position": "Lean back in the leg-extension seat or recline it, so the rectus femoris is longer at the hip.",
+        "stance": "Seated in a leg-extension machine."
+      },
+      "swap_tags": [
+        "muscle_isolation"
+      ],
+      "example_exercise_ids": [
+        "leg-extension",
+        "sissy-squat"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "kubo2019",
+        "zabaletakorta2021"
+      ],
+      "caveat": "The studies compared leg extensions or squats; seat recline was not tested. The map rates leg extensions rectus femoris 1.0 and squats 0.4."
+    },
+    {
+      "target": "all",
+      "goal": "Train the long-length part of the range",
+      "how": {
+        "joint_angle": "Deep knee bend under load.",
+        "stretch_position": "Bottom of the squat or the first part of a leg extension (knee bent well past 90 degrees)."
+      },
+      "swap_tags": [
+        "stretch_emphasis"
+      ],
+      "example_exercise_ids": [
+        "hack-squat",
+        "pendulum-squat",
+        "bulgarian-split-squat"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "pedrosa2022"
+      ],
+      "caveat": "In leg extensions, partials at long length beat full range and short-length partials. Leg extensions carry the 'Peak-contraction focus' tag because resistance is often hardest near lockout; control the bottom too."
+    },
+    {
+      "target": "vastus_lateralis",
+      "goal": "Vasti: heavy squat patterns",
+      "how": {
+        "joint_angle": "Deep squat, hack squat or leg press.",
+        "stance": "Feet about shoulder width, knees travelling forward over the toes."
+      },
+      "swap_tags": [
+        "loading_potential"
+      ],
+      "example_exercise_ids": [
+        "hack-squat",
+        "back-squat",
+        "leg-press"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "kubo2019"
+      ],
+      "caveat": "Full and half squats grew the vasti similarly, about 5% over 10 weeks."
+    },
+    {
+      "target": "all",
+      "goal": "Lower fatigue cost",
+      "how": {
+        "stance": "Machine squats and presses with back support."
+      },
+      "swap_tags": [
+        "stability",
+        "systemic_fatigue",
+        "spinal_load"
+      ],
+      "example_exercise_ids": [
+        "hack-squat",
+        "pendulum-squat",
+        "leg-press"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Swaps with 'More stable' and 'Less spinal loading' keep the quad work and cut whole-body fatigue."
+    },
+    {
+      "target": "vastus_medialis",
+      "goal": "Inner-quad (teardrop) bias",
+      "how": {
+        "stance": "Narrow stance or knees forward."
+      },
+      "swap_tags": [],
+      "example_exercise_ids": [
+        "sissy-squat",
+        "hack-squat"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "Separate vastus medialis growth by stance is a model; deep knee bends work all the vasti."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "hack-squat",
+      "why": "Deep, stable knee bend with high loads and no bar on the spine.",
+      "evidence": "supported",
+      "citations": [
+        "pedrosa2022"
+      ]
+    },
+    {
+      "exercise_id": "leg-extension",
+      "why": "The one library exercise that grew all regions of the rectus femoris in a direct comparison.",
+      "evidence": "supported",
+      "citations": [
+        "zabaletakorta2021"
+      ]
+    },
+    {
+      "exercise_id": "back-squat",
+      "why": "Heavy, loadable; grew the vasti in MRI studies.",
+      "evidence": "supported",
+      "citations": [
+        "kubo2019"
+      ]
+    },
+    {
+      "exercise_id": "pendulum-squat",
+      "why": "Deep knee bend on a guided path; stretch-biased in the app.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "bulgarian-split-squat",
+      "why": "One leg at a time, deep knee bend; quads 1.0, glutes 0.8.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "leg-press",
+      "why": "Easy to push hard safely; quads 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "sissy-squat",
+      "why": "Knee extension with an open hip; rectus femoris 1.0 on the map.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Relying only on squats and presses when the rectus femoris is a goal.",
+      "evidence": "supported",
+      "citations": [
+        "kubo2019",
+        "zabaletakorta2021"
+      ]
+    },
+    {
+      "text": "Cutting depth short on squats, presses and leg extensions, so the long-length range is missed.",
+      "evidence": "supported",
+      "citations": [
+        "pedrosa2022"
+      ]
+    },
+    {
+      "text": "Letting the hips rise first on squats, which shifts work away from the quads.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Bouncing out of the bottom of leg extensions.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Knees forward, sit between your heels.",
+      "why": "Bends the knee deeply for the quads.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Control the bottom, don't bounce.",
+      "why": "Keeps tension in the long-length range.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Push the floor away.",
+      "why": "Knee extension through the whole foot.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Lean back on leg extensions.",
+      "why": "Lengthens the rectus femoris at the hip.",
+      "evidence": "modeled"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.quads.min": 10,
+    "targets.json:targets.quads.max": 20,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@leg-extension.heads.quads_rf": 1,
+    "exercises.json:@back-squat.heads.quads_rf": 0.4,
+    "exercises.json:@deadlift.muscles.quads": 0.5
+  },
+  "notes": [
+    "Weekly target in the app: 10 to 20 quads sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "Kubo 2019 (17 men) and Zabaleta-Korta 2021 were small trials; the direction is consistent but sizes are rough.",
+    "Pedrosa 2022 used leg extensions in untrained people; extending it to squats is a reasonable guess, not a finding."
+  ]
+}

@@ -1,0 +1,212 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "push-up",
+ "kind": "exercise",
+ "exercise_id": "push-up",
+ "title": "Push-Up",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A bodyweight press from the floor for the chest, front delts and triceps, with some core work.",
+ "type": "accessory",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [],
+  "text": "No equipment needed."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "chest_upper": 0.7,
+    "chest_lower": 1
+   },
+   "why": "Library rating 1 for chest (main mover): each working set adds 1 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for front delts (helper): each working set adds 0.5 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.25,
+    "triceps_short": 0.5
+   },
+   "why": "Library rating 0.5 for triceps (helper): each working set adds 0.5 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abs",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for abs: below the counting floor, so it adds nothing to the weekly abs total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Put your hands a little wider than your shoulders and make a straight line from head to heels.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Brace your core and glutes.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower your chest to just above the floor, with your elbows about 45° from your body.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Push back up to straight arms.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Brace your abs and squeeze your glutes",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower until your chest nearly touches the floor",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Push the floor away to lockout",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your hips level, not sagging or piked up.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the hips sag or pike during the rep.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "archer-push-up",
+   "why": "Swap sheet: More stretch emphasis, More technical.",
+   "differences": [
+    "More stretch emphasis",
+    "More technical"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "deficit-push-up",
+   "why": "Swap sheet: More stretch emphasis.",
+   "differences": [
+    "More stretch emphasis"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "iso-lateral-chest-press",
+   "why": "Swap sheet: More stretch emphasis, More stable, Heavier loading potential.",
+   "differences": [
+    "More stretch emphasis",
+    "More stable",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "plate-loaded-chest-press",
+   "why": "Swap sheet: More stable, Heavier loading potential, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Heavier loading potential",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

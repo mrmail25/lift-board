@@ -1,0 +1,236 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "barbell-shrug",
+ "kind": "exercise",
+ "exercise_id": "barbell-shrug",
+ "title": "Barbell Shrug",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Barbell shrug: lift the shoulders toward the ears. Upper traps 1. Very loadable; grip is often the limit.",
+ "type": "isolation",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "traps",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "traps_upper": 1,
+    "traps_mid_lower": 0.4
+   },
+   "why": "The upper traps raise the shoulder blades (elevation); mid/lower help to steady them (0.4).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "You hold the bar the whole set (0.3).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Bar in a rack at mid-thigh height.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Overhand grip just outside the hips.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Stand tall with straight arms.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Shrug the shoulders straight up",
+   "why": "Straight up, not rolled, is the trap's line.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Pause at the top",
+   "why": "Pausing at the top stops a bounce.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to a full stretch",
+   "why": "Straight arms keeps the work on the traps.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Use straps when grip fails first",
+   "why": "Lets the traps reach the end of the set.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "Straps",
+   "target_muscle_ids": [
+    "traps"
+   ],
+   "effect": "Grip stops being the limit.",
+   "swap_tags": [
+    "grip_demand"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Less forearm work."
+  },
+  {
+   "kind": "tempo",
+   "change": "Hold 1 second at the top",
+   "target_muscle_ids": [
+    "traps"
+   ],
+   "effect": "More time at the shortest point.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Tempo itself changes growth little."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Rolling the shoulders in circles instead of moving straight up and down.",
+   "fix": "Lighten the load until you can pause at the top.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Rolling the shoulders.",
+   "fix": "Straight up and down.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Bending the elbows.",
+   "fix": "Keep the arms straight.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Rolling the shoulders works more of the traps.",
+   "reality": "The upper traps lift the shoulder blades; rolling adds no load.",
+   "evidence": "biomechanics"
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick the bar up from a rack at mid-thigh height.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-shrug",
+   "why": "Dumbbells at the sides; freer path.",
+   "differences": [
+    "Less spinal loading",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "shrug-machine",
+   "why": "Machine shrug, no grip limit from balance.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:forearms",
+   "goal_label": "More forearms",
+   "exercise_id": "farmer-carry",
+   "why": "Walking with heavy weights: grip and traps.",
+   "differences": [
+    "Less isolation",
+    "More systemic fatigue",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 3,
+  "skill_demand": 1,
+  "flags": [
+   "upper_trap_involvement",
+   "spinal_load",
+   "grip_demand"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@barbell-shrug.heads.traps_mid_lower": 0.4,
+  "exercises.json:@barbell-shrug.muscles.forearms": 0.3,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Shrug variations have not been compared for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

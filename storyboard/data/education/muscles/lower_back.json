@@ -1,0 +1,321 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "lower_back",
+  "kind": "muscle",
+  "title": "Lower back",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "lower_back"
+  ],
+  "summary": "The erector spinae, two thick columns of muscle either side of the spine. They straighten the spine and, more often in training, hold it still while the hips do the work. Deadlifts, RDLs, rows and squats load them heavily, so direct work is usually small.",
+  "what_it_is": {
+    "overview": "The app's lower-back region is the erector spinae from the bottom of the traps diamond down to the sacrum. The deeper multifidus and the quadratus lumborum work with it but are not tracked.",
+    "heads": [
+      {
+        "id": "iliocostalis",
+        "name": "Iliocostalis (outer column)",
+        "origin": "The back of the pelvis and sacrum via a shared tendon.",
+        "insertion": "The angles of the ribs, up to the neck.",
+        "fiber_direction": "Vertical, running up the outer part of the back.",
+        "crosses_joints": [
+          "spine"
+        ],
+        "tracked_region": "lower_back",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "longissimus",
+        "name": "Longissimus (middle column)",
+        "origin": "The shared tendon on the sacrum and lumbar spine.",
+        "insertion": "The sideways bony points of the vertebrae and the ribs, up to the skull.",
+        "fiber_direction": "Vertical, the thickest column beside the spine.",
+        "crosses_joints": [
+          "spine"
+        ],
+        "tracked_region": "lower_back",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "spinalis",
+        "name": "Spinalis (inner column)",
+        "origin": "The spines of the lower vertebrae.",
+        "insertion": "The spines of the vertebrae higher up.",
+        "fiber_direction": "Vertical, hugging the spine.",
+        "crosses_joints": [
+          "spine"
+        ],
+        "tracked_region": "lower_back",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "iliocostalis",
+        "longissimus",
+        "spinalis"
+      ],
+      "joint": "spine",
+      "action": "Spinal extension (arching the back).",
+      "detail": "The job in a rounded-back extension.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "iliocostalis",
+        "longissimus",
+        "spinalis"
+      ],
+      "joint": "spine",
+      "action": "Hold the spine still against bending forces (isometric work).",
+      "detail": "The main job in deadlifts, RDLs, good mornings, rows and squats.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "iliocostalis",
+        "longissimus"
+      ],
+      "joint": "spine",
+      "action": "Side bending when one side works.",
+      "detail": "Minor in training.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Glutes and hamstrings",
+        "role": "Do the hip extension in hinges while the erectors hold the spine.",
+        "evidence": "biomechanics",
+        "muscle_id": "glutes"
+      },
+      {
+        "name": "Multifidus and quadratus lumborum",
+        "role": "Deep spinal stabilizers; not tracked.",
+        "evidence": "biomechanics"
+      },
+      {
+        "name": "Lats",
+        "role": "Help stiffen the lower back through the fascia.",
+        "evidence": "biomechanics",
+        "muscle_id": "lats"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Abs",
+        "role": "Flex the spine, the opposite action.",
+        "evidence": "biomechanics",
+        "muscle_id": "abs"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In squats and bent-over rows the erectors hold the trunk angle; back squats are rated 0.4 and barbell rows 0.5.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "deadlift",
+        "rating": 0.9,
+        "role": "main"
+      },
+      {
+        "exercise_id": "rack-pull",
+        "rating": 0.8,
+        "role": "main"
+      },
+      {
+        "exercise_id": "romanian-deadlift",
+        "rating": 0.7,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "good-morning",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "barbell-row",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "back-squat",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "kettlebell-swing",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "smith-row",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "45-degree-hyperextension",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "smith-squat",
+        "rating": 0.2,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 3 sets of deadlift (0.9), 3 sets of Romanian deadlift (0.7) and 4 sets of barbell row (0.5) give 2.7 + 2.1 + 2 = 6.8, which the panel shows as 7 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "all",
+      "goal": "Spinal extension through range",
+      "how": {
+        "joint_angle": "Let the upper back round over the pad, then extend back to neutral.",
+        "stance": "Back-extension bench or machine."
+      },
+      "swap_tags": [
+        "muscle_isolation",
+        "stability"
+      ],
+      "example_exercise_ids": [
+        "back-extension-machine",
+        "back-extension"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "A rounded-back style puts more of the movement in the spine; a flat-back hinge style moves the hips and shifts work to glutes and hamstrings."
+    },
+    {
+      "target": "all",
+      "goal": "Isometric strength in hinges",
+      "how": {
+        "joint_angle": "Hip hinge with a neutral spine.",
+        "grip": "Bar or dumbbells."
+      },
+      "swap_tags": [
+        "spinal_load",
+        "systemic_fatigue"
+      ],
+      "example_exercise_ids": [
+        "deadlift",
+        "romanian-deadlift",
+        "good-morning"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Heavy and fatiguing; counted toward the program check's heavy squat and deadlift limits."
+    },
+    {
+      "target": "all",
+      "goal": "Less lower-back load for other muscles",
+      "how": {
+        "stance": "Chest-supported rows, machine squats and hip thrusts."
+      },
+      "swap_tags": [
+        "spinal_load"
+      ],
+      "example_exercise_ids": [
+        "chest-supported-row",
+        "hack-squat"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Swaps that show 'Less spinal loading' also reduce lower-back credit."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "back-extension-machine",
+      "why": "Direct, guided spinal extension; lower back 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "back-extension",
+      "why": "Bodyweight or loaded; lower back 0.8 with glutes and hamstrings.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "deadlift",
+      "why": "Very heavy isometric work; lower back 0.9.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "romanian-deadlift",
+      "why": "Hinge with a long hamstring stretch; lower back 0.7.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "good-morning",
+      "why": "Bar-on-back hinge; lower back 0.6.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "reverse-hyper",
+      "why": "Hips move against a fixed torso; lower back 0.5.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Adding lots of direct lower-back work on top of heavy hinges and rows.",
+      "evidence": "modeled"
+    },
+    {
+      "text": "Yanking deadlifts off the floor with a loose back.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Hyperextending hard at the top of back extensions.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Ignoring how many heavy squat and deadlift sets pile up in a week.",
+      "evidence": "modeled"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Brace, then hinge.",
+      "why": "Sets the trunk before the load moves.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Push the hips back, keep the bar close.",
+      "why": "Keeps the hinge on the hips with a steady spine.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Finish tall, not leaning back.",
+      "why": "Stops overextension at lockout.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Smooth reps on back extensions.",
+      "why": "Controls the range.",
+      "evidence": "modeled"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.lower_back.min": 3,
+    "targets.json:targets.lower_back.max": 10,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@back-squat.muscles.lower_back": 0.4,
+    "exercises.json:@barbell-row.muscles.lower_back": 0.5
+  },
+  "notes": [
+    "Weekly target in the app: 3 to 10 lower back sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "No erector growth study by exercise choice is on file, so nothing here is marked supported.",
+    "Targets are low and marked extrapolated because heavy compounds give most of the work.",
+    "No back-pain or injury claims; choose variations you can train comfortably."
+  ]
+}

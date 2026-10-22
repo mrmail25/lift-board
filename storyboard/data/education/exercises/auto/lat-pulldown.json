@@ -1,0 +1,177 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "lat-pulldown",
+ "kind": "exercise",
+ "exercise_id": "lat-pulldown",
+ "title": "Lat Pulldown",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A cable pulldown that works like a pull-up with adjustable weight.",
+ "type": "accessory",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "lat_pulldown"
+  ],
+  "text": "Needs: lat pulldown station (seat and thigh pad)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for lats (main mover): each working set adds 1 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for biceps (helper): each working set adds 0.5 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for upper back (helper): each working set adds 0.4 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for rear delts (minor): each working set adds 0.3 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the thigh pad snug and grip the bar a little wider than your shoulders.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lean back slightly with your chest up.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull the bar to your upper chest, driving your elbows down.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Let it rise slowly until your arms are straight and your lats stretch.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lean back slightly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pull the bar to your upper chest",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Let the arms fully extend at the top",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Don't yank with your lower back. Pull from your elbows.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Leaning way back and rowing the bar to your stomach.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "single-arm-lat-pulldown",
+   "why": "Swap sheet: One side at a time.",
+   "differences": [
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "muscle-up",
+   "why": "Swap sheet: Less stretch emphasis, Less stable, Lower loading potential.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less stable",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 1,
+  "flags": [
+   "constant_tension"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

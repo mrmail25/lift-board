@@ -1,0 +1,229 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "pec-deck",
+ "kind": "exercise",
+ "exercise_id": "pec-deck",
+ "title": "Pec Deck",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Machine fly: chest 1. Hardest where the arms come together.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "pec_deck"
+  ],
+  "text": "Needs: pec deck / rear-delt fly machine."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "chest_upper": 0.7,
+    "chest_lower": 1
+   },
+   "why": "The pecs bring the arms across the body; mid/lower 1, upper 0.7.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Front delts help: below the floor.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Seat so the handles are at chest height.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Arms set for a stretch at the start.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Back on the pad.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep your back against the pad",
+   "why": "Squeezing the handles together.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Squeeze the handles together in front",
+   "why": "Fixed elbow bend.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Open slowly to a full stretch",
+   "why": "Controlling the return.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the shoulders back",
+   "why": "Rolling forward shortens the range.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "chest"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Shrugging the shoulders up as you bring the handles in.",
+   "fix": "Set the start position for a comfortable stretch.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Start too wide.",
+   "fix": "Use a stretch you can control.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Shoulders rolling forward.",
+   "fix": "Keep them back.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "cable-fly",
+   "why": "Cable fly.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:chest_upper",
+   "goal_label": "More upper chest",
+   "exercise_id": "incline-dumbbell-press",
+   "why": "Incline press: more upper chest.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "chaves2020"
+   ]
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-fly",
+   "why": "Dumbbell fly.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "push-up",
+   "why": "Push-ups.",
+   "differences": [
+    "Less peak-contraction focus",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "peak_contraction_focus"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@pec-deck.heads.chest_lower": 1,
+  "exercises.json:@pec-deck.heads.chest_upper": 0.7,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Fly variations have not been compared for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

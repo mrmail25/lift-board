@@ -1,0 +1,289 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "rear_delts",
+  "kind": "muscle",
+  "title": "Rear delts",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "rear_delts"
+  ],
+  "summary": "The back third of the deltoid, running from the shoulder blade to the outer upper arm. It pulls the arm back with the elbow out. Rows help, but reverse flyes and face pulls are the most direct work.",
+  "what_it_is": {
+    "overview": "One region in the app, the back of the shoulder cap. It is a separate muscle from the rhomboids and rotator cuff, which the app counts as upper back.",
+    "heads": [
+      {
+        "id": "posterior_deltoid",
+        "name": "Rear (posterior) deltoid",
+        "origin": "The lower edge of the spine of the shoulder blade.",
+        "insertion": "The deltoid tuberosity on the outer upper-arm bone.",
+        "fiber_direction": "Run forward and out from the shoulder blade across the back of the shoulder to the arm.",
+        "crosses_joints": [
+          "shoulder"
+        ],
+        "tracked_region": "rear_delts",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "posterior_deltoid"
+      ],
+      "joint": "shoulder",
+      "action": "Horizontal abduction (pulling the arm back with the elbow out to the side).",
+      "detail": "The main job in reverse flyes and wide rows.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "posterior_deltoid"
+      ],
+      "joint": "shoulder",
+      "action": "Shoulder extension and external rotation.",
+      "detail": "Why rows, pulldowns and face pulls credit it.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Infraspinatus and teres minor",
+        "role": "External rotation, as in face pulls.",
+        "evidence": "biomechanics",
+        "muscle_id": "upper_back"
+      },
+      {
+        "name": "Rhomboids and mid traps",
+        "role": "Pull the shoulder blades together while the rear delt moves the arm.",
+        "evidence": "biomechanics",
+        "muscle_id": "upper_back"
+      },
+      {
+        "name": "Lats",
+        "role": "Shoulder extension in rows.",
+        "evidence": "biomechanics",
+        "muscle_id": "lats"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Chest",
+        "role": "Brings the arm forward and across.",
+        "evidence": "biomechanics",
+        "muscle_id": "chest"
+      },
+      {
+        "name": "Front delts",
+        "role": "Raise the arm forward.",
+        "evidence": "biomechanics",
+        "muscle_id": "front_delts"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In heavy rows the rear delt is a working helper (0.4 to 0.6 in the library), not a stabilizer.",
+        "evidence": "modeled"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "chest-supported-row",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "wide-grip-cable-row",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "seal-row",
+        "rating": 0.55,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "barbell-row",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "seated-cable-row",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "one-arm-dumbbell-row",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "pull-up",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "lat-pulldown",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "tuck-front-lever",
+        "rating": 0.25,
+        "role": "minor"
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 3 sets of reverse pec deck (1.0), 3 sets of face pull (1.0) and 4 sets of chest-supported row (0.6) give 3 + 3 + 2.4 = 8.4, which the panel shows as 8.5 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "posterior_deltoid",
+      "goal": "Isolate the rear delt",
+      "how": {
+        "joint_angle": "Arm moves back in line with the shoulders, elbow out and slightly bent.",
+        "stretch_position": "Arms reaching in front at the start.",
+        "grip": "Neutral or overhand handles.",
+        "stance": "Chest on a pad, or facing a pec deck."
+      },
+      "swap_tags": [
+        "muscle_isolation",
+        "stability"
+      ],
+      "example_exercise_ids": [
+        "reverse-pec-deck",
+        "cable-rear-delt-fly",
+        "dumbbell-rear-delt-fly"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Keeping the shoulder blades fairly still is a common coaching choice to keep work on the delt rather than the mid-back."
+    },
+    {
+      "target": "posterior_deltoid",
+      "goal": "Rows that hit rear delts more",
+      "how": {
+        "joint_angle": "Elbows flared about 60 to 90 degrees from the torso, pulling toward the upper chest.",
+        "grip": "Wide overhand.",
+        "stance": "Chest supported."
+      },
+      "swap_tags": [
+        "upper_back_thickness_bias"
+      ],
+      "example_exercise_ids": [
+        "wide-grip-cable-row",
+        "chest-supported-row"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "Elbows-out rows flag 'Upper-back thickness focus' in the swap sheet; they also load the rear delts (0.6)."
+    },
+    {
+      "target": "posterior_deltoid",
+      "goal": "External rotation with the pull",
+      "how": {
+        "joint_angle": "Pull to the face and rotate the hands back.",
+        "grip": "Rope.",
+        "stance": "Standing, cable at face height."
+      },
+      "swap_tags": [
+        "constant_tension"
+      ],
+      "example_exercise_ids": [
+        "face-pull"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Adds rotator-cuff work (credited to upper back) alongside the rear delt."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "reverse-pec-deck",
+      "why": "Stable, guided isolation; easy to push to failure.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "cable-rear-delt-fly",
+      "why": "Cable tension through the whole range.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "dumbbell-rear-delt-fly",
+      "why": "No equipment needed; do it chest-supported to stop swinging.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "face-pull",
+      "why": "Rear delts 1.0 plus rotator-cuff and mid-trap work.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "chest-supported-row",
+      "why": "A row that credits rear delts 0.6 without lower-back fatigue.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "wide-grip-cable-row",
+      "why": "Elbows-out row; rear delts 0.6.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "trx-y-t-raise",
+      "why": "Bodyweight option; rear delts 0.8.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Turning the reverse fly into a row by bending the elbows more and more.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Using so much load that the traps shrug the weight up.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Counting on rows alone; they credit rear delts at most 0.6.",
+      "evidence": "modeled"
+    },
+    {
+      "text": "Swinging the torso on bent-over flyes.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Reach wide, not back.",
+      "why": "Keeps the arm path on the rear delt.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Lead with the pinkies.",
+      "why": "Keeps the elbows out.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Pause a beat at the back.",
+      "why": "Stops swinging.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Chest on the pad.",
+      "why": "Removes body English.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.rear_delts.min": 6,
+    "targets.json:targets.rear_delts.max": 18,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5
+  },
+  "notes": [
+    "Weekly target in the app: 6 to 18 rear delts sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "No rear-delt growth study by exercise choice is on file, so nothing here is marked supported.",
+    "Coaching choices about keeping the shoulder blades still are modeled."
+  ]
+}

@@ -1,0 +1,212 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "seated-row-machine",
+ "kind": "exercise",
+ "exercise_id": "seated-row-machine",
+ "title": "Seated Row Machine (Selectorized)",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A selectorized seated row with a chest pad and fixed handles, which keeps the torso still so the mid-back and lats do the work.",
+ "type": "accessory",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "upper_back",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for upper back (main mover): each working set adds 1 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.75,
+   "band": "main",
+   "why": "Library rating 0.75 for lats (main mover): each working set adds 0.75 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.55,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.15,
+    "traps_mid_lower": 0.55
+   },
+   "why": "Library rating 0.55 for traps (helper): each working set adds 0.55 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.45,
+   "band": "helper",
+   "why": "Library rating 0.45 for rear delts (helper): each working set adds 0.45 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.45,
+   "band": "helper",
+   "why": "Library rating 0.45 for biceps (helper): each working set adds 0.45 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the seat so the handles are at about lower-chest height, with your chest on the pad.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Row the handles back until your elbows pass your torso.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Let them go forward until your arms are straight and your shoulder blades spread.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Row the handles back",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the chest on the pad",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Reach forward fully",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your chest on the pad. Don't lean back to finish the rep.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Leaning back off the pad.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "high-to-low-row-machine",
+   "why": "Swap sheet: More stretch emphasis, Less upper-back focus.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-back focus"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "inverted-row",
+   "why": "Swap sheet: Less stable, Lower loading potential, More technical.",
+   "differences": [
+    "Less stable",
+    "Lower loading potential",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "seated-cable-row",
+   "why": "Swap sheet: Steadier cable tension.",
+   "differences": [
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "chest-supported-dumbbell-row",
+   "why": "Swap sheet: More technical.",
+   "differences": [
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 1,
+  "flags": [
+   "upper_back_thickness_bias"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

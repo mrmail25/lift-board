@@ -1,0 +1,280 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "leg-extension",
+ "kind": "exercise",
+ "exercise_id": "leg-extension",
+ "title": "Leg Extension",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "The quad isolation machine: straighten the knees against a pad. The only common lift that loads the rectus femoris hard; quads 1, rectus femoris 1.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "leg_extension"
+  ],
+  "text": "Needs: leg extension machine or attachment."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 1,
+    "quads_vasti": 0.8
+   },
+   "why": "All four quads straighten the knee. Sitting bends the hip, but the rectus femoris still works hard because it can't be helped by the hip here, so the library rates it 1 and the vasti 0.8.",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "quads_rf",
+     "rating": 1,
+     "text": "With matched volume, leg extensions grew all three measured regions of the rectus femoris, while Smith squats did not.",
+     "evidence": "supported",
+     "citations": [
+      "zabaletakorta2021"
+     ]
+    }
+   ]
+  }
+ ],
+ "setup": [
+  {
+   "text": "Line your knees up with the machine's pivot.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Pad on the lower shins, just above the ankles.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Hold the handles and sit back; set the back pad so you are not perched forward.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Extend the legs to full lockout",
+   "why": "Full lockout finishes the rep where the quads are shortest.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Pause at the top",
+   "why": "A short pause at the top makes it harder to swing the weight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower under control",
+   "why": "The quads are longest at the bottom; control it there.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Leaning back slightly stretches the rectus femoris more.",
+   "why": "Leaning back extends the hip, which lengthens the rectus femoris; not tested for growth on its own.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your hips down on the seat",
+   "why": "Lifting the hips adds momentum and changes the angle.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "angle",
+   "change": "Recline the back pad or lean back",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "Extends the hip so the rectus femoris works from a longer length.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Mechanics only; growth from the lean itself is not tested."
+  },
+  {
+   "kind": "range",
+   "change": "Bias the bottom half (knees well bent) at the end of a set",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "Leg-extension partials at long quad lengths grew the quads more than partials at short lengths.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "supported",
+   "citations": [
+    "pedrosa2022"
+   ],
+   "caveat": "Full range stays the default."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Using momentum and lifting the hips off the seat.",
+   "fix": "Use a load you can lift with the hips on the seat; hold the handles.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Seat set so the knee isn't at the pivot.",
+   "fix": "Adjust the back pad until it is.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Cutting the bottom range short.",
+   "fix": "Lower until the knees are bent past 90 degrees.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Leg extensions are useless if you squat.",
+   "reality": "They grew the rectus femoris where squats did not.",
+   "evidence": "supported",
+   "citations": [
+    "zabaletakorta2021",
+    "kubo2019"
+   ]
+  },
+  {
+   "myth": "Leg extensions are bad for your knees.",
+   "reality": "It is a widely used, low-fatigue quad exercise. Use a load and range you can train comfortably.",
+   "evidence": "modeled"
+  },
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Machine isolation is easy to push close to failure; stop when the hips start lifting.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "hack-squat",
+   "why": "Compound quad work from a deep knee bend.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:quads_vasti",
+   "goal_label": "More vasti (outer and inner quad)",
+   "exercise_id": "leg-press",
+   "why": "Heavier, compound quad training (vasti 1).",
+   "differences": [
+    "Less peak-contraction focus",
+    "Less isolation",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "sissy-squat",
+   "why": "No machine; leaning back loads the quads with the hip extended.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "bulgarian-split-squat",
+   "why": "Dumbbell quad and glute work, one leg at a time.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "peak_contraction_focus"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@leg-extension.heads.quads_rf": 1,
+  "exercises.json:@leg-extension.heads.quads_vasti": 0.8,
+  "exercises.json:@leg-press.heads.quads_vasti": 1,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Rectus femoris findings come from two studies (MRI and ultrasound).",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

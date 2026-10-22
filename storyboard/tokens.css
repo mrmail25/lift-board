@@ -1,0 +1,49 @@
+/* Ape-Chit design tokens (storyboard). The rebuild reuses this file as-is: every colour, size, radius and
+   timing in the app comes from here, so a re-theme is one file. */
+:root{
+  /* Logo: the ONE place the artwork is referenced. v3 is pending Mr Dude's approval; swap these two lines. */
+  --logo-icon:url("assets/logo/icon-black-v3.svg");
+  --logo-lockup:url("assets/logo/lockup-v3.svg");
+
+  /* Brand: black, white, one accent ("Ember") */
+  --ink:#000;            /* text, primary marks, logo */
+  --paper:#fff;          /* cards, sheets */
+  --accent:#E8430C;      /* Ember: primary action, active state, PRs, rest line. 4.0:1 on white, 5.2:1 on black */
+  --accent-press:#C2380A;/* pressed accent + small accent text on white (5.4:1) */
+  --accent-tint:#FDECE6; /* accent wash behind chips / selected rows */
+
+  /* Neutrals (greys of ink) */
+  --bg:#F2F2F4;          /* grouped background */
+  --fill:#E9E9EC;        /* inputs, segmented track, keypad keys */
+  --line:rgba(0,0,0,.09);/* hairlines */
+  --text-2:#6B6B70;      /* secondary text */
+  --text-3:#A1A1A6;      /* tertiary, placeholders, auto-filled values */
+  --chrome:rgba(249,249,250,.82); /* translucent bars (tab bar, nav) */
+
+  /* Functional only (never brand): destructive actions */
+  --danger:#E5242B;
+  /* over-volume colours (functional, like --danger). Thresholds are NOT here: rules.json volume_bands */
+  --vol-under:#B9B9BE; --vol-amber:#F0A830; --vol-red:#D93B30;
+
+  /* Type: system stack, SF Pro on Apple devices */
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  --font-num:"SF Pro Rounded",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --t-large:34px;  /* large title */
+  --t-title:22px;  /* section / sheet title */
+  --t-head:17px;   /* headline (semibold) */
+  --t-body:17px;   /* body, inputs (>=16px so iOS never zooms on focus) */
+  --t-sub:15px;    /* subhead */
+  --t-foot:13px;   /* footnote */
+  --t-cap:11px;    /* caption / tab labels */
+
+  /* Space (4-pt grid), radius, shadow, motion */
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:22px;--r-pill:999px;
+  --shadow-sheet:0 -1px 0 rgba(0,0,0,.04),0 -12px 40px rgba(0,0,0,.14);
+  --shadow-float:0 6px 24px rgba(0,0,0,.22);
+  --ease:cubic-bezier(.32,.72,0,1);   /* iOS sheet curve */
+  --t-fast:120ms;--t-med:240ms;--t-sheet:380ms;
+
+  --tab-h:50px;--nav-h:44px;
+  --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
+}

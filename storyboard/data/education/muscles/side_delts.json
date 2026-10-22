@@ -1,0 +1,298 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "side_delts",
+  "kind": "muscle",
+  "title": "Side delts",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "side_delts"
+  ],
+  "summary": "The middle third of the deltoid, which gives the shoulders their width. It lifts the arm out to the side. Lateral raises are the main tool; presses help less than most people think.",
+  "what_it_is": {
+    "overview": "One region in the app, the widest part of the shoulder cap. It is one part of the deltoid, tracked separately because it works differently from the front and rear parts.",
+    "heads": [
+      {
+        "id": "lateral_deltoid",
+        "name": "Side (lateral) deltoid",
+        "origin": "The top outer edge of the shoulder blade (the acromion).",
+        "insertion": "The deltoid tuberosity on the outer upper-arm bone, shared with the front and rear delts.",
+        "fiber_direction": "Many short fibres arranged like a feather (multipennate), running down the outside of the shoulder.",
+        "crosses_joints": [
+          "shoulder"
+        ],
+        "tracked_region": "side_delts",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "lateral_deltoid"
+      ],
+      "joint": "shoulder",
+      "action": "Abduction (raising the arm out to the side).",
+      "detail": "Its main job, strongest roughly between the arm at the side and shoulder height.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "lateral_deltoid"
+      ],
+      "joint": "shoulder",
+      "action": "Helps raise the arm forward and overhead.",
+      "detail": "Why most overhead presses credit it at 0.4 to 0.5.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Supraspinatus (rotator cuff)",
+        "role": "Starts the raise and keeps the arm centred in the socket; not tracked by the app.",
+        "evidence": "biomechanics"
+      },
+      {
+        "name": "Front delts",
+        "role": "Help when the arm rises in front of the body.",
+        "evidence": "biomechanics",
+        "muscle_id": "front_delts"
+      },
+      {
+        "name": "Upper traps and serratus",
+        "role": "Rotate the shoulder blade upward so the arm can rise.",
+        "evidence": "biomechanics",
+        "muscle_id": "traps"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Lats",
+        "role": "Pull the arm down to the side.",
+        "evidence": "biomechanics",
+        "muscle_id": "lats"
+      },
+      {
+        "name": "Chest",
+        "role": "Pulls the arm down and across.",
+        "evidence": "biomechanics",
+        "muscle_id": "chest"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In carries and shrugs the side delt holds the arm in place but does little lifting; the library does not credit it there.",
+        "evidence": "modeled"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "upright-row",
+        "rating": 0.8,
+        "role": "main"
+      },
+      {
+        "exercise_id": "overhead-press",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "seated-dumbbell-shoulder-press",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "arnold-press",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "machine-shoulder-press",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "pike-push-up",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "landmine-press-one-arm",
+        "rating": 0.2,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 4 sets of dumbbell lateral raise (1.0), 3 sets of cable lateral raise (1.0) and 3 sets of overhead press (0.5) give 4 + 3 + 1.5 = 8.5, which the panel shows as 8.5 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "lateral_deltoid",
+      "goal": "Tension at the bottom of the raise",
+      "how": {
+        "joint_angle": "Cable set low and slightly behind or across the body.",
+        "stretch_position": "Arm across the front of the hips at the start.",
+        "grip": "Single handle.",
+        "stance": "Side-on to the cable, one arm at a time."
+      },
+      "swap_tags": [
+        "constant_tension",
+        "unilateral"
+      ],
+      "example_exercise_ids": [
+        "cable-lateral-raise"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "A cable keeps tension on where a dumbbell is nearly weightless (arm at the side). Whether that grows more muscle has not been tested well."
+    },
+    {
+      "target": "lateral_deltoid",
+      "goal": "Keep it on the delt, not the traps",
+      "how": {
+        "joint_angle": "Raise to about shoulder height in the plane of the shoulder blade (slightly in front of the body).",
+        "grip": "Neutral or slightly thumb-down is common.",
+        "stance": "Slight forward lean."
+      },
+      "swap_tags": [
+        "upper_trap_involvement",
+        "muscle_isolation"
+      ],
+      "example_exercise_ids": [
+        "dumbbell-lateral-raise",
+        "lateral-raise-machine",
+        "upright-row"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Upright rows and Y-raises flag 'More upper-trap work' in the swap sheet; plain raises and machines keep more of the work on the side delt."
+    },
+    {
+      "target": "lateral_deltoid",
+      "goal": "Stable, easy-to-progress raises",
+      "how": {
+        "stance": "Seated machine or chest-supported."
+      },
+      "swap_tags": [
+        "stability"
+      ],
+      "example_exercise_ids": [
+        "lateral-raise-machine",
+        "standing-lateral-raise-machine",
+        "seated-dumbbell-lateral-raise"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Machines remove swinging and make small load jumps possible."
+    },
+    {
+      "target": "lateral_deltoid",
+      "goal": "Presses as helper volume",
+      "how": {
+        "joint_angle": "Overhead press with the elbows slightly out."
+      },
+      "swap_tags": [
+        "loading_potential"
+      ],
+      "example_exercise_ids": [
+        "overhead-press",
+        "seated-dumbbell-shoulder-press"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "Most overhead presses credit side delts 0.4 to 0.5 in the library; raises remain the main source."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "dumbbell-lateral-raise",
+      "why": "The standard side-delt isolation; needs no machine.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "cable-lateral-raise",
+      "why": "Steady tension from the very bottom, one arm at a time.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "lateral-raise-machine",
+      "why": "Fixed path and easy small jumps, so sets can go close to failure without swinging.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "seated-dumbbell-lateral-raise",
+      "why": "Sitting removes leg drive and cheating.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "cable-y-raise",
+      "why": "Raise in a Y path; side delts 1.0 with more upper-trap work.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "upright-row",
+      "why": "Heavier loading for side delts (0.8) and upper traps.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "overhead-press",
+      "why": "Heavy press that adds side-delt volume (0.5).",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Swinging the weight up with the hips and traps.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Shrugging the shoulders toward the ears as the arm rises.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Using a load so heavy that the arm only reaches halfway.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Expecting presses alone to build side delts.",
+      "evidence": "modeled"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Lead with the elbows, not the hands.",
+      "why": "Keeps the arm moving out to the side.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Push the weight away from you, out and up.",
+      "why": "Keeps the shoulders down.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Stop around shoulder height.",
+      "why": "Past that the traps take over more.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Control it down; no drop.",
+      "why": "Keeps tension on the lowering.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.side_delts.min": 8,
+    "targets.json:targets.side_delts.max": 22,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@upright-row.muscles.side_delts": 0.8,
+    "exercises.json:@overhead-press.muscles.side_delts": 0.5
+  },
+  "notes": [
+    "Weekly target in the app: 8 to 22 side delts sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "No growth study comparing side-delt exercises is on file, so nothing here is marked supported.",
+    "Side delts usually need direct work: presses credit them at most 0.5."
+  ]
+}

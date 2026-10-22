@@ -1,0 +1,360 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "triceps",
+  "kind": "muscle",
+  "title": "Triceps",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "triceps_long",
+    "triceps_short"
+  ],
+  "summary": "The three-headed muscle on the back of the upper arm. All three heads straighten the elbow; the long head also crosses the shoulder. Overhead extensions grew the triceps clearly more than pushdowns in a direct comparison.",
+  "what_it_is": {
+    "overview": "The app splits the triceps into two map regions: the long head (inner strip) and the lateral and medial heads together (outer horseshoe). Weekly targets count the whole muscle.",
+    "heads": [
+      {
+        "id": "long",
+        "name": "Long head",
+        "origin": "Just below the shoulder socket (the infraglenoid tubercle of the shoulder blade).",
+        "insertion": "The point of the elbow (olecranon), through the shared triceps tendon.",
+        "fiber_direction": "Runs down the inner back of the arm; fibres are pennate (set at an angle like a feather).",
+        "crosses_joints": [
+          "shoulder",
+          "elbow"
+        ],
+        "tracked_region": "triceps_long",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "lateral",
+        "name": "Lateral head",
+        "origin": "The back of the upper-arm bone, high up and to the outside.",
+        "insertion": "The point of the elbow, through the shared tendon.",
+        "fiber_direction": "Runs down the outer back of the arm, forming the outer horseshoe.",
+        "crosses_joints": [
+          "elbow"
+        ],
+        "tracked_region": "triceps_short",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "medial",
+        "name": "Medial head",
+        "origin": "The back of the lower upper-arm bone, deep under the other two heads.",
+        "insertion": "The point of the elbow, through the shared tendon.",
+        "fiber_direction": "Runs down under the long and lateral heads, near the elbow.",
+        "crosses_joints": [
+          "elbow"
+        ],
+        "tracked_region": "triceps_short",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "long",
+        "lateral",
+        "medial"
+      ],
+      "joint": "elbow",
+      "action": "Elbow extension (straightening the elbow).",
+      "detail": "The job in every press, pushdown and extension.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "long"
+      ],
+      "joint": "shoulder",
+      "action": "Helps pull the arm down and back (shoulder extension and adduction).",
+      "detail": "Why the long head is stretched with the arm overhead and works a little in straight-arm pulldowns and pullovers.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Anconeus",
+        "role": "Small muscle that helps straighten the elbow; not tracked.",
+        "evidence": "biomechanics"
+      },
+      {
+        "name": "Chest and front delts",
+        "role": "Do the shoulder part of every press while the triceps straighten the elbow.",
+        "evidence": "biomechanics",
+        "muscle_id": "chest"
+      },
+      {
+        "name": "Lats and rear delts",
+        "role": "Shoulder extension with the long head.",
+        "evidence": "biomechanics",
+        "muscle_id": "lats"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Biceps and brachialis",
+        "role": "Bend the elbow, the direct opposite.",
+        "evidence": "biomechanics",
+        "muscle_id": "biceps"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In rows and pulldowns the long head helps steady the shoulder; the library rates triceps 0 or below 0.25 there.",
+        "evidence": "modeled"
+      },
+      {
+        "text": "Pullovers and straight-arm pulldowns use the long head for shoulder extension; pullovers are rated 0.25 to 0.3 for triceps.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "close-grip-bench-press",
+        "rating": 1,
+        "role": "main",
+        "note": "A compound press rated as a main triceps mover."
+      },
+      {
+        "exercise_id": "weighted-dip",
+        "rating": 0.8,
+        "role": "main"
+      },
+      {
+        "exercise_id": "overhead-press",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "barbell-bench-press",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "push-up",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "incline-dumbbell-press",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "dumbbell-bench-press",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "dumbbell-pullover",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "pullover-machine",
+        "rating": 0.25,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "straight-arm-pulldown",
+        "rating": 0.2,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 4 sets of barbell bench press (0.5), 3 sets of overhead cable triceps extension (1.0) and 3 sets of triceps pushdown (1.0) give 2 + 3 + 3 = 8, which the panel shows as 8 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "long",
+      "goal": "Long-head bias: work with the arm overhead",
+      "how": {
+        "joint_angle": "Shoulder raised so the upper arm points up.",
+        "stretch_position": "Elbow fully bent behind the head with the arm overhead, which stretches the long head across both joints.",
+        "grip": "Rope, bar or single handle.",
+        "stance": "Standing facing away from a cable, seated, or on a machine."
+      },
+      "swap_tags": [
+        "triceps_long_head_bias",
+        "stretch_emphasis"
+      ],
+      "example_exercise_ids": [
+        "overhead-cable-triceps-extension",
+        "cable-overhead-rope-extension",
+        "overhead-triceps-machine"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "maeo2023"
+      ],
+      "caveat": "Same wording as the swap tag 'Triceps long-head bias'. In the study the lateral and medial heads also grew more overhead, even with about a third less load."
+    },
+    {
+      "target": "lateral",
+      "goal": "Lateral and medial heads",
+      "how": {
+        "joint_angle": "Upper arm at the side or in front (pushdowns, presses, kickbacks).",
+        "grip": "Bar or rope.",
+        "stance": "Standing at a high cable."
+      },
+      "swap_tags": [
+        "constant_tension"
+      ],
+      "example_exercise_ids": [
+        "triceps-pushdown",
+        "close-grip-bench-press",
+        "machine-triceps-extension"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "The short heads cross only the elbow, so they work in every elbow extension. The map rates pushdowns short 1.0 and long 0.6."
+    },
+    {
+      "target": "all",
+      "goal": "Heavy compound triceps work",
+      "how": {
+        "joint_angle": "Close-grip press or dips.",
+        "grip": "Hands about shoulder width on a bar."
+      },
+      "swap_tags": [
+        "loading_potential"
+      ],
+      "example_exercise_ids": [
+        "close-grip-bench-press",
+        "weighted-dip",
+        "jm-press"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Heavier loads and more systemic fatigue than isolation."
+    },
+    {
+      "target": "all",
+      "goal": "Peak contraction",
+      "how": {
+        "joint_angle": "Upper arm behind the body, hardest at lockout.",
+        "stance": "Hinged over, as in kickbacks."
+      },
+      "swap_tags": [
+        "peak_contraction_focus"
+      ],
+      "example_exercise_ids": [
+        "dumbbell-kickback"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "Kickbacks are tagged 'Peak-contraction focus'; no growth advantage is shown, and they are hardest where the triceps is short."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "overhead-cable-triceps-extension",
+      "why": "Overhead position grew the triceps about 1.4-fold more than pushdowns, most of all the long head.",
+      "evidence": "supported",
+      "citations": [
+        "maeo2023"
+      ]
+    },
+    {
+      "exercise_id": "cable-overhead-rope-extension",
+      "why": "Same overhead position with a rope; stretch emphasis and long-head bias.",
+      "evidence": "supported",
+      "citations": [
+        "maeo2023"
+      ]
+    },
+    {
+      "exercise_id": "overhead-triceps-machine",
+      "why": "Overhead extension on a guided path; easy to push to failure.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "skull-crusher",
+      "why": "Long range with the elbow fully bent; stretch-biased in the app.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "triceps-pushdown",
+      "why": "Simple, loadable work for the lateral and medial heads with cable tension.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "close-grip-bench-press",
+      "why": "Heavy compound press; triceps 1.0 with chest 0.6.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "weighted-dip",
+      "why": "Heavy dip; triceps 0.8 and chest 0.8.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Letting the elbows drift forward and down on pushdowns so the lats and chest help.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Flaring the elbows wide on overhead extensions, which shortens the range.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Stopping short of a full stretch on overhead work; that range is where the extra growth was seen.",
+      "evidence": "supported",
+      "citations": [
+        "maeo2023"
+      ]
+    },
+    {
+      "text": "Doing only pushdowns when overhead work is available.",
+      "evidence": "supported",
+      "citations": [
+        "maeo2023"
+      ]
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Elbows pointed at the ceiling, reach deep behind your head.",
+      "why": "Loads the long head in its stretch.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Pin the upper arm; only the forearm moves.",
+      "why": "Keeps the work on elbow extension.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Lock out fully without slamming.",
+      "why": "Uses the whole range under control.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Lower slowly, especially near the stretch.",
+      "why": "Controls the hardest part.",
+      "evidence": "modeled"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.triceps.min": 8,
+    "targets.json:targets.triceps.max": 18,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@triceps-pushdown.heads.triceps_short": 1,
+    "exercises.json:@triceps-pushdown.heads.triceps_long": 0.6,
+    "exercises.json:@close-grip-bench-press.muscles.chest": 0.6,
+    "exercises.json:@weighted-dip.muscles.chest": 0.8,
+    "exercises.json:@dumbbell-pullover.muscles.triceps": 0.3,
+    "exercises.json:@pullover-machine.muscles.triceps": 0.25
+  },
+  "notes": [
+    "Weekly target in the app: 8 to 18 triceps sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "Maeo 2023 measured untrained adults with cable extensions, comparing overhead and pushdown arm positions. It supports overhead work, not dropping pushdowns or presses.",
+    "The long/short split on the map is shading only; weekly targets count the whole triceps."
+  ]
+}

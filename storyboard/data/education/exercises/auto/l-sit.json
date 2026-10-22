@@ -1,0 +1,181 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "l-sit",
+ "kind": "exercise",
+ "exercise_id": "l-sit",
+ "title": "L-Sit (Floor or Parallettes)",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A support hold on the floor or parallettes with your legs held out straight, for the abs and hip flexors.",
+ "type": "isolation",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [
+   "parallettes|dip_station"
+  ],
+  "text": "Needs: parallettes or dip bars or power tower."
+ },
+ "muscles": [
+  {
+   "muscle_id": "abs",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for abs (helper): each working set adds 0.6 of a set to the weekly abs total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "quads",
+   "rating": 0.3,
+   "band": "minor",
+   "regions": {
+    "quads_rf": 0.3,
+    "quads_vasti": 0
+   },
+   "why": "Library rating 0.3 for quads (minor): each working set adds 0.3 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.15,
+   "band": "not_counted",
+   "regions": {
+    "triceps_long": 0,
+    "triceps_short": 0.15
+   },
+   "why": "Library rating 0.15 for triceps: below the counting floor, so it adds nothing to the weekly triceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Put your hands beside your hips and press down.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lift your hips and legs until your legs are straight out in front.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Hold for time.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lock the arms",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lift the legs to hip height",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Press the shoulders down",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Tuck your knees in if you can't straighten your legs yet.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Bending the knees.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "hollow-body-hold",
+   "why": "Swap sheet: Easier to learn.",
+   "differences": [
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "captains-chair-knee-raise",
+   "why": "Swap sheet: Easier to learn.",
+   "differences": [
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "ab-crunch-machine",
+   "why": "Swap sheet: Better isolation, More stable, Easier to learn.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 3,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

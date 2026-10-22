@@ -1,0 +1,292 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "pull-up",
+ "kind": "exercise",
+ "exercise_id": "pull-up",
+ "title": "Pull-Up",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Pull your bodyweight up to a bar with an overhand grip: lats are the main mover, with biceps and mid-back helping and a big stretch at the hang.",
+ "type": "primary",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [
+   "pull_up_bar"
+  ],
+  "text": "Needs: pull-up bar."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 1,
+   "band": "main",
+   "why": "The lats pull the upper arm down and back toward the body (shoulder adduction and extension). From a dead hang they start fully stretched.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "The elbow flexors bend the elbow against bodyweight; overhand grip gives the biceps a little less leverage than palms up (0.6 vs 0.8 for the chin-up).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Rhomboids and mid traps pull the shoulder blades down and back near the top.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "The rear delts help extend the shoulder: minor.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "You hold your bodyweight (swap tag 'More grip demand').",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Grip a little wider than your shoulders, palms facing away.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Start from a dead hang with straight arms.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Cross your ankles or keep the legs slightly in front to stop swinging.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the shoulders down first",
+   "why": "Starting the pull from the shoulders sets the shoulder blades first.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive the elbows toward your ribs",
+   "why": "Elbows toward the ribs is the lat's line of pull.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Get your chin over the bar",
+   "why": "Chin over the bar finishes the range.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Use the full range. The dead hang at the bottom is the stretch that builds the lats.",
+   "why": "The dead hang is where the lats are longest.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lower all the way, every rep",
+   "why": "Half reps skip the stretch.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "Wider overhand grip",
+   "target_muscle_ids": [
+    "lats"
+   ],
+   "effect": "Coaches use it for 'width' (upper lats and teres major); the lat is one muscle, so this is a tendency.",
+   "swap_tags": [
+    "lat_width_bias"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "andersen2014"
+   ],
+   "caveat": "Pulldown EMG was similar across grip widths, and the wide grip allowed less load."
+  },
+  {
+   "kind": "grip",
+   "change": "Palms facing you (chin-up) or neutral",
+   "target_muscle_ids": [
+    "biceps",
+    "lats"
+   ],
+   "effect": "More biceps help; most people get more reps.",
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "chin-up"
+   ],
+   "evidence": "biomechanics",
+   "citations": [
+    "lusk2010"
+   ],
+   "caveat": "Lat EMG was a little higher with an overhand grip in pulldowns; activity, not growth."
+  },
+  {
+   "kind": "tempo",
+   "change": "Slow 2-3 second lowering",
+   "target_muscle_ids": [
+    "lats"
+   ],
+   "effect": "More time in the stretch per rep; also a way to progress before you can add load.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Tempo itself changes growth little."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Kipping or swinging to finish reps.",
+   "fix": "Use strict reps; if you can't, use bands or the assisted machine.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Half reps that never reach a full hang.",
+   "fix": "Straighten the arms at the bottom every rep.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Craning the neck to get the chin over.",
+   "fix": "Pull the chest toward the bar instead.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Wide-grip pull-ups are best for lat width.",
+   "reality": "Lat EMG barely changes with grip width; width focus is a coaching model, not a measured result.",
+   "evidence": "biomechanics",
+   "citations": [
+    "andersen2014",
+    "lusk2010"
+   ]
+  },
+  {
+   "myth": "You need to do pull-ups before you can build a back.",
+   "reality": "Pulldowns train the same muscles and let you progress in small steps.",
+   "evidence": "modeled"
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "When you add load, the app suggests one bodyweight-only set of 5 first (assisted machines: one set with one step more assistance). Without added load the first working set is its own warm-up.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.bodyweight"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app counts your effective load (bodyweight share plus added load) and suggests more weight only when the jump is 5% or less; otherwise it adds a rep first, up to 2 past the top of the range.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 6-10 rep range. Stop when you can't reach the bar without kipping; assistance or a band lets you keep training close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Lower under control to a full hang; don't drop into it.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "If the full hang doesn't feel right for your shoulders, use the range and grip you can train comfortably.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "assisted-pull-up",
+   "why": "Same movement with machine assistance, so you can train in the target rep range.",
+   "differences": [
+    "More stable",
+    "Easier to learn",
+    "Less grip demand"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "lat-pulldown",
+   "why": "Same pull, seated, any load you need.",
+   "differences": [
+    "Less lat-width focus",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "chin-up",
+   "why": "Palms toward you: more biceps (rating 0.8).",
+   "differences": [
+    "Less lat-width focus"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "straight-arm-pulldown",
+   "why": "Lats without the biceps.",
+   "differences": [
+    "Less lat-width focus",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "lat_width_bias",
+   "grip_demand"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@chin-up.muscles.biceps": 0.8,
+  "exercises.json:@pull-up.muscles.biceps": 0.6,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.rep_range_by_type.primary.0": 6,
+  "rules.json:logger.rep_range_by_type.primary.1": 10,
+  "rules.json:logger.target_rir_by_type.primary": 3
+ },
+ "notes": [
+  "Lat findings by grip are EMG only.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

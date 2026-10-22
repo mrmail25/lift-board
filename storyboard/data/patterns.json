@@ -1,0 +1,7799 @@
+{
+ "version": 2,
+ "description": "Movement-pattern slots, weekly minimums and slot templates. Spec: patterns-spec.md. Slot assignment and minimums are model choices, not measured.",
+ "count_unit": "exercises per week: each tile on the board whose exercise lists the slot counts 1 (sets are not counted). A compound slot is only counted by non-isolation exercises. A slot with counts_toward also counts for those slots.",
+ "slots": {
+  "horizontal_push": {
+   "name": "Horizontal push",
+   "kind": "compound",
+   "description": "Press away from your chest (bench, push-up, dip): your main chest and triceps builder.",
+   "primary_muscles": [
+    "chest",
+    "triceps",
+    "front_delts"
+   ],
+   "group": "upper_push",
+   "required": true
+  },
+  "vertical_push": {
+   "name": "Vertical push",
+   "kind": "compound",
+   "description": "Press overhead: front delts and triceps; horizontal pressing already covers much of this, so it is recommended, not required.",
+   "primary_muscles": [
+    "front_delts",
+    "triceps",
+    "side_delts"
+   ],
+   "group": "upper_push"
+  },
+  "horizontal_pull": {
+   "name": "Horizontal pull",
+   "kind": "compound",
+   "description": "Row toward your torso: upper back thickness and rear delts.",
+   "primary_muscles": [
+    "upper_back",
+    "lats",
+    "rear_delts"
+   ],
+   "group": "upper_pull",
+   "required": true
+  },
+  "vertical_pull": {
+   "name": "Vertical pull",
+   "kind": "compound",
+   "description": "Pull down from overhead (pulldown, pull-up): your main lat builder.",
+   "primary_muscles": [
+    "lats",
+    "biceps",
+    "upper_back"
+   ],
+   "group": "upper_pull",
+   "required": true
+  },
+  "squat": {
+   "name": "Squat (knee-dominant)",
+   "kind": "compound",
+   "description": "Bend knees and hips together under load (squat, leg press, hack): the main quad builder.",
+   "primary_muscles": [
+    "quads",
+    "glutes",
+    "adductors"
+   ],
+   "group": "lower",
+   "required": true
+  },
+  "hinge": {
+   "name": "Hinge",
+   "kind": "compound",
+   "description": "Bend at the hips with soft knees (RDL, deadlift): hamstrings, glutes and back.",
+   "primary_muscles": [
+    "hamstrings",
+    "glutes",
+    "lower_back"
+   ],
+   "group": "lower",
+   "required": true
+  },
+  "lunge": {
+   "name": "Lunge / single-leg",
+   "kind": "compound",
+   "description": "One leg at a time (split squat, lunge, step-up); optional, and it also counts as a squat.",
+   "primary_muscles": [
+    "quads",
+    "glutes"
+   ],
+   "group": "lower",
+   "counts_toward": [
+    "squat"
+   ]
+  },
+  "carry_core": {
+   "name": "Carry / anti-rotation",
+   "kind": "isolation",
+   "description": "Hold load while staying upright (carries, Pallof press, get-up); optional trunk and grip work.",
+   "primary_muscles": [
+    "obliques",
+    "abs",
+    "forearms"
+   ],
+   "group": "core"
+  },
+  "power": {
+   "name": "Jump / throw",
+   "kind": "compound",
+   "description": "Fast, explosive reps (jumps, slams); optional athletic work, not a muscle builder.",
+   "primary_muscles": [
+    "quads",
+    "glutes",
+    "calves"
+   ],
+   "group": "lower"
+  },
+  "chest_fly": {
+   "name": "Chest fly",
+   "kind": "isolation",
+   "description": "Arms sweep together (fly, pec deck): chest work without triceps fatigue.",
+   "primary_muscles": [
+    "chest"
+   ],
+   "group": "upper_push"
+  },
+  "front_delts": {
+   "name": "Front delts",
+   "kind": "isolation",
+   "description": "Raise or angled press to the front; optional, since pressing already trains front delts.",
+   "primary_muscles": [
+    "front_delts"
+   ],
+   "group": "upper_push"
+  },
+  "side_delts": {
+   "name": "Side delts",
+   "kind": "isolation",
+   "description": "Raise out to the side: the main way to build shoulder width; presses barely reach it.",
+   "primary_muscles": [
+    "side_delts"
+   ],
+   "group": "upper_push"
+  },
+  "rear_delts": {
+   "name": "Rear delts",
+   "kind": "isolation",
+   "description": "Pull the arms back and apart (reverse fly, face pull): back of the shoulder.",
+   "primary_muscles": [
+    "rear_delts"
+   ],
+   "group": "upper_pull"
+  },
+  "lat_iso": {
+   "name": "Lat isolation",
+   "kind": "isolation",
+   "description": "Straight-arm pulldown or pullover: lats without biceps; optional.",
+   "primary_muscles": [
+    "lats"
+   ],
+   "group": "upper_pull"
+  },
+  "traps": {
+   "name": "Traps",
+   "kind": "isolation",
+   "description": "Shrug: upper traps; optional, since heavy pulls and carries train them too.",
+   "primary_muscles": [
+    "traps"
+   ],
+   "group": "upper_pull"
+  },
+  "biceps": {
+   "name": "Biceps",
+   "kind": "isolation",
+   "description": "Bend the elbow against load (curls): rows and pulldowns help but rarely max them out.",
+   "primary_muscles": [
+    "biceps"
+   ],
+   "group": "arms"
+  },
+  "triceps": {
+   "name": "Triceps",
+   "kind": "isolation",
+   "description": "Straighten the elbow (pushdown, overhead extension); overhead versions stretch the long head.",
+   "primary_muscles": [
+    "triceps"
+   ],
+   "group": "arms"
+  },
+  "forearms": {
+   "name": "Grip / forearms",
+   "kind": "isolation",
+   "description": "Wrist curls, reverse curls and hangs; optional.",
+   "primary_muscles": [
+    "forearms"
+   ],
+   "group": "arms"
+  },
+  "quads_iso": {
+   "name": "Quad isolation",
+   "kind": "isolation",
+   "description": "Leg extension and similar: extra quad work with little back or hip fatigue.",
+   "primary_muscles": [
+    "quads"
+   ],
+   "group": "lower"
+  },
+  "hamstring_curl": {
+   "name": "Hamstring curl",
+   "kind": "isolation",
+   "description": "Bend the knee against load: trains the hamstrings at the knee, which hinges do not fully cover.",
+   "primary_muscles": [
+    "hamstrings"
+   ],
+   "group": "lower"
+  },
+  "glute_iso": {
+   "name": "Glute / hip extension",
+   "kind": "isolation",
+   "description": "Hip thrust, back extension, kickback: extra glutes; optional.",
+   "primary_muscles": [
+    "glutes"
+   ],
+   "group": "lower"
+  },
+  "hip_iso": {
+   "name": "Hip ad/abduction",
+   "kind": "isolation",
+   "description": "Inner and outer thigh machines or cables; optional.",
+   "primary_muscles": [
+    "adductors",
+    "abductors"
+   ],
+   "group": "lower"
+  },
+  "calves": {
+   "name": "Calves",
+   "kind": "isolation",
+   "description": "Calf raise: calves get little from squats, so they need their own work.",
+   "primary_muscles": [
+    "calves"
+   ],
+   "group": "lower"
+  },
+  "abs": {
+   "name": "Abs",
+   "kind": "isolation",
+   "description": "Crunch, leg raise or rollout: direct trunk flexion and bracing.",
+   "primary_muscles": [
+    "abs",
+    "obliques"
+   ],
+   "group": "core"
+  }
+ },
+ "required": [
+  "horizontal_push",
+  "horizontal_pull",
+  "vertical_pull",
+  "squat",
+  "hinge"
+ ],
+ "weekly_min_by_level": {
+  "beginner": {
+   "horizontal_push": 1,
+   "vertical_push": 1,
+   "horizontal_pull": 1,
+   "vertical_pull": 1,
+   "squat": 1,
+   "hinge": 1,
+   "lunge": 0,
+   "carry_core": 0,
+   "power": 0,
+   "chest_fly": 0,
+   "front_delts": 0,
+   "side_delts": 1,
+   "rear_delts": 0,
+   "lat_iso": 0,
+   "traps": 0,
+   "biceps": 1,
+   "triceps": 1,
+   "forearms": 0,
+   "quads_iso": 0,
+   "hamstring_curl": 0,
+   "glute_iso": 0,
+   "hip_iso": 0,
+   "calves": 0,
+   "abs": 0
+  },
+  "intermediate": {
+   "horizontal_push": 1,
+   "vertical_push": 1,
+   "horizontal_pull": 1,
+   "vertical_pull": 1,
+   "squat": 1,
+   "hinge": 1,
+   "lunge": 0,
+   "carry_core": 0,
+   "power": 0,
+   "chest_fly": 0,
+   "front_delts": 0,
+   "side_delts": 1,
+   "rear_delts": 1,
+   "lat_iso": 0,
+   "traps": 0,
+   "biceps": 1,
+   "triceps": 1,
+   "forearms": 0,
+   "quads_iso": 0,
+   "hamstring_curl": 1,
+   "glute_iso": 0,
+   "hip_iso": 0,
+   "calves": 1,
+   "abs": 1
+  },
+  "advanced": {
+   "horizontal_push": 1,
+   "vertical_push": 1,
+   "horizontal_pull": 1,
+   "vertical_pull": 1,
+   "squat": 1,
+   "hinge": 1,
+   "lunge": 0,
+   "carry_core": 0,
+   "power": 0,
+   "chest_fly": 1,
+   "front_delts": 0,
+   "side_delts": 1,
+   "rear_delts": 1,
+   "lat_iso": 0,
+   "traps": 0,
+   "biceps": 1,
+   "triceps": 1,
+   "forearms": 0,
+   "quads_iso": 0,
+   "hamstring_curl": 1,
+   "glute_iso": 0,
+   "hip_iso": 0,
+   "calves": 1,
+   "abs": 1
+  }
+ },
+ "scoring": {
+  "_note": "slot_recommendations score (model choice). score = w_fit*fit + w_similarity*swap.json score vs slot anchor/100 + w_main_slot*(slot is the exercise's first pattern) + w_staple*(in rules.staples) + w_use*min(preset tiles using it,12) - fatigue_penalty_by_level[level]*fatigue (+ beginner_machine_bonus for machine/cable families at beginner, + board_equipment_bonus if the board already uses that equipment, - already_on_board_penalty). fit = weighted mean of the exercise's ratings for slot.primary_muscles using muscle_weights. anchor = the slot's most-used preset exercise. Ties by id. Beginner excludes advanced_only and rare equipment (rings, suspension, medicine ball, stability ball); intermediate excludes rare equipment unless a staple.",
+  "w_fit": 40,
+  "w_similarity": 20,
+  "w_main_slot": 10,
+  "w_staple": 8,
+  "w_use": 0.5,
+  "fatigue_penalty_by_level": {
+   "beginner": 20,
+   "intermediate": 12,
+   "advanced": 8
+  },
+  "beginner_machine_bonus": 6,
+  "board_equipment_bonus": 3,
+  "already_on_board_penalty": 15,
+  "muscle_weights": [
+   0.6,
+   0.25,
+   0.15
+  ],
+  "advanced_only": [
+   "muscle-up",
+   "archer-push-up",
+   "pseudo-planche-push-up",
+   "front-lever-row",
+   "tuck-front-lever",
+   "dragon-flag",
+   "pistol-squat",
+   "shrimp-squat",
+   "wall-handstand-push-up",
+   "ring-dip",
+   "ring-pull-up",
+   "depth-jump",
+   "bounding",
+   "nordic-curl",
+   "kettlebell-snatch",
+   "kettlebell-clean",
+   "turkish-get-up",
+   "viking-press",
+   "good-morning",
+   "deficit-push-up",
+   "l-sit",
+   "ring-l-sit"
+  ]
+ },
+ "templates": {
+  "full-body": {
+   "name": "Full Body",
+   "levels": {
+    "beginner": {
+     "2": [
+      {
+       "day": "mon",
+       "label": "Full Body A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "3": [
+      {
+       "day": "mon",
+       "label": "Full Body A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hinge",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Full Body C",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "4": [
+      {
+       "day": "mon",
+       "label": "Full Body A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hinge",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Full Body C",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hinge",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        }
+       ]
+      }
+     ]
+    },
+    "intermediate": {
+     "2": [
+      {
+       "day": "mon",
+       "label": "Full Body A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "lunge",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        }
+       ]
+      }
+     ],
+     "3": [
+      {
+       "day": "mon",
+       "label": "Full Body A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "lunge",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 5,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Full Body C",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        }
+       ]
+      }
+     ],
+     "4": [
+      {
+       "day": "mon",
+       "label": "Full Body A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "lunge",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Full Body C",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "lunge",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "advanced": {
+     "2": [
+      {
+       "day": "mon",
+       "label": "Full Body A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 5,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "lunge",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "3": [
+      {
+       "day": "mon",
+       "label": "Full Body A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "lunge",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 5,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Full Body C",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "4": [
+      {
+       "day": "mon",
+       "label": "Full Body A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "lunge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Full Body C",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "lunge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "upper-lower": {
+   "name": "Upper/Lower",
+   "levels": {
+    "beginner": {
+     "2": [
+      {
+       "day": "mon",
+       "label": "Upper A",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Lower A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "4": [
+      {
+       "day": "mon",
+       "label": "Upper A",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Lower A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Upper B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Lower B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "intermediate": {
+     "2": [
+      {
+       "day": "mon",
+       "label": "Upper A",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 5,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Lower A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "4": [
+      {
+       "day": "mon",
+       "label": "Upper A",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Lower A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Upper B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Lower B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "lunge",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "advanced": {
+     "4": [
+      {
+       "day": "mon",
+       "label": "Upper A",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Lower A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Upper B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Lower B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "lunge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "ppl": {
+   "name": "Push/Pull/Legs",
+   "levels": {
+    "beginner": {
+     "3": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "6": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Push B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Pull B",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Legs B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "intermediate": {
+     "3": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 5,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "6": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Push B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Pull B",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Legs B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "lunge",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "advanced": {
+     "3": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 5,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 2,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "6": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Push B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Pull B",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "lat_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Legs B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "lunge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "bro-split": {
+   "name": "Bro Split",
+   "levels": {
+    "beginner": {
+     "5": [
+      {
+       "day": "mon",
+       "label": "Chest",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Back",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "lat_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Shoulders",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Arms",
+       "slots": [
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "forearms",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "intermediate": {
+     "5": [
+      {
+       "day": "mon",
+       "label": "Chest",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Back",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "traps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Shoulders",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Arms",
+       "slots": [
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "forearms",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "advanced": {
+     "5": [
+      {
+       "day": "mon",
+       "label": "Chest",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 2,
+         "type": "primary"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Back",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "traps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Shoulders",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Arms",
+       "slots": [
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "forearms",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "pplu": {
+   "name": "Push/Pull/Legs/Upper",
+   "levels": {
+    "beginner": {
+     "4": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Upper B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "intermediate": {
+     "4": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Upper B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "advanced": {
+     "4": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Upper B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "pplul": {
+   "name": "Push/Pull/Legs/Upper/Lower",
+   "levels": {
+    "beginner": {
+     "5": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Upper B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Lower B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "intermediate": {
+     "5": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Upper B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Lower B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "lunge",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "advanced": {
+     "5": [
+      {
+       "day": "mon",
+       "label": "Push",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Pull",
+       "slots": [
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Upper B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Lower B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "lunge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "arnold": {
+   "name": "Arnold Split",
+   "levels": {
+    "beginner": {
+     "3": [
+      {
+       "day": "mon",
+       "label": "Chest & Back",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Shoulders & Arms",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "6": [
+      {
+       "day": "mon",
+       "label": "Chest & Back",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Shoulders & Arms",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Chest & Back",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Shoulders & Arms",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Legs B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "intermediate": {
+     "3": [
+      {
+       "day": "mon",
+       "label": "Chest & Back",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Shoulders & Arms",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "6": [
+      {
+       "day": "mon",
+       "label": "Chest & Back",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 2,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Shoulders & Arms",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Chest & Back",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 2,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Shoulders & Arms",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Legs B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "lunge",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "advanced": {
+     "3": [
+      {
+       "day": "mon",
+       "label": "Chest & Back",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "lat_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "calves",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Shoulders & Arms",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 5,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "6": [
+      {
+       "day": "mon",
+       "label": "Chest & Back",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "lat_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 2,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Shoulders & Arms",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Legs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Chest & Back",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "lat_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 2,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Shoulders & Arms",
+       "slots": [
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "sat",
+       "label": "Legs B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "lunge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "torso-limbs": {
+   "name": "Torso/Limbs",
+   "levels": {
+    "beginner": {
+     "2": [
+      {
+       "day": "mon",
+       "label": "Torso",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Limbs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "4": [
+      {
+       "day": "mon",
+       "label": "Torso",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Limbs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Torso B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Limbs B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "intermediate": {
+     "2": [
+      {
+       "day": "mon",
+       "label": "Torso",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Limbs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ],
+     "4": [
+      {
+       "day": "mon",
+       "label": "Torso",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Limbs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Torso B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Limbs B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "advanced": {
+     "4": [
+      {
+       "day": "mon",
+       "label": "Torso",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Limbs",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Torso B",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "traps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Limbs B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "glute_iso",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "phul": {
+   "name": "PHUL (Power Hypertrophy Upper Lower)",
+   "levels": {
+    "beginner": {
+     "4": [
+      {
+       "day": "mon",
+       "label": "Power Upper",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Power Lower",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "squat",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Hypertrophy Upper",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Hypertrophy Lower",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "lunge",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "intermediate": {
+     "4": [
+      {
+       "day": "mon",
+       "label": "Power Upper",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Power Lower",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "squat",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Hypertrophy Upper",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Hypertrophy Lower",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "lunge",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "advanced": {
+     "4": [
+      {
+       "day": "mon",
+       "label": "Power Upper",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "tue",
+       "label": "Power Lower",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "thu",
+       "label": "Hypertrophy Upper",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Hypertrophy Lower",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "lunge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "upper-lower-full": {
+   "name": "Upper/Lower/Full",
+   "levels": {
+    "beginner": {
+     "3": [
+      {
+       "day": "mon",
+       "label": "Upper A",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Lower A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "hinge",
+         "sets": 2,
+         "type": "primary"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "intermediate": {
+     "3": [
+      {
+       "day": "mon",
+       "label": "Upper A",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Lower A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 4,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "lunge",
+         "sets": 2,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    },
+    "advanced": {
+     "3": [
+      {
+       "day": "mon",
+       "label": "Upper A",
+       "slots": [
+        {
+         "slot": "horizontal_push",
+         "sets": 5,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_pull",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "vertical_push",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "biceps",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "triceps",
+         "sets": 3,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "wed",
+       "label": "Lower A",
+       "slots": [
+        {
+         "slot": "squat",
+         "sets": 4,
+         "type": "primary"
+        },
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "quads_iso",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hamstring_curl",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "hip_iso",
+         "sets": 2,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 4,
+         "type": "isolation"
+        },
+        {
+         "slot": "abs",
+         "sets": 4,
+         "type": "isolation"
+        }
+       ]
+      },
+      {
+       "day": "fri",
+       "label": "Full Body B",
+       "slots": [
+        {
+         "slot": "hinge",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "horizontal_push",
+         "sets": 5,
+         "type": "accessory"
+        },
+        {
+         "slot": "horizontal_pull",
+         "sets": 3,
+         "type": "primary"
+        },
+        {
+         "slot": "lunge",
+         "sets": 3,
+         "type": "accessory"
+        },
+        {
+         "slot": "side_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "rear_delts",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "calves",
+         "sets": 3,
+         "type": "isolation"
+        },
+        {
+         "slot": "chest_fly",
+         "sets": 2,
+         "type": "isolation"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  }
+ },
+ "templates_note": "templates[split_id].levels[level][day_count] = [{day,label,slots:[{slot,sets,type}]}]. Derived from splits.json presets (same days, order, sets); `type` is a hint for which recommendation to pick (primary/accessory/isolation). Slots added to meet weekly_min_by_level are listed in templates_added.",
+ "templates_added": [
+  {
+   "split": "full-body",
+   "level": "beginner",
+   "days": "2",
+   "day": "mon",
+   "slot": "vertical_push",
+   "sets": 2,
+   "trimmed_2_sets_from": "side_delts"
+  },
+  {
+   "split": "full-body",
+   "level": "beginner",
+   "days": "3",
+   "day": "wed",
+   "slot": "vertical_push",
+   "sets": 3
+  },
+  {
+   "split": "full-body",
+   "level": "beginner",
+   "days": "4",
+   "day": "fri",
+   "slot": "vertical_push",
+   "sets": 3
+  },
+  {
+   "split": "full-body",
+   "level": "intermediate",
+   "days": "2",
+   "day": "thu",
+   "slot": "vertical_push",
+   "sets": 2,
+   "trimmed_2_sets_from": "hinge"
+  },
+  {
+   "split": "full-body",
+   "level": "intermediate",
+   "days": "3",
+   "day": "fri",
+   "slot": "vertical_push",
+   "sets": 3
+  },
+  {
+   "split": "full-body",
+   "level": "intermediate",
+   "days": "4",
+   "day": "mon",
+   "slot": "vertical_push",
+   "sets": 3
+  },
+  {
+   "split": "full-body",
+   "level": "advanced",
+   "days": "2",
+   "day": "mon",
+   "slot": "vertical_push",
+   "sets": 2,
+   "trimmed_2_sets_from": "horizontal_push"
+  },
+  {
+   "split": "full-body",
+   "level": "advanced",
+   "days": "2",
+   "day": "mon",
+   "slot": "chest_fly",
+   "sets": 2
+  },
+  {
+   "split": "full-body",
+   "level": "advanced",
+   "days": "3",
+   "day": "fri",
+   "slot": "vertical_push",
+   "sets": 2
+  },
+  {
+   "split": "full-body",
+   "level": "advanced",
+   "days": "3",
+   "day": "fri",
+   "slot": "chest_fly",
+   "sets": 2
+  },
+  {
+   "split": "full-body",
+   "level": "advanced",
+   "days": "4",
+   "day": "tue",
+   "slot": "vertical_push",
+   "sets": 2
+  },
+  {
+   "split": "full-body",
+   "level": "advanced",
+   "days": "4",
+   "day": "thu",
+   "slot": "chest_fly",
+   "sets": 2
+  },
+  {
+   "split": "upper-lower",
+   "level": "intermediate",
+   "days": "2",
+   "day": "mon",
+   "slot": "rear_delts",
+   "sets": 2,
+   "trimmed_2_sets_from": "horizontal_push"
+  },
+  {
+   "split": "torso-limbs",
+   "level": "intermediate",
+   "days": "2",
+   "day": "mon",
+   "slot": "vertical_push",
+   "sets": 2,
+   "trimmed_2_sets_from": "horizontal_push"
+  },
+  {
+   "split": "torso-limbs",
+   "level": "intermediate",
+   "days": "4",
+   "day": "thu",
+   "slot": "vertical_push",
+   "sets": 3
+  },
+  {
+   "split": "torso-limbs",
+   "level": "advanced",
+   "days": "4",
+   "day": "thu",
+   "slot": "vertical_push",
+   "sets": 3
+  },
+  {
+   "split": "phul",
+   "level": "intermediate",
+   "days": "4",
+   "day": "mon",
+   "slot": "rear_delts",
+   "sets": 2
+  },
+  {
+   "split": "phul",
+   "level": "advanced",
+   "days": "4",
+   "day": "thu",
+   "slot": "rear_delts",
+   "sets": 2
+  },
+  {
+   "split": "upper-lower-full",
+   "level": "advanced",
+   "days": "3",
+   "day": "fri",
+   "slot": "chest_fly",
+   "sets": 2
+  }
+ ],
+ "custom_suggest": {
+  "note": "Muscle similarity picks the family; the name decides direction (pattern = line of pull/push, not leading muscle).",
+  "min_similarity": 0.6,
+  "extra_similarity": 0.85,
+  "extra_lookahead": 5,
+  "max_slots": 3,
+  "direction_keywords": {
+   "horizontal_pull": [
+    "row"
+   ],
+   "vertical_pull": [
+    "pulldown",
+    "pull-down",
+    "pull-up",
+    "pullup",
+    "pull up",
+    "chin"
+   ],
+   "horizontal_push": [
+    "bench",
+    "push-up",
+    "pushup",
+    "push up",
+    "chest press",
+    "floor press",
+    "dip"
+   ],
+   "vertical_push": [
+    "overhead",
+    "shoulder press",
+    "military",
+    "pike",
+    "handstand"
+   ]
+  },
+  "direction_pairs": [
+   [
+    "horizontal_pull",
+    "vertical_pull"
+   ],
+   [
+    "horizontal_push",
+    "vertical_push"
+   ]
+  ],
+  "ask_if_no_keyword": true
+ }
+}

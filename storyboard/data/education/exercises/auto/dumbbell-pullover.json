@@ -1,0 +1,204 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "dumbbell-pullover",
+ "kind": "exercise",
+ "exercise_id": "dumbbell-pullover",
+ "title": "Dumbbell Pullover",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A dumbbell pullover across a flat bench that works the lats and chest in a long, stretched position.",
+ "type": "isolation",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell",
+   "flat_bench"
+  ],
+  "text": "Needs: dumbbells; flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for lats (main mover): each working set adds 0.8 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "chest",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "chest_upper": 0.4,
+    "chest_lower": 0.5
+   },
+   "why": "Library rating 0.5 for chest (helper): each working set adds 0.5 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.3,
+   "band": "minor",
+   "regions": {
+    "triceps_long": 0.3,
+    "triceps_short": 0
+   },
+   "why": "Library rating 0.3 for triceps (minor): each working set adds 0.3 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for upper back: below the counting floor, so it adds nothing to the weekly upper back total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Lie on a bench holding one dumbbell over your chest with both hands.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Keeping a slight elbow bend, lower the weight back behind your head until you feel a stretch in your lats and chest.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull it back over your chest in the same arc.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep a slight bend in the elbows",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower the dumbbell behind your head",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pull back over your chest",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Tension drops off at the top, so stop just before the weight is over your face.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Flaring the ribs and arching to get extra range.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "incline-cable-pullover",
+   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "pullover-machine",
+   "why": "Swap sheet: Better isolation, More stable.",
+   "differences": [
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "straight-arm-pulldown",
+   "why": "Swap sheet: Better isolation, More stable, Steadier cable tension.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "tuck-front-lever",
+   "why": "Swap sheet: Less stretch emphasis, More technical, More grip demand.",
+   "differences": [
+    "Less stretch emphasis",
+    "More technical",
+    "More grip demand"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

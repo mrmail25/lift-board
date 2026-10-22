@@ -1,0 +1,209 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "straight-arm-pulldown",
+ "kind": "exercise",
+ "exercise_id": "straight-arm-pulldown",
+ "title": "Straight-Arm Pulldown",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Cable pulldown with straight arms: lats 1 without the biceps.",
+ "type": "isolation",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "cable"
+  ],
+  "text": "Needs: cable station with an adjustable pulley."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 1,
+   "band": "main",
+   "why": "The lats pull the arm down (shoulder extension); straight arms take the biceps out.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.2,
+   "band": "not_counted",
+   "regions": {
+    "triceps_long": 0.2,
+    "triceps_short": 0.0
+   },
+   "why": "The triceps long head helps extend the shoulder: minor (0.2).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Bar or rope on a high pulley.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Step back, hinge slightly, arms straight overhead.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep elbows nearly locked",
+   "why": "Arms straight.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Sweep the bar down to your thighs",
+   "why": "Pulling to the thighs.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Return until you feel a lat stretch",
+   "why": "Letting the arms rise to a stretch.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the torso still",
+   "why": "The arms move, not the hips.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "lats"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Bending the elbows so it turns into a pushdown.",
+   "fix": "Lighten until the torso stays still.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Bending the elbows.",
+   "fix": "Keep them nearly straight.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Hinging to move the weight.",
+   "fix": "Fixed torso.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "lat-pulldown",
+   "why": "Pulldown with bent arms: more load and biceps.",
+   "differences": [
+    "Less isolation",
+    "More systemic fatigue",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-pullover",
+   "why": "Dumbbell pullover.",
+   "differences": [
+    "Less isolation",
+    "Less stable",
+    "Less constant tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "pull-up",
+   "why": "Bodyweight vertical pull.",
+   "differences": [
+    "Lat width focus",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "constant_tension"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@straight-arm-pulldown.muscles.triceps": 0.2,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.cable": 2.5,
+  "rules.json:logger.load_step.lb.cable": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Lat isolation has not been compared with compound pulls for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

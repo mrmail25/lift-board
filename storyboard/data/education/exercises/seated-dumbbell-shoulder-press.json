@@ -1,0 +1,278 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "seated-dumbbell-shoulder-press",
+ "kind": "exercise",
+ "exercise_id": "seated-dumbbell-shoulder-press",
+ "title": "Seated Dumbbell Shoulder Press",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Seated overhead press with dumbbells: front delts 1, side delts and triceps 0.5. The back support makes it steadier than standing.",
+ "type": "accessory",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell",
+   "adjustable_bench"
+  ],
+  "text": "Needs: dumbbells; adjustable (incline) bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "front_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "The front delts raise the arm overhead (shoulder flexion and abduction).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "side_delts",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The side delts help, more when the elbows are out to the sides (0.5).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.25,
+    "triceps_short": 0.5
+   },
+   "why": "The triceps straighten the elbow at the top (0.5).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Bench upright or one notch back from upright.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Kick the dumbbells to your shoulders from your thighs.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Start with the dumbbells at about ear height, palms forward or slightly in.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep your back against the pad",
+   "why": "Pressing straight up over the shoulders keeps the forearms vertical.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Press up until arms are straight",
+   "why": "Keeping the back on the pad stops it turning into an incline press.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to about ear level",
+   "why": "Lowering to about ear height is the full range for most lifters.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your forearms vertical under the weights.",
+   "why": "Seated dumbbell 1RM was higher than standing, while delt EMG was a little lower.",
+   "evidence": "biomechanics",
+   "from_library": true,
+   "citations": [
+    "saeterbakken2013"
+   ]
+  },
+  {
+   "cue": "Keep the ribs down",
+   "why": "Arching turns it into an incline press.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "Palms facing in, elbows a little forward",
+   "target_muscle_ids": [
+    "front_delts"
+   ],
+   "effect": "Many lifters find the shoulders more comfortable this way.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "caveat": "Comfort choice."
+  },
+  {
+   "kind": "stance",
+   "change": "Press standing",
+   "target_muscle_ids": [
+    "front_delts",
+    "side_delts"
+   ],
+   "effect": "Higher delt EMG but less load than seated.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "citations": [
+    "saeterbakken2013"
+   ],
+   "caveat": "EMG and 1RM, not growth."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "front_delts"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Arching the lower back off the pad to finish reps.",
+   "fix": "Use a load you can press with the back on the pad.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Arching off the pad.",
+   "fix": "Keep the back against it.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Half reps from the top.",
+   "fix": "Lower to about ear height.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "You need the side delts to press overhead for growth.",
+   "reality": "Pressing works the front delts most; lateral raises are the main side-delt exercise.",
+   "evidence": "biomechanics"
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds up to 2 ramp-up sets only when the first working load is at least 18 kg (40 lb) per hand and the main muscle is not already warm from an earlier lift. Otherwise start with a slightly lighter first set.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to.accessory"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 8-12 rep range. End the set before the dumbbells drift out of line.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "safeties",
+   "text": "Getting the dumbbells up and down is part of the lift: kick them up from the thighs and bring them back to the thighs at the end.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "overhead-press",
+   "why": "Barbell overhead press: more load.",
+   "differences": [
+    "Loads the spine",
+    "Heavier loading potential",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "machine-shoulder-press",
+   "why": "Fixed path, easy to push close to failure.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "arnold-press",
+   "why": "Dumbbell press with a rotation; a variation, same muscles.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "pike-push-up",
+   "why": "Bodyweight overhead pressing.",
+   "differences": [
+    "Less systemic fatigue",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@seated-dumbbell-shoulder-press.muscles.side_delts": 0.5,
+  "exercises.json:@seated-dumbbell-shoulder-press.muscles.triceps": 0.5,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.accessory": 7.5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.dumbbell": 2,
+  "rules.json:logger.load_step.lb.dumbbell": 5,
+  "rules.json:logger.rep_range_by_type.accessory.0": 8,
+  "rules.json:logger.rep_range_by_type.accessory.1": 12,
+  "rules.json:logger.target_rir_by_type.accessory": 3,
+  "rules.json:logger.warmup_ramp.accessory_max_sets": 2,
+  "rules.json:logger.warmup_ramp.accessory_min_load.dumbbell.kg": 18,
+  "rules.json:logger.warmup_ramp.accessory_min_load.dumbbell.lb": 40
+ },
+ "notes": [
+  "Shoulder press findings are EMG and 1RM only.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

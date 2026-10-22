@@ -1,0 +1,229 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "meadows-row",
+ "kind": "exercise",
+ "exercise_id": "meadows-row",
+ "title": "Meadows Row",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A one-arm landmine row, done standing side-on to the bar, that gives the lats a long stretch at the bottom.",
+ "type": "accessory",
+ "equipment": "landmine",
+ "equipment_needs": {
+  "items": [
+   "landmine",
+   "barbell",
+   "plates"
+  ],
+  "text": "Needs: landmine attachment; barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for lats (main mover): each working set adds 1 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for upper back (main mover): each working set adds 0.8 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for rear delts (helper): each working set adds 0.5 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.5
+   },
+   "why": "Library rating 0.5 for traps (helper): each working set adds 0.5 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for biceps (helper): each working set adds 0.5 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for forearms (helper): each working set adds 0.4 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for lower back: below the counting floor, so it adds nothing to the weekly lower back total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand side-on to the end of a landmine bar in a staggered stance and grip the thick end overhand.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Rest your free forearm on your front knee and let the bar hang so your lat stretches.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Row your elbow up and back toward your hip.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower slowly to the full stretch.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Brace the free forearm on your knee",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Row the elbow up and back",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to a full stretch",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Use straps if your grip gives out first. The bar end is thick.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Twisting the torso to finish the rep.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "kettlebell-row",
+   "why": "Swap sheet: Less stretch emphasis, Less systemic fatigue.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less systemic fatigue"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "one-arm-dumbbell-row",
+   "why": "Swap sheet: Less stretch emphasis, Less systemic fatigue.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "chest-supported-dumbbell-row",
+   "why": "Swap sheet: Less stretch emphasis, Upper-back thickness focus, More stable.",
+   "differences": [
+    "Less stretch emphasis",
+    "Upper-back thickness focus",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "front-lever-row",
+   "why": "Swap sheet: Less stretch emphasis, Both sides together, Less systemic fatigue.",
+   "differences": [
+    "Less stretch emphasis",
+    "Both sides together",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "unilateral",
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

@@ -1,0 +1,202 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "pike-push-up",
+ "kind": "exercise",
+ "exercise_id": "pike-push-up",
+ "title": "Pike Push-Up",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A push-up with your hips raised high so you press at an overhead angle, a bodyweight shoulder press.",
+ "type": "accessory",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [],
+  "text": "No equipment needed."
+ },
+ "muscles": [
+  {
+   "muscle_id": "front_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for front delts (main mover): each working set adds 1 of a set to the weekly front delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.6,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.3,
+    "triceps_short": 0.6
+   },
+   "why": "Library rating 0.6 for triceps (helper): each working set adds 0.6 of a set to the weekly triceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "chest",
+   "rating": 0.3,
+   "band": "minor",
+   "regions": {
+    "chest_upper": 0.3,
+    "chest_lower": 0.1
+   },
+   "why": "Library rating 0.3 for chest (minor): each working set adds 0.3 of a set to the weekly chest total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "side_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for side delts (minor): each working set adds 0.3 of a set to the weekly side delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Start in a push-up position and walk your feet in until your hips are high.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower your head toward the floor between your hands.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Press back up to straight arms.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower your head toward the floor in front of your hands",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep hips high",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Press back up",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Raise your feet on a box to make it harder.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Dropping the hips into a regular push-up.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "wall-handstand-push-up",
+   "why": "Swap sheet: Less stable, Loads the spine, More technical.",
+   "differences": [
+    "Less stable",
+    "Loads the spine",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "iso-lateral-shoulder-press",
+   "why": "Swap sheet: More stable, Heavier loading potential, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Heavier loading potential",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "viking-press",
+   "why": "Swap sheet: More systemic fatigue, Loads the spine, Heavier loading potential.",
+   "differences": [
+    "More systemic fatigue",
+    "Loads the spine",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "machine-shoulder-press",
+   "why": "Swap sheet: More stable, Heavier loading potential, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Heavier loading potential",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

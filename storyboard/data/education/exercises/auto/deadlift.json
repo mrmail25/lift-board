@@ -1,0 +1,273 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "deadlift",
+ "kind": "exercise",
+ "exercise_id": "deadlift",
+ "title": "Deadlift",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A conventional deadlift from the floor, a full-body pull for the posterior chain, meaning the hamstrings, glutes and back.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.9,
+   "band": "main",
+   "why": "Library rating 0.9 for lower back (main mover): each working set adds 0.9 of a set to the weekly lower back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for glutes (main mover): each working set adds 0.8 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.7,
+   "band": "helper",
+   "why": "Library rating 0.7 for hamstrings (helper): each working set adds 0.7 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.6,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.6,
+    "traps_mid_lower": 0.42
+   },
+   "why": "Library rating 0.6 for traps (helper): each working set adds 0.6 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for forearms (helper): each working set adds 0.6 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for upper back (helper): each working set adds 0.5 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "quads",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "quads_rf": 0.2,
+    "quads_vasti": 0.5
+   },
+   "why": "Library rating 0.5 for quads (helper): each working set adds 0.5 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for lats (helper): each working set adds 0.4 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for adductors (helper): each working set adds 0.4 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.25,
+   "band": "minor",
+   "why": "Library rating 0.25 for abductors (minor): each working set adds 0.25 of a set to the weekly abductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "obliques",
+   "rating": 0.15,
+   "band": "not_counted",
+   "why": "Library rating 0.15 for obliques: below the counting floor, so it adds nothing to the weekly obliques total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand with the bar over your mid-foot and your feet about hip width apart.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Hinge down and grip the bar just outside your legs, with your back flat and your shoulders over the bar.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Push the floor away and stand up with the bar sliding up your legs.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower it back down the same way.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the slack out of the bar",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Push the floor away with your legs",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lock out with hips and knees together",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the bar touching your legs the whole time.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the hips shoot up first so the back rounds.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set safety arms or pins where you can fail a rep safely, or use a spotter, and use collars.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "romanian-deadlift",
+   "why": "Swap sheet: More stretch emphasis, Less upper-trap work.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "trap-bar-deadlift",
+   "why": "Swap sheet: Easier to learn.",
+   "differences": [
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "less_grip",
+   "goal_label": "Less grip demand",
+   "exercise_id": "good-morning",
+   "why": "Swap sheet: More stretch emphasis, Less upper-trap work, Less grip demand.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work",
+    "Less grip demand"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "smith-rdl",
+   "why": "Swap sheet: More stretch emphasis, Less upper-trap work, More stable.",
+   "differences": [
+    "More stretch emphasis",
+    "Less upper-trap work",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 3,
+  "flags": [
+   "upper_trap_involvement",
+   "spinal_load",
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

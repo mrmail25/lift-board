@@ -1,0 +1,200 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "trx-hamstring-curl",
+ "kind": "exercise",
+ "exercise_id": "trx-hamstring-curl",
+ "title": "Suspension Hamstring Curl",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A lying leg curl with your heels in suspension straps, combined with a hip bridge, for the hamstrings.",
+ "type": "isolation",
+ "equipment": "suspension",
+ "equipment_needs": {
+  "items": [
+   "suspension_trainer"
+  ],
+  "text": "Needs: suspension trainer (TRX)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "hamstrings",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for hamstrings (main mover): each working set adds 1 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for glutes (helper): each working set adds 0.4 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "calves",
+   "rating": 0.25,
+   "band": "minor",
+   "regions": {
+    "calves_gastroc": 0.25,
+    "calves_soleus": 0
+   },
+   "why": "Library rating 0.25 for calves (minor): each working set adds 0.25 of a set to the weekly calves total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Lie on your back with your heels in the foot cradles and lift your hips.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull your heels toward your glutes, keeping your hips up.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Straighten your legs slowly.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Curl the heels toward your glutes",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the hips up",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Extend slowly",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your hips high the whole set.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Dropping the hips during the curl.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "nordic-curl",
+   "why": "Swap sheet: More stretch emphasis, More stable.",
+   "differences": [
+    "More stretch emphasis",
+    "More stable"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "kneeling-leg-curl",
+   "why": "Swap sheet: Better isolation, More stable, Easier to learn.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "lying-leg-curl",
+   "why": "Swap sheet: Better isolation, More stable, Easier to learn.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "standing-leg-curl",
+   "why": "Swap sheet: Better isolation, More stable, One side at a time.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 1,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

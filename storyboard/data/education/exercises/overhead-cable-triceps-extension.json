@@ -1,0 +1,310 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "overhead-cable-triceps-extension",
+ "kind": "exercise",
+ "exercise_id": "overhead-cable-triceps-extension",
+ "title": "Overhead Cable Triceps Extension",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "A rope extension with the arms overhead, so the triceps long head works from a deep stretch. The app's go-to triceps isolation move: triceps 1, long head 1.",
+ "type": "isolation",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "cable"
+  ],
+  "text": "Needs: cable station with an adjustable pulley."
+ },
+ "muscles": [
+  {
+   "muscle_id": "triceps",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "triceps_long": 1,
+    "triceps_short": 0.7
+   },
+   "why": "All three heads straighten the elbow. The long head also crosses the shoulder, and with the arm overhead it is stretched across both joints, so the library rates it 1 and the short (lateral and medial) heads 0.7.",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "triceps_long",
+     "rating": 1,
+     "text": "Overhead cable extensions grew the triceps, the long head most of all, clearly more than pushdowns in a 12-week study.",
+     "evidence": "supported",
+     "citations": [
+      "maeo2023"
+     ]
+    }
+   ]
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the pulley at about hip to chest height and attach a rope.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Turn away from the stack, rope behind your head, and step forward into a staggered stance until the weight lifts.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Lean forward slightly with your abs braced, elbows pointing forward beside your head.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep elbows pointing forward",
+   "why": "Elbows that point forward keep the upper arm overhead, which is what stretches the long head.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Extend the arms overhead",
+   "why": "Only the forearms move; the elbow is the hinge.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Return to a deep stretch",
+   "why": "The long-head stretch at the bottom is the reason to choose this exercise.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Get a deep stretch at the bottom of every rep.",
+   "why": "Same idea as the cue: the deep bottom position is where this lift does its best work.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your ribs down",
+   "why": "Stops the lower back arching so the arms, not the torso, move the rope.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "angle",
+   "change": "Keep the upper arm close to your ears rather than in front of your face",
+   "target_muscle_ids": [
+    "triceps"
+   ],
+   "effect": "More shoulder flexion, so the long head is longer through the whole rep.",
+   "swap_tags": [
+    "triceps_long_head_bias",
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Go only as far overhead as your shoulders allow comfortably."
+  },
+  {
+   "kind": "range",
+   "change": "Add bottom-half (lengthened) partials when full reps run out",
+   "target_muscle_ids": [
+    "triceps"
+   ],
+   "effect": "Extends the set in the stretched part of the range; lengthened partials matched full reps for elbow-extensor growth in trained people.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "supported",
+   "citations": [
+    "wolf2025"
+   ],
+   "caveat": "Full reps work as well; partials are an option, not a requirement."
+  },
+  {
+   "kind": "stance",
+   "change": "One arm at a time with a single handle",
+   "target_muscle_ids": [
+    "triceps"
+   ],
+   "effect": "Lets you match reps between arms and find a comfortable path for each elbow.",
+   "swap_tags": [
+    "unilateral"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Same wording as the swap tag 'One side at a time'."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "triceps"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Letting the elbows flare out to the sides.",
+   "fix": "Keep the elbows about shoulder width and pointing forward; lighten the load if they drift out.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Bending the torso forward and back to move the rope.",
+   "fix": "Brace in a fixed lean; only the forearms move.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Stopping well short of the stretch.",
+   "fix": "Let the rope travel behind your head until the triceps are long.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Turning it into a pullover by moving the upper arms.",
+   "fix": "Fix the upper arms overhead; if they move, the weight is too heavy.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Pushdowns and overhead extensions grow the triceps the same.",
+   "reality": "With the same sets, overhead extensions grew the triceps more, especially the long head.",
+   "evidence": "supported",
+   "citations": [
+    "maeo2023"
+   ]
+  },
+  {
+   "myth": "Only heavy weights build muscle.",
+   "reality": "Light and heavy loads gave similar growth when sets were taken close to failure. Heavy loads build more strength.",
+   "evidence": "supported",
+   "citations": [
+    "schoenfeld2017load"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. End the set when the elbows start to flare or the torso starts to help.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Lower into the stretch under control; don't let the rope yank your arms back.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "If the overhead position doesn't feel right for your shoulders, lower the elbows a little or use a skull crusher, which keeps the arm less overhead.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "bias:triceps_short",
+   "goal_label": "More triceps lateral/medial heads",
+   "exercise_id": "triceps-pushdown",
+   "why": "Arms at your sides, so the short heads lead (short heads 1, long head 0.6).",
+   "differences": [
+    "Less stretch emphasis",
+    "Less triceps long-head bias"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2023"
+   ]
+  },
+  {
+   "goal": "bias:triceps_short",
+   "goal_label": "More triceps lateral/medial heads",
+   "exercise_id": "skull-crusher",
+   "why": "Free-weight extension with the arm partly overhead; still a good long-head stretch (long head 0.9).",
+   "differences": [
+    "Less triceps long-head bias",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "peak_contraction",
+   "goal_label": "Peak-contraction focus",
+   "exercise_id": "dumbbell-kickback",
+   "why": "Hardest at lockout instead of in the stretch; a preference, no growth advantage shown.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less triceps long-head bias",
+    "Peak-contraction focus"
+   ],
+   "evidence": "modeled",
+   "citations": [
+    "nunes2020"
+   ]
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "deficit-push-up",
+   "why": "No equipment; the triceps still help (rating 0.6) alongside the chest.",
+   "differences": [
+    "Less triceps long-head bias",
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "triceps_long_head_bias",
+   "constant_tension"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@deficit-push-up.muscles.triceps": 0.6,
+  "exercises.json:@overhead-cable-triceps-extension.heads.triceps_long": 1,
+  "exercises.json:@overhead-cable-triceps-extension.heads.triceps_short": 0.7,
+  "exercises.json:@skull-crusher.heads.triceps_long": 0.9,
+  "exercises.json:@triceps-pushdown.heads.triceps_long": 0.6,
+  "exercises.json:@triceps-pushdown.heads.triceps_short": 1,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.cable": 2.5,
+  "rules.json:logger.load_step.lb.cable": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "The long-head growth result comes from one 12-week study comparing overhead extensions with pushdowns.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

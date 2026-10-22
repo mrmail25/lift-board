@@ -1,0 +1,295 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "leg-press",
+ "kind": "exercise",
+ "exercise_id": "leg-press",
+ "title": "Leg Press",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "The sled leg press: quads 1, glutes 0.6, adductors 0.5. Heavy leg training with little fatigue to the back and torso.",
+ "type": "primary",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "leg_press"
+  ],
+  "text": "Needs: leg press."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 0.4,
+    "quads_vasti": 1
+   },
+   "why": "The quads straighten the knee; vasti 1, rectus femoris 0.4.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "The glutes extend the hip from the bent position; more with the feet high.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The adductor magnus helps extend the hip, more with a wider stance.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Back and hips flat on the pad.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Feet shoulder width in the middle of the platform.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Release the safeties before the first rep and keep a hand on them.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower until knees are deeply bent",
+   "why": "Lowering until the hips almost come off the pad uses the full range.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your lower back on the pad",
+   "why": "Knees tracking with the toes keeps the hips sitting between the legs.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Press without locking the knees hard",
+   "why": "Stopping just short of lockout keeps tension on.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the hips on the pad",
+   "why": "If they lift, you've gone deeper than your hips allow.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "stance",
+   "change": "Feet higher on the platform",
+   "target_muscle_ids": [
+    "glutes",
+    "adductors"
+   ],
+   "effect": "More hip bend, more glute and adductor work.",
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "high-foot-leg-press"
+   ],
+   "evidence": "biomechanics",
+   "caveat": "Mechanics only."
+  },
+  {
+   "kind": "stance",
+   "change": "Feet lower",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "More knee bend, more quads.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Heels may lift."
+  },
+  {
+   "kind": "stance",
+   "change": "One leg at a time",
+   "target_muscle_ids": [
+    "quads",
+    "glutes"
+   ],
+   "effect": "Same pattern per leg.",
+   "swap_tags": [
+    "unilateral"
+   ],
+   "example_exercise_ids": [
+    "single-leg-press"
+   ],
+   "evidence": "biomechanics",
+   "caveat": "Takes twice as long."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Letting the hips roll off the seat at the bottom.",
+   "fix": "Use the depth you can reach with the hips flat.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Short, heavy reps.",
+   "fix": "Use the full range; log the depth you use.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Locking the knees hard at the top.",
+   "fix": "Stop just short.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Leg press doesn't build legs like squats.",
+   "reality": "Free weights and machines gave similar growth.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Ramp up before your first working set. For primary lifts the app suggests 50% x 8, 70% x 4 and 85% x 2 when the first working load is 60 kg or more, and 50% x 8 then 75% x 3 below that.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp",
+   "note": "High-load warm-ups improved strength performance in a systematic review; the percentages are coaching convention.",
+   "citations": [
+    "mccrary2015"
+   ]
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 6-10 rep range. Easy to push close to failure; keep the safeties within reach.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "safeties",
+   "text": "Set the safety stops, and keep the hips on the pad.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "hack-squat",
+   "why": "Machine squat with a deep knee bend.",
+   "differences": [
+    "More stretch emphasis"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:glutes",
+   "goal_label": "More glutes",
+   "exercise_id": "back-squat",
+   "why": "Barbell squat: more glutes and adductors.",
+   "differences": [
+    "More stretch emphasis",
+    "Less stable",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "bulgarian-split-squat",
+   "why": "One leg at a time with dumbbells.",
+   "differences": [
+    "More stretch emphasis",
+    "Less stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:quads_rf",
+   "goal_label": "More rectus femoris",
+   "exercise_id": "leg-extension",
+   "why": "Grew the rectus femoris where squats did not.",
+   "differences": [
+    "Peak-contraction focus",
+    "Better isolation",
+    "Less systemic fatigue"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "zabaletakorta2021"
+   ]
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 3,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@leg-press.heads.quads_rf": 0.4,
+  "exercises.json:@leg-press.heads.quads_vasti": 1,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.primary.0": 6,
+  "rules.json:logger.rep_range_by_type.primary.1": 10,
+  "rules.json:logger.target_rir_by_type.primary": 3,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three_from_kg": 60
+ },
+ "notes": [
+  "Leg-press variations have not been compared for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

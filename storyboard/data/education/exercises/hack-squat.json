@@ -1,0 +1,277 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "hack-squat",
+ "kind": "exercise",
+ "exercise_id": "hack-squat",
+ "title": "Hack Squat",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Machine hack squat: quads 1, glutes 0.5. A deep, guided squat without a bar on the spine.",
+ "type": "primary",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "hack_squat"
+  ],
+  "text": "Needs: hack squat machine."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 0.4,
+    "quads_vasti": 1
+   },
+   "why": "The quads straighten the knee from a deep bend; vasti 1, rectus femoris 0.4.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The glutes extend the hip; more with the feet higher.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "The adductor magnus helps extend the hip.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Shoulders under the pads, back flat on the pad.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Feet shoulder width in the middle of the platform.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Release the safety handles before the first rep.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Release the handles and brace",
+   "why": "Going deep uses the range the machine is built for.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lower until thighs pass parallel",
+   "why": "Knees tracking over the toes.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Press through the whole foot",
+   "why": "Pushing through the whole foot keeps balance.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the back on the pad",
+   "why": "The machine supports the back; use it.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "stance",
+   "change": "Feet lower on the platform",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "More knee bend, more quad work.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Heels may lift."
+  },
+  {
+   "kind": "stance",
+   "change": "Feet higher",
+   "target_muscle_ids": [
+    "glutes"
+   ],
+   "effect": "More hip bend, more glutes.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Mechanics only."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Letting the heels lift off the platform.",
+   "fix": "Use the depth you can reach with the back flat.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Short reps with a heavy load.",
+   "fix": "Use the full range.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Heels lifting.",
+   "fix": "Move the feet up.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Ramp up before your first working set. For primary lifts the app suggests 50% x 8, 70% x 4 and 85% x 2 when the first working load is 60 kg or more, and 50% x 8 then 75% x 3 below that.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp",
+   "note": "High-load warm-ups improved strength performance in a systematic review; the percentages are coaching convention.",
+   "citations": [
+    "mccrary2015"
+   ]
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 6-10 rep range. Safeties make it reasonable to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "safeties",
+   "text": "Engage the safety handles when you finish the set.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "bias:glutes",
+   "goal_label": "More glutes",
+   "exercise_id": "back-squat",
+   "why": "Barbell squat: more glutes and adductors.",
+   "differences": [
+    "Less stable",
+    "More systemic fatigue",
+    "Loads the spine"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "bulgarian-split-squat",
+   "why": "One leg at a time.",
+   "differences": [
+    "Less stable",
+    "One side at a time",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "goblet-squat",
+   "why": "Dumbbell squat.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less stable",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:quads_rf",
+   "goal_label": "More rectus femoris",
+   "exercise_id": "leg-extension",
+   "why": "Grew the rectus femoris where squats did not.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Better isolation"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "zabaletakorta2021"
+   ]
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 3,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@hack-squat.heads.quads_rf": 0.4,
+  "exercises.json:@hack-squat.heads.quads_vasti": 1,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.primary.0": 6,
+  "rules.json:logger.rep_range_by_type.primary.1": 10,
+  "rules.json:logger.target_rir_by_type.primary": 3,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three_from_kg": 60
+ },
+ "notes": [
+  "Hack squat has not been compared with other squats for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

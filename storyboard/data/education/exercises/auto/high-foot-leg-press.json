@@ -1,0 +1,164 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "high-foot-leg-press",
+ "kind": "exercise",
+ "exercise_id": "high-foot-leg-press",
+ "title": "High-Foot Leg Press",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A leg press with your feet high on the platform to shift the work toward the glutes and adductors.",
+ "type": "primary",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "leg_press"
+  ],
+  "text": "Needs: leg press."
+ },
+ "muscles": [
+  {
+   "muscle_id": "glutes",
+   "rating": 0.9,
+   "band": "main",
+   "why": "Library rating 0.9 for glutes (main mover): each working set adds 0.9 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "quads",
+   "rating": 0.7,
+   "band": "helper",
+   "regions": {
+    "quads_rf": 0.25,
+    "quads_vasti": 0.7
+   },
+   "why": "Library rating 0.7 for quads (helper): each working set adds 0.7 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for adductors (helper): each working set adds 0.6 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for hamstrings (minor): each working set adds 0.3 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Put your feet high and a bit wide on the platform.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower until your hips are deeply flexed, keeping your hips on the seat.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Press through your heels to the top.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower deep while keeping the back on the pad",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Push through the heels",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stop just short of lockout",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stop before your tailbone curls off the pad.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the lower back peel off the pad.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "single-leg-press",
+   "why": "Swap sheet: Less stretch emphasis, One side at a time, Lower loading potential.",
+   "differences": [
+    "Less stretch emphasis",
+    "One side at a time",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 3,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

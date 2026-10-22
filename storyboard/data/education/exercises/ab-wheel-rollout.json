@@ -1,0 +1,201 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "ab-wheel-rollout",
+ "kind": "exercise",
+ "exercise_id": "ab-wheel-rollout",
+ "title": "Ab Wheel Rollout",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Roll a wheel out and back from the knees: abs 1, obliques 0.6. The abs work to stop the spine arching (anti-extension).",
+ "type": "isolation",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [
+   "ab_wheel"
+  ],
+  "text": "Needs: ab wheel."
+ },
+ "muscles": [
+  {
+   "muscle_id": "abs",
+   "rating": 1,
+   "band": "main",
+   "why": "The rectus abdominis resists the spine arching as you roll out, then helps pull you back.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "obliques",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "The obliques brace the trunk (0.6).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "The lats pull the arms back to return: below the floor.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "The spinal erectors stabilize: below the floor.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Kneel on a pad, wheel under your shoulders.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Brace, slight round in the upper back.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Brace your abs",
+   "why": "Ribs down, no arch.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Roll forward as far as you can hold a flat back",
+   "why": "Going only as far as you can return without arching.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Pull back with the abs",
+   "why": "Pulling back with the arms and abs.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Roll toward a wall to limit the range",
+   "why": "The wall stops you at a set distance while you build up.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "range",
+   "change": "Further roll-out, then standing roll-outs",
+   "target_muscle_ids": [
+    "abs"
+   ],
+   "effect": "Longer lever, harder rep.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Only if you can keep the back from arching."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Letting the lower back sag at the far point.",
+   "fix": "Shorten the range until the back stays flat.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Arching the lower back.",
+   "fix": "Roll out less.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Hips piking up first on the return.",
+   "fix": "Pull back with the abs and arms together.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Ab training removes belly fat.",
+   "reality": "Training a muscle doesn't selectively reduce the fat over it.",
+   "evidence": "modeled"
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "There is no load to jump here: progress by adding reps, then range or a harder variation, one small step at a time.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Stop when you can't keep the back flat.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "cable-crunch",
+   "why": "Loadable spinal flexion on a cable.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "hanging-leg-raise",
+   "why": "Bar only; curl the hips up.",
+   "differences": [
+    "More grip demand"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "weighted-decline-crunch",
+   "why": "Decline bench crunch with a plate.",
+   "differences": [],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@ab-wheel-rollout.muscles.obliques": 0.6,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Ab exercises have not been compared for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

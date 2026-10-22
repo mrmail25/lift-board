@@ -1,0 +1,676 @@
+{
+  "schema": "lift-board.education.fundamental/1",
+  "id": "set-crediting-targets",
+  "kind": "fundamental",
+  "title": "Set crediting and weekly targets",
+  "status": "final",
+  "updated": "2026-10-21",
+  "strict_numbers": true,
+  "summary": "How the app turns your logged and planned sets into weekly totals per muscle, which sets count as hard, how targets scale with your level, what the colours and warnings mean, and how the stimulus curve is built. Every number on this page is quoted from the app's data files.",
+  "app_link": {
+    "features": [
+      "Weekly volume panel and body map (targets.json counting, targets, gradient)",
+      "Level setting (targets.json levelMinFactor)",
+      "Stimulus curve (targets.json curve)",
+      "Hard-set rule and set tags in the logger (rules.json logger)",
+      "On-plan check in the weekly review (rules.json review)",
+      "Program checks (rules.json rules)"
+    ],
+    "explains": "Exactly how a set becomes a number on the board, and when the app calls a muscle under, on target or over."
+  },
+  "sections": [
+    {
+      "id": "counting",
+      "heading": "How sets are counted",
+      "body": [
+        "Every working set adds the exercise's rating for each muscle to that muscle's weekly total. A main mover gets a full set or close to it; a helper muscle gets part of a set.",
+        "Very small ratings are treated as noise and ignored, and the total is rounded for display. The ratings themselves are coaching estimates in the exercise library."
+      ],
+      "points": [
+        {
+          "text": "Counting is fractional: the weekly total is the sum over all tiles of sets x rating.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:counting.method",
+              "text": "fractional"
+            }
+          ],
+          "citations": [
+            "pelland2026"
+          ],
+          "app_key": "targets.json:counting.method"
+        },
+        {
+          "text": "Ratings below 0.25 count as 0.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:counting.min_rating_to_count",
+              "text": "below 0.25"
+            },
+            {
+              "key": "targets.json:counting.description",
+              "text": "count as 0"
+            }
+          ],
+          "app_key": "targets.json:counting.min_rating_to_count"
+        },
+        {
+          "text": "Weekly totals are shown rounded to the nearest 0.5.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:counting.round_to",
+              "text": "nearest 0.5"
+            }
+          ],
+          "app_key": "targets.json:counting.round_to"
+        },
+        {
+          "text": "Example: 4 sets of incline dumbbell press (chest 1.0) plus 3 sets of weighted dip (chest 0.8) add up to 6.4 chest sets, which the board shows as 6.5.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "text": "4 sets",
+              "example": true
+            },
+            {
+              "text": "3 sets",
+              "example": true
+            },
+            {
+              "key": "exercises.json:@incline-dumbbell-press.muscles.chest",
+              "text": "chest 1.0"
+            },
+            {
+              "key": "exercises.json:@weighted-dip.muscles.chest",
+              "text": "chest 0.8"
+            },
+            {
+              "expr": "4*{exercises.json:@incline-dumbbell-press.muscles.chest}+3*{exercises.json:@weighted-dip.muscles.chest}",
+              "text": "6.4 chest sets",
+              "round": 2
+            },
+            {
+              "expr": "round((4*{exercises.json:@incline-dumbbell-press.muscles.chest}+3*{exercises.json:@weighted-dip.muscles.chest})/{targets.json:counting.round_to})*{targets.json:counting.round_to}",
+              "text": "shows as 6.5",
+              "round": 2
+            }
+          ]
+        },
+        {
+          "text": "In a large meta-regression, counting indirect sets as half a set fit the growth data best. The app's per-exercise ratings are a finer-grained version of that idea.",
+          "evidence": "supported",
+          "quotes": [],
+          "citations": [
+            "pelland2026"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hard-sets",
+      "heading": "Which sets count",
+      "body": [
+        "Planned sets on the board are assumed to be hard sets. Logged sets count as hard only when they are close enough to failure.",
+        "Set tags change how much a logged set counts. Warm-ups are their own set kind and never count."
+      ],
+      "points": [
+        {
+          "text": "A logged set is hard when it is a working set with at least one rep and RIR 3 or less, or no RIR entered.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:logger.hardRIR",
+              "text": "RIR 3"
+            }
+          ],
+          "citations": [
+            "robinson2024"
+          ],
+          "app_key": "rules.json:logger.hardRIR"
+        },
+        {
+          "text": "You can move that cut-off anywhere from 0 to 5 in settings.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:logger.hardRIR_range",
+              "text": "0 to 5"
+            }
+          ],
+          "app_key": "rules.json:logger.hardRIR_range"
+        },
+        {
+          "text": "Credit applies only when the set is hard. A tagged set with no RIR uses the tag's default RIR.",
+          "evidence": "modeled",
+          "quotes": [],
+          "app_key": "rules.json:logger.set_tags.hard_rule"
+        },
+        {
+          "text": "Failure: default RIR of 0, and it counts 1.0 hard set. There is no bonus for failure.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:logger.set_tags.failure.default_rir",
+              "text": "RIR of 0"
+            },
+            {
+              "key": "rules.json:logger.set_tags.failure.hard_credit",
+              "text": "counts 1.0"
+            }
+          ],
+          "citations": [
+            "refalo2023",
+            "robinson2024"
+          ],
+          "app_key": "rules.json:logger.set_tags.failure.hard_credit"
+        },
+        {
+          "text": "Myo-rep match: credit 1.0 hard set. It has no default RIR, so a myo-rep set with no RIR entered counts as hard.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:logger.set_tags.myo_rep.hard_credit",
+              "text": "credit 1.0"
+            }
+          ],
+          "app_key": "rules.json:logger.set_tags.myo_rep.hard_credit"
+        },
+        {
+          "text": "Drop set: each drop has a default RIR of 0 and credits 0.5 of a hard set, and the drops after one top set add at most 1.0 set. The top set counts as normal.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:logger.set_tags.drop_set.default_rir",
+              "text": "RIR of 0"
+            },
+            {
+              "key": "rules.json:logger.set_tags.drop_set.hard_credit",
+              "text": "credits 0.5"
+            },
+            {
+              "key": "rules.json:logger.set_tags.drop_set.cap_per_top_set",
+              "text": "at most 1.0 set"
+            }
+          ],
+          "app_key": "rules.json:logger.set_tags.drop_set.hard_credit"
+        },
+        {
+          "text": "Partials: credit 1.0 hard set when hard, but partial sets never set PRs.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:logger.set_tags.partials.hard_credit",
+              "text": "credit 1.0"
+            }
+          ],
+          "citations": [
+            "wolf2023"
+          ],
+          "app_key": "rules.json:logger.set_tags.partials.hard_credit"
+        },
+        {
+          "text": "Logged hard sets are credited to muscles with the same fractional ratings as planning.",
+          "evidence": "modeled",
+          "quotes": [],
+          "app_key": "rules.json:logger.completed_analytics.hard_sets"
+        }
+      ]
+    },
+    {
+      "id": "targets",
+      "heading": "Weekly targets and your level",
+      "body": [
+        "Each muscle has a weekly minimum and maximum in credited sets. The maximum is not a ceiling on growth; it is where extra sets usually cost more recovery than they return.",
+        "Each target carries an evidence tag: direct when studies measured that muscle at different weekly set counts, pooled when it comes from meta-analyses of many muscles, and extrapolated when it is a coaching estimate."
+      ],
+      "points": [
+        {
+          "text": "Chest, for example, is 10 to 20 sets at Advanced.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:targets.chest.min",
+              "text": "10"
+            },
+            {
+              "key": "targets.json:targets.chest.max",
+              "text": "20"
+            }
+          ],
+          "citations": [
+            "schoenfeld2017dose",
+            "pelland2026"
+          ],
+          "app_key": "targets.json:targets.chest"
+        },
+        {
+          "text": "Your level scales the minimum: multiply by 0.6 for Beginner, 0.8 for Intermediate and 1.0 for Advanced, then round to 0.5. Max is unchanged.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:levelMinFactor.beginner",
+              "text": "0.6 for Beginner"
+            },
+            {
+              "key": "targets.json:levelMinFactor.intermediate",
+              "text": "0.8 for Intermediate"
+            },
+            {
+              "key": "targets.json:levelMinFactor.advanced",
+              "text": "1.0 for Advanced"
+            },
+            {
+              "key": "targets.json:levelMinFactor.note",
+              "text": "round to 0.5"
+            },
+            {
+              "key": "targets.json:levelMinFactor.note",
+              "text": "Max is unchanged"
+            }
+          ],
+          "app_key": "targets.json:levelMinFactor"
+        },
+        {
+          "text": "Example: Hamstrings (8 to 16) become 6.5 to 16 at Intermediate and 5 to 16 at Beginner.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:targets.hamstrings.min",
+              "text": "Hamstrings (8"
+            },
+            {
+              "key": "targets.json:targets.hamstrings.max",
+              "text": "to 16"
+            },
+            {
+              "expr": "round({targets.json:targets.hamstrings.min}*{targets.json:levelMinFactor.intermediate}/{targets.json:counting.round_to})*{targets.json:counting.round_to}",
+              "text": "become 6.5",
+              "round": 2
+            },
+            {
+              "expr": "round({targets.json:targets.hamstrings.min}*{targets.json:levelMinFactor.beginner}/{targets.json:counting.round_to})*{targets.json:counting.round_to}",
+              "text": "and 5",
+              "round": 2
+            }
+          ]
+        },
+        {
+          "text": "More weekly hard sets per muscle went with more growth, with diminishing returns at higher volumes. The exact minimum and maximum for each muscle are coaching choices built on that.",
+          "evidence": "supported",
+          "quotes": [],
+          "citations": [
+            "schoenfeld2017dose",
+            "pelland2026"
+          ],
+          "app_key": "targets.json:curve.evidence_tags"
+        }
+      ]
+    },
+    {
+      "id": "status",
+      "heading": "Under, on target and over",
+      "body": [
+        "The volume panel colours each muscle by comparing its weekly total with its level-scaled minimum and its maximum. The rules below are copied from the data file.",
+        "The body map uses a smooth colour scale with its own stops, so near the top of the range the map and the panel status can differ slightly."
+      ],
+      "points": [
+        {
+          "text": "Green: min <= total <= max.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:counting.status.green",
+              "text": "min <= total <= max"
+            }
+          ],
+          "app_key": "targets.json:counting.status.green"
+        },
+        {
+          "text": "Amber, under: min - 2 <= total < min. Red, under: total < min - 2.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:counting.status.amber_under",
+              "text": "min - 2 <= total < min"
+            },
+            {
+              "key": "targets.json:counting.status.red_under",
+              "text": "total < min - 2"
+            }
+          ],
+          "app_key": "targets.json:counting.status"
+        },
+        {
+          "text": "Amber, over: max < total <= max * 1.25. Red, over: total > max * 1.25.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:counting.status.amber_over",
+              "text": "max < total <= max * 1.25"
+            },
+            {
+              "key": "targets.json:counting.status.red_over",
+              "text": "total > max * 1.25"
+            }
+          ],
+          "app_key": "targets.json:counting.status"
+        },
+        {
+          "text": "Chest at Advanced (10 to 20): amber from 8 up to just under 10, red below 8, amber above 20 up to 25, red above 25.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:targets.chest.min",
+              "text": "10"
+            },
+            {
+              "key": "targets.json:targets.chest.max",
+              "text": "20"
+            },
+            {
+              "expr": "{targets.json:targets.chest.min}-2",
+              "text": "8"
+            },
+            {
+              "expr": "{targets.json:targets.chest.max}*1.25",
+              "text": "25"
+            }
+          ]
+        },
+        {
+          "text": "On the body map and the volume panel, a muscle turns amber as soon as it is over the maximum and fully red above max*1.25, the same lines everywhere.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:gradient.week.red_full",
+              "text": "max*1.25"
+            }
+          ],
+          "app_key": "targets.json:gradient.week"
+        },
+        {
+          "text": "The weekly volume program check warns: {muscle} is at {sets} weekly sets, outside the {min} to {max} target.",
+          "evidence": "modeled",
+          "quotes": [],
+          "app_key": "rules.json:rules.#weekly_volume.message"
+        }
+      ]
+    },
+    {
+      "id": "curve",
+      "heading": "The stimulus curve",
+      "body": [
+        "The curve turns weekly sets into a relative stimulus score so you can see diminishing returns. It is a model for comparing plans, not a measurement of growth.",
+        "Its shape and anchor points are modeling choices, loosely based on meta-analyses that found more sets help with diminishing returns."
+      ],
+      "points": [
+        {
+          "text": "The model is S(x)=1-exp(-x/k), where x is weekly effective sets after the session discount.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:curve.model",
+              "text": "S(x)=1-exp(-x/k)"
+            }
+          ],
+          "citations": [
+            "schoenfeld2017dose",
+            "pelland2026"
+          ],
+          "app_key": "targets.json:curve.model"
+        },
+        {
+          "text": "Each muscle's k is its level-scaled minimum divided by ln(2.5), so every muscle sits at 60% of the modeled maximum at its minimum.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:curve.anchors.method",
+              "text": "ln(2.5)"
+            },
+            {
+              "key": "targets.json:curve.anchors.min",
+              "text": "60%",
+              "scale": 100
+            }
+          ],
+          "app_key": "targets.json:curve.anchors"
+        },
+        {
+          "text": "Chest k is 6.55, 8.73 and 10.91 for Beginner, Intermediate and Advanced; for example 10 / ln(2.5) = 10.91.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:curve.k_by_muscle.chest",
+              "text": "6.55, 8.73 and 10.91"
+            },
+            {
+              "key": "targets.json:targets.chest.min",
+              "text": "10 /"
+            },
+            {
+              "key": "targets.json:curve.anchors.method",
+              "text": "ln(2.5)"
+            },
+            {
+              "expr": "round({targets.json:targets.chest.min}/ln(2.5),2)",
+              "text": "= 10.91",
+              "round": 2
+            }
+          ]
+        },
+        {
+          "text": "A k of 6, 8 and 10 by level is kept only as a fallback for custom muscles.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:curve.k",
+              "text": "6, 8 and 10"
+            }
+          ],
+          "app_key": "targets.json:curve.note_k_level"
+        },
+        {
+          "text": "Effective sets past 10 for a muscle in one session count at 50%.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:curve.session_discount.cap",
+              "text": "past 10"
+            },
+            {
+              "key": "targets.json:curve.session_discount.factor",
+              "text": "50%",
+              "scale": 100
+            }
+          ],
+          "app_key": "targets.json:curve.session_discount"
+        },
+        {
+          "text": "Example: 14 effective sets for one muscle in one session add 12 to x.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "text": "14 effective",
+              "example": true
+            },
+            {
+              "expr": "{targets.json:curve.session_discount.cap}+(14-{targets.json:curve.session_discount.cap})*{targets.json:curve.session_discount.factor}",
+              "text": "add 12",
+              "round": 2
+            }
+          ]
+        },
+        {
+          "text": "The value of one more set is S(x+1)-S(x), shown as a percent of the maximum.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "targets.json:curve.marginal",
+              "text": "S(x+1)-S(x)"
+            }
+          ],
+          "app_key": "targets.json:curve.marginal"
+        }
+      ]
+    },
+    {
+      "id": "on-plan",
+      "heading": "On plan in the weekly review",
+      "body": [
+        "The review compares credited sets you logged with the sets on your board, muscle by muscle.",
+        "A small margin stops rounding from marking a muscle as behind."
+      ],
+      "points": [
+        {
+          "text": "A muscle is on plan when credited done >= planned - margin, with a margin of 0.5 credited sets.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:review.on_plan_margin_note",
+              "text": "credited done >= planned - margin"
+            },
+            {
+              "key": "rules.json:review.on_plan_margin",
+              "text": "margin of 0.5"
+            }
+          ],
+          "app_key": "rules.json:review.on_plan_margin"
+        },
+        {
+          "text": "Mid-week, planned = routine sets Monday through today.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:review.on_plan_margin_note",
+              "text": "Mid-week, planned = routine sets Monday through today."
+            }
+          ],
+          "app_key": "rules.json:review.on_plan_margin_note"
+        },
+        {
+          "text": "Example: with 12 planned chest sets, 11.5 done is on plan and 11 done is not.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "text": "12 planned",
+              "example": true
+            },
+            {
+              "expr": "12-{rules.json:review.on_plan_margin}",
+              "text": "11.5 done",
+              "round": 2
+            },
+            {
+              "text": "11 done is not",
+              "example": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "warnings",
+      "heading": "Program warnings tied to volume",
+      "body": [
+        "The program checks look at whole days as well as whole weeks. They are coaching rules of thumb, and every message comes with a suggested fix.",
+        "These limits are modeling choices; no study sets an exact per-session ceiling."
+      ],
+      "points": [
+        {
+          "text": "A day with more than 20, 24 or 28 hard sets (Beginner, Intermediate, Advanced) gets a warning, and an info note when it is within 4 of that cap.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:rules.#session_hard_sets.warn_above",
+              "text": "20, 24 or 28"
+            },
+            {
+              "key": "rules.json:rules.#session_hard_sets.info_band",
+              "text": "within 4"
+            }
+          ],
+          "app_key": "rules.json:rules.#session_hard_sets.warn_above"
+        },
+        {
+          "text": "Past about 10 effective sets for one muscle in one session, the app warns that extra sets mostly add fatigue.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:rules.#junk_volume_session.threshold",
+              "text": "about 10"
+            }
+          ],
+          "app_key": "rules.json:rules.#junk_volume_session.threshold"
+        },
+        {
+          "text": "More than 5 sets of one exercise in a day gets a warning to split it or cut sets.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:rules.#sets_per_exercise.threshold",
+              "text": "More than 5"
+            }
+          ],
+          "app_key": "rules.json:rules.#sets_per_exercise.threshold"
+        },
+        {
+          "text": "A day counts toward frequency when the muscle gets at least 2 effective sets that day; a muscle trained that way on fewer than 2 days gets an info note.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:rules.#low_frequency.min_effective_to_count",
+              "text": "at least 2 effective sets"
+            },
+            {
+              "key": "rules.json:rules.#low_frequency.threshold",
+              "text": "fewer than 2 days"
+            }
+          ],
+          "citations": [
+            "schoenfeld2019freq",
+            "pelland2026"
+          ],
+          "app_key": "rules.json:rules.#low_frequency"
+        },
+        {
+          "text": "Two solid sessions for the same muscle too close together trigger a note to allow at least 48 hours between hard sessions.",
+          "evidence": "modeled",
+          "quotes": [
+            {
+              "key": "rules.json:rules.#consecutive_high_volume.message",
+              "text": "at least 48 hours"
+            }
+          ],
+          "app_key": "rules.json:rules.#consecutive_high_volume.message"
+        }
+      ]
+    }
+  ],
+  "app_values": {
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "targets.json:levelMinFactor.beginner": 0.6,
+    "targets.json:levelMinFactor.intermediate": 0.8,
+    "targets.json:levelMinFactor.advanced": 1.0,
+    "targets.json:curve.k": {
+      "beginner": 6,
+      "intermediate": 8,
+      "advanced": 10
+    },
+    "targets.json:curve.session_discount.cap": 10,
+    "targets.json:curve.session_discount.factor": 0.5,
+    "targets.json:curve.anchors.min": 0.6,
+    "rules.json:logger.hardRIR": 3,
+    "rules.json:logger.set_tags.drop_set.hard_credit": 0.5,
+    "rules.json:logger.set_tags.drop_set.cap_per_top_set": 1.0,
+    "rules.json:review.on_plan_margin": 0.5
+  },
+  "notes": [
+    "Every number in this page's points is quoted from a data file or computed from one; check_education validates each quote against the live files.",
+    "Worked-example inputs (how many sets someone did) are marked as examples; the results are recomputed from the files.",
+    "Text and numbers render from the files at build time if they ever drift; this page must then be updated."
+  ]
+}

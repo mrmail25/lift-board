@@ -1,0 +1,214 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "landmine-rdl",
+ "kind": "exercise",
+ "exercise_id": "landmine-rdl",
+ "title": "Landmine Romanian Deadlift",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A hip hinge holding the end of a landmine bar, which loads the hamstrings and glutes on a forgiving arc.",
+ "type": "accessory",
+ "equipment": "landmine",
+ "equipment_needs": {
+  "items": [
+   "landmine",
+   "barbell",
+   "plates"
+  ],
+  "text": "Needs: landmine attachment; barbell (Olympic bar); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.9,
+   "band": "main",
+   "why": "Library rating 0.9 for hamstrings (main mover): each working set adds 0.9 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.8,
+   "band": "main",
+   "why": "Library rating 0.8 for glutes (main mover): each working set adds 0.8 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for lower back (helper): each working set adds 0.4 of a set to the weekly lower back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for adductors (minor): each working set adds 0.3 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.2,
+   "band": "not_counted",
+   "regions": {
+    "traps_upper": 0.2,
+    "traps_mid_lower": 0.1
+   },
+   "why": "Library rating 0.2 for traps: below the counting floor, so it adds nothing to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for forearms: below the counting floor, so it adds nothing to the weekly forearms total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand facing the bar end, hold it with both hands at arm's length, with soft knees.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Push your hips back and let the bar slide down your thighs until your hamstrings are stretched.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive your hips forward to stand tall.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Push the hips back",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the bar close",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Stand by squeezing the glutes",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Reach your hips back, not your hands down.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Squatting down instead of hinging.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-rdl",
+   "why": "Swap sheet: Loads the spine, More grip demand.",
+   "differences": [
+    "Loads the spine",
+    "More grip demand"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "kettlebell-single-leg-rdl",
+   "why": "Swap sheet: Less stable, One side at a time.",
+   "differences": [
+    "Less stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "good-morning",
+   "why": "Swap sheet: Loads the spine, Heavier loading potential, More technical.",
+   "differences": [
+    "Loads the spine",
+    "Heavier loading potential",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "smith-rdl",
+   "why": "Swap sheet: More stable, Less systemic fatigue, Loads the spine.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Loads the spine"
+   ],
+   "evidence": "modeled"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

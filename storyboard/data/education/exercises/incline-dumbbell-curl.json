@@ -1,0 +1,413 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "incline-dumbbell-curl",
+ "kind": "exercise",
+ "exercise_id": "incline-dumbbell-curl",
+ "title": "Incline Dumbbell Curl",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "A dumbbell curl lying back on an incline bench so your arms hang behind your body. It trains the elbow flexors (biceps 1) with the biceps long head lengthened at the shoulder, and costs very little whole-body fatigue.",
+ "type": "isolation",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell",
+   "adjustable_bench"
+  ],
+  "text": "Needs: dumbbells; adjustable (incline) bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "biceps",
+   "rating": 1,
+   "band": "main",
+   "why": "The biceps (both heads) and the brachialis bend the elbow against the dumbbell; the app groups them as biceps. Leaning back extends the shoulder, and the long head crosses the shoulder, so it works from a longer length than in a standing curl. At the elbow the load curve is like any dumbbell curl: hardest with the forearm horizontal, close to zero with the arm hanging straight.",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "biceps",
+     "rating": 1,
+     "text": "In a 12-week MRI study in untrained adults (one arm each way), incline curls grew the biceps brachii more than preacher curls (+22.1% vs +18.9%), preacher curls grew the brachialis and brachioradialis more, and total elbow-flexor growth was similar.",
+     "evidence": "supported",
+     "citations": [
+      "kobayashi2026"
+     ]
+    }
+   ]
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Forearm muscles grip the dumbbell and hold the wrist straight. The brachioradialis also bends the elbow, but least with the palms up, so it helps less than in a hammer curl. Rated 0.3: it counts, a little.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0,
+   "band": "not_counted",
+   "why": "The front delts only hold the upper arm still. If the elbows drift forward, the shoulder starts lifting the weight, and the library does not credit that.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bench at 45-60 degrees. 60 is easier to start with; lower angles stretch the long head more.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "text": "Sit with the dumbbells on your thighs, then lie back with your head and upper back on the pad and your chest up.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Let your arms hang straight down from the shoulders, palms facing forward, dumbbells clear of the bench.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Choose a weight noticeably lighter than your standing curl; the stretched start makes it harder.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep upper arms behind your torso",
+   "why": "That shoulder position is what lengthens the long head; it is the reason to pick this curl.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Curl without moving the elbows",
+   "why": "If the elbows swing forward, the front delts take over part of the lift and the long-head stretch is lost.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to a full stretch",
+   "why": "Straight arms at the bottom put the long head at its longest across both joints.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Palms up the whole way",
+   "why": "The biceps also turn the palm up (supination), so a fully supinated grip keeps them doing more of the work.",
+   "evidence": "biomechanics"
+  },
+  {
+   "cue": "Curl all the way up, elbows still back",
+   "why": "With the upper arm hanging back, the dumbbell still pulls on the elbow flexors at the top, so the whole range is useful. Moving the elbows forward to get higher only hands work to the front delts.",
+   "evidence": "biomechanics"
+  },
+  {
+   "cue": "Slow down for the last part of the lowering and pause a beat at the bottom",
+   "why": "Keeps tension on in the stretch and removes the bounce. Tempo itself matters little for growth across normal speeds.",
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ]
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "angle",
+   "change": "Lower the bench from 60 toward 45 degrees",
+   "target_muscle_ids": [
+    "biceps"
+   ],
+   "effect": "More shoulder extension, so the long head is longer through the whole rep.",
+   "swap_tags": [
+    "biceps_long_head_bias",
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [
+    "incline-dumbbell-curl",
+    "bayesian-cable-curl"
+   ],
+   "evidence": "biomechanics",
+   "caveat": "The mechanics are clear; whether the long head specifically grows more has not been measured (the 2026 incline-vs-preacher study measured the biceps as a whole). Use an angle you can train pain-free."
+  },
+  {
+   "kind": "grip",
+   "change": "Neutral (hammer) grip instead of palms up",
+   "target_muscle_ids": [
+    "forearms",
+    "biceps"
+   ],
+   "effect": "Shifts work toward the brachioradialis and brachialis and away from the biceps.",
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "hammer-curl"
+   ],
+   "evidence": "biomechanics",
+   "caveat": "In the library Hammer Curl rates forearms 0.8 and biceps 0.8."
+  },
+  {
+   "kind": "range",
+   "change": "Add bottom-half (lengthened) partials when full reps run out",
+   "target_muscle_ids": [
+    "biceps"
+   ],
+   "effect": "Extends the set in the stretched part of the range. Lengthened partials matched full reps for elbow-flexor growth in trained people, and training the straight-arm half grew the elbow flexors more than the bent-arm half in untrained people.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "supported",
+   "citations": [
+    "wolf2025",
+    "sato2021",
+    "pedrosa2023"
+   ],
+   "caveat": "These studies used preacher and other curls, not this incline curl; full reps work just as well. Partials only at the top half are the weaker choice."
+  },
+  {
+   "kind": "tempo",
+   "change": "2-3 second lowering and a short pause at the bottom",
+   "target_muscle_ids": [
+    "biceps"
+   ],
+   "effect": "Keeps tension in the stretch and makes the start of each rep honest.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool."
+  },
+  {
+   "kind": "stance",
+   "change": "One arm at a time",
+   "target_muscle_ids": [
+    "biceps"
+   ],
+   "effect": "Lets you focus on one arm and match reps between sides; the set takes twice as long.",
+   "swap_tags": [
+    "unilateral"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Same wording as the swap tag 'One side at a time'."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Bringing the elbows forward as you curl.",
+   "fix": "Keep the upper arms pointing at the floor; use a lighter weight if they drift.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "text": "Shrugging the shoulders forward off the pad to start the rep.",
+   "fix": "Keep your upper back on the bench and your chest up.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Stopping short of straight arms at the bottom.",
+   "fix": "Lower all the way; the stretch is the point of this curl.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Dropping into the bottom and bouncing out of it.",
+   "fix": "Slow the last part of the lowering and pause a beat.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Curling the wrists in to finish the rep.",
+   "fix": "Keep the wrists straight so the elbow flexors do the work.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Setting the bench too upright (75 degrees or more).",
+   "fix": "Then it is a seated curl; stay at 45-60 degrees.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Incline curls are proven to build the long head (the \"peak\").",
+   "reality": "A 2026 study found incline curls grew the biceps brachii a little more than preacher curls, but it did not separate the heads. Long-head emphasis follows from the mechanics and has not been measured on its own.",
+   "evidence": "supported",
+   "citations": [
+    "kobayashi2026"
+   ]
+  },
+  {
+   "myth": "The incline curl beats every other curl.",
+   "reality": "Total elbow-flexor growth was similar to preacher curls, which grew the brachialis and brachioradialis more. Mixing curl types is reasonable.",
+   "evidence": "supported",
+   "citations": [
+    "kobayashi2026"
+   ]
+  },
+  {
+   "myth": "You need a hard squeeze at the top to grow.",
+   "reality": "Curls loaded hardest near the top and curls loaded hardest in the stretch gave similar biceps growth. Peak-contraction focus is a preference, not a requirement.",
+   "evidence": "supported",
+   "citations": [
+    "nunes2020"
+   ]
+  },
+  {
+   "myth": "Light curls can't build big arms.",
+   "reality": "Light and heavy loads gave similar growth when sets were taken close to failure. The incline curl is meant to be done with a light load.",
+   "evidence": "supported",
+   "citations": [
+    "schoenfeld2017load"
+   ]
+  },
+  {
+   "myth": "Partial reps are always cheating.",
+   "reality": "Bottom-half (lengthened) partials matched full reps for arm growth in trained people. Top-half partials are the weaker choice.",
+   "evidence": "supported",
+   "citations": [
+    "wolf2025",
+    "pedrosa2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets to isolation exercises. Curls usually come after rows or pulldowns, so the arms are already warm; make the first set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to.isolation"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Dumbbells jump in big steps for small weights. The app suggests a heavier pair only when the jump is 10% or less for an isolation move. Going from 12 kg to 14 kg is about 17%, so it adds reps first, up to 2 past the top of the 10-15 range, before it suggests the jump.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve. You can take curls closer to failure than heavy barbell lifts, but end the set when your elbows start to drift forward.",
+   "evidence": "modeled",
+   "citations": [
+    "robinson2024"
+   ],
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Control the bottom. The stretched position is where the curl is hardest to control, so lower slowly into it rather than letting the dumbbells drop.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a bench angle you can train pain-free. If the stretched position doesn't feel right, raise the bench toward 60 degrees or switch to a Bayesian cable curl or preacher curl.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Start and finish with the dumbbells on your thighs. Sit up before you put them down instead of dropping them beside the bench.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "bayesian-cable-curl",
+   "why": "Keeps the arm-behind-the-body stretch with steadier cable tension; lengthened partials of it grew the arms as well as full reps.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "wolf2025"
+   ]
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "preacher-curl",
+   "why": "Arm braced on a pad; it grew the brachialis and brachioradialis more than incline curls, with the same total elbow-flexor growth.",
+   "differences": [
+    "Less biceps long-head stretch",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "kobayashi2026"
+   ]
+  },
+  {
+   "goal": "bias:forearms",
+   "goal_label": "More forearms",
+   "exercise_id": "hammer-curl",
+   "why": "A neutral grip makes the brachioradialis work harder (forearms 0.8 vs 0.3).",
+   "differences": [
+    "Less stretch emphasis",
+    "Less biceps long-head stretch"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "peak_contraction",
+   "goal_label": "Peak-contraction focus",
+   "exercise_id": "spider-curl",
+   "why": "Hardest at the top instead of in the stretch. It's a preference; no growth advantage has been shown.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less biceps long-head stretch",
+    "Peak-contraction focus"
+   ],
+   "evidence": "modeled",
+   "citations": [
+    "nunes2020"
+   ]
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "chin-up",
+   "why": "Needs only a bar. The biceps still get a lot of work (0.8) along with the lats, at a higher fatigue cost.",
+   "differences": [
+    "Less biceps long-head stretch",
+    "Less isolation",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "biceps_long_head_bias"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@incline-dumbbell-curl.muscles.biceps": 1,
+  "exercises.json:@incline-dumbbell-curl.muscles.forearms": 0.3,
+  "exercises.json:@hammer-curl.muscles.forearms": 0.8,
+  "exercises.json:@hammer-curl.muscles.biceps": 0.8,
+  "exercises.json:@chin-up.muscles.biceps": 0.8,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.dumbbell": 2,
+  "rules.json:logger.rep_range_by_type.isolation": [
+   10,
+   15
+  ],
+  "rules.json:logger.target_rir_by_type.isolation": 2,
+  "rules.json:logger.warmup_ramp.applies_to.isolation": "never (do the first working set a touch lighter if wanted)"
+ },
+ "notes": [
+  "Ratings and display bands are the library model. The map shows the biceps as one region; heads are not split.",
+  "The incline-vs-preacher study (Kobayashi 2026) was 12 weeks in untrained adults and is very recent (online ahead of print). It measured whole muscles, not the long and short heads.",
+  "The lengthened-range studies used other curls. Applying them to this curl is a reasonable inference, not a direct test.",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

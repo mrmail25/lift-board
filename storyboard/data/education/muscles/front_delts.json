@@ -1,0 +1,304 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "front_delts",
+  "kind": "muscle",
+  "title": "Front delts",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "front_delts"
+  ],
+  "summary": "The front third of the deltoid, from the collarbone to the outer upper arm. It raises the arm forward and helps in every press, which is why most people get plenty of front-delt work without isolating it.",
+  "what_it_is": {
+    "overview": "One region in the app. The deltoid's three parts share one insertion but act differently, so the app tracks front, side and rear delts as separate muscles. Front-delt targets are low because presses already credit them.",
+    "heads": [
+      {
+        "id": "anterior_deltoid",
+        "name": "Front (anterior) deltoid",
+        "origin": "The front of the outer third of the collarbone.",
+        "insertion": "The deltoid tuberosity, a bump on the outside of the upper-arm bone about a third of the way down.",
+        "fiber_direction": "Run down the front of the shoulder to the arm.",
+        "crosses_joints": [
+          "shoulder"
+        ],
+        "tracked_region": "front_delts",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "anterior_deltoid"
+      ],
+      "joint": "shoulder",
+      "action": "Shoulder flexion (raising the arm forward and overhead).",
+      "detail": "The main job in overhead presses and front raises.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "anterior_deltoid"
+      ],
+      "joint": "shoulder",
+      "action": "Horizontal adduction (bringing the arm across the body).",
+      "detail": "Why it works in every bench press and fly.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "anterior_deltoid"
+      ],
+      "joint": "shoulder",
+      "action": "Internal rotation and help with raising the arm to the side.",
+      "detail": "Secondary actions.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Upper chest",
+        "role": "Shoulder flexion in incline pressing.",
+        "evidence": "biomechanics",
+        "muscle_id": "chest"
+      },
+      {
+        "name": "Side delts",
+        "role": "Help when the arm rises in front and to the side.",
+        "evidence": "biomechanics",
+        "muscle_id": "side_delts"
+      },
+      {
+        "name": "Triceps",
+        "role": "Straighten the elbow in presses.",
+        "evidence": "biomechanics",
+        "muscle_id": "triceps"
+      },
+      {
+        "name": "Traps and serratus",
+        "role": "Rotate the shoulder blade upward so the arm can go overhead.",
+        "evidence": "biomechanics",
+        "muscle_id": "traps"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Lats",
+        "role": "Pull the arm down and back, the opposite of a front raise.",
+        "evidence": "biomechanics",
+        "muscle_id": "lats"
+      },
+      {
+        "name": "Rear delts",
+        "role": "Pull the arm back and out.",
+        "evidence": "biomechanics",
+        "muscle_id": "rear_delts"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In rows and carries the front delt only steadies the shoulder; the library rates it 0 there.",
+        "evidence": "modeled"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "incline-dumbbell-press",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "incline-barbell-bench-press",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "barbell-bench-press",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "dumbbell-bench-press",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "push-up",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "weighted-dip",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "machine-chest-press",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "cable-fly",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "pec-deck",
+        "rating": 0.2,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 4 sets of barbell bench press (0.5), 3 sets of incline dumbbell press (0.6) and 3 sets of overhead press (1.0) give 2 + 1.8 + 3 = 6.8, which the panel shows as 7 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "anterior_deltoid",
+      "goal": "Front-delt emphasis",
+      "how": {
+        "joint_angle": "Arm moving forward and up, as in overhead presses and front raises.",
+        "stretch_position": "Arm at or slightly behind the body at the start of a front raise.",
+        "grip": "Overhand or neutral.",
+        "stance": "Standing or seated with back support."
+      },
+      "swap_tags": [
+        "muscle_isolation"
+      ],
+      "example_exercise_ids": [
+        "overhead-press",
+        "front-raise",
+        "seated-dumbbell-shoulder-press"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Most lifters need little direct front-delt work once pressing volume is in place."
+    },
+    {
+      "target": "anterior_deltoid",
+      "goal": "Pressing overhead with less spinal load",
+      "how": {
+        "joint_angle": "Vertical press.",
+        "stance": "Seated with a back pad, or a machine."
+      },
+      "swap_tags": [
+        "spinal_load",
+        "stability"
+      ],
+      "example_exercise_ids": [
+        "machine-shoulder-press",
+        "seated-dumbbell-shoulder-press"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Standing barbell presses put the load through the spine; seated and machine presses take that out."
+    },
+    {
+      "target": "anterior_deltoid",
+      "goal": "Upper-chest presses also train the front delt",
+      "how": {
+        "joint_angle": "Incline bench about 30 to 45 degrees."
+      },
+      "swap_tags": [],
+      "example_exercise_ids": [
+        "incline-dumbbell-press",
+        "incline-barbell-bench-press"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "Rated 0.6 for front delts in the library, more than flat pressing (0.5)."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "overhead-press",
+      "why": "Heavy vertical press; front delts 1.0, side delts 0.5, triceps 0.6.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "seated-dumbbell-shoulder-press",
+      "why": "Each arm moves freely; back support takes the load off the spine.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "machine-shoulder-press",
+      "why": "Guided press that is easy to push close to failure.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "landmine-press-one-arm",
+      "why": "Angled one-arm press that many find comfortable on the shoulder.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "arnold-press",
+      "why": "Rotating dumbbell press that starts with the arms in front.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "front-raise",
+      "why": "Isolation when presses are not enough or not possible.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "incline-dumbbell-press",
+      "why": "Trains the upper chest and gives front delts 0.6 per set.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Adding lots of front raises on top of heavy pressing; the front delts are usually already near target.",
+      "evidence": "modeled"
+    },
+    {
+      "text": "Leaning far back on overhead presses so the press becomes an incline press.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Using momentum on front raises.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Cutting the overhead press short at forehead height.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Squeeze your glutes and keep your ribs down.",
+      "why": "Stops the lean-back on standing presses.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Bar travels close to your face, then head through.",
+      "why": "Keeps the press vertical.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Raise to eye level, no higher, no swing.",
+      "why": "Keeps front raises on the delt.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Count your presses first.",
+      "why": "Bench and overhead work already credit the front delts.",
+      "evidence": "modeled"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.front_delts.min": 4,
+    "targets.json:targets.front_delts.max": 16,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@overhead-press.muscles.side_delts": 0.5,
+    "exercises.json:@overhead-press.muscles.triceps": 0.6,
+    "exercises.json:@incline-dumbbell-press.muscles.front_delts": 0.6
+  },
+  "notes": [
+    "Weekly target in the app: 4 to 16 front delts sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "No front-delt growth study by exercise choice is on file, so nothing here is marked supported.",
+    "Targets are low and marked extrapolated in targets.json because presses supply most of the work."
+  ]
+}

@@ -1,0 +1,206 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "trx-row",
+ "kind": "exercise",
+ "exercise_id": "trx-row",
+ "title": "Suspension Row",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A bodyweight row on suspension straps, where your body angle sets the difficulty.",
+ "type": "accessory",
+ "equipment": "suspension",
+ "equipment_needs": {
+  "items": [
+   "suspension_trainer"
+  ],
+  "text": "Needs: suspension trainer (TRX)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "upper_back",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for upper back (main mover): each working set adds 1 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0.65,
+   "band": "helper",
+   "why": "Library rating 0.65 for lats (helper): each working set adds 0.65 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for rear delts (helper): each working set adds 0.5 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.1,
+    "traps_mid_lower": 0.5
+   },
+   "why": "Library rating 0.5 for traps (helper): each working set adds 0.5 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for biceps (helper): each working set adds 0.5 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hold the handles and lean back with your body straight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull your chest to the handles, elbows close.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower until your arms are straight.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull your chest to the hands",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the body rigid",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to straight arms",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Walk your feet forward to make it harder.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the hips sag.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "inverted-row",
+   "why": "Swap sheet: More stable.",
+   "differences": [
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "front-lever-row",
+   "why": "Swap sheet: Less upper-back focus, More stable, More technical.",
+   "differences": [
+    "Less upper-back focus",
+    "More stable",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "chest-supported-dumbbell-row",
+   "why": "Swap sheet: More stable, Heavier loading potential.",
+   "differences": [
+    "More stable",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "seated-row-machine",
+   "why": "Swap sheet: More stable, Heavier loading potential, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Heavier loading potential",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 1,
+  "systemic_fatigue": 2,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": [
+   "upper_back_thickness_bias"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

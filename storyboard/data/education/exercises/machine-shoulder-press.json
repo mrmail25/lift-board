@@ -1,0 +1,228 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "machine-shoulder-press",
+ "kind": "exercise",
+ "exercise_id": "machine-shoulder-press",
+ "title": "Machine Shoulder Press",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Seated machine shoulder press: front delts 1, triceps 0.5. Fixed path, easy to push close to failure.",
+ "type": "accessory",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "front_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "The front delts raise the arm overhead.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "side_delts",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Side delts help (0.4).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.25,
+    "triceps_short": 0.5
+   },
+   "why": "Triceps lock out.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Seat so the handles start at shoulder height.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Back flat on the pad.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep your back flat on the pad",
+   "why": "Pressing straight up.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Press up to nearly straight arms",
+   "why": "Lowering to shoulder height.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower under control to the start",
+   "why": "Back on the pad.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Stop short of lockout",
+   "why": "Keeps tension on the delts.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "front_delts"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Setting the seat too high and cutting the range short.",
+   "fix": "Set the seat so the handles start at shoulder height.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Seat too high.",
+   "fix": "Handles at shoulder height.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Arching off the pad.",
+   "fix": "Back flat.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds up to 2 ramp-up sets only when the first working load is at least 40 kg (95 lb) and the main muscle is not already warm from an earlier lift. Otherwise start with a slightly lighter first set.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to.accessory"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 8-12 rep range. Easy to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "smith-overhead-press",
+   "why": "Smith-bar overhead press.",
+   "differences": [
+    "Loads the spine",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:side_delts",
+   "goal_label": "More side delts",
+   "exercise_id": "seated-dumbbell-shoulder-press",
+   "why": "Dumbbells: more side delt.",
+   "differences": [
+    "Less stable",
+    "More systemic fatigue",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "pike-push-up",
+   "why": "Bodyweight overhead press.",
+   "differences": [
+    "Less stable",
+    "Lower loading potential",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "landmine-press-one-arm",
+   "why": "One-arm angled press.",
+   "differences": [
+    "Less stable",
+    "One side at a time",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@machine-shoulder-press.muscles.side_delts": 0.4,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.accessory": 7.5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.accessory.0": 8,
+  "rules.json:logger.rep_range_by_type.accessory.1": 12,
+  "rules.json:logger.target_rir_by_type.accessory": 3,
+  "rules.json:logger.warmup_ramp.accessory_max_sets": 2,
+  "rules.json:logger.warmup_ramp.accessory_min_load.default.kg": 40,
+  "rules.json:logger.warmup_ramp.accessory_min_load.default.lb": 95
+ },
+ "notes": [
+  "Shoulder press findings are EMG and 1RM only (see seated dumbbell press).",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

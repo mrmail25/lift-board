@@ -1,0 +1,295 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "front-squat",
+ "kind": "exercise",
+ "exercise_id": "front-squat",
+ "title": "Front Squat",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Barbell squat with the bar on the front of the shoulders: quads 1, glutes and adductors 0.5. More upright than a back squat, so more knee bend and more quads.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "squat_rack"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; rack with J-hooks (power rack, squat stands or bench uprights)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "quads_rf": 0.4,
+    "quads_vasti": 1
+   },
+   "why": "The quads straighten the knee; the upright torso means more knee bend. Vasti 1, rectus femoris 0.4.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The glutes extend the hip, less than in a back squat because the torso stays upright.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The adductor magnus helps extend the hip at depth.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "The upper back holds the elbows up so the bar stays on the shoulders.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "abs",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "The trunk braces hard to stay upright; below the counting floor (0.2).",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Bar in a rack at upper-chest height; safeties just below your bottom position.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Bar on the front delts, close to the throat; fingertips under the bar or arms crossed.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Elbows high, then walk it out.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep elbows up throughout",
+   "why": "Elbows up keeps the bar on the shoulders.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Sit straight down with an upright torso",
+   "why": "Upright torso keeps the bar over mid-foot.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Drive up through mid-foot",
+   "why": "Full depth with knees forward.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lead with the elbows out of the hole",
+   "why": "Stops the chest dropping and the bar rolling forward.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "Cross-arm grip or straps on the bar",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "For lifters who can't reach a clean grip; same squat.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "caveat": "Comfort choice."
+  },
+  {
+   "kind": "range",
+   "change": "Full depth",
+   "target_muscle_ids": [
+    "glutes",
+    "adductors"
+   ],
+   "effect": "Deep squats grew glutes and adductors more than half squats (back-squat study).",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "kubo2019"
+   ],
+   "caveat": "Measured with back squats; modeled for front squats."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "quads"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Dropping the elbows so the bar rolls forward.",
+   "fix": "Lighten the load until the elbows stay high.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Elbows dropping.",
+   "fix": "Drive them up.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Heels lifting.",
+   "fix": "Lifting shoes or small plates under the heels help some lifters.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Front squats are easier on the back because they're lighter.",
+   "reality": "They're more upright, so less hip bend; the bar is still on the spine, just in front.",
+   "evidence": "biomechanics"
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Ramp up before your first working set. For primary lifts the app suggests 50% x 8, 70% x 4 and 85% x 2 when the first working load is 60 kg or more, and 50% x 8 then 75% x 3 below that.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp",
+   "note": "High-load warm-ups improved strength performance in a systematic review; the percentages are coaching convention.",
+   "citations": [
+    "mccrary2015"
+   ]
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 6-10 rep range. Keep heavy sets a few reps short; dropping the bar forward is the safe bail if you have to.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "safeties",
+   "text": "Squat in a rack with the safeties set just below your bottom position.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "bias:glutes",
+   "goal_label": "More glutes",
+   "exercise_id": "back-squat",
+   "why": "Back squat: more glutes and more load.",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_spinal_load",
+   "goal_label": "Less spinal load",
+   "exercise_id": "hack-squat",
+   "why": "Machine squat with no bar on the spine.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "bulgarian-split-squat",
+   "why": "One leg at a time.",
+   "differences": [
+    "Less stable",
+    "One side at a time",
+    "Less spinal loading"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:quads_rf",
+   "goal_label": "More rectus femoris",
+   "exercise_id": "leg-extension",
+   "why": "Grew the rectus femoris where squats did not.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus",
+    "Better isolation"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "zabaletakorta2021"
+   ]
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 3,
+  "flags": [
+   "spinal_load"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@front-squat.heads.quads_rf": 0.4,
+  "exercises.json:@front-squat.heads.quads_vasti": 1,
+  "exercises.json:@front-squat.muscles.abs": 0.2,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.rep_range_by_type.primary.0": 6,
+  "rules.json:logger.rep_range_by_type.primary.1": 10,
+  "rules.json:logger.target_rir_by_type.primary": 3,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three_from_kg": 60
+ },
+ "notes": [
+  "Front vs back squat have not been compared for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

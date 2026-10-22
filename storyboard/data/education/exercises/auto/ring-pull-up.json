@@ -1,0 +1,216 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "ring-pull-up",
+ "kind": "exercise",
+ "exercise_id": "ring-pull-up",
+ "title": "Ring Pull-Up",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A pull-up on rings, where your grip turns freely from overhand to neutral. Most people find that easier on the elbows and shoulders than a fixed bar.",
+ "type": "accessory",
+ "equipment": "rings",
+ "equipment_needs": {
+  "items": [
+   "rings"
+  ],
+  "text": "Needs: gymnastic rings."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for lats (main mover): each working set adds 1 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for upper back (helper): each working set adds 0.6 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for biceps (helper): each working set adds 0.6 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.4,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.1,
+    "traps_mid_lower": 0.4
+   },
+   "why": "Library rating 0.4 for traps (helper): each working set adds 0.4 of a set to the weekly traps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.35,
+   "band": "minor",
+   "why": "Library rating 0.35 for forearms (minor): each working set adds 0.35 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for rear delts (minor): each working set adds 0.3 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hang from the rings with your arms straight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull your chest up toward the rings, letting your palms turn in.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower all the way to a dead hang.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the elbows down to your ribs",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Let the rings rotate",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to a full hang",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep the rings from swinging. Start each rep from a still hang.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Kipping to finish reps.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "assisted-pull-up",
+   "why": "Swap sheet: Lat width focus, More stable, Heavier loading potential.",
+   "differences": [
+    "Lat width focus",
+    "More stable",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "neutral-grip-lat-pulldown",
+   "why": "Swap sheet: More stable, Heavier loading potential, Steadier cable tension.",
+   "differences": [
+    "More stable",
+    "Heavier loading potential",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "selectorized-pulldown-machine",
+   "why": "Swap sheet: More stable, Heavier loading potential, Easier to learn.",
+   "differences": [
+    "More stable",
+    "Heavier loading potential",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "muscle-up",
+   "why": "Swap sheet: Less stretch emphasis, More stable, More technical.",
+   "differences": [
+    "Less stretch emphasis",
+    "More stable",
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 1,
+  "systemic_fatigue": 2,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": [
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

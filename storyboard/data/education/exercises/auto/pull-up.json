@@ -1,0 +1,209 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "pull-up",
+ "kind": "exercise",
+ "exercise_id": "pull-up",
+ "title": "Pull-Up",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A bodyweight pull-up with an overhand grip, the main lift for the lats.",
+ "type": "primary",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [
+   "pull_up_bar"
+  ],
+  "text": "Needs: pull-up bar."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for lats (main mover): each working set adds 1 of a set to the weekly lats total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "Library rating 0.6 for biceps (helper): each working set adds 0.6 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for upper back (helper): each working set adds 0.5 of a set to the weekly upper back total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for rear delts (minor): each working set adds 0.3 of a set to the weekly rear delts total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for forearms (minor): each working set adds 0.3 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Hang from the bar with your hands a little wider than your shoulders and your palms facing away.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull your shoulders down, then drive your elbows toward your hips.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull until your chin clears the bar.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower all the way to a full hang.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Pull the shoulders down first",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive the elbows toward your ribs",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Get your chin over the bar",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Use the full range. The dead hang at the bottom is the stretch that builds the lats.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Kipping or swinging to finish reps.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "chin-up",
+   "why": "Swap sheet: Less lat-width focus.",
+   "differences": [
+    "Less lat-width focus"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "neutral-grip-lat-pulldown",
+   "why": "Swap sheet: Less lat-width focus, More stable, Steadier cable tension.",
+   "differences": [
+    "Less lat-width focus",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "lat-pulldown",
+   "why": "Swap sheet: Less lat-width focus, More stable, Steadier cable tension.",
+   "differences": [
+    "Less lat-width focus",
+    "More stable",
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "easier_to_learn",
+   "goal_label": "Easier to learn",
+   "exercise_id": "selectorized-pulldown-machine",
+   "why": "Swap sheet: Less lat-width focus, More stable, Easier to learn.",
+   "differences": [
+    "Less lat-width focus",
+    "More stable",
+    "Easier to learn"
+   ],
+   "evidence": "modeled"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": [
+   "lat_width_bias",
+   "grip_demand"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

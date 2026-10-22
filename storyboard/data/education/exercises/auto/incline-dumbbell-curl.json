@@ -1,0 +1,189 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "incline-dumbbell-curl",
+ "kind": "exercise",
+ "exercise_id": "incline-dumbbell-curl",
+ "title": "Incline Dumbbell Curl",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A curl lying back on an incline bench so the biceps work from a long stretch.",
+ "type": "isolation",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell",
+   "adjustable_bench"
+  ],
+  "text": "Needs: dumbbells; adjustable (incline) bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "biceps",
+   "rating": 1,
+   "band": "main",
+   "why": "Library rating 1 for biceps (main mover): each working set adds 1 of a set to the weekly biceps total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "forearms",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Library rating 0.3 for forearms (minor): each working set adds 0.3 of a set to the weekly forearms total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bench at 45–60° and lie back with your arms hanging straight down.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Keep your upper arms still, pointing at the floor.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Curl the dumbbells up.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lower all the way until your arms are fully straight.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep upper arms behind your torso",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Curl without moving the elbows",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Lower to a full stretch",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Let your arms hang behind your body. That stretch is what makes this curl work.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Bringing the elbows forward as you curl.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds no ramp-up sets; make the first working set a touch lighter if you like.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 10-15 reps, stopping about 2 reps short of failure (RIR 2). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-curl",
+   "why": "Swap sheet: Less stretch emphasis, Less biceps long-head stretch.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less biceps long-head stretch"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "peak_contraction",
+   "goal_label": "Peak-contraction focus",
+   "exercise_id": "concentration-curl",
+   "why": "Swap sheet: Less stretch emphasis, Less biceps long-head stretch, Peak-contraction focus.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less biceps long-head stretch",
+    "Peak-contraction focus"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "cable-curl",
+   "why": "Swap sheet: Less stretch emphasis, Less biceps long-head stretch, Better isolation.",
+   "differences": [
+    "Less stretch emphasis",
+    "Less biceps long-head stretch",
+    "Better isolation"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "machine-preacher-curl",
+   "why": "Swap sheet: Less biceps long-head stretch, Better isolation, More stable.",
+   "differences": [
+    "Less biceps long-head stretch",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": [
+   "biceps_long_head_bias"
+  ]
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

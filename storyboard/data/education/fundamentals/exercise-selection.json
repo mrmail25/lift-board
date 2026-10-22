@@ -1,0 +1,358 @@
+{
+  "schema": "lift-board.education.fundamental/1",
+  "id": "exercise-selection",
+  "kind": "fundamental",
+  "title": "Choosing exercises: stretch, stability, fatigue, loading and skill",
+  "status": "final",
+  "updated": "2026-10-21",
+  "summary": "Most well-chosen exercises build muscle when sets are hard and volume is enough. Exercise choice decides which muscles and regions get the work, how much fatigue each set costs, how easily load can rise, and how much skill it takes. The swap sheet describes these trade-offs with a fixed set of tags.",
+  "app_link": {
+    "features": [
+      "Swap sheet difference lines (rules.json swap_tags)",
+      "Exercise library ratings and swap attributes (exercises.json)",
+      "Missing-stretch program check and stretch share (rules.json stretch_biased, targets.json analytics)",
+      "Recovery cost (targets.json recovery.fatigue_field)"
+    ],
+    "explains": "What each swap-sheet line means, how strong the evidence behind it is, and how to trade stability, fatigue, loading, stretch and skill against each other."
+  },
+  "sections": [
+    {
+      "id": "how-swaps-work",
+      "heading": "How the swap sheet describes differences",
+      "body": [
+        "Every library exercise carries swap attributes. When you look at an alternative, the app compares its attributes with the current exercise's and shows the most important differences, at most a few lines, in a fixed order.",
+        "The lines describe how an exercise usually loads muscles, not what any one person will feel or grow. Each tag has an evidence level: supported, biomechanics or modeled."
+      ],
+      "points": [
+        {
+          "text": "Lines are sorted by tag priority, muscle-specific tags first, and capped at a small number per swap.",
+          "evidence": "modeled",
+          "app_key": "rules.json:swap_tags.compare.max_lines"
+        },
+        {
+          "text": "Typical differences, not guarantees.",
+          "evidence": "modeled",
+          "app_key": "rules.json:swap_tags.compare.disclaimer_short"
+        },
+        {
+          "text": "Which muscles an exercise credits, and how much, comes from its library ratings, shown in the swap sheet's muscle chips, not from the tags.",
+          "evidence": "modeled"
+        }
+      ]
+    },
+    {
+      "id": "stretch",
+      "heading": "Stretch and range of motion",
+      "body": [
+        "Where the hardest part of the rep sits matters. Several training studies found more growth when the muscle was loaded hard at long length (stretched) than at short length (squeezed). The edge is real in those comparisons but modest and uncertain when pooled, and lengthened partials matched full reps in trained people.",
+        "Use stretch emphasis as a tie-breaker between otherwise similar exercises."
+      ],
+      "points": [
+        {
+          "text": "Stretch emphasis: seated leg curls beat lying curls for the hamstrings, overhead extensions beat pushdowns for the triceps, long-length partials beat short-length partials for quads and calves, and straight-arm preacher curls beat the bent-arm range for the elbow flexors.",
+          "evidence": "supported",
+          "citations": [
+            "maeo2021",
+            "maeo2023",
+            "pedrosa2022",
+            "kassiano2023",
+            "sato2021"
+          ],
+          "swap_tags": [
+            "stretch_emphasis"
+          ]
+        },
+        {
+          "text": "Pooled across studies, partial versus full range made a small, uncertain difference, with a possible edge for partials at long lengths.",
+          "evidence": "supported",
+          "citations": [
+            "wolf2023",
+            "wolf2025"
+          ],
+          "swap_tags": [
+            "stretch_emphasis"
+          ]
+        },
+        {
+          "text": "Standing (knee straight) calf raises grew the gastrocnemius far more than seated raises, because the knee position keeps that muscle long.",
+          "evidence": "supported",
+          "citations": [
+            "kinoshita2023"
+          ],
+          "swap_tags": [
+            "stretch_emphasis"
+          ]
+        },
+        {
+          "text": "Triceps long-head bias: with the arm overhead, overhead extensions grew the long head more than pushdowns did, and the other heads too.",
+          "evidence": "supported",
+          "citations": [
+            "maeo2023"
+          ],
+          "swap_tags": [
+            "triceps_long_head_bias"
+          ]
+        },
+        {
+          "text": "Biceps long-head stretch: with the arm behind the body, the long head is lengthened at the bottom. The mechanics are clear; a growth benefit has not been tested directly.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "biceps_long_head_bias"
+          ]
+        },
+        {
+          "text": "Peak-contraction focus: exercises hardest at the squeeze are popular for feel. A cable preacher curl (harder near the top) and a barbell preacher curl (harder in the stretch) grew the biceps similarly, so no growth advantage is shown either way.",
+          "evidence": "modeled",
+          "citations": [
+            "nunes2020"
+          ],
+          "swap_tags": [
+            "peak_contraction_focus"
+          ]
+        },
+        {
+          "text": "Steadier cable tension: a cable keeps resistance on through more of the range than gravity-loaded free weights.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "constant_tension"
+          ]
+        },
+        {
+          "text": "The app's missing-stretch note and stretch share flag weeks with little stretch-biased work for a muscle. The thresholds are modeling choices.",
+          "evidence": "modeled",
+          "app_key": "targets.json:analytics.stretch_share_flag_below"
+        }
+      ]
+    },
+    {
+      "id": "regional",
+      "heading": "Regions and biases",
+      "body": [
+        "Within a muscle group, some exercises grow some regions more than others. A few of these differences are measured; most region and bias tags are mechanics or coach consensus.",
+        "When a region matters to you, pick at least one exercise whose mechanics target it and let the rest of your volume come from whatever trains the group well."
+      ],
+      "points": [
+        {
+          "text": "Leg extensions grew all measured regions of the rectus femoris, while squats grew it little.",
+          "evidence": "supported",
+          "citations": [
+            "zabaletakorta2021",
+            "kubo2019"
+          ]
+        },
+        {
+          "text": "Incline pressing grew the upper chest site most in untrained men; the other chest sites did not differ between flat and incline.",
+          "evidence": "supported",
+          "citations": [
+            "chaves2020"
+          ]
+        },
+        {
+          "text": "Deep squats grew the glutes and adductors more than half squats.",
+          "evidence": "supported",
+          "citations": [
+            "kubo2019"
+          ]
+        },
+        {
+          "text": "Lat width focus: wide overhand pulls with the elbows out are used for the upper lats and teres. The lat is one muscle, so this is a tendency, not a separate target.",
+          "evidence": "modeled",
+          "swap_tags": [
+            "lat_width_bias"
+          ]
+        },
+        {
+          "text": "Upper-back thickness focus: horizontal rows that hit the mid-back as much as or more than the lats.",
+          "evidence": "modeled",
+          "swap_tags": [
+            "upper_back_thickness_bias"
+          ]
+        },
+        {
+          "text": "More upper-trap work: heavy shrugging, upward rotation or heavy loads held at the sides make the upper traps work hard.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "upper_trap_involvement"
+          ]
+        },
+        {
+          "text": "Higher EMG (muscle electrical activity) during an exercise did not predict more growth: hip thrusts showed more glute EMG than squats but grew the glutes about the same. EMG-only findings are treated as biomechanics, not growth evidence.",
+          "evidence": "supported",
+          "citations": [
+            "plotkin2023"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stability",
+      "heading": "Stability, isolation and one side at a time",
+      "body": [
+        "Stability is how much the equipment balances the load for you. Machines, cables and the Smith machine do the most; free weights less; rings, suspension trainers and single-leg free-weight work the least.",
+        "More stable exercises make it easier to push the target muscle close to failure safely and to repeat technique. Less stable ones train balance and coordination and may carry over better to free movement."
+      ],
+      "points": [
+        {
+          "text": "Stability: machines, cables and Smith rate highest, free weights in the middle, rings, suspension and single-leg free weights lowest.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "stability"
+          ]
+        },
+        {
+          "text": "Free-weight and machine training gave similar muscle growth in a meta-analysis.",
+          "evidence": "supported",
+          "citations": [
+            "haugen2023"
+          ],
+          "swap_tags": [
+            "stability"
+          ]
+        },
+        {
+          "text": "Isolation: supported single-joint exercises keep the work on one target muscle; compounds spread it across several.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "muscle_isolation"
+          ]
+        },
+        {
+          "text": "One side at a time: unilateral work evens out sides but takes more time per set.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "unilateral"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fatigue",
+      "heading": "Fatigue cost",
+      "body": [
+        "Every hard set costs recovery, but not equally. Heavy compound lifts that load the spine and need hard bracing cost more than a cable or machine isolation set for the same muscle credit.",
+        "When recovery is the limit, swap toward exercises with similar credit and lower fatigue cost rather than cutting sets."
+      ],
+      "points": [
+        {
+          "text": "Systemic fatigue: whole-body cost per hard set (breathing, bracing, recovery). This is coach consensus tied to the library's fatigue field.",
+          "evidence": "modeled",
+          "swap_tags": [
+            "systemic_fatigue"
+          ],
+          "app_key": "targets.json:recovery.fatigue_field"
+        },
+        {
+          "text": "Loads the spine: bar on the back or overhead, heavy bent-over or hinge positions and heavy carries. The program checks also count heavy squat and deadlift sets per day and per week.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "spinal_load"
+          ],
+          "app_key": "rules.json:rules.#spinal_load.week_warn_above"
+        },
+        {
+          "text": "More grip demand: grip can limit load or reps on heavy pulls and carries before the target muscle is worked hard.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "grip_demand"
+          ]
+        },
+        {
+          "text": "The recovery cost is a rough estimate for comparing weeks, not a measurement.",
+          "evidence": "modeled",
+          "app_key": "targets.json:recovery.note"
+        }
+      ]
+    },
+    {
+      "id": "loading",
+      "heading": "Loading potential",
+      "body": [
+        "Loading potential is how much absolute load you can use and keep adding over time. Big compound lifts score highest; light isolation and bodyweight-only moves lowest.",
+        "For growth, load is a means to hard sets, not the goal. Heavy lifts are efficient for strength and for training several muscles at once."
+      ],
+      "points": [
+        {
+          "text": "Loading potential: big compound lifts rate highest, light isolation and bodyweight-only exercises lowest.",
+          "evidence": "biomechanics",
+          "swap_tags": [
+            "loading_potential"
+          ]
+        },
+        {
+          "text": "Light and heavy loads grew muscle about equally when sets were taken to failure; heavy loads gave more strength.",
+          "evidence": "supported",
+          "citations": [
+            "schoenfeld2017load"
+          ],
+          "swap_tags": [
+            "loading_potential"
+          ]
+        },
+        {
+          "text": "Exercises with little loading potential are still useful for growth, as long as you can add reps or small amounts of load over time.",
+          "evidence": "modeled",
+          "swap_tags": [
+            "loading_potential"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill",
+      "heading": "Skill demand",
+      "body": [
+        "Some lifts need more practice before they can be trained hard safely: barbell squats, Olympic-style kettlebell work, rings and single-leg free-weight moves.",
+        "A lower-skill swap lets a newer lifter train the same muscle hard from day one; the skilled lift can be practised alongside it."
+      ],
+      "points": [
+        {
+          "text": "Skill demand: how much technique or practice the lift needs before it can be trained hard safely.",
+          "evidence": "modeled",
+          "swap_tags": [
+            "skill_demand"
+          ]
+        },
+        {
+          "text": "If an exercise feels awkward or unstable, a more stable, lower-skill swap usually lets the target muscle reach a hard set sooner.",
+          "evidence": "modeled",
+          "swap_tags": [
+            "skill_demand",
+            "stability"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "putting-together",
+      "heading": "Putting it together",
+      "body": [
+        "Start with exercises you can do with good technique and progress over time. Cover each muscle's main actions, include at least one stretch-biased choice where the library has one, and use the swap sheet to trade fatigue, skill and equipment against each other.",
+        "No single exercise is required, and the best choice is the one you will train hard and consistently."
+      ],
+      "points": [
+        {
+          "text": "Within broad limits, growth depended more on hard sets and volume than on picking one perfect exercise.",
+          "evidence": "modeled",
+          "citations": [
+            "haugen2023",
+            "schoenfeld2017load"
+          ]
+        },
+        {
+          "text": "Exercise choice and tags carry no medical claims; choose variations you can train comfortably.",
+          "evidence": "modeled",
+          "app_key": "rules.json:swap_tags.compare.disclaimer"
+        }
+      ]
+    }
+  ],
+  "app_values": {
+    "rules.json:swap_tags.compare.max_lines": 3,
+    "rules.json:swap_tags.compare.disclaimer_short": "Typical differences, not guarantees.",
+    "targets.json:analytics.stretch_share_flag_below": 0.25
+  },
+  "notes": [
+    "Tag meanings and evidence levels follow rules.json swap_tags; a point can be supported when it cites a study even if the tag itself is mechanics or a model.",
+    "All sixteen swap tags are explained here; check_education enforces that."
+  ]
+}

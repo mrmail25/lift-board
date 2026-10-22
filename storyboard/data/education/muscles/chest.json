@@ -1,0 +1,410 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "chest",
+  "kind": "muscle",
+  "title": "Chest",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "chest_upper",
+    "chest_lower"
+  ],
+  "summary": "The pectoralis major: a fan-shaped muscle from the collarbone, breastbone and ribs to the front of the upper arm. It brings the arm across and in front of the body. Presses and flyes both train it; incline work shifts more of the load to the upper fibres.",
+  "what_it_is": {
+    "overview": "The app splits the chest into two map regions: upper (the clavicular head) and mid/lower (the sternal and lower fibres). Weekly targets count the whole chest. The pec minor underneath is not tracked, and the serratus is shown with the obliques.",
+    "heads": [
+      {
+        "id": "clavicular",
+        "name": "Upper chest (clavicular head)",
+        "origin": "The front of the inner half of the collarbone.",
+        "insertion": "The outer lip of the groove at the front of the upper-arm bone; the tendon twists so these fibres attach lowest.",
+        "fiber_direction": "Run down and out from the collarbone to the arm.",
+        "crosses_joints": [
+          "shoulder"
+        ],
+        "tracked_region": "chest_upper",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "sternocostal",
+        "name": "Mid chest (sternal head)",
+        "origin": "The front of the breastbone and the cartilage of the upper six ribs.",
+        "insertion": "Same tendon at the front of the upper-arm bone, above the clavicular fibres.",
+        "fiber_direction": "Close to horizontal, running straight out to the arm.",
+        "crosses_joints": [
+          "shoulder"
+        ],
+        "tracked_region": "chest_lower",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "abdominal",
+        "name": "Lower chest (abdominal part)",
+        "origin": "The sheath of the upper abdominal wall below the ribs.",
+        "insertion": "Highest part of the same twisted tendon.",
+        "fiber_direction": "Run up and out toward the armpit, forming the lower edge of the chest.",
+        "crosses_joints": [
+          "shoulder"
+        ],
+        "tracked_region": "chest_lower",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "clavicular",
+        "sternocostal",
+        "abdominal"
+      ],
+      "joint": "shoulder",
+      "action": "Horizontal adduction (bringing the arm across the front of the body).",
+      "detail": "The main job in flyes and in the second half of every press.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "clavicular",
+        "sternocostal",
+        "abdominal"
+      ],
+      "joint": "shoulder",
+      "action": "Internal rotation of the upper arm.",
+      "detail": "A secondary action; minor in training.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "clavicular"
+      ],
+      "joint": "shoulder",
+      "action": "Shoulder flexion (raising the arm forward and up).",
+      "detail": "Why incline presses and low-to-high flyes, which lift the arm upward, lean on the upper fibres.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "sternocostal",
+        "abdominal"
+      ],
+      "joint": "shoulder",
+      "action": "Pull the arm down from overhead or from in front (extension and adduction).",
+      "detail": "Why dips, decline presses and high-to-low flyes, which press or pull the arm downward, lean on the lower fibres; also a helper in pullovers.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Front delts",
+        "role": "Shoulder flexion and pressing; rated 0.5 on most presses.",
+        "evidence": "biomechanics",
+        "muscle_id": "front_delts"
+      },
+      {
+        "name": "Triceps",
+        "role": "Straighten the elbow in every press.",
+        "evidence": "biomechanics",
+        "muscle_id": "triceps"
+      },
+      {
+        "name": "Lats",
+        "role": "Help the lower fibres pull the arm down from overhead in pullovers.",
+        "evidence": "biomechanics",
+        "muscle_id": "lats"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Rear delts",
+        "role": "Pull the arm back and out, the opposite of a fly.",
+        "evidence": "biomechanics",
+        "muscle_id": "rear_delts"
+      },
+      {
+        "name": "Rhomboids and mid traps",
+        "role": "Pull the shoulder blades back while the chest pulls the arms forward.",
+        "evidence": "biomechanics",
+        "muscle_id": "upper_back"
+      },
+      {
+        "name": "Lats (for the upper fibres)",
+        "role": "Pull the arm down, opposing the clavicular head's forward raise.",
+        "evidence": "biomechanics",
+        "muscle_id": "lats"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In push-ups and dips the chest moves the load while the abs and trunk hold the body rigid; it is the mover, not a stabilizer.",
+        "evidence": "biomechanics"
+      },
+      {
+        "text": "Close-grip and overhead pressing still work the chest as a helper: close-grip bench press is rated 0.6 and the two-arm landmine press 0.6.",
+        "evidence": "modeled"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "weighted-dip",
+        "rating": 0.8,
+        "role": "main",
+        "note": "Rated 0.8; mostly lower fibres (heads 0.32 upper, 0.8 lower)."
+      },
+      {
+        "exercise_id": "close-grip-bench-press",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "landmine-press-two-arm",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "dumbbell-pullover",
+        "rating": 0.5,
+        "role": "helper",
+        "note": "The lower fibres help pull the arm down from overhead."
+      },
+      {
+        "exercise_id": "muscle-up",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "pike-push-up",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "jm-press",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "incline-cable-pullover",
+        "rating": 0.2,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 4 sets of barbell bench press (1.0), 3 sets of weighted dip (0.8) and 3 sets of close-grip bench press (0.6) give 4 + 2.4 + 1.8 = 8.2, which the panel shows as 8 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "clavicular",
+      "goal": "Upper-chest emphasis",
+      "how": {
+        "joint_angle": "Bench inclined about 30 to 45 degrees, or a fly path from low to high.",
+        "stretch_position": "Elbows and hands lowered to chest level at the bottom.",
+        "grip": "A grip slightly narrower than flat benching is common.",
+        "stance": "Feet planted, shoulder blades set."
+      },
+      "swap_tags": [],
+      "example_exercise_ids": [
+        "incline-dumbbell-press",
+        "incline-barbell-bench-press",
+        "cable-crossover-low-to-high"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "chaves2020"
+      ],
+      "caveat": "One study in untrained men, measured at three sites: only the upper site grew more with incline pressing. Treat it as a reason to include incline work, not to drop flat pressing."
+    },
+    {
+      "target": "sternocostal",
+      "goal": "Mid and lower chest",
+      "how": {
+        "joint_angle": "Flat or slightly declined press, dips with a slight forward lean, or a fly path from high to low.",
+        "stretch_position": "Bottom of a dip or press with the elbows behind the torso.",
+        "grip": "Shoulder-width or a little wider.",
+        "stance": "Torso leaning forward on dips."
+      },
+      "swap_tags": [],
+      "example_exercise_ids": [
+        "barbell-bench-press",
+        "weighted-dip",
+        "cable-crossover-high-to-low"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Follows from fibre direction and arm path; no study has shown lower-chest growth from these choices specifically."
+    },
+    {
+      "target": "all",
+      "goal": "Load the chest in its stretch",
+      "how": {
+        "joint_angle": "Arms opening wide with a slight elbow bend (flyes), or a deep press with the hands lower than the chest.",
+        "stretch_position": "Upper arms behind the line of the torso at the bottom.",
+        "grip": "Dumbbells or handles let the hands drop lower than a bar.",
+        "stance": "Flat or incline bench; deficit push-ups raise the hands."
+      },
+      "swap_tags": [
+        "stretch_emphasis"
+      ],
+      "example_exercise_ids": [
+        "dumbbell-fly",
+        "dumbbell-bench-press",
+        "deficit-push-up",
+        "cable-fly"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "That these positions load the chest at long length is mechanics. No chest-specific growth study is on file; see the hypertrophy fundamentals page for the general stretch evidence."
+    },
+    {
+      "target": "all",
+      "goal": "Machines or free weights",
+      "how": {
+        "joint_angle": "Same pressing path.",
+        "grip": "Machine handles or dumbbells.",
+        "stance": "Seated machine or bench."
+      },
+      "swap_tags": [
+        "stability",
+        "loading_potential"
+      ],
+      "example_exercise_ids": [
+        "machine-chest-press",
+        "barbell-bench-press"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "haugen2023"
+      ],
+      "caveat": "Machines and free weights grew muscle about equally across studies. Choose by comfort, progression and what lets you push hard."
+    },
+    {
+      "target": "all",
+      "goal": "Peak-contraction flyes",
+      "how": {
+        "joint_angle": "Pec deck or cable fly that stays hard with the hands together.",
+        "stance": "Seated or standing."
+      },
+      "swap_tags": [
+        "peak_contraction_focus",
+        "constant_tension"
+      ],
+      "example_exercise_ids": [
+        "pec-deck",
+        "cable-fly"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "Popular for the squeeze; no growth advantage shown."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "barbell-bench-press",
+      "why": "The most loadable chest press and easy to progress; chest 1.0 with front delts and triceps 0.5.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "incline-dumbbell-press",
+      "why": "Upper-chest emphasis with a deep dumbbell stretch; the only chest pick here with a direct growth study behind the incline.",
+      "evidence": "supported",
+      "citations": [
+        "chaves2020"
+      ]
+    },
+    {
+      "exercise_id": "dumbbell-bench-press",
+      "why": "Hands can travel lower than a bar, so the chest works through a longer range.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "machine-chest-press",
+      "why": "Guided path, easy to take close to failure safely; machines grow muscle about as well as free weights.",
+      "evidence": "supported",
+      "citations": [
+        "haugen2023"
+      ]
+    },
+    {
+      "exercise_id": "weighted-dip",
+      "why": "Heavy lower-chest work with a deep stretch; also triceps 0.8.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "cable-fly",
+      "why": "Isolation with steady cable tension and a long stretch; no triceps limit.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "deficit-push-up",
+      "why": "Bodyweight press with extra depth; scales with added load or tempo.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Bouncing the bar off the chest, which skips the hardest, most stretched part of the rep.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Shortening the range on dumbbell presses and flyes so the chest is never loaded near its stretch.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Letting the shoulders roll forward at the top, so the front delts take over.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Flaring the elbows straight out to the sides on every press; most people press best with the elbows somewhat tucked.",
+      "evidence": "modeled"
+    },
+    {
+      "text": "Chasing the squeeze with very light flyes instead of loading the stretch.",
+      "evidence": "modeled"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Shoulder blades back and down, chest up.",
+      "why": "Gives a stable base and keeps the work on the chest.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Touch, then press.",
+      "why": "Uses the bottom of the range without bouncing.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Elbows about 45 to 70 degrees from your sides.",
+      "why": "A comfortable pressing path for most people.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Open wide on flyes, slight bend in the elbows.",
+      "why": "Loads the stretch without turning it into a press.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Lean forward on dips.",
+      "why": "Shifts the work from triceps to chest.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.chest.min": 10,
+    "targets.json:targets.chest.max": 20,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@weighted-dip.heads.chest_upper": 0.32,
+    "exercises.json:@weighted-dip.heads.chest_lower": 0.8,
+    "exercises.json:@barbell-bench-press.muscles.front_delts": 0.5,
+    "exercises.json:@barbell-bench-press.muscles.triceps": 0.5,
+    "exercises.json:@weighted-dip.muscles.triceps": 0.8
+  },
+  "notes": [
+    "Weekly target in the app: 10 to 20 chest sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "The upper/lower split on the map follows fibre direction plus one training study; any regional difference is modest.",
+    "Chest-specific stretch and fly-vs-press growth comparisons are not on file, so those notes are biomechanics or modeled.",
+    "No medical claims; choose presses you can train through a full range without pain."
+  ]
+}

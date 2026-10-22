@@ -1,0 +1,240 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "skull-crusher",
+ "kind": "exercise",
+ "exercise_id": "skull-crusher",
+ "title": "Skull Crusher",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Lying barbell or EZ-bar triceps extension: triceps 1, with the long head working at a long length (0.9).",
+ "type": "isolation",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "ez_bar|barbell",
+   "plates",
+   "flat_bench"
+  ],
+  "text": "Needs: EZ curl bar or barbell (Olympic bar); weight plates; flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "triceps",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "triceps_long": 0.9,
+    "triceps_short": 1
+   },
+   "why": "All three heads straighten the elbow. With the arm angled back over the head, the long head is lengthened, so it rates 0.9.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Lie on a flat bench with an EZ bar over your chest.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Angle the arms slightly back toward your head.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Narrow grip.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep upper arms angled slightly back",
+   "why": "Lowering to the forehead or behind the head.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Bend the elbows to lower the bar behind your head",
+   "why": "Upper arms fixed.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Extend back to the start",
+   "why": "Full lockout.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lower behind the head for more stretch",
+   "why": "More shoulder flexion lengthens the long head.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "angle",
+   "change": "Arms angled further back",
+   "target_muscle_ids": [
+    "triceps"
+   ],
+   "effect": "More long-head stretch.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Overhead extensions do this more."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "triceps"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Letting the elbows flare wide apart.",
+   "fix": "Lighten until the upper arms stay still.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Elbows flaring wide.",
+   "fix": "Keep them about shoulder width.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Turning it into a press.",
+   "fix": "Only the elbows move.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Stop a rep or two short; a missed rep is over your head.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "safeties",
+   "text": "Lower under control, and have a spotter or use dumbbells if pushing near failure.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "bias:triceps_long",
+   "goal_label": "More triceps long head",
+   "exercise_id": "overhead-cable-triceps-extension",
+   "why": "Overhead: grew the long head more than pushdowns.",
+   "differences": [
+    "Triceps long-head bias",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2023"
+   ]
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "triceps-pushdown",
+   "why": "Cable pushdown: lower stretch, easy to push hard.",
+   "differences": [
+    "Less stretch emphasis",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-kickback",
+   "why": "Dumbbell triceps.",
+   "differences": [
+    "Less stretch emphasis",
+    "Peak-contraction focus"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "weighted-dip",
+   "why": "Bodyweight pressing with lots of triceps.",
+   "differences": [
+    "Less isolation",
+    "More systemic fatigue",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@skull-crusher.heads.triceps_long": 0.9,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Skull crushers have not been compared with other extensions for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

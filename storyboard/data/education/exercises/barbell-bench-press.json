@@ -1,0 +1,522 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "barbell-bench-press",
+ "kind": "exercise",
+ "exercise_id": "barbell-bench-press",
+ "title": "Barbell Bench Press",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "The app's main flat press. The chest is the main mover, with the front delts and triceps helping. It has the heaviest loading potential of the chest presses, which also makes it one of the most fatiguing.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "squat_rack",
+   "flat_bench"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; rack with J-hooks (power rack, squat stands or bench uprights); flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "chest_upper": 0.7,
+    "chest_lower": 1
+   },
+   "why": "Pressing the bar up brings the upper arms forward and in across the body (horizontal shoulder adduction with some flexion). The pec major is the largest muscle doing that, and a flat press lines up best with its mid and lower (sternal) fibres, so the library rates mid/lower chest 1 and upper (clavicular) chest 0.7. The bottom of the rep, bar on the chest, is where the pecs are longest.",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "chest_upper",
+     "rating": 0.7,
+     "text": "The upper chest helps less on a flat bench; it works more as the arm moves toward overhead. In one 8-week study in untrained men, incline pressing grew the upper-chest site more than flat pressing, while strength gains were similar.",
+     "evidence": "supported",
+     "citations": [
+      "chaves2020"
+     ]
+    }
+   ]
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The front delts flex the shoulder alongside the upper chest. On a flat bench the arm moves through only part of that range, so they help rather than lead. EMG was a little higher with a medium grip than a narrow one; that is activity, not growth, and does not change the rating.",
+   "evidence": "biomechanics",
+   "citations": [
+    "saeterbakken2021"
+   ]
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.5,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.25,
+    "triceps_short": 0.5
+   },
+   "why": "The triceps straighten the elbow, mostly in the top half of the press. The lateral and medial heads (short heads, 0.5) do only that. The long head also crosses the shoulder, where it pulls the arm down and back, the opposite of pressing, so it is rated lower (0.25, minor). Narrower grips raised triceps EMG in two studies.",
+   "evidence": "biomechanics",
+   "citations": [
+    "lehman2005",
+    "saeterbakken2021"
+   ]
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0,
+   "band": "not_counted",
+   "why": "The mid-back holds the shoulder blades pulled back so the press has a stable base. It works hard but barely changes length, so the library credits it 0.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lats",
+   "rating": 0,
+   "band": "not_counted",
+   "why": "The lats help steady the bar on the way down and keep the elbows on track. That is stabilising work without a full range, so it is not counted.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the safety arms (or pins) just below your chest height at the bottom of the rep, or have a spotter who knows the lift.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Lie with your eyes under the bar and your feet flat on the floor, a little behind your knees.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Pull your shoulder blades back and down and keep them there. A natural arch in the upper back is fine; your head, upper back and butt stay on the bench.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Grip a little wider than your shoulders, with your thumbs wrapped around the bar. At the bottom your forearms should be close to vertical seen from the front.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Lift the bar out with straight arms, bring it over your shoulders, breathe in and brace before the first rep.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower the bar to your mid-chest",
+   "why": "The same touch point every rep keeps your forearms near vertical and your depth honest.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Keep elbows about 45 degrees from your torso",
+   "why": "Between a tight tuck (more triceps) and a full flare. The library range is 45-70 degrees; find the angle that feels strong and comfortable.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Press up and slightly back over the shoulders",
+   "why": "The bar starts over the mid-chest and finishes over the shoulder joint, where the lever arm is shortest at lockout.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep your shoulder blades pinned and your butt on the bench the whole time.",
+   "why": "A fixed base keeps the range and the bar path the same from set to set, so your logged loads stay comparable.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Wrists stacked over elbows",
+   "why": "A straight wrist puts the bar over the forearm bones, so force goes straight into the bar instead of bending the wrist back.",
+   "evidence": "biomechanics"
+  },
+  {
+   "cue": "Lower in about 2 seconds, touch, then press",
+   "why": "Control and a touch remove the bounce. A wide range of rep speeds (0.5-8 s per rep) gave similar growth in a meta-analysis, so this is about control, not a magic tempo.",
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ]
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "Wider grip (index fingers at or just inside the ring marks)",
+   "target_muscle_ids": [
+    "chest"
+   ],
+   "effect": "Slightly less triceps work and a shorter press. In EMG studies wider grips lowered triceps activity and narrow grips lowered sternal chest activity.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "citations": [
+    "lehman2005",
+    "saeterbakken2021"
+   ],
+   "caveat": "EMG differences were small and are not growth evidence. A very wide grip shortens the range, so it does not stretch the chest more."
+  },
+  {
+   "kind": "grip",
+   "change": "Narrower grip (about shoulder width)",
+   "target_muscle_ids": [
+    "triceps",
+    "front_delts"
+   ],
+   "effect": "More elbow bend, so more triceps work; most people lift a bit less with a narrow grip.",
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "close-grip-bench-press"
+   ],
+   "evidence": "biomechanics",
+   "citations": [
+    "lehman2005",
+    "saeterbakken2021"
+   ],
+   "caveat": "Close-Grip Bench Press is the library's triceps-first version: triceps 1, chest 0.6."
+  },
+  {
+   "kind": "angle",
+   "change": "Incline the bench to about 30-45 degrees",
+   "target_muscle_ids": [
+    "chest",
+    "front_delts"
+   ],
+   "effect": "Shifts work toward the upper chest (and a little more front delt).",
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "incline-barbell-bench-press"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "chaves2020"
+   ],
+   "caveat": "One 8-week study in untrained men, one measurement site. In the library the incline barbell press rates upper chest 1 and front delts 0.6."
+  },
+  {
+   "kind": "range",
+   "change": "Full range: touch the chest every rep",
+   "target_muscle_ids": [
+    "chest"
+   ],
+   "effect": "Keeps the hardest part of the rep at the stretch. Full-range bench built more strength than 2/3 or 1/3 range in trained men.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [
+    "dumbbell-bench-press"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "martinezcava2022",
+    "wolf2023"
+   ],
+   "caveat": "That study measured strength, not muscle size; for growth, partial vs full range made a small and uncertain difference. For a deeper stretch than a bar allows, dumbbells read 'More stretch emphasis' on the swap sheet."
+  },
+  {
+   "kind": "tempo",
+   "change": "Pause about 1 second on the chest",
+   "target_muscle_ids": [
+    "chest",
+    "triceps"
+   ],
+   "effect": "Removes the bounce, so the muscles start each press from the stretch without help. Usually costs some load.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth, so the pause is a control tool, not a growth trick."
+  },
+  {
+   "kind": "angle",
+   "change": "Elbow angle: tuck closer to 45 degrees or open toward 70",
+   "target_muscle_ids": [
+    "chest",
+    "triceps"
+   ],
+   "effect": "Coaches reason that a tighter tuck shifts a little work to the triceps and front delts, and a wider angle to the chest.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "caveat": "Stay inside the library's 45-70 degree range; not tested for growth."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Bouncing the bar off your chest instead of touching and pressing.",
+   "fix": "Lower under control, touch, then press. Take a little weight off if you can't stop the bounce.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Lifting the butt off the bench to finish a hard rep.",
+   "fix": "Push through the floor, but keep your hips down. A rep that needs that is past your target RIR.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Letting the shoulder blades slide forward during the set.",
+   "fix": "Reset them before each set and think of bending the bar to keep your upper back tight.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Wrists bent back under the bar.",
+   "fix": "Set the bar low in your palm, over the forearm bones.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Touch point drifting from rep to rep, or the range shrinking as the load goes up.",
+   "fix": "Same touch point and full range every rep, so the logged load means the same thing each week.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Flaring the elbows straight out to 90 degrees.",
+   "fix": "Keep them about 45-70 degrees from your torso.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "A wide grip builds the outer chest and a narrow grip the inner chest.",
+   "reality": "No growth study shows inner/outer chest growth from grip width. EMG shows grip shifts work a little between chest and triceps, not between inner and outer chest.",
+   "evidence": "biomechanics",
+   "citations": [
+    "lehman2005",
+    "saeterbakken2021"
+   ]
+  },
+  {
+   "myth": "Flat bench doesn't train the upper chest.",
+   "reality": "The upper chest still helps (rated 0.7). Incline pressing grew it more in one study, which is why the app rates incline presses higher for it.",
+   "evidence": "supported",
+   "citations": [
+    "chaves2020"
+   ]
+  },
+  {
+   "myth": "You have to go to failure on every set to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain. The app aims for about 3 reps in reserve on bench.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  },
+  {
+   "myth": "Only heavy sets build muscle.",
+   "reality": "Light and heavy loads gave similar growth when sets were taken close to failure. Heavy sets build more strength, which matters if a bigger bench is your goal.",
+   "evidence": "supported",
+   "citations": [
+    "schoenfeld2017load"
+   ]
+  },
+  {
+   "myth": "A big arch is always cheating.",
+   "reality": "An arch shortens the range. In powerlifting that is the point. For muscle growth, coaches usually prefer a moderate arch and a full range so the chest works through more of the stretch.",
+   "evidence": "modeled"
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Ramp up before your first working set. The app does this for primary lifts: from a first working load of 60 kg or more it suggests 50% x 8, 70% x 4 and 85% x 2 (below that, 50% x 8 and 75% x 3). For 100 kg that is 50, 70 and 85 kg.",
+   "evidence": "modeled",
+   "citations": [
+    "mccrary2015"
+   ],
+   "app_key": "rules.json:logger.warmup_ramp",
+   "note": "High-load warm-ups improved strength performance in a systematic review; the percentages are coaching convention."
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add weight in small steps. The app suggests a heavier bar only when the jump is 5% or less for a primary lift; otherwise it adds a rep first. With 2.5 kg (5 lb) steps that is any bar from 50 kg (100 lb) up.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Leave about 3 reps in reserve on working sets in the 6-10 rep range. End the set when the bar slows a lot or your form changes, especially without a spotter.",
+   "evidence": "modeled",
+   "citations": [
+    "refalo2023"
+   ],
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Same controlled range on every rep: lower under control, touch the same spot, no bounce.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "safeties",
+   "text": "Use safety arms set just below the bottom of your range, or a spotter, and put collars on. Wrap your thumbs around the bar; a thumbless grip makes the bar easier to lose.",
+   "evidence": "biomechanics"
+  },
+  {
+   "topic": "setup",
+   "text": "If a grip width or elbow angle doesn't feel right, change it or pick a press you can train pain-free, such as dumbbells or a machine.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "dumbbell-bench-press",
+   "why": "Hands can go lower than a bar allows, so the chest works deeper in the stretch.",
+   "differences": [
+    "More stretch emphasis",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "less_fatigue",
+   "goal_label": "Less fatigue",
+   "exercise_id": "machine-chest-press",
+   "why": "The machine balances the load, so you can push close to failure with less whole-body effort.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Lower loading potential"
+   ],
+   "evidence": "modeled"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "smith-bench-press",
+   "why": "Same press on a fixed bar path, with less to balance and easier to learn.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:chest_upper",
+   "goal_label": "More upper chest",
+   "exercise_id": "incline-barbell-bench-press",
+   "why": "Upper chest is rated 1 instead of 0.7; incline pressing grew the upper chest more in one study.",
+   "differences": [],
+   "evidence": "supported",
+   "citations": [
+    "chaves2020"
+   ]
+  },
+  {
+   "goal": "bias:triceps_short",
+   "goal_label": "More triceps lateral/medial heads",
+   "exercise_id": "close-grip-bench-press",
+   "why": "A narrower grip makes the triceps the main mover (triceps 1, chest 0.6).",
+   "differences": [],
+   "evidence": "biomechanics",
+   "citations": [
+    "lehman2005"
+   ]
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "cable-fly",
+   "why": "Chest work without the triceps limit, steady cable tension, and little fatigue.",
+   "differences": [
+    "More stretch emphasis",
+    "Better isolation",
+    "More stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-bench-press",
+   "why": "Needs only dumbbells and a flat bench, and you can drop the dumbbells to the side if a rep fails.",
+   "differences": [
+    "More stretch emphasis",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "push-up",
+   "why": "Same muscles and ratings as the bench with no equipment; add reps, a pause, or a backpack for load.",
+   "differences": [
+    "Less systemic fatigue",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@barbell-bench-press.muscles.chest": 1,
+  "exercises.json:@barbell-bench-press.muscles.front_delts": 0.5,
+  "exercises.json:@barbell-bench-press.muscles.triceps": 0.5,
+  "exercises.json:@barbell-bench-press.heads.chest_upper": 0.7,
+  "exercises.json:@barbell-bench-press.heads.chest_lower": 1,
+  "exercises.json:@barbell-bench-press.heads.triceps_long": 0.25,
+  "exercises.json:@barbell-bench-press.heads.triceps_short": 0.5,
+  "exercises.json:@incline-barbell-bench-press.heads.chest_upper": 1,
+  "exercises.json:@incline-barbell-bench-press.muscles.front_delts": 0.6,
+  "exercises.json:@close-grip-bench-press.muscles.triceps": 1,
+  "exercises.json:@close-grip-bench-press.muscles.chest": 0.6,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three_from_kg": 60,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three": [
+   [
+    0.5,
+    8
+   ],
+   [
+    0.7,
+    4
+   ],
+   [
+    0.85,
+    2
+   ]
+  ],
+  "rules.json:logger.warmup_ramp.sets_by_working_load.two": [
+   [
+    0.5,
+    8
+   ],
+   [
+    0.75,
+    3
+   ]
+  ],
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.target_rir_by_type.primary": 3,
+  "rules.json:logger.rep_range_by_type.primary": [
+   6,
+   10
+  ]
+ },
+ "notes": [
+  "Ratings and display bands are the library model. The bands are main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25.",
+  "Grip-width findings are EMG (muscle activity during a set). They describe where the work goes, not proven differences in growth.",
+  "The upper-chest finding is one short study in untrained men. Treat it as a tendency.",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

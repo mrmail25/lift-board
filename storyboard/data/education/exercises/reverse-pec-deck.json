@@ -1,0 +1,253 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "reverse-pec-deck",
+ "kind": "exercise",
+ "exercise_id": "reverse-pec-deck",
+ "title": "Reverse Pec Deck",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "The pec-deck machine used facing in: sweep the arms out and back. Rear delts 1, upper back 0.5.",
+ "type": "isolation",
+ "equipment": "machine",
+ "equipment_needs": {
+  "items": [
+   "pec_deck"
+  ],
+  "text": "Needs: pec deck / rear-delt fly machine."
+ },
+ "muscles": [
+  {
+   "muscle_id": "rear_delts",
+   "rating": 1,
+   "band": "main",
+   "why": "The rear delts pull the upper arm backward out to the side (horizontal abduction), exactly the motion of this machine.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Rhomboids and mid traps squeeze the shoulder blades together near the end.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "traps",
+   "rating": 0.4,
+   "band": "helper",
+   "regions": {
+    "traps_upper": 0.16,
+    "traps_mid_lower": 0.4
+   },
+   "why": "Mid and lower traps help squeeze the shoulder blades (0.4).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the seat so the handles are at shoulder height.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Set the arms so they start in front of your chest, with a stretch.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Chest against the pad.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Keep a slight bend in the elbows",
+   "why": "Pushing out to the sides keeps the work on the rear delts.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Sweep the arms back and out",
+   "why": "Slight elbow bend that doesn't change keeps the shoulder moving, not the elbow.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Return slowly without the stack touching",
+   "why": "Stopping when the arms are in line with the body keeps the load on the delts.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Move at the shoulder and don't squeeze your shoulder blades too hard, to keep the work on the rear delts.",
+   "why": "Keep the shoulder blades still for more rear delt; let them move for more upper back.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Lead with the pinkies",
+   "why": "Many lifters find this keeps the arms in the right path.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "Neutral handles (palms facing each other) vs overhand",
+   "target_muscle_ids": [
+    "rear_delts"
+   ],
+   "effect": "Small change in shoulder rotation; pick the one that feels smooth.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "caveat": "Comfort choice."
+  },
+  {
+   "kind": "range",
+   "change": "Let the shoulder blades squeeze together at the end",
+   "target_muscle_ids": [
+    "upper_back",
+    "traps"
+   ],
+   "effect": "Adds rhomboid and mid-trap work.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Shoulder blades still keeps it more rear delt."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "rear_delts"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Pulling with the back by squeezing the shoulder blades hard.",
+   "fix": "Use a load you can move with the chest on the pad.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Using too much weight and shrugging.",
+   "fix": "Rear delts are small; lighten it.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Bending the elbows to finish reps.",
+   "fix": "Keep the elbow angle fixed.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Only heavy weights build muscle.",
+   "reality": "Light and heavy loads gave similar growth when sets were taken close to failure. Heavy loads build more strength.",
+   "evidence": "supported",
+   "citations": [
+    "schoenfeld2017load"
+   ]
+  },
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds no ramp-up sets here. If the muscle is not warm from earlier work, make the first set a little lighter.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 10% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 2 reps in reserve in the 10-15 rep range. Low-risk to push close to failure.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "constant_tension",
+   "goal_label": "Steadier tension",
+   "exercise_id": "cable-rear-delt-fly",
+   "why": "Cable rear fly: steady tension, more range.",
+   "differences": [
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-rear-delt-fly",
+   "why": "Bent-over rear fly with dumbbells.",
+   "differences": [
+    "Less isolation",
+    "Less stable"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:traps_mid_lower",
+   "goal_label": "More mid/lower traps",
+   "exercise_id": "face-pull",
+   "why": "Cable pull to the face: more mid and lower traps (0.5).",
+   "differences": [
+    "Steadier cable tension"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 3,
+  "stability": 3,
+  "systemic_fatigue": 1,
+  "loading_potential": 1,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@face-pull.heads.traps_mid_lower": 0.5,
+  "exercises.json:@reverse-pec-deck.heads.traps_mid_lower": 0.4,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.isolation": 10,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.machine": 2.5,
+  "rules.json:logger.load_step.lb.machine": 5,
+  "rules.json:logger.rep_range_by_type.isolation.0": 10,
+  "rules.json:logger.rep_range_by_type.isolation.1": 15,
+  "rules.json:logger.target_rir_by_type.isolation": 2
+ },
+ "notes": [
+  "Rear-delt variations have not been compared for growth in a study the app cites.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

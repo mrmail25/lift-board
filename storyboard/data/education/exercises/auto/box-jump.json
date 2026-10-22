@@ -1,0 +1,210 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "box-jump",
+ "kind": "exercise",
+ "exercise_id": "box-jump",
+ "title": "Box Jump",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "An explosive jump onto a box. It's for power, not size: the muscle stimulus is low, but it trains rate of force.",
+ "type": "accessory",
+ "equipment": "bodyweight",
+ "equipment_needs": {
+  "items": [
+   "plyo_box"
+  ],
+  "text": "Needs: plyo box or sturdy box."
+ },
+ "muscles": [
+  {
+   "muscle_id": "quads",
+   "rating": 0.55,
+   "band": "helper",
+   "regions": {
+    "quads_rf": 0.25,
+    "quads_vasti": 0.55
+   },
+   "why": "Library rating 0.55 for quads (helper): each working set adds 0.55 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "glutes",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for glutes (helper): each working set adds 0.5 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "calves",
+   "rating": 0.4,
+   "band": "helper",
+   "regions": {
+    "calves_gastroc": 0.4,
+    "calves_soleus": 0.2
+   },
+   "why": "Library rating 0.4 for calves (helper): each working set adds 0.4 of a set to the weekly calves total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for hamstrings: below the counting floor, so it adds nothing to the weekly hamstrings total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Stand a short step from the box.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Swing your arms and jump up, landing softly with bent knees.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Step down, don't jump down.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Swing the arms and jump",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Land softly on the box",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Step down",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "A higher box isn't the goal. Land quietly.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Picking a box so high you land in a deep squat.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds up to 2 ramp-up sets only when the load is heavy for the equipment and the main muscle is not warm yet.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 8-12 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "depth-jump",
+   "why": "Swap sheet: More technical.",
+   "differences": [
+    "More technical"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "shrimp-squat",
+   "why": "Swap sheet: More stretch emphasis, Less stable, One side at a time.",
+   "differences": [
+    "More stretch emphasis",
+    "Less stable",
+    "One side at a time"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "maeo2021",
+    "maeo2023",
+    "pedrosa2022",
+    "kassiano2023",
+    "sato2021",
+    "wolf2023"
+   ]
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "pistol-squat",
+   "why": "Swap sheet: More stretch emphasis, Less stable, One side at a time.",
+   "differences": [
+    "More stretch emphasis",
+    "Less stable",
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-reverse-lunge",
+   "why": "Swap sheet: Less stable, One side at a time, More systemic fatigue.",
+   "differences": [
+    "Less stable",
+    "One side at a time",
+    "More systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 2,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 2,
+  "loading_potential": 1,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

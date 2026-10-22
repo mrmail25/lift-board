@@ -1,0 +1,310 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "forearms",
+  "kind": "muscle",
+  "title": "Forearms",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "forearms"
+  ],
+  "summary": "The many muscles between elbow and wrist: wrist and finger flexors on the palm side, extensors on the back, and the brachioradialis on top near the elbow. They grip, bend and straighten the wrist, and help bend the elbow. Heavy pulls, carries and curls already work them.",
+  "what_it_is": {
+    "overview": "One region in the app, from the elbow crease to the wrist (never the hand). It groups the flexors, extensors and brachioradialis.",
+    "heads": [
+      {
+        "id": "flexors",
+        "name": "Wrist and finger flexors",
+        "origin": "The bony bump on the inner side of the elbow (medial epicondyle) and the front of the forearm bones.",
+        "insertion": "The palm side of the wrist, hand and fingers.",
+        "fiber_direction": "Run down the palm side of the forearm, turning into long tendons at the wrist.",
+        "crosses_joints": [
+          "elbow",
+          "wrist"
+        ],
+        "tracked_region": "forearms",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "extensors",
+        "name": "Wrist and finger extensors",
+        "origin": "The bony bump on the outer side of the elbow (lateral epicondyle).",
+        "insertion": "The back of the hand and fingers.",
+        "fiber_direction": "Run down the back of the forearm to the hand.",
+        "crosses_joints": [
+          "elbow",
+          "wrist"
+        ],
+        "tracked_region": "forearms",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "brachioradialis",
+        "name": "Brachioradialis",
+        "origin": "The lower outer edge of the upper-arm bone, just above the elbow.",
+        "insertion": "The thumb side of the radius near the wrist.",
+        "fiber_direction": "Runs down the top (thumb side) of the forearm.",
+        "crosses_joints": [
+          "elbow"
+        ],
+        "tracked_region": "forearms",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "flexors"
+      ],
+      "joint": "wrist",
+      "action": "Wrist flexion and gripping (finger flexion).",
+      "detail": "Grip is the job in deadlifts, rows, hangs and carries.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "extensors"
+      ],
+      "joint": "wrist",
+      "action": "Wrist extension and holding the wrist straight while gripping.",
+      "detail": "Work as stabilizers in nearly every grip.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "brachioradialis"
+      ],
+      "joint": "elbow",
+      "action": "Elbow flexion, strongest with a thumbs-up (neutral) grip.",
+      "detail": "Why hammer and reverse curls credit forearms.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Biceps and brachialis",
+        "role": "Bend the elbow with the brachioradialis.",
+        "evidence": "biomechanics",
+        "muscle_id": "biceps"
+      },
+      {
+        "name": "Hand muscles",
+        "role": "Help grip; not tracked.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Flexors vs extensors",
+        "role": "Each group opposes the other at the wrist.",
+        "evidence": "biomechanics",
+        "muscle_id": "forearms"
+      },
+      {
+        "name": "Triceps",
+        "role": "Straightens the elbow, opposing the brachioradialis.",
+        "evidence": "biomechanics",
+        "muscle_id": "triceps"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "Holding a heavy bar is an isometric grip effort for the flexors while the extensors keep the wrist straight; deadlifts are rated 0.6 for forearms.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "deadlift",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "rack-pull",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "romanian-deadlift",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "dead-hang",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "barbell-curl",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "dumbbell-curl",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "pull-up",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "chin-up",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "barbell-shrug",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "neutral-grip-lat-pulldown",
+        "rating": 0.25,
+        "role": "minor"
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 3 sets of deadlift (0.6), 3 sets of hammer curl (0.8) and 4 sets of pull-up (0.3) give 1.8 + 2.4 + 1.2 = 5.4, which the panel shows as 5.5 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "flexors",
+      "goal": "Wrist flexors and grip",
+      "how": {
+        "joint_angle": "Wrist bending toward the palm, or a hard isometric grip.",
+        "stretch_position": "Let the wrist extend and the bar roll toward the fingers at the bottom.",
+        "grip": "Palms up for wrist curls; thick or heavy handles for carries.",
+        "stance": "Forearms on a bench, or standing with weights at the sides."
+      },
+      "swap_tags": [
+        "grip_demand"
+      ],
+      "example_exercise_ids": [
+        "wrist-curl",
+        "farmer-carry",
+        "dead-hang"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Exercises with 'More grip demand' in the swap sheet also train grip."
+    },
+    {
+      "target": "extensors",
+      "goal": "Wrist extensors",
+      "how": {
+        "joint_angle": "Wrist bending back.",
+        "grip": "Palms down."
+      },
+      "swap_tags": [
+        "muscle_isolation"
+      ],
+      "example_exercise_ids": [
+        "reverse-wrist-curl",
+        "reverse-curl"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Light loads and higher reps are typical."
+    },
+    {
+      "target": "brachioradialis",
+      "goal": "Brachioradialis",
+      "how": {
+        "joint_angle": "Elbow flexion.",
+        "grip": "Neutral (thumbs up) or palms down."
+      },
+      "swap_tags": [],
+      "example_exercise_ids": [
+        "hammer-curl",
+        "reverse-curl",
+        "cable-rope-hammer-curl"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "These also credit biceps (hammer curl 0.8)."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "wrist-curl",
+      "why": "Direct wrist-flexor isolation; forearms 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "reverse-wrist-curl",
+      "why": "Direct extensor work; forearms 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "reverse-curl",
+      "why": "Brachioradialis and extensors; forearms 1.0, biceps 0.6.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "hammer-curl",
+      "why": "Forearms and biceps 0.8 each.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "farmer-carry",
+      "why": "Heavy grip, forearms 1.0, plus traps and trunk.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "suitcase-carry",
+      "why": "One-sided carry; forearms 0.9 and obliques.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Using straps on every pulling set when grip is a goal.",
+      "evidence": "modeled"
+    },
+    {
+      "text": "Bouncing wrist curls with tiny range.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Adding lots of forearm isolation when deadlifts, rows and curls already reach the target.",
+      "evidence": "modeled"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Let the bar roll to your fingertips, then curl it back.",
+      "why": "Uses the full range on wrist curls.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Crush the handles.",
+      "why": "Turns carries and hangs into grip training.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Thumbs up for hammer curls.",
+      "why": "Brings in the brachioradialis.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.forearms.min": 2,
+    "targets.json:targets.forearms.max": 12,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@hammer-curl.muscles.biceps": 0.8,
+    "exercises.json:@reverse-curl.muscles.biceps": 0.6,
+    "exercises.json:@deadlift.muscles.forearms": 0.6,
+    "exercises.json:@suitcase-carry.muscles.forearms": 0.9
+  },
+  "notes": [
+    "Weekly target in the app: 2 to 12 forearms sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "No forearm growth study by exercise choice is on file, so nothing here is marked supported.",
+    "Targets are low and marked extrapolated because pulls and curls give lots of indirect work.",
+    "No claims about elbow or wrist pain; pick variations you can train comfortably."
+  ]
+}

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- maximum-scale=1 stops iOS zooming on input focus; touch-action:manipulation (sb.css) removes double-tap zoom -->
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F2F2F4">
+<meta name="robots" content="noindex">
+<title>Ape-Chit · Storyboard</title>
+<link rel="icon" href="assets/logo/icon-black-v3.png">
+<link rel="apple-touch-icon" href="assets/logo/icon-black-v3.png">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="sb.css">
+</head>
+<body>
+<!-- Storyboard only: mock data, no real logic, no service worker. Routes: #train #workout #keypad #clock … (see sb.js ROUTES) -->
+<div id="app">
+  <main id="view" class="scroller"></main>
+  <div id="wbar-slot"></div>
+  <nav id="tabs" class="tabs"></nav>
+  <div id="sheets"></div>
+  <div id="toast" class="toast"></div>
+</div>
+<script src="assets/mock-ex.js"></script>
+<script src="assets/musclemap.js"></script>
+<script src="assets/swaptags.js"></script>
+<script src="logic/rank.js"></script>
+<script src="logic/swaptags.js"></script>
+<script src="assets/mock-board.js"></script>
+<script src="sb.js"></script>
+</body>
+</html>

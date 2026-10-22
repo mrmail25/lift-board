@@ -1,0 +1,360 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "traps",
+  "kind": "muscle",
+  "title": "Traps",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "traps_upper",
+    "traps_mid_lower"
+  ],
+  "summary": "The trapezius is a large diamond from the skull down to the mid-back and out to the shoulders. The upper part lifts and rotates the shoulder blades; the middle and lower parts pull them back and down. Shrugs and carries build the upper traps; rows and Y-raises the rest.",
+  "what_it_is": {
+    "overview": "The app has two map regions: upper traps (neck slope to the shoulder) and mid/lower traps (the diamond between the shoulder blades). Weekly targets count the whole muscle.",
+    "heads": [
+      {
+        "id": "upper",
+        "name": "Upper traps",
+        "origin": "The base of the skull and the ligament along the back of the neck.",
+        "insertion": "The outer third of the collarbone.",
+        "fiber_direction": "Run down and out from the neck to the shoulder.",
+        "crosses_joints": [
+          "scapulothoracic",
+          "spine"
+        ],
+        "tracked_region": "traps_upper",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "middle",
+        "name": "Middle traps",
+        "origin": "The spines of the lowest neck and upper mid-back vertebrae (about C7 to T3).",
+        "insertion": "The top of the shoulder (acromion) and the spine of the shoulder blade.",
+        "fiber_direction": "Run straight out from the spine to the shoulder blade.",
+        "crosses_joints": [
+          "scapulothoracic"
+        ],
+        "tracked_region": "traps_mid_lower",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "lower",
+        "name": "Lower traps",
+        "origin": "The spines of the mid-back vertebrae (about T4 to T12).",
+        "insertion": "The inner end of the spine of the shoulder blade.",
+        "fiber_direction": "Run up and out from the spine to the shoulder blade.",
+        "crosses_joints": [
+          "scapulothoracic"
+        ],
+        "tracked_region": "traps_mid_lower",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "upper"
+      ],
+      "joint": "scapulothoracic",
+      "action": "Elevation (shrugging) and upward rotation of the shoulder blade.",
+      "detail": "Upward rotation, with the lower traps and serratus, lets the arm go overhead.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "middle"
+      ],
+      "joint": "scapulothoracic",
+      "action": "Retraction (pulling the shoulder blades together).",
+      "detail": "The squeeze in rows.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "lower"
+      ],
+      "joint": "scapulothoracic",
+      "action": "Depression (pulling the shoulder blades down) and upward rotation.",
+      "detail": "Active in Y-raises and when reaching overhead.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "upper"
+      ],
+      "joint": "spine",
+      "action": "Helps tilt and turn the head; holds the shoulders up under heavy loads.",
+      "detail": "Why carries and deadlifts work the upper traps hard.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Levator scapulae",
+        "role": "Lifts the shoulder blade with the upper traps; not tracked.",
+        "evidence": "biomechanics"
+      },
+      {
+        "name": "Rhomboids",
+        "role": "Retract the shoulder blades with the middle traps.",
+        "evidence": "biomechanics",
+        "muscle_id": "upper_back"
+      },
+      {
+        "name": "Serratus anterior",
+        "role": "Rotates the shoulder blade upward with the upper and lower traps.",
+        "evidence": "biomechanics",
+        "muscle_id": "obliques"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Lats and pec minor",
+        "role": "Pull the shoulder girdle down, opposing the upper traps.",
+        "evidence": "biomechanics",
+        "muscle_id": "lats"
+      },
+      {
+        "name": "Serratus anterior (for the middle traps)",
+        "role": "Pulls the shoulder blades forward, opposing retraction.",
+        "evidence": "biomechanics",
+        "muscle_id": "obliques"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In deadlifts and carries the upper traps hold the shoulders against a heavy load without much movement; the library credits deadlifts 0.6 and farmer carries 0.8.",
+        "evidence": "biomechanics"
+      },
+      {
+        "text": "In overhead pressing the traps rotate the shoulder blades upward; the overhead press is rated 0.3.",
+        "evidence": "modeled"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "farmer-carry",
+        "rating": 0.8,
+        "role": "main"
+      },
+      {
+        "exercise_id": "deadlift",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "trap-bar-deadlift",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "barbell-row",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "seated-cable-row",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "face-pull",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "overhead-press",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "romanian-deadlift",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "dumbbell-lateral-raise",
+        "rating": 0.3,
+        "role": "minor"
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 3 sets of barbell shrug (1.0), 3 sets of deadlift (0.6) and 4 sets of chest-supported row (0.5) give 3 + 1.8 + 2 = 6.8, which the panel shows as 7 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "upper",
+      "goal": "Upper traps",
+      "how": {
+        "joint_angle": "Shoulders lifted straight up toward the ears.",
+        "stretch_position": "Let the shoulders sink fully at the bottom.",
+        "grip": "Dumbbells at the sides or a bar in front.",
+        "stance": "Standing tall."
+      },
+      "swap_tags": [
+        "upper_trap_involvement",
+        "grip_demand"
+      ],
+      "example_exercise_ids": [
+        "barbell-shrug",
+        "dumbbell-shrug",
+        "farmer-carry"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Swaps that lose this show 'Less upper-trap work'. Straps help when grip limits the set."
+    },
+    {
+      "target": "middle",
+      "goal": "Middle traps",
+      "how": {
+        "joint_angle": "Rows with the elbows out and a full squeeze of the shoulder blades.",
+        "stance": "Chest supported."
+      },
+      "swap_tags": [
+        "upper_back_thickness_bias"
+      ],
+      "example_exercise_ids": [
+        "chest-supported-dumbbell-row",
+        "plate-loaded-chest-supported-row",
+        "wide-grip-cable-row"
+      ],
+      "evidence": "modeled",
+      "citations": [],
+      "caveat": "The library rates these rows 0.6 to 0.65 for traps, mostly mid/lower."
+    },
+    {
+      "target": "lower",
+      "goal": "Lower traps",
+      "how": {
+        "joint_angle": "Arms raised in a Y overhead, shoulder blades pulled down and back.",
+        "stance": "Chest on an incline bench."
+      },
+      "swap_tags": [
+        "muscle_isolation"
+      ],
+      "example_exercise_ids": [
+        "dumbbell-incline-y-raise",
+        "trx-y-t-raise"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Light loads; the incline Y-raise is rated traps 1.0 with the mid/lower region at 1.0."
+    },
+    {
+      "target": "upper",
+      "goal": "Shrugs without spinal load",
+      "how": {
+        "stance": "Machine or Smith shrug."
+      },
+      "swap_tags": [
+        "spinal_load",
+        "stability"
+      ],
+      "example_exercise_ids": [
+        "shrug-machine",
+        "smith-shrug"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Removes the bar from the spine and the balance demand."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "barbell-shrug",
+      "why": "Heavy upper-trap isolation; loads progress easily.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "dumbbell-shrug",
+      "why": "Arms at the sides let the shoulders move straight up.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "shrug-machine",
+      "why": "No spinal load and no grip-balance issue.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "farmer-carry",
+      "why": "Upper traps 0.8 plus grip and trunk work.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "dumbbell-incline-y-raise",
+      "why": "Targets the lower and mid traps (traps 1.0).",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "chest-supported-dumbbell-row",
+      "why": "Mid traps with the back; traps 0.6.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "rack-pull",
+      "why": "Very heavy upper-trap and back work; high fatigue and spinal load.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Rolling the shoulders in circles on shrugs; it adds nothing and only the up-down part works.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Cutting shrugs short at the bottom.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Shrugging during rows and pulldowns when the goal is lats or mid-back.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Doing extra direct trap work when deadlifts, carries and rows already reach the target.",
+      "evidence": "modeled"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Shoulders to ears, pause, all the way down.",
+      "why": "Uses the full range.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Straight up, no rolling.",
+      "why": "Matches the fibre line.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Down and back on Y-raises.",
+      "why": "Engages the lower traps.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Use straps on heavy shrugs.",
+      "why": "Takes grip out as the limit.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.traps.min": 4,
+    "targets.json:targets.traps.max": 16,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@deadlift.muscles.traps": 0.6,
+    "exercises.json:@farmer-carry.muscles.traps": 0.8,
+    "exercises.json:@overhead-press.muscles.traps": 0.3,
+    "exercises.json:@dumbbell-incline-y-raise.heads.traps_mid_lower": 1,
+    "exercises.json:@chest-supported-dumbbell-row.muscles.traps": 0.6,
+    "exercises.json:@plate-loaded-chest-supported-row.muscles.traps": 0.65
+  },
+  "notes": [
+    "Weekly target in the app: 4 to 16 traps sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "No trap growth study by exercise choice is on file, so nothing here is marked supported.",
+    "Targets are low and marked extrapolated because pulls, carries and deadlifts give lots of indirect work."
+  ]
+}

@@ -1,0 +1,172 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "reverse-hack-squat",
+ "kind": "exercise",
+ "exercise_id": "reverse-hack-squat",
+ "title": "Reverse Hack Squat",
+ "status": "final",
+ "source": "auto",
+ "source_label": "Auto-generated from the exercise library",
+ "updated": "2026-10-21",
+ "summary": "A hack squat done facing the pad with your hips pushed back. It shifts the work from the quads toward the glutes and hamstrings.",
+ "type": "primary",
+ "equipment": "plate-loaded machine",
+ "equipment_needs": {
+  "items": [
+   "gym_machine",
+   "plates"
+  ],
+  "text": "Needs: commercial gym machine (this exercise's own machine); weight plates."
+ },
+ "muscles": [
+  {
+   "muscle_id": "glutes",
+   "rating": 0.9,
+   "band": "main",
+   "why": "Library rating 0.9 for glutes (main mover): each working set adds 0.9 of a set to the weekly glutes total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "quads",
+   "rating": 0.75,
+   "band": "main",
+   "regions": {
+    "quads_rf": 0.25,
+    "quads_vasti": 0.75
+   },
+   "why": "Library rating 0.75 for quads (main mover): each working set adds 0.75 of a set to the weekly quads total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "adductors",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "Library rating 0.5 for adductors (helper): each working set adds 0.5 of a set to the weekly adductors total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Library rating 0.4 for hamstrings (helper): each working set adds 0.4 of a set to the weekly hamstrings total.",
+   "evidence": "modeled"
+  },
+  {
+   "muscle_id": "lower_back",
+   "rating": 0.2,
+   "band": "not_counted",
+   "why": "Library rating 0.2 for lower back: below the counting floor, so it adds nothing to the weekly lower back total.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Face the machine with your chest on the back pad and your shoulders under the pads.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Push your hips back and squat down until your hips are deeply flexed.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Drive back up through your heels.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Push the hips back as you lower",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Go deep",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive up through the heels",
+   "why": "Library cue for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Let your hips travel back, not just down.",
+   "why": "Library tip for this exercise.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "bias_tweaks": [],
+ "mistakes": [
+  {
+   "text": "Letting the heels lift.",
+   "fix": "Follow the cues above.",
+   "evidence": "modeled",
+   "from_library": true
+  }
+ ],
+ "misconceptions": [],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Warm-up: the app adds two or three ramp-up sets at rising loads before the first working set, unless that load is very light.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to"
+  },
+  {
+   "topic": "load_jump",
+   "text": "The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump.max_jump_pct_by_type"
+  },
+  {
+   "topic": "rir",
+   "text": "Default target: 6-10 reps, stopping about 3 reps short of failure (RIR 3). Stop the set when form breaks down.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "rom",
+   "text": "Use the same controlled range on every rep; lower under control rather than dropping or bouncing.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation and range you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "single-leg-press",
+   "why": "Swap sheet: Less stretch emphasis, One side at a time, Lower loading potential.",
+   "differences": [
+    "Less stretch emphasis",
+    "One side at a time",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 3,
+  "skill_demand": 1,
+  "flags": []
+ },
+ "app_values": {},
+ "notes": [
+  "Ratings, swap attributes and cues are the library model (modeled). An authored page will replace this one."
+ ]
+}

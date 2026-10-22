@@ -1,0 +1,298 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "lat-pulldown",
+ "kind": "exercise",
+ "exercise_id": "lat-pulldown",
+ "title": "Lat Pulldown",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "A seated cable pull from overhead: the pull-up pattern at any load. Lats 1, with biceps and mid-back helping.",
+ "type": "accessory",
+ "equipment": "cable",
+ "equipment_needs": {
+  "items": [
+   "lat_pulldown"
+  ],
+  "text": "Needs: lat pulldown station (seat and thigh pad)."
+ },
+ "muscles": [
+  {
+   "muscle_id": "lats",
+   "rating": 1,
+   "band": "main",
+   "why": "The lats pull the upper arm down toward the body; at the top, arms straight, they are fully stretched.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "biceps",
+   "rating": 0.5,
+   "band": "helper",
+   "why": "The elbow flexors bend the elbow; overhand grip, so they help (0.5).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "upper_back",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "Mid-back pulls the shoulder blades down and back at the bottom.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "rear_delts",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "Rear delts help extend the shoulder: minor.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the thigh pad so your legs are locked in.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Grip a little wider than your shoulders.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Sit tall, chest up, with a slight lean back.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lean back slightly",
+   "why": "A small lean lines the pull up with the lats; a big one turns it into a row.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Pull the bar to your upper chest",
+   "why": "Upper chest is the end of the range for most lifters.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Let the arms fully extend at the top",
+   "why": "Full extension at the top is the stretch.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Don't yank with your lower back. Pull from your elbows.",
+   "why": "Pulling with the elbows keeps the lats, not the lower back, moving the weight.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Drive the elbows down to your sides",
+   "why": "That is the lat's line of pull.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "grip",
+   "change": "Wider overhand grip",
+   "target_muscle_ids": [
+    "lats"
+   ],
+   "effect": "Coaches use it for 'width'; the lat is one muscle, so this is a tendency.",
+   "swap_tags": [
+    "lat_width_bias"
+   ],
+   "example_exercise_ids": [
+    "wide-grip-lat-pulldown"
+   ],
+   "evidence": "modeled",
+   "citations": [
+    "andersen2014"
+   ],
+   "caveat": "EMG was similar across grip widths, and wide grips allow less load."
+  },
+  {
+   "kind": "grip",
+   "change": "Neutral or close grip",
+   "target_muscle_ids": [
+    "lats",
+    "biceps"
+   ],
+   "effect": "More elbow flexion and often a stronger pull.",
+   "swap_tags": [],
+   "example_exercise_ids": [
+    "close-grip-pulldown",
+    "neutral-grip-lat-pulldown"
+   ],
+   "evidence": "biomechanics",
+   "caveat": "Grip choice changes little for the lats."
+  },
+  {
+   "kind": "stance",
+   "change": "One arm at a time",
+   "target_muscle_ids": [
+    "lats"
+   ],
+   "effect": "More range and a longer stretch per side.",
+   "swap_tags": [
+    "unilateral"
+   ],
+   "example_exercise_ids": [
+    "single-arm-lat-pulldown"
+   ],
+   "evidence": "biomechanics",
+   "caveat": "Takes twice as long."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "lats"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Leaning way back and rowing the bar to your stomach.",
+   "fix": "Stay nearly upright and pull to the upper chest.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Letting the stack pull your arms up fast.",
+   "fix": "Control the top; that is the stretch.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Pulling the bar behind the neck.",
+   "fix": "Pull to the front; it lets the lats work without forcing the shoulders.",
+   "evidence": "modeled"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Behind-the-neck pulldowns hit the lats harder.",
+   "reality": "No growth advantage has been shown; pulling to the front is the standard.",
+   "evidence": "modeled"
+  },
+  {
+   "myth": "Machines don't build muscle like free weights.",
+   "reality": "Free-weight and machine training gave similar muscle growth in a meta-analysis. Pick by fit, stability and how well you can push close to failure.",
+   "evidence": "supported",
+   "citations": [
+    "haugen2023"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds up to 2 ramp-up sets only when the first working load is at least 40 kg (95 lb) and the main muscle is not already warm from an earlier lift. Otherwise start with a slightly lighter first set.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to.accessory"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 8-12 rep range. Easy to push close to failure; stop when you start leaning back to finish reps.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "home_bodyweight",
+   "goal_label": "Home gym: no equipment / bar only",
+   "exercise_id": "pull-up",
+   "why": "The same pattern with bodyweight; no machine needed.",
+   "differences": [
+    "Lat width focus",
+    "Less stable",
+    "Less constant tension"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "one_side",
+   "goal_label": "One side at a time",
+   "exercise_id": "single-arm-lat-pulldown",
+   "why": "One arm at a time for a longer stretch.",
+   "differences": [
+    "One side at a time"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "straight-arm-pulldown",
+   "why": "Lats without the biceps; low fatigue.",
+   "differences": [
+    "Better isolation",
+    "Less systemic fatigue",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "bias:upper_back",
+   "goal_label": "More upper back",
+   "exercise_id": "seated-cable-row",
+   "why": "A horizontal pull with more mid-back (upper back 1).",
+   "differences": [
+    "Less stretch emphasis",
+    "Upper-back thickness focus"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 3,
+  "systemic_fatigue": 2,
+  "loading_potential": 2,
+  "skill_demand": 1,
+  "flags": [
+   "constant_tension"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@lat-pulldown.muscles.biceps": 0.5,
+  "exercises.json:@seated-cable-row.muscles.upper_back": 1,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.accessory": 7.5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.cable": 2.5,
+  "rules.json:logger.load_step.lb.cable": 5,
+  "rules.json:logger.rep_range_by_type.accessory.0": 8,
+  "rules.json:logger.rep_range_by_type.accessory.1": 12,
+  "rules.json:logger.target_rir_by_type.accessory": 3,
+  "rules.json:logger.warmup_ramp.accessory_max_sets": 2,
+  "rules.json:logger.warmup_ramp.accessory_min_load.default.kg": 40,
+  "rules.json:logger.warmup_ramp.accessory_min_load.default.lb": 95
+ },
+ "notes": [
+  "Grip findings are EMG only.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

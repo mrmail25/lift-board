@@ -1,0 +1,307 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "incline-dumbbell-press",
+ "kind": "exercise",
+ "exercise_id": "incline-dumbbell-press",
+ "title": "Incline Dumbbell Press",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "A dumbbell press on a 30-45 degree bench: upper chest is the focus (rated 1), with front delts and triceps helping and a long stretch at the bottom.",
+ "type": "accessory",
+ "equipment": "dumbbell",
+ "equipment_needs": {
+  "items": [
+   "dumbbell",
+   "adjustable_bench"
+  ],
+  "text": "Needs: dumbbells; adjustable (incline) bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "chest",
+   "rating": 1,
+   "band": "main",
+   "regions": {
+    "chest_upper": 1,
+    "chest_lower": 0.7
+   },
+   "why": "Pressing up and in on an incline brings the upper arm forward and up (shoulder flexion with horizontal adduction), the line of the upper (clavicular) chest. So the library rates upper chest 1 and mid/lower 0.7. Dumbbells can go lower than a bar, so the stretch is deeper.",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "chest_upper",
+     "rating": 1,
+     "text": "Incline pressing grew the upper chest more than flat pressing in one 8-week study in untrained men.",
+     "evidence": "supported",
+     "citations": [
+      "chaves2020"
+     ]
+    }
+   ]
+  },
+  {
+   "muscle_id": "front_delts",
+   "rating": 0.6,
+   "band": "helper",
+   "why": "More shoulder flexion than a flat press, so the front delts help more (0.6).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "triceps",
+   "rating": 0.4,
+   "band": "helper",
+   "regions": {
+    "triceps_long": 0.2,
+    "triceps_short": 0.4
+   },
+   "why": "The triceps finish the press; with dumbbells you don't lock out against a bar as hard, so they rate 0.4.",
+   "evidence": "modeled"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Set the bench at 30-45 degrees; lower keeps more of the work on the chest.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Sit with the dumbbells on your thighs and kick them up one at a time as you lie back.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Shoulder blades back and down, feet planted.",
+   "evidence": "modeled"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Lower to the sides of your upper chest",
+   "why": "The sides of the upper chest is where the press lines up with the upper pec.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Keep wrists stacked over elbows",
+   "why": "Wrists over elbows means the forearms push straight up.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Press up without clanking the bells",
+   "why": "Stopping just short of touching keeps tension on the chest.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Press up and slightly in",
+   "why": "The hands come together a little at the top, following the chest's line of pull.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "angle",
+   "change": "Bench at 30 degrees rather than 45 or higher",
+   "target_muscle_ids": [
+    "chest",
+    "front_delts"
+   ],
+   "effect": "Keeps more of the work on the chest; steeper benches shift it to the front delts.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "caveat": "The exact best angle is not settled."
+  },
+  {
+   "kind": "range",
+   "change": "Lower until the elbows are a little below the bench",
+   "target_muscle_ids": [
+    "chest"
+   ],
+   "effect": "Uses the deeper stretch dumbbells allow.",
+   "swap_tags": [
+    "stretch_emphasis"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Go as deep as is comfortable for your shoulders."
+  },
+  {
+   "kind": "grip",
+   "change": "Palms turned slightly in (about 45 degrees)",
+   "target_muscle_ids": [
+    "chest"
+   ],
+   "effect": "Many lifters find the shoulders more comfortable; small effect on the muscles.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "caveat": "Comfort choice, not a growth trick."
+  },
+  {
+   "kind": "tempo",
+   "change": "Lower in 2-3 seconds and pause briefly in the stretch",
+   "target_muscle_ids": [
+    "chest"
+   ],
+   "effect": "Keeps tension on in the lengthened position and removes bounce, so each rep starts honestly.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Rep speeds from 0.5 to 8 s gave similar growth; this is a control tool, not a growth trick."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Flaring elbows straight out to the sides at the bottom.",
+   "fix": "Keep the elbows about 45-70 degrees from your torso at the bottom.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Bench set so steep it becomes a shoulder press.",
+   "fix": "Stay at 30-45 degrees.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Banging the dumbbells together at the top.",
+   "fix": "Stop just short; keep the tension.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Cutting the bottom short to use heavier dumbbells.",
+   "fix": "Use the full range; it is the main reason to pick dumbbells.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Only incline presses work the upper chest.",
+   "reality": "Flat presses still work it (rated 0.7); incline presses work it more.",
+   "evidence": "supported",
+   "citations": [
+    "chaves2020"
+   ]
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "The app adds up to 2 ramp-up sets only when the first working load is at least 18 kg (40 lb) per hand and the main muscle is not already warm from an earlier lift. Otherwise start with a slightly lighter first set.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp.applies_to.accessory"
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 7.5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 8-12 rep range. End the set before the dumbbells start to drift out of line; you can always drop them to the sides.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "safeties",
+   "text": "Getting the dumbbells into place is part of the lift: kick them up from your thighs, and at the end bring them to your chest and sit up, or lower them to the sides with control.",
+   "evidence": "modeled"
+  },
+  {
+   "topic": "setup",
+   "text": "Pick a variation, range and setup you can train pain-free.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "heavier_loading",
+   "goal_label": "Heavier loading",
+   "exercise_id": "incline-barbell-bench-press",
+   "why": "Same incline with a bar: more load, less stretch.",
+   "differences": [
+    "Less stretch emphasis",
+    "Heavier loading potential"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "incline-machine-press",
+   "why": "Machine path, less fatigue, easy to push close to failure.",
+   "differences": [
+    "Less stretch emphasis",
+    "More stable",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "dumbbell-bench-press",
+   "why": "Flat version; more mid/lower chest (rated 1).",
+   "differences": [],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "incline-dumbbell-fly",
+   "why": "Upper-chest fly without the triceps; low fatigue.",
+   "differences": [
+    "Better isolation",
+    "Less systemic fatigue",
+    "Lower loading potential"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 3,
+  "muscle_isolation": 1,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 2,
+  "skill_demand": 2,
+  "flags": []
+ },
+ "app_values": {
+  "exercises.json:@barbell-bench-press.heads.chest_upper": 0.7,
+  "exercises.json:@dumbbell-bench-press.heads.chest_lower": 1,
+  "exercises.json:@incline-dumbbell-press.heads.chest_lower": 0.7,
+  "exercises.json:@incline-dumbbell-press.heads.chest_upper": 1,
+  "exercises.json:@incline-dumbbell-press.muscles.front_delts": 0.6,
+  "exercises.json:@incline-dumbbell-press.muscles.triceps": 0.4,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.accessory": 7.5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.dumbbell": 2,
+  "rules.json:logger.load_step.lb.dumbbell": 5,
+  "rules.json:logger.rep_range_by_type.accessory.0": 8,
+  "rules.json:logger.rep_range_by_type.accessory.1": 12,
+  "rules.json:logger.target_rir_by_type.accessory": 3,
+  "rules.json:logger.warmup_ramp.accessory_max_sets": 2,
+  "rules.json:logger.warmup_ramp.accessory_min_load.dumbbell.kg": 18,
+  "rules.json:logger.warmup_ramp.accessory_min_load.dumbbell.lb": 40
+ },
+ "notes": [
+  "The upper-chest finding is one 8-week study in untrained men.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

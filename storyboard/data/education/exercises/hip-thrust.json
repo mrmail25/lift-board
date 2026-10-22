@@ -1,0 +1,305 @@
+{
+ "schema": "lift-board.education.exercise/1",
+ "id": "hip-thrust",
+ "kind": "exercise",
+ "exercise_id": "hip-thrust",
+ "title": "Hip Thrust",
+ "status": "final",
+ "source": "authored",
+ "source_label": null,
+ "updated": "2026-10-21",
+ "summary": "Barbell hip thrust from a bench: glutes 1, hamstrings 0.4. Hardest at the top, where the glutes are shortest.",
+ "type": "primary",
+ "equipment": "barbell",
+ "equipment_needs": {
+  "items": [
+   "barbell",
+   "plates",
+   "flat_bench"
+  ],
+  "text": "Needs: barbell (Olympic bar); weight plates; flat bench."
+ },
+ "muscles": [
+  {
+   "muscle_id": "glutes",
+   "rating": 1,
+   "band": "main",
+   "why": "The glute max extends the hip. With the shins vertical at the top, the glutes take most of it.",
+   "evidence": "biomechanics",
+   "region_notes": [
+    {
+     "region_id": "glutes",
+     "rating": 1,
+     "text": "Set-equated hip thrusts and back squats grew the glute max similarly in untrained adults.",
+     "evidence": "supported",
+     "citations": [
+      "plotkin2023"
+     ]
+    }
+   ]
+  },
+  {
+   "muscle_id": "hamstrings",
+   "rating": 0.4,
+   "band": "helper",
+   "why": "The hamstrings help extend the hip but the bent knee limits them (0.4).",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "abductors",
+   "rating": 0.3,
+   "band": "minor",
+   "why": "The glute medius helps keep the knees out: minor.",
+   "evidence": "biomechanics"
+  },
+  {
+   "muscle_id": "quads",
+   "rating": 0.2,
+   "band": "not_counted",
+   "regions": {
+    "quads_rf": 0.08,
+    "quads_vasti": 0.2
+   },
+   "why": "The quads hold the knee angle; below the counting floor (0.2).",
+   "evidence": "biomechanics"
+  }
+ ],
+ "setup": [
+  {
+   "text": "Upper back on a bench edge, just below the shoulder blades.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Bar padded across the hip crease.",
+   "evidence": "modeled"
+  },
+  {
+   "text": "Feet flat, about hip width; shins vertical at the top.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "form_cues": [
+  {
+   "cue": "Tuck your chin and brace",
+   "why": "Chin tucked, ribs down keeps the movement at the hips, not the lower back.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Drive the hips up until level with your torso",
+   "why": "Full hip extension at the top is where the glutes work hardest.",
+   "evidence": "biomechanics",
+   "from_library": true
+  },
+  {
+   "cue": "Squeeze glutes at the top",
+   "why": "A one-second pause at the top stops you bouncing.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "cue": "Tuck your chin and ribs down so your lower back doesn't arch at the top.",
+   "why": "Hip thrusts and squats grew the glutes similarly; squats also grew the quads and adductors.",
+   "evidence": "supported",
+   "from_library": true,
+   "citations": [
+    "plotkin2023"
+   ]
+  },
+  {
+   "cue": "Push through the heels",
+   "why": "Keeps the work on the hips, not the quads.",
+   "evidence": "modeled"
+  }
+ ],
+ "bias_tweaks": [
+  {
+   "kind": "stance",
+   "change": "Feet further out",
+   "target_muscle_ids": [
+    "hamstrings"
+   ],
+   "effect": "More hamstring work, less quad.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Mechanics only."
+  },
+  {
+   "kind": "stance",
+   "change": "One leg at a time",
+   "target_muscle_ids": [
+    "glutes"
+   ],
+   "effect": "Same pattern with bodyweight load.",
+   "swap_tags": [
+    "unilateral"
+   ],
+   "example_exercise_ids": [],
+   "evidence": "biomechanics",
+   "caveat": "Hard to load heavily."
+  },
+  {
+   "kind": "tempo",
+   "change": "Pause 1-2 seconds at the top",
+   "target_muscle_ids": [
+    "glutes"
+   ],
+   "effect": "More time where the glutes are hardest working.",
+   "swap_tags": [],
+   "example_exercise_ids": [],
+   "evidence": "modeled",
+   "citations": [
+    "schoenfeld2015tempo"
+   ],
+   "caveat": "Tempo itself changes growth little."
+  }
+ ],
+ "mistakes": [
+  {
+   "text": "Arching the lower back to finish instead of extending the hips.",
+   "fix": "Tuck the chin and ribs; lighten the load if the lower back arches.",
+   "evidence": "modeled",
+   "from_library": true
+  },
+  {
+   "text": "Arching the lower back at the top.",
+   "fix": "Stop at full hip extension.",
+   "evidence": "biomechanics"
+  },
+  {
+   "text": "Feet too close so the quads take over.",
+   "fix": "Shins vertical at the top.",
+   "evidence": "biomechanics"
+  }
+ ],
+ "misconceptions": [
+  {
+   "myth": "Hip thrusts are the best glute builder.",
+   "reality": "They grew the glutes about the same as squats.",
+   "evidence": "supported",
+   "citations": [
+    "plotkin2023"
+   ]
+  },
+  {
+   "myth": "Every set has to go to failure to grow.",
+   "reality": "Stopping a few reps short gave similar growth to failure in a meta-analysis; growth tends to rise as sets get closer to failure, but the exact curve is uncertain.",
+   "evidence": "supported",
+   "citations": [
+    "refalo2023",
+    "robinson2024"
+   ]
+  }
+ ],
+ "lower_risk": [
+  {
+   "topic": "warmup",
+   "text": "Ramp up before your first working set. For primary lifts the app suggests 50% x 8, 70% x 4 and 85% x 2 when the first working load is 60 kg or more, and 50% x 8 then 75% x 3 below that.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.warmup_ramp",
+   "note": "High-load warm-ups improved strength performance in a systematic review; the percentages are coaching convention.",
+   "citations": [
+    "mccrary2015"
+   ]
+  },
+  {
+   "topic": "load_jump",
+   "text": "Add load in small steps. The app suggests a heavier load only when the jump is 5% or less; otherwise it adds a rep first, up to 2 past the top of the range. Default steps for this equipment are 2.5 kg or 5 lb; your gym profile can replace them.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.load_jump"
+  },
+  {
+   "topic": "rir",
+   "text": "Aim for about 3 reps in reserve in the 6-10 rep range. Stop the set when you can't reach full hip extension.",
+   "evidence": "modeled",
+   "app_key": "rules.json:logger.target_rir_by_type"
+  },
+  {
+   "topic": "setup",
+   "text": "Pad the bar; set up with the bench secure so it can't slide.",
+   "evidence": "modeled"
+  }
+ ],
+ "alternatives": [
+  {
+   "goal": "more_stretch",
+   "goal_label": "More stretch",
+   "exercise_id": "back-squat",
+   "why": "Similar glute growth plus quads and adductors.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "supported",
+   "citations": [
+    "plotkin2023"
+   ]
+  },
+  {
+   "goal": "more_stable",
+   "goal_label": "More stable",
+   "exercise_id": "smith-hip-thrust",
+   "why": "Fixed bar path; quicker setup.",
+   "differences": [
+    "More stable",
+    "Less systemic fatigue",
+    "Easier to learn"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "more_isolation",
+   "goal_label": "Better isolation",
+   "exercise_id": "hip-thrust-machine",
+   "why": "Machine version.",
+   "differences": [
+    "Better isolation",
+    "More stable",
+    "Less systemic fatigue"
+   ],
+   "evidence": "biomechanics"
+  },
+  {
+   "goal": "home_dumbbells",
+   "goal_label": "Home gym: dumbbells",
+   "exercise_id": "bulgarian-split-squat",
+   "why": "Dumbbell glute and quad work.",
+   "differences": [
+    "More stretch emphasis",
+    "Less peak-contraction focus",
+    "Less isolation"
+   ],
+   "evidence": "biomechanics"
+  }
+ ],
+ "swap": {
+  "stretch_emphasis": 1,
+  "muscle_isolation": 2,
+  "stability": 2,
+  "systemic_fatigue": 3,
+  "loading_potential": 3,
+  "skill_demand": 2,
+  "flags": [
+   "peak_contraction_focus"
+  ]
+ },
+ "app_values": {
+  "exercises.json:@hip-thrust.muscles.hamstrings": 0.4,
+  "exercises.json:@hip-thrust.muscles.quads": 0.2,
+  "rules.json:logger.load_jump.max_jump_pct_by_type.primary": 5,
+  "rules.json:logger.load_jump.rep_overshoot": 2,
+  "rules.json:logger.load_step.kg.barbell": 2.5,
+  "rules.json:logger.load_step.lb.barbell": 5,
+  "rules.json:logger.rep_range_by_type.primary.0": 6,
+  "rules.json:logger.rep_range_by_type.primary.1": 10,
+  "rules.json:logger.target_rir_by_type.primary": 3,
+  "rules.json:logger.warmup_ramp.sets_by_working_load.three_from_kg": 60
+ },
+ "notes": [
+  "Hip-thrust findings are one study in untrained adults.",
+  "Ratings and display bands are the library model (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4, not counted < 0.25).",
+  "Technique and load management only. This page makes no medical or injury claims."
+ ]
+}

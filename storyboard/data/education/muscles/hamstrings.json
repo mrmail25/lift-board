@@ -1,0 +1,401 @@
+{
+  "schema": "lift-board.education.muscle/1",
+  "id": "hamstrings",
+  "kind": "muscle",
+  "title": "Hamstrings",
+  "status": "final",
+  "updated": "2026-10-21",
+  "region_ids": [
+    "hamstrings"
+  ],
+  "summary": "The muscles on the back of the thigh. Three of the four heads cross both hip and knee, so they bend the knee and extend the hip. Seated leg curls (hip bent, hamstrings long) grew them more than lying curls, and squats and hip thrusts grew them little.",
+  "what_it_is": {
+    "overview": "One region in the app, the whole back of the thigh. The four heads (biceps femoris long and short heads, semitendinosus, semimembranosus) are described here; targets count the whole group.",
+    "heads": [
+      {
+        "id": "biceps_femoris_long",
+        "name": "Biceps femoris long head",
+        "origin": "The sitting bone (ischial tuberosity) at the bottom of the pelvis.",
+        "insertion": "The head of the fibula on the outer knee.",
+        "fiber_direction": "Runs down the outer back of the thigh.",
+        "crosses_joints": [
+          "hip",
+          "knee"
+        ],
+        "tracked_region": "hamstrings",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "biceps_femoris_short",
+        "name": "Biceps femoris short head",
+        "origin": "The back of the thigh bone (linea aspera).",
+        "insertion": "The head of the fibula with the long head.",
+        "fiber_direction": "Short fibres under the long head, low on the outer thigh.",
+        "crosses_joints": [
+          "knee"
+        ],
+        "tracked_region": "hamstrings",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "semitendinosus",
+        "name": "Semitendinosus",
+        "origin": "The sitting bone.",
+        "insertion": "The inner top of the shin (pes anserinus).",
+        "fiber_direction": "Runs down the inner back of the thigh, with a long tendon.",
+        "crosses_joints": [
+          "hip",
+          "knee"
+        ],
+        "tracked_region": "hamstrings",
+        "evidence": "biomechanics"
+      },
+      {
+        "id": "semimembranosus",
+        "name": "Semimembranosus",
+        "origin": "The sitting bone.",
+        "insertion": "The back of the inner shin bone near the knee.",
+        "fiber_direction": "Broad and flat, deep to the semitendinosus.",
+        "crosses_joints": [
+          "hip",
+          "knee"
+        ],
+        "tracked_region": "hamstrings",
+        "evidence": "biomechanics"
+      }
+    ]
+  },
+  "what_it_does": [
+    {
+      "head_ids": [
+        "biceps_femoris_long",
+        "biceps_femoris_short",
+        "semitendinosus",
+        "semimembranosus"
+      ],
+      "joint": "knee",
+      "action": "Knee flexion (bending the knee).",
+      "detail": "The job in every leg curl and Nordic curl.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "biceps_femoris_long",
+        "semitendinosus",
+        "semimembranosus"
+      ],
+      "joint": "hip",
+      "action": "Hip extension.",
+      "detail": "The job in RDLs, good mornings and back extensions.",
+      "evidence": "biomechanics"
+    },
+    {
+      "head_ids": [
+        "biceps_femoris_long",
+        "semitendinosus",
+        "semimembranosus"
+      ],
+      "joint": "knee",
+      "action": "Grew more when knee flexion was trained with the hip bent (seated curls).",
+      "detail": "Seated curls lengthen the two-joint heads at the hip; the short head, which crosses only the knee, grew about the same either way.",
+      "evidence": "supported",
+      "citations": [
+        "maeo2021"
+      ]
+    }
+  ],
+  "relationships": {
+    "synergists": [
+      {
+        "name": "Glutes",
+        "role": "Extend the hip with the hamstrings.",
+        "evidence": "biomechanics",
+        "muscle_id": "glutes"
+      },
+      {
+        "name": "Adductor magnus",
+        "role": "Its rear part extends the hip like a hamstring.",
+        "evidence": "biomechanics",
+        "muscle_id": "adductors"
+      },
+      {
+        "name": "Gastrocnemius",
+        "role": "Helps bend the knee.",
+        "evidence": "biomechanics",
+        "muscle_id": "calves"
+      }
+    ],
+    "antagonists": [
+      {
+        "name": "Quads",
+        "role": "Straighten the knee.",
+        "evidence": "biomechanics",
+        "muscle_id": "quads"
+      },
+      {
+        "name": "Hip flexors",
+        "role": "Flex the hip; not tracked.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "stabilizer_roles": [
+      {
+        "text": "In squats the hamstrings change length little because the hip and knee bend together; most squats are rated below 0.25 for hamstrings (back squat 0).",
+        "evidence": "biomechanics"
+      },
+      {
+        "text": "In hip thrusts the hamstrings help extend the hip; hip thrusts are rated 0.4.",
+        "evidence": "biomechanics"
+      }
+    ],
+    "indirect": [
+      {
+        "exercise_id": "deadlift",
+        "rating": 0.7,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "trap-bar-deadlift",
+        "rating": 0.5,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "hip-thrust",
+        "rating": 0.4,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "back-extension",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "kettlebell-swing",
+        "rating": 0.6,
+        "role": "helper"
+      },
+      {
+        "exercise_id": "walking-lunge",
+        "rating": 0.3,
+        "role": "minor"
+      },
+      {
+        "exercise_id": "back-squat",
+        "rating": 0,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      },
+      {
+        "exercise_id": "bulgarian-split-squat",
+        "rating": 0,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      },
+      {
+        "exercise_id": "leg-press",
+        "rating": 0,
+        "role": "not_counted",
+        "note": "Below the 0.25 cut-off, so it adds nothing to this muscle's sets."
+      }
+    ],
+    "indirect_note": "Each working set adds the exercise's rating for this muscle to the weekly total, and ratings under 0.25 count as 0. 3 sets of Romanian deadlift (1.0), 3 sets of seated leg curl (1.0) and 3 sets of hip thrust (0.4) give 3 + 3 + 1.2 = 7.2, which the panel shows as 7 (rounded to the nearest 0.5). The full list comes live from exercises.json; the rows above are examples and the ratings are coaching estimates.",
+    "indirect_evidence": "modeled"
+  },
+  "bias": [
+    {
+      "target": "all",
+      "goal": "Knee flexion with the hip bent",
+      "how": {
+        "joint_angle": "Hip bent forward in the seat; curl the knee.",
+        "stretch_position": "Knee straight at the start with the hip flexed, so the two-joint heads are long at both joints.",
+        "stance": "Seated leg-curl machine, torso leaning slightly forward."
+      },
+      "swap_tags": [
+        "stretch_emphasis",
+        "muscle_isolation"
+      ],
+      "example_exercise_ids": [
+        "seated-leg-curl"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "maeo2021"
+      ],
+      "caveat": "Whole hamstrings grew +14.1% vs +9.3% in 12 weeks; the short head did not differ."
+    },
+    {
+      "target": "biceps_femoris_long",
+      "goal": "Biceps femoris long head: hip extension",
+      "how": {
+        "joint_angle": "Hip hinge with the knee nearly straight.",
+        "stretch_position": "Bottom of a 45-degree hip extension or RDL."
+      },
+      "swap_tags": [
+        "stretch_emphasis",
+        "spinal_load"
+      ],
+      "example_exercise_ids": [
+        "45-degree-hyperextension",
+        "romanian-deadlift",
+        "good-morning"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "bourne2017"
+      ],
+      "caveat": "Hip extension grew the long head more than Nordic curls; it also grew the semimembranosus, which Nordics did not."
+    },
+    {
+      "target": "semitendinosus",
+      "goal": "Semitendinosus: knee flexion",
+      "how": {
+        "joint_angle": "Knee flexion, including eccentric work.",
+        "stance": "Kneeling for Nordics; machine for curls."
+      },
+      "swap_tags": [
+        "stretch_emphasis"
+      ],
+      "example_exercise_ids": [
+        "nordic-curl",
+        "lying-leg-curl",
+        "seated-leg-curl"
+      ],
+      "evidence": "supported",
+      "citations": [
+        "bourne2017"
+      ],
+      "caveat": "Both Nordic curls and hip extension grew the semitendinosus."
+    },
+    {
+      "target": "all",
+      "goal": "Lower fatigue cost",
+      "how": {
+        "stance": "Machine curls instead of heavy hinges."
+      },
+      "swap_tags": [
+        "systemic_fatigue",
+        "spinal_load",
+        "stability"
+      ],
+      "example_exercise_ids": [
+        "seated-leg-curl",
+        "lying-leg-curl"
+      ],
+      "evidence": "biomechanics",
+      "citations": [],
+      "caveat": "Curls give near-full hamstring credit with little whole-body fatigue."
+    }
+  ],
+  "best_exercises": [
+    {
+      "exercise_id": "seated-leg-curl",
+      "why": "Hip bent, hamstrings long; grew the hamstrings more than lying curls.",
+      "evidence": "supported",
+      "citations": [
+        "maeo2021"
+      ]
+    },
+    {
+      "exercise_id": "romanian-deadlift",
+      "why": "Hip hinge loaded in the stretch; hamstrings 1.0.",
+      "evidence": "supported",
+      "citations": [
+        "bourne2017"
+      ]
+    },
+    {
+      "exercise_id": "45-degree-hyperextension",
+      "why": "The hip-extension movement that grew the long head and semimembranosus.",
+      "evidence": "supported",
+      "citations": [
+        "bourne2017"
+      ]
+    },
+    {
+      "exercise_id": "nordic-curl",
+      "why": "Eccentric knee flexion; grew the semitendinosus.",
+      "evidence": "supported",
+      "citations": [
+        "bourne2017"
+      ]
+    },
+    {
+      "exercise_id": "lying-leg-curl",
+      "why": "Simple knee-flexion isolation; still grew the hamstrings, just less than seated.",
+      "evidence": "supported",
+      "citations": [
+        "maeo2021"
+      ]
+    },
+    {
+      "exercise_id": "good-morning",
+      "why": "Bar-on-back hinge; hamstrings 1.0.",
+      "evidence": "biomechanics"
+    },
+    {
+      "exercise_id": "stiff-leg-dumbbell-deadlift",
+      "why": "Hinge with dumbbells; hamstrings 1.0.",
+      "evidence": "biomechanics"
+    }
+  ],
+  "mistakes": [
+    {
+      "text": "Counting on squats or hip thrusts to grow the hamstrings.",
+      "evidence": "supported",
+      "citations": [
+        "kubo2019",
+        "plotkin2023"
+      ]
+    },
+    {
+      "text": "Choosing only lying curls when a seated curl is available.",
+      "evidence": "supported",
+      "citations": [
+        "maeo2021"
+      ]
+    },
+    {
+      "text": "Rounding the back and bending the knees on RDLs so the hips barely hinge.",
+      "evidence": "biomechanics"
+    },
+    {
+      "text": "Cutting the stretch short on curls and hinges.",
+      "evidence": "modeled"
+    }
+  ],
+  "coach_cues": [
+    {
+      "cue": "Hips back, soft knees, bar close.",
+      "why": "Turns an RDL into a hip hinge.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Lean forward in the seated curl.",
+      "why": "Lengthens the hamstrings at the hip.",
+      "evidence": "modeled"
+    },
+    {
+      "cue": "Lower slowly on Nordics.",
+      "why": "Uses the eccentric range under control.",
+      "evidence": "biomechanics"
+    },
+    {
+      "cue": "Feel the stretch, then drive the hips through.",
+      "why": "Uses the long-length range.",
+      "evidence": "modeled"
+    }
+  ],
+  "app_values": {
+    "targets.json:targets.hamstrings.min": 8,
+    "targets.json:targets.hamstrings.max": 16,
+    "targets.json:counting.min_rating_to_count": 0.25,
+    "targets.json:counting.round_to": 0.5,
+    "exercises.json:@hip-thrust.muscles.hamstrings": 0.4,
+    "exercises.json:@back-squat.muscles.hamstrings": 0
+  },
+  "notes": [
+    "Weekly target in the app: 8 to 16 hamstrings sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
+    "Maeo 2021 and Bourne 2017 tested untrained or recreationally active people over 10 to 12 weeks.",
+    "Hamstring injury prevention is outside this page; no medical claims."
+  ]
+}
