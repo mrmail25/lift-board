@@ -245,7 +245,7 @@ function loadTemplate(t){const days=blankDays(),CH=TP().chooseDefaults(RD(),t.da
     D.slots=td.slots.map((s,i)=>({sid:s.id,label:s.label,type:s.slot_type,min:s.sets.min,max:s.sets.max,n:s.sets.default,def:(CH[s.id]||[s.default_exercise])[0],rank:CH[s.id]?CH[s.id][1]+1:s.default_rank,i}))}
   B.days=days;B.tpl=t.id;B.level=t.level;B.name=`${t.split_name} · ${t.days_per_week} days (slots)`;B.version=0;B.dirty=true;B.edited=Date.now()}
 // ------------------------------------------------------------- analysis sheet
-let AN=null,FIX=[];const RLAB=id=>PC.ruleLabel(RD(),id); // rules.json rules[].short_label
+let AN=null,FIX=[],AMBU=null;const RLAB=id=>PC.ruleLabel(RD(),id); // rules.json rules[].short_label
 const LBL=m=>(RD().rules.ranking.labels.regions[m])||X.ML[m]||m.replace(/_/g,' ');
 // Analysis: sections, items and wording come from rules.json analysis_metrics v2 (see the batch B note below). Suggestions
 // are the typed suggestions of rules.json suggestions.analysis_sheet, from logic/analysis.js (port of tools/analysis.py
@@ -300,7 +300,10 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   const sugCard=s=>`<div class="flag sugc ${s.severity}${s.fixes.length?' hasfix':''}" data-type="${s.type}" data-src="${s.source}" data-sec="${s.section}"${(s.target||{}).flag?` data-rule="${ruleOf(s.target.flag)}"`:''}>
       <div class="ftl">${(TY[s.type]||{}).label||s.type} <span class="tag sev ${s.severity}">${sevL[s.severity]||s.severity}</span></div>${(([a,b])=>`<p class="s1">${a}</p>${b?`<details class="why"><summary class="whys">Why?</summary><p>${b}</p></details>`:''}`)(oneSentence(sugTarget(s,d,lv)))}
       ${s.fixes.length?s.fixes.map(f=>fxRow(f,s)).join(''):'<p class="sub nofix">No one-tap change passes the checks. Change it by hand.</p>'}</div>`;
-  const vrow=([m,v])=>{const st=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',VB=X.VB,top=v.max*(VB.red_factor!=null?VB.red_factor:1);return `<button class="row vrow" data-vs="${st}" data-b="mus" data-m="${m}"><span class="vm">${X.ML[m]||m}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${+v.raw.toFixed(1)}<small>/${v.min}–${v.max}</small></span></button>`};
+  const VCOL=((IB.weekly_sets_per_muscle||{}).value||{}).muscles||{};
+  // Coach's per-muscle colour (items() weekly_sets_per_muscle: G in range, A close = within the volume_in_reach tolerance, R far):
+  // an amber muscle shows amber with a "Close" status and is never green; G / R keep the volume-band colours
+  const vrow=([m,v])=>{const col=(VCOL[m]||{}).colour,st0=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',st=col==='A'?'amber':col==='R'&&st0==='in'?'red':st0,VB=X.VB,top=v.max*(VB.red_factor!=null?VB.red_factor:1);return `<button class="row vrow${col==='A'?' vclose':''}" data-vs="${st}" data-col="${col||''}" data-b="mus" data-m="${m}"><span class="vm">${X.ML[m]||m}${col==='A'?`<small class="vst amb">${st0==='under'?'Close, under':'Close, over'}</small>`:''}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${+v.raw.toFixed(1)}<small>/${v.min}–${v.max}</small></span></button>`};
   const T=Object.entries(A.muscles).filter(([m,v])=>v.raw>0||v.min>0),RU={};R.rules.forEach(r=>RU[r.id]=r);
   const FM=R.frequency_muscles,fq=m=>B.days.map((dd,i)=>{const e=PC.eff(dt,dd.tiles.map(t=>({id:t.id,sets:t.sets})))[m]||0;const ok=e>=dt.targets.analytics.frequency_min_effective;return `<i class="${ok?'on':e>0?'lo':''}" data-r="${RAMPL(e)}" title="${WD[i]} · ${+e.toFixed(1)} sets${ok?' (counts)':''}"></i>`}).join('');
   const SL=RU.session_length,mx=Math.max(SL.warn_min+15,...A.day.map(x=>x.minutes)),SP=A.spinal,cm=Object.keys(A.muscles).includes(AN.mus)?AN.mus:'chest';
@@ -332,16 +335,22 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
     return `${ds?`<b>${ds}</b>`:''}${xs.length?`${ds?' · ':''}${xs.slice(0,5).join(', ')}${xs.length>5?` +${xs.length-5} more`:''}`:''}${f.missing_slot?`Nothing on the board fills ${(MPL[f.missing_slot]||f.missing_slot.replace(/_/g,' ')).toLowerCase()}`:''}`};
   const fdet=(f,note)=>`<div class="fdet ${note?'note':f.severity}" data-rule="${f.rule}"${f.muscle?` data-m="${f.muscle}"`:''}><p>${PC.message(dt,f.flag,d,lv)}</p>${who(f)?`<p class="fwho">${who(f)}</p>`:''}${f.muscle?`<button class="btn plain sm" data-b="mus" data-m="${f.muscle}">What trains ${MLB(f.muscle).toLowerCase()} ›</button>`:''}</div>`;
   const NA=it=>{const a=(AMI[it.id]||{}).applies||{};return (a.requires||[]).includes('baseline_saved')?'needs a saved normal week':(a.levels&&!a.levels.includes(lv))?`not used at ${lv} level`:'needs 2+ training days'};
-  const stTag=it=>it.kind!=='check'?'':it.status==='pass'?'<span class="tag rs ok">✓ Pass</span>':it.status==='attention'?`<span class="tag rs bad">! ${it.flags.length>1?it.flags.length+' flags':'Attention'}</span>`:`<span class="tag rs na" title="${NA(it)}">n/a</span>`;
-  const mrow=it=>{const def=AMI[it.id]||{};return `<div class="mrow" data-metric="${it.id}" data-kind="${it.kind}" data-status="${def.status}" data-evidence="${def.evidence}"${it.status?` data-check="${it.status}"`:''}>
+  const AMB=Object.entries(VCOL).filter(([,c])=>c.colour==='A').map(([m,c])=>({m,sets:c.sets,min:(A.muscles[m]||{}).min,max:(A.muscles[m]||{}).max}));
+  const ambTxt=a=>`${MLB(a.m).toLowerCase()} ${+(+a.sets).toFixed(2)} of ${a.min}–${a.max}`;
+  const ambBlock=()=>{if(!AMB.length)return '';const pk=AMB.map(a=>[a,cbPick('mus',a.m)]);
+    return `<div class="ambl" data-n="${AMB.length}"><p class="ambh">Passing, ${AMB.length} close to target: ${AMB.map(ambTxt).join(', ')}</p>
+     ${AMBU&&AMBU.sig===sigD()?`<div class="aplc ambu"><div class="grow"><p>${AMBU.text}</p></div><button class="btn sm ink" data-b="ambundo">Undo</button></div>`:''}
+     <div class="group ambg">${pk.map(([a,p])=>`<div class="row ambr" data-m="${a.m}"><div class="grow"><div class="t1">${MLB(a.m)} <span class="num sub">${+(+a.sets).toFixed(2)} of ${a.min}–${a.max}</span></div>${p?`<div class="t2">Suggested: ${X.exNameP(p.id)} on ${WDL[DAYS.indexOf(p.day)]}, ${setsFor(p.id)} sets</div>`:''}</div>${p?`<button class="btn sm accent ambadd" data-b="ambadd" data-m="${a.m}" data-id="${p.id}" data-day="${p.day}">Add suggested</button>`:''}</div>`).join('')}</div></div>`};
+  const stTag=it=>it.kind!=='check'?'':it.id==='volume_in_reach'&&it.status==='pass'&&AMB.length?`<span class="tag rs amb">✓ Passing · ${AMB.length} close</span>`:it.status==='pass'?'<span class="tag rs ok">✓ Pass</span>':it.status==='attention'?`<span class="tag rs bad">! ${it.flags.length>1?it.flags.length+' flags':'Attention'}</span>`:`<span class="tag rs na" title="${NA(it)}">n/a</span>`;
+  const mrow=it=>{const def=AMI[it.id]||{};return `<div class="mrow" data-metric="${it.id}" data-kind="${it.kind}" data-status="${def.status}" data-evidence="${def.evidence}"${it.status?` data-check="${it.status}"`:''}${it.id==='volume_in_reach'?` data-amber="${AMB.length}"`:''}>
      <div class="mh">${X.kchip(it.kind)}<b class="ml">${it.label}</b>${stTag(it)}<button class="ixb" data-b="anx" data-id="${it.id}" aria-label="Explain: ${it.label}">${X.I('info',1.8)}</button></div>
      ${VAL[it.id]?`<div class="mval num">${VAL[it.id]}</div>`:''}<p class="mdesc">${def.description}${it.status==='n/a'?` <em>Not counted: ${NA(it)}.</em>`:''}</p>${def.status==='proposed'?'<span class="tag prop">Proposed</span>':''}
-     ${EXTRA[it.id]||''}${(it.flags||[]).map(f=>fdet(f)).join('')}${(it.notes||[]).map(f=>fdet(f,1)).join('')}</div>`};
+     ${EXTRA[it.id]||''}${it.id==='volume_in_reach'&&it.status==='pass'?ambBlock():''}${(it.flags||[]).map(f=>fdet(f)).join('')}${(it.notes||[]).map(f=>fdet(f,1)).join('')}</div>`};
   const aplc=([a,i])=>`<div class="aplc" data-k="${i}"><div class="grow"><div class="ftl">Applied</div><p>${a.preview}</p>${a.asig===cur?'':'<p class="sub">The board changed after this. Undo puts the whole board back as it was just before Apply, so later edits are lost.</p>'}</div><button class="btn sm ink" data-b="unapply" data-k="${i}">Undo</button></div>`;
   const SECS=EV.sections.filter(s=>s.tab==='build_analysis'&&s.id!=='suggestions');
   const sec=c=>{const its=IT.filter(i=>i.section===c.id),chk=its.filter(i=>i.kind==='check'&&i.status!=='n/a'),bad=chk.filter(i=>i.status==='attention').length;
     const sg=SH.filter(s=>s.section===c.id),top=SUGX.has(c.id)?sg:sg.slice(0,SUG_TOP),ap=APPLIED.map((a,i)=>[a,i]).filter(([a])=>a.section===c.id);
-    return `<section class="acat" data-cat="${c.id}"><div class="ghead cath">${c.label} <span class="gsub">${chk.length?`${chk.length-bad} of ${chk.length} checks pass`:''}</span></div><p class="cdesc">${c.description}</p>
+    return `<section class="acat" data-cat="${c.id}"><div class="ghead cath">${c.label} <span class="gsub">${chk.length?`${chk.length-bad} of ${chk.length} checks pass`:''}${c.id==='volume'&&AMB.length&&its.some(i=>i.id==='volume_in_reach'&&i.status==='pass')?` · ${AMB.length} close to target`:''}</span></div><p class="cdesc">${c.description}</p>
       ${ap.length?`<div class="flags">${ap.map(aplc).join('')}</div>`:''}${sg.length?`<div class="flags isug" data-n="${sg.length}">${top.map(sugCard).join('')}${sg.length>top.length?`<button class="btn plain block more" data-b="sugmore" data-sec="${c.id}">Show all ${sg.length} suggestions</button>`:''}</div>`:''}
       <div class="mlist">${its.map(mrow).join('')}</div></section>`};
   const nWarn=SH.filter(s=>s.severity==='warn').length;
@@ -444,6 +453,9 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   if(k==='mus'||k==='pat')return contribSheet(k,b.dataset[k==='mus'?'m':'p']);if(k==='cbclose')return CB&&CB.close();
   if(k==='cbrm'){const f=findT(b.dataset.u);if(!f)return;const nm=X.exNameP(f.t.id),dn=WD[DAYS.indexOf(f.d.day)];commit(()=>removeU([b.dataset.u]),`Removed ${nm}`);if(CB){CB.last=`Removed ${nm} from ${dn}.`;cbRe()}return}
   if(k==='cbadd'){const id=b.dataset.id,day=b.dataset.day,dn=WD[DAYS.indexOf(day)];commit(()=>{B.days.find(D=>D.day===day).tiles.push(T(id,setsFor(id)))},`Added ${X.exNameP(id)} to ${dn}`);if(CB){CB.last=`Added ${X.exNameP(id)} to ${dn} (${setsFor(id)} sets).`;cbRe()}return}
+  if(k==='ambadd'){const id=b.dataset.id,day=b.dataset.day,m=b.dataset.m;commit(()=>{B.days.find(D=>D.day===day).tiles.push(T(id,setsFor(id)))},`Added ${X.exNameP(id)} to ${WD[DAYS.indexOf(day)]}`);
+    AMBU={text:`Added ${X.exNameP(id)} to ${WDL[DAYS.indexOf(day)]} (${setsFor(id)} sets) for ${MLB(m).toLowerCase()}.`,sig:sigD(),m};if(AN&&!AN.closed)renderAnalysis();return}
+  if(k==='ambundo'){undo();AMBU=null;hideUndo();if(AN&&!AN.closed)renderAnalysis();return}
   if(k==='cbundo'){undo();if(CB){CB.last=null;cbRe()}return}if(k==='anclose')return AN&&AN.close();
   if(k==='apply'){const z=FIX[+b.dataset.k];if(!z)return;const before=snap(),bsig=sigD();commit(()=>applyDays(z.days),`Applied: ${z.preview}`);APPLIED.unshift({preview:z.preview,before,bsig,asig:sigD(),section:z.section});if(AN&&!AN.closed){renderAnalysis();const el=AN.body.querySelector(`.acat[data-cat="${z.section}"] .aplc`);if(el)el.scrollIntoView({block:'center'})}return}
   if(k==='unapply'){const a=APPLIED[+b.dataset.k];if(!a)return;B.hist.push(snap());restore(a.before);APPLIED.splice(+b.dataset.k,1);paint();hideUndo();X.toast('Suggestion undone');return}

@@ -26,7 +26,7 @@
   --vol-under:#B9B9BE; --vol-amber:#F0A830; --vol-red:#D93B30;
   /* ONE sequential ramp (round 2): Build Day-mode map + days-per-muscle grid. Effective sets that day: 0, >0, >=1.5, >=3, >=5.
      Single hue (blue), monotonic in contrast against the surface in both themes; never a range colour (green/grey/amber/red). */
-  --ramp-0:var(--fill); --ramp-1:#C9DCF5; --ramp-2:#8DB5EA; --ramp-3:#4C82D2; --ramp-4:#1D4E9E;
+  --ramp-0:var(--fill); --ramp-1:#ACC8F0; --ramp-2:#8DB5EA; --ramp-3:#4C82D2; --ramp-4:#1D4E9E;
   --ramp-fg-hi:#fff; /* text on ramp-3/4 */
   --vol-in-range:#5cc48c; /* in range, both body maps + volume bars (CoS 2026-10-22; Mr Dude's live-app mid green, Oct 11). Darkens toward max via color-mix */
   /* Build chit edge: body region of the exercise's main muscle (functional, never brand) */
@@ -49,7 +49,10 @@
   --line-strong:#C4C4C9; --grab:#C7C7CC; --tab-off:#999A9F;
   --kp-bg:#D6D7DC; --kp-press:#B9BAC0;
   --map-base:#ECECEF; --map-line:#D6D6DA; --map-empty:#DCDCE0; --map-off:#D9D9DD;
-  --heat-1:#C4C4C9; --heat-2:#A8A8AD; --heat-3:#5A5A5F; --heat-4:#0B0B0C; /* Learn guide-ready map (greys of ink) */
+  /* muscle role on a map (batch C, Mr Dude: no greyscale on maps): exercise popup, Finish, Learn. main = primary (rating >= 0.75),
+     helper = secondary, minor = minor (Coach's exercise-details level buckets). Never grey: grey means unworked / under range. */
+  --vol-in-range-ink:#1F8A50; /* in-range green as text on white (pass tick) */
+  --hl-main:#E8430C; --hl-helper:#F08A5D; --hl-minor:#F7BC9F;
   --warn-tint:#FFF3D6; --warn-ink:#7A5300; --warn-line:#D9A93A;
   --ok-tint:#E4F4EA; --ok-ink:#1E6B3A; --bad-tint:#FDECEC;
   --slot-bg:rgba(255,255,255,.55);
@@ -97,7 +100,8 @@ html[data-theme=dark]{
   --line-strong:#48484A; --grab:#545458; --tab-off:#7C7C82;
   --kp-bg:#1C1C1E; --kp-press:#4A4A4D;
   --map-base:#2A2A2D; --map-line:#3C3C40; --map-empty:#3A3A3E; --map-off:#3A3A3E;
-  --heat-1:#4F4F54; --heat-2:#76767B; --heat-3:#B0B0B5; --heat-4:#F2F2F4;
+  --vol-in-range-ink:#4CC285;
+  --hl-main:#FF8452; --hl-helper:#C9592B; --hl-minor:#85442B;
   --warn-tint:#3A2E12; --warn-ink:#F2C46A; --warn-line:#8A6A22;
   --ok-tint:#143322; --ok-ink:#7FD8A4; --bad-tint:#3A1616;
   --slot-bg:rgba(255,255,255,.04);
@@ -124,7 +128,8 @@ html[data-theme=dark]{
   --line-strong:#48484A; --grab:#545458; --tab-off:#7C7C82;
   --kp-bg:#1C1C1E; --kp-press:#4A4A4D;
   --map-base:#2A2A2D; --map-line:#3C3C40; --map-empty:#3A3A3E; --map-off:#3A3A3E;
-  --heat-1:#4F4F54; --heat-2:#76767B; --heat-3:#B0B0B5; --heat-4:#F2F2F4;
+  --vol-in-range-ink:#4CC285;
+  --hl-main:#FF8452; --hl-helper:#C9592B; --hl-minor:#85442B;
   --warn-tint:#3A2E12; --warn-ink:#F2C46A; --warn-line:#8A6A22;
   --ok-tint:#143322; --ok-ink:#7FD8A4; --bad-tint:#3A1616;
   --slot-bg:rgba(255,255,255,.04);

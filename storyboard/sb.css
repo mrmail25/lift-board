@@ -959,3 +959,14 @@ details.ls.flash{box-shadow:0 0 0 3px var(--accent);border-radius:var(--r-md)}
 /* Progress: logged-progress items */
 .pitem .t1{display:flex;align-items:center;gap:6px}.pitem .nc{color:var(--text-3)}
 .cbadd span{display:flex;align-items:center;gap:6px}
+/* batch C: contributor-sheet names and fatigue tier labels wrap instead of an ellipsis */
+.cbsheet .cbr .t1,.fzt .t1{white-space:normal;overflow:visible;text-overflow:clip}
+/* batch C: volume check display. Plain green tick only when every muscle is in range; amber (close, Coach colour A) passes in amber */
+.tag.rs.ok{color:var(--vol-in-range-ink)}
+.tag.rs.amb{background:var(--warn-tint);color:var(--warn-ink)}
+.vrow .vm{display:flex;flex-direction:column;justify-content:center;line-height:1.15}
+.vrow .vst{font-size:11px;font-weight:600;margin-top:1px}.vst.amb{color:var(--warn-ink)}
+.ambl{margin:8px 0 4px;border:1px solid var(--warn-line);background:var(--warn-tint);border-radius:12px;padding:10px 12px}
+.ambl .ambh{margin:0 0 8px;font-size:var(--t-foot);color:var(--warn-ink);font-weight:600;line-height:1.35}
+.ambl .group{margin:0;background:var(--paper)}.ambr{gap:10px}.ambr .t1{white-space:normal}.ambr .t2{white-space:normal}
+.ambr .btn.sm{flex:none;height:30px;padding:0 12px}.ambl .aplc.ambu{margin:0 0 8px}

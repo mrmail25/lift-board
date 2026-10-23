@@ -217,3 +217,31 @@ Parity (node, all 0 mismatches): test/analysis.diff.js, movement.diff.js, templa
     21).
 - **Tests**: batch B block in `test/sb.test.js` (`b3…`, `b4…`, `b7…`). The round-1 analysis and suggestion checks were rewritten
   for the inline sections. Shots: `28a…` (Analysis), `29a…` (tray and popup), `30a…` (Finish), light and dark.
+
+## Batch C (CoS fixes, 2026-10-23)
+
+- **Map role colours**: `tokens.css` adds `--hl-main`, `--hl-helper` and `--hl-minor` in the light set and both dark sets. The
+  grey `--heat-*` tokens are gone. Grey on a map now means only unworked (`--map-empty`) or the volume map's under-range
+  colour (`--vol-under`). Changes in `sb.js`:
+  - `FILL` turns numeric values (ratings) into role colours: 0.75 and up main, 0.4 and up helper, else minor.
+  - The exercise popup uses Coach's `body_map.levels` (primary → main, secondary → helper, minor → minor; trace isn't shaded).
+  - The Finish map uses `sesRole`: each muscle's best level across today's done exercises (RD.EX ratings, same buckets). The
+    bars still show effective sets.
+  - The Learn index map uses main for "Guide ready" and minor for "Coming soon".
+  - Light `--ramp-1` is now #ACC8F0 (it was #C9DCF5, close to grey).
+- **Contributor sheets and fatigue breakdown**: names and tier labels wrap (`.cbsheet .cbr .t1` and `.fzt .t1` use
+  `white-space: normal`).
+- **Volume check display**: the rule is unchanged. `volume_in_reach` fails only on red (more than 2 sets under the minimum or
+  more than 25% over the maximum); amber (close) passes. The display now follows Coach's per-muscle colour from
+  `items()` `weekly_sets_per_muscle`:
+  - When the check passes with amber muscles, the tag reads "✓ Passing · N close". Below it: "Passing, N close to target:
+    muscle sets of min–max, …", then one row per muscle with Add suggested. That pick is the same as the contributor sheet's
+    (`cbPick`). An Undo row stays until the board changes.
+  - The section header adds "· N close to target".
+  - In Weekly sets per muscle, amber rows get an amber bar and a "Close, under" or "Close, over" label, and are never green.
+  - The plain green "✓ Pass" (`--vol-in-range-ink`) only shows when every muscle is in range.
+- **Rank diff**: `data/ranking-reference.json` is Coach's v13 regeneration (byte-equal to `../data`). `rank.diff.js` tests that
+  reference (67 cases, 247 exercises) and flags a stale copy. The swap and preset snapshot cross-check is opt-in with
+  `NEUTRAL=1`.
+- **Tests**: `allRoutesRender` and `learn-lats` wait for their content instead of a fixed delay. 10 new `c…` checks are in the
+  Batch C block. Shots: `31a…31e`, plus the re-shot 28a, 28g, 28j, 29d, 29e and 30d.

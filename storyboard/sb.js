@@ -437,7 +437,7 @@ function finStats(){const F=FIN,H=F.X,u=S.unit,W=F.sets.filter(x=>x.kind==='work
 const fmtVol=v=>Math.round(v).toLocaleString('en-US');
 const dayLong=iso=>{const d=new Date(iso.slice(0,10)+'T12:00:00');return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})};
 V.finish=()=>{if(!FIN)FIN=finBuild(true);const F=FIN,T=finStats(),u=S.unit,nPR=Object.keys(T.P).length,up=T.cmp.filter(c=>c.c==='up').length,dn=T.cmp.filter(c=>c.c==='down').length,cmpN=T.cmp.filter(c=>!c.first).length;
-  const vp=T.lastVol?(T.vol-T.lastVol)/T.lastVol*100:null,vm=withFin(()=>sesMus(F.ses.id)),mw=Object.entries(vm).sort((a,b)=>b[1]-a[1]);
+  const vp=T.lastVol?(T.vol-T.lastVol)/T.lastVol*100:null,vm=withFin(()=>sesMus(F.ses.id)),role=withFin(()=>sesRole(F.ses.id)),rvm=Object.fromEntries(Object.entries(role).map(([m,k])=>[m,HLV[k]])),mw=Object.entries(vm).sort((a,b)=>b[1]-a[1]);
   // facts only, in this order; each line is skipped when its number is not there
   const facts=[nPR?`${nPR} lift${nPR>1?'s':''} with a PR today.`:'',
     vp!=null?`${Math.abs(vp)<0.05?'Same volume as':`${Math.abs(vp).toFixed(1)}% ${vp>0?'more':'less'} volume than`} your last ${esc(F.ses.label)} (${dayLong(T.same.startedAt)}).`:`First ${esc(F.ses.label)} in your log, so there is nothing to compare the volume with yet.`,
@@ -454,9 +454,9 @@ V.finish=()=>{if(!FIN)FIN=finBuild(true);const F=FIN,T=finStats(),u=S.unit,nPR=O
    `<article class="fc" data-card="vs"><div class="eyebrow">vs last time</div><h2>${cmpN?`Up on ${up} of ${cmpN}`:'Nothing to compare yet'}</h2>
      ${T.cmp.map(c=>`<div class="cmp" data-ex="${c.id}"><div class="grow"><b>${exNameP(c.id)}</b><span class="num">${nfmt(c.now.l)} × ${c.now.reps}${c.first?' · first time logged':` · was ${nfmt(c.was.l)} × ${c.was.reps} on Oct ${c.when}`}</span></div><span class="dl ${c.first?'flat':c.c}">${c.first?'new':c.txt}</span></div>`).join('')}
      <p class="foot fpad">Best working set (heaviest, then most reps) against the last session that had the lift.${T.lastVol!=null?` Volume ${fmtVol(T.vol)} vs ${fmtVol(T.lastVol)} ${u}.`:''}</p></article>`,
-   `<article class="fc" data-card="map"><div class="eyebrow">Muscles worked</div><h2>${T.sets} hard sets</h2><div class="mapcard finmap"><div class="maps">${map('front',rampVol(vm))}${map('back',rampVol(vm))}</div><div class="legend">${rampLegend('sets this workout')}</div></div>
+   `<article class="fc" data-card="map"><div class="eyebrow">Muscles worked</div><h2>${T.sets} hard sets</h2><div class="mapcard finmap" data-role="${Object.entries(role).map(([m,k])=>m+':'+k).join(' ')}"><div class="maps">${map('front',rvm)}${map('back',rvm)}</div><div class="legend">${hlLegend()}</div></div>
      ${mw.slice(0,5).map(([m,n])=>`<div class="mw"><span>${ML[m]||m}</span><i style="--w:${Math.min(1,n/Math.max(1,mw[0][1]))*100}%"></i><b class="num">${+n.toFixed(1)}</b></div>`).join('')}
-     <p class="foot fpad">Same effective-set model as Build's Day map; helper muscles count as partial sets.</p></article>`,
+     <p class="foot fpad">Map: each muscle's biggest role in today's exercises. Bars: effective sets, the same model as Build's Day map (helper muscles count as partial sets).</p></article>`,
    `<article class="fc" data-card="e1"><div class="eyebrow">Strength trend</div><h2>e1RM vs your best</h2>${withFin(()=>e1Chart(F.ses.id))}</article>`,
    `<article class="fc ape" data-card="ape"><div class="ape-slot"><div class="logo-tile"></div></div><div class="eyebrow">Ape says</div><h2>Ape humor goes here</h2>
      <p class="sub">Placeholder card. The lines come later. Hidden when Settings › Ape humor is off.</p></article>`];
@@ -602,6 +602,9 @@ const volTxt=w=>{const v=w.volU===S.unit?w.vol:w.volU==='lb'?w.vol/KG_LB:w.vol*K
 // sets per muscle in one session: the same effective-set model as Build's Day map (progcheck analytics), shaded with the same ramp
 function sesMus(sid){if(!RD||!window.PCHECK)return {};const tiles=entsOf(sid).map(e=>({id:e.exerciseId,sets:setsOfE(e.id).filter(x=>x.kind==='working'&&x.done&&x.reps>0).length})).filter(t=>t.sets&&RD.EX[t.id]);
   if(!tiles.length)return {};const A=PCHECK.analytics(RD,[{day:'mon',tiles}],'intermediate'),o={};for(const [m,v] of Object.entries(A.muscles))if(v.raw>0)o[m]=v.raw;return o}
+// each muscle's role in one session: its best level over the exercises done (RD.EX ratings, Coach's buckets), for the Finish map
+function sesRole(sid){if(!RD)return {};const o={},rk={main:3,helper:2,minor:1};for(const e of entsOf(sid)){const x=RD.EX[e.exerciseId];if(!x||!setsOfE(e.id).some(s=>s.kind==='working'&&s.done&&s.reps>0))continue;
+  for(const [m,r] of Object.entries(x.muscles||{})){const k=hlLevel(r);if(k&&(!o[m]||rk[k]>rk[o[m]]))o[m]=k}}return o}
 const RAMPL=r=>!(r>0)?0:r>=5?4:r>=3?3:r>=1.5?2:1,rampFill=r=>{const l=RAMPL(r);return l?`var(--ramp-${l})`:null};
 const rampVol=m=>{const o={};for(const [k,v] of Object.entries(m)){const f=rampFill(v);if(f)o[k]=f}return o};
 const rampLegend=(t='sets')=>`<span class="mleg mlday"><i style="background:var(--ramp-1)"></i>&lt;1.5<i style="background:var(--ramp-2)"></i>1.5<i style="background:var(--ramp-3)"></i>3<i style="background:var(--ramp-4)"></i>5+ ${t}</span>`;
@@ -877,7 +880,14 @@ const IN_DARK=40;
 const volFill=(n,min,max)=>{const st=vStat(n,min,max);if(st!=='in')return VFILL[st];const p=max>min?Math.min(1,Math.max(0,(n-min)/(max-min))):0,k=Math.round(p*IN_DARK);
   return k?`color-mix(in oklch, var(--vol-in-range), var(--vol-mix) ${k}%)`:VFILL.in};
 const volLegend=()=>`<div class="legend vleg">${['under','in','amber','red'].map(k=>`<span><i style="background:${VFILL[k]}"></i>${VLAB[k]}</span>`).join('')}</div><p class="foot vfoot">Amber above max, red above ${VB.red_factor!=null?VB.red_factor+'×':'(factor pending)'} max · rules.json volume_bands</p>`;
-const FILL=v=>typeof v==='string'?(VFILL[v]||v):v==null?'var(--map-empty)':v>=.95?'var(--heat-4)':v>=.75?'var(--heat-3)':v>=.45?'var(--heat-2)':'var(--heat-1)'; // tokens so the map reads in dark mode
+// numeric map values = a credit rating / intensity, shaded by role with the --hl-* colour tokens (never greyscale; grey = unworked)
+const FILL=v=>typeof v==='string'?(VFILL[v]||v):v==null||!(v>0)?'var(--map-empty)':v>=.75?'var(--hl-main)':v>=.4?'var(--hl-helper)':'var(--hl-minor)';
+// role of a muscle from its credit rating = the same display bands as the rating labels next to the map (BAND: main >= 0.75,
+// helper >= 0.4, minor >= 0.25; under 0.25 adds no sets and is not shaded). exercise-details body_map.levels puts secondary
+// at >= 0.5, which would contradict the "0.4 Helper" labels in the same popup, so the map follows the labels.
+const HLV={main:'var(--hl-main)',helper:'var(--hl-helper)',minor:'var(--hl-minor)'};
+const hlLevel=r=>r>=.75?'main':r>=.4?'helper':r>=.25?'minor':null;
+const hlLegend=(cls='')=>`<span class="mleg hleg ${cls}"><i style="background:var(--hl-main)"></i>main<i style="background:var(--hl-helper)"></i>helper<i style="background:var(--hl-minor)"></i>minor</span>`;
 function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
   return `<svg viewBox="0 0 ${w} ${h}" class="mmap" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>
    ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="var(--map-base)" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */return `<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'var(--map-off)'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"/>`}).join('')}
@@ -1040,7 +1050,7 @@ async function afterLearn(){
   const fpages=await Promise.all(fun.map(p=>p.status==='final'?eduPage(p.id):Promise.resolve({entry:p})));
   const xi=await exIndex(),xp=(xi.pages||[]).slice().sort((x,y)=>x.rank-y.rank),xf=xp.filter(p=>p.status==='final'),xtop=[...xf,...xp.filter(p=>p.status!=='final')].slice(0,8);
   $('#learnbody').innerHTML=`<div class="card mapcard"><div class="maps">${map('front',vm)}${map('back',vm)}</div>
-    <div class="legend"><span><i style="background:var(--heat-4)"></i>Guide ready</span>${nf<mus.length?'<span><i style="background:var(--heat-1)"></i>Coming soon</span>':''}</div><p class="maptip">Tap any muscle</p></div>
+    <div class="legend"><span><i style="background:var(--hl-main)"></i>Guide ready</span>${nf<mus.length?'<span><i style="background:var(--hl-minor)"></i>Coming soon</span>':''}</div><p class="maptip">Tap any muscle</p></div>
    <div class="sec"><h2>Muscles</h2><span class="more num">${nf} of ${mus.length} ready</span></div>
    <div class="group">${mus.map(p=>`<button class="row ${p.status==='final'?'':'planned'}" data-go="#learn-${p.id}"><div class="grow t1">${p.title}</div>${p.status==='final'?'':'<span class="soon">Coming soon</span>'}${CHEV}</button>`).join('')}</div>
    <div class="sec"><h2>Fundamentals</h2></div>
@@ -1123,11 +1133,11 @@ let EXD=null;
 async function exdLoad(){if(!EXD){try{const j=await fetch(DATA+'exercise-details.json').then(r=>r.json());EXD={};const L=j.exercises||[];(Array.isArray(L)?L:Object.values(L)).forEach(e=>EXD[e.id]=e)}catch(e){EXD={}}}return EXD}
 const yn=b=>b?'Yes':'No',pctS=v=>`${Math.round(v*100)}%`;
 function exDetailBody(id,d){const e=EX[id]||{},f=d.fatigue||{},st=d.stretch||{},sp=d.stimulus_per_fatigue||{},rr=d.rep_range||{},bm=(d.body_map||{}).muscles||{};
-  const vm={};for(const [m,v] of Object.entries(bm))if(v>0)vm[m]=v;const sfor=(st.stretch_biased_for||[]).map(m=>ML[m]||m);
+  const rat=(EX[id]||{}).rat||{},vm={};for(const [m,v] of Object.entries(bm)){const k=hlLevel(rat[m]||0);if(v>0&&k)vm[m]=HLV[k]}const sfor=(st.stretch_biased_for||[]).map(m=>ML[m]||m);
   const row=(k,v,sub='')=>`<div class="row xm"><div class="grow"><div class="t1">${k}</div>${sub?`<div class="t2">${sub}</div>`:''}</div><span class="val num">${v}</span></div>`;
   return `${d.show_photo&&d.photos?`<div class="xphotos" data-photo="exact">${['start','end'].map((k,i)=>`<figure><img src="assets/ex-photos/${id}-${i}.jpg" alt="${esc(d.name)} ${k} position" loading="lazy"><figcaption>${k==='start'?'Start':'End'}</figcaption></figure>`).join('')}</div>
      <p class="foot xcred">Photos: free-exercise-db (“${esc(d.photos.source_name)}”), public domain (The Unlicense).</p>`:''}
-   <div class="mapcard small xmap" data-mus="${Object.keys(vm).join(' ')}"><div class="maps">${map('front',vm)}${map('back',vm)}</div><div class="legend"><span class="mleg"><i style="background:var(--heat-4)"></i>main<i style="background:var(--heat-2)"></i>helper<i style="background:var(--heat-1)"></i>minor</span></div></div>
+   <div class="mapcard small xmap" data-mus="${Object.keys(vm).join(' ')}"><div class="maps">${map('front',vm)}${map('back',vm)}</div><div class="legend">${hlLegend()}</div></div>
    <div class="ghead">Muscles worked · share of each set's credit</div>
    <div class="group inset0 xtg">${(d.targets||[]).map(t=>`<button class="row" data-go="#learn-${t.muscle}"><div class="grow t1">${ML[t.muscle]||t.muscle}</div>${rate(t.rating)}<span class="val num xsh">${t.counts?pctS(t.share):'map only'}</span>${CHEV}</button>`).join('')}${!(d.targets||[]).length&&d.untracked_target?`<div class="row utn"><div class="grow"><div class="t1">${d.untracked_target.label||'Not tracked'}</div><div class="t2">${d.untracked_target.tag||''}</div></div></div>`:''}</div>
    <div class="ghead">How Analysis counts it</div>
@@ -1389,7 +1399,7 @@ document.addEventListener('click',e=>{
 });
 window.SB={sheet,S,WK,CLK,ROUTINES,closeAll,startWorkout,gymPlates,plateCalc,movePat,mpDefs,eqDefs,passF,get sheets(){return SHEETS},get keypad(){return KP}};
 // internals for board.js (the Build whiteboard): same sheet, swap sheet, ranking scenario, muscle map, volume_bands
-window.SBX={logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={BAND,hlLevel,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in
