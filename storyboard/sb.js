@@ -113,7 +113,9 @@ const DATA='data/';let UNLOADING=false,RDP=null;addEventListener('pagehide',()=>
 const getJ=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
 async function loadVB(){const u=DATA+'rules.json',j=await getJ(u),b=j&&(j.volume_bands||(j.rules||{}).volume_bands);if(b&&typeof b.red_factor==='number'){Object.assign(VB,b,{src:u});return VB}if(!UNLOADING)console.warn('rules.json volume_bands missing: over-volume red disabled');return VB}
 const vStat=(n,min,max)=>n<min?'under':VB.red_factor!=null&&n>max*VB.red_factor?'red':n>max?'amber':'in';
-const VLAB={under:'Under',in:'In range',amber:'Over max',red:'Well over'};
+// volume status names = the Weekly sets row labels. Coach's colours (progcheck col): in range G; up to 2 sets under the minimum or
+// up to 25% over the maximum A ("Close, under" / "Close, over"); beyond that R. Maps keep close-under grey (under is a range colour).
+const VLAB={under:'Under',in:'In range',amber:'Close, over',red:'Over max','close-under':'Close, under','close-over':'Close, over',over:'Over max'};
 
 // units setting (CoS): localStorage apechit.sb.unit, default lb. Progress converts Coach's kg sample log for display.
 const UNIT_K='apechit.sb.unit',KG_LB=2.20462262;
@@ -450,7 +452,7 @@ V.finish=()=>{if(!FIN)FIN=finBuild(true);const F=FIN,T=finStats(),u=S.unit,nPR=O
      <div class="stats"><div><b class="num">${F.min}</b><span>minutes</span></div><div><b class="num">${T.sets}</b><span>sets</span></div><div><b class="num">${fmtVol(T.vol)}</b><span>${u} volume</span></div><div><b class="num acc">${nPR}</b><span>PRs</span></div></div>
      <ul class="facts">${facts.map(f=>`<li>${f}</li>`).join('')}</ul></article>`,
    `<article class="fc" data-card="prs"><div class="eyebrow">Personal records</div><h2>${nPR?`${nPR} lift${nPR>1?'s':''} with a PR`:'No PRs today'}</h2>${prRows||`<p class="sub">No set beat your logged bests by more than Coach's tie margin (half a load step or 1%).</p>`}
-     <p class="foot fpad">PR rules from rules.json logger.prs, the same as the Log.</p></article>`,
+     <p class="foot fpad">PRs use the same rules as the Log.</p></article>`,
    `<article class="fc" data-card="vs"><div class="eyebrow">vs last time</div><h2>${cmpN?`Up on ${up} of ${cmpN}`:'Nothing to compare yet'}</h2>
      ${T.cmp.map(c=>`<div class="cmp" data-ex="${c.id}"><div class="grow"><b>${exNameP(c.id)}</b><span class="num">${nfmt(c.now.l)} × ${c.now.reps}${c.first?' · first time logged':` · was ${nfmt(c.was.l)} × ${c.was.reps} on Oct ${c.when}`}</span></div><span class="dl ${c.first?'flat':c.c}">${c.first?'new':c.txt}</span></div>`).join('')}
      <p class="foot fpad">Best working set (heaviest, then most reps) against the last session that had the lift.${T.lastVol!=null?` Volume ${fmtVol(T.vol)} vs ${fmtVol(T.lastVol)} ${u}.`:''}</p></article>`,
@@ -648,7 +650,7 @@ V.logDay=()=>{logLoad();const d=S.logDay,w=LOGS[d],nav=t=>`<div class="nav"><div
      <div class="group lsets">${setsOfE(e.id).map(x=>`<div class="row lset${badgeSet[x.id]?' haspr':''}"><span class="sn ${x.kind==='warmup'?'w':''}">${x.kind==='warmup'?'W':++n}</span><span class="grow num">${showLoad(x.load,s.unit,id)} ${S.unit} × ${x.reps}</span>${badgeSet[x.id]?`<span class="badge">PR</span>`:''}</div>`).join('')}</div>`};
   return nav(`${WD[(dt.getDay()+6)%7]}, Oct ${d}`)+`<div class="ldh"><h1>${esc(s.label)}</h1><p class="sub">${hm(s.startedAt)} – ${hm(s.endedAt)} · ${w.min} min</p>
     <div class="ldstats"><div><b class="num">${w.sets}</b><span>sets</span></div><div><b class="num">${volTxt(w).split(' ')[0]}</b><span>${S.unit} volume</span></div><div><b class="num acc" title="${npr} PR badges">${w.pr}</b><span>lifts with a PR</span></div></div></div>
-   <div class="ghead">Session notes</div><div class="card lnotes">${s.notes?esc(s.notes):`<span class="sub">No notes.</span> <button class="btn plain" data-act="ledit" data-d="${d}">Add</button>`}</div>
+   <div class="ghead">Session notes</div><div class="card lnotes" data-raw>${s.notes?esc(s.notes):`<span class="sub">No notes.</span> <button class="btn plain" data-act="ledit" data-d="${d}">Add</button>`}</div>
    <div class="ghead">Muscles trained</div><div class="card mapcard ldmap"><div class="maps">${map('front',vm)}${map('back',vm)}</div><div class="legend">${rampLegend('sets this workout')}</div></div>
    <div class="ghead">Strength trend</div><div class="card" id="e1card">${e1Chart(s.id)}</div>
    ${entsOf(s.id).map(exHtml).join('')}<p class="foot">PRs follow Coach's rules (logger.prs): the first logged session of an exercise is the baseline, ties within half a load step or 1% are not PRs. Editing a workout recalculates them.</p>`};
@@ -879,15 +881,17 @@ const VFILL={under:'var(--vol-under)',in:'var(--vol-in-range)',amber:'var(--vol-
 const IN_DARK=40;
 const volFill=(n,min,max)=>{const st=vStat(n,min,max);if(st!=='in')return VFILL[st];const p=max>min?Math.min(1,Math.max(0,(n-min)/(max-min))):0,k=Math.round(p*IN_DARK);
   return k?`color-mix(in oklch, var(--vol-in-range), var(--vol-mix) ${k}%)`:VFILL.in};
-const volLegend=()=>`<div class="legend vleg">${['under','in','amber','red'].map(k=>`<span><i style="background:${VFILL[k]}"></i>${VLAB[k]}</span>`).join('')}</div><p class="foot vfoot">Amber above max, red above ${VB.red_factor!=null?VB.red_factor+'×':'(factor pending)'} max · rules.json volume_bands</p>`;
+// key: one entry per status. rows=true (Analysis Weekly sets) adds "Close, under" (the maps shade it grey, as Under)
+const volLegend=(rows=false)=>{const rf=VB.red_factor,pc=rf!=null?`${Math.round((rf-1)*100)}%`:'the set margin',ST=[['under','under'],['in','in'],...(rows?[['close-under','amber']]:[]),['close-over','amber'],['over','red']];
+  return `<div class="legend vleg">${ST.map(([k,f])=>`${k==='close-under'||(!rows&&k==='close-over')?'<span class="vcap">Close to target:</span>':''}<span data-st="${k}"><i style="background:${VFILL[f]}"></i>${VLAB[k]}</span>`).join('')}</div><p class="foot vfoot">${rows?`Close to target (amber): up to 2 sets under the minimum, or up to ${pc} over the maximum.`:`Close, over: up to ${pc} over the maximum. Muscles just under the minimum stay grey.`} Over max: more than ${pc} over.</p>`};
 // numeric map values = a credit rating / intensity, shaded by role with the --hl-* colour tokens (never greyscale; grey = unworked)
 const FILL=v=>typeof v==='string'?(VFILL[v]||v):v==null||!(v>0)?'var(--map-empty)':v>=.75?'var(--hl-main)':v>=.4?'var(--hl-helper)':'var(--hl-minor)';
-// role of a muscle from its credit rating = the same display bands as the rating labels next to the map (BAND: main >= 0.75,
-// helper >= 0.4, minor >= 0.25; under 0.25 adds no sets and is not shaded). exercise-details body_map.levels puts secondary
-// at >= 0.5, which would contradict the "0.4 Helper" labels in the same popup, so the map follows the labels.
-const HLV={main:'var(--hl-main)',helper:'var(--hl-helper)',minor:'var(--hl-minor)'};
+// map role colours. The exercise popup reads Coach's exercise-details body_map.levels (primary / secondary / minor / trace) and
+// body_map.level_labels; trace is not counted and not shaded. Finish (no popup payload loaded) buckets RD.EX ratings with
+// hlLevel, the same bands (main >= 0.75, helper 0.4 to < 0.75, minor 0.25 to < 0.4).
+const HLV={main:'var(--hl-main)',helper:'var(--hl-helper)',minor:'var(--hl-minor)'},LV2HL={primary:'main',secondary:'helper',minor:'minor'};
 const hlLevel=r=>r>=.75?'main':r>=.4?'helper':r>=.25?'minor':null;
-const hlLegend=(cls='')=>`<span class="mleg hleg ${cls}"><i style="background:var(--hl-main)"></i>main<i style="background:var(--hl-helper)"></i>helper<i style="background:var(--hl-minor)"></i>minor</span>`;
+const hlLegend=(L={main:'main',helper:'helper',minor:'minor'})=>`<span class="mleg hleg">${['main','helper','minor'].map(k=>`<i style="background:var(--hl-${k})"></i>${L[k]}`).join('')}</span>`;
 function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
   return `<svg viewBox="0 0 ${w} ${h}" class="mmap" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>
    ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="var(--map-base)" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */return `<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'var(--map-off)'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"/>`}).join('')}
@@ -985,7 +989,7 @@ const SW=[['--ink','#000000','Ink'],['--paper','#FFFFFF','Paper'],['--accent','#
 V.style=()=>`<div class="nav"><div class="l"><button class="back" data-go="#settings">${I('chevL',2.4)}Settings</button></div><div class="t">Style guide</div><div class="r"></div></div>
   ${header('Ape-Chit')}
   <div class="card brand"><div class="lockup" role="img" aria-label="Ape-Chit lockup"></div><div class="icons"><div class="logo-tile big"></div><div class="logo-tile mid"></div><div class="logo-tile sm"></div>
-   <p class="sub">Logo v3, pending approval. Referenced once, in tokens.css.</p></div></div>
+   <p class="sub">Logo v3, pending approval. Defined once, as a design token.</p></div></div>
   <div class="ghead">Palette · black, white, one accent</div>
   <div class="group">${SW.map(([t,h,n])=>`<div class="row"><span class="sw" style="background:var(${t})"></span><div class="grow"><div class="t1">${n}</div><div class="t2"><code>${t}</code></div></div><span class="val num">${h}</span></div>`).join('')}</div>
   <p class="foot"><b>Ember</b> is the only accent: primary actions, PRs, the active field and the rest line. Ember on white is 4.0:1 (fills, large text); pressed Ember is 5.4:1 for small text. Red appears only on delete.</p>
@@ -1100,9 +1104,9 @@ async function afterLearnFund(id){
   if(!j){$('#lf').innerHTML=`${header((entry||{}).title||'Fundamentals')}<div class="soonbox"><span class="soon">Coming soon</span></div>`;return}
   const al=j.app_link||{};
   $('#lf').innerHTML=`<div class="fund-hero"><div class="eyebrow">Fundamentals</div><h1>${j.title}</h1><p>${j.summary||''}</p></div>
-   ${al.explains?`<div class="card inapp"><div class="eyebrow">In Ape-Chit</div><p>${al.explains}</p><ul>${(al.features||[]).map(f=>`<li>${f.replace(/\s*\(([^)]*)\)/,' <code>$1</code>')}</li>`).join('')}</ul></div>`:''}
+   ${al.explains?`<div class="card inapp"><div class="eyebrow">In Ape-Chit</div><p>${al.explains}</p><ul>${(al.features||[]).map(f=>`<li>${f.replace(/\s*\([^)]*\)/,'')}</li>`).join('')}</ul></div>`:''}
    <div class="lsx">${(j.sections||[]).map((s,i)=>sect(s.heading,`${(s.body||[]).map(p=>`<p>${p}</p>`).join('')}
-      ${(s.points||[]).length?`<div class="pts">${s.points.map(p=>`<div class="pt"><p>${p.text}</p><div class="ptm">${ev(p)}${tagL(p.swap_tags)}${p.app_key?`<code>${p.app_key}</code>`:''}</div></div>`).join('')}</div>`:''}`,i===0,(s.points||[]).length?s.points.length+' points':'')).join('')}
+      ${(s.points||[]).length?`<div class="pts">${s.points.map(p=>`<div class="pt"><p>${p.text}</p><div class="ptm">${ev(p)}${tagL(p.swap_tags)}</div></div>`).join('')}</div>`:''}`,i===0,(s.points||[]).length?s.points.length+' points':'')).join('')}
    ${(j.notes||[]).length?sect('Honest limits',`<ul class="bul">${j.notes.map(n=>`<li>${n}</li>`).join('')}</ul>`):''}
    ${refList()}</div><p class="foot">${(EDU.idx||{}).disclaimer||''}</p>`;
   // page#section from an analysis item's Learn link: open that section and scroll to it
@@ -1133,13 +1137,14 @@ let EXD=null;
 async function exdLoad(){if(!EXD){try{const j=await fetch(DATA+'exercise-details.json').then(r=>r.json());EXD={};const L=j.exercises||[];(Array.isArray(L)?L:Object.values(L)).forEach(e=>EXD[e.id]=e)}catch(e){EXD={}}}return EXD}
 const yn=b=>b?'Yes':'No',pctS=v=>`${Math.round(v*100)}%`;
 function exDetailBody(id,d){const e=EX[id]||{},f=d.fatigue||{},st=d.stretch||{},sp=d.stimulus_per_fatigue||{},rr=d.rep_range||{},bm=(d.body_map||{}).muscles||{};
-  const rat=(EX[id]||{}).rat||{},vm={};for(const [m,v] of Object.entries(bm)){const k=hlLevel(rat[m]||0);if(v>0&&k)vm[m]=HLV[k]}const sfor=(st.stretch_biased_for||[]).map(m=>ML[m]||m);
+  const LV=(d.body_map||{}).levels||{},LL=(d.body_map||{}).level_labels||{},vm={};for(const [m,v] of Object.entries(bm)){const k=LV2HL[LV[m]];if(v>0&&k)vm[m]=HLV[k]}
+  const rateL=(t)=>{const k=LV2HL[LV[t.muscle]];return `<span class="rate ${k||'nc'}" data-level="${LV[t.muscle]||''}"><b class="num">${+t.rating.toFixed(2)}</b>${LL[LV[t.muscle]]||''}</span>`};const sfor=(st.stretch_biased_for||[]).map(m=>ML[m]||m);
   const row=(k,v,sub='')=>`<div class="row xm"><div class="grow"><div class="t1">${k}</div>${sub?`<div class="t2">${sub}</div>`:''}</div><span class="val num">${v}</span></div>`;
   return `${d.show_photo&&d.photos?`<div class="xphotos" data-photo="exact">${['start','end'].map((k,i)=>`<figure><img src="assets/ex-photos/${id}-${i}.jpg" alt="${esc(d.name)} ${k} position" loading="lazy"><figcaption>${k==='start'?'Start':'End'}</figcaption></figure>`).join('')}</div>
      <p class="foot xcred">Photos: free-exercise-db (“${esc(d.photos.source_name)}”), public domain (The Unlicense).</p>`:''}
-   <div class="mapcard small xmap" data-mus="${Object.keys(vm).join(' ')}"><div class="maps">${map('front',vm)}${map('back',vm)}</div><div class="legend">${hlLegend()}</div></div>
+   <div class="mapcard small xmap" data-mus="${Object.keys(vm).join(' ')}"><div class="maps">${map('front',vm)}${map('back',vm)}</div><div class="legend">${hlLegend({main:LL.primary||'main',helper:LL.secondary||'helper',minor:LL.minor||'minor'})}</div></div>
    <div class="ghead">Muscles worked · share of each set's credit</div>
-   <div class="group inset0 xtg">${(d.targets||[]).map(t=>`<button class="row" data-go="#learn-${t.muscle}"><div class="grow t1">${ML[t.muscle]||t.muscle}</div>${rate(t.rating)}<span class="val num xsh">${t.counts?pctS(t.share):'map only'}</span>${CHEV}</button>`).join('')}${!(d.targets||[]).length&&d.untracked_target?`<div class="row utn"><div class="grow"><div class="t1">${d.untracked_target.label||'Not tracked'}</div><div class="t2">${d.untracked_target.tag||''}</div></div></div>`:''}</div>
+   <div class="group inset0 xtg">${(d.targets||[]).map(t=>`<button class="row" data-go="#learn-${t.muscle}"><div class="grow t1">${ML[t.muscle]||t.muscle}</div>${rateL(t)}<span class="val num xsh">${t.counts?pctS(t.share):'map only'}</span>${CHEV}</button>`).join('')}${!(d.targets||[]).length&&d.untracked_target?`<div class="row utn"><div class="grow"><div class="t1">${d.untracked_target.label||'Not tracked'}</div><div class="t2">${d.untracked_target.tag||''}</div></div></div>`:''}</div>
    <div class="ghead">How Analysis counts it</div>
    <div class="group inset0 xmet">${row('Stretch',st.stretch_focused?'Stretch-focused':`Emphasis ${st.stretch_emphasis??'–'} of 3`,sfor.length?`Counts as stretch work for ${sfor.join(', ')}`:'Not on a stretch-check list')}
     ${row('Fatigue rating',`${f.rating??'–'}`,f.tier?f.tier[0].toUpperCase()+f.tier.slice(1):'')}
@@ -1399,7 +1404,28 @@ document.addEventListener('click',e=>{
 });
 window.SB={sheet,S,WK,CLK,ROUTINES,closeAll,startWorkout,gymPlates,plateCalc,movePat,mpDefs,eqDefs,passF,get sheets(){return SHEETS},get keypad(){return KP}};
 // internals for board.js (the Build whiteboard): same sheet, swap sheet, ranking scenario, muscle map, volume_bands
-window.SBX={BAND,hlLevel,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+// ------------------------------------------------------------- no developer text in the UI (batch C)
+// Coach's data carries file / key references meant for developers ("(rules.json frequency_muscles)", "Spec: data/x.md",
+// "targets.json:curve.k"). Visible text never shows them: a parenthetical holding one is dropped, a sentence naming a file or
+// key path is dropped (or, if that would empty the text, the reference becomes plain words), and snake_case keys become words.
+// Runs on every text node the app renders (attributes untouched); user-typed text ([data-raw], inputs) is left alone.
+const DEVF=/\b[\w\/-]+(?:\.[\w-]+)*\.(?:json|js|py|md|csv|css|html)\b(?::[\w.#\[\]-]+)?|\b(?:tools|data|logic|test)\/[\w.\/-]+|\b(?:rules|targets|logger|analytics|ranking|exercises|templates|patterns|splits)(?:\.[a-z_#\[\]]+)+/i;
+const DEVG=new RegExp('(?:'+DEVF.source+')(?:\\s+[a-z][a-z0-9]*(?:[._][a-z0-9#]+)+)?','gi'),SNAKE=/\b[a-z][a-z0-9]*(?:_[a-z0-9]+)+\b/g,hasSnake=s=>/\b[a-z][a-z0-9]*(?:_[a-z0-9]+)+\b/.test(s);
+const devWords=ref=>{const k=ref.replace(/^[^:\s]*\.(?:json|js|py|md|csv|css|html)[:\s]*/i,'').replace(/^(?:rules|targets|logger|analytics|ranking)\./i,'').split(/[.#\[\]]+/).filter(x=>x&&!/^(rules|logger|analytics|ranking|targets)$/.test(x));
+  const w=x=>x.replace(/_/g,' ');if(!k.length)return "Coach's data";const last=k[k.length-1];
+  return ML[last]&&k.length>1?`Coach's ${w(k[k.length-2])} list for ${(ML[last]||last).toLowerCase()}`:`Coach's ${w(k.slice(-2).join(' '))} setting`};
+const DEVNOTE=/^(?:spec|source|fixture|render|see)\b|not from this text|check_education|enforces that|regenerate|generated by/i;
+function devClean(s){if(!s||(!DEVF.test(s)&&!hasSnake(s)))return s;const lead=s.match(/^\s*/)[0],trail=s.match(/\s*$/)[0];let t=s.trim();
+  t=t.replace(/\s*[({]([^(){}]*)[)}]/g,(m,inner)=>DEVF.test(inner)||hasSnake(inner)?'':m);
+  // a sentence that is a note to developers, or nothing but a reference, goes; otherwise the reference becomes words
+  if(DEVF.test(t)){const out=t.split(/(?<=[.;!?])\s+/).map(x=>{if(!DEVF.test(x))return x;const bare=x.replace(DEVG,'').replace(/[^A-Za-z ]/g,' ').trim().split(/\s+/).filter(Boolean);
+      return DEVNOTE.test(x)||bare.length<4?'':x.replace(DEVG,devWords)}).filter(Boolean).join(' ').replace(/;\s*$/,'.');t=out.trim()?out:t.replace(DEVG,devWords)}
+  t=t.replace(SNAKE,w=>w.replace(/_/g,' ')).replace(/\s+([,.;:])/g,'$1').replace(/\s{2,}/g,' ');return lead+t+trail}
+const devSkip=n=>{const p=n.parentElement;return !p||!!p.closest('script,style,textarea,input,[data-raw],[contenteditable]')};
+function devScrub(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode())){if(devSkip(n))continue;const v=n.nodeValue,c=devClean(v);if(c!==v)n.nodeValue=c}}
+new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData'){if(!devSkip(m.target)){const c=devClean(m.target.nodeValue);if(c!==m.target.nodeValue)m.target.nodeValue=c}}else m.addedNodes.forEach(x=>x.nodeType===3?(devSkip(x)||(x.nodeValue=devClean(x.nodeValue))):x.nodeType===1&&devScrub(x))}})
+  .observe(document.documentElement,{childList:true,subtree:true,characterData:true});
+window.SBX={devClean,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

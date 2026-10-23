@@ -970,3 +970,6 @@ details.ls.flash{box-shadow:0 0 0 3px var(--accent);border-radius:var(--r-md)}
 .ambl .ambh{margin:0 0 8px;font-size:var(--t-foot);color:var(--warn-ink);font-weight:600;line-height:1.35}
 .ambl .group{margin:0;background:var(--paper)}.ambr{gap:10px}.ambr .t1{white-space:normal}.ambr .t2{white-space:normal}
 .ambr .btn.sm{flex:none;height:30px;padding:0 12px}.ambl .aplc.ambu{margin:0 0 8px}
+.vst.red{color:var(--vol-red)}
+.vleg{flex-wrap:wrap;row-gap:4px}
+.vleg .vcap{color:var(--warn-ink);font-weight:600}

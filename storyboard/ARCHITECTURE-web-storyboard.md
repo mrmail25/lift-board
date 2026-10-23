@@ -245,3 +245,19 @@ Parity (node, all 0 mismatches): test/analysis.diff.js, movement.diff.js, templa
   `NEUTRAL=1`.
 - **Tests**: `allRoutesRender` and `learn-lats` wait for their content instead of a fixed delay. 10 new `c…` checks are in the
   Batch C block. Shots: `31a…31e`, plus the re-shot 28a, 28g, 28j, 29d, 29e and 30d.
+- **No developer text in the UI**:
+  - `sb.js` `devClean` runs on every rendered text node through a MutationObserver. Attributes, inputs and `[data-raw]` user
+    notes are skipped. It drops a parenthetical that holds a file or key reference, drops a sentence naming a file or key path
+    (when that would empty the text, it rewrites the reference as "Coach's … setting"), and turns snake_case keys into words.
+  - Our own strings no longer name files.
+  - Learn pages no longer print `app_key` and `features (…)` code references.
+  - The Analysis footer no longer shows the analysis_metrics developer note.
+  - Check: `noFileNamesInVisibleText` covers every route in light and dark, every Analysis and Progress explain sheet, and
+    every Learn muscle, fundamental and authored exercise page.
+- **Volume key**: one entry per status, worded like the rows. Entries: Under (grey), In range (green), "Close to target:"
+  Close, under / Close, over (amber), Over max (red). Over max is more than `volume_bands.red_factor` over the maximum; Coach's
+  colours make it R. The map key leaves out Close, under, because maps keep it grey. Rows carry `data-st`. Check:
+  `cVolumeKeyMatchesRowStatuses`.
+- **Popup levels**: the popup map and its rating labels both read Coach's `exercise-details.json` `body_map.levels`
+  (primary / secondary / minor / trace) and `body_map.level_labels` (Main mover / Helper / Minor / Not counted). Helper is now 0.4
+  to under 0.75, matching the library bands. Check: `cPopupShadingMatchesRatingLabelsAllExercises` (247 exercises).

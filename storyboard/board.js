@@ -267,7 +267,7 @@ function sugTarget(s,days,lv){const t=s.target||{},A=stats().A;
   return ''}
 // Logged-progress values for the Analysis sheet and the Progress tab: the synthetic log (data/progress-reference.json), not real data.
 function progressNow(){try{return X.progressData?X.progressData():null}catch(e){console.warn(e);return null}}
-const DATA_ASKS=['Fatigue shows points, not %, until there is a saved baseline week (targets.json recovery), so Bring recovery cost back to normal cannot fire yet.','The starting board and the library routines are mock routines.','Logged-progress values come from the synthetic log in data/progress-reference.json.'];
+const DATA_ASKS=['Fatigue shows points, not %, until there is a saved baseline week, so Bring recovery cost back to normal cannot fire yet.','The starting board and the library routines are mock routines.','Logged-progress values come from a synthetic six-week log.'];
 function curve(m,A){const v=A.muscles[m],k=v.k,x=v.x,Sx=z=>1-Math.exp(-z/k),Xm=Math.max(30,Math.ceil((Math.max(x,v.max)+4)/5)*5),W=320,H=168,px=z=>30+z/Xm*(W-40),py=z=>H-30-z*(H-44);
   let d='';for(let i=0;i<=60;i++){const z=i/60*Xm;d+=(i?'L':'M')+px(z).toFixed(1)+','+py(Sx(z)).toFixed(1)}const nx=Sx(x+1)-Sx(x),tk=[];for(let z=0;z<=Xm;z+=Xm>30?10:5)tk.push(`<text x="${px(z)}" y="${H-14}" text-anchor="middle">${z}</text>`);
   return `<svg class="ancurve" viewBox="0 0 ${W} ${H}" data-m="${m}"><rect x="${px(v.min)}" y="8" width="${px(v.max)-px(v.min)}" height="${H-38}" class="band"/>${[0,.5,1].map(z=>`<line x1="30" x2="${W-8}" y1="${py(z)}" y2="${py(z)}"/><text x="26" y="${py(z)+3}" text-anchor="end">${z*100}%</text>`).join('')}${tk.join('')}
@@ -303,7 +303,8 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   const VCOL=((IB.weekly_sets_per_muscle||{}).value||{}).muscles||{};
   // Coach's per-muscle colour (items() weekly_sets_per_muscle: G in range, A close = within the volume_in_reach tolerance, R far):
   // an amber muscle shows amber with a "Close" status and is never green; G / R keep the volume-band colours
-  const vrow=([m,v])=>{const col=(VCOL[m]||{}).colour,st0=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',st=col==='A'?'amber':col==='R'&&st0==='in'?'red':st0,VB=X.VB,top=v.max*(VB.red_factor!=null?VB.red_factor:1);return `<button class="row vrow${col==='A'?' vclose':''}" data-vs="${st}" data-col="${col||''}" data-b="mus" data-m="${m}"><span class="vm">${X.ML[m]||m}${col==='A'?`<small class="vst amb">${st0==='under'?'Close, under':'Close, over'}</small>`:''}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${+v.raw.toFixed(1)}<small>/${v.min}–${v.max}</small></span></button>`};
+  const vrow=([m,v])=>{const col=(VCOL[m]||{}).colour,st0=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',st=col==='A'?'amber':col==='R'&&st0==='in'?'red':st0,VB=X.VB,top=v.max*(VB.red_factor!=null?VB.red_factor:1);const ks=col==='A'?(st0==='under'?'close-under':'close-over'):st==='amber'?'close-over':st==='red'?'over':st;
+    return `<button class="row vrow${col==='A'?' vclose':''}" data-vs="${st}" data-st="${ks}" data-col="${col||''}" data-b="mus" data-m="${m}"><span class="vm">${X.ML[m]||m}${ks==='close-under'||ks==='close-over'||ks==='over'?`<small class="vst ${ks==='over'?'red':'amb'}">${X.VLAB[ks]}</small>`:''}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${+v.raw.toFixed(1)}<small>/${v.min}–${v.max}</small></span></button>`};
   const T=Object.entries(A.muscles).filter(([m,v])=>v.raw>0||v.min>0),RU={};R.rules.forEach(r=>RU[r.id]=r);
   const FM=R.frequency_muscles,fq=m=>B.days.map((dd,i)=>{const e=PC.eff(dt,dd.tiles.map(t=>({id:t.id,sets:t.sets})))[m]||0;const ok=e>=dt.targets.analytics.frequency_min_effective;return `<i class="${ok?'on':e>0?'lo':''}" data-r="${RAMPL(e)}" title="${WD[i]} · ${+e.toFixed(1)} sets${ok?' (counts)':''}"></i>`}).join('');
   const SL=RU.session_length,mx=Math.max(SL.warn_min+15,...A.day.map(x=>x.minutes)),SP=A.spinal,cm=Object.keys(A.muscles).includes(AN.mus)?AN.mus:'chest';
@@ -320,7 +321,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
     lower_back_fatigue:ntc('lower_back_fatigue')?`${ntc('lower_back_fatigue')} note${ntc('lower_back_fatigue')>1?'s':''}`:'no notes',stretch_coverage:ntc('stretch_coverage')?`${ntc('stretch_coverage')} note${ntc('stretch_coverage')>1?'s':''}`:'',
     session_length:(v=>v?`≈ ${v.average} min a session`:'')(val('session_length'))};
   const fz=val('fatigue_rating')||{},rc=val('recovery_cost')||{},ss=val('stretch_share')||{per_muscle:{}},mps=val('movement_pattern_sets')||{};
-  const EXTRA={weekly_sets_per_muscle:`<div class="group vol">${T.map(vrow).join('')}</div>${X.volLegend()}`,
+  const EXTRA={weekly_sets_per_muscle:`<div class="group vol">${T.map(vrow).join('')}</div>${X.volLegend(true)}`,
     stimulus_curve:`<div class="chips fl noswipe" id="anmus">${T.filter(([,v])=>v.raw>0).map(([m])=>`<button class="chip ${m===cm?'on':''}" data-anm="${m}">${X.ML[m]||m}</button>`).join('')}</div><div class="card curve">${curve(cm,A)}</div><p class="foot">${A.curveModel}. ${A.disclaimer}</p>`,
     weekly_sets_per_region:chips(Object.entries(val('weekly_sets_per_region')||{}).map(([k,v])=>[RGL(k),+(+v).toFixed(1)])),
     effective_frequency:`<div class="group freq"><div class="row fqh"><span class="vm"></span><span class="fq">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>${FM.map(m=>`<button class="row" data-b="mus" data-m="${m}"><span class="vm">${X.ML[m]}</span><span class="fq">${fq(m)}</span></button>`).join('')}<div class="row fqleg">${rampLeg()}</div></div>`,
@@ -358,7 +359,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
      ${SH.length||APPLIED.length?'':'<p class="sub nosug">No suggestions: nothing on this board needs a change.</p>'}</div>
     ${SECS.map(sec).join('')}
     <div class="ghead">Still sample data <span class="smp">sample</span></div><div class="group asks" id="anasks">${DATA_ASKS.map(t=>`<div class="row"><div class="grow t2">${t}</div></div>`).join('')}</div>
-    <p class="foot">${EV.note}</p><div style="height:24px"></div>`;AN.body.scrollTop=sc0}
+    <div style="height:24px"></div>`;AN.body.scrollTop=sc0}
 // explain sheet for an item; the fatigue rating adds its breakdown
 function explainItem(id){const it=(AN&&AN.items||{})[id];const ex=id==='fatigue_rating'&&it?fatigueHtml(it.value):id==='checks_pass'?(()=>{const c=stats().C;return `<div class="group"><div class="row"><div class="grow t1">This board</div><span class="val num">${c.pass} of ${c.total}</span></div></div>`})():'';return X.explainSheet(id,ex)}
 // contributor sheet: the exercises behind a muscle or a movement pattern, their sets and effective sets; Remove (per chit),
@@ -399,7 +400,7 @@ function slotsBody(){const TT=TJT();if(!TT.length)return '<p class="foot">templa
    <div class="ghead">Slots · ${t.days.length} days · ${ns2} slots</div>
    <div class="group" id="tslots">${t.days.map(d=>`<div class="row"><div class="grow"><div class="t1">${WD[DAYS.indexOf(d.day)]} · ${d.label}</div><div class="t2">${d.slots.map(s=>`${s.label} ${s.sets.min}–${s.sets.max}`).join(', ')}</div></div><span class="val num">${d.slots.length}</span></div>`).join('')}</div>
    <div class="ghead">Volume check · defaults</div><div class="group tvol" id="tvol">${Object.keys(vx).length?Object.entries(vx).map(([m,v])=>`<div class="row" data-mu="${m}" data-st="${v.status}"><div class="grow"><div class="t1"><span class="dot amber"></span>${X.ML[m]||m}</div><div class="t2">${v.sets} sets a week vs ${v.min}–${v.max}: amber, a documented exception</div></div></div>`).join(''):'<div class="row"><div class="grow t2">Every muscle in range with the defaults.</div></div>'}</div>
-   <p class="foot">Slots from templates.json; each slot's eligible exercises from templates-reference.json. The defaults reproduce the ${t.split_name} ${t.level} ${t.days_per_week}-day prebuilt routine exactly (0 non-info warnings). Amber = within 2 sets under the level minimum or up to 25% over the max.</p>
+   <p class="foot">Each slot lists Coach's eligible exercises. The defaults reproduce the ${t.split_name} ${t.level} ${t.days_per_week}-day prebuilt routine exactly (0 non-info warnings). Amber = within 2 sets under the level minimum or up to 25% over the max.</p>
    <div class="pad"><button class="btn accent block" data-b="nwslots" data-id="${t.id}">Use these slots</button></div></div>`}
 function newBody(view){const SP=RD().splits.splits,PT=RD().patterns.templates;if(view==='slots')return slotsBody();
   if(view==='tpl'){const s=SP.find(x=>x.id===NS.split),lv=s.levels[NS.level]?NS.level:Object.keys(s.levels)[0];NS.level=lv;const ns=Object.keys(s.levels[lv]);if(!ns.includes(NS.n))NS.n=ns[0];
@@ -410,7 +411,7 @@ function newBody(view){const SP=RD().splits.splits,PT=RD().patterns.templates;if
      <div class="ghead">Days a week</div><div class="chips">${ns.map(n=>`<button class="chip ${n===NS.n?'on':''}" data-ns="n" data-v="${n}">${n} days</button>`).join('')}</div>
      <div class="ghead">Preview · ${days.length} days · ≈ ${hm(mn)} a week</div>
      <div class="group">${days.map((d,i)=>`<div class="row"><div class="grow"><div class="t1">${WD[DAYS.indexOf(d.day)]} · ${d.label}</div><div class="t2">${ptd&&ptd[i]?ptd[i].slots.map(x=>SL[x.slot].name).join(', '):d.tiles.length+' exercises'}</div></div><span class="val num">${d.tiles.length}</span></div>`).join('')}</div>
-     <p class="foot">Exercises from splits.json, slots from patterns.json. You can move anything after.</p>
+     <p class="foot">Exercises and slots come from Coach's prebuilt splits. You can move anything after.</p>
      <div class="pad"><button class="btn accent block" data-b="nwtpl">Use this template</button></div></div>`}
   if(view==='lib')return `<div class="nwv"><button class="btn plain nwback" data-b="nwback">‹ New</button><div class="ghead">Your library</div>
      <div class="group">${X.ROUTINES.map(r=>`<div class="row"><div class="grow"><div class="t1">${r.name} <span class="smp" title="Mock routine">sample</span></div><div class="t2">${r.meta} · ${r.days.length} days</div></div><button class="btn sm grey" data-b="nwlib" data-id="${r.id}">Duplicate &amp; edit</button></div>`).join('')}</div>
