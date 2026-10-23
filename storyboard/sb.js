@@ -5,7 +5,8 @@
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const EX={};(window.EXL||[]).forEach(([id,name,type,eq,mus,rat])=>EX[id]={id,name,type,eq,mus,rat:rat||{}});
 const ML={chest:'Chest',front_delts:'Front delts',side_delts:'Side delts',rear_delts:'Rear delts',lats:'Lats',upper_back:'Upper back',traps:'Traps',biceps:'Biceps',triceps:'Triceps',forearms:'Forearms',abs:'Abs',quads:'Quads',hamstrings:'Hamstrings',glutes:'Glutes',calves:'Calves',adductors:'Adductors',lower_back:'Lower back',obliques:'Obliques',abductors:'Abductors',brachialis:'Brachialis'};
-const GLY={primary:'★',accessory:'✚',isolation:'●'};
+// Exercise type is SHAPE-coded (colour already means body region): star = primary, triangle = accessory, circle = isolation.
+const GLY={primary:'★',accessory:'▲',isolation:'●'};
 const exNameP=id=>(EX[id]||{}).name||id;
 const exName=id=>exNameP(id)+(typeof isFav==='function'&&isFav(id)?' <span class="fv" aria-label="Favorite">★</span>':'');
 const exSub=id=>{const e=EX[id];return e?e.mus.map(m=>ML[m]||m).join(' · '):''};
@@ -32,6 +33,8 @@ const P={
  info:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8v.01" stroke-width="2.2"/>',
  x:'<path d="M6 6l12 12M18 6L6 18"/>',up:'<path d="M12 19V5M6 11l6-6 6 6"/>',down:'<path d="M12 5v14M6 13l6 6 6-6"/>',
  tabs:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 15h18M7.5 17.5h.01M12 17.5h.01M16.5 17.5h.01"/>',
+ more:'<circle cx="5.5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="18.5" cy="12" r="1.3" fill="currentColor"/>',
+ note:'<path d="M5 4.5h10.5L19 8v11.5H5z"/><path d="M8.5 10h7M8.5 13.5h7M8.5 17h4"/>',
  flame:'<path d="M12 21c-3.9 0-6.5-2.6-6.5-6.2 0-3.3 2.4-5.4 3.6-8.3.4 1.6 1.4 2.8 2.4 3.3.3-2.8 1.9-5.3 4.1-6.8-.3 2.8.6 4.6 1.9 6.5 1 1.5 1 3 1 5.3C18.5 18.4 15.9 21 12 21z"/>',
 };
 const I=(n,sw=1.8)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
@@ -59,7 +62,7 @@ const ROUTINES=[
   {n:'Legs',d:'Wed',min:62,ex:[R('front-squat',4,'6–8'),R('romanian-deadlift',3,'8–10'),R('walking-lunge',3,'10–12'),R('standing-calf-raise',4,'10–15')]}]},
 ];
 const setsOf=d=>d.ex.reduce((a,e)=>a+e.s,0);
-const WK={title:'Upper A',elapsed:32*60+14,paused:false,rest:{left:108,total:180},ex:[
+const WK={title:'Upper A',sub:'Upper / Lower · Day 1',ref:{rid:'ul',di:0},notes:{},rest:{left:108,total:180},ex:[
  {id:'barbell-bench-press',bar:true,cue:'Last time <b>225 × 8, 8, 7</b> · Try <b>230 × 6–8</b>',sets:[
    {p:'135 × 8',warm:true,done:true,wv:'135',rv:'8'},{p:'225 × 8',done:true,wv:'230',rv:'8'},{p:'225 × 8',done:true,wv:'230',rv:'7'},{p:'225 × 7'}]},
  {id:'barbell-row',bar:true,cue:'Last time <b>185 × 10, 10, 9</b>',sets:[{p:'185 × 10'},{p:'185 × 10'},{p:'185 × 9'}]},
@@ -67,6 +70,23 @@ const WK={title:'Upper A',elapsed:32*60+14,paused:false,rest:{left:108,total:180
  {id:'lat-pulldown',cue:'Last time <b>150 × 12, 11, 10</b>',sets:[{p:'150 × 12'},{p:'150 × 11'},{p:'150 × 10'}]},
  {id:'ez-bar-curl',bar:true,cue:'Last time <b>80 × 12, 10</b>',sets:[{p:'80 × 12'},{p:'80 × 10'}]},
  {id:'triceps-pushdown',cue:'Last time <b>70 × 12, 12</b>',sets:[{p:'70 × 12'},{p:'70 × 12'}]}]};
+// SESSION CLOCK: elapsed is derived from the start time (not a counter), so it reads 0:00 the moment a workout starts and
+// never carries a stale value from page load. The cold-loaded #workout routes show a mid-workout DEMO (32:14 in, 3 sets done).
+const CLK={start:Date.now(),pausedAt:null,pausedMs:0};
+Object.defineProperty(WK,'elapsed',{get(){const now=CLK.pausedAt??Date.now();return Math.max(0,Math.floor((now-CLK.start-CLK.pausedMs)/1000))},
+  set(v){const now=CLK.pausedAt??Date.now();CLK.start=now-CLK.pausedMs-v*1000}});
+Object.defineProperty(WK,'paused',{get(){return CLK.pausedAt!=null},set(p){if(p&&CLK.pausedAt==null)CLK.pausedAt=Date.now();else if(!p&&CLK.pausedAt!=null){CLK.pausedMs+=Date.now()-CLK.pausedAt;CLK.pausedAt=null}}});
+const WK0=JSON.parse(JSON.stringify({title:WK.title,sub:WK.sub,ref:WK.ref,ex:WK.ex}));
+function resetClock(sec){CLK.start=Date.now()-sec*1000;CLK.pausedAt=null;CLK.pausedMs=0}
+function demoWorkout(){Object.assign(WK,JSON.parse(JSON.stringify(WK0)),{notes:{},empty:false,restLab:'Bench set 3'});WK.rest={left:108,total:180};resetClock(32*60+14);S.demo=true}
+// start a real workout: clock at 0:00, no sets done, no rest running, session notes empty
+function startWorkout(title,list,o={}){const prev={};WK0.ex.forEach(x=>prev[x.id]=x);
+  WK.title=title;WK.sub=o.sub||'';WK.ref=o.ref||null;WK.empty=!!o.empty;WK.notes={};WK.rest={left:0,total:180};
+  WK.ex=list.map(e=>{const p=prev[e.id],eq=((EX[e.id]||{}).eq)||'';const ps=p?p.sets.filter(s=>!s.warm).map(s=>s.p):[];
+    return {id:e.id,bar:/barbell|trap bar|smith/.test(eq)||/ez-bar/.test(e.id),cue:p?p.cue:'',sets:Array.from({length:e.sets||e.s||3},(_,i)=>({p:ps[i]||ps[ps.length-1]||''}))}});
+  resetClock(0);S.live=true;S.demo=false;S.session=true;startTick()} // restart the 1 s tick so the display lands on whole seconds from 0:00
+const setsDone=()=>WK.ex.reduce((a,x)=>a+x.sets.filter(s=>s.done).length,0),setsAll=()=>WK.ex.reduce((a,x)=>a+x.sets.length,0);
+const clockTime=t=>{const d=new Date(t);let h=d.getHours(),m=d.getMinutes();const ap=h>=12?'PM':'AM';h=h%12||12;return `${h}:${String(m).padStart(2,'0')} ${ap}`};
 const LOGS={ // Oct 2026, day -> workout
  1:{n:'Upper A',min:57,sets:18,vol:'20,880',pr:0},2:{n:'Lower A',min:54,sets:16,vol:'27,340',pr:1},5:{n:'Upper B',min:55,sets:16,vol:'14,920',pr:0},
  6:{n:'Lower B',min:51,sets:15,vol:'25,610',pr:0},8:{n:'Upper A',min:59,sets:18,vol:'21,060',pr:1},9:{n:'Lower A',min:53,sets:16,vol:'27,900',pr:0},
@@ -91,7 +111,7 @@ const VLAB={under:'Under',in:'In range',amber:'Over max',red:'Well over'};
 const S={tab:'train',route:'train',session:false,pick:null,day:{},buildDay:0,unit:'lb',bar:'Olympic',plate:225,logSel:15,month:9,year:2026,split:1};
 const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
 let tick=null;
-function startTick(){clearInterval(tick);tick=setInterval(()=>{if(!WK.paused)WK.elapsed++;if(WK.rest.left>0)WK.rest.left--;paintTime()},1000)}
+function startTick(){clearInterval(tick);tick=setInterval(()=>{if(WK.rest.left>0)WK.rest.left--;paintTime()},1000)}
 function paintTime(){
   $$('[data-el]').forEach(e=>e.textContent=fmt(WK.elapsed));
   $$('[data-rest]').forEach(e=>e.textContent=fmt(WK.rest.left));
@@ -117,7 +137,7 @@ function sheet(o){
   let y0=null,t0=0,dy=0;
   sh.addEventListener('pointerdown',e=>{
     const onChrome=e.target.closest('.grab,.sh-head')&&!e.target.closest('button');
-    const onBody=e.target.closest('.sh-body')&&body.scrollTop<=0&&!e.target.closest('input,.wheel,.chips,.noswipe');
+    const onBody=e.target.closest('.sh-body')&&body.scrollTop<=0&&!e.target.closest('input,textarea,.wheel,.chips,.noswipe');
     if(!onChrome&&!onBody)return;y0=e.clientY;t0=performance.now();dy=0;
   });
   const mv=e=>{if(y0==null)return;dy=e.clientY-y0;if(dy>6){sh.classList.add('dragging');sh.style.transform=`translateY(${dy}px)`}};
@@ -150,19 +170,19 @@ function keepInView(){ // scroll once, only if the active field would sit under 
 function press(k){
   if(!AF)return;let v=fresh?'':AF.value;fresh=false;AF.classList.remove('auto');
   if(k==='del')v=v.slice(0,-1);else if(k==='.'){if(!v.includes('.'))v=(v||'0')+'.'}else if(v.replace('.','').length<6)v=v==='0'?k:v+k;
-  AF.value=v;
+  AF.value=v;syncField(AF);
   if(AF.dataset.kind==='w')fillLater(AF); // weight fills the later empty sets, in place (no re-render)
 }
 function fillLater(f){
   const blk=f.closest('.exb');if(!blk)return;const rows=$$('.srow',blk),i=rows.indexOf(f.closest('.srow'));
-  rows.slice(i+1).forEach(r=>{const w=$('[data-kind=w]',r);if(!r.classList.contains('done')&&(w.value===''||w.classList.contains('auto'))){w.value=f.value;w.classList.toggle('auto',!!f.value)}});
+  rows.slice(i+1).forEach(r=>{const w=$('[data-kind=w]',r);if(!r.classList.contains('done')&&(w.value===''||w.classList.contains('auto'))){w.value=f.value;w.classList.toggle('auto',!!f.value);syncField(w)}});
 }
 
 // ---------------------------------------------------------------- swipe-left-to-delete rows
 function bindSwipes(root){
   $$('.swipe',root).forEach(row=>{
     if(row._sw)return;row._sw=1;const inner=$(':scope > .in',row);let x0=null,y0=0,dx=0,lock=null;
-    row.addEventListener('pointerdown',e=>{if(e.target.closest('.del')||e.target.closest('.fld'))return;x0=e.clientX;y0=e.clientY;dx=0;lock=null});
+    row.addEventListener('pointerdown',e=>{if(e.target.closest('.del')||(e.target.closest('.fld')&&!row.dataset.del))return;if(e.target.closest('.swipe')!==row)return;x0=e.clientX;y0=e.clientY;dx=0;lock=null});
     row.addEventListener('pointermove',e=>{if(x0==null)return;const mx=e.clientX-x0,my=e.clientY-y0;
       if(!lock&&(Math.abs(mx)>8||Math.abs(my)>8))lock=Math.abs(mx)>Math.abs(my)?'x':'y';
       if(lock!=='x')return;if(!row.classList.contains('drag')){try{row.setPointerCapture(e.pointerId)}catch(_){}}dx=mx+(row.classList.contains('open')?-88:0);row.classList.add('drag');
@@ -171,30 +191,34 @@ function bindSwipes(root){
       if(lock==='x'){row.classList.toggle('open',dx<-44);if(dx<-44)$$('.swipe.open').forEach(o=>o!==row&&o.classList.remove('open'));row._justSwiped=Date.now()}};
     row.addEventListener('pointerup',end);row.addEventListener('pointercancel',end);
     row.addEventListener('click',e=>{if(row._justSwiped&&Date.now()-row._justSwiped<300){e.stopPropagation();e.preventDefault()}},true);
-    $(':scope > .del',row).addEventListener('click',e=>{e.stopPropagation();row.style.transition='height .28s var(--ease),opacity .2s';row.style.height=row.offsetHeight+'px';
+    $(':scope > .del',row).addEventListener('click',e=>{e.stopPropagation();if(row.dataset.del&&DEL[row.dataset.del])return DEL[row.dataset.del](row);row.style.transition='height .28s var(--ease),opacity .2s';row.style.height=row.offsetHeight+'px';
       requestAnimationFrame(()=>{row.style.height='0';row.style.opacity='0'});setTimeout(()=>row.remove(),300);toast('Deleted · Undo')});
   });
 }
+// undo snackbar for the workout screen (Build has its own in board.js)
+let SUT=null,SUF=null;function undoSnack(t,fn){let u=$('#sundo');if(!u){u=document.createElement('div');u.id='sundo';u.className='bundo';$('#app').appendChild(u)}
+  SUF=fn;u.innerHTML=`<span>${t}</span><button data-act="sundo">Undo</button>`;u.classList.add('on');clearTimeout(SUT);SUT=setTimeout(hideSnack,6000)}
+function hideSnack(){const u=$('#sundo');if(u)u.classList.remove('on');SUF=null}
 let tt;function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),1800)}
 
 // ---------------------------------------------------------------- tab bar + floating workout bar
 // Recommended 4 tabs: Train · Log · Build · Progress. Settings = gear on Build; Learn = book icon in headers.
-const TABS=[['train','Train'],['log','Log'],['build','Build'],['progress','Progress']];
+const TABS=[['build','Build'],['train','Train'],['log','Log'],['progress','Progress']]; // Build leftmost (markup round 1)
 function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-go="#${k}" class="${S.tab===k?'on':''}" aria-label="${l}">${I(k,1.7)}<span>${l}</span></button>`).join('')}
 function renderBar(){
   const show=S.session&&!document.body.classList.contains('full');document.body.classList.toggle('has-bar',show);
   $('#wbar-slot').innerHTML=show?`<div class="wbar" data-go="#workout" role="button" aria-label="Return to workout">
-    <span class="live"></span><div class="main"><div class="n">${WK.title}</div><div class="s"><span data-el>${fmt(WK.elapsed)}</span> · 7 of 17 sets</div></div>
+    <span class="live"></span><div class="main"><div class="n">${WK.title}</div><div class="s"><span data-el>${fmt(WK.elapsed)}</span> · ${setsDone()} of ${setsAll()} sets</div></div>
     <div class="rst"><div class="k">Rest</div><div class="v" data-rest>${fmt(WK.rest.left)}</div></div>
     <button class="tr" data-act="trash" aria-label="Discard or resume">${I('trash',1.7)}</button>
     <i class="line" data-line style="transform:scaleX(${WK.rest.left/WK.rest.total})"></i></div>`:'';
 }
 function trashSheet(){
   const s=sheet({body:`<div class="act-sheet"><div class="as-ico">${I('trash',1.7)}</div><h3>Discard this workout?</h3>
-    <p>${WK.title} · ${Math.round(WK.elapsed/60)} min · 3 sets logged. Discarding deletes it; nothing is saved to your Log.</p>
+    <p>${WK.title} · ${Math.round(WK.elapsed/60)} min · ${setsDone()} set${setsDone()===1?'':'s'} logged. Discarding deletes it; nothing is saved to your Log.</p>
     <button class="btn block danger-fill" data-x="discard">Discard workout</button><button class="btn block grey" data-x="resume">Resume workout</button></div>`});
   s.el.addEventListener('click',e=>{const a=e.target.closest('[data-x]');if(!a)return;s.close();
-    if(a.dataset.x==='discard'){S.session=false;renderBar();toast('Workout discarded')}else go('#workout')});
+    if(a.dataset.x==='discard'){S.session=false;S.live=false;S.demo=false;renderBar();toast('Workout discarded')}else go('#workout')});
   return s;
 }
 function confirmSheet(t,p,btn,fn){const c=sheet({body:`<div class="act-sheet"><h3>${t}</h3><p>${p}</p><button class="btn block danger-fill" data-x="1">${btn}</button><button class="btn block grey" data-x="0">Cancel</button></div>`});
@@ -244,33 +268,76 @@ function afterTrain(){
 }
 
 // 2. WORKOUT
-function setRow(s,i){
-  return `<div class="srow sgrid ${s.done?'done':''}"><div class="sn ${s.warm?'w':''}">${s.warm?'W':i}</div><div class="prev">${s.p||'—'}</div>
-    <input class="fld" data-kind="w" readonly inputmode="none" value="${s.wv||''}" placeholder="${(s.p||'').split(' × ')[0]}" aria-label="Weight">
+// Set rows swipe left to delete ONLY that set (Undo). The exercise is deleted from its ⋯ menu or by swiping its header.
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function setRow(s,i,xi,si){
+  return `<div class="swipe sws" data-del="set" data-xi="${xi}" data-si="${si}"><button class="del">Delete</button><div class="in"><div class="srow sgrid ${s.done?'done':''}" data-xi="${xi}" data-si="${si}"><div class="sn ${s.warm?'w':''}">${s.warm?'W':i}</div><div class="prev">${s.p||'—'}</div>
+    <input class="fld ${s.wauto?'auto':''}" data-kind="w" readonly inputmode="none" value="${s.wv||''}" placeholder="${(s.p||'').split(' × ')[0]}" aria-label="Weight">
     <input class="fld" data-kind="r" readonly inputmode="none" value="${s.rv||''}" placeholder="${(s.p||'').split(' × ')[1]||''}" aria-label="Reps">
-    <button class="ck" data-act="ck" aria-label="Done">${I('check',2.4)}</button></div>`;
+    <button class="ck" data-act="ck" aria-label="Done">${I('check',2.4)}</button></div></div></div>`;
 }
-function exBlock(ex){
+// per-exercise notes: "Always" (saved on this device, shown every time) and "This session" (this workout only)
+const LSN='apechit.sb.exNotes';
+const noteA=id=>(ld(LSN,{})[id]||''),noteS=id=>(WK.notes[id]||'');
+function notesHtml(id,xi){const a=noteA(id),s=noteS(id);if(!a&&!s)return '';
+  return `<button class="exnotes" data-act="notes" data-xi="${xi}" aria-label="Edit notes">${a?`<span class="exn al"><b>Always</b>${esc(a)}</span>`:''}${s?`<span class="exn ss"><b>This session</b>${esc(s)}</span>`:''}</button>`}
+function exBlock(ex,xi){
   let n=0;
-  return `<section class="exb swipe" data-ex="${ex.id}"><button class="del">Delete</button><div class="in">
-   <div class="exh">${gl(ex.id)}<div class="grow"><div class="nm">${exName(ex.id)}</div><div class="mu">${exSub(ex.id)}</div></div>
-    <button class="mini" data-act="info" data-id="${ex.id}" aria-label="Learn">${I('info',1.7)}</button>
-    ${ex.bar?`<button class="mini" data-act="plates" aria-label="Plate calculator">${I('plate',1.6)}</button>`:''}
-    <button class="mini" data-act="swap" data-id="${ex.id}" aria-label="Swap">${I('swap',1.7)}</button></div>
-   <div class="cue">${ex.cue}</div>
+  return `<section class="exb" data-ex="${ex.id}" data-xi="${xi}">
+   <div class="swipe swh" data-del="ex" data-xi="${xi}"><button class="del">Delete</button><div class="in"><div class="exh">${gl(ex.id)}<button class="grow exnm" data-act="info" data-id="${ex.id}" aria-label="Learn about ${exNameP(ex.id)}"><div class="nm">${exName(ex.id)}</div><div class="mu">${exSub(ex.id)}</div></button>
+    <button class="mini" data-act="notes" data-xi="${xi}" aria-label="Notes">${I('note',1.7)}</button>
+    ${ex.bar?`<button class="mini" data-act="plates" data-xi="${xi}" aria-label="Plate calculator">${I('plate',1.6)}</button>`:''}
+    <button class="mini" data-act="wswap" data-xi="${xi}" data-id="${ex.id}" aria-label="Swap">${I('swap',1.7)}</button>
+    <button class="mini" data-act="exmenu" data-xi="${xi}" aria-label="More">${I('more',1.7)}</button></div></div></div>
+   ${notesHtml(ex.id,xi)}
+   ${ex.cue?`<div class="cue">${ex.cue}</div>`:''}
    <div class="sgrid shd"><div>Set</div><div>Previous</div><div>${S.unit}</div><div>Reps</div><div></div></div>
-   ${ex.sets.map(s=>setRow(s,s.warm?0:++n)).join('')}
-   <button class="addset" data-act="addset">${I('plus',2)} Add set</button></div></section>`;
+   <div class="sets">${ex.sets.map((s,si)=>setRow(s,s.warm?0:++n,xi,si)).join('')}</div>
+   <button class="addset" data-act="addset" data-xi="${xi}">${I('plus',2)} Add set</button></section>`;
 }
-const restBox=()=>`<div class="rest" data-act="restsheet"><div class="rl"><div class="rlb">Rest · Bench set 3</div><div class="tm" data-rest>${fmt(WK.rest.left)}</div></div>
+const restBox=()=>`<div class="rest" data-act="restsheet"><div class="rl"><div class="rlb">${WK.rest.left>0?'Rest · '+(WK.restLab||''):'Rest · starts when you tick a set'}</div><div class="tm" data-rest>${fmt(WK.rest.left)}</div></div>
   <button data-act="rest-">−15</button><button data-act="rest+">+15</button><button data-act="skip">Skip</button><i class="line" data-line style="transform:scaleX(${WK.rest.left/WK.rest.total})"></i></div>`;
 V.workout=()=>`<div class="wk-nav"><div class="wk-top"><button class="ibtn flat" data-act="minimize" aria-label="Minimize">${I('chevD',2)}</button>
    <button class="clock ${WK.paused?'paused':''}" data-act="clock">${I(WK.paused?'pause':'clock',2)}<span data-el>${fmt(WK.elapsed)}</span></button>
    <button class="btn accent sm" data-go="#finish">Finish</button></div>${restBox()}</div>
-  <div class="wk-title"><div class="eyebrow">Upper / Lower · Day 1</div><h1>${WK.title}</h1></div>
-  ${WK.ex.map(exBlock).join('')}
+  <div class="wk-title"><div class="eyebrow">${WK.sub||'Started '+clockTime(CLK.start)}</div><h1>${WK.title}</h1></div>
+  <div id="wkx">${WK.ex.map(exBlock).join('')}</div>
   <button class="btn grey block addex" data-act="tray">${I('plus',2)} Add exercise</button>`;
 function afterWorkout(){bindSwipes($('#view'))}
+function renderWk(){const x=$('#wkx');if(!x)return;x.innerHTML=WK.ex.map(exBlock).join('');bindSwipes(x);renderBar()}
+function renderEx(xi){const old=$(`.exb[data-xi="${xi}"]`);if(!old)return renderWk();const t=document.createElement('div');t.innerHTML=exBlock(WK.ex[xi],xi);old.replaceWith(t.firstElementChild);bindSwipes($(`.exb[data-xi="${xi}"]`));renderBar()}
+// keep typed values in the workout model, so a re-render (delete, undo, swap) never loses them
+function syncField(f){const r=f.closest('.srow');if(!r||r.dataset.xi==null)return;const s=((WK.ex[+r.dataset.xi]||{}).sets||[])[+r.dataset.si];if(!s)return;
+  if(f.dataset.kind==='w'){s.wv=f.value;s.wauto=f.classList.contains('auto')}else s.rv=f.value}
+const DEL={
+ set(row){const xi=+row.dataset.xi,si=+row.dataset.si,ex=WK.ex[xi];if(!ex)return;const [s]=ex.sets.splice(si,1);
+   const lab=s.warm?'Warm-up set':'Set '+(ex.sets.slice(0,si).filter(x=>!x.warm).length+1);
+   row.style.transition='height .26s var(--ease),opacity .2s';row.style.height=row.offsetHeight+'px';requestAnimationFrame(()=>{row.style.height='0';row.style.opacity='0'});
+   setTimeout(()=>renderEx(xi),270);undoSnack(`${lab} of ${exNameP(ex.id)} deleted`,()=>{ex.sets.splice(si,0,s);renderEx(xi)})},
+ ex(row){delEx(+row.dataset.xi)}};
+function delEx(xi){const ex=WK.ex[xi];if(!ex)return;WK.ex.splice(xi,1);renderWk();undoSnack(`${exNameP(ex.id)} removed`,()=>{WK.ex.splice(xi,0,ex);renderWk()})}
+function exMenu(xi){const ex=WK.ex[xi];if(!ex)return;
+  const s=sheet({title:exNameP(ex.id),cls:'grouped',body:`<div class="group"><button class="row" data-x="notes"><span class="ico gr">${I('note',1.7)}</span><div class="grow t1">Notes</div>${CHEV}</button>
+    <button class="row" data-x="swap"><span class="ico gr">${I('swap',1.7)}</span><div class="grow t1">Swap exercise</div>${CHEV}</button>
+    <button class="row" data-x="info"><span class="ico gr">${I('info',1.7)}</span><div class="grow t1">About this exercise</div>${CHEV}</button></div>
+    <div class="group" style="margin-top:20px"><button class="row dangerrow" data-x="del">Delete exercise</button></div>
+    <p class="foot">Delete removes ${exNameP(ex.id)} and its ${ex.sets.length} sets from this workout. You can undo. To delete one set, swipe it left.</p>`});
+  s.el.addEventListener('click',e=>{const a=e.target.closest('[data-x]');if(!a)return;s.close();const k=a.dataset.x;
+    if(k==='del')delEx(xi);if(k==='notes')setTimeout(()=>notesSheet(xi),60);if(k==='swap')setTimeout(()=>wSwap(xi),60);if(k==='info')go('#learn-ex-'+ex.id)});return s}
+function notesSheet(xi){const ex=WK.ex[xi];if(!ex)return;const id=ex.id;
+  const s=sheet({title:'Notes',cls:'grouped nsheet',right:`<button class="btn plain strong" data-x="close">Done</button>`,body:`<div class="nsh-h">${gl(id)}<b>${exNameP(id)}</b></div>
+    <div class="ghead">Always <span class="gsub">shown every time you do this exercise</span></div>
+    <div class="group"><textarea id="nta" class="nta" rows="2" maxlength="200" placeholder="e.g. Seat on notch 4 · pause 1 s at the chest">${esc(noteA(id))}</textarea></div>
+    <div class="ghead">This session <span class="gsub">only for today's workout</span></div>
+    <div class="group"><textarea id="nts" class="nta" rows="2" maxlength="200" placeholder="e.g. Left shoulder tight, kept it lighter">${esc(noteS(id))}</textarea></div>
+    <p class="foot">Always notes are saved on this device and come back next time. Session notes stay with this workout.</p>`,
+    onClose(){const a=$('#nta',s.el).value.trim(),t=$('#nts',s.el).value.trim(),all=ld(LSN,{});if(a)all[id]=a;else delete all[id];sv(LSN,all);if(t)WK.notes[id]=t;else delete WK.notes[id];if($(`.exb[data-xi="${xi}"]`))renderEx(xi)}});
+  s.el.addEventListener('click',e=>{if(e.target.closest('[data-x=close]'))s.close()});return s}
+// mid-workout swap: "This workout only" by default; "Also update routine" changes the routine day too
+function wSwap(xi){const ex=WK.ex[xi];if(!ex)return;const old=ex.id;
+  return swapSheet(old,{workout:true,onPick:(nid,also)=>{ex.id=nid;ex.cue='';ex.bar=/barbell|trap bar|smith/.test((EX[nid]||{}).eq||'')||/ez-bar/.test(nid);ex.sets.forEach(s=>{s.p='';delete s.wauto});
+    let upd=false;if(also&&WK.ref){const r=ROUTINES.find(x=>x.id===WK.ref.rid),d=r&&r.days[WK.ref.di],e=d&&d.ex.find(x=>x.id===old);if(e){e.id=nid;upd=true}}
+    renderEx(xi);toast(upd?`Swapped · ${(ROUTINES.find(x=>x.id===WK.ref.rid)||{}).name||'routine'} updated too`:'Swapped for this workout only')}})}
 
 // 4. FINISH
 V.finish=()=>`<div class="fin">
@@ -299,8 +366,8 @@ function afterFinish(){const c=$('#fincards');c.addEventListener('scroll',()=>{c
 const GAPS=[['side_delts',8,14,'cable-lateral-raise'],['lats',14,16,'lat-pulldown'],['calves',8,10,'seated-calf-raise'],['abs',6,8,'cable-crunch']];
 const CROSS=[['Chest','cable-fly'],['Back','seated-cable-row'],['Shoulders','dumbbell-lateral-raise'],['Arms','hammer-curl'],['Legs','leg-extension'],['Core','hanging-leg-raise']];
 V.empty=()=>`<div class="wk-nav"><div class="wk-top"><button class="ibtn flat" data-go="#train" aria-label="Close">${I('chevD',2)}</button>
-   <button class="clock" data-act="clock">${I('clock',2)}<span>4:02</span></button><button class="btn accent sm" data-go="#finish">Finish</button></div></div>
-  <div class="wk-title"><div class="eyebrow">Started 7:02 PM</div><h1>Empty workout</h1></div>
+   <button class="clock" data-act="clock">${I('clock',2)}<span data-el>${fmt(WK.elapsed)}</span></button><button class="btn accent sm" data-go="#finish">Finish</button></div></div>
+  <div class="wk-title"><div class="eyebrow">Started ${clockTime(CLK.start)}</div><h1>Empty workout</h1></div>
 ${emptyBody()}
   <button class="btn grey block addex" data-act="tray">${I('search',2)} Browse all exercises</button>`;
 
@@ -333,10 +400,36 @@ function emptyBody(){if(!RD)return '';const sc=SC;
   <div class="group">${top.map(r=>`<div class="row sugr" data-id="${r.id}">${gl(r.id)}<div class="grow"><div class="t1">${exName(r.id)}</div><div class="t2">${exSub(r.id)}</div>${whyR(r)}</div><button class="addc" data-act="add" aria-label="Add">${I('plus',2.2)}</button></div>`).join('')}</div>
   ${gaps.length?`<div class="sec"><h2>This week's gaps</h2><span class="more">vs your targets</span></div>
   <div class="group">${gaps.map(([m,d,t])=>`<div class="row gap"><div class="grow"><div class="t1">${ML[m]||m} <span class="sub num">· ${f1(d)} of ${f1(t)} sets</span></div><div class="gbar"><i style="--w:${Math.min(1,d/t)*100}%"></i></div></div></div>`).join('')}</div>`:''}`}
-let TF={q:'',type:null,mus:null,eq:null,fav:false,mode:'sug'};   // mode: 'sug' (Suggested, default) | 'lib' (Library order)
+let TF={q:'',mus:null,pat:null,eq:null,fav:false,mode:'sug'};   // mode: 'sug' (Suggested, default) | 'lib' (Library order)
+// ---- tray filters: three compact wrapping rows (Muscle, Movement pattern, Equipment) + Reset; no horizontal scrolling.
+// MOVEMENT PATTERN: Coach's field exercises[].movement_pattern; labels and order from rules.json movement_patterns.
+// The row renders whatever values the data contains (new ones such as core / carry appear with no code change).
+// Every exercise carries movement_pattern (exercises.json v12); a custom exercise without one counts as 'other' (tools/movement.py rule 5).
+const movePat=id=>{const e=RD&&RD.EX[id];if(!e)return null;return e.movement_pattern||'other'};
+const mpLabelFb=k=>k.replace(/_/g,' ').replace(/^./,c=>c.toUpperCase());
+function mpDefs(){const R=RD&&RD.rules.movement_patterns,pair=x=>typeof x==='string'?[x,null]:[x.id||x.key,x.label||x.name];let L=[];
+  if(Array.isArray(R))L=R.map(pair);
+  else if(R&&typeof R==='object'){const src=R.patterns||R.items||R.labels||R.values||R,skip=['order','note','notes','description','version'];
+    L=Array.isArray(src)?src.map(pair):(Array.isArray(R.order)?R.order:Object.keys(src).filter(k=>!skip.includes(k))).map(k=>{const v=src[k];return [k,typeof v==='string'?v:v&&(v.label||v.name)]})}
+  L=L.filter(x=>x[0]).map(([k,l])=>[k,l||mpLabelFb(k)]);
+  const present=new Set(Object.keys(RD?RD.EX:{}).map(movePat).filter(Boolean)),out=L.filter(([k])=>present.has(k));
+  [...present].filter(k=>!L.some(x=>x[0]===k)).sort().forEach(k=>out.push([k,mpLabelFb(k)]));return out}
+const MUS_F=[['chest','Chest'],['lats','Lats'],['upper_back','Upper back'],['traps','Traps'],['front_delts','Front delts'],['side_delts','Side delts'],['rear_delts','Rear delts'],['biceps','Biceps'],['triceps','Triceps'],['quads','Quads'],['hamstrings','Hams'],['glutes','Glutes'],['calves','Calves'],['abs','Abs']];
+const EQ_LAB={'smith machine':'Smith','plate-loaded machine':'Plate-loaded'};
+// equipment chips: every equipment value with 12+ exercises in the library (most common first), the rest under "Other"
+function eqDefs(){const c={};Object.values(RD?RD.EX:{}).forEach(e=>c[e.equipment]=(c[e.equipment]||0)+1);const top=Object.keys(c).filter(k=>c[k]>=12).sort((a,b)=>c[b]-c[a]);
+  return [...top.map(k=>[k,EQ_LAB[k]||k[0].toUpperCase()+k.slice(1)]),...(Object.keys(c).length>top.length?[['other','Other']]:[])]}
+function passF(F,id){const e=RD&&RD.EX[id];if(!e)return false;
+  if(F.mus&&!((e.muscles[F.mus]||0)>=0.5))return false;if(F.pat&&movePat(id)!==F.pat)return false;
+  if(F.eq){const top=eqDefs().map(x=>x[0]).filter(x=>x!=='other');if(F.eq==='other'?top.includes(e.equipment):e.equipment!==F.eq)return false}return true}
+function filterHtml(F,at){const c=(k,v,l)=>`<button class="chip xs ${F[k]===v?'on':''}" data-${at}="${k}" data-v="${v}">${l}</button>`;
+  return `<div class="tfilt noswipe"><div class="tfr" data-row="mus"><span class="tfl">Muscle</span>${MUS_F.map(([m,l])=>c('mus',m,l)).join('')}</div>
+   <div class="tfr" data-row="pat"><span class="tfl">Pattern</span>${mpDefs().map(([k,l])=>c('pat',k,l)).join('')}</div>
+   <div class="tfr" data-row="eq"><span class="tfl">Equipment</span>${eqDefs().map(([k,l])=>c('eq',k,l)).join('')}</div></div>`}
+const anyF=F=>!!(F.mus||F.pat||F.eq||F.fav||F.q);
 function trayList(){
   // search + filters are hard filters in both modes; what passes them goes to rank('tray', candidates)
-  const ids=EXL.map(x=>x[0]).filter(id=>{const e=EX[id];return e&&(!TF.fav||isFav(id))&&(!TF.type||e.type===TF.type)&&(!TF.mus||e.mus.includes(TF.mus))&&(!TF.eq||e.eq===TF.eq)&&(!TF.q||e.name.toLowerCase().includes(TF.q.toLowerCase()))});
+  const ids=EXL.map(x=>x[0]).filter(id=>{const e=EX[id];return e&&(!TF.fav||isFav(id))&&passF(TF,id)&&(!TF.q||e.name.toLowerCase().includes(TF.q.toLowerCase()))});
   const sug=TF.mode==='sug'&&RD,cands=SC.cands?SC.cands.filter(i=>ids.includes(i)):ids;
   const rows=sug?rk('tray',cands,{},null):ids.map(id=>({id}));
   const row=r=>{const id=r.id,e=EX[id];return `<div class="row trow" data-id="${id}">${gl(id)}<div class="grow"><div class="t1">${exNameP(id)}${isFav(id)?' <span class="fv">★</span>':''}</div><div class="t2">${exSub(id)} · ${e.eq}</div>${r.reasons?whyR(r):''}</div>${starBtn(id)}<button class="ib-i" data-act="exinfo" data-id="${id}" aria-label="Info">${I('info',1.7)}</button><button class="addc" data-act="add" aria-label="Add">${I('plus',2.2)}</button></div>`};
@@ -344,19 +437,19 @@ function trayList(){
   return `<div class="tcount">${rows.length} exercises${sug?` · ranked for ${({mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'})[SC.day]||'today'}${hid?` · ${hid} hidden (on this day or not in your gym)`:''}`:' · library order'}</div>${SC.note?`<div class="scnote">${SC.note}</div>`:''}<div class="group">`+rows.slice(0,80).map(row).join('')+'</div>';
 }
 function traySheet(){
-  const ch=(k,v,l)=>`<button class="chip ${TF[k]===v?'on':''}" data-f="${k}" data-v="${v}">${l}</button>`;
   const s=sheet({title:'Add exercise',cls:'tall grouped',right:`<button class="btn plain" data-x="close">Done</button>`,
     body:`<div class="srch"><span>${I('search',2)}</span><input id="tq" type="search" placeholder="Search 239 exercises" autocomplete="off"></div>
-    <div class="pad0"><div class="seg sm" id="tmode"><button class="${TF.mode==='sug'?'on':''}" data-m="sug">Suggested</button><button class="${TF.mode==='lib'?'on':''}" data-m="lib">Library</button></div></div>
-    <div class="chips fl"><button class="chip ${TF.fav?'on':''}" data-f="fav" data-v="true"><span class="fv">★</span> Favorites</button>${['primary','accessory','isolation'].map(t=>ch('type',t,GLY[t]+' '+t[0].toUpperCase()+t.slice(1))).join('')}</div>
-    <div class="chips fl">${['chest','lats','upper_back','side_delts','biceps','triceps','quads','hamstrings','glutes','calves','abs'].map(m=>ch('mus',m,ML[m])).join('')}</div>
-    <div class="chips fl">${['barbell','dumbbell','cable','machine','bodyweight','smith machine'].map(m=>ch('eq',m,m[0].toUpperCase()+m.slice(1))).join('')}</div>
+    <div class="tftop"><div class="seg sm" id="tmode"><button class="${TF.mode==='sug'?'on':''}" data-m="sug">Suggested</button><button class="${TF.mode==='lib'?'on':''}" data-m="lib">Library</button></div>
+     <button class="chip xs ${TF.fav?'on':''}" data-f="fav" data-v="true"><span class="fv">★</span> Favorites</button><button class="btn plain sm treset" data-x="reset" ${anyF(TF)?'':'disabled'}>Reset</button></div>
+    <div id="tfb">${filterHtml(TF,'f')}</div>
     <div class="tlist">${trayList()}</div>`});
-  s.el.addEventListener('click',e=>{const md=e.target.closest('#tmode [data-m]');if(md){TF.mode=md.dataset.m;$$('#tmode button',s.el).forEach(b=>b.classList.toggle('on',b===md));$('.tlist',s.el).innerHTML=trayList();return}
-    const f=e.target.closest('[data-f]');if(f){if(f.dataset.f==='fav'){TF.fav=!TF.fav;f.classList.toggle('on',TF.fav);$('.tlist',s.el).innerHTML=trayList();return}TF[f.dataset.f]=TF[f.dataset.f]===f.dataset.v?null:f.dataset.v;
-      $$(`[data-f=${f.dataset.f}]`,s.el).forEach(c=>c.classList.toggle('on',TF[c.dataset.f]===c.dataset.v));$('.tlist',s.el).innerHTML=trayList()}
+  const upd=()=>{$('.tlist',s.el).innerHTML=trayList();$('[data-x=reset]',s.el).disabled=!anyF(TF)};
+  s.el.addEventListener('click',e=>{const md=e.target.closest('#tmode [data-m]');if(md){TF.mode=md.dataset.m;$$('#tmode button',s.el).forEach(b=>b.classList.toggle('on',b===md));upd();return}
+    const f=e.target.closest('[data-f]');if(f){if(f.dataset.f==='fav'){TF.fav=!TF.fav;f.classList.toggle('on',TF.fav);upd();return}TF[f.dataset.f]=TF[f.dataset.f]===f.dataset.v?null:f.dataset.v;
+      $$(`[data-f=${f.dataset.f}]`,s.el).forEach(c=>c.classList.toggle('on',TF[c.dataset.f]===c.dataset.v));upd();return}
+    if(e.target.closest('[data-x=reset]')){Object.assign(TF,{q:'',mus:null,pat:null,eq:null,fav:false});$('#tq',s.el).value='';$('#tfb',s.el).innerHTML=filterHtml(TF,'f');$('[data-f=fav]',s.el).classList.remove('on');upd();return}
     if(e.target.closest('[data-x=close]'))s.close()});
-  $('#tq',s.el).addEventListener('input',e=>{TF.q=e.target.value;$('.tlist',s.el).innerHTML=trayList()});
+  $('#tq',s.el).addEventListener('input',e=>{TF.q=e.target.value;upd()});
   return s;
 }
 
@@ -459,39 +552,60 @@ function swapSheet(id,opt={}){
   const s=sheet({title:'Swap exercise',cls:'grouped',right:`<button class="btn plain" data-x="close">Cancel</button>`,body:`
     <div class="cur card">${gl(id)}<div class="grow"><div class="eyebrow">Replacing</div><b>${exName(id)}</b><div class="t2">${exSub(id)}</div></div></div>
     ${SC.note?`<div class="scnote">${SC.note}</div>`:''}
+    ${opt.workout?`<div class="ghead">Apply to</div><div class="group scope noswipe"><div class="row"><div class="grow"><div class="t1" id="scl">This workout only</div><div class="t2" id="sct">${WK.ref?`${(ROUTINES.find(x=>x.id===WK.ref.rid)||{}).name} stays as it is`:'Your routine stays as it is'}</div></div><span class="scok">${I('check',2.6)}</span></div>
+      <div class="row"><div class="grow"><div class="t1">Also update routine</div><div class="t2">Use the new exercise in this routine day from now on</div></div><span class="tg" data-sw="routine" role="switch" aria-checked="false"></span></div></div>`:''}
     <div class="pad"><div class="seg"><button class="on">Similar</button><button>Browse all</button><button>Create new</button></div></div>
     <div class="group">${alts.map(a=>`<div class="row alt" data-x="pick" data-id="${a.id}" data-score="${a.score!=null?a.score:''}" role="button" tabindex="0">${gl(a.id)}<div class="grow"><div class="t1">${exName(a.id)}</div>${exSub(a.id)?`<div class="t2">${exSub(a.id)}</div>`:''}</div><span class="altb">${starBtn(a.id)}<button class="ib-i" data-act="exinfo" data-id="${a.id}" aria-label="Learn">${I('info',1.7)}</button></span>
       <div class="altx">${diffRow(a)}${a.reasons&&a.reasons.length?whyR(a):''}${opt.debug&&a.score!=null?`<div class="dbg num">score ${a.score} · fit ${a.fit}</div>`:''}</div></div>`).join('')}</div>
-    <p class="foot">Typical differences, not guarantees.</p>
-    <div class="group" style="margin-top:16px"><div class="row"><div class="grow"><div class="t1">Only this workout</div><div class="t2">Keep the routine unchanged</div></div><span class="tg" data-act="tg"></span></div></div>`});
-  s.el.addEventListener('click',e=>{if(e.target.closest('[data-act]'))return;const x=e.target.closest('[data-x]');if(!x)return;s.close();if(x.dataset.x==='pick'){if(opt.onPick)opt.onPick(x.dataset.id);else toast('Swapped')}});return s;
+    <p class="foot">Typical differences, not guarantees.</p>`});
+  let also=false;
+  s.el.addEventListener('click',e=>{const sw=e.target.closest('[data-sw]');if(sw){also=!also;sw.classList.toggle('on',also);sw.setAttribute('aria-checked',also);
+      $('#scl',s.el).textContent=also?'This workout and the routine':'This workout only';$('#sct',s.el).textContent=also?'The routine day changes too':`${WK.ref?(ROUTINES.find(x=>x.id===WK.ref.rid)||{}).name:'Your routine'} stays as it is`;return}
+    if(e.target.closest('[data-act]'))return;const x=e.target.closest('[data-x]');if(!x)return;s.close();if(x.dataset.x==='pick'){if(opt.onPick)opt.onPick(x.dataset.id,also);else toast('Swapped')}});s.also=()=>also;return s;
 }
 
 // 8. PLATES
 const BARS=[['Olympic',45],['SSB',70],['Smith',15],['EZ',35],['Trap',75]];
 const PL=[[45,'#0b0b0c',100,15],[35,'#2a2a2d',90,13],[25,'#47474b',78,11],[10,'#6e6e73',58,9],[5,'#97979c',46,7],[2.5,'#E8430C',38,6]];
-function plateCalc(total,bar){let side=(total-bar)/2;const out=[];if(side<0)return out;for(const [w] of PL){while(side>=w-1e-9){out.push(w);side-=w}}return out}
+// Plate sizes live in the gym profile (rules.json logger.gym_profile_default.lb.plates [{weight,pairs}]); toggling a size
+// off/on saves the gym's plate list to localStorage (apechit.sb.gym) and ranking sees the same list (gymProfile()).
+const LSG='apechit.sb.gym';let GYM=(()=>{try{return JSON.parse(localStorage.getItem(LSG))}catch(e){return null}})();
+const defPlates=()=>RD?RD.rules.logger.gym_profile_default.lb.plates:PL.map(([w])=>({weight:w,pairs:2}));
+const gymPlates=()=>(GYM&&Array.isArray(GYM.plates))?GYM.plates:defPlates();
+function togglePlate(w){const all=defPlates(),cur=gymPlates(),on=cur.some(p=>p.weight===w);
+  const next=on?cur.filter(p=>p.weight!==w):[...cur,all.find(p=>p.weight===w)||{weight:w,pairs:2}].sort((a,b)=>b.weight-a.weight);GYM=Object.assign({},GYM||{},{plates:next});sv(LSG,GYM)}
+function plateCalc(total,bar,plates){let side=(total-bar)/2;const out=[];if(side<0)return {out,left:0};for(const p of (plates||gymPlates()).slice().sort((a,b)=>b.weight-a.weight)){let n=0;while(side>=p.weight-1e-9&&n<(p.pairs||99)){out.push(p.weight);side-=p.weight;n++}}return {out,left:Math.round(side*2*100)/100}}
+// target weight: the exercise's lb field (first set not ticked: typed value, else the value shown in the field)
+function plateTarget(xi){const blk=$(`.exb[data-xi="${xi}"]`)||$$('.exb').find(b=>$('.plate,[data-act=plates]',b));if(!blk)return null;
+  const rows=$$('.srow',blk),r=rows.find(x=>!x.classList.contains('done'))||rows[rows.length-1];if(!r)return null;const f=$('[data-kind=w]',r),v=parseFloat(f.value||f.placeholder);
+  const sn=$('.sn',r).textContent;return isFinite(v)&&v>0?{w:v,set:sn==='W'?'warm-up':'set '+sn,id:blk.dataset.ex,typed:!!f.value}:null}
 function plateBody(){
-  const bar=(BARS.find(b=>b[0]===S.bar)||['Custom',20])[1],ps=plateCalc(S.plate,bar);
+  const bar=(BARS.find(b=>b[0]===S.bar)||['Custom',20])[1],pc=plateCalc(S.plate,bar),ps=pc.out,on=new Set(gymPlates().map(p=>p.weight)),sizes=[...new Set([...defPlates().map(p=>p.weight),...PL.map(p=>p[0])])].sort((a,b)=>b-a);
   let off=0;const side=ps.map(w=>{const p=PL.find(x=>x[0]===w),r=`<rect x="${off}" y="${-p[2]*.55}" width="${p[3]}" height="${p[2]*1.1}" rx="3" fill="${p[1]}"/>`;off+=p[3]+1.5;return r}).join('');
   const sv=`<svg viewBox="-175 -64 350 128" class="barsvg"><rect x="-172" y="-5" width="344" height="10" rx="4" fill="#cfcfd4"/><rect x="-58" y="-3.5" width="116" height="7" fill="#b4b4b9"/>
     <rect x="58" y="-13" width="6" height="26" rx="2" fill="#8e8e93"/><rect x="-64" y="-13" width="6" height="26" rx="2" fill="#8e8e93"/>
     <g transform="translate(66,0)">${side}</g><g transform="translate(-66,0) scale(-1,1)">${side}</g></svg>`;
   const per={};ps.forEach(w=>per[w]=(per[w]||0)+1);
   return `<div class="pw"><button class="rnd" data-pl="-5" aria-label="Minus 5">−</button><div class="pv"><b class="num">${S.plate}</b><span>${S.unit}</span></div><button class="rnd" data-pl="5" aria-label="Plus 5">+</button></div>
+   ${S.plateFrom?`<p class="pfrom sub">From the ${S.unit} field · ${exNameP(S.plateFrom.id)}, ${S.plateFrom.set}${S.plateFrom.typed?'':' (last time)'}</p>`:''}
    ${sv}<div class="pside">${ps.length?Object.entries(per).sort((a,b)=>b[0]-a[0]).map(([w,n])=>`<span class="pc"><b class="num">${n} ×</b> ${w}</span>`).join(''):'<span class="sub">Bar only</span>'}<span class="sub">per side · bar ${bar}</span></div>
+   ${pc.left>0?`<p class="pleft">${pc.left} ${S.unit} can't be loaded with the plates turned on · nearest ${S.plate-pc.left} ${S.unit}</p>`:''}
+   <div class="ghead" style="padding-left:20px">Plates at Home gym <span class="gsub">tap a size to turn it off</span></div>
+   <div class="chips wrap pltg noswipe">${sizes.map(w=>`<button class="chip ${on.has(w)?'on':'off'}" data-pt="${w}" aria-pressed="${on.has(w)}">${w}</button>`).join('')}</div>
    <div class="ghead" style="padding-left:20px">Bar</div>
    <div class="chips barpick noswipe">${BARS.map(([n,w])=>`<button class="chip ${S.bar===n?'on':''}" data-bar="${n}">${n} <span class="num op">${w}</span></button>`).join('')}<button class="chip" data-bar="Custom">${I('plus',2.2)} Custom</button></div>
-   <p class="foot" style="padding:14px 20px 4px">Plates from <b>Home gym</b> · edit in Settings › Gyms</p>`;
+   <p class="foot" style="padding:14px 20px 4px">Plate sizes are saved to your <b>Home gym</b> profile.</p>`;
 }
-function plateSheet(){const s=sheet({title:'Plate calculator',right:`<button class="btn plain" data-x="close">Done</button>`,body:`<div id="plb">${plateBody()}</div>`});
-  s.el.addEventListener('click',e=>{const a=e.target.closest('[data-pl],[data-bar],[data-x]');if(!a)return;if(a.dataset.x)return s.close();
-    if(a.dataset.pl)S.plate=Math.max(15,S.plate+ +a.dataset.pl);if(a.dataset.bar)S.bar=a.dataset.bar;$('#plb',s.el).innerHTML=plateBody()});return s}
+function plateSheet(xi){const t=plateTarget(xi==null?0:xi);S.plateFrom=t;if(t)S.plate=t.w;
+  const s=sheet({title:'Plate calculator',right:`<button class="btn plain" data-x="close">Done</button>`,body:`<div id="plb">${plateBody()}</div>`});
+  s.el.addEventListener('click',e=>{const a=e.target.closest('[data-pl],[data-bar],[data-x],[data-pt]');if(!a)return;if(a.dataset.x)return s.close();
+    if(a.dataset.pt){togglePlate(+a.dataset.pt);const w=+a.dataset.pt;toast(gymPlates().some(p=>p.weight===w)?`${w} ${S.unit} plates on`:`${w} ${S.unit} plates off · saved to Home gym`)}
+    if(a.dataset.pl){S.plate=Math.max(15,S.plate+ +a.dataset.pl);S.plateFrom=null}if(a.dataset.bar)S.bar=a.dataset.bar;$('#plb',s.el).innerHTML=plateBody()});return s}
 
 // clock sheet: Pause + fast minute wheel to roll the time back
 function clockSheet(){
   const s=sheet({title:'Workout clock',right:`<button class="btn plain" data-x="close">Done</button>`,body:`
-    <div class="ck-big num" data-el>${fmt(WK.elapsed)}</div><div class="ck-sub sub">Started 6:12 PM · ${WK.title}</div>
+    <div class="ck-big num" data-el>${fmt(WK.elapsed)}</div><div class="ck-sub sub">Started ${clockTime(CLK.start)} · ${WK.title}</div>
     <div class="pad"><button class="btn block ${WK.paused?'accent':'ink'}" data-x="pause">${I(WK.paused?'play':'pause')} ${WK.paused?'Resume':'Pause'}</button></div>
     <div class="ghead" style="padding-left:20px">Roll back time</div>
     <div class="wheelbox"><div class="wband"></div><div class="wheel noswipe" id="wheel">${Array.from({length:181},(_,i)=>`<div class="wi" data-m="${i}">${i}</div>`).join('')}</div><span class="wunit">min</span></div>
@@ -535,7 +649,7 @@ V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#b
    <button class="row"><div class="grow t1">Week starts on</div><span class="val">Monday</span>${CHEV}</button></div>
   <div class="ghead">Rest timer</div>
   <div class="group"><div class="row"><span class="gl primary">★</span><div class="grow t1">Primary lifts</div><span class="pill num">3:00</span></div>
-   <div class="row"><span class="gl">✚</span><div class="grow t1">Accessories</div><span class="pill num">2:00</span></div>
+   <div class="row"><span class="gl accessory">${GLY.accessory}</span><div class="grow t1">Accessories</div><span class="pill num">2:00</span></div>
    <div class="row"><span class="gl">●</span><div class="grow t1">Isolation</div><span class="pill num">1:30</span></div>
    <div class="row"><div class="grow"><div class="t1">Chime when rest ends</div><div class="t2">Soft</div></div>${tg(1)}</div>
    <div class="row"><div class="grow t1">Vibrate</div>${tg(1)}</div></div>
@@ -563,13 +677,79 @@ function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Numbe
    ${side==='front'&&opt.ape?`<g class="ape-head"><circle cx="512" cy="148" r="92" fill="#fff" stroke="var(--accent)" stroke-width="7" stroke-dasharray="18 13"/><text x="512" y="138" text-anchor="middle" font-size="46" font-weight="800" fill="var(--accent-press)" font-family="-apple-system,sans-serif">APE</text><text x="512" y="186" text-anchor="middle" font-size="32" fill="#6b6b70" font-family="-apple-system,sans-serif">head slot</text></g>`:''}</svg>`}
 const VOL_X=[['traps',8,6,12],['forearms',6,4,12],['obliques',4,4,10],['lower_back',6,4,10],['adductors',4,4,10],['abductors',3,4,10]];
 const volMap=()=>{const o={};[...VOL,...VOL_X].forEach(([m,n,lo,hi])=>o[m]=volFill(n,lo,hi));return o}; // same vStat bands as the panel, in-range shaded from --vol-in-range
-V.progress=()=>header('Progress',bookBtn)+
-  `<div class="pad"><div class="seg"><button class="on">This week</button><button>4 weeks</button><button>Block</button></div></div>
-   <div class="card mapcard"><div class="maps">${map('front',volMap(),{ape:true})}${map('back',volMap())}</div>
-    ${volLegend()}
-    <p class="maptip">Tap a muscle to learn about it</p></div>
-   <div class="sec"><h2>4 wk vs previous</h2><span class="more">Deload excluded</span></div>
-   <div class="group">${VOL.slice(0,6).map(([m,n])=>`<button class="row" data-go="#learn-${m}"><div class="grow t1">${ML[m]}</div><span class="val num">${n*4} vs ${n*4}</span><span class="flat">—</span>${CHEV}</button>`).join('')}</div>`;
+// PROGRESS (round 1, Coach's rules.json progress + data/progress-spec.md): logged workouts only, through logic/progress.js
+// (port of tools/progress.py). The log is Coach's synthetic fixture (data/progress-reference.json, six weeks to Thu Oct 22),
+// plus your Always notes from Train (apechit.sb.exNotes) so they show first. Refinement cards that edit the routine use the
+// analysis-sheet ops (logic/analysis.js applyOps); Apply keeps the routine as it was for Undo.
+const PROG={routine:null,applied:[],sig:null,res:null,base:null};
+function progRoutine(){const P=RD&&RD.PREF;if(!P)return null;if(!PROG.routine){PROG.routine=JSON.parse(JSON.stringify(P.routine));PROG.base=JSON.stringify(P.routine)}return PROG.routine}
+function progressData(){const P=RD&&RD.PREF;if(!P||!window.PROGRESS)return null;const rt=progRoutine(),notes=Object.assign({},P.history.exNotes||{},ld(LSN,{}));
+  const sig=JSON.stringify([rt,notes]);if(PROG.sig===sig&&PROG.res)return PROG.res;
+  const h=Object.assign({},P.history,{exNotes:notes});PROG.res=PROGRESS.progress(RD,h,rt.filter(d=>d.tiles.length),P.as_of,P.level,P.goal||null);PROG.sig=sig;return PROG.res}
+const kg=v=>v==null?'–':`${(+v).toFixed(1)} kg`,fx1=v=>v==null?'–':(+v).toFixed(1).replace(/\.0$/,'');
+const TRL={up:'Up',down:'Down',flat:'Flat',insufficient:'Not enough weeks'},LFT={up:'Up',stalled:'Stalled',dropping:'Dropping',insufficient:'Too few sessions'};
+const DNL=d=>RD.rules.day_names[d]||d,DSH=d=>DNL(d).slice(0,3);
+function bandOf(m){const T=RD.targets.targets[m],lv=(RD.PREF||{}).level||'intermediate';if(!T)return null;return [RANK.pyRound(T.min*RD.targets.levelMinFactor[lv]*2)/2,T.max]}
+const progMap=pr=>{const o={};for(const [m,v] of Object.entries(pr.muscles)){const b=bandOf(m);o[m]=b&&v.last_week_sets>0?volFill(v.last_week_sets,b[0],b[1]):null}return o};
+V.progress=()=>{const pr=RD&&progressData();if(!pr)return header('Progress',bookBtn)+`<p class="foot">No logged workouts yet.</p>`;const A=pr.adherence,W=(Object.values(pr.muscles)[0]||{}).weeks||[];
+  return header('Progress',bookBtn)+
+  `<p class="foot plog">${pr.label} Synthetic log: ${pr.guards.completed_sessions} completed sessions over ${pr.guards.logged_weeks} weeks, as of ${pr.as_of}. <span class="smp">sample</span></p>
+   <div class="card mapcard"><div class="maps">${map('front',progMap(pr),{ape:true})}${map('back',progMap(pr))}</div>${volLegend()}
+    <p class="maptip">Last completed week, credited sets vs target · tap a muscle</p></div>
+   <div id="pmus">${pmusHtml(S.pmus)}</div>
+   <div class="sec"><h2>Adherence</h2><span class="more">last ${A.weeks} weeks</span></div>
+   <div class="group padh"><div class="row"><div class="grow t1">Planned sets done</div><span class="val num" id="padh-s">${A.completed_planned_sets} of ${A.planned_sets} · ${A.sets_ratio!=null?Math.round(A.sets_ratio*100)+'%':'–'}</span></div>
+    <div class="row"><div class="grow t1">Sessions</div><span class="val num" id="padh-n">${A.sessions_completed} done · ${A.sessions_skipped} skipped</span></div></div>
+   <div class="sec"><h2>Per muscle</h2><span class="more">credited vs planned · ${W.length} wk trend</span></div>
+   <div class="group pml">${Object.entries(pr.muscles).map(([m,v])=>`<button class="row" data-pm="${m}"><div class="grow"><div class="t1">${ML[m]||m}</div><div class="t2 num">${fx1(v.last_week_sets)} of ${fx1(v.plan_sets)} planned last week${v.adherence!=null?` · ${Math.round(v.adherence*100)}% over ${W.length} wk`:''}</div></div><span class="ptr ${v.trend.status}">${TRL[v.trend.status]}</span></button>`).join('')}</div>
+   ${refHtml(pr)}
+   ${routineHtml()}
+   <p class="foot">Hard sets are credited per Coach's set tags (drop sets, myo-reps, partials). e1RM uses Epley on working sets of ${RD.rules.logger.e1rm_max_reps} reps or fewer, deload weeks left out. Every threshold is modeled.</p>`};
+function spark(v){const s=v.weekly_sets,mx=Math.max(1,v.plan_sets,...s),W=v.weeks||[];
+  return `<div class="spark" aria-label="Weekly credited sets">${s.map((x,i)=>`<div class="sp"><i style="--h:${x/mx*100}%" class="${x<v.plan_sets*0.75?'lo':''}"></i><small>${(W[i]||'').slice(5).replace('-','/')}</small></div>`).join('')}<b style="--y:${v.plan_sets/mx*100}%" title="Plan"></b></div>`}
+function pmusHtml(m){if(!m)return '';const pr=progressData(),v=pr&&pr.muscles[m];if(!v)return `<div class="card pmus" data-mu="${m}"><b>${ML[m]||m}</b><p class="sub">Nothing logged for this muscle in the last ${RD.rules.progress.trend.weeks} weeks.</p></div>`;
+  const ml=v.main_lift,top=Math.max(v.plan_sets,v.last_week_sets||0,1),b=bandOf(m);
+  return `<div class="card pmus" data-mu="${m}"><div class="pmh"><b>${ML[m]||m}</b><span class="ptr ${v.trend.status}">${TRL[v.trend.status]}${v.trend.pct_per_week!=null?` ${v.trend.pct_per_week>0?'+':''}${Math.round(v.trend.pct_per_week)}%/wk`:''}</span></div>
+   <div class="pav"><div class="pvl"><span>Credited last week</span><b class="num">${fx1(v.last_week_sets)}</b></div><div class="pvl"><span>Planned</span><b class="num">${fx1(v.plan_sets)}</b></div><div class="pvl"><span>This week so far</span><b class="num">${fx1(v.this_week_sets)}</b></div><div class="pvl"><span>Adherence</span><b class="num" data-k="adh">${v.adherence!=null?Math.round(v.adherence*100)+'%':'–'}</b></div></div>
+   ${spark(v)}<p class="sub sparkc">Weekly credited sets, last ${v.weeks.length} completed weeks · line = plan${b?` · target ${b[0]}–${b[1]}`:''}</p>
+   <div class="ghead sub2">Main lift</div>${ml?`<div class="pml1" data-ex="${ml.id}"><div class="t1">${exNameP(ml.id)}</div><div class="t2 num">e1RM ${kg(ml.first_e1rm_kg)} → ${kg(ml.last_e1rm_kg)} · ${ml.sessions} sessions · <span class="ptr ${ml.status==='stalled'?'flat':ml.status==='dropping'?'down':ml.status}">${LFT[ml.status]}${ml.pct_per_week!=null?` ${ml.pct_per_week>0?'+':''}${ml.pct_per_week.toFixed(1)}%/wk`:''}</span></div><div class="t2">From sets of ${RD.rules.logger.e1rm_max_reps} reps or fewer</div></div>`:'<p class="sub">No lift with enough sessions for a trend yet.</p>'}
+   <div class="ghead sub2">Notes</div>${v.notes.length?`<div class="pnotes">${v.notes.map(n=>`<div class="pn ${n.kind}"><span class="tag ${n.kind==='always'?'al':'ss'}">${n.kind==='always'?'Always':'This session'}</span><div class="grow"><div class="t2">${exNameP(n.exercise)}${n.date?` · ${n.date.slice(5).replace('-','/')}`:''}</div><div class="t1">${esc(n.text)}</div></div></div>`).join('')}</div>`:'<p class="sub">No notes on exercises for this muscle.</p>'}</div>`}
+// refinement cards
+const opsLine=ops=>{const rm=ops.filter(o=>o.op==='remove'),ad=ops.filter(o=>o.op==='add');
+  if(rm.length>2&&ad.length>=rm.length&&rm.every(r=>ad.some(a=>a.id===r.id))){const f=rm[0].day,t=ad[0].day,ex=ad.filter(a=>!rm.some(r=>r.id===a.id));return `the whole ${DSH(f)} session (${rm.length} exercises) moves to ${DSH(t)}`+(ex.length?' · '+ex.map(o=>`add ${exNameP(o.id)} ×${o.sets} on ${DSH(o.day)}`).join(' · '):'')}
+  return opsLine0(ops)};
+const opsLine0=ops=>ops.map(o=>o.op==='swap'?`${exNameP(o.from_id)} → ${exNameP(o.to_id)} on ${DSH(o.day)}`:o.op==='sets'?`${exNameP(o.id)} ${o.from}→${o.to} sets on ${DSH(o.day)}`:o.op==='add'?`add ${exNameP(o.id)} ×${o.sets} on ${DSH(o.day)}`:`remove ${exNameP(o.id)} from ${DSH(o.day)}`).join(' · ');
+let PEDIT=[];
+function refHtml(pr){PEDIT=[];const G=pr.guards,R=pr.refinements;
+  const ed=(label,ops)=>{PEDIT.push({label,ops});return `<div class="fxr"><span>${label}<small class="sub opl">${opsLine(ops)}</small></span><button class="btn sm accent" data-act="papply" data-k="${PEDIT.length-1}">Apply</button></div>`};
+  const idx={};R.forEach((r,i)=>idx[r.type+':'+(r.exercise||r.day||r.muscle)]=i);
+  const card=(r,i)=>{if(r.type==='stall'){const a=r.actions,rr=a.rep_range_change,sw=a.swap_variation;
+      return `<div class="flag pref" data-rt="stall" id="pref-${i}"><div class="ftl">Stalled lift <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>Best e1RM of the last 3 sessions is ${kg(r.best_recent_kg)}, not above the ${kg(r.best_before_kg)} before them (${r.exposures} sessions).</p>
+       ${rr?`<div class="fxr disp"><span>Try ${rr.suggest_range[0]}–${rr.suggest_range[1]} reps for a while (your top sets were ${rr.from_reps_median}; range ${rr.rep_range[0]}–${rr.rep_range[1]})</span><span class="tag">Display only</span></div>`:''}
+       ${sw?ed(`Swap for ${exNameP(sw.to_id)}, a variation for the same slot`,sw.diff):''}</div>`}
+    if(r.type==='missed_sets'){const a=r.actions;return `<div class="flag pref" data-rt="missed_sets" id="pref-${i}"><div class="ftl">Missed sets <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>${r.missed} of the last ${r.sessions.length} sessions had fewer sets than planned (${r.sessions.map(s=>`${s.done}/${s.planned}`).join(', ')}).</p>
+       ${a.trim_sets?ed(`Plan ${a.trim_sets[0].to} sets instead of ${a.trim_sets[0].from}`,a.trim_sets):''}${a.move_sets?ed(`Plan fewer sets here and move ${a.move_sets[1].sets} to ${DNL(a.move_sets[1].day)}`,a.move_sets):''}</div>`}
+    if(r.type==='under_delivered'){const see=(r.action||{}).see||[];return `<div class="flag pref info" data-rt="under_delivered" data-mu="${r.muscle}" id="pref-${i}"><div class="ftl">Under-delivered <span class="tag sev info">${ML[r.muscle]||r.muscle}</span></div><p>${r.actual.map(fx1).join(' and ')} credited sets in the last ${r.weeks.length} weeks vs ${fx1(r.plan)} planned.</p>
+       ${see.length?see.map(s=>{const j=idx[s.type+':'+(s.exercise||s.day)];return `<button class="btn plain sm psee" data-act="psee" data-k="${j}">${s.type==='skipped_day'?`See: skipped ${DNL(s.day)}`:`See: missed sets on ${exNameP(s.exercise)}`} ›</button>`}).join(''):'<p class="sub">Probably swaps or logging. Nothing to change in the routine.</p>'}</div>`}
+    if(r.type==='skipped_day'){const a=r.action;return `<div class="flag pref" data-rt="skipped_day" id="pref-${i}"><div class="ftl">Skipped day <span class="tag sev info">${DNL(r.day)}</span></div><p>Skipped ${r.skipped_sessions.length} times in the last weeks. That left ${r.muscles.map(m=>(ML[m]||m).toLowerCase()).join(', ')} short.</p>
+       ${a?ed(`Move ${a.label||DNL(r.day)} to ${DNL(a.to_day)}`,a.diff):'<p class="sub">No empty day takes it without a new warning.</p>'}</div>`}
+    return ''};
+  const ap=PROG.applied.map((a,i)=>`<div class="aplc" data-k="${i}"><div class="grow"><div class="ftl">Applied</div><p>${a.label}</p><p class="sub opl">${opsLine(a.ops)}</p></div><button class="btn sm ink" data-act="pundo" data-k="${i}">Undo</button></div>`).join('');
+  return `<div class="sec" id="prefs"><h2>Refinements</h2><span class="more">from your log</span></div>
+   ${ap?`<div class="flags">${ap}</div>`:''}
+   ${G.refinements_enabled?`<p class="foot pguard" data-on="1">Refinements are on: ${G.completed_sessions} completed sessions over ${G.logged_weeks} weeks (needs ${RD.rules.progress.guards.min_completed_sessions} over ${RD.rules.progress.guards.min_logged_weeks}+).</p>`+(R.length?`<div class="flags">${R.map(card).join('')}</div>`:'<p class="foot">Nothing to refine: the log matches the plan.</p>'):`<p class="foot pguard" data-on="0">Refinements start after ${RD.rules.progress.guards.min_completed_sessions} completed sessions over ${RD.rules.progress.guards.min_logged_weeks}+ weeks. You have ${G.completed_sessions} over ${G.logged_weeks}.</p>`}`}
+function routineHtml(){const rt=progRoutine(),base=JSON.parse(PROG.base||'[]'),bs=d=>JSON.stringify((base.find(x=>x.day===d.day)||{tiles:[]}).tiles);
+  return `<div class="sec"><h2>Routine</h2><span class="smp">sample</span></div><p class="foot" style="padding-top:0">The log's ${(RD.PREF||{}).level||''} upper / lower routine; refinements edit this, not your board.</p><div class="group prt">${rt.filter(d=>d.tiles.length||base.some(x=>x.day===d.day)).sort((a,b)=>PCHECK.ORDER.indexOf(a.day)-PCHECK.ORDER.indexOf(b.day)).map(d=>`<div class="row${JSON.stringify(d.tiles)!==bs(d)?' chg':''}" data-day="${d.day}"><div class="grow"><div class="t1">${DSH(d.day)} · ${d.label||(d.tiles.length?'Training':'Rest')}</div><div class="t2">${d.tiles.length?d.tiles.map(t=>`${shortEx(t.id)} ×${t.sets}`).join(', '):'Rest'}</div></div></div>`).join('')}</div>`}
+const shortEx=id=>(EX[id]&&EX[id].short_name)||(RD&&RD.EX[id]&&(RD.EX[id].short_name||RD.EX[id].name))||exNameP(id);
+function progApply(k){const e=PEDIT[+k];if(!e)return;const rt=progRoutine(),before=JSON.parse(JSON.stringify(rt));
+  for(const o of e.ops)if(!rt.some(d=>d.day===o.day))rt.push({day:o.day,label:'',tiles:[]});
+  let nw=ANALYSIS.applyOps(rt,e.ops);const mv=e.ops.find(o=>o.op==='add'),rm=e.ops.filter(o=>o.op==='remove');
+  if(rm.length&&mv){const src=nw.find(d=>d.day===rm[0].day),dst=nw.find(d=>d.day===mv.day);if(src&&dst&&!src.tiles.length){dst.label=src.label;src.label=''}} // a moved day keeps its name
+  PROG.routine=nw;PROG.applied.unshift({label:e.label,ops:e.ops,before});rerenderProgress();toast('Routine updated · Undo is on the card')}
+function progUndo(k){const a=PROG.applied[+k];if(!a)return;PROG.routine=a.before;PROG.applied.splice(+k,1);rerenderProgress();toast('Refinement undone')}
+function rerenderProgress(){const v=$('#view'),sc=v.scrollTop;v.innerHTML=V.progress();afterProgress();v.scrollTop=sc}
+function afterProgress(){$$('.mapcard .mmap .mp').forEach(p=>p.addEventListener('click',()=>{if(p.dataset.mu)selPM(p.dataset.mu)}));$$('[data-pm]').forEach(b=>b.addEventListener('click',()=>selPM(b.dataset.pm)));if(S.pmus)selPM(S.pmus,true)}
+function selPM(m,quiet){S.pmus=m;$('#pmus').innerHTML=pmusHtml(m);$$('.mapcard .mmap .mp').forEach(p=>p.classList.toggle('psel',p.dataset.mu===m));if(!quiet)$('#pmus').scrollIntoView({block:'nearest',behavior:'smooth'})}
 function afterMap(){$$('.mmap .mp').forEach(p=>p.addEventListener('click',()=>{if(p.dataset.mu)go('#learn-'+p.dataset.mu)}))}
 
 // STYLE GUIDE
@@ -588,7 +768,7 @@ V.style=()=>`<div class="nav"><div class="l"><button class="back" data-go="#sett
   <div class="ghead">Controls</div>
   <div class="card ctl"><div class="two"><button class="btn accent">Primary</button><button class="btn ink">Secondary</button></div><div class="two"><button class="btn grey">Tertiary</button><button class="btn danger">Delete</button></div>
    <div class="seg"><button>Beginner</button><button class="on">Intermediate</button><button>Advanced</button></div>
-   <div class="chips" style="padding:0"><button class="chip on">★ Primary</button><button class="chip">✚ Accessory</button><button class="chip">● Isolation</button></div>
+   <div class="chips" style="padding:0"><button class="chip on">★ Primary</button><button class="chip">${GLY.accessory} Accessory</button><button class="chip">● Isolation</button></div>
    <div class="tags"><span class="tag acc">More stretch emphasis</span><span class="tag">More stable</span><span class="badge">PR</span><span class="evb ink">Studies</span><span class="evb">Mechanics</span><span class="evb line">Coach model</span></div>
    <div class="fields"><input class="fld demo" readonly value="" placeholder="225"><input class="fld demo active" readonly value="230"><input class="fld demo auto" readonly value="230">${tg(1)}${tg(0)}</div>
    <p class="sub">Field: empty · active · auto-filled from the set above</p></div>
@@ -735,12 +915,16 @@ const whyL=(id,ctx)=>`<div class="why">${why(id,ctx)}</div>`;
 let RD=null;
 async function loadRank(){if(RD)return RD;
   for(const b of ['data/','../data/']){try{const f=n=>fetch(b+n,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(n);return r.json()});
+    // round 1: slot templates (rules.json templates -> templates.json), their resolved eligibility, and the synthetic progress log load in parallel
+    const opt=n=>f(n).catch(()=>null),O=['templates.json','templates-reference.json','progress-reference.json'].map(opt);
     const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(f));
-    RD=RANK.makeData({exercises,rules,targets,patterns,splits});RD.splits=splits;RD.base=b;return RD}catch(e){}}
+    const [tj,tref,pref]=await Promise.all(O),tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
+    RD=RANK.makeData({exercises,rules,targets,patterns,splits});RD.splits=splits;RD.base=b;
+    RD.TJ=tf==='templates.json'?tj:await opt(tf);RD.TREF=tref;RD.PREF=pref;return RD}catch(e){}}
   console.warn('ranking data missing: suggestions fall back to library order');return null}
 const LSK2={equip:'apechit.sb.equip'};
 let EQUIP=ld(LSK2.equip,{});                                  // gym profile `equipment` {name: bool} (ranking-spec §5, Builder items)
-const gymProfile=()=>Object.assign({},RD.rules.logger.gym_profile_default.lb,Object.keys(EQUIP).length?{equipment:EQUIP}:{});
+const gymProfile=()=>Object.assign({},RD.rules.logger.gym_profile_default.lb,Object.keys(EQUIP).length?{equipment:EQUIP}:{},GYM&&Array.isArray(GYM.plates)?{plates:GYM.plates}:{});
 const PREFS_OVR={};                                            // per-route overrides (worked examples)
 const prefs=()=>Object.assign({goals:GOALS,bias_muscles:BIAS,favorites:FAV,gym_profile:RD?gymProfile():null,level:'intermediate',unit:'lb'},PREFS_OVR.p||{});
 let SC={board:BOARDS.ppl,day:'fri',cands:null,note:''};       // ranking scenario for the current route
@@ -823,11 +1007,18 @@ function afterSettingsProfile(){$$('.bmap .mp').forEach(p=>p.addEventListener('c
 const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  train:['train','train'],'train-pick':['train','train',0,0,()=>{S.pick='ppl'}],
  workout:['workout','',1,1],keypad:['workout','',1,1,null,()=>{focusField($('[data-kind=w]',$$('.exb')[1]))}],
- clock:['workout','',1,1,null,()=>{S.wheel=12;clockSheet()}],plates:['workout','',1,1,null,plateSheet],rest:['workout','',1,1,null,restSheet],
- 'workout-swipe':['workout','',1,1,null,()=>{const r=$$('.exb')[5];r.scrollIntoView({block:'center'});r.classList.add('open')}],
+ clock:['workout','',1,1,null,()=>{S.wheel=12;clockSheet()}],plates:['workout','',1,1,null,()=>plateSheet(0)],rest:['workout','',1,1,null,restSheet],
+ 'workout-swipe':['workout','',1,1,null,()=>{const r=$$('.exb[data-ex="barbell-row"] .sws')[1];r.scrollIntoView({block:'center'});r.classList.add('open')}],
+ 'workout-set-undo':['workout','',1,1,null,()=>{const r=$$('.exb[data-ex="barbell-row"] .sws')[1];r.scrollIntoView({block:'center'});DEL.set(r)}],
+ 'workout-ex-swipe':['workout','',1,1,null,()=>{const r=$('.exb[data-ex="barbell-row"] .swh');r.scrollIntoView({block:'center'});r.classList.add('open')}],
+ 'workout-menu':['workout','',1,1,null,()=>exMenu(1)],
+ 'workout-notes':['workout','',1,1,()=>{const a=ld(LSN,{});a['barbell-bench-press']=a['barbell-bench-press']||'Pause 1 s on the chest · feet flat, butt down';sv(LSN,a);WK.notes['barbell-row']='Lower back a bit tight today, strict reps'}],
+ 'workout-note-sheet':['workout','',1,1,()=>{WK.notes['barbell-row']='Lower back a bit tight today, strict reps'},()=>notesSheet(1)],
+ 'workout-swap':['workout','',1,1,null,()=>wSwap(0)],
+ 'train-start':['train','train',0,0,null,()=>{const b=$('.rt.act [data-act=start]');b&&b.click()}],
  bar:['log','log',0,1],'bar-trash':['log','log',0,1,null,trashSheet],
  finish:['finish','',1,0],'finish-ape':['finish','',1,0,null,()=>{const c=$('#fincards');c.style.scrollBehavior='auto';c.scrollLeft=c.scrollWidth}],
- empty:['empty','',1,1,()=>{SC.day='sat'}],tray:['empty','',1,1,null,traySheet],'tray-legs':['empty','',1,1,()=>{SC.note="Coach's case: PPL intermediate legs day (Fri), no goals, bias or favorites";PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],'tray-lib':['empty','',1,1,()=>{TF.mode='lib'},traySheet],
+ empty:['empty','',1,1,()=>{SC.day='sat';startWorkout('Empty workout',[],{empty:true})}],tray:['empty','',1,1,null,traySheet],'tray-legs':['empty','',1,1,()=>{SC.note="Coach's case: PPL intermediate legs day (Fri), no goals, bias or favorites";PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],'tray-lib':['empty','',1,1,()=>{TF.mode='lib'},traySheet],
  'tray-calf':['empty','',1,1,()=>{Object.assign(SC,{board:BOARDS.legsGap,day:'mon',cands:BOARDS.legsGapCands,note:"Coach's calf-gap case: legs-only week, calves at 3 of 5 sets"});PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],
  'swap-lat-home':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Home template ticked (adjustable dumbbells, bench, pull-up bar, bands).';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.home}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
  'swap-lat-com':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Commercial template ticked.';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.commercial}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
@@ -838,10 +1029,10 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  log:['log','log'],'log-month':['log','log',0,0,null,monthSheet],'log-edit':['log','log',0,0,null,()=>editSheet(15)],'log-add':['log','log',0,0,()=>{S.logSel=14},()=>editSheet(14)],
  'log-swipe':['log','log',0,0,null,()=>{const r=$$('#view .swipe')[0];r&&r.classList.add('open')}],
  build:['build','build',0,0,()=>{SC.day='mon'}],'build-list':['buildList','build',0,0,()=>{SC.day='mon'}],swap:['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('barbell-bench-press')],'swap-curl':['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('ez-bar-curl')],
- settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress'],style:['style','build'],
+ settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress',0,0,()=>{S.pmus=null}],'progress-muscle':['progress','progress',0,0,()=>{S.pmus='chest'}],'progress-refine':['progress','progress',0,0,()=>{S.pmus=null},()=>{const e=$('#prefs');if(e)$('#view').scrollTop=e.offsetTop-60}],style:['style','build'],
  learn:['learn',''],'tray-fav':['empty','',1,1,()=>{TF.fav=true},traySheet],'settings-favs':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#favs').offsetTop-60}],'settings-goals':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#profile').offsetTop-40}],'learn-fundamental':['learnFund',''],
 };
-const AFTER={train:afterTrain,workout:afterWorkout,finish:afterFinish,log:afterLog,buildList:afterBuildList,progress:afterMap,learn:afterLearn};
+const AFTER={train:afterTrain,workout:afterWorkout,finish:afterFinish,log:afterLog,buildList:afterBuildList,progress:afterProgress,learn:afterLearn};
 let NAV=0;
 function go(h){if(location.hash===h)route();else location.hash=h}
 function route(){
@@ -854,7 +1045,9 @@ function route(){
   closeAll();if(AF){AF.classList.remove('active');AF=null}
   S.pick=null;S.wheel=0;if(tab)S.tab=tab;
   if(sess)S.session=true;else if(NAV===0)S.session=false;  // a cold-loaded route shows the state it names
-  SC={board:BOARDS.ppl,day:'fri',cands:null,note:''};PREFS_OVR.p=null;TF={q:'',type:null,mus:null,eq:null,fav:false,mode:'sug'}; // per-route ranking scenario
+  if(sess&&!S.live&&!S.demo&&scr!=='empty')demoWorkout();   // cold-loaded mid-workout routes = the demo; a real Start resets to 0:00
+  SC={board:BOARDS.ppl,day:'fri',cands:null,note:''};PREFS_OVR.p=null;TF={q:'',mus:null,pat:null,eq:null,fav:false,mode:'sug'}; // per-route ranking scenario
+  if(scr==='finish'){S.live=false;S.demo=false}
   pre&&pre();S.route=r;S.scr=scr;S.arg=arg;NAV++;
   document.body.classList.toggle('full',!!full);document.body.dataset.route=r;
   render();if(post)setTimeout(post,80);
@@ -874,17 +1067,23 @@ document.addEventListener('click',e=>{
     if(k==='pick'){const r=ROUTINES.find(x=>x.id===id);if(r.active&&!S.pick)return;S.pick=(S.pick===id||r.active)?null:id;
       $$('.rt').forEach(el=>{const on=S.pick?el.dataset.rt===S.pick:el.classList.contains('act');el.classList.toggle('open',on);el.classList.toggle('closed',!on)});
       if(S.pick)setTimeout(()=>{const el=$(`.rt[data-rt=${S.pick}]`);$('#view').scrollTo({top:el.offsetTop-70,behavior:'smooth'})},280);return}
-    if(k==='start'){S.session=true;return go('#workout')}
+    if(k==='start'){const r=ROUTINES.find(x=>x.id===id)||ROUTINES[0],di=S.day[r.id]??(r.active?r.next:0),d=r.days[di];
+      startWorkout(d.n,d.ex,{sub:`${r.name} · Day ${di+1}`,ref:{rid:r.id,di}});return go('#workout')}
+    if(k==='sundo'){const f=SUF;hideSnack();if(f)f();return}
+    if(k==='papply')return progApply(a.dataset.k);if(k==='pundo')return progUndo(a.dataset.k);
+    if(k==='psee'){const el=$('#pref-'+a.dataset.k);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1200)}return}
+    if(k==='notes')return notesSheet(+a.dataset.xi);if(k==='exmenu')return exMenu(+a.dataset.xi);if(k==='wswap')return wSwap(+a.dataset.xi);
     if(k==='activate'){const r=ROUTINES.find(x=>x.id===id);ROUTINES.forEach(x=>x.active=false);r.active=true;r.next=0;S.pick=null;ROUTINES.sort((x,y)=>y.active-x.active);render();return toast(`${r.name} is now active`)}
     if(k==='minimize'){S.session=true;return go('#train')}
-    if(k==='clock')return clockSheet();if(k==='plates')return plateSheet();if(k==='swap')return swapSheet(id);if(k==='tray')return traySheet();if(k==='equip')return equipSheet();
+    if(k==='clock')return clockSheet();if(k==='plates')return plateSheet(a.dataset.xi!=null?+a.dataset.xi:0);if(k==='swap')return swapSheet(id);if(k==='tray')return traySheet();if(k==='equip')return equipSheet();
     if(k==='info'||k==='exinfo')return go('#learn-ex-'+id);if(k==='fav'){e.stopPropagation();return toggleFav(id)}if(k==='back')return NAV>1?history.back():go('#train');
     if(k==='restsheet'){if(!e.target.closest('button'))restSheet();return}
     if(k==='rest-'){WK.rest.left=Math.max(0,WK.rest.left-15);return paintTime()}if(k==='rest+'){WK.rest.left+=15;WK.rest.total=Math.max(WK.rest.total,WK.rest.left);return paintTime()}
     if(k==='skip'){WK.rest.left=0;return paintTime()}
-    if(k==='ck'){const r=a.closest('.srow');r.classList.toggle('done');if(r.classList.contains('done')){$$('.fld',r).forEach(f=>{if(!f.value)f.value=f.placeholder;f.classList.remove('auto')});WK.rest.left=WK.rest.total=180;paintTime()}return}
-    if(k==='addset'){const blk=a.closest('.exb'),rows=$$('.srow',blk),last=rows[rows.length-1],n=rows.filter(x=>!$('.sn.w',x)).length+1,w=$('[data-kind=w]',last);
-      last.insertAdjacentHTML('afterend',setRow({p:''},n));if(w.value){const nw=$('[data-kind=w]',$$('.srow',blk).pop());nw.value=w.value;nw.classList.add('auto')}return}
+    if(k==='ck'){const r=a.closest('.srow');r.classList.toggle('done');const st=((WK.ex[+r.dataset.xi]||{}).sets||[])[+r.dataset.si];if(st)st.done=r.classList.contains('done');
+      if(r.classList.contains('done')){$$('.fld',r).forEach(f=>{if(!f.value)f.value=f.placeholder;f.classList.remove('auto');syncField(f)});const ex=WK.ex[+r.dataset.xi];
+        WK.restLab=ex?`${(RD&&RD.EX[ex.id]&&RD.EX[ex.id].short_name)||exNameP(ex.id)} set ${ex.sets.slice(0,+r.dataset.si+1).filter(x=>!x.warm).length}`:'';WK.rest.left=WK.rest.total=180;const l=$('.rlb');if(l)l.textContent='Rest · '+WK.restLab;paintTime()}renderBar();return}
+    if(k==='addset'){const xi=+a.dataset.xi,ex=WK.ex[xi];if(!ex)return;const last=ex.sets[ex.sets.length-1]||{};ex.sets.push({p:'',wv:last.wv||'',wauto:!!last.wv});renderEx(xi);return}
     if(k==='day'){const d=+a.dataset.d;S.logSel=d;$$('.cd').forEach(c=>c.classList.toggle('sel',+c.dataset.d===d));return editSheet(d)}
     if(k==='edit')return editSheet(+a.dataset.d);if(k==='month')return monthSheet();
     if(k==='mprev'||k==='mnext'){S.month+=k==='mnext'?1:-1;if(S.month<0){S.month=11;S.year--}if(S.month>11){S.month=0;S.year++}return render()}
@@ -900,9 +1099,9 @@ document.addEventListener('click',e=>{
   const wd=e.target.closest('.wd');if(wd&&!e.target.closest('.lbl')){const i=[0,1,3,4].indexOf(+wd.dataset.wd);if(i>=0){S.buildDay=i;render()}return}
   if(KP&&!e.target.closest('.sheet'))KP.close(); // tapping away from fields closes the keypad
 });
-window.SB={sheet,S,WK,closeAll,get sheets(){return SHEETS},get keypad(){return KP}};
+window.SB={sheet,S,WK,CLK,ROUTINES,closeAll,startWorkout,gymPlates,plateCalc,movePat,mpDefs,eqDefs,passF,get sheets(){return SHEETS},get keypad(){return KP}};
 // internals for board.js (the Build whiteboard): same sheet, swap sheet, ranking scenario, muscle map, volume_bands
-window.SBX={V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,VB,VFILL,VLAB,volLegend,
+window.SBX={progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

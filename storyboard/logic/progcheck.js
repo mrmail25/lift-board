@@ -201,6 +201,8 @@ function analytics(dt,days,level){const TT=dt.targets,C=TT.curve,A=TT.analytics,
   const day=days.map(d=>({day:d.day,minutes:sessionMinutes(dt,d.tiles),sets:total(d),cost:d.tiles.reduce((a,t)=>a+t.sets*fat(dt.EX[t.id]),0),spinal:d.tiles.reduce((a,t)=>a+(HEAVY.has(t.id)?t.sets:0),0)}));
   return {muscles,day,weekSets:days.reduce((a,d)=>a+total(d),0),weekMinutes:day.reduce((a,d)=>a+d.minutes,0),weekCost:day.reduce((a,d)=>a+d.cost,0),
     spinal:{week:day.reduce((a,d)=>a+d.spinal,0),week_max:RU.spinal_load.week_warn_above[level],session_max:RU.spinal_load.session_warn_above[level]},disclaimer:A.disclaimer,curveModel:C.model}}
-const API={check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,flagKey,ORDER,shortLabel,ruleLabel};
+const API={check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,flagKey,ORDER,shortLabel,ruleLabel,
+  // internals reused by logic/analysis.js and logic/progress.js (same functions, so the ports cannot drift)
+  _x:{gAddSets,gAddExercise,gReduceSets,prev,nonin,_day,load,col,RULE_OF,total,ctx,clone,cmpT,sortBy,fmtPy}};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else root.PCHECK=API;
 })(typeof window!=='undefined'?window:this);

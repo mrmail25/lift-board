@@ -267,6 +267,6 @@ function rank(dt,context,cands,state,prefs,n){
 function meta(dt,prefs){const gs=_goals(prefs,dt.rules.ranking);
   return {goals:gs,targets:adjustedTargets(prefs,dt),rep_ranges:repRanges(gs,dt),conflicts:goalConflicts(gs,dt),spinal_cap_factor:combineGoals(gs,dt).spinal_cap_factor,bias:_bias(prefs,dt)}}
 
-const API={makeData,rank,meta,equipmentStatus,itemStatus,needsStatus,combineGoals,adjustedTargets,repRanges,goalConflicts,swaps,swapScore,slotRecommendations,pyRound,TERMS};
+const API={candidates,primaryMuscle,fam,makeData,rank,meta,equipmentStatus,itemStatus,needsStatus,combineGoals,adjustedTargets,repRanges,goalConflicts,swaps,swapScore,slotRecommendations,pyRound,TERMS};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else root.RANK=API;
 })(typeof window!=='undefined'?window:this);

@@ -14,9 +14,16 @@ const repRange=id=>{const g=(X.prefs().goals||[]).filter(x=>x in RD().rules.rep_
 const repsFor=id=>repRange(id).display;
 const REP_STEP={reps:1,seconds:5,meters:5};
 const setsFor=id=>{const G=RD().rules.pattern_gap_fix.sets_by_kind;return ex(id).type==='isolation'?G.isolation:G.compound}; // rules.json pattern_gap_fix
-let UID=0;const T=(id,sets,reps)=>({u:'c'+(++UID),id,sets,reps:reps||null});
+let UID=0;const T=(id,sets,reps,from)=>Object.assign({u:'c'+(++UID),id,sets,reps:reps||null},from?{from}:{}); // from: {sid,i} when the chit filled a template slot
+// Clean / Detail (item 5): Detail adds one line under each chit name with its top 3 muscle fractions (exercises.json muscles).
+// Muscle abbreviations are a storyboard table (the data has no muscle short_label yet).
+const MSH={chest:'Chest',front_delts:'FD',side_delts:'SD',rear_delts:'RD',lats:'Lats',upper_back:'UB',traps:'Traps',biceps:'Bi',triceps:'Tri',forearms:'Fore',abs:'Abs',quads:'Quads',hamstrings:'Hams',glutes:'Glutes',calves:'Calves',adductors:'Add',lower_back:'LB',obliques:'Obl',abductors:'Abd'};
+const fr=v=>v>=1?'1':String(+v.toFixed(2)).replace(/^0/,'');
+const fracs=id=>{const M=(ex(id)||{}).muscles||{},O=RD().exl.muscles||Object.keys(M);return O.filter(m=>M[m]>0).map(m=>[m,M[m]]).sort((a,b)=>b[1]-a[1]||O.indexOf(a[0])-O.indexOf(b[0]))};
+const fracLine=id=>fracs(id).slice(0,3).map(([m,v])=>`${MSH[m]||m} ${fr(v)}`).join(' · ');
+const BD={detail:(()=>{try{return localStorage.getItem('apechit.sb.boardDetail')==='1'}catch(e){return false}})()};
 // ------------------------------------------------------------- state
-const B={name:'',level:'intermediate',version:0,dirty:false,edited:0,days:[],sel:new Set(),hist:[]};
+const B={name:'',level:'intermediate',version:0,dirty:false,edited:0,days:[],sel:new Set(),hist:[],tpl:null};
 function blankDays(){return DAYS.map(d=>({day:d,label:'',rest:true,tiles:[]}))}
 function loadDays(list,name){const days=blankDays();for(const d of list){const k=DAYS.indexOf(d.day);days[k].label=d.label||'';days[k].rest=false;days[k].tiles=d.tiles.filter(t=>ex(t.id)).map(t=>T(t.id,t.sets))}B.days=days;if(name)B.name=name}
 function initBoard(){ // Mr Dude's draft: his Upper / Lower with two edits since v3 (bench 6 sets, cable fly in for the Thursday incline press)
@@ -24,9 +31,10 @@ function initBoard(){ // Mr Dude's draft: his Upper / Lower with two edits since
   const list=r.days.map(d=>({day:dmap[d.d],label:d.n,tiles:d.ex.map(e=>({id:e.id,sets:e.s,reps:e.r}))}));
   list[0].tiles[0].sets=6;list[0].tiles.splice(1,1,{id:'incline-dumbbell-press',sets:3});list[2].tiles.splice(0,1,{id:'cable-fly',sets:3});
   loadDays(list,r.name);B.version=3;B.dirty=true;B.edited=Date.now()-2*60000;B.level='intermediate';B.sel.clear();B.hist=[]}
-const snap=()=>JSON.stringify({days:B.days,name:B.name,dirty:B.dirty,edited:B.edited,version:B.version,level:B.level});
+const snap=()=>JSON.stringify({days:B.days,name:B.name,dirty:B.dirty,edited:B.edited,version:B.version,level:B.level,tpl:B.tpl||null});
 function restore(s){const o=JSON.parse(s);Object.assign(B,o);B.sel=new Set()}
-const isRest=d=>!d.tiles.length&&d.rest!==false;
+const isRest=d=>!d.tiles.length&&!(d.slots||[]).length&&d.rest!==false;
+const openSlots=()=>sum(B.days.map(d=>(d.slots||[]).length));
 const dayLabel=d=>d.label||(isRest(d)?'Rest':'Training day');
 const stripTxt=d=>isRest(d)?'Rest':`${sum(d.tiles.map(t=>t.sets))} sets`;
 function commit(fn,undoText){B.hist.push(snap());fn();B.days.forEach(d=>{if(d.tiles.length)d.rest=false});B.dirty=true;B.edited=Date.now();paint();if(undoText)undoBar(undoText)}
@@ -39,37 +47,58 @@ function stateLine(){if(!B.dirty)return `<b class="saved">Saved v${B.version}</b
   const ago=s<60?'just now':Math.round(s/60)+' min ago';return `<b class="draft">Draft</b> · edited ${ago}${B.version?` · last saved v${B.version}`:' · not saved yet'}${LVL()}`}
 const LVL=()=>` · <span class="blv">${B.level[0].toUpperCase()+B.level.slice(1)}</span>`;
 // ------------------------------------------------------------- stats (live: board, or the drag preview)
-function stats(days){const d=checkDays(days),A=PC.analytics(RD(),d,B.level),C=PC.checks(RD(),d,B.level);return {A,C,d}}
+function stats(days){const d=checkDays(days),A=PC.analytics(RD(),d,B.level),C=PC.checks(RD(),d,B.level);
+  // check count = rules.analysis_metrics checks_pass (analysis.py): pass = rules with no non-info flag, total = len(rules); strip and sheet header agree
+  const CP=window.ANALYSIS.checksPass(RD(),d,B.level);C.pass=CP.pass;C.total=CP.total;return {A,C,d}}
 function volMap(A){const o={};for(const [m,v] of Object.entries(A.muscles))o[m]=v.raw>0?X.volFill(v.raw,v.min,v.max):null;return o} // same fill as the Progress map
+// Summary map (bigger, markup round 1): Week = weekly sets vs target (same fill as Progress); Day = that day's sets per muscle.
+// Tapping a day in the strip or a day header switches the map to that day. Tapping a muscle opens its Learn page.
+const MAPV={mode:'week',day:0};
+const DAYF=r=>r>=5?'var(--day-4)':r>=3?'var(--day-3)':r>=1.5?'var(--day-2)':r>0?'var(--day-1)':null;
+function dayMap(d){const o={};if(!d||!d.tiles.length)return o;const A=PC.analytics(RD(),[{day:d.day,tiles:d.tiles.map(t=>({id:t.id,sets:t.sets}))}],B.level);for(const [m,v] of Object.entries(A.muscles))o[m]=DAYF(v.raw);return o}
+function mapHtml(st,days){const day=MAPV.mode==='day',d=days[MAPV.day],vm=day?dayMap(d):volMap(st.A);
+  const cap=day?`<b>${WD[MAPV.day]}</b> · ${isRest(d)?'Rest':`${dayLabel(d)} · ${sum(d.tiles.map(t=>t.sets))} sets`}`:'<b>This week</b> · vs targets';
+  const leg=day?`<span class="mleg mlday"><i style="background:var(--day-1)"></i>1<i style="background:var(--day-2)"></i>1.5<i style="background:var(--day-3)"></i>3<i style="background:var(--day-4)"></i>5+ sets</span>`
+    :`<span class="mleg">${['under','in','amber','red'].map(k=>`<i style="background:${X.VFILL[k]}"></i>${({under:'Under',in:'In',amber:'Over',red:'Well over'})[k]}`).join('')}</span>`;
+  return `<div class="bmaps" data-mode="${MAPV.mode}" data-day="${d?d.day:''}">${X.map('front',vm)}${X.map('back',vm)}</div><div class="bmcap" id="bmcap">${cap}</div><div class="bmleg">${leg}</div>`}
+function setMap(mode,i){MAPV.mode=mode;if(i!=null)MAPV.day=i;$$('#mapseg button').forEach(b=>b.classList.toggle('on',b.dataset.mm===MAPV.mode));paintStats()}
 function stripHtml(st){const {A,C,d}=st,avg=d.length?A.weekMinutes/d.length:0,fail=C.total-C.pass;
-  return `<span class="amaps">${X.map('front',volMap(A))}${X.map('back',volMap(A))}</span>
-   <span class="ast"><b class="num" data-s="sets">${A.weekSets}</b><small>sets / wk</small></span>
+  return `<span class="ast"><b class="num" data-s="sets">${A.weekSets}</b><small>sets / wk</small></span>
    <span class="ast"><b class="num" data-s="min">${d.length?'≈ '+mins5(avg):'–'}</b><small>min / session</small></span>
-   <span class="ast chk ${fail?'bad':'ok'}"><b class="num" data-s="checks">${C.pass}/${C.total}</b><small>checks pass</small></span>`}
+   <span class="ast chk ${fail?'bad':'ok'}"><b class="num" data-s="checks">${C.pass}/${C.total}</b><small>checks pass</small></span><span class="ago">Analysis ›</span>`}
 function dayMeta(day){const n=sum(day.tiles.map(t=>t.sets));return day.tiles.length?`${n} sets · ≈ ${mins5(PC.sessionMinutes(RD(),day.tiles.map(t=>({id:t.id,sets:t.sets}))))} min`:''}
-function paintStats(days){days=days||B.days;const st=stats(days);const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);s.setAttribute('aria-label',`Analysis: ${st.A.weekSets} sets a week, ${st.C.pass} of ${st.C.total} checks pass`)}
+function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bmap');if(mp)mp.innerHTML=mapHtml(st,days);const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);s.setAttribute('aria-label',`Analysis: ${st.A.weekSets} sets a week, ${st.C.pass} of ${st.C.total} checks pass`)}
   days.forEach((d,i)=>{const n=sum(d.tiles.map(t=>t.sets));const b=$(`#dstrip [data-jump="${i}"] .dn`);if(b){b.textContent=stripTxt(d);b.parentNode.classList.toggle('rd',isRest(d))}
     const h=$(`.col[data-day="${d.day}"] .cm`);if(h)h.textContent=dayMeta(d)});
   $$('.col').forEach((c,i)=>{const d=days[i];if(!d)return;c.classList.toggle('restday',isRest(d));const l=$('.cl',c);if(l)l.textContent=dayLabel(d)}); // preview days mid-drag
   const bs=$('#bstate');if(bs)bs.innerHTML=stateLine();return st}
 // ------------------------------------------------------------- view
 function chit(t){const e=ex(t.id),g=WB.primaryRegion(RD(),t.id),sel=B.sel.has(t.u)?' sel':'';
-  return `<div class="chit${sel}" data-u="${t.u}" data-id="${t.id}" data-region="${g}" style="--mc:var(--region-${g})" role="button" tabindex="0" aria-label="${X.exNameP(t.id)}, ${t.sets} sets"><span class="cg ${e.type}" aria-hidden="true">${X.GLY[e.type]}</span><span class="cn">${shortName(t.id)}</span><span class="cs num">${t.sets}</span></div>`}
+  return `<div class="chit${sel}" data-u="${t.u}" data-id="${t.id}" data-region="${g}" style="--mc:var(--region-${g})" role="button" tabindex="0" aria-label="${X.exNameP(t.id)}, ${t.sets} sets"><span class="cg ${e.type}" aria-hidden="true">${X.GLY[e.type]}</span><span class="cn">${shortName(t.id)}</span><span class="cs num">${t.sets}</span><span class="cf" aria-hidden="true">${fracLine(t.id)}</span></div>`}
+// item 6: an open template slot is a dashed placeholder (label + set range); it is not a tile, so stats and checks ignore it.
+const slotHtml=(d,s)=>`<button class="slotc" data-b="slot" data-day="${d.day}" data-sid="${s.sid}" aria-label="Open slot: ${s.label}, ${s.min} to ${s.max} sets. Tap to pick an exercise"><span class="cg ${s.type}" aria-hidden="true">${X.GLY[s.type]}</span><span class="sl">${s.label}</span><span class="sr">${s.min}–${s.max} sets</span></button>`;
 function colHtml(d,i){return `<section class="col${isRest(d)?' restday':''}" data-day="${d.day}" data-i="${i}"><header data-b="dayh" data-day="${d.day}" role="button" tabindex="0" aria-label="${WDL[i]}: ${dayLabel(d)}. Rename or set Rest"><b>${WD[i]}</b><span class="cl">${dayLabel(d)}</span><span class="cm num">${dayMeta(d)}</span></header>
-  <div class="chits" data-day="${d.day}">${d.tiles.map(chit).join('')}</div><button class="cadd" data-b="add" data-day="${d.day}" aria-label="Add exercise to ${WDL[i]}">${X.I('plus',2.2)}</button></section>`}
+  <div class="chits" data-day="${d.day}">${d.tiles.map(chit).join('')}${(d.slots||[]).map(s=>slotHtml(d,s)).join('')}</div><button class="cadd" data-b="add" data-day="${d.day}" aria-label="Add exercise to ${WDL[i]}">${X.I('plus',2.2)}</button></section>`}
 function boardHtml(){return `<div class="cols">${B.days.map(colHtml).join('')}</div>`}
 X.V.build=()=>{if(!B.days.length)initBoard();
   return `<div class="bw">${X.header('Build',`<button class="ibtn tabsbtn" data-b="tabs" aria-label="Other tabs">${X.I('tabs',1.8)}</button><button class="ibtn" data-b="new" aria-label="New routine">${X.I('plus',2.2)}</button>`+X.bookBtn+X.gearBtn)}
   <div class="bname"><div class="bn">${B.name||'New routine'}</div>
    <div class="bacts"><button class="btn ink" data-b="push" aria-label="Push to Library">${X.I('up',2.2)}<span class="bl-l">Push to Library</span><span class="bl-s">Push</span></button><button class="btn accent" data-b="start" aria-label="Start training">${X.I('play')}<span class="bl-l">Start training</span><span class="bl-s">Start</span></button></div>
    <div class="bstate" id="bstate">${stateLine()}</div></div>
-  <div class="bstick"><button class="astrip" id="astrip" data-b="analysis"></button>
+  <div class="bsum"><div class="bsmap" id="bmap"></div>
+   <div class="bsr"><div class="seg xs" id="mapseg"><button data-b="mapm" data-mm="week" class="${MAPV.mode==='week'?'on':''}">Week</button><button data-b="mapm" data-mm="day" class="${MAPV.mode==='day'?'on':''}">Day</button></div>
+    <button class="astrip" id="astrip" data-b="analysis"></button><div class="seg xs bdseg" id="bdseg" role="group" aria-label="Board: clean or detail">${bdsegHtml()}</div></div></div>
+  <div class="bstick">
    <div class="dstrip" id="dstrip">${WD.map((w,i)=>`<button data-jump="${i}" aria-label="Jump to ${WDL[i]}"><span>${w}</span><small class="dn"></small></button>`).join('')}</div>
    <div class="selbar" id="selbar"><span id="selt"></span><button class="btn plain" data-b="seldone">Done</button></div></div>
-  <div class="board" id="board">${boardHtml()}</div>
-  <p class="foot bhint">Hold a chit to lift it. Drag it to another day, or off the board to remove it. Tap a day's name to rename it or make it a Rest day.</p></div>`};
+  <div class="btools" id="btools">${toolsHtml()}</div>
+  <div class="board${BD.detail?' b-detail':''}" id="board">${boardHtml()}</div>
+  <div class="glegend" aria-label="Chit shapes">${['primary','accessory','isolation'].map(t=>`<span><span class="cg ${t}">${X.GLY[t]}</span>${t[0].toUpperCase()+t.slice(1)}</span>`).join('')}<div class="seg xs bdseg bdseg2" role="group" aria-label="Board: clean or detail">${bdsegHtml()}</div></div>
+  <p class="foot bhint">Tap a muscle on the map to learn about it. Hold a chit to lift it. Drag it to another day, or off the board to remove it. Tap a day's name to rename it or make it a Rest day.</p></div>`};
 X.AFTER.build=()=>{paint(true);const bd=$('#board');bd.addEventListener('scroll',markDay,{passive:true});markDay()};
-function paint(full){const bd=$('#board');if(!bd)return;const sl=bd.scrollLeft;if(!full)bd.innerHTML=boardHtml();bd.scrollLeft=sl;const bn=$('.bname .bn');if(bn)bn.textContent=B.name||'New routine';
+const bdsegHtml=()=>`<button data-b="bmode" data-v="clean" class="${BD.detail?'':'on'}">Clean</button><button data-b="bmode" data-v="detail" class="${BD.detail?'on':''}">Detail</button>`;
+function toolsHtml(){const n=openSlots();return (n?`<div class="slotbar" id="slotbar"><span>${n} open slot${n>1?'s':''}</span><button class="btn grey" data-b="slotfill">Fill with defaults</button></div>`:'')}
+function paint(full){const bd=$('#board');if(!bd)return;const sl=bd.scrollLeft;if(!full)bd.innerHTML=boardHtml();bd.classList.toggle('b-detail',BD.detail);const bt=$('#btools');if(bt)bt.innerHTML=toolsHtml();$$('.bdseg').forEach(x=>x.innerHTML=bdsegHtml());bd.scrollLeft=sl;const bn=$('.bname .bn');if(bn)bn.textContent=B.name||'New routine';
   paintStats();paintSel();if(AN&&!AN.closed)renderAnalysis()}
 let JMP=-1;function markDay(){const bd=$('#board');if(!bd)return;const cols=$$('.col',bd),o=cols[0].offsetLeft,x=bd.scrollLeft+8;let k=0;cols.forEach((c,i)=>{if(c.offsetLeft-o<=x)k=i});
   if(JMP>k&&bd.scrollLeft>=bd.scrollWidth-bd.clientWidth-2)k=JMP;$$('#dstrip button').forEach((b,i)=>b.classList.toggle('on',i===k))}
@@ -145,6 +174,7 @@ function chitSheet(u){const f=findT(u);if(!f)return;const id=f.t.id,e=ex(id),day
     return `<div class="csh"><div class="csh-h">${X.gl(t.id)}<div class="grow"><div class="t1">${X.exNameP(t.id)}</div><div class="t2">${X.exSub(t.id)} · ${WDL[DAYS.indexOf(g.d.day)]}</div></div></div>
      <div class="group"><div class="row"><div class="grow t1">Sets</div><div class="step"><button data-b="sets-" aria-label="Fewer sets">−</button><b class="num" id="cs-sets">${t.sets}</b><button data-b="sets+" aria-label="More sets">+</button></div></div>
       <div class="row"><div class="grow"><div class="t1">${rr.unit==='reps'?'Reps':rr.unit==='seconds'?'Seconds':'Meters'}</div><div class="t2 rrn">${t.reps?'Your range':(X.prefs().goals||[]).length?'Typical for your goals':'Typical range'}${rr.per_side?' · per side':''}${rr.not_to_failure?' · stop well short of failure':''}</div></div><div class="step"><button data-b="reps-" aria-label="Lower reps">−</button><b class="num" id="cs-reps">${rp}</b><button data-b="reps+" aria-label="Higher reps">+</button></div></div></div>
+     <div class="ghead">Muscles worked · set credit per set</div><div class="group csfr">${fracs(t.id).map(([m,v])=>`<div class="row" data-fm="${m}"><span class="fn">${X.ML[m]||m.replace(/_/g,' ')}</span><span class="fb"><i style="--w:${Math.round(v*100)}%;--mc:var(--region-${WB.primaryRegion(RD(),t.id)})"></i></span><b class="fv num">${fr(v)}</b></div>`).join('')}</div>
      <div class="cacts"><button data-b="c-swap">${X.I('swap',1.8)}<span>Swap</span></button><button data-b="c-info">${X.I('info',1.8)}<span>Info</span></button><button data-b="c-dup">${X.I('plus',2)}<span>Duplicate</span></button><button data-b="c-del" class="dl">${X.I('trash',1.8)}<span>Delete</span></button></div></div>`};
   CS=X.sheet({title:'',cls:'grouped csheet',body:body(),onClose(){CS=null}});CS.u=u;CS.re=()=>{CS.body.innerHTML=body()};return CS}
 function chitAct(k){if(!CS)return;const u=CS.u,f=findT(u);if(!f)return;const t=f.t;
@@ -169,63 +199,143 @@ function dayAct(k){if(!DS)return;const day=DS.day,i=DAYS.indexOf(day),v=($('#dsn
   if(k==='dsrest'){const d=B.days[i],n=d.tiles.length;commit(()=>{const D=B.days[i];D.tiles=[];D.rest=true;D.label='';B.sel.clear()},n?`${WD[i]} is a Rest day · ${n} removed`:`${WD[i]} is a Rest day`);return}
   if(k==='dstrain'){commit(()=>{const D=B.days[i];D.rest=false;D.label=v||'Training day'},`${WD[i]} is a training day`);return}}
 // other tabs while the tab bar is hidden (landscape phone)
-function tabsSheet(){const T4=[['train','Train'],['log','Log'],['build','Build'],['progress','Progress']];
+function tabsSheet(){const T4=[['build','Build'],['train','Train'],['log','Log'],['progress','Progress']];
   const s=X.sheet({title:'Go to',cls:'grouped',body:`<div class="group">${T4.map(([k,l])=>`<button class="row" data-b="tabgo" data-to="${k}"><span class="ico gr">${X.I(k,1.7)}</span><div class="grow t1">${l}</div>${X.CHEV}</button>`).join('')}</div><p class="foot">The tab bar is hidden in landscape so the board gets the full height. Turn the phone upright to see it again.</p>`});return s}
 // ------------------------------------------------------------- tray (Suggested / Library, filter chips, drag or +)
-let TRAY=null;const TFB={mode:'sug',type:null,mus:null,day:'mon'};
-function trayRows(){const RDv=RD(),ids=Object.keys(RDv.EX).filter(i=>{const e=RDv.EX[i];return (!TFB.type||e.type===TFB.type)&&(!TFB.mus||(e.muscles[TFB.mus]||0)>=0.5)});
-  const rows=TFB.mode==='sug'?RANK.rank(RDv,'tray',ids,{board:rankBoard(),day:TFB.day},X.prefs(),24):ids.slice(0,60).map(id=>({id}));
+let TRAY=null;const TFB={mode:'sug',mus:null,pat:null,eq:null,day:'mon',slot:null,only:null};const anyTF=()=>!!(TFB.mus||TFB.pat||TFB.eq);
+function trayRows(){const RDv=RD(),ids=Object.keys(RDv.EX).filter(i=>X.passF(TFB,i)&&(!TFB.only||TFB.only.includes(i)));
+  let rows=TFB.mode==='sug'?RANK.rank(RDv,'tray',ids,{board:rankBoard(),day:TFB.day},X.prefs(),TFB.only?ids.length:24):ids.slice(0,60).map(id=>({id}));
+  if(TFB.only){const have=new Set(rows.map(r=>r.id));rows=rows.concat(ids.filter(i=>!have.has(i)).map(id=>({id})));const df=TFB.slot.def;rows.sort((a,b)=>(b.id===df)-(a.id===df))}
+  const dtag=id=>TFB.slot&&id===TFB.slot.def?'<span class="tag def">default</span>':'';
   return `<div class="tcount">${TFB.mode==='sug'?`Ranked for ${WDL[DAYS.indexOf(TFB.day)]} · hold a row to drag it onto any day`:'Library order · hold a row to drag it onto any day'}</div><div class="group">`+
-   rows.map(r=>`<div class="row trow" data-id="${r.id}">${X.gl(r.id)}<div class="grow"><div class="t1">${X.exNameP(r.id)}</div>${r.reasons?X.whyR(r):`<div class="t2">${X.exSub(r.id)}</div>`}</div><button class="addc" data-b="tadd" data-id="${r.id}" aria-label="Add to ${WD[DAYS.indexOf(TFB.day)]}">${X.I('plus',2.2)}</button></div>`).join('')+'</div>'}
-function traySheet(day){TFB.day=day||TFB.day;const ch=(k,v,l)=>`<button class="chip ${TFB[k]===v?'on':''}" data-tf="${k}" data-v="${v}">${l}</button>`;
-  TRAY=X.sheet({title:`Add to ${WD[DAYS.indexOf(TFB.day)]}`,cls:'grouped btray',modal:false,right:'<button class="btn plain" data-b="tclose">Done</button>',onClose(){TRAY=null},
-    body:`<div class="pad0"><div class="seg sm" id="tmodeb"><button class="${TFB.mode==='sug'?'on':''}" data-tm="sug">Suggested</button><button class="${TFB.mode==='lib'?'on':''}" data-tm="lib">Library</button></div></div>
-    <div class="chips fl noswipe">${['primary','accessory','isolation'].map(t=>ch('type',t,X.GLY[t]+' '+t[0].toUpperCase()+t.slice(1))).join('')}${['chest','lats','upper_back','side_delts','rear_delts','biceps','triceps','quads','hamstrings','glutes','calves','abs'].map(m=>ch('mus',m,X.ML[m])).join('')}</div>
+   rows.map(r=>`<div class="row trow" data-id="${r.id}">${X.gl(r.id)}<div class="grow"><div class="t1">${X.exNameP(r.id)}${dtag(r.id)}</div>${r.reasons?X.whyR(r):`<div class="t2">${X.exSub(r.id)}</div>`}</div><button class="addc" data-b="tadd" data-id="${r.id}" aria-label="Add to ${WD[DAYS.indexOf(TFB.day)]}">${X.I('plus',2.2)}</button></div>`).join('')+'</div>'}
+const trayTitle=()=>TFB.slot?`Fill ${WD[DAYS.indexOf(TFB.day)]} slot`:`Add to ${WD[DAYS.indexOf(TFB.day)]}`;
+function slotEligible(sid){const R=(RD().TREF||{templates:{}}).templates[B.tpl],s=R&&R.slots[sid];if(s)return s.eligible.slice();
+  const t=TP().find(RD().TJ,B.tpl),sl=t&&[].concat(...t.days.map(d=>d.slots)).find(x=>x.id===sid);return sl?window.TEMPLATES.eligible(RD(),sl.eligibility,B.level):[]}
+const TP=()=>window.TEMPLATES;
+function slotTray(day,sid){const D=B.days.find(d=>d.day===day),s=D&&(D.slots||[]).find(x=>x.sid===sid);if(!s)return;
+  if(TRAY)TRAY.close();Object.assign(TFB,{mus:null,pat:null,eq:null,slot:{day,sid,def:s.def,label:s.label,min:s.min,max:s.max,n:s.n},only:slotEligible(sid)});traySheet(day);
+  $$('.slotc').forEach(c=>c.classList.toggle('on',c.dataset.sid===sid));return TRAY}
+function traySheet(day){TFB.day=day||TFB.day;
+  TRAY=X.sheet({title:trayTitle(),cls:'grouped btray',modal:false,right:'<button class="btn plain" data-b="tclose">Done</button>',onClose(){TRAY=null;TFB.slot=null;TFB.only=null;$$('.slotc.on').forEach(c=>c.classList.remove('on'))},
+    body:`${TFB.slot?`<div class="tslot" id="tslot"><b>${TFB.slot.label}</b> · ${TFB.slot.min}–${TFB.slot.max} sets (default ${TFB.slot.n}) · ${TFB.only.length} eligible exercises from templates-reference.json. Pick one to fill the slot.</div>`:''}<div class="tftop"><div class="seg sm" id="tmodeb"><button class="${TFB.mode==='sug'?'on':''}" data-tm="sug">Suggested</button><button class="${TFB.mode==='lib'?'on':''}" data-tm="lib">Library</button></div><button class="btn plain sm treset" data-b="treset" ${anyTF()?'':'disabled'}>Reset</button></div>
+    <div id="tfbb"${TFB.slot?' hidden':''}>${X.filterHtml(TFB,'tf')}</div>
     <div class="tlist" id="btlist">${trayRows()}</div>`});return TRAY}
-function refreshTray(){if(TRAY){$('#btlist',TRAY.el).innerHTML=trayRows();const h=$('.sh-head .t',TRAY.el);if(h)h.textContent=`Add to ${WD[DAYS.indexOf(TFB.day)]}`}}
+function refreshTray(){if(TRAY){$('#btlist',TRAY.el).innerHTML=trayRows();const rb=$('[data-b=treset]',TRAY.el);if(rb)rb.disabled=!anyTF();const h=$('.sh-head .t',TRAY.el);if(h)h.textContent=trayTitle()}}
+// fill one slot (tile keeps from:{sid,i}; it goes before any filled tile from a later slot, so default fills keep the template order)
+function fillSlot(D,s,id,sets){D.slots=D.slots.filter(x=>x.sid!==s.sid);const t=T(id,sets==null?s.n:sets,null,{sid:s.sid,i:s.i});
+  const k=D.tiles.findIndex(x=>x.from&&x.from.i>s.i);k<0?D.tiles.push(t):D.tiles.splice(k,0,t)}
+function fillDefaults(){const n=openSlots();if(!n)return;commit(()=>B.days.forEach(D=>(D.slots||[]).slice().forEach(s=>fillSlot(D,s,s.def))),`Filled ${n} slots with their defaults`)}
+function loadTemplate(t){const days=blankDays();for(const td of t.days){const D=days[DAYS.indexOf(td.day)];D.label=td.label;D.rest=false;
+    D.slots=td.slots.map((s,i)=>({sid:s.id,label:s.label,type:s.slot_type,min:s.sets.min,max:s.sets.max,n:s.sets.default,def:s.default_exercise,i}))}
+  B.days=days;B.tpl=t.id;B.level=t.level;B.name=`${t.split_name} · ${t.days_per_week} days (slots)`;B.version=0;B.dirty=true;B.edited=Date.now()}
 // ------------------------------------------------------------- analysis sheet
 let AN=null,FIX=[];const RLAB=id=>PC.ruleLabel(RD(),id); // rules.json rules[].short_label
 const LBL=m=>(RD().rules.ranking.labels.regions[m])||X.ML[m]||m.replace(/_/g,' ');
-function renderAnalysis(){if(!AN)return;const {A,C,d}=stats(),R=RD().rules,RU={};R.rules.forEach(r=>RU[r.id]=r);FIX=[];const lv=B.level;
-  const warn=C.flags.filter(f=>f[0]==='warn'),info=C.flags.filter(f=>f[0]==='info'),fx=f=>{const list=PC.fixes(RD(),d,lv,f);return list.map(z=>{FIX.push(z);return `<div class="fxr"><span>${z.preview}${z.resolves?'':` <em>${R.partial_label}</em>`}</span><button class="btn sm grey" data-b="apply" data-k="${FIX.length-1}">Apply</button></div>`}).join('')||'<div class="fxr none">No one-tap fix passes the checks. Adjust it by hand.</div>'};
-  const flagRow=f=>`<div class="flag ${f[0]}" data-flag="${f[1]}" data-rule="${f[1].startsWith('spinal_load')?'spinal_load':f[1]}"><div class="ftl">${PC.shortLabel(RD(),f)}</div><p>${PC.message(RD(),f,d,lv)}</p>${fx(f)}</div>`;
-  const passing=C.list.filter(c=>!c.warn.length).map(c=>RLAB(c.id));
-  const T=Object.entries(A.muscles).filter(([m,v])=>v.raw>0||v.min>0),VB=X.VB;
-  const vrow=([m,v])=>{const st=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',top=v.max*(VB.red_factor||1.25);return `<div class="row vrow" data-vs="${st}"><span class="vm">${X.ML[m]||m}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${+v.raw.toFixed(1)}<small>/${v.min}–${v.max}</small></span></div>`};
-  const FM=R.frequency_muscles,fq=m=>B.days.map((dd,i)=>{const e=PC.eff(RD(),dd.tiles.map(t=>({id:t.id,sets:t.sets})))[m]||0;return `<i class="${e>=RD().targets.analytics.frequency_min_effective?'on':e>0?'lo':''}" title="${WD[i]}"></i>`}).join('');
-  const SL=RU.session_length,mx=Math.max(SL.warn_min+15,...A.day.map(x=>x.minutes));
-  const SP=A.spinal,cm=Object.keys(A.muscles).includes(AN.mus)?AN.mus:'chest';
-  AN.body.innerHTML=`<div class="anh"><div class="big num">${C.pass} of ${C.total}</div><div class="sub">checks pass · ${warn.length?`${new Set(warn.map(f=>f[1])).size} need attention`:'nothing needs attention'} · ${info.length} notes</div></div>
-   ${warn.length?`<div class="ghead">Needs attention</div><div class="flags">${warn.map(flagRow).join('')}</div>`:''}
-   <div class="ghead">Weekly sets per muscle</div><div class="group vol">${T.map(vrow).join('')}</div>${X.volLegend()}
-   <div class="ghead">Frequency <span class="gsub">days with ${RD().targets.analytics.frequency_min_effective}+ effective sets</span></div>
-   <div class="group freq"><div class="row fqh"><span class="vm"></span><span class="fq">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>${FM.map(m=>`<div class="row"><span class="vm">${X.ML[m]}</span><span class="fq">${fq(m)}</span></div>`).join('')}</div>
-   <div class="ghead">Session length <span class="gsub">info ${SL.info_min} · warn ${SL.warn_min} min</span></div>
-   <div class="group sess">${A.day.map(x=>`<div class="row"><span class="vm">${WD[DAYS.indexOf(x.day)]}</span><span class="sbar"><i style="--w:${x.minutes/mx*100}%" class="${x.minutes>=SL.warn_min?'w':x.minutes>=SL.info_min?'i':''}"></i><b style="--x:${SL.info_min/mx*100}%"></b><b class="w" style="--x:${SL.warn_min/mx*100}%"></b></span><span class="vn num">${Math.round(x.minutes)}</span></div>`).join('')||'<div class="row sub">No training days yet</div>'}</div>
-   <div class="ghead">Fatigue and spinal load <span class="smp" title="Points until a saved baseline week">fatigue: sample</span></div>
-   <div class="group sess">${A.day.map(x=>`<div class="row"><span class="vm">${WD[DAYS.indexOf(x.day)]}</span><span class="fz num">${x.cost.toFixed(1)} <small>fatigue</small></span><span class="fz num ${x.spinal>SP.session_max?'over':''}">${x.spinal}/${SP.session_max} <small>spine sets</small></span></div>`).join('')}
-    <div class="row"><span class="vm"><b>Week</b></span><span class="fz num"><b>${A.weekCost.toFixed(1)}</b> <small>fatigue</small></span><span class="fz num ${SP.week>SP.week_max?'over':''}"><b>${SP.week}/${SP.week_max}</b> <small>spine sets</small></span></div></div>
-   <p class="foot">Fatigue = sets × each exercise's fatigue rating (targets.json recovery). It becomes a % once you save a normal week. Heavy spine sets = heavy squats and hinges (rules.json spinal_load).</p>
-   <div class="ghead">Stimulus curve</div>
-   <div class="chips fl noswipe" id="anmus">${T.filter(([,v])=>v.raw>0).map(([m])=>`<button class="chip ${m===cm?'on':''}" data-anm="${m}">${X.ML[m]||m}</button>`).join('')}</div>
-   <div class="card curve">${curve(cm,A)}</div>
-   <p class="foot">${A.curveModel}. ${A.disclaimer}</p>
-   ${info.length?`<details class="andet" id="annotes"><summary class="ghead">${info.length} notes <span class="gsub">suggestions, not problems</span></summary><div class="flags">${info.map(flagRow).join('')}</div></details>`:''}
+// Analysis (round 1, Coach's audit): headers, order and metrics come from rules.json analysis_metrics (7 ordered categories,
+// 43 metrics, each with label, description, evidence and status; 'proposed' is marked). Suggestions are the 11 typed
+// suggestions of rules.json suggestions.analysis_sheet, from logic/analysis.js (port of tools/analysis.py sheet()).
+// Apply = board days := fix.days (Undo keeps the pre-Apply board). A rule is filed under the category of the metric whose
+// defined_in names it (rules.json rules.#id); a rule no metric names lands in "More checks" (only shown when one exists).
+const ANL=window.ANALYSIS;let SUGN=6;
+const RULE_CAT=id=>{const M=(RD().rules.analysis_metrics||{metrics:[]}).metrics,re=new RegExp('rules\\.#'+id+'(?![A-Za-z_])');
+  const own=M.find(m=>m.id===id&&(m.defined_in||[]).some(d=>re.test(d)))||M.find(m=>(m.defined_in||[]).some(d=>re.test(d)));return own?own.category:'more'};
+const ruleOf=f=>PC._x.RULE_OF(f[1]);
+let APPLIED=[];const sigD=()=>JSON.stringify(B.days.map(d=>[d.label,isRest(d),d.tiles.map(t=>[t.id,t.sets])]));
+const pct=x=>`${Math.round(x*100)}%`,MLB=m=>X.ML[m]||LBL(m);
+function sugTarget(s,days,lv){const t=s.target||{},A=stats().A;
+  if(t.flag)return PC.message(RD(),t.flag,days,lv);
+  if(s.source==='lower_fatigue_swap')return `${X.exNameP(t.exercise)} has a same-pattern option with more ${MLB(t.muscle).toLowerCase()} stimulus per unit of fatigue.`;
+  if(s.source==='stretch_share')return `${MLB(t.muscle)}: ${pct(t.share)} of its sets are stretch-biased (the flag is below ${pct(RD().targets.analytics.stretch_share_flag_below)}).`;
+  if(s.source==='effective_frequency')return `${MLB(t.muscle)} gets ${RD().targets.analytics.frequency_min_effective}+ effective sets on ${t.days} day${t.days===1?'':'s'} a week. Two days spreads the same volume.`;
+  if(s.source==='recovery_vs_baseline')return `This week's modeled recovery cost is ${t.pct}% of your saved normal week.`;
+  if(s.source==='weekly_band'){const v=A.muscles[t.muscle]||{};return `${MLB(t.muscle)}: ${t.sets} effective sets a week, ${t.side==='under'?'below':'above'} the ${v.min}–${v.max} target.`}
+  return ''}
+function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules,lv=B.level;FIX=[];
+  const cur=sigD();APPLIED=APPLIED.filter(a=>a.bsig!==cur); // undone (here or with the Undo bar): drop it
+  const M=ANL.metrics(dt,d,lv),SH=ANL.sheet(dt,d,lv,null),TY={};(R.suggestions.analysis_sheet.types||[]).forEach(t=>TY[t.id]=t);
+  const CATS=ANL.catalogue(dt),EV=dt.rules.analysis_metrics;
+  const fxRow=f=>{FIX.push(f);return `<div class="fxr"><span>${f.preview}${f.resolves?'':` <em>${R.partial_label}</em>`}</span><button class="btn sm accent" data-b="apply" data-k="${FIX.length-1}">Apply</button></div>`};
+  const sevL={warn:'Warning',info:'Info',suggest:'Suggestion'};
+  const sugCard=s=>`<div class="flag sugc ${s.severity}${s.fixes.length?' hasfix':''}" data-type="${s.type}" data-src="${s.source}"${(s.target||{}).flag?` data-rule="${ruleOf(s.target.flag)}"`:''}>
+     <div class="ftl">${(TY[s.type]||{}).label||s.type} <span class="tag sev ${s.severity}">${sevL[s.severity]||s.severity}</span></div><p>${sugTarget(s,d,lv)}</p>
+     ${s.fixes.length?s.fixes.map(fxRow).join(''):'<p class="sub nofix">No one-tap change passes the checks. Change it by hand.</p>'}</div>`;
+  const vrow=([m,v])=>{const st=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',VB=X.VB,top=v.max*(VB.red_factor!=null?VB.red_factor:1);return `<div class="row vrow" data-vs="${st}"><span class="vm">${X.ML[m]||m}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${+v.raw.toFixed(1)}<small>/${v.min}–${v.max}</small></span></div>`};
+  const T=Object.entries(A.muscles).filter(([m,v])=>v.raw>0||v.min>0),RU={};R.rules.forEach(r=>RU[r.id]=r);
+  const FM=R.frequency_muscles,fq=m=>B.days.map((dd,i)=>{const e=PC.eff(dt,dd.tiles.map(t=>({id:t.id,sets:t.sets})))[m]||0;return `<i class="${e>=dt.targets.analytics.frequency_min_effective?'on':e>0?'lo':''}" title="${WD[i]}"></i>`}).join('');
+  const SL=RU.session_length,mx=Math.max(SL.warn_min+15,...A.day.map(x=>x.minutes)),SP=A.spinal,cm=Object.keys(A.muscles).includes(AN.mus)?AN.mus:'chest';
+  const chips=o=>`<div class="mchips">${o.map(([k,v])=>`<span class="tag mv"><b>${k}</b> ${v}</span>`).join('')}</div>`;
+  const pp=(()=>{let push=0,pull=0;for(const dd of d)for(const t of dd.tiles){if(R.push_patterns.includes(dt.PAT[t.id]))push+=t.sets;if(R.pull_patterns.includes(dt.PAT[t.id]))pull+=t.sets}return push?(pull/push).toFixed(2):pull?'no pressing':'—'})();
+  const MPL=(R.movement_patterns||{}).labels||{},RGL=k=>k[0].toUpperCase()+k.slice(1);
+  const flagsOf=id=>C.flags.filter(f=>ruleOf(f)===id&&f[0]!=='info').length,st=id=>{const n=flagsOf(id);return n?`${n} warning${n>1?'s':''}`:'passing'};
+  const PRG=progressNow();
+  const VAL={checks_pass:`${M.checks_pass.pass} of ${M.checks_pass.total}`,suggestion_list:`${SH.length}`,week_sets_total:`${M.week_sets_total} sets`,volume_status:'',
+    weekly_sets_per_muscle:`${T.filter(([,v])=>v.raw>=v.min&&v.raw<=v.max).length} of ${T.length} in range`,
+    marginal_set_gain:A.muscles[cm]?`${MLB(cm)}: next set ≈ +${(A.muscles[cm].next*100).toFixed(1)}%`:'',
+    session_discount:`${dt.targets.curve.session_discount.cap} sets / muscle / session, then × ${dt.targets.curve.session_discount.factor}`,
+    weekly_sets_per_region:'',effective_frequency:`${FM.filter(m=>(A.muscles[m]||{}).freq>=2).length} of ${FM.length} muscles on 2+ days`,consecutive_high_volume:st('consecutive_high_volume'),
+    push_pull_ratio:`pull : push ${pp}`,pattern_coverage:st('pattern_gap'),missing_stretch:st('missing_stretch'),redundant_pattern:st('redundant_pattern'),
+    stretch_biased_share:'',movement_pattern_sets:'',lengthened_bias_share:pct(M.lengthened_bias_share),unilateral_share:pct(M.unilateral_share),
+    recovery_cost:`${A.weekCost.toFixed(1)} points (no saved normal week yet)`,stimulus_per_fatigue:`${SH.filter(s=>s.type==='swap_lower_fatigue').length} lower-fatigue swaps`,
+    spinal_load:`${SP.week} of ${SP.week_max} heavy spine sets`,junk_volume_session:st('junk_volume_session'),session_length:st('session_length'),avg_session_minutes:`≈ ${M.avg_session_minutes} min`,
+    session_hard_sets:st('session_hard_sets'),sets_per_exercise:st('sets_per_exercise'),many_small_entries:st('many_small_entries'),session_density:'',
+    logged_hard_sets:PRG?`${Object.values(PRG.muscles).reduce((a,m)=>a+(m.last_week_sets||0),0).toFixed(1)} credited sets last week`:'',
+    adherence:PRG&&PRG.adherence.sets_ratio!=null?`${pct(PRG.adherence.sets_ratio)} of planned sets`:'',progress_signal:PRG?`${PRG.refinements.filter(r=>r.type==='stall').length} stalled lifts`:''};
+  const EXTRA={weekly_sets_per_muscle:`<div class="group vol">${T.map(vrow).join('')}</div>`,volume_status:X.volLegend(),
+    stimulus_curve:`<div class="chips fl noswipe" id="anmus">${T.filter(([,v])=>v.raw>0).map(([m])=>`<button class="chip ${m===cm?'on':''}" data-anm="${m}">${X.ML[m]||m}</button>`).join('')}</div><div class="card curve">${curve(cm,A)}</div><p class="foot">${A.curveModel}. ${A.disclaimer}</p>`,
+    weekly_sets_per_region:chips(Object.entries(M.weekly_sets_per_region).map(([k,v])=>[RGL(k),+(+v).toFixed(1)])),
+    effective_frequency:`<div class="group freq"><div class="row fqh"><span class="vm"></span><span class="fq">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>${FM.map(m=>`<div class="row"><span class="vm">${X.ML[m]}</span><span class="fq">${fq(m)}</span></div>`).join('')}</div>`,
+    stretch_biased_share:chips(Object.entries(M.stretch_biased_share).map(([k,v])=>[MLB(k),pct(v)])),
+    movement_pattern_sets:chips(Object.entries(M.movement_pattern_sets).map(([k,v])=>[MPL[k]||k,v])),
+    spinal_load:`<div class="group sess">${A.day.map(x=>`<div class="row"><span class="vm">${WD[DAYS.indexOf(x.day)]}</span><span class="fz num">${x.cost.toFixed(1)} <small>fatigue</small></span><span class="fz num ${x.spinal>SP.session_max?'over':''}">${x.spinal}/${SP.session_max} <small>spine sets</small></span></div>`).join('')}</div>`,
+    session_length:`<div class="group sess">${A.day.map(x=>`<div class="row"><span class="vm">${WD[DAYS.indexOf(x.day)]}</span><span class="sbar"><i style="--w:${x.minutes/mx*100}%" class="${x.minutes>=SL.warn_min?'w':x.minutes>=SL.info_min?'i':''}"></i><b style="--x:${SL.info_min/mx*100}%"></b><b class="w" style="--x:${SL.warn_min/mx*100}%"></b></span><span class="vn num">${Math.round(x.minutes)}</span></div>`).join('')||'<div class="row sub">No training days yet</div>'}</div>`,
+    session_density:chips(Object.entries(M.session_density).map(([k,v])=>[WD[DAYS.indexOf(k)],`${v} sets/h`]))};
+  const evTag=m=>`<span class="tag ev ${m.evidence}" title="${(m.citations||[]).join(', ')}">${m.evidence==='supported'?'Supported':'Modeled'}</span>${m.status==='proposed'?'<span class="tag prop">Proposed</span>':''}`;
+  const mrow=m=>`<div class="mrow" data-metric="${m.id}" data-status="${m.status}" data-evidence="${m.evidence}"><div class="mh"><b>${m.label}</b>${evTag(m)}<span class="mval num">${VAL[m.id]||''}</span></div><p class="mdesc">${m.description}</p>${EXTRA[m.id]||''}</div>`;
+  const ruleList=R.rules.filter(r=>!r.app_only&&(!r.levels||r.levels.includes(lv)));
+  const rstat=cat=>ruleList.filter(r=>RULE_CAT(r.id)===cat).map(r=>{const c=C.list.find(x=>x.id===r.id),bad=c?c.warn.length:flagsOf(r.id);return `<span class="tag rs ${bad?'bad':'ok'}" data-rule="${r.id}">${bad?'!':'✓'} ${RLAB(r.id)}</span>`}).join('');
+  const sec=c=>{const rs=ruleList.filter(r=>RULE_CAT(r.id)===c.id),bad=rs.filter(r=>{const x=C.list.find(y=>y.id===r.id);return x&&x.warn.length}).length;
+    const body=c.id==='suggestions'?suggestions():'';
+    return `<section class="acat${c.id==='suggestions'?' sugs':''}" data-cat="${c.id}"><div class="ghead cath${c.id==='suggestions'?' sugh':''}">${c.label} <span class="gsub">${rs.length?`${rs.length-bad} of ${rs.length} checks pass`:''}</span></div>
+      <p class="cdesc">${c.description}</p>${rs.length?`<div class="rstat">${rstat(c.id)}</div>`:''}${body}<div class="mlist">${(c.metrics||[]).map(mrow).join('')}</div></section>`};
+  const suggestions=()=>{const top=SH.slice(0,SUGN),rest=SH.slice(SUGN);
+    return `${APPLIED.length?`<div class="flags">${APPLIED.map((a,i)=>`<div class="aplc" data-k="${i}"><div class="grow"><div class="ftl">Applied</div><p>${a.preview}</p>${a.asig===cur?'':'<p class="sub">The board changed after this. Undo puts the whole board back as it was just before Apply, so later edits are lost.</p>'}</div><button class="btn sm ink" data-b="unapply" data-k="${i}">Undo</button></div>`).join('')}</div>`:''}
+     ${SH.length?`<div class="flags" id="sugl">${top.map(sugCard).join('')}</div>${rest.length?`<button class="btn plain block more" data-b="sugmore">Show ${rest.length} more suggestion${rest.length>1?'s':''}</button>`:''}`:(APPLIED.length?'':'<p class="foot">No suggestions: nothing on this board needs a change.</p>')}`};
+  const more=ruleList.some(r=>RULE_CAT(r.id)==='more');
+  AN.body.innerHTML=`<div class="anh"><div class="big num">${M.checks_pass.pass} of ${M.checks_pass.total}</div><div class="sub">checks pass · ${SH.filter(s=>s.severity==='warn').length} need attention · ${SH.length} suggestion${SH.length===1?'':'s'}</div></div>
+   ${CATS.map(sec).join('')}
+   ${more?`<section class="acat" data-cat="more"><div class="ghead cath">More checks <span class="gsub">not yet filed under a metric</span></div><div class="rstat">${rstat('more')}</div></section>`:''}
    <div class="ghead">Still sample data <span class="smp">sample</span></div><div class="group asks" id="anasks">${DATA_ASKS.map(t=>`<div class="row"><div class="grow t2">${t}</div></div>`).join('')}</div>
-   <details class="andet" id="anpass"><summary class="ghead">${passing.length} passing checks</summary><div class="pass">${passing.map(p=>`<span class="tag">✓ ${p}</span>`).join('')}</div></details><div style="height:24px"></div>`}
-const DATA_ASKS=['Fatigue shows points, not %, until there is a saved baseline week (targets.json recovery).','The starting board and the library routines are mock routines.'];
+   <p class="foot">${EV.note}</p><div style="height:24px"></div>`}
+// Logged-progress values for the Analysis sheet and the Progress tab: the synthetic log (data/progress-reference.json), not real data.
+function progressNow(){try{return X.progressData?X.progressData():null}catch(e){console.warn(e);return null}}
+const DATA_ASKS=['Fatigue shows points, not %, until there is a saved baseline week (targets.json recovery), so Bring recovery cost back to normal cannot fire yet.','The starting board and the library routines are mock routines.','Logged-progress values come from the synthetic log in data/progress-reference.json.'];
 function curve(m,A){const v=A.muscles[m],k=v.k,x=v.x,Sx=z=>1-Math.exp(-z/k),Xm=Math.max(30,Math.ceil((Math.max(x,v.max)+4)/5)*5),W=320,H=168,px=z=>30+z/Xm*(W-40),py=z=>H-30-z*(H-44);
   let d='';for(let i=0;i<=60;i++){const z=i/60*Xm;d+=(i?'L':'M')+px(z).toFixed(1)+','+py(Sx(z)).toFixed(1)}const nx=Sx(x+1)-Sx(x),tk=[];for(let z=0;z<=Xm;z+=Xm>30?10:5)tk.push(`<text x="${px(z)}" y="${H-14}" text-anchor="middle">${z}</text>`);
   return `<svg class="ancurve" viewBox="0 0 ${W} ${H}" data-m="${m}"><rect x="${px(v.min)}" y="8" width="${px(v.max)-px(v.min)}" height="${H-38}" class="band"/>${[0,.5,1].map(z=>`<line x1="30" x2="${W-8}" y1="${py(z)}" y2="${py(z)}"/><text x="26" y="${py(z)+3}" text-anchor="end">${z*100}%</text>`).join('')}${tk.join('')}
    <path d="${d}" class="cv"/><circle cx="${px(x)}" cy="${py(Sx(x))}" r="5" class="dot"/><text x="${px(v.min)+4}" y="20" class="bl">target ${v.min}–${v.max}</text></svg>
    <div class="anread"><b>${X.ML[m]||m}</b>: ${x.toFixed(1)} effective sets a week → ${Math.round(Sx(x)*100)}% of the modeled max. Next set ≈ +${(nx*100).toFixed(1)}%.</div>`}
-function analysisSheet(){AN=X.sheet({title:'Analysis',cls:'tall grouped ansheet',right:'<button class="btn plain" data-b="anclose">Done</button>',onClose(){AN=null}});AN.mus='chest';renderAnalysis();return AN}
+function analysisSheet(){SUGN=6;AN=X.sheet({title:'Analysis',cls:'tall grouped ansheet',right:'<button class="btn plain" data-b="anclose">Done</button>',onClose(){AN=null}});AN.mus='chest';renderAnalysis();return AN}
 // ------------------------------------------------------------- New menu (blank, split template, library preset)
 let NW=null;const NS={split:'upper-lower',level:'intermediate',n:'4'};
-function newBody(view){const SP=RD().splits.splits,PT=RD().patterns.templates;
+const TJT=()=>((RD().TJ||{}).templates||[]);
+function slotsBody(){const TT=TJT();if(!TT.length)return '<p class="foot">templates.json did not load.</p>';const sp=[...new Map(TT.map(t=>[t.split,t.split_name])).entries()];
+  if(!sp.some(x=>x[0]===NS.split))NS.split=sp[0][0];let lvs=LEVELS.filter(l=>TT.some(t=>t.split===NS.split&&t.level===l));if(!lvs.includes(NS.level))NS.level=lvs[0];
+  const ns=TT.filter(t=>t.split===NS.split&&t.level===NS.level).map(t=>String(t.days_per_week));if(!ns.includes(NS.n))NS.n=ns[0];
+  const t=TT.find(x=>x.id===`${NS.split}/${NS.level}/${NS.n}`),vx=((RD().TJ.volume_exceptions||{})[t.id])||{},ns2=sum(t.days.map(d=>d.slots.length));
+  return `<div class="nwv"><button class="btn plain nwback" data-b="nwback">‹ New</button>
+   <div class="ghead">Split</div><div class="chips wrap">${sp.map(([id,n])=>`<button class="chip ${id===NS.split?'on':''}" data-ns="split" data-v="${id}">${n}</button>`).join('')}</div>
+   <div class="ghead">Level</div><div class="pad0"><div class="seg">${LEVELS.map(l=>`<button class="${l===NS.level?'on':''} ${lvs.includes(l)?'':'off'}" data-ns="level" data-v="${l}" ${lvs.includes(l)?'':'disabled'}>${l[0].toUpperCase()+l.slice(1)}</button>`).join('')}</div></div>
+   <div class="ghead">Days a week</div><div class="chips">${ns.map(n=>`<button class="chip ${n===NS.n?'on':''}" data-ns="n" data-v="${n}">${n} days</button>`).join('')}</div>
+   <div class="ghead">Slots · ${t.days.length} days · ${ns2} slots</div>
+   <div class="group" id="tslots">${t.days.map(d=>`<div class="row"><div class="grow"><div class="t1">${WD[DAYS.indexOf(d.day)]} · ${d.label}</div><div class="t2">${d.slots.map(s=>`${s.label} ${s.sets.min}–${s.sets.max}`).join(', ')}</div></div><span class="val num">${d.slots.length}</span></div>`).join('')}</div>
+   <div class="ghead">Volume check · defaults</div><div class="group tvol" id="tvol">${Object.keys(vx).length?Object.entries(vx).map(([m,v])=>`<div class="row" data-mu="${m}" data-st="${v.status}"><div class="grow"><div class="t1"><span class="dot amber"></span>${X.ML[m]||m}</div><div class="t2">${v.sets} sets a week vs ${v.min}–${v.max}: amber, a documented exception</div></div></div>`).join(''):'<div class="row"><div class="grow t2">Every muscle in range with the defaults.</div></div>'}</div>
+   <p class="foot">Slots from templates.json; each slot's eligible exercises from templates-reference.json. The defaults reproduce the ${t.split_name} ${t.level} ${t.days_per_week}-day prebuilt routine exactly (0 non-info warnings). Amber = within 2 sets under the level minimum or up to 25% over the max.</p>
+   <div class="pad"><button class="btn accent block" data-b="nwslots" data-id="${t.id}">Use these slots</button></div></div>`}
+function newBody(view){const SP=RD().splits.splits,PT=RD().patterns.templates;if(view==='slots')return slotsBody();
   if(view==='tpl'){const s=SP.find(x=>x.id===NS.split),lv=s.levels[NS.level]?NS.level:Object.keys(s.levels)[0];NS.level=lv;const ns=Object.keys(s.levels[lv]);if(!ns.includes(NS.n))NS.n=ns[0];
     const days=s.levels[lv][NS.n],pt=((PT[NS.split]||{}).levels||{})[lv],ptd=pt&&pt[NS.n],SL=RD().patterns.slots,mn=sum(days.map(d=>PC.sessionMinutes(RD(),d.tiles)));
-    return `<div class="nwv"><button class="btn plain nwback" data-b="nwback">‹ New</button>
+    return `<div class="nwv"><button class="btn plain nwback" data-b="nwback">‹ New</button><div class="ghead">Prebuilt routine</div>
      <div class="ghead">Split</div><div class="chips wrap">${SP.map(x=>`<button class="chip ${x.id===NS.split?'on':''}" data-ns="split" data-v="${x.id}">${x.name}</button>`).join('')}</div>
      <div class="ghead">Level</div><div class="pad0"><div class="seg">${LEVELS.map(l=>`<button class="${l===lv?'on':''} ${s.levels[l]?'':'off'}" data-ns="level" data-v="${l}" ${s.levels[l]?'':'disabled'}>${l[0].toUpperCase()+l.slice(1)}</button>`).join('')}</div></div>
      <div class="ghead">Days a week</div><div class="chips">${ns.map(n=>`<button class="chip ${n===NS.n?'on':''}" data-ns="n" data-v="${n}">${n} days</button>`).join('')}</div>
@@ -238,12 +348,15 @@ function newBody(view){const SP=RD().splits.splits,PT=RD().patterns.templates;
      <p class="foot">The copy opens as a draft. The original stays as it is until you push the copy.</p></div>`;
   return `<div class="nwv"><div class="group nwopts">
     <button class="row" data-b="nwblank"><span class="ico gr">${X.I('plus',2)}</span><div class="grow"><div class="t1">Blank board</div><div class="t2">Seven empty days</div></div>${X.CHEV}</button>
-    <button class="row" data-b="nwtplv"><span class="ico acc">${X.I('build',1.8)}</span><div class="grow"><div class="t1">From a split template</div><div class="t2">Choose the split, level and days</div></div>${X.CHEV}</button>
+    <button class="row" data-b="nwslotsv"><span class="ico acc">${X.I('build',1.8)}</span><div class="grow"><div class="t1">Template (slots)</div><div class="t2">Empty slots by movement; you pick each exercise</div></div>${X.CHEV}</button>
+    <button class="row" data-b="nwprev"><span class="ico gr">${X.I('build',1.8)}</span><div class="grow"><div class="t1">Prebuilt routine</div><div class="t2">A full routine for the split, level and days</div></div>${X.CHEV}</button>
     <button class="row" data-b="nwlibv"><span class="ico gr">${X.I('book',1.8)}</span><div class="grow"><div class="t1">From your library</div><div class="t2">Duplicate a routine and edit the copy</div></div>${X.CHEV}</button></div>
     <p class="foot">Your current draft is kept in Undo until you leave Build.</p></div>`}
 function newSheet(view){NW=X.sheet({title:'New routine',cls:'grouped',right:'<button class="btn plain" data-b="nwclose">Cancel</button>',body:newBody(view),onClose(){NW=null}});NW.v=view;return NW}
 const nwView=v=>{if(NW){NW.v=v;NW.body.innerHTML=newBody(v)}};
 function startFrom(kind,arg){if(NW)NW.close();
+  if(kind!=='slots')B.tpl=null;
+  if(kind==='slots'){const t=TP().find(RD().TJ,arg);commit(()=>loadTemplate(t),`Started ${t.split_name} slots`)}
   if(kind==='blank')commit(()=>{B.days=blankDays();B.name='New routine';B.version=0},'Started a blank board');
   if(kind==='tpl'){const s=RD().splits.splits.find(x=>x.id===NS.split);commit(()=>{loadDays(s.levels[NS.level][NS.n],`${s.name} · ${NS.n} days`);B.level=NS.level;B.version=0},`Started from ${s.name}`)}
   if(kind==='lib'){const r=X.ROUTINES.find(x=>x.id===arg),dm={Mon:'mon',Tue:'tue',Wed:'wed',Thu:'thu',Fri:'fri',Sat:'sat',Sun:'sun'};
@@ -258,21 +371,31 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   const tm=e.target.closest('[data-tm]');if(tm&&TRAY){TFB.mode=tm.dataset.tm;$$('#tmodeb button').forEach(x=>x.classList.toggle('on',x===tm));refreshTray();return}
   const tf=e.target.closest('[data-tf]');if(tf&&TRAY){const k=tf.dataset.tf;TFB[k]=TFB[k]===tf.dataset.v?null:tf.dataset.v;$$(`[data-tf=${k}]`,TRAY.el).forEach(c=>c.classList.toggle('on',TFB[k]===c.dataset.v));refreshTray();return}
   const am=e.target.closest('[data-anm]');if(am&&AN){AN.mus=am.dataset.anm;const sc=AN.body.scrollTop;renderAnalysis();AN.body.scrollTop=sc;return}
-  const ns=e.target.closest('[data-ns]');if(ns&&NW){NS[ns.dataset.ns]=ns.dataset.v;nwView('tpl');return}
-  const j=e.target.closest('[data-jump]');if(j)return jump(+j.dataset.jump);
+  const ns=e.target.closest('[data-ns]');if(ns&&NW){NS[ns.dataset.ns]=ns.dataset.v;nwView(NW.v==='slots'?'slots':'tpl');return}
+  const j=e.target.closest('[data-jump]');if(j){setMap('day',+j.dataset.jump);return jump(+j.dataset.jump)}
+  const mp=e.target.closest('#bmap .mp');if(mp&&mp.dataset.mu){e.preventDefault();return X.go('#learn-'+mp.dataset.mu)}
   if(!b)return;const k=b.dataset.b;e.stopPropagation();
-  if(k==='dayh')return daySheet(b.dataset.day);if(k==='dsclose')return DS&&DS.close();if(k==='dsrename'||k==='dsrest'||k==='dstrain')return dayAct(k);
+  if(k==='mapm')return setMap(b.dataset.mm,b.dataset.mm==='day'&&MAPV.mode!=='day'?Math.max(0,$$('#dstrip button').findIndex(x=>x.classList.contains('on'))):null);
+  if(k==='treset'){Object.assign(TFB,{mus:null,pat:null,eq:null});if(TRAY)$('#tfbb',TRAY.el).innerHTML=X.filterHtml(TFB,'tf');refreshTray();return}
+  if(k==='dayh'){setMap('day',DAYS.indexOf(b.dataset.day));return daySheet(b.dataset.day)}if(k==='dsclose')return DS&&DS.close();if(k==='dsrename'||k==='dsrest'||k==='dstrain')return dayAct(k);
   if(k==='tabs')return tabsSheet();if(k==='tabgo'){X.closeAll();return X.go('#'+b.dataset.to)}
-  if(k==='analysis')return analysisSheet();if(k==='anclose')return AN&&AN.close();
-  if(k==='apply'){const z=FIX[+b.dataset.k];if(!z)return;commit(()=>applyDays(z.days),`Applied: ${z.preview}`);return}
+  if(k==='analysis')return analysisSheet();if(k==='sugmore'){SUGN=999;const sc=AN.body.scrollTop;renderAnalysis();AN.body.scrollTop=sc;return}if(k==='anclose')return AN&&AN.close();
+  if(k==='apply'){const z=FIX[+b.dataset.k];if(!z)return;const before=snap(),bsig=sigD();commit(()=>applyDays(z.days),`Applied: ${z.preview}`);APPLIED.unshift({preview:z.preview,before,bsig,asig:sigD()});if(AN&&!AN.closed){renderAnalysis();AN.body.scrollTop=0}return}
+  if(k==='unapply'){const a=APPLIED[+b.dataset.k];if(!a)return;B.hist.push(snap());restore(a.before);APPLIED.splice(+b.dataset.k,1);paint();hideUndo();X.toast('Suggestion undone');return}
   if(k==='undo')return undo();
   if(k==='add'){if(TRAY){TFB.day=b.dataset.day;refreshTray();return}return traySheet(b.dataset.day)}
+  if(k==='bmode'){BD.detail=b.dataset.v==='detail';try{localStorage.setItem('apechit.sb.boardDetail',BD.detail?'1':'0')}catch(x){}return paint()}
+  if(k==='slot')return slotTray(b.dataset.day,b.dataset.sid);
+  if(k==='slotfill')return fillDefaults();
+  if(k==='tadd'&&TFB.slot){const id=b.dataset.id,z=TFB.slot,D=B.days.find(d=>d.day===z.day),s=D&&(D.slots||[]).find(x=>x.sid===z.sid);if(!s)return;
+    commit(()=>fillSlot(D,s,id),`Filled ${z.label} with ${X.exNameP(id)}`);return TRAY&&TRAY.close()}
   if(k==='tadd'){const id=b.dataset.id;commit(()=>{const D=B.days.find(d=>d.day===TFB.day);D.tiles.push(T(id,setsFor(id)))},`Added ${X.exNameP(id)} to ${WD[DAYS.indexOf(TFB.day)]}`);refreshTray();return}
   if(k==='tclose')return TRAY&&TRAY.close();
   if(k==='seldone'){B.sel.clear();return paintSel()}
   if(k==='push'){B.version=(B.version||0)+1;B.dirty=false;paintStats();return X.toast(`Pushed to Library · v${B.version}`)}
-  if(k==='start'){X.S.session=true;return X.go('#workout')}
-  if(k==='new')return newSheet();if(k==='nwclose')return NW&&NW.close();if(k==='nwback')return nwView(null);if(k==='nwtplv')return nwView('tpl');if(k==='nwlibv')return nwView('lib');
+  if(k==='start'){const i=MAPV.mode==='day'&&B.days[MAPV.day].tiles.length?MAPV.day:B.days.findIndex(d=>d.tiles.length);if(i<0)return X.toast('Add exercises first');const d=B.days[i];
+    X.startWorkout(dayLabel(d),d.tiles.map(t=>({id:t.id,sets:t.sets})),{sub:`${B.name||'New routine'} · ${WDL[i]}`});return X.go('#workout')}
+  if(k==='new')return newSheet();if(k==='nwclose')return NW&&NW.close();if(k==='nwback')return nwView(null);if(k==='nwtplv'||k==='nwprev')return nwView('tpl');if(k==='nwslotsv')return nwView('slots');if(k==='nwslots')return startFrom('slots',b.dataset.id);if(k==='nwlibv')return nwView('lib');
   if(k==='nwblank')return startFrom('blank');if(k==='nwtpl')return startFrom('tpl');if(k==='nwlib')return startFrom('lib',b.dataset.id);
   if(k.startsWith('sets')||k.startsWith('reps')||k.startsWith('c-'))return chitAct(k);
 },true);
@@ -280,11 +403,19 @@ setInterval(()=>{if(X.S.scr==='build'&&!DRAG){const bs=$('#bstate');if(bs)bs.inn
 // storyboard routes for the shots and tests
 Object.assign(X.ROUTES,{
  'build-chit':['build','build',0,0,()=>{},()=>{const c=$('.chit');if(c)chitSheet(c.dataset.u)}],
- 'build-tray':['build','build',0,0,()=>{},()=>traySheet('wed')],
+ 'build-tray':['build','build',0,0,()=>{Object.assign(TFB,{mus:null,pat:null,eq:null})},()=>traySheet('wed')],
  'build-analysis':['build','build',0,0,()=>{},analysisSheet],
  'build-new':['build','build',0,0,()=>{},()=>newSheet()],
  'build-new-tpl':['build','build',0,0,()=>{},()=>newSheet('tpl')],
  'build-day':['build','build',0,0,()=>{},()=>daySheet('mon')],
+ 'build-map-day':['build','build',0,0,()=>{MAPV.mode='day';MAPV.day=0},()=>{}],
+ 'build-detail':['build','build',0,0,()=>{BD.detail=true},()=>{}],
+ 'build-detail-chit':['build','build',0,0,()=>{BD.detail=true},()=>{const c=$('.chit');if(c)chitSheet(c.dataset.u)}],
+ 'build-new-slots':['build','build',0,0,()=>{Object.assign(NS,{split:'upper-lower',level:'intermediate',n:'4'})},()=>newSheet('slots')],
+ 'build-template':['build','build',0,0,()=>{BD.detail=false;loadTemplate(TP().find(RD().TJ,'upper-lower/intermediate/4'));B.hist=[];
+   const D=B.days[0];fillSlot(D,D.slots[0],D.slots[0].def);fillSlot(D,D.slots[0],'chin-up')},()=>{}],
+ 'build-tray-slot':['build','build',0,0,()=>{BD.detail=false;loadTemplate(TP().find(RD().TJ,'upper-lower/intermediate/4'));B.hist=[]},()=>slotTray('mon','mon-4')],
+ 'build-tray-filter':['build','build',0,0,()=>{Object.assign(TFB,{mus:null,pat:'vertical_pull',eq:null})},()=>traySheet('thu')],
 });
-window.BOARD={get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
+window.BOARD={get detail(){return BD.detail},fracLine,MSH,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
 })();

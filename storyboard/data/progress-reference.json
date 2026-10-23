@@ -1,0 +1,7415 @@
+{
+ "description": "Synthetic logged history (tools/progress_fixture.py) and the expected tools/progress.py output. Not real user data.",
+ "as_of": "2026-10-22",
+ "level": "intermediate",
+ "routine": [
+  {
+   "day": "mon",
+   "label": "Upper A",
+   "tiles": [
+    {
+     "id": "dumbbell-bench-press",
+     "sets": 3
+    },
+    {
+     "id": "pull-up",
+     "sets": 3
+    },
+    {
+     "id": "overhead-press",
+     "sets": 3
+    },
+    {
+     "id": "chest-supported-row",
+     "sets": 3
+    },
+    {
+     "id": "cable-lateral-raise",
+     "sets": 3
+    },
+    {
+     "id": "incline-dumbbell-curl",
+     "sets": 3
+    },
+    {
+     "id": "overhead-cable-triceps-extension",
+     "sets": 2
+    }
+   ]
+  },
+  {
+   "day": "tue",
+   "label": "Lower A",
+   "tiles": [
+    {
+     "id": "back-squat",
+     "sets": 3
+    },
+    {
+     "id": "romanian-deadlift",
+     "sets": 3
+    },
+    {
+     "id": "leg-extension",
+     "sets": 3
+    },
+    {
+     "id": "seated-leg-curl",
+     "sets": 3
+    },
+    {
+     "id": "standing-calf-raise",
+     "sets": 3
+    },
+    {
+     "id": "cable-crunch",
+     "sets": 3
+    }
+   ]
+  },
+  {
+   "day": "thu",
+   "label": "Upper B",
+   "tiles": [
+    {
+     "id": "incline-dumbbell-press",
+     "sets": 3
+    },
+    {
+     "id": "barbell-row",
+     "sets": 3
+    },
+    {
+     "id": "lat-pulldown",
+     "sets": 3
+    },
+    {
+     "id": "cable-fly",
+     "sets": 2
+    },
+    {
+     "id": "dumbbell-lateral-raise",
+     "sets": 3
+    },
+    {
+     "id": "reverse-pec-deck",
+     "sets": 2
+    },
+    {
+     "id": "triceps-pushdown",
+     "sets": 2
+    }
+   ]
+  },
+  {
+   "day": "fri",
+   "label": "Lower B",
+   "tiles": [
+    {
+     "id": "hack-squat",
+     "sets": 3
+    },
+    {
+     "id": "hip-thrust",
+     "sets": 3
+    },
+    {
+     "id": "lying-leg-curl",
+     "sets": 3
+    },
+    {
+     "id": "bulgarian-split-squat",
+     "sets": 2
+    },
+    {
+     "id": "hip-abduction-machine",
+     "sets": 2
+    },
+    {
+     "id": "seated-calf-raise",
+     "sets": 3
+    },
+    {
+     "id": "hanging-leg-raise",
+     "sets": 2
+    }
+   ]
+  }
+ ],
+ "history": {
+  "sessions": [
+   {
+    "id": "s2026-09-14",
+    "status": "completed",
+    "date": "2026-09-14T17:30:00-07:00",
+    "startedAt": "2026-09-14T17:30:00-07:00",
+    "endedAt": "2026-09-14T18:40:00-07:00",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "dumbbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "chest-supported-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "incline-dumbbell-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-cable-triceps-extension",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-09-15",
+    "status": "completed",
+    "date": "2026-09-15T17:30:00-07:00",
+    "startedAt": "2026-09-15T17:30:00-07:00",
+    "endedAt": "2026-09-15T18:40:00-07:00",
+    "dayIdx": 1,
+    "label": "Lower A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "back-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "romanian-deadlift",
+       "sets": 3
+      },
+      {
+       "exerciseId": "leg-extension",
+       "sets": 3
+      },
+      {
+       "exerciseId": "seated-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "standing-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-crunch",
+       "sets": 3
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-09-17",
+    "status": "completed",
+    "date": "2026-09-17T17:30:00-07:00",
+    "startedAt": "2026-09-17T17:30:00-07:00",
+    "endedAt": "2026-09-17T18:40:00-07:00",
+    "dayIdx": 3,
+    "label": "Upper B",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "incline-dumbbell-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "lat-pulldown",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-fly",
+       "sets": 2
+      },
+      {
+       "exerciseId": "dumbbell-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "reverse-pec-deck",
+       "sets": 2
+      },
+      {
+       "exerciseId": "triceps-pushdown",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-09-18",
+    "status": "completed",
+    "date": "2026-09-18T17:30:00-07:00",
+    "startedAt": "2026-09-18T17:30:00-07:00",
+    "endedAt": "2026-09-18T18:40:00-07:00",
+    "dayIdx": 4,
+    "label": "Lower B",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "hack-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "hip-thrust",
+       "sets": 3
+      },
+      {
+       "exerciseId": "lying-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "bulgarian-split-squat",
+       "sets": 2
+      },
+      {
+       "exerciseId": "hip-abduction-machine",
+       "sets": 2
+      },
+      {
+       "exerciseId": "seated-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "hanging-leg-raise",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-09-21",
+    "status": "completed",
+    "date": "2026-09-21T17:30:00-07:00",
+    "startedAt": "2026-09-21T17:30:00-07:00",
+    "endedAt": "2026-09-21T18:40:00-07:00",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "dumbbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "chest-supported-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "incline-dumbbell-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-cable-triceps-extension",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-09-22",
+    "status": "completed",
+    "date": "2026-09-22T17:30:00-07:00",
+    "startedAt": "2026-09-22T17:30:00-07:00",
+    "endedAt": "2026-09-22T18:40:00-07:00",
+    "dayIdx": 1,
+    "label": "Lower A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "back-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "romanian-deadlift",
+       "sets": 3
+      },
+      {
+       "exerciseId": "leg-extension",
+       "sets": 3
+      },
+      {
+       "exerciseId": "seated-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "standing-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-crunch",
+       "sets": 3
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-09-24",
+    "status": "completed",
+    "date": "2026-09-24T17:30:00-07:00",
+    "startedAt": "2026-09-24T17:30:00-07:00",
+    "endedAt": "2026-09-24T18:40:00-07:00",
+    "dayIdx": 3,
+    "label": "Upper B",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "incline-dumbbell-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "lat-pulldown",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-fly",
+       "sets": 2
+      },
+      {
+       "exerciseId": "dumbbell-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "reverse-pec-deck",
+       "sets": 2
+      },
+      {
+       "exerciseId": "triceps-pushdown",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-09-25",
+    "status": "completed",
+    "date": "2026-09-25T17:30:00-07:00",
+    "startedAt": "2026-09-25T17:30:00-07:00",
+    "endedAt": "2026-09-25T18:40:00-07:00",
+    "dayIdx": 4,
+    "label": "Lower B",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "hack-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "hip-thrust",
+       "sets": 3
+      },
+      {
+       "exerciseId": "lying-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "bulgarian-split-squat",
+       "sets": 2
+      },
+      {
+       "exerciseId": "hip-abduction-machine",
+       "sets": 2
+      },
+      {
+       "exerciseId": "seated-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "hanging-leg-raise",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-09-28",
+    "status": "completed",
+    "date": "2026-09-28T17:30:00-07:00",
+    "startedAt": "2026-09-28T17:30:00-07:00",
+    "endedAt": "2026-09-28T18:40:00-07:00",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "dumbbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "chest-supported-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "incline-dumbbell-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-cable-triceps-extension",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-09-29",
+    "status": "completed",
+    "date": "2026-09-29T17:30:00-07:00",
+    "startedAt": "2026-09-29T17:30:00-07:00",
+    "endedAt": "2026-09-29T18:40:00-07:00",
+    "dayIdx": 1,
+    "label": "Lower A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "back-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "romanian-deadlift",
+       "sets": 3
+      },
+      {
+       "exerciseId": "leg-extension",
+       "sets": 3
+      },
+      {
+       "exerciseId": "seated-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "standing-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-crunch",
+       "sets": 3
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-01",
+    "status": "completed",
+    "date": "2026-10-01T17:30:00-07:00",
+    "startedAt": "2026-10-01T17:30:00-07:00",
+    "endedAt": "2026-10-01T18:40:00-07:00",
+    "dayIdx": 3,
+    "label": "Upper B",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "incline-dumbbell-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "lat-pulldown",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-fly",
+       "sets": 2
+      },
+      {
+       "exerciseId": "dumbbell-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "reverse-pec-deck",
+       "sets": 2
+      },
+      {
+       "exerciseId": "triceps-pushdown",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-02",
+    "status": "completed",
+    "date": "2026-10-02T17:30:00-07:00",
+    "startedAt": "2026-10-02T17:30:00-07:00",
+    "endedAt": "2026-10-02T18:40:00-07:00",
+    "dayIdx": 4,
+    "label": "Lower B",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "hack-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "hip-thrust",
+       "sets": 3
+      },
+      {
+       "exerciseId": "lying-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "bulgarian-split-squat",
+       "sets": 2
+      },
+      {
+       "exerciseId": "hip-abduction-machine",
+       "sets": 2
+      },
+      {
+       "exerciseId": "seated-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "hanging-leg-raise",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-05",
+    "status": "completed",
+    "date": "2026-10-05T17:30:00-07:00",
+    "startedAt": "2026-10-05T17:30:00-07:00",
+    "endedAt": "2026-10-05T18:40:00-07:00",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "dumbbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "chest-supported-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "incline-dumbbell-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-cable-triceps-extension",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-06",
+    "status": "completed",
+    "date": "2026-10-06T17:30:00-07:00",
+    "startedAt": "2026-10-06T17:30:00-07:00",
+    "endedAt": "2026-10-06T18:40:00-07:00",
+    "dayIdx": 1,
+    "label": "Lower A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "back-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "romanian-deadlift",
+       "sets": 3
+      },
+      {
+       "exerciseId": "leg-extension",
+       "sets": 3
+      },
+      {
+       "exerciseId": "seated-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "standing-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-crunch",
+       "sets": 3
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-08",
+    "status": "skipped",
+    "date": "2026-10-08T17:30:00-07:00",
+    "dayIdx": 3,
+    "label": "Upper B",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "incline-dumbbell-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "lat-pulldown",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-fly",
+       "sets": 2
+      },
+      {
+       "exerciseId": "dumbbell-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "reverse-pec-deck",
+       "sets": 2
+      },
+      {
+       "exerciseId": "triceps-pushdown",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-09",
+    "status": "completed",
+    "date": "2026-10-09T17:30:00-07:00",
+    "startedAt": "2026-10-09T17:30:00-07:00",
+    "endedAt": "2026-10-09T18:40:00-07:00",
+    "dayIdx": 4,
+    "label": "Lower B",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "hack-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "hip-thrust",
+       "sets": 3
+      },
+      {
+       "exerciseId": "lying-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "bulgarian-split-squat",
+       "sets": 2
+      },
+      {
+       "exerciseId": "hip-abduction-machine",
+       "sets": 2
+      },
+      {
+       "exerciseId": "seated-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "hanging-leg-raise",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-12",
+    "status": "completed",
+    "date": "2026-10-12T17:30:00-07:00",
+    "startedAt": "2026-10-12T17:30:00-07:00",
+    "endedAt": "2026-10-12T18:40:00-07:00",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "dumbbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "chest-supported-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "incline-dumbbell-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-cable-triceps-extension",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-13",
+    "status": "completed",
+    "date": "2026-10-13T17:30:00-07:00",
+    "startedAt": "2026-10-13T17:30:00-07:00",
+    "endedAt": "2026-10-13T18:40:00-07:00",
+    "dayIdx": 1,
+    "label": "Lower A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "back-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "romanian-deadlift",
+       "sets": 3
+      },
+      {
+       "exerciseId": "leg-extension",
+       "sets": 3
+      },
+      {
+       "exerciseId": "seated-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "standing-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-crunch",
+       "sets": 3
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-15",
+    "status": "skipped",
+    "date": "2026-10-15T17:30:00-07:00",
+    "dayIdx": 3,
+    "label": "Upper B",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "incline-dumbbell-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "barbell-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "lat-pulldown",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-fly",
+       "sets": 2
+      },
+      {
+       "exerciseId": "dumbbell-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "reverse-pec-deck",
+       "sets": 2
+      },
+      {
+       "exerciseId": "triceps-pushdown",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-16",
+    "status": "completed",
+    "date": "2026-10-16T17:30:00-07:00",
+    "startedAt": "2026-10-16T17:30:00-07:00",
+    "endedAt": "2026-10-16T18:40:00-07:00",
+    "dayIdx": 4,
+    "label": "Lower B",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "hack-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "hip-thrust",
+       "sets": 3
+      },
+      {
+       "exerciseId": "lying-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "bulgarian-split-squat",
+       "sets": 2
+      },
+      {
+       "exerciseId": "hip-abduction-machine",
+       "sets": 2
+      },
+      {
+       "exerciseId": "seated-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "hanging-leg-raise",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-19",
+    "status": "completed",
+    "date": "2026-10-19T17:30:00-07:00",
+    "startedAt": "2026-10-19T17:30:00-07:00",
+    "endedAt": "2026-10-19T18:40:00-07:00",
+    "dayIdx": 0,
+    "label": "Upper A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "dumbbell-bench-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "pull-up",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-press",
+       "sets": 3
+      },
+      {
+       "exerciseId": "chest-supported-row",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-lateral-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "incline-dumbbell-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "overhead-cable-triceps-extension",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "id": "s2026-10-20",
+    "status": "completed",
+    "date": "2026-10-20T17:30:00-07:00",
+    "startedAt": "2026-10-20T17:30:00-07:00",
+    "endedAt": "2026-10-20T18:40:00-07:00",
+    "dayIdx": 1,
+    "label": "Lower A",
+    "unit": "kg",
+    "notes": "",
+    "snapshot": {
+     "exercises": [
+      {
+       "exerciseId": "back-squat",
+       "sets": 3
+      },
+      {
+       "exerciseId": "romanian-deadlift",
+       "sets": 3
+      },
+      {
+       "exerciseId": "leg-extension",
+       "sets": 3
+      },
+      {
+       "exerciseId": "seated-leg-curl",
+       "sets": 3
+      },
+      {
+       "exerciseId": "standing-calf-raise",
+       "sets": 3
+      },
+      {
+       "exerciseId": "cable-crunch",
+       "sets": 3
+      }
+     ]
+    }
+   }
+  ],
+  "entries": [
+   {
+    "id": "s2026-09-14-e0",
+    "sessionId": "s2026-09-14",
+    "order": 0,
+    "exerciseId": "dumbbell-bench-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-14-e1",
+    "sessionId": "s2026-09-14",
+    "order": 1,
+    "exerciseId": "pull-up",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-14-e2",
+    "sessionId": "s2026-09-14",
+    "order": 2,
+    "exerciseId": "overhead-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-14-e3",
+    "sessionId": "s2026-09-14",
+    "order": 3,
+    "exerciseId": "chest-supported-row",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-14-e4",
+    "sessionId": "s2026-09-14",
+    "order": 4,
+    "exerciseId": "cable-lateral-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-14-e5",
+    "sessionId": "s2026-09-14",
+    "order": 5,
+    "exerciseId": "incline-dumbbell-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-14-e6",
+    "sessionId": "s2026-09-14",
+    "order": 6,
+    "exerciseId": "overhead-cable-triceps-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-15-e0",
+    "sessionId": "s2026-09-15",
+    "order": 0,
+    "exerciseId": "back-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-15-e1",
+    "sessionId": "s2026-09-15",
+    "order": 1,
+    "exerciseId": "romanian-deadlift",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-15-e2",
+    "sessionId": "s2026-09-15",
+    "order": 2,
+    "exerciseId": "leg-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-15-e3",
+    "sessionId": "s2026-09-15",
+    "order": 3,
+    "exerciseId": "seated-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-15-e4",
+    "sessionId": "s2026-09-15",
+    "order": 4,
+    "exerciseId": "standing-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-15-e5",
+    "sessionId": "s2026-09-15",
+    "order": 5,
+    "exerciseId": "cable-crunch",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-17-e0",
+    "sessionId": "s2026-09-17",
+    "order": 0,
+    "exerciseId": "incline-dumbbell-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-17-e1",
+    "sessionId": "s2026-09-17",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-17-e2",
+    "sessionId": "s2026-09-17",
+    "order": 2,
+    "exerciseId": "lat-pulldown",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-17-e3",
+    "sessionId": "s2026-09-17",
+    "order": 3,
+    "exerciseId": "cable-fly",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-17-e4",
+    "sessionId": "s2026-09-17",
+    "order": 4,
+    "exerciseId": "dumbbell-lateral-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-17-e5",
+    "sessionId": "s2026-09-17",
+    "order": 5,
+    "exerciseId": "reverse-pec-deck",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-17-e6",
+    "sessionId": "s2026-09-17",
+    "order": 6,
+    "exerciseId": "triceps-pushdown",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-18-e0",
+    "sessionId": "s2026-09-18",
+    "order": 0,
+    "exerciseId": "hack-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-18-e1",
+    "sessionId": "s2026-09-18",
+    "order": 1,
+    "exerciseId": "hip-thrust",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-18-e2",
+    "sessionId": "s2026-09-18",
+    "order": 2,
+    "exerciseId": "lying-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-18-e3",
+    "sessionId": "s2026-09-18",
+    "order": 3,
+    "exerciseId": "bulgarian-split-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-18-e4",
+    "sessionId": "s2026-09-18",
+    "order": 4,
+    "exerciseId": "hip-abduction-machine",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-18-e5",
+    "sessionId": "s2026-09-18",
+    "order": 5,
+    "exerciseId": "seated-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-18-e6",
+    "sessionId": "s2026-09-18",
+    "order": 6,
+    "exerciseId": "hanging-leg-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-21-e0",
+    "sessionId": "s2026-09-21",
+    "order": 0,
+    "exerciseId": "dumbbell-bench-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-21-e1",
+    "sessionId": "s2026-09-21",
+    "order": 1,
+    "exerciseId": "pull-up",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-21-e2",
+    "sessionId": "s2026-09-21",
+    "order": 2,
+    "exerciseId": "overhead-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-21-e3",
+    "sessionId": "s2026-09-21",
+    "order": 3,
+    "exerciseId": "chest-supported-row",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-21-e4",
+    "sessionId": "s2026-09-21",
+    "order": 4,
+    "exerciseId": "cable-lateral-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-21-e5",
+    "sessionId": "s2026-09-21",
+    "order": 5,
+    "exerciseId": "incline-dumbbell-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-21-e6",
+    "sessionId": "s2026-09-21",
+    "order": 6,
+    "exerciseId": "overhead-cable-triceps-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-22-e0",
+    "sessionId": "s2026-09-22",
+    "order": 0,
+    "exerciseId": "back-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-22-e1",
+    "sessionId": "s2026-09-22",
+    "order": 1,
+    "exerciseId": "romanian-deadlift",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-22-e2",
+    "sessionId": "s2026-09-22",
+    "order": 2,
+    "exerciseId": "leg-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-22-e3",
+    "sessionId": "s2026-09-22",
+    "order": 3,
+    "exerciseId": "seated-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-22-e4",
+    "sessionId": "s2026-09-22",
+    "order": 4,
+    "exerciseId": "standing-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-22-e5",
+    "sessionId": "s2026-09-22",
+    "order": 5,
+    "exerciseId": "cable-crunch",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-24-e0",
+    "sessionId": "s2026-09-24",
+    "order": 0,
+    "exerciseId": "incline-dumbbell-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-24-e1",
+    "sessionId": "s2026-09-24",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-24-e2",
+    "sessionId": "s2026-09-24",
+    "order": 2,
+    "exerciseId": "lat-pulldown",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-24-e3",
+    "sessionId": "s2026-09-24",
+    "order": 3,
+    "exerciseId": "cable-fly",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-24-e4",
+    "sessionId": "s2026-09-24",
+    "order": 4,
+    "exerciseId": "dumbbell-lateral-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-24-e5",
+    "sessionId": "s2026-09-24",
+    "order": 5,
+    "exerciseId": "reverse-pec-deck",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-24-e6",
+    "sessionId": "s2026-09-24",
+    "order": 6,
+    "exerciseId": "triceps-pushdown",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-25-e0",
+    "sessionId": "s2026-09-25",
+    "order": 0,
+    "exerciseId": "hack-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-25-e1",
+    "sessionId": "s2026-09-25",
+    "order": 1,
+    "exerciseId": "hip-thrust",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-25-e2",
+    "sessionId": "s2026-09-25",
+    "order": 2,
+    "exerciseId": "lying-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-25-e3",
+    "sessionId": "s2026-09-25",
+    "order": 3,
+    "exerciseId": "bulgarian-split-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-25-e4",
+    "sessionId": "s2026-09-25",
+    "order": 4,
+    "exerciseId": "hip-abduction-machine",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-25-e5",
+    "sessionId": "s2026-09-25",
+    "order": 5,
+    "exerciseId": "seated-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-25-e6",
+    "sessionId": "s2026-09-25",
+    "order": 6,
+    "exerciseId": "hanging-leg-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-28-e0",
+    "sessionId": "s2026-09-28",
+    "order": 0,
+    "exerciseId": "dumbbell-bench-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-28-e1",
+    "sessionId": "s2026-09-28",
+    "order": 1,
+    "exerciseId": "pull-up",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-28-e2",
+    "sessionId": "s2026-09-28",
+    "order": 2,
+    "exerciseId": "overhead-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-28-e3",
+    "sessionId": "s2026-09-28",
+    "order": 3,
+    "exerciseId": "chest-supported-row",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-28-e4",
+    "sessionId": "s2026-09-28",
+    "order": 4,
+    "exerciseId": "cable-lateral-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-28-e5",
+    "sessionId": "s2026-09-28",
+    "order": 5,
+    "exerciseId": "incline-dumbbell-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-28-e6",
+    "sessionId": "s2026-09-28",
+    "order": 6,
+    "exerciseId": "overhead-cable-triceps-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-29-e0",
+    "sessionId": "s2026-09-29",
+    "order": 0,
+    "exerciseId": "back-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-29-e1",
+    "sessionId": "s2026-09-29",
+    "order": 1,
+    "exerciseId": "romanian-deadlift",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-29-e2",
+    "sessionId": "s2026-09-29",
+    "order": 2,
+    "exerciseId": "leg-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-29-e3",
+    "sessionId": "s2026-09-29",
+    "order": 3,
+    "exerciseId": "seated-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-29-e4",
+    "sessionId": "s2026-09-29",
+    "order": 4,
+    "exerciseId": "standing-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-09-29-e5",
+    "sessionId": "s2026-09-29",
+    "order": 5,
+    "exerciseId": "cable-crunch",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-01-e0",
+    "sessionId": "s2026-10-01",
+    "order": 0,
+    "exerciseId": "incline-dumbbell-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-01-e1",
+    "sessionId": "s2026-10-01",
+    "order": 1,
+    "exerciseId": "barbell-row",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-01-e2",
+    "sessionId": "s2026-10-01",
+    "order": 2,
+    "exerciseId": "lat-pulldown",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-01-e3",
+    "sessionId": "s2026-10-01",
+    "order": 3,
+    "exerciseId": "cable-fly",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-01-e4",
+    "sessionId": "s2026-10-01",
+    "order": 4,
+    "exerciseId": "dumbbell-lateral-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-01-e5",
+    "sessionId": "s2026-10-01",
+    "order": 5,
+    "exerciseId": "reverse-pec-deck",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-01-e6",
+    "sessionId": "s2026-10-01",
+    "order": 6,
+    "exerciseId": "triceps-pushdown",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-02-e0",
+    "sessionId": "s2026-10-02",
+    "order": 0,
+    "exerciseId": "hack-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-02-e1",
+    "sessionId": "s2026-10-02",
+    "order": 1,
+    "exerciseId": "hip-thrust",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-02-e2",
+    "sessionId": "s2026-10-02",
+    "order": 2,
+    "exerciseId": "lying-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-02-e3",
+    "sessionId": "s2026-10-02",
+    "order": 3,
+    "exerciseId": "bulgarian-split-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-02-e4",
+    "sessionId": "s2026-10-02",
+    "order": 4,
+    "exerciseId": "hip-abduction-machine",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-02-e5",
+    "sessionId": "s2026-10-02",
+    "order": 5,
+    "exerciseId": "seated-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-02-e6",
+    "sessionId": "s2026-10-02",
+    "order": 6,
+    "exerciseId": "hanging-leg-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-05-e0",
+    "sessionId": "s2026-10-05",
+    "order": 0,
+    "exerciseId": "dumbbell-bench-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-05-e1",
+    "sessionId": "s2026-10-05",
+    "order": 1,
+    "exerciseId": "pull-up",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-05-e2",
+    "sessionId": "s2026-10-05",
+    "order": 2,
+    "exerciseId": "overhead-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-05-e3",
+    "sessionId": "s2026-10-05",
+    "order": 3,
+    "exerciseId": "chest-supported-row",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-05-e4",
+    "sessionId": "s2026-10-05",
+    "order": 4,
+    "exerciseId": "cable-lateral-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-05-e5",
+    "sessionId": "s2026-10-05",
+    "order": 5,
+    "exerciseId": "incline-dumbbell-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-05-e6",
+    "sessionId": "s2026-10-05",
+    "order": 6,
+    "exerciseId": "overhead-cable-triceps-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-06-e0",
+    "sessionId": "s2026-10-06",
+    "order": 0,
+    "exerciseId": "back-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-06-e1",
+    "sessionId": "s2026-10-06",
+    "order": 1,
+    "exerciseId": "romanian-deadlift",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-06-e2",
+    "sessionId": "s2026-10-06",
+    "order": 2,
+    "exerciseId": "leg-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-06-e3",
+    "sessionId": "s2026-10-06",
+    "order": 3,
+    "exerciseId": "seated-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-06-e4",
+    "sessionId": "s2026-10-06",
+    "order": 4,
+    "exerciseId": "standing-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-06-e5",
+    "sessionId": "s2026-10-06",
+    "order": 5,
+    "exerciseId": "cable-crunch",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-09-e0",
+    "sessionId": "s2026-10-09",
+    "order": 0,
+    "exerciseId": "hack-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-09-e1",
+    "sessionId": "s2026-10-09",
+    "order": 1,
+    "exerciseId": "hip-thrust",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-09-e2",
+    "sessionId": "s2026-10-09",
+    "order": 2,
+    "exerciseId": "lying-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-09-e3",
+    "sessionId": "s2026-10-09",
+    "order": 3,
+    "exerciseId": "bulgarian-split-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-09-e4",
+    "sessionId": "s2026-10-09",
+    "order": 4,
+    "exerciseId": "hip-abduction-machine",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-09-e5",
+    "sessionId": "s2026-10-09",
+    "order": 5,
+    "exerciseId": "seated-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-09-e6",
+    "sessionId": "s2026-10-09",
+    "order": 6,
+    "exerciseId": "hanging-leg-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-12-e0",
+    "sessionId": "s2026-10-12",
+    "order": 0,
+    "exerciseId": "dumbbell-bench-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-12-e1",
+    "sessionId": "s2026-10-12",
+    "order": 1,
+    "exerciseId": "pull-up",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-12-e2",
+    "sessionId": "s2026-10-12",
+    "order": 2,
+    "exerciseId": "overhead-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-12-e3",
+    "sessionId": "s2026-10-12",
+    "order": 3,
+    "exerciseId": "chest-supported-row",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-12-e4",
+    "sessionId": "s2026-10-12",
+    "order": 4,
+    "exerciseId": "cable-lateral-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-12-e5",
+    "sessionId": "s2026-10-12",
+    "order": 5,
+    "exerciseId": "incline-dumbbell-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-12-e6",
+    "sessionId": "s2026-10-12",
+    "order": 6,
+    "exerciseId": "overhead-cable-triceps-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-13-e0",
+    "sessionId": "s2026-10-13",
+    "order": 0,
+    "exerciseId": "back-squat",
+    "skipped": false,
+    "notes": "Knees felt fine at depth"
+   },
+   {
+    "id": "s2026-10-13-e1",
+    "sessionId": "s2026-10-13",
+    "order": 1,
+    "exerciseId": "romanian-deadlift",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-13-e2",
+    "sessionId": "s2026-10-13",
+    "order": 2,
+    "exerciseId": "leg-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-13-e3",
+    "sessionId": "s2026-10-13",
+    "order": 3,
+    "exerciseId": "seated-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-13-e4",
+    "sessionId": "s2026-10-13",
+    "order": 4,
+    "exerciseId": "standing-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-13-e5",
+    "sessionId": "s2026-10-13",
+    "order": 5,
+    "exerciseId": "cable-crunch",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-16-e0",
+    "sessionId": "s2026-10-16",
+    "order": 0,
+    "exerciseId": "hack-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-16-e1",
+    "sessionId": "s2026-10-16",
+    "order": 1,
+    "exerciseId": "hip-thrust",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-16-e2",
+    "sessionId": "s2026-10-16",
+    "order": 2,
+    "exerciseId": "lying-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-16-e3",
+    "sessionId": "s2026-10-16",
+    "order": 3,
+    "exerciseId": "bulgarian-split-squat",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-16-e4",
+    "sessionId": "s2026-10-16",
+    "order": 4,
+    "exerciseId": "hip-abduction-machine",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-16-e5",
+    "sessionId": "s2026-10-16",
+    "order": 5,
+    "exerciseId": "seated-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-16-e6",
+    "sessionId": "s2026-10-16",
+    "order": 6,
+    "exerciseId": "hanging-leg-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-19-e0",
+    "sessionId": "s2026-10-19",
+    "order": 0,
+    "exerciseId": "dumbbell-bench-press",
+    "skipped": false,
+    "notes": "Shoulder a bit tight on the last set"
+   },
+   {
+    "id": "s2026-10-19-e1",
+    "sessionId": "s2026-10-19",
+    "order": 1,
+    "exerciseId": "pull-up",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-19-e2",
+    "sessionId": "s2026-10-19",
+    "order": 2,
+    "exerciseId": "overhead-press",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-19-e3",
+    "sessionId": "s2026-10-19",
+    "order": 3,
+    "exerciseId": "chest-supported-row",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-19-e4",
+    "sessionId": "s2026-10-19",
+    "order": 4,
+    "exerciseId": "cable-lateral-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-19-e5",
+    "sessionId": "s2026-10-19",
+    "order": 5,
+    "exerciseId": "incline-dumbbell-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-19-e6",
+    "sessionId": "s2026-10-19",
+    "order": 6,
+    "exerciseId": "overhead-cable-triceps-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-20-e0",
+    "sessionId": "s2026-10-20",
+    "order": 0,
+    "exerciseId": "back-squat",
+    "skipped": false,
+    "notes": "Moved fast, add load next time"
+   },
+   {
+    "id": "s2026-10-20-e1",
+    "sessionId": "s2026-10-20",
+    "order": 1,
+    "exerciseId": "romanian-deadlift",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-20-e2",
+    "sessionId": "s2026-10-20",
+    "order": 2,
+    "exerciseId": "leg-extension",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-20-e3",
+    "sessionId": "s2026-10-20",
+    "order": 3,
+    "exerciseId": "seated-leg-curl",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-20-e4",
+    "sessionId": "s2026-10-20",
+    "order": 4,
+    "exerciseId": "standing-calf-raise",
+    "skipped": false,
+    "notes": ""
+   },
+   {
+    "id": "s2026-10-20-e5",
+    "sessionId": "s2026-10-20",
+    "order": 5,
+    "exerciseId": "cable-crunch",
+    "skipped": false,
+    "notes": ""
+   }
+  ],
+  "sets": [
+   {
+    "id": "s2026-09-14-e0-t0",
+    "entryId": "s2026-09-14-e0",
+    "sessionId": "s2026-09-14",
+    "idx": 0,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e0-t1",
+    "entryId": "s2026-09-14-e0",
+    "sessionId": "s2026-09-14",
+    "idx": 1,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e0-t2",
+    "entryId": "s2026-09-14-e0",
+    "sessionId": "s2026-09-14",
+    "idx": 2,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e1-t0",
+    "entryId": "s2026-09-14-e1",
+    "sessionId": "s2026-09-14",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e1-t1",
+    "entryId": "s2026-09-14-e1",
+    "sessionId": "s2026-09-14",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e1-t2",
+    "entryId": "s2026-09-14-e1",
+    "sessionId": "s2026-09-14",
+    "idx": 2,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e2-t0",
+    "entryId": "s2026-09-14-e2",
+    "sessionId": "s2026-09-14",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e2-t1",
+    "entryId": "s2026-09-14-e2",
+    "sessionId": "s2026-09-14",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e2-t2",
+    "entryId": "s2026-09-14-e2",
+    "sessionId": "s2026-09-14",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e3-t0",
+    "entryId": "s2026-09-14-e3",
+    "sessionId": "s2026-09-14",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e3-t1",
+    "entryId": "s2026-09-14-e3",
+    "sessionId": "s2026-09-14",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e3-t2",
+    "entryId": "s2026-09-14-e3",
+    "sessionId": "s2026-09-14",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e4-t0",
+    "entryId": "s2026-09-14-e4",
+    "sessionId": "s2026-09-14",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e4-t1",
+    "entryId": "s2026-09-14-e4",
+    "sessionId": "s2026-09-14",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e4-t2",
+    "entryId": "s2026-09-14-e4",
+    "sessionId": "s2026-09-14",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e5-t0",
+    "entryId": "s2026-09-14-e5",
+    "sessionId": "s2026-09-14",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e5-t1",
+    "entryId": "s2026-09-14-e5",
+    "sessionId": "s2026-09-14",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e5-t2",
+    "entryId": "s2026-09-14-e5",
+    "sessionId": "s2026-09-14",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e6-t0",
+    "entryId": "s2026-09-14-e6",
+    "sessionId": "s2026-09-14",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-14-e6-t1",
+    "entryId": "s2026-09-14-e6",
+    "sessionId": "s2026-09-14",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e0-t0",
+    "entryId": "s2026-09-15-e0",
+    "sessionId": "s2026-09-15",
+    "idx": 0,
+    "kind": "working",
+    "load": 100.0,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e0-t1",
+    "entryId": "s2026-09-15-e0",
+    "sessionId": "s2026-09-15",
+    "idx": 1,
+    "kind": "working",
+    "load": 100.0,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e0-t2",
+    "entryId": "s2026-09-15-e0",
+    "sessionId": "s2026-09-15",
+    "idx": 2,
+    "kind": "working",
+    "load": 100.0,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e1-t0",
+    "entryId": "s2026-09-15-e1",
+    "sessionId": "s2026-09-15",
+    "idx": 0,
+    "kind": "working",
+    "load": 90.0,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e1-t1",
+    "entryId": "s2026-09-15-e1",
+    "sessionId": "s2026-09-15",
+    "idx": 1,
+    "kind": "working",
+    "load": 90.0,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e1-t2",
+    "entryId": "s2026-09-15-e1",
+    "sessionId": "s2026-09-15",
+    "idx": 2,
+    "kind": "working",
+    "load": 90.0,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e2-t0",
+    "entryId": "s2026-09-15-e2",
+    "sessionId": "s2026-09-15",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e2-t1",
+    "entryId": "s2026-09-15-e2",
+    "sessionId": "s2026-09-15",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e2-t2",
+    "entryId": "s2026-09-15-e2",
+    "sessionId": "s2026-09-15",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e3-t0",
+    "entryId": "s2026-09-15-e3",
+    "sessionId": "s2026-09-15",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e3-t1",
+    "entryId": "s2026-09-15-e3",
+    "sessionId": "s2026-09-15",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e3-t2",
+    "entryId": "s2026-09-15-e3",
+    "sessionId": "s2026-09-15",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e4-t0",
+    "entryId": "s2026-09-15-e4",
+    "sessionId": "s2026-09-15",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e4-t1",
+    "entryId": "s2026-09-15-e4",
+    "sessionId": "s2026-09-15",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e4-t2",
+    "entryId": "s2026-09-15-e4",
+    "sessionId": "s2026-09-15",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e5-t0",
+    "entryId": "s2026-09-15-e5",
+    "sessionId": "s2026-09-15",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e5-t1",
+    "entryId": "s2026-09-15-e5",
+    "sessionId": "s2026-09-15",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-15-e5-t2",
+    "entryId": "s2026-09-15-e5",
+    "sessionId": "s2026-09-15",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e0-t0",
+    "entryId": "s2026-09-17-e0",
+    "sessionId": "s2026-09-17",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e0-t1",
+    "entryId": "s2026-09-17-e0",
+    "sessionId": "s2026-09-17",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e0-t2",
+    "entryId": "s2026-09-17-e0",
+    "sessionId": "s2026-09-17",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e1-t0",
+    "entryId": "s2026-09-17-e1",
+    "sessionId": "s2026-09-17",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e1-t1",
+    "entryId": "s2026-09-17-e1",
+    "sessionId": "s2026-09-17",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e1-t2",
+    "entryId": "s2026-09-17-e1",
+    "sessionId": "s2026-09-17",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e2-t0",
+    "entryId": "s2026-09-17-e2",
+    "sessionId": "s2026-09-17",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e2-t1",
+    "entryId": "s2026-09-17-e2",
+    "sessionId": "s2026-09-17",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e2-t2",
+    "entryId": "s2026-09-17-e2",
+    "sessionId": "s2026-09-17",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e3-t0",
+    "entryId": "s2026-09-17-e3",
+    "sessionId": "s2026-09-17",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e3-t1",
+    "entryId": "s2026-09-17-e3",
+    "sessionId": "s2026-09-17",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e4-t0",
+    "entryId": "s2026-09-17-e4",
+    "sessionId": "s2026-09-17",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e4-t1",
+    "entryId": "s2026-09-17-e4",
+    "sessionId": "s2026-09-17",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e4-t2",
+    "entryId": "s2026-09-17-e4",
+    "sessionId": "s2026-09-17",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e5-t0",
+    "entryId": "s2026-09-17-e5",
+    "sessionId": "s2026-09-17",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e5-t1",
+    "entryId": "s2026-09-17-e5",
+    "sessionId": "s2026-09-17",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e6-t0",
+    "entryId": "s2026-09-17-e6",
+    "sessionId": "s2026-09-17",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-17-e6-t1",
+    "entryId": "s2026-09-17-e6",
+    "sessionId": "s2026-09-17",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e0-t0",
+    "entryId": "s2026-09-18-e0",
+    "sessionId": "s2026-09-18",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e0-t1",
+    "entryId": "s2026-09-18-e0",
+    "sessionId": "s2026-09-18",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e0-t2",
+    "entryId": "s2026-09-18-e0",
+    "sessionId": "s2026-09-18",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e1-t0",
+    "entryId": "s2026-09-18-e1",
+    "sessionId": "s2026-09-18",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e1-t1",
+    "entryId": "s2026-09-18-e1",
+    "sessionId": "s2026-09-18",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e1-t2",
+    "entryId": "s2026-09-18-e1",
+    "sessionId": "s2026-09-18",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e2-t0",
+    "entryId": "s2026-09-18-e2",
+    "sessionId": "s2026-09-18",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e2-t1",
+    "entryId": "s2026-09-18-e2",
+    "sessionId": "s2026-09-18",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e2-t2",
+    "entryId": "s2026-09-18-e2",
+    "sessionId": "s2026-09-18",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e3-t0",
+    "entryId": "s2026-09-18-e3",
+    "sessionId": "s2026-09-18",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e3-t1",
+    "entryId": "s2026-09-18-e3",
+    "sessionId": "s2026-09-18",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e4-t0",
+    "entryId": "s2026-09-18-e4",
+    "sessionId": "s2026-09-18",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e4-t1",
+    "entryId": "s2026-09-18-e4",
+    "sessionId": "s2026-09-18",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e5-t0",
+    "entryId": "s2026-09-18-e5",
+    "sessionId": "s2026-09-18",
+    "idx": 0,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e5-t1",
+    "entryId": "s2026-09-18-e5",
+    "sessionId": "s2026-09-18",
+    "idx": 1,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e5-t2",
+    "entryId": "s2026-09-18-e5",
+    "sessionId": "s2026-09-18",
+    "idx": 2,
+    "kind": "working",
+    "load": 20,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e6-t0",
+    "entryId": "s2026-09-18-e6",
+    "sessionId": "s2026-09-18",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-18-e6-t1",
+    "entryId": "s2026-09-18-e6",
+    "sessionId": "s2026-09-18",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e0-t0",
+    "entryId": "s2026-09-21-e0",
+    "sessionId": "s2026-09-21",
+    "idx": 0,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e0-t1",
+    "entryId": "s2026-09-21-e0",
+    "sessionId": "s2026-09-21",
+    "idx": 1,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e0-t2",
+    "entryId": "s2026-09-21-e0",
+    "sessionId": "s2026-09-21",
+    "idx": 2,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e1-t0",
+    "entryId": "s2026-09-21-e1",
+    "sessionId": "s2026-09-21",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e1-t1",
+    "entryId": "s2026-09-21-e1",
+    "sessionId": "s2026-09-21",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e1-t2",
+    "entryId": "s2026-09-21-e1",
+    "sessionId": "s2026-09-21",
+    "idx": 2,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e2-t0",
+    "entryId": "s2026-09-21-e2",
+    "sessionId": "s2026-09-21",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e2-t1",
+    "entryId": "s2026-09-21-e2",
+    "sessionId": "s2026-09-21",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e2-t2",
+    "entryId": "s2026-09-21-e2",
+    "sessionId": "s2026-09-21",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e3-t0",
+    "entryId": "s2026-09-21-e3",
+    "sessionId": "s2026-09-21",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e3-t1",
+    "entryId": "s2026-09-21-e3",
+    "sessionId": "s2026-09-21",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e3-t2",
+    "entryId": "s2026-09-21-e3",
+    "sessionId": "s2026-09-21",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e4-t0",
+    "entryId": "s2026-09-21-e4",
+    "sessionId": "s2026-09-21",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e4-t1",
+    "entryId": "s2026-09-21-e4",
+    "sessionId": "s2026-09-21",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e4-t2",
+    "entryId": "s2026-09-21-e4",
+    "sessionId": "s2026-09-21",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e5-t0",
+    "entryId": "s2026-09-21-e5",
+    "sessionId": "s2026-09-21",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e5-t1",
+    "entryId": "s2026-09-21-e5",
+    "sessionId": "s2026-09-21",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e5-t2",
+    "entryId": "s2026-09-21-e5",
+    "sessionId": "s2026-09-21",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e6-t0",
+    "entryId": "s2026-09-21-e6",
+    "sessionId": "s2026-09-21",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-21-e6-t1",
+    "entryId": "s2026-09-21-e6",
+    "sessionId": "s2026-09-21",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e0-t0",
+    "entryId": "s2026-09-22-e0",
+    "sessionId": "s2026-09-22",
+    "idx": 0,
+    "kind": "working",
+    "load": 102.5,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e0-t1",
+    "entryId": "s2026-09-22-e0",
+    "sessionId": "s2026-09-22",
+    "idx": 1,
+    "kind": "working",
+    "load": 102.5,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e0-t2",
+    "entryId": "s2026-09-22-e0",
+    "sessionId": "s2026-09-22",
+    "idx": 2,
+    "kind": "working",
+    "load": 102.5,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e1-t0",
+    "entryId": "s2026-09-22-e1",
+    "sessionId": "s2026-09-22",
+    "idx": 0,
+    "kind": "working",
+    "load": 92.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e1-t1",
+    "entryId": "s2026-09-22-e1",
+    "sessionId": "s2026-09-22",
+    "idx": 1,
+    "kind": "working",
+    "load": 92.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e1-t2",
+    "entryId": "s2026-09-22-e1",
+    "sessionId": "s2026-09-22",
+    "idx": 2,
+    "kind": "working",
+    "load": 92.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e2-t0",
+    "entryId": "s2026-09-22-e2",
+    "sessionId": "s2026-09-22",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e2-t1",
+    "entryId": "s2026-09-22-e2",
+    "sessionId": "s2026-09-22",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e2-t2",
+    "entryId": "s2026-09-22-e2",
+    "sessionId": "s2026-09-22",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e3-t0",
+    "entryId": "s2026-09-22-e3",
+    "sessionId": "s2026-09-22",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e3-t1",
+    "entryId": "s2026-09-22-e3",
+    "sessionId": "s2026-09-22",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e3-t2",
+    "entryId": "s2026-09-22-e3",
+    "sessionId": "s2026-09-22",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e4-t0",
+    "entryId": "s2026-09-22-e4",
+    "sessionId": "s2026-09-22",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e4-t1",
+    "entryId": "s2026-09-22-e4",
+    "sessionId": "s2026-09-22",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e4-t2",
+    "entryId": "s2026-09-22-e4",
+    "sessionId": "s2026-09-22",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e5-t0",
+    "entryId": "s2026-09-22-e5",
+    "sessionId": "s2026-09-22",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e5-t1",
+    "entryId": "s2026-09-22-e5",
+    "sessionId": "s2026-09-22",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-22-e5-t2",
+    "entryId": "s2026-09-22-e5",
+    "sessionId": "s2026-09-22",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e0-t0",
+    "entryId": "s2026-09-24-e0",
+    "sessionId": "s2026-09-24",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e0-t1",
+    "entryId": "s2026-09-24-e0",
+    "sessionId": "s2026-09-24",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e0-t2",
+    "entryId": "s2026-09-24-e0",
+    "sessionId": "s2026-09-24",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e1-t0",
+    "entryId": "s2026-09-24-e1",
+    "sessionId": "s2026-09-24",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e1-t1",
+    "entryId": "s2026-09-24-e1",
+    "sessionId": "s2026-09-24",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e1-t2",
+    "entryId": "s2026-09-24-e1",
+    "sessionId": "s2026-09-24",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e2-t0",
+    "entryId": "s2026-09-24-e2",
+    "sessionId": "s2026-09-24",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e2-t1",
+    "entryId": "s2026-09-24-e2",
+    "sessionId": "s2026-09-24",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e2-t2",
+    "entryId": "s2026-09-24-e2",
+    "sessionId": "s2026-09-24",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e3-t0",
+    "entryId": "s2026-09-24-e3",
+    "sessionId": "s2026-09-24",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e3-t1",
+    "entryId": "s2026-09-24-e3",
+    "sessionId": "s2026-09-24",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e4-t0",
+    "entryId": "s2026-09-24-e4",
+    "sessionId": "s2026-09-24",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e4-t1",
+    "entryId": "s2026-09-24-e4",
+    "sessionId": "s2026-09-24",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e4-t2",
+    "entryId": "s2026-09-24-e4",
+    "sessionId": "s2026-09-24",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e5-t0",
+    "entryId": "s2026-09-24-e5",
+    "sessionId": "s2026-09-24",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e5-t1",
+    "entryId": "s2026-09-24-e5",
+    "sessionId": "s2026-09-24",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e6-t0",
+    "entryId": "s2026-09-24-e6",
+    "sessionId": "s2026-09-24",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-24-e6-t1",
+    "entryId": "s2026-09-24-e6",
+    "sessionId": "s2026-09-24",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e0-t0",
+    "entryId": "s2026-09-25-e0",
+    "sessionId": "s2026-09-25",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e0-t1",
+    "entryId": "s2026-09-25-e0",
+    "sessionId": "s2026-09-25",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e0-t2",
+    "entryId": "s2026-09-25-e0",
+    "sessionId": "s2026-09-25",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e1-t0",
+    "entryId": "s2026-09-25-e1",
+    "sessionId": "s2026-09-25",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e1-t1",
+    "entryId": "s2026-09-25-e1",
+    "sessionId": "s2026-09-25",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e1-t2",
+    "entryId": "s2026-09-25-e1",
+    "sessionId": "s2026-09-25",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e2-t0",
+    "entryId": "s2026-09-25-e2",
+    "sessionId": "s2026-09-25",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e2-t1",
+    "entryId": "s2026-09-25-e2",
+    "sessionId": "s2026-09-25",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e2-t2",
+    "entryId": "s2026-09-25-e2",
+    "sessionId": "s2026-09-25",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e3-t0",
+    "entryId": "s2026-09-25-e3",
+    "sessionId": "s2026-09-25",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e3-t1",
+    "entryId": "s2026-09-25-e3",
+    "sessionId": "s2026-09-25",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e4-t0",
+    "entryId": "s2026-09-25-e4",
+    "sessionId": "s2026-09-25",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e4-t1",
+    "entryId": "s2026-09-25-e4",
+    "sessionId": "s2026-09-25",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e5-t0",
+    "entryId": "s2026-09-25-e5",
+    "sessionId": "s2026-09-25",
+    "idx": 0,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e5-t1",
+    "entryId": "s2026-09-25-e5",
+    "sessionId": "s2026-09-25",
+    "idx": 1,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e5-t2",
+    "entryId": "s2026-09-25-e5",
+    "sessionId": "s2026-09-25",
+    "idx": 2,
+    "kind": "working",
+    "load": 21,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e6-t0",
+    "entryId": "s2026-09-25-e6",
+    "sessionId": "s2026-09-25",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-25-e6-t1",
+    "entryId": "s2026-09-25-e6",
+    "sessionId": "s2026-09-25",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e0-t0",
+    "entryId": "s2026-09-28-e0",
+    "sessionId": "s2026-09-28",
+    "idx": 0,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e0-t1",
+    "entryId": "s2026-09-28-e0",
+    "sessionId": "s2026-09-28",
+    "idx": 1,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e0-t2",
+    "entryId": "s2026-09-28-e0",
+    "sessionId": "s2026-09-28",
+    "idx": 2,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e1-t0",
+    "entryId": "s2026-09-28-e1",
+    "sessionId": "s2026-09-28",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e1-t1",
+    "entryId": "s2026-09-28-e1",
+    "sessionId": "s2026-09-28",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e1-t2",
+    "entryId": "s2026-09-28-e1",
+    "sessionId": "s2026-09-28",
+    "idx": 2,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e2-t0",
+    "entryId": "s2026-09-28-e2",
+    "sessionId": "s2026-09-28",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e2-t1",
+    "entryId": "s2026-09-28-e2",
+    "sessionId": "s2026-09-28",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e2-t2",
+    "entryId": "s2026-09-28-e2",
+    "sessionId": "s2026-09-28",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e3-t0",
+    "entryId": "s2026-09-28-e3",
+    "sessionId": "s2026-09-28",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e3-t1",
+    "entryId": "s2026-09-28-e3",
+    "sessionId": "s2026-09-28",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e3-t2",
+    "entryId": "s2026-09-28-e3",
+    "sessionId": "s2026-09-28",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e4-t0",
+    "entryId": "s2026-09-28-e4",
+    "sessionId": "s2026-09-28",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e4-t1",
+    "entryId": "s2026-09-28-e4",
+    "sessionId": "s2026-09-28",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e4-t2",
+    "entryId": "s2026-09-28-e4",
+    "sessionId": "s2026-09-28",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e5-t0",
+    "entryId": "s2026-09-28-e5",
+    "sessionId": "s2026-09-28",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e5-t1",
+    "entryId": "s2026-09-28-e5",
+    "sessionId": "s2026-09-28",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e5-t2",
+    "entryId": "s2026-09-28-e5",
+    "sessionId": "s2026-09-28",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e6-t0",
+    "entryId": "s2026-09-28-e6",
+    "sessionId": "s2026-09-28",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-28-e6-t1",
+    "entryId": "s2026-09-28-e6",
+    "sessionId": "s2026-09-28",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e0-t0",
+    "entryId": "s2026-09-29-e0",
+    "sessionId": "s2026-09-29",
+    "idx": 0,
+    "kind": "working",
+    "load": 105.0,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e0-t1",
+    "entryId": "s2026-09-29-e0",
+    "sessionId": "s2026-09-29",
+    "idx": 1,
+    "kind": "working",
+    "load": 105.0,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e0-t2",
+    "entryId": "s2026-09-29-e0",
+    "sessionId": "s2026-09-29",
+    "idx": 2,
+    "kind": "working",
+    "load": 105.0,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e1-t0",
+    "entryId": "s2026-09-29-e1",
+    "sessionId": "s2026-09-29",
+    "idx": 0,
+    "kind": "working",
+    "load": 95.0,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e1-t1",
+    "entryId": "s2026-09-29-e1",
+    "sessionId": "s2026-09-29",
+    "idx": 1,
+    "kind": "working",
+    "load": 95.0,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e1-t2",
+    "entryId": "s2026-09-29-e1",
+    "sessionId": "s2026-09-29",
+    "idx": 2,
+    "kind": "working",
+    "load": 95.0,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e2-t0",
+    "entryId": "s2026-09-29-e2",
+    "sessionId": "s2026-09-29",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e2-t1",
+    "entryId": "s2026-09-29-e2",
+    "sessionId": "s2026-09-29",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e2-t2",
+    "entryId": "s2026-09-29-e2",
+    "sessionId": "s2026-09-29",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e3-t0",
+    "entryId": "s2026-09-29-e3",
+    "sessionId": "s2026-09-29",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e3-t1",
+    "entryId": "s2026-09-29-e3",
+    "sessionId": "s2026-09-29",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e3-t2",
+    "entryId": "s2026-09-29-e3",
+    "sessionId": "s2026-09-29",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e4-t0",
+    "entryId": "s2026-09-29-e4",
+    "sessionId": "s2026-09-29",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e4-t1",
+    "entryId": "s2026-09-29-e4",
+    "sessionId": "s2026-09-29",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e4-t2",
+    "entryId": "s2026-09-29-e4",
+    "sessionId": "s2026-09-29",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e5-t0",
+    "entryId": "s2026-09-29-e5",
+    "sessionId": "s2026-09-29",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e5-t1",
+    "entryId": "s2026-09-29-e5",
+    "sessionId": "s2026-09-29",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-09-29-e5-t2",
+    "entryId": "s2026-09-29-e5",
+    "sessionId": "s2026-09-29",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e0-t0",
+    "entryId": "s2026-10-01-e0",
+    "sessionId": "s2026-10-01",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e0-t1",
+    "entryId": "s2026-10-01-e0",
+    "sessionId": "s2026-10-01",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e0-t2",
+    "entryId": "s2026-10-01-e0",
+    "sessionId": "s2026-10-01",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e1-t0",
+    "entryId": "s2026-10-01-e1",
+    "sessionId": "s2026-10-01",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e1-t1",
+    "entryId": "s2026-10-01-e1",
+    "sessionId": "s2026-10-01",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e1-t2",
+    "entryId": "s2026-10-01-e1",
+    "sessionId": "s2026-10-01",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e2-t0",
+    "entryId": "s2026-10-01-e2",
+    "sessionId": "s2026-10-01",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e2-t1",
+    "entryId": "s2026-10-01-e2",
+    "sessionId": "s2026-10-01",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e2-t2",
+    "entryId": "s2026-10-01-e2",
+    "sessionId": "s2026-10-01",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e3-t0",
+    "entryId": "s2026-10-01-e3",
+    "sessionId": "s2026-10-01",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e3-t1",
+    "entryId": "s2026-10-01-e3",
+    "sessionId": "s2026-10-01",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e4-t0",
+    "entryId": "s2026-10-01-e4",
+    "sessionId": "s2026-10-01",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e4-t1",
+    "entryId": "s2026-10-01-e4",
+    "sessionId": "s2026-10-01",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e4-t2",
+    "entryId": "s2026-10-01-e4",
+    "sessionId": "s2026-10-01",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e5-t0",
+    "entryId": "s2026-10-01-e5",
+    "sessionId": "s2026-10-01",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e5-t1",
+    "entryId": "s2026-10-01-e5",
+    "sessionId": "s2026-10-01",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e6-t0",
+    "entryId": "s2026-10-01-e6",
+    "sessionId": "s2026-10-01",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-01-e6-t1",
+    "entryId": "s2026-10-01-e6",
+    "sessionId": "s2026-10-01",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e0-t0",
+    "entryId": "s2026-10-02-e0",
+    "sessionId": "s2026-10-02",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e0-t1",
+    "entryId": "s2026-10-02-e0",
+    "sessionId": "s2026-10-02",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e0-t2",
+    "entryId": "s2026-10-02-e0",
+    "sessionId": "s2026-10-02",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e1-t0",
+    "entryId": "s2026-10-02-e1",
+    "sessionId": "s2026-10-02",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e1-t1",
+    "entryId": "s2026-10-02-e1",
+    "sessionId": "s2026-10-02",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e1-t2",
+    "entryId": "s2026-10-02-e1",
+    "sessionId": "s2026-10-02",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e2-t0",
+    "entryId": "s2026-10-02-e2",
+    "sessionId": "s2026-10-02",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e2-t1",
+    "entryId": "s2026-10-02-e2",
+    "sessionId": "s2026-10-02",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e2-t2",
+    "entryId": "s2026-10-02-e2",
+    "sessionId": "s2026-10-02",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e3-t0",
+    "entryId": "s2026-10-02-e3",
+    "sessionId": "s2026-10-02",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e3-t1",
+    "entryId": "s2026-10-02-e3",
+    "sessionId": "s2026-10-02",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e4-t0",
+    "entryId": "s2026-10-02-e4",
+    "sessionId": "s2026-10-02",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e4-t1",
+    "entryId": "s2026-10-02-e4",
+    "sessionId": "s2026-10-02",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e5-t0",
+    "entryId": "s2026-10-02-e5",
+    "sessionId": "s2026-10-02",
+    "idx": 0,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e5-t1",
+    "entryId": "s2026-10-02-e5",
+    "sessionId": "s2026-10-02",
+    "idx": 1,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e5-t2",
+    "entryId": "s2026-10-02-e5",
+    "sessionId": "s2026-10-02",
+    "idx": 2,
+    "kind": "working",
+    "load": 22,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e6-t0",
+    "entryId": "s2026-10-02-e6",
+    "sessionId": "s2026-10-02",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-02-e6-t1",
+    "entryId": "s2026-10-02-e6",
+    "sessionId": "s2026-10-02",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e0-t0",
+    "entryId": "s2026-10-05-e0",
+    "sessionId": "s2026-10-05",
+    "idx": 0,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e0-t1",
+    "entryId": "s2026-10-05-e0",
+    "sessionId": "s2026-10-05",
+    "idx": 1,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e0-t2",
+    "entryId": "s2026-10-05-e0",
+    "sessionId": "s2026-10-05",
+    "idx": 2,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e1-t0",
+    "entryId": "s2026-10-05-e1",
+    "sessionId": "s2026-10-05",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e1-t1",
+    "entryId": "s2026-10-05-e1",
+    "sessionId": "s2026-10-05",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e1-t2",
+    "entryId": "s2026-10-05-e1",
+    "sessionId": "s2026-10-05",
+    "idx": 2,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e2-t0",
+    "entryId": "s2026-10-05-e2",
+    "sessionId": "s2026-10-05",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e2-t1",
+    "entryId": "s2026-10-05-e2",
+    "sessionId": "s2026-10-05",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e2-t2",
+    "entryId": "s2026-10-05-e2",
+    "sessionId": "s2026-10-05",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e3-t0",
+    "entryId": "s2026-10-05-e3",
+    "sessionId": "s2026-10-05",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e3-t1",
+    "entryId": "s2026-10-05-e3",
+    "sessionId": "s2026-10-05",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e3-t2",
+    "entryId": "s2026-10-05-e3",
+    "sessionId": "s2026-10-05",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e4-t0",
+    "entryId": "s2026-10-05-e4",
+    "sessionId": "s2026-10-05",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e4-t1",
+    "entryId": "s2026-10-05-e4",
+    "sessionId": "s2026-10-05",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e4-t2",
+    "entryId": "s2026-10-05-e4",
+    "sessionId": "s2026-10-05",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e5-t0",
+    "entryId": "s2026-10-05-e5",
+    "sessionId": "s2026-10-05",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e5-t1",
+    "entryId": "s2026-10-05-e5",
+    "sessionId": "s2026-10-05",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e5-t2",
+    "entryId": "s2026-10-05-e5",
+    "sessionId": "s2026-10-05",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e6-t0",
+    "entryId": "s2026-10-05-e6",
+    "sessionId": "s2026-10-05",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-05-e6-t1",
+    "entryId": "s2026-10-05-e6",
+    "sessionId": "s2026-10-05",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e0-t0",
+    "entryId": "s2026-10-06-e0",
+    "sessionId": "s2026-10-06",
+    "idx": 0,
+    "kind": "working",
+    "load": 107.5,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e0-t1",
+    "entryId": "s2026-10-06-e0",
+    "sessionId": "s2026-10-06",
+    "idx": 1,
+    "kind": "working",
+    "load": 107.5,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e0-t2",
+    "entryId": "s2026-10-06-e0",
+    "sessionId": "s2026-10-06",
+    "idx": 2,
+    "kind": "working",
+    "load": 107.5,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e1-t0",
+    "entryId": "s2026-10-06-e1",
+    "sessionId": "s2026-10-06",
+    "idx": 0,
+    "kind": "working",
+    "load": 97.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e1-t1",
+    "entryId": "s2026-10-06-e1",
+    "sessionId": "s2026-10-06",
+    "idx": 1,
+    "kind": "working",
+    "load": 97.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e2-t0",
+    "entryId": "s2026-10-06-e2",
+    "sessionId": "s2026-10-06",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e2-t1",
+    "entryId": "s2026-10-06-e2",
+    "sessionId": "s2026-10-06",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e2-t2",
+    "entryId": "s2026-10-06-e2",
+    "sessionId": "s2026-10-06",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e3-t0",
+    "entryId": "s2026-10-06-e3",
+    "sessionId": "s2026-10-06",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e3-t1",
+    "entryId": "s2026-10-06-e3",
+    "sessionId": "s2026-10-06",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e3-t2",
+    "entryId": "s2026-10-06-e3",
+    "sessionId": "s2026-10-06",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e4-t0",
+    "entryId": "s2026-10-06-e4",
+    "sessionId": "s2026-10-06",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e4-t1",
+    "entryId": "s2026-10-06-e4",
+    "sessionId": "s2026-10-06",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e4-t2",
+    "entryId": "s2026-10-06-e4",
+    "sessionId": "s2026-10-06",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e5-t0",
+    "entryId": "s2026-10-06-e5",
+    "sessionId": "s2026-10-06",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e5-t1",
+    "entryId": "s2026-10-06-e5",
+    "sessionId": "s2026-10-06",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-06-e5-t2",
+    "entryId": "s2026-10-06-e5",
+    "sessionId": "s2026-10-06",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e0-t0",
+    "entryId": "s2026-10-09-e0",
+    "sessionId": "s2026-10-09",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e0-t1",
+    "entryId": "s2026-10-09-e0",
+    "sessionId": "s2026-10-09",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e0-t2",
+    "entryId": "s2026-10-09-e0",
+    "sessionId": "s2026-10-09",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e1-t0",
+    "entryId": "s2026-10-09-e1",
+    "sessionId": "s2026-10-09",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e1-t1",
+    "entryId": "s2026-10-09-e1",
+    "sessionId": "s2026-10-09",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e1-t2",
+    "entryId": "s2026-10-09-e1",
+    "sessionId": "s2026-10-09",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e2-t0",
+    "entryId": "s2026-10-09-e2",
+    "sessionId": "s2026-10-09",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e2-t1",
+    "entryId": "s2026-10-09-e2",
+    "sessionId": "s2026-10-09",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e2-t2",
+    "entryId": "s2026-10-09-e2",
+    "sessionId": "s2026-10-09",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e3-t0",
+    "entryId": "s2026-10-09-e3",
+    "sessionId": "s2026-10-09",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e3-t1",
+    "entryId": "s2026-10-09-e3",
+    "sessionId": "s2026-10-09",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e4-t0",
+    "entryId": "s2026-10-09-e4",
+    "sessionId": "s2026-10-09",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e4-t1",
+    "entryId": "s2026-10-09-e4",
+    "sessionId": "s2026-10-09",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e5-t0",
+    "entryId": "s2026-10-09-e5",
+    "sessionId": "s2026-10-09",
+    "idx": 0,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e5-t1",
+    "entryId": "s2026-10-09-e5",
+    "sessionId": "s2026-10-09",
+    "idx": 1,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e5-t2",
+    "entryId": "s2026-10-09-e5",
+    "sessionId": "s2026-10-09",
+    "idx": 2,
+    "kind": "working",
+    "load": 23,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e6-t0",
+    "entryId": "s2026-10-09-e6",
+    "sessionId": "s2026-10-09",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-09-e6-t1",
+    "entryId": "s2026-10-09-e6",
+    "sessionId": "s2026-10-09",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e0-t0",
+    "entryId": "s2026-10-12-e0",
+    "sessionId": "s2026-10-12",
+    "idx": 0,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e0-t1",
+    "entryId": "s2026-10-12-e0",
+    "sessionId": "s2026-10-12",
+    "idx": 1,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e0-t2",
+    "entryId": "s2026-10-12-e0",
+    "sessionId": "s2026-10-12",
+    "idx": 2,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e1-t0",
+    "entryId": "s2026-10-12-e1",
+    "sessionId": "s2026-10-12",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e1-t1",
+    "entryId": "s2026-10-12-e1",
+    "sessionId": "s2026-10-12",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e1-t2",
+    "entryId": "s2026-10-12-e1",
+    "sessionId": "s2026-10-12",
+    "idx": 2,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e2-t0",
+    "entryId": "s2026-10-12-e2",
+    "sessionId": "s2026-10-12",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e2-t1",
+    "entryId": "s2026-10-12-e2",
+    "sessionId": "s2026-10-12",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e2-t2",
+    "entryId": "s2026-10-12-e2",
+    "sessionId": "s2026-10-12",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e3-t0",
+    "entryId": "s2026-10-12-e3",
+    "sessionId": "s2026-10-12",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e3-t1",
+    "entryId": "s2026-10-12-e3",
+    "sessionId": "s2026-10-12",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e3-t2",
+    "entryId": "s2026-10-12-e3",
+    "sessionId": "s2026-10-12",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e4-t0",
+    "entryId": "s2026-10-12-e4",
+    "sessionId": "s2026-10-12",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e4-t1",
+    "entryId": "s2026-10-12-e4",
+    "sessionId": "s2026-10-12",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e4-t2",
+    "entryId": "s2026-10-12-e4",
+    "sessionId": "s2026-10-12",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e5-t0",
+    "entryId": "s2026-10-12-e5",
+    "sessionId": "s2026-10-12",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e5-t1",
+    "entryId": "s2026-10-12-e5",
+    "sessionId": "s2026-10-12",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e5-t2",
+    "entryId": "s2026-10-12-e5",
+    "sessionId": "s2026-10-12",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e6-t0",
+    "entryId": "s2026-10-12-e6",
+    "sessionId": "s2026-10-12",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-12-e6-t1",
+    "entryId": "s2026-10-12-e6",
+    "sessionId": "s2026-10-12",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e0-t0",
+    "entryId": "s2026-10-13-e0",
+    "sessionId": "s2026-10-13",
+    "idx": 0,
+    "kind": "working",
+    "load": 110.0,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e0-t1",
+    "entryId": "s2026-10-13-e0",
+    "sessionId": "s2026-10-13",
+    "idx": 1,
+    "kind": "working",
+    "load": 110.0,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e0-t2",
+    "entryId": "s2026-10-13-e0",
+    "sessionId": "s2026-10-13",
+    "idx": 2,
+    "kind": "working",
+    "load": 110.0,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e1-t0",
+    "entryId": "s2026-10-13-e1",
+    "sessionId": "s2026-10-13",
+    "idx": 0,
+    "kind": "working",
+    "load": 97.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e1-t1",
+    "entryId": "s2026-10-13-e1",
+    "sessionId": "s2026-10-13",
+    "idx": 1,
+    "kind": "working",
+    "load": 97.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e2-t0",
+    "entryId": "s2026-10-13-e2",
+    "sessionId": "s2026-10-13",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e2-t1",
+    "entryId": "s2026-10-13-e2",
+    "sessionId": "s2026-10-13",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e2-t2",
+    "entryId": "s2026-10-13-e2",
+    "sessionId": "s2026-10-13",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e3-t0",
+    "entryId": "s2026-10-13-e3",
+    "sessionId": "s2026-10-13",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e3-t1",
+    "entryId": "s2026-10-13-e3",
+    "sessionId": "s2026-10-13",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e3-t2",
+    "entryId": "s2026-10-13-e3",
+    "sessionId": "s2026-10-13",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e4-t0",
+    "entryId": "s2026-10-13-e4",
+    "sessionId": "s2026-10-13",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e4-t1",
+    "entryId": "s2026-10-13-e4",
+    "sessionId": "s2026-10-13",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e4-t2",
+    "entryId": "s2026-10-13-e4",
+    "sessionId": "s2026-10-13",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e5-t0",
+    "entryId": "s2026-10-13-e5",
+    "sessionId": "s2026-10-13",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e5-t1",
+    "entryId": "s2026-10-13-e5",
+    "sessionId": "s2026-10-13",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-13-e5-t2",
+    "entryId": "s2026-10-13-e5",
+    "sessionId": "s2026-10-13",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e0-t0",
+    "entryId": "s2026-10-16-e0",
+    "sessionId": "s2026-10-16",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e0-t1",
+    "entryId": "s2026-10-16-e0",
+    "sessionId": "s2026-10-16",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e0-t2",
+    "entryId": "s2026-10-16-e0",
+    "sessionId": "s2026-10-16",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e1-t0",
+    "entryId": "s2026-10-16-e1",
+    "sessionId": "s2026-10-16",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e1-t1",
+    "entryId": "s2026-10-16-e1",
+    "sessionId": "s2026-10-16",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e1-t2",
+    "entryId": "s2026-10-16-e1",
+    "sessionId": "s2026-10-16",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e2-t0",
+    "entryId": "s2026-10-16-e2",
+    "sessionId": "s2026-10-16",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e2-t1",
+    "entryId": "s2026-10-16-e2",
+    "sessionId": "s2026-10-16",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e2-t2",
+    "entryId": "s2026-10-16-e2",
+    "sessionId": "s2026-10-16",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e3-t0",
+    "entryId": "s2026-10-16-e3",
+    "sessionId": "s2026-10-16",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e3-t1",
+    "entryId": "s2026-10-16-e3",
+    "sessionId": "s2026-10-16",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e4-t0",
+    "entryId": "s2026-10-16-e4",
+    "sessionId": "s2026-10-16",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e4-t1",
+    "entryId": "s2026-10-16-e4",
+    "sessionId": "s2026-10-16",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e5-t0",
+    "entryId": "s2026-10-16-e5",
+    "sessionId": "s2026-10-16",
+    "idx": 0,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e5-t1",
+    "entryId": "s2026-10-16-e5",
+    "sessionId": "s2026-10-16",
+    "idx": 1,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e5-t2",
+    "entryId": "s2026-10-16-e5",
+    "sessionId": "s2026-10-16",
+    "idx": 2,
+    "kind": "working",
+    "load": 24,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e6-t0",
+    "entryId": "s2026-10-16-e6",
+    "sessionId": "s2026-10-16",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-16-e6-t1",
+    "entryId": "s2026-10-16-e6",
+    "sessionId": "s2026-10-16",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e0-t0",
+    "entryId": "s2026-10-19-e0",
+    "sessionId": "s2026-10-19",
+    "idx": 0,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e0-t1",
+    "entryId": "s2026-10-19-e0",
+    "sessionId": "s2026-10-19",
+    "idx": 1,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e0-t2",
+    "entryId": "s2026-10-19-e0",
+    "sessionId": "s2026-10-19",
+    "idx": 2,
+    "kind": "working",
+    "load": 32.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e1-t0",
+    "entryId": "s2026-10-19-e1",
+    "sessionId": "s2026-10-19",
+    "idx": 0,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e1-t1",
+    "entryId": "s2026-10-19-e1",
+    "sessionId": "s2026-10-19",
+    "idx": 1,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e1-t2",
+    "entryId": "s2026-10-19-e1",
+    "sessionId": "s2026-10-19",
+    "idx": 2,
+    "kind": "working",
+    "load": null,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e2-t0",
+    "entryId": "s2026-10-19-e2",
+    "sessionId": "s2026-10-19",
+    "idx": 0,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e2-t1",
+    "entryId": "s2026-10-19-e2",
+    "sessionId": "s2026-10-19",
+    "idx": 1,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e2-t2",
+    "entryId": "s2026-10-19-e2",
+    "sessionId": "s2026-10-19",
+    "idx": 2,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e3-t0",
+    "entryId": "s2026-10-19-e3",
+    "sessionId": "s2026-10-19",
+    "idx": 0,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e3-t1",
+    "entryId": "s2026-10-19-e3",
+    "sessionId": "s2026-10-19",
+    "idx": 1,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e3-t2",
+    "entryId": "s2026-10-19-e3",
+    "sessionId": "s2026-10-19",
+    "idx": 2,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e4-t0",
+    "entryId": "s2026-10-19-e4",
+    "sessionId": "s2026-10-19",
+    "idx": 0,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e4-t1",
+    "entryId": "s2026-10-19-e4",
+    "sessionId": "s2026-10-19",
+    "idx": 1,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e4-t2",
+    "entryId": "s2026-10-19-e4",
+    "sessionId": "s2026-10-19",
+    "idx": 2,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e5-t0",
+    "entryId": "s2026-10-19-e5",
+    "sessionId": "s2026-10-19",
+    "idx": 0,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e5-t1",
+    "entryId": "s2026-10-19-e5",
+    "sessionId": "s2026-10-19",
+    "idx": 1,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e5-t2",
+    "entryId": "s2026-10-19-e5",
+    "sessionId": "s2026-10-19",
+    "idx": 2,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e6-t0",
+    "entryId": "s2026-10-19-e6",
+    "sessionId": "s2026-10-19",
+    "idx": 0,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-19-e6-t1",
+    "entryId": "s2026-10-19-e6",
+    "sessionId": "s2026-10-19",
+    "idx": 1,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e0-t0",
+    "entryId": "s2026-10-20-e0",
+    "sessionId": "s2026-10-20",
+    "idx": 0,
+    "kind": "working",
+    "load": 112.5,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e0-t1",
+    "entryId": "s2026-10-20-e0",
+    "sessionId": "s2026-10-20",
+    "idx": 1,
+    "kind": "working",
+    "load": 112.5,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e0-t2",
+    "entryId": "s2026-10-20-e0",
+    "sessionId": "s2026-10-20",
+    "idx": 2,
+    "kind": "working",
+    "load": 112.5,
+    "reps": 6,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e1-t0",
+    "entryId": "s2026-10-20-e1",
+    "sessionId": "s2026-10-20",
+    "idx": 0,
+    "kind": "working",
+    "load": 97.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e1-t1",
+    "entryId": "s2026-10-20-e1",
+    "sessionId": "s2026-10-20",
+    "idx": 1,
+    "kind": "working",
+    "load": 97.5,
+    "reps": 8,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e2-t0",
+    "entryId": "s2026-10-20-e2",
+    "sessionId": "s2026-10-20",
+    "idx": 0,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e2-t1",
+    "entryId": "s2026-10-20-e2",
+    "sessionId": "s2026-10-20",
+    "idx": 1,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e2-t2",
+    "entryId": "s2026-10-20-e2",
+    "sessionId": "s2026-10-20",
+    "idx": 2,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e3-t0",
+    "entryId": "s2026-10-20-e3",
+    "sessionId": "s2026-10-20",
+    "idx": 0,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e3-t1",
+    "entryId": "s2026-10-20-e3",
+    "sessionId": "s2026-10-20",
+    "idx": 1,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e3-t2",
+    "entryId": "s2026-10-20-e3",
+    "sessionId": "s2026-10-20",
+    "idx": 2,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e4-t0",
+    "entryId": "s2026-10-20-e4",
+    "sessionId": "s2026-10-20",
+    "idx": 0,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e4-t1",
+    "entryId": "s2026-10-20-e4",
+    "sessionId": "s2026-10-20",
+    "idx": 1,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e4-t2",
+    "entryId": "s2026-10-20-e4",
+    "sessionId": "s2026-10-20",
+    "idx": 2,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e5-t0",
+    "entryId": "s2026-10-20-e5",
+    "sessionId": "s2026-10-20",
+    "idx": 0,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e5-t1",
+    "entryId": "s2026-10-20-e5",
+    "sessionId": "s2026-10-20",
+    "idx": 1,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   },
+   {
+    "id": "s2026-10-20-e5-t2",
+    "entryId": "s2026-10-20-e5",
+    "sessionId": "s2026-10-20",
+    "idx": 2,
+    "kind": "working",
+    "load": 25,
+    "reps": 10,
+    "rir": 1,
+    "done": true
+   }
+  ],
+  "exNotes": {
+   "back-squat": "Belt on for sets of 5 or fewer",
+   "cable-fly": "Seat at notch 4"
+  },
+  "bodyweights": [
+   {
+    "date": "2026-09-14",
+    "value": 80,
+    "unit": "kg"
+   }
+  ],
+  "deloads": [],
+  "readiness": []
+ },
+ "expected": {
+  "as_of": "2026-10-22",
+  "label": "From logged workouts; a model for spotting trends, not a measurement.",
+  "muscles": {
+   "chest": {
+    "plan_sets": 8,
+    "this_week_sets": 3.0,
+    "last_week_sets": 3.0,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     8.0,
+     8.0,
+     3.0,
+     3.0
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -36.3636
+    },
+    "adherence": 0.6875,
+    "main_lift": {
+     "id": "dumbbell-bench-press",
+     "status": "stalled",
+     "pct_per_week": 0.0,
+     "sessions": 4,
+     "first_e1rm_kg": 41.1667,
+     "last_e1rm_kg": 41.1667,
+     "first_date": "2026-09-28",
+     "last_date": "2026-10-19"
+    },
+    "notes": [
+     {
+      "kind": "always",
+      "exercise": "cable-fly",
+      "text": "Seat at notch 4"
+     },
+     {
+      "kind": "session",
+      "exercise": "dumbbell-bench-press",
+      "text": "Shoulder a bit tight on the last set",
+      "session_id": "s2026-10-19",
+      "date": "2026-10-19"
+     }
+    ]
+   },
+   "front_delts": {
+    "plan_sets": 6.9,
+    "this_week_sets": 4.5,
+    "last_week_sets": 4.5,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     6.9,
+     6.9,
+     4.5,
+     4.5
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -16.8421
+    },
+    "adherence": 0.8261,
+    "main_lift": {
+     "id": "overhead-press",
+     "status": "up",
+     "pct_per_week": 4.2553,
+     "sessions": 4,
+     "first_e1rm_kg": 29.3333,
+     "last_e1rm_kg": 33.3333,
+     "first_date": "2026-09-28",
+     "last_date": "2026-10-19"
+    },
+    "notes": [
+     {
+      "kind": "session",
+      "exercise": "dumbbell-bench-press",
+      "text": "Shoulder a bit tight on the last set",
+      "session_id": "s2026-10-19",
+      "date": "2026-10-19"
+     }
+    ]
+   },
+   "side_delts": {
+    "plan_sets": 7.5,
+    "this_week_sets": 4.5,
+    "last_week_sets": 4.5,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     7.5,
+     7.5,
+     4.5,
+     4.5
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -20.0
+    },
+    "adherence": 0.8,
+    "main_lift": {
+     "id": "overhead-press",
+     "status": "up",
+     "pct_per_week": 4.2553,
+     "sessions": 4,
+     "first_e1rm_kg": 29.3333,
+     "last_e1rm_kg": 33.3333,
+     "first_date": "2026-09-28",
+     "last_date": "2026-10-19"
+    },
+    "notes": []
+   },
+   "rear_delts": {
+    "plan_sets": 7.1,
+    "this_week_sets": 2.7,
+    "last_week_sets": 2.7,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     7.1,
+     7.1,
+     2.7,
+     2.7
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -35.9184
+    },
+    "adherence": 0.6901,
+    "main_lift": {
+     "id": "chest-supported-row",
+     "status": "up",
+     "pct_per_week": 4.2553,
+     "sessions": 4,
+     "first_e1rm_kg": 29.3333,
+     "last_e1rm_kg": 33.3333,
+     "first_date": "2026-09-28",
+     "last_date": "2026-10-19"
+    },
+    "notes": []
+   },
+   "lats": {
+    "plan_sets": 11.25,
+    "this_week_sets": 5.6,
+    "last_week_sets": 5.6,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     11.25,
+     11.25,
+     5.6,
+     5.6
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -26.8249
+    },
+    "adherence": 0.7489,
+    "main_lift": {
+     "id": "pull-up",
+     "status": "stalled",
+     "pct_per_week": 0.0,
+     "sessions": 4,
+     "first_e1rm_kg": 101.3333,
+     "last_e1rm_kg": 101.3333,
+     "first_date": "2026-09-28",
+     "last_date": "2026-10-19"
+    },
+    "notes": []
+   },
+   "upper_back": {
+    "plan_sets": 10.45,
+    "this_week_sets": 5.0,
+    "last_week_sets": 5.0,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     10.45,
+     10.45,
+     5.0,
+     5.0
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -28.2201
+    },
+    "adherence": 0.7392,
+    "main_lift": {
+     "id": "pull-up",
+     "status": "stalled",
+     "pct_per_week": 0.0,
+     "sessions": 4,
+     "first_e1rm_kg": 101.3333,
+     "last_e1rm_kg": 101.3333,
+     "first_date": "2026-09-28",
+     "last_date": "2026-10-19"
+    },
+    "notes": []
+   },
+   "traps": {
+    "plan_sets": 7.4,
+    "this_week_sets": 3.9,
+    "last_week_sets": 3.9,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     7.4,
+     7.4,
+     3.9,
+     3.9
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -24.7788
+    },
+    "adherence": 0.7635,
+    "main_lift": {
+     "id": "chest-supported-row",
+     "status": "up",
+     "pct_per_week": 4.2553,
+     "sessions": 4,
+     "first_e1rm_kg": 29.3333,
+     "last_e1rm_kg": 33.3333,
+     "first_date": "2026-09-28",
+     "last_date": "2026-10-19"
+    },
+    "notes": []
+   },
+   "biceps": {
+    "plan_sets": 9.0,
+    "this_week_sets": 6.0,
+    "last_week_sets": 6.0,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     9.0,
+     9.0,
+     6.0,
+     6.0
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -16.0
+    },
+    "adherence": 0.8333,
+    "main_lift": {
+     "id": "pull-up",
+     "status": "stalled",
+     "pct_per_week": 0.0,
+     "sessions": 4,
+     "first_e1rm_kg": 101.3333,
+     "last_e1rm_kg": 101.3333,
+     "first_date": "2026-09-28",
+     "last_date": "2026-10-19"
+    },
+    "notes": []
+   },
+   "triceps": {
+    "plan_sets": 8.2,
+    "this_week_sets": 5.0,
+    "last_week_sets": 5.0,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     8.2,
+     8.2,
+     5.0,
+     5.0
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -19.3939
+    },
+    "adherence": 0.8049,
+    "main_lift": {
+     "id": "overhead-press",
+     "status": "up",
+     "pct_per_week": 4.2553,
+     "sessions": 4,
+     "first_e1rm_kg": 29.3333,
+     "last_e1rm_kg": 33.3333,
+     "first_date": "2026-09-28",
+     "last_date": "2026-10-19"
+    },
+    "notes": []
+   },
+   "forearms": {
+    "plan_sets": 3.9,
+    "this_week_sets": 2.8,
+    "last_week_sets": 3.4,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     3.9,
+     3.9,
+     3.4,
+     3.4
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -5.4795
+    },
+    "adherence": 0.9359,
+    "main_lift": {
+     "id": "romanian-deadlift",
+     "status": "up",
+     "pct_per_week": 0.7742,
+     "sessions": 4,
+     "first_e1rm_kg": 120.3333,
+     "last_e1rm_kg": 123.5,
+     "first_date": "2026-09-29",
+     "last_date": "2026-10-20"
+    },
+    "notes": []
+   },
+   "abs": {
+    "plan_sets": 5,
+    "this_week_sets": 3.0,
+    "last_week_sets": 5.0,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     5.0,
+     5.0,
+     5.0,
+     5.0
+    ],
+    "trend": {
+     "status": "flat",
+     "pct_per_week": 0.0
+    },
+    "adherence": 1.0,
+    "main_lift": {
+     "id": "cable-crunch",
+     "status": "up",
+     "pct_per_week": 4.2553,
+     "sessions": 4,
+     "first_e1rm_kg": 29.3333,
+     "last_e1rm_kg": 33.3333,
+     "first_date": "2026-09-29",
+     "last_date": "2026-10-20"
+    },
+    "notes": []
+   },
+   "quads": {
+    "plan_sets": 11,
+    "this_week_sets": 6.0,
+    "last_week_sets": 11.0,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     11.0,
+     11.0,
+     11.0,
+     11.0
+    ],
+    "trend": {
+     "status": "flat",
+     "pct_per_week": 0.0
+    },
+    "adherence": 1.0,
+    "main_lift": {
+     "id": "back-squat",
+     "status": "up",
+     "pct_per_week": 2.2989,
+     "sessions": 4,
+     "first_e1rm_kg": 126.0,
+     "last_e1rm_kg": 135.0,
+     "first_date": "2026-09-29",
+     "last_date": "2026-10-20"
+    },
+    "notes": [
+     {
+      "kind": "always",
+      "exercise": "back-squat",
+      "text": "Belt on for sets of 5 or fewer"
+     },
+     {
+      "kind": "session",
+      "exercise": "back-squat",
+      "text": "Moved fast, add load next time",
+      "session_id": "s2026-10-20",
+      "date": "2026-10-20"
+     },
+     {
+      "kind": "session",
+      "exercise": "back-squat",
+      "text": "Knees felt fine at depth",
+      "session_id": "s2026-10-13",
+      "date": "2026-10-13"
+     }
+    ]
+   },
+   "hamstrings": {
+    "plan_sets": 10.2,
+    "this_week_sets": 5.0,
+    "last_week_sets": 9.2,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     10.2,
+     10.2,
+     9.2,
+     9.2
+    ],
+    "trend": {
+     "status": "flat",
+     "pct_per_week": -4.1237
+    },
+    "adherence": 0.951,
+    "main_lift": {
+     "id": "romanian-deadlift",
+     "status": "up",
+     "pct_per_week": 0.7742,
+     "sessions": 4,
+     "first_e1rm_kg": 120.3333,
+     "last_e1rm_kg": 123.5,
+     "first_date": "2026-09-29",
+     "last_date": "2026-10-20"
+    },
+    "notes": []
+   },
+   "glutes": {
+    "plan_sets": 10.9,
+    "this_week_sets": 3.5,
+    "last_week_sets": 10.2,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     10.9,
+     10.9,
+     10.2,
+     10.2
+    ],
+    "trend": {
+     "status": "flat",
+     "pct_per_week": -2.654
+    },
+    "adherence": 0.9679,
+    "main_lift": {
+     "id": "hip-thrust",
+     "status": "up",
+     "pct_per_week": 4.4444,
+     "sessions": 4,
+     "first_e1rm_kg": 28.0,
+     "last_e1rm_kg": 32.0,
+     "first_date": "2026-09-25",
+     "last_date": "2026-10-16"
+    },
+    "notes": [
+     {
+      "kind": "always",
+      "exercise": "back-squat",
+      "text": "Belt on for sets of 5 or fewer"
+     },
+     {
+      "kind": "session",
+      "exercise": "back-squat",
+      "text": "Moved fast, add load next time",
+      "session_id": "s2026-10-20",
+      "date": "2026-10-20"
+     },
+     {
+      "kind": "session",
+      "exercise": "back-squat",
+      "text": "Knees felt fine at depth",
+      "session_id": "s2026-10-13",
+      "date": "2026-10-13"
+     }
+    ]
+   },
+   "calves": {
+    "plan_sets": 6,
+    "this_week_sets": 3.0,
+    "last_week_sets": 6.0,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     6.0,
+     6.0,
+     6.0,
+     6.0
+    ],
+    "trend": {
+     "status": "flat",
+     "pct_per_week": 0.0
+    },
+    "adherence": 1.0,
+    "main_lift": {
+     "id": "seated-calf-raise",
+     "status": "up",
+     "pct_per_week": 4.4444,
+     "sessions": 4,
+     "first_e1rm_kg": 28.0,
+     "last_e1rm_kg": 32.0,
+     "first_date": "2026-09-25",
+     "last_date": "2026-10-16"
+    },
+    "notes": []
+   },
+   "adductors": {
+    "plan_sets": 5.2,
+    "this_week_sets": 2.6,
+    "last_week_sets": 4.8,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     5.2,
+     5.2,
+     4.8,
+     4.8
+    ],
+    "trend": {
+     "status": "flat",
+     "pct_per_week": -3.2
+    },
+    "adherence": 0.9615,
+    "main_lift": {
+     "id": "back-squat",
+     "status": "up",
+     "pct_per_week": 2.2989,
+     "sessions": 4,
+     "first_e1rm_kg": 126.0,
+     "last_e1rm_kg": 135.0,
+     "first_date": "2026-09-29",
+     "last_date": "2026-10-20"
+    },
+    "notes": [
+     {
+      "kind": "always",
+      "exercise": "back-squat",
+      "text": "Belt on for sets of 5 or fewer"
+     },
+     {
+      "kind": "session",
+      "exercise": "back-squat",
+      "text": "Moved fast, add load next time",
+      "session_id": "s2026-10-20",
+      "date": "2026-10-20"
+     },
+     {
+      "kind": "session",
+      "exercise": "back-squat",
+      "text": "Knees felt fine at depth",
+      "session_id": "s2026-10-13",
+      "date": "2026-10-13"
+     }
+    ]
+   },
+   "lower_back": {
+    "plan_sets": 4.8,
+    "this_week_sets": 2.6,
+    "last_week_sets": 2.6,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     4.8,
+     4.8,
+     2.6,
+     2.6
+    ],
+    "trend": {
+     "status": "down",
+     "pct_per_week": -23.7838
+    },
+    "adherence": 0.7708,
+    "main_lift": {
+     "id": "romanian-deadlift",
+     "status": "up",
+     "pct_per_week": 0.7742,
+     "sessions": 4,
+     "first_e1rm_kg": 120.3333,
+     "last_e1rm_kg": 123.5,
+     "first_date": "2026-09-29",
+     "last_date": "2026-10-20"
+    },
+    "notes": []
+   },
+   "obliques": {
+    "plan_sets": 2.2,
+    "this_week_sets": 1.2,
+    "last_week_sets": 2.2,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     2.2,
+     2.2,
+     2.2,
+     2.2
+    ],
+    "trend": {
+     "status": "flat",
+     "pct_per_week": 0.0
+    },
+    "adherence": 1.0,
+    "main_lift": {
+     "id": "hanging-leg-raise",
+     "status": "stalled",
+     "pct_per_week": 0.0,
+     "sessions": 4,
+     "first_e1rm_kg": 35.2,
+     "last_e1rm_kg": 35.2,
+     "first_date": "2026-09-25",
+     "last_date": "2026-10-16"
+    },
+    "notes": []
+   },
+   "abductors": {
+    "plan_sets": 5.4,
+    "this_week_sets": 1.25,
+    "last_week_sets": 5.15,
+    "weeks": [
+     "2026-09-21",
+     "2026-09-28",
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "weekly_sets": [
+     5.4,
+     5.4,
+     5.15,
+     5.15
+    ],
+    "trend": {
+     "status": "flat",
+     "pct_per_week": -1.8957
+    },
+    "adherence": 0.9769,
+    "main_lift": {
+     "id": "bulgarian-split-squat",
+     "status": "up",
+     "pct_per_week": 4.4444,
+     "sessions": 4,
+     "first_e1rm_kg": 28.0,
+     "last_e1rm_kg": 32.0,
+     "first_date": "2026-09-25",
+     "last_date": "2026-10-16"
+    },
+    "notes": []
+   }
+  },
+  "adherence": {
+   "weeks": 4,
+   "planned_sets": 296,
+   "completed_planned_sets": 258,
+   "sets_ratio": 0.8716,
+   "sessions_completed": 14,
+   "sessions_skipped": 2,
+   "sessions_ratio": 0.875
+  },
+  "guards": {
+   "completed_sessions": 20,
+   "logged_weeks": 6,
+   "refinements_enabled": true
+  },
+  "refinements": [
+   {
+    "type": "stall",
+    "exercise": "dumbbell-bench-press",
+    "exposures": 6,
+    "best_recent_kg": 41.1667,
+    "best_before_kg": 41.1667,
+    "actions": {
+     "rep_range_change": {
+      "from_reps_median": 8,
+      "suggest_range": [
+       10,
+       12
+      ],
+      "rep_range": [
+       8,
+       12
+      ]
+     },
+     "swap_variation": {
+      "to_id": "landmine-press-two-arm",
+      "diff": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "dumbbell-bench-press",
+        "to_id": "landmine-press-two-arm",
+        "sets": 3
+       }
+      ]
+     }
+    }
+   },
+   {
+    "type": "stall",
+    "exercise": "hanging-leg-raise",
+    "exposures": 5,
+    "best_recent_kg": 35.2,
+    "best_before_kg": 35.2,
+    "actions": {
+     "rep_range_change": {
+      "from_reps_median": 10,
+      "suggest_range": [
+       15,
+       20
+      ],
+      "rep_range": [
+       10,
+       20
+      ]
+     },
+     "swap_variation": {
+      "to_id": "ab-wheel-rollout",
+      "diff": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "hanging-leg-raise",
+        "to_id": "ab-wheel-rollout",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   },
+   {
+    "type": "stall",
+    "exercise": "pull-up",
+    "exposures": 6,
+    "best_recent_kg": 101.3333,
+    "best_before_kg": 101.3333,
+    "actions": {
+     "rep_range_change": {
+      "from_reps_median": 10,
+      "suggest_range": [
+       6,
+       8
+      ],
+      "rep_range": [
+       6,
+       10
+      ]
+     },
+     "swap_variation": {
+      "to_id": "chin-up",
+      "diff": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "pull-up",
+        "to_id": "chin-up",
+        "sets": 3
+       }
+      ]
+     }
+    }
+   },
+   {
+    "type": "missed_sets",
+    "exercise": "romanian-deadlift",
+    "sessions": [
+     {
+      "session_id": "s2026-10-06",
+      "day_idx": 1,
+      "planned": 3,
+      "done": 2
+     },
+     {
+      "session_id": "s2026-10-13",
+      "day_idx": 1,
+      "planned": 3,
+      "done": 2
+     },
+     {
+      "session_id": "s2026-10-20",
+      "day_idx": 1,
+      "planned": 3,
+      "done": 2
+     }
+    ],
+    "missed": 3,
+    "actions": {
+     "trim_sets": [
+      {
+       "op": "sets",
+       "day": "tue",
+       "id": "romanian-deadlift",
+       "from": 3,
+       "to": 2
+      }
+     ],
+     "move_sets": [
+      {
+       "op": "sets",
+       "day": "tue",
+       "id": "romanian-deadlift",
+       "from": 3,
+       "to": 2
+      },
+      {
+       "op": "add",
+       "day": "fri",
+       "id": "romanian-deadlift",
+       "sets": 2
+      }
+     ]
+    }
+   },
+   {
+    "type": "under_delivered",
+    "muscle": "chest",
+    "plan": 8,
+    "actual": [
+     3.0,
+     3.0
+    ],
+    "weeks": [
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "cause": "skipped_sessions",
+    "action": {
+     "see": [
+      {
+       "type": "skipped_day",
+       "day": "thu"
+      }
+     ]
+    }
+   },
+   {
+    "type": "under_delivered",
+    "muscle": "front_delts",
+    "plan": 6.9,
+    "actual": [
+     4.5,
+     4.5
+    ],
+    "weeks": [
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "cause": "skipped_sessions",
+    "action": {
+     "see": [
+      {
+       "type": "skipped_day",
+       "day": "thu"
+      }
+     ]
+    }
+   },
+   {
+    "type": "under_delivered",
+    "muscle": "side_delts",
+    "plan": 7.5,
+    "actual": [
+     4.5,
+     4.5
+    ],
+    "weeks": [
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "cause": "skipped_sessions",
+    "action": {
+     "see": [
+      {
+       "type": "skipped_day",
+       "day": "thu"
+      }
+     ]
+    }
+   },
+   {
+    "type": "under_delivered",
+    "muscle": "rear_delts",
+    "plan": 7.1,
+    "actual": [
+     2.7,
+     2.7
+    ],
+    "weeks": [
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "cause": "skipped_sessions",
+    "action": {
+     "see": [
+      {
+       "type": "skipped_day",
+       "day": "thu"
+      }
+     ]
+    }
+   },
+   {
+    "type": "under_delivered",
+    "muscle": "lats",
+    "plan": 11.25,
+    "actual": [
+     5.6,
+     5.6
+    ],
+    "weeks": [
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "cause": "skipped_sessions",
+    "action": {
+     "see": [
+      {
+       "type": "skipped_day",
+       "day": "thu"
+      }
+     ]
+    }
+   },
+   {
+    "type": "under_delivered",
+    "muscle": "upper_back",
+    "plan": 10.45,
+    "actual": [
+     5.0,
+     5.0
+    ],
+    "weeks": [
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "cause": "skipped_sessions",
+    "action": {
+     "see": [
+      {
+       "type": "skipped_day",
+       "day": "thu"
+      }
+     ]
+    }
+   },
+   {
+    "type": "under_delivered",
+    "muscle": "traps",
+    "plan": 7.4,
+    "actual": [
+     3.9,
+     3.9
+    ],
+    "weeks": [
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "cause": "skipped_sessions",
+    "action": {
+     "see": [
+      {
+       "type": "skipped_day",
+       "day": "thu"
+      }
+     ]
+    }
+   },
+   {
+    "type": "under_delivered",
+    "muscle": "biceps",
+    "plan": 9.0,
+    "actual": [
+     6.0,
+     6.0
+    ],
+    "weeks": [
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "cause": "skipped_sessions",
+    "action": {
+     "see": [
+      {
+       "type": "skipped_day",
+       "day": "thu"
+      }
+     ]
+    }
+   },
+   {
+    "type": "under_delivered",
+    "muscle": "triceps",
+    "plan": 8.2,
+    "actual": [
+     5.0,
+     5.0
+    ],
+    "weeks": [
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "cause": "skipped_sessions",
+    "action": {
+     "see": [
+      {
+       "type": "skipped_day",
+       "day": "thu"
+      }
+     ]
+    }
+   },
+   {
+    "type": "under_delivered",
+    "muscle": "lower_back",
+    "plan": 4.8,
+    "actual": [
+     2.6,
+     2.6
+    ],
+    "weeks": [
+     "2026-10-05",
+     "2026-10-12"
+    ],
+    "cause": "missed_sets",
+    "action": {
+     "see": [
+      {
+       "type": "missed_sets",
+       "exercise": "romanian-deadlift"
+      }
+     ]
+    }
+   },
+   {
+    "type": "skipped_day",
+    "day": "thu",
+    "skipped_sessions": [
+     "s2026-10-08",
+     "s2026-10-15"
+    ],
+    "muscles": [
+     "chest",
+     "front_delts",
+     "side_delts",
+     "rear_delts",
+     "lats",
+     "upper_back",
+     "traps",
+     "biceps",
+     "triceps"
+    ],
+    "action": {
+     "to_day": "wed",
+     "label": "Upper B",
+     "diff": [
+      {
+       "op": "remove",
+       "day": "thu",
+       "id": "incline-dumbbell-press",
+       "sets": 3
+      },
+      {
+       "op": "remove",
+       "day": "thu",
+       "id": "barbell-row",
+       "sets": 3
+      },
+      {
+       "op": "remove",
+       "day": "thu",
+       "id": "lat-pulldown",
+       "sets": 3
+      },
+      {
+       "op": "remove",
+       "day": "thu",
+       "id": "cable-fly",
+       "sets": 2
+      },
+      {
+       "op": "remove",
+       "day": "thu",
+       "id": "dumbbell-lateral-raise",
+       "sets": 3
+      },
+      {
+       "op": "remove",
+       "day": "thu",
+       "id": "reverse-pec-deck",
+       "sets": 2
+      },
+      {
+       "op": "remove",
+       "day": "thu",
+       "id": "triceps-pushdown",
+       "sets": 2
+      },
+      {
+       "op": "add",
+       "day": "wed",
+       "id": "incline-dumbbell-press",
+       "sets": 3
+      },
+      {
+       "op": "add",
+       "day": "wed",
+       "id": "barbell-row",
+       "sets": 3
+      },
+      {
+       "op": "add",
+       "day": "wed",
+       "id": "lat-pulldown",
+       "sets": 3
+      },
+      {
+       "op": "add",
+       "day": "wed",
+       "id": "cable-fly",
+       "sets": 2
+      },
+      {
+       "op": "add",
+       "day": "wed",
+       "id": "dumbbell-lateral-raise",
+       "sets": 3
+      },
+      {
+       "op": "add",
+       "day": "wed",
+       "id": "reverse-pec-deck",
+       "sets": 2
+      },
+      {
+       "op": "add",
+       "day": "wed",
+       "id": "triceps-pushdown",
+       "sets": 2
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

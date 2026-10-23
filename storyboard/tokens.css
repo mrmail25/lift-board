@@ -24,6 +24,7 @@
   --danger:#E5242B;
   /* over-volume colours (functional, like --danger). Thresholds are NOT here: rules.json volume_bands */
   --vol-under:#B9B9BE; --vol-amber:#F0A830; --vol-red:#D93B30;
+  --day-1:#B4B4BA; --day-2:#8A8A90; --day-3:#48484D; --day-4:#0B0B0C; /* Build map in Day mode: sets that day (ink scale, not a range colour) */
   --vol-in-range:#5cc48c; /* in range, both body maps + volume bars (CoS 2026-10-22; Mr Dude's live-app mid green, Oct 11). Darkens toward max via color-mix */
   /* Build chit edge: body region of the exercise's main muscle (functional, never brand) */
   /* body-region edge colours (rules.json body_regions.order; names from body_regions.tokens_suggested) */

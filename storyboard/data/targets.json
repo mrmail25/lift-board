@@ -912,18 +912,6 @@
   "frequency_min_effective": 2,
   "stretch_share_flag_below": 0.25,
   "spf": "rating/fatigue per muscle; suggest swap when another exercise rates >= rating-0.1 for that muscle with higher spf; only within the same movement pattern (rules.json patterns), never compound to isolation",
-  "session_length": {
-   "warmup_min": 10,
-   "work_sec_per_set": 45,
-   "rest_min": {
-    "compound": 2.5,
-    "isolation": 1.5
-   },
-   "compound_types": [
-    "primary",
-    "accessory"
-   ]
-  },
   "disclaimer": "Model for comparing plans, not a measurement of growth or recovery."
  }
 }

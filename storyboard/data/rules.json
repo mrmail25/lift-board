@@ -1069,6 +1069,169 @@
       "candidate_rule": "fix_actions.add_slot_exercise + fix_validation",
       "success_metric": "slot count reaches the weekly min (flag clears = resolves; warn->info counts as resolving the warn); else count rises = partial",
       "reference": "tools/patterns.py pattern_gaps / slot_recommendations; tools/check_program.py _gens('pattern_gap')"
+    },
+    "analysis_sheet": {
+      "version": 1,
+      "note": "Analysis-sheet suggestions. Each type names its source (a key of this suggestions block, or a rules[] id whose fixes are used), the trigger and the edit. Candidates come from tools/suggest.py suggest(days, level, baseline) and are validated with suggestions.validation. Deterministic: same board, level and baseline -> same list.",
+      "apply": "Apply = replace the board days with fix.days and keep the pre-apply board as the Undo snapshot (same as the old fixes.js applyFix). fix.diff is the same change as ops, for the preview, storage and history; tools/analysis.py apply_ops(days, diff) rebuilds the same tiles per day (appended tiles go last).",
+      "undo": "Undo = restore the snapshot (equivalently, the inverse ops in reverse order). One level of Undo per applied suggestion; a later manual edit clears it.",
+      "edit_ops": {
+        "sets": "{op, day, id, from, to}: set that tile's sets to `to`. Undo: back to `from`.",
+        "swap": "{op, day, from_id, to_id, sets}: replace the tile with from_id by to_id at the same position, same sets. Undo: swap back.",
+        "add": "{op, day, id, sets}: append a tile at the end of the day. Undo: remove that appended tile.",
+        "remove": "{op, day, id, sets}: remove the tile. Undo: re-insert it at its old position (kept in the Undo snapshot)."
+      },
+      "order": "warn-sourced suggestions first (program-check warnings in checker order), then the types below in list order; within a type by target (muscle in targets.json order, day in week order).",
+      "max_fixes_per_suggestion": 3,
+      "types": [
+        {
+          "id": "add_sets_under_target",
+          "label": "Add sets to an under-target muscle",
+          "sources": [
+            "weekly_band",
+            "weekly_volume"
+          ],
+          "trigger": "weekly effective sets < level min (weekly_band target.side under, not red; weekly_volume flag below the band: red)",
+          "edits": [
+            "sets (+1 up to 5 on the highest-rated tile, fix_actions.add_sets)",
+            "add (fix_actions.add_exercise)"
+          ],
+          "success": "sets closer to the range; resolves when inside"
+        },
+        {
+          "id": "trim_sets_over_target",
+          "label": "Trim sets from an over-target muscle",
+          "sources": [
+            "weekly_band",
+            "weekly_volume"
+          ],
+          "trigger": "weekly effective sets > max",
+          "edits": [
+            "sets (-1 at a time on the highest contributor, min 2; fix_actions.reduce_sets)"
+          ],
+          "success": "resolves when <= max"
+        },
+        {
+          "id": "split_low_frequency",
+          "label": "Spread a muscle over two days",
+          "sources": [
+            "effective_frequency",
+            "low_frequency"
+          ],
+          "trigger": "effective_frequency or the low_frequency rule: muscle in frequency_muscles on fewer than 2 days at >= 2 effective sets, with >= 2 training days",
+          "edits": [
+            "sets + add (fix_actions.move_sets_to_day)",
+            "add (fix_actions.add_exercise on another day)"
+          ],
+          "success": "days at threshold rises; resolves at 2"
+        },
+        {
+          "id": "swap_stretch_biased",
+          "label": "Swap in a stretch-biased exercise",
+          "sources": [
+            "stretch_share",
+            "missing_stretch"
+          ],
+          "trigger": "stretch-biased share < 0.25 (stretch_share) or none at all (missing_stretch)",
+          "edits": [
+            "swap (fix_actions.swap_exercise criteria stretch_biased)",
+            "add (fix_actions.add_exercise stretch)"
+          ],
+          "success": "share rises; resolves at >= 0.25"
+        },
+        {
+          "id": "swap_lower_fatigue",
+          "label": "Swap for a lower-fatigue option",
+          "sources": [
+            "lower_fatigue_swap"
+          ],
+          "trigger": "an exercise on the board has a same-pattern candidate with higher stimulus per fatigue",
+          "edits": [
+            "swap (every tile of that exercise)"
+          ],
+          "success": "week recovery cost strictly lower"
+        },
+        {
+          "id": "trim_recovery_cost",
+          "label": "Bring recovery cost back to normal",
+          "sources": [
+            "recovery_vs_baseline"
+          ],
+          "trigger": "saved baseline and week cost > 115% of it",
+          "edits": [
+            "sets (reduce_sets highest_fatigue)",
+            "swap (lower_fatigue)"
+          ],
+          "success": "resolves at <= 115%"
+        },
+        {
+          "id": "fill_pattern_gap",
+          "label": "Add a missing movement pattern",
+          "sources": [
+            "pattern_gap"
+          ],
+          "trigger": "rules pattern_gap (warn: required slot at 0; info: below the level minimum)",
+          "edits": [
+            "add (fix_actions.add_slot_exercise)"
+          ],
+          "success": "slot count reaches the minimum"
+        },
+        {
+          "id": "balance_push_pull",
+          "label": "Even out pulling and pressing",
+          "sources": [
+            "push_pull_imbalance"
+          ],
+          "trigger": "pull:push outside 0.75-2.0",
+          "edits": [
+            "rules[push_pull_imbalance].fixes"
+          ],
+          "success": "ratio inside the band"
+        },
+        {
+          "id": "shorten_session",
+          "label": "Shorten a long or crowded day",
+          "sources": [
+            "session_length",
+            "session_hard_sets"
+          ],
+          "trigger": "session_length >= 90 min or hard sets above the level cap",
+          "edits": [
+            "rules[].fixes (move_tile, move_sets_to_day, reduce_sets, remove_tile)"
+          ],
+          "success": "flag clears"
+        },
+        {
+          "id": "reduce_spinal_load",
+          "label": "Reduce heavy spine sets",
+          "sources": [
+            "spinal_load"
+          ],
+          "trigger": "heavy squat + hinge sets above the session or week cap",
+          "edits": [
+            "rules[spinal_load].fixes (swap lower_spinal, move_sets_to_day, reduce_sets)"
+          ],
+          "success": "flag clears"
+        },
+        {
+          "id": "program_check",
+          "label": "Fix a program-check warning",
+          "sources": [
+            "many_small_entries",
+            "sets_per_exercise",
+            "junk_volume_session",
+            "redundant_pattern",
+            "hinge_before_squat",
+            "consecutive_high_volume",
+            "beginner_squat_and_deadlift"
+          ],
+          "trigger": "that rule's flag",
+          "edits": [
+            "rules[].fixes for the rule (fix_actions)"
+          ],
+          "success": "fix_validation"
+        }
+      ]
     }
   },
   "logger": {
@@ -4183,5 +4346,1032 @@
     "resolver": "tools/whiteboard.py primary_region(exercise_id) -> region id",
     "fixture": "data/body-regions-reference.json"
   },
-  "short_label_note": "rules[].short_label: 3-5 words (a hyphenated word counts as one) for compact chips. short_label_variants keys: message_* variant names (info, week, no_pull, no_push, indirect_only), the checker ids spinal_load_session/_week as session/week, and weekly_volume over/under (sets above max / below min)."
+  "short_label_note": "rules[].short_label: 3-5 words (a hyphenated word counts as one) for compact chips. short_label_variants keys: message_* variant names (info, week, no_pull, no_push, indirect_only), the checker ids spinal_load_session/_week as session/week, and weekly_volume over/under (sets above max / below min).",
+  "movement_patterns": {
+    "version": 1,
+    "order": [
+      "horizontal_push",
+      "vertical_push",
+      "horizontal_pull",
+      "vertical_pull",
+      "squat",
+      "hinge",
+      "lunge",
+      "isolation",
+      "core",
+      "other"
+    ],
+    "labels": {
+      "horizontal_push": "Horizontal push",
+      "vertical_push": "Vertical push",
+      "horizontal_pull": "Horizontal pull",
+      "vertical_pull": "Vertical pull",
+      "squat": "Squat",
+      "hinge": "Hinge",
+      "lunge": "Lunge / single-leg",
+      "isolation": "Isolation",
+      "core": "Core & carry",
+      "other": "Power & other"
+    },
+    "compound": [
+      "horizontal_push",
+      "vertical_push",
+      "horizontal_pull",
+      "vertical_pull",
+      "squat",
+      "hinge",
+      "lunge"
+    ],
+    "derived_from": "exercises.json exercises[].patterns (the patterns.json slots used by pattern_gap, test_patterns and patterns.py)",
+    "rule": "1) The first slot in the exercise's patterns list that is one of the 7 compound slots, if the exercise is not type isolation (the same condition under which pattern_gap counts it for that slot). 2) Otherwise its main slot (patterns[0]) abs or carry_core -> core. 3) Main slot power -> other. 4) Any other main slot (an isolation slot: chest_fly, side_delts, biceps, glute_iso, calves, ...) -> isolation. 5) No patterns (a custom exercise without slots) -> other.",
+    "why_core": "core is added to the requested list because 25 library exercises (abs + carry_core slots) would otherwise sit in isolation or other, and \"core\" is a common tray search. power stays in other (8 exercises).",
+    "edge_cases": {
+      "incline presses": "horizontal_push: their main slot is horizontal_push (rules.patterns incline_press is a push pattern); upper-chest emphasis is a swap tag, not a filter.",
+      "landmine presses (one- and two-arm)": "horizontal_push: patterns lists horizontal_push first, then vertical_push; pattern_gap credits both slots, the filter shows the first.",
+      "dips (weighted, ring, assisted, machine)": "horizontal_push: main slot horizontal_push.",
+      "jm-press": "horizontal_push: main slot is triceps, but it is an accessory that pattern_gap also counts as a horizontal push, so rule 1 picks horizontal_push.",
+      "pullovers (dumbbell, machine, cable)": "isolation: main slot lat_iso; they never count as a vertical pull.",
+      "step-ups, split squats, lunges, pistols": "lunge: main slot lunge (which also counts toward squat in pattern_gap).",
+      "hip thrusts and glute bridges": "isolation: main slot glute_iso (a single-joint hip extension). They do not count for the hinge slot in pattern_gap, so filtering them under hinge would disagree with the checks.",
+      "back extensions, reverse hyper, 45-degree hyperextension": "isolation: main slot glute_iso.",
+      "glute-ham raise, nordic curl": "isolation: main slot hamstring_curl.",
+      "upright row": "isolation: main slot side_delts (it is multi-joint, but it fills the side-delt slot).",
+      "kettlebell swing, clean, snatch, single-leg RDL, good morning": "hinge: main slot hinge.",
+      "pike push-up, wall handstand push-up": "vertical_push.",
+      "muscle-up": "vertical_pull.",
+      "carries, get-up, Pallof press, rotations, crunches, leg raises, holds": "core: main slot abs or carry_core (25 exercises, worth its own chip).",
+      "jumps, throws, plyometric push-up": "other: main slot power; few exercises, and the equipment filter already has a Plyometric chip.",
+      "custom exercises": "derived the same way from their patterns (patterns.custom_suggest); none -> other."
+    },
+    "consistency": "For every exercise with a compound movement_pattern P, pattern_gap counts it for slot P (tested). The legacy rules.patterns map (redundant_pattern, push:pull) is unchanged; its pattern always lies inside the exercise's main slot.",
+    "resolver": "tools/movement.py movement_pattern(exercise)",
+    "fixture": "data/movement-patterns-reference.json"
+  },
+  "templates": {
+    "file": "data/templates.json",
+    "spec": "data/template-spec.md",
+    "resolver": "tools/templates.py",
+    "reference": "data/templates-reference.json",
+    "note": "Slot templates: placeholder slots (label, slot_type, eligibility, set range, default exercise) per split x level x days. Each template is cross-linked to the splits.json preset its defaults reproduce."
+  },
+  "analysis_metrics": {
+    "version": 1,
+    "note": "Every metric the Analysis sheet and Log tab show, and proposed ones. Status: defined (already had a rules.json / targets.json key), added (shown by the old app or storyboard with no definition until round 1; the formula here is the definition), proposed (new). evidence: supported = the direction is backed by the cited studies; modeled = a planning choice. Values are models, not measurements. Audit: data/analysis-audit.md; values for every preset: data/analysis-reference.json (tools/analysis.py).",
+    "categories": [
+      {
+        "id": "suggestions",
+        "label": "Suggestions",
+        "description": "Validated one-tap changes (Apply / Undo) and the check count."
+      },
+      {
+        "id": "volume",
+        "label": "Volume",
+        "description": "Weekly sets per muscle against the targets, and the modeled stimulus curve."
+      },
+      {
+        "id": "frequency",
+        "label": "Frequency",
+        "description": "How the weekly sets are spread over days."
+      },
+      {
+        "id": "balance",
+        "label": "Balance",
+        "description": "Push:pull, movement-pattern coverage and exercise mix."
+      },
+      {
+        "id": "recovery_fatigue",
+        "label": "Recovery & fatigue",
+        "description": "Modeled recovery cost and spinal load."
+      },
+      {
+        "id": "session",
+        "label": "Session",
+        "description": "Per-day length, hard sets and layout."
+      },
+      {
+        "id": "logged",
+        "label": "Logged progress",
+        "description": "From completed workouts only (Log / Progress tabs); see rules.json progress."
+      }
+    ],
+    "metrics": [
+      {
+        "id": "suggestion_list",
+        "label": "Suggestions",
+        "category": "suggestions",
+        "description": "Validated board changes, warnings first, at most 3 fixes each.",
+        "formula": "tools/suggest.py suggest(days, level, baseline) + suggestions.analysis_sheet.order",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: analytics.js sg-* / check.js",
+          "storyboard Build: Analysis sheet"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json suggestions",
+          "rules.json fix_actions",
+          "rules.json fix_validation"
+        ],
+        "suggestion_types": [
+          "all"
+        ]
+      },
+      {
+        "id": "checks_pass",
+        "label": "Checks passing",
+        "category": "suggestions",
+        "description": "Program-check rules with no warning this week, out of all rules that apply.",
+        "formula": "pass = rules with no non-info flag (spinal_load_session/_week count as spinal_load); total = len(rules); info flags do not fail a check",
+        "evidence": "modeled",
+        "status": "added",
+        "shown_in": [
+          "storyboard Build: strip \"N/M checks pass\", sheet header"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json analysis_metrics.#checks_pass"
+        ]
+      },
+      {
+        "id": "weekly_sets_per_muscle",
+        "label": "Weekly sets per muscle",
+        "category": "volume",
+        "description": "Effective sets: sets x rating, ratings below 0.25 ignored, rounded to 0.5.",
+        "formula": "targets.json counting (fractional, min_rating_to_count, round_to); target = targets[m].min x levelMinFactor[level] .. max",
+        "evidence": "supported",
+        "status": "defined",
+        "shown_in": [
+          "old app: app.js vol() volume panel",
+          "storyboard Build: Weekly sets per muscle, mini map"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "targets.json counting",
+          "targets.json targets",
+          "targets.json levelMinFactor"
+        ],
+        "citations": [
+          "schoenfeld2017dose",
+          "pelland2026"
+        ],
+        "suggestion_types": [
+          "add_sets_under_target",
+          "trim_sets_over_target"
+        ],
+        "note": "The target numbers themselves are modeled from the cited dose-response data."
+      },
+      {
+        "id": "volume_status",
+        "label": "Volume colour",
+        "category": "volume",
+        "description": "Under / in range / over (amber) / far over (red) against the weekly target.",
+        "formula": "rules.json volume_bands (over); under = total < level min; red = total > max x red_factor; weekly_volume rule warns on red",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: volume panel, body map",
+          "storyboard Build: volume rows, mini map"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json volume_bands",
+          "rules.json rules.#weekly_volume",
+          "targets.json counting.status"
+        ],
+        "suggestion_types": [
+          "add_sets_under_target",
+          "trim_sets_over_target"
+        ],
+        "note": "targets.json counting.status still describes amber_under / red_under (min - 2); volume_bands is the over-target source of truth and check_program.col() applies both."
+      },
+      {
+        "id": "week_sets_total",
+        "label": "Sets per week",
+        "category": "volume",
+        "description": "All planned working sets in the week, every exercise counted fully.",
+        "formula": "sum over days and tiles of sets",
+        "evidence": "modeled",
+        "status": "added",
+        "shown_in": [
+          "storyboard Build: strip \"sets / wk\""
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json analysis_metrics.#week_sets_total"
+        ]
+      },
+      {
+        "id": "stimulus_curve",
+        "label": "Stimulus curve",
+        "category": "volume",
+        "description": "Modeled share of the weekly stimulus ceiling reached by the current weekly sets.",
+        "formula": "targets.json curve: S(x) = 1 - exp(-x / k[muscle][level]), x = weekly effective sets after session_discount",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: analytics.js Diminishing returns chart",
+          "storyboard Build: Stimulus curve"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "targets.json curve.model",
+          "targets.json curve.k_by_muscle"
+        ],
+        "note": "Shape follows the diminishing returns in pelland2026; k and the 0-1 scale are modeling choices (targets.json curve.modeling_choices)."
+      },
+      {
+        "id": "marginal_set_gain",
+        "label": "Next set",
+        "category": "volume",
+        "description": "Modeled extra stimulus from one more weekly set.",
+        "formula": "targets.json curve.marginal: S(x+1) - S(x)",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: analytics.js",
+          "storyboard Build: curve read-out"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "targets.json curve.marginal"
+        ]
+      },
+      {
+        "id": "session_discount",
+        "label": "Per-session cap",
+        "category": "volume",
+        "description": "Effective sets past 10 for one muscle in one session count at 50% in the curve.",
+        "formula": "targets.json curve.session_discount {cap: 10, factor: 0.5}; same threshold as rules junk_volume_session",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: analytics.js note"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "targets.json curve.session_discount",
+          "rules.json rules.#junk_volume_session.threshold"
+        ]
+      },
+      {
+        "id": "volume_evidence_tag",
+        "label": "Evidence tag",
+        "category": "volume",
+        "description": "Direct / pooled / extrapolated evidence behind each muscle's target.",
+        "formula": "targets.json targets[m].evidence.tag",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: analytics.js evChip"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "targets.json targets[].evidence",
+          "targets.json curve.evidence_tags"
+        ],
+        "note": "The tag classifies the evidence behind each target (a modeling choice); the cited studies are listed per muscle in targets.json."
+      },
+      {
+        "id": "weekly_sets_per_region",
+        "label": "Sets per body region",
+        "category": "volume",
+        "description": "Effective weekly sets summed per body region (chest, back, shoulders, arms, legs, core).",
+        "formula": "for each muscle m: region = body_regions.muscles[m]; region sets = sum of weekly_sets_per_muscle[m] over its muscles (a set can add to several regions, as it does to several muscles)",
+        "evidence": "modeled",
+        "status": "proposed",
+        "shown_in": [
+          "proposed"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json body_regions"
+        ],
+        "note": "A display summary; targets stay per muscle."
+      },
+      {
+        "id": "effective_frequency",
+        "label": "Days per muscle",
+        "category": "frequency",
+        "description": "Days in the week with at least 2 effective sets for the muscle.",
+        "formula": "count of days with sum(sets x rating, rating >= 0.25) >= targets.json analytics.frequency_min_effective (2)",
+        "evidence": "supported",
+        "status": "defined",
+        "shown_in": [
+          "old app: analytics.js Frequency dots",
+          "storyboard Build: Frequency grid"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "targets.json analytics.frequency_min_effective",
+          "rules.json rules.#low_frequency",
+          "rules.json suggestions.effective_frequency"
+        ],
+        "citations": [
+          "schoenfeld2019freq",
+          "schoenfeld2016freq"
+        ],
+        "suggestion_types": [
+          "split_low_frequency"
+        ],
+        "note": "Supported as a way to distribute volume; volume-equated studies show little extra effect of frequency itself."
+      },
+      {
+        "id": "consecutive_high_volume",
+        "label": "Back-to-back hard days",
+        "category": "frequency",
+        "description": "A muscle at session \"solid\" or more on two days in a row.",
+        "formula": "rules.json rules.#consecutive_high_volume (uses targets.json session[m].solid)",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js",
+          "storyboard Build: flags"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#consecutive_high_volume"
+        ],
+        "suggestion_types": [
+          "program_check"
+        ]
+      },
+      {
+        "id": "day_shading",
+        "label": "Day shading",
+        "category": "frequency",
+        "description": "Per-day colour of each muscle on the body map: none / light / solid / heavy.",
+        "formula": "targets.json session (light, solid, heavy per muscle) + gradient.day",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: heat.js day mode"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "targets.json session",
+          "targets.json gradient"
+        ]
+      },
+      {
+        "id": "push_pull_ratio",
+        "label": "Pull : push",
+        "category": "balance",
+        "description": "Weekly pulling sets divided by pressing sets.",
+        "formula": "rules.json rules.#push_pull_imbalance: pull_sets / push_sets over rules.push_patterns / pull_patterns; band 0.75-2.0",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js flag",
+          "storyboard Build: flag"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#push_pull_imbalance",
+          "rules.json push_patterns",
+          "rules.json pull_patterns"
+        ],
+        "suggestion_types": [
+          "balance_push_pull"
+        ],
+        "note": "The band is a coaching convention, not a tested threshold."
+      },
+      {
+        "id": "pattern_coverage",
+        "label": "Movement patterns",
+        "category": "balance",
+        "description": "Exercises per movement slot this week against the level minimum.",
+        "formula": "check_program.slot_counts + patterns.json weekly_min_by_level; rule pattern_gap",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: patterns.js",
+          "storyboard Build: flags"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "patterns.json",
+          "rules.json rules.#pattern_gap",
+          "rules.json pattern_gap_fix"
+        ],
+        "suggestion_types": [
+          "fill_pattern_gap"
+        ]
+      },
+      {
+        "id": "stretch_biased_share",
+        "label": "Stretch-biased share",
+        "category": "balance",
+        "description": "Share of a muscle's effective sets that come from its stretch-biased exercises.",
+        "formula": "share[m] = sum(sets x rating, tiles in rules.stretch_biased[m]) / sum(sets x rating), ratings >= 0.25, for muscles in rules.stretch_biased; flag below targets.json analytics.stretch_share_flag_below (0.25)",
+        "evidence": "supported",
+        "status": "added",
+        "shown_in": [
+          "old app: analytics.js Stretch-biased share"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json stretch_biased",
+          "targets.json analytics.stretch_share_flag_below",
+          "rules.json suggestions.stretch_share"
+        ],
+        "citations": [
+          "maeo2023",
+          "kassiano2023",
+          "pedrosa2022"
+        ],
+        "suggestion_types": [
+          "swap_stretch_biased"
+        ],
+        "note": "Training at long muscle lengths is supported for several muscles; the 25% line is modeled."
+      },
+      {
+        "id": "missing_stretch",
+        "label": "No stretch exercise",
+        "category": "balance",
+        "description": "A muscle with no stretch-biased exercise this week.",
+        "formula": "rules.json rules.#missing_stretch",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js",
+          "storyboard Build: notes"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#missing_stretch"
+        ],
+        "suggestion_types": [
+          "swap_stretch_biased"
+        ]
+      },
+      {
+        "id": "redundant_pattern",
+        "label": "Same pattern piled up",
+        "category": "balance",
+        "description": "Several same-pattern exercises on one day past ~10 effective sets for a muscle.",
+        "formula": "rules.json rules.#redundant_pattern",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#redundant_pattern"
+        ],
+        "suggestion_types": [
+          "program_check"
+        ]
+      },
+      {
+        "id": "movement_pattern_sets",
+        "label": "Sets per movement pattern",
+        "category": "balance",
+        "description": "Weekly sets per tray movement pattern (horizontal push ... other).",
+        "formula": "sum of tile sets grouped by exercises[].movement_pattern (whole sets, no ratings)",
+        "evidence": "modeled",
+        "status": "proposed",
+        "shown_in": [
+          "proposed"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json movement_patterns"
+        ]
+      },
+      {
+        "id": "lengthened_bias_share",
+        "label": "Lengthened-bias share",
+        "category": "balance",
+        "description": "Share of all weekly sets from exercises with the top stretch-emphasis rating.",
+        "formula": "sum(sets of tiles with swap.stretch_emphasis == 3) / sum(sets)",
+        "evidence": "supported",
+        "status": "proposed",
+        "shown_in": [
+          "proposed"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json swap_tags.vocabulary.#stretch_emphasis"
+        ],
+        "citations": [
+          "maeo2023",
+          "pedrosa2022"
+        ],
+        "note": "Supported in direction for the muscles studied; the share itself is descriptive."
+      },
+      {
+        "id": "unilateral_share",
+        "label": "One-side share",
+        "category": "balance",
+        "description": "Share of weekly sets from one-side-at-a-time exercises.",
+        "formula": "sum(sets of tiles with swap flag unilateral) / sum(sets)",
+        "evidence": "modeled",
+        "status": "proposed",
+        "shown_in": [
+          "proposed"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json swap_tags.vocabulary.#unilateral"
+        ],
+        "note": "Descriptive only; no growth difference between one- and two-sided work is claimed."
+      },
+      {
+        "id": "recovery_cost",
+        "label": "Recovery cost",
+        "category": "recovery_fatigue",
+        "description": "Sets x each exercise's fatigue rating, per day and week; a % of your saved normal week once one exists.",
+        "formula": "targets.json recovery: session_cost = sum(sets x fatigue); week_cost = sum; x optional modifiers; % of baseline",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: analytics.js Recovery cost",
+          "storyboard Build: Fatigue and spinal load"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "targets.json recovery",
+          "rules.json rules.#recovery_vs_baseline",
+          "rules.json suggestions.recovery_vs_baseline"
+        ],
+        "suggestion_types": [
+          "trim_recovery_cost"
+        ]
+      },
+      {
+        "id": "stimulus_per_fatigue",
+        "label": "Stimulus per fatigue",
+        "category": "recovery_fatigue",
+        "description": "Main-muscle rating divided by fatigue; drives lower-fatigue swaps.",
+        "formula": "targets.json analytics.spf: rating[m] / fatigue",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: analytics.js Lower-fatigue swaps"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "targets.json analytics.spf",
+          "rules.json suggestions.lower_fatigue_swap"
+        ],
+        "suggestion_types": [
+          "swap_lower_fatigue"
+        ]
+      },
+      {
+        "id": "spinal_load",
+        "label": "Heavy spine sets",
+        "category": "recovery_fatigue",
+        "description": "Sets of heavy squats and hinges per day and week against the level caps.",
+        "formula": "rules.json rules.#spinal_load (heavy_squats + heavy_hinges)",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js",
+          "storyboard Build: Fatigue and spinal load"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#spinal_load",
+          "rules.json heavy_squats",
+          "rules.json heavy_hinges"
+        ],
+        "suggestion_types": [
+          "reduce_spinal_load"
+        ]
+      },
+      {
+        "id": "junk_volume_session",
+        "label": "Muscle sets per session",
+        "category": "recovery_fatigue",
+        "description": "More than ~10 effective sets for one muscle in one session.",
+        "formula": "rules.json rules.#junk_volume_session",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#junk_volume_session"
+        ],
+        "suggestion_types": [
+          "program_check"
+        ]
+      },
+      {
+        "id": "session_length",
+        "label": "Session length",
+        "category": "session",
+        "description": "Estimated minutes: warm-up + per set work + rest by exercise type.",
+        "formula": "rules.json rules.#session_length: warmup_min + sum(sets x (work_min_per_set + rest_min_by_type[type])); info 75, warn 90",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: day header \"~N min\"",
+          "storyboard Build: day meta, strip \"min / session\", Session length bars"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#session_length"
+        ],
+        "suggestion_types": [
+          "shorten_session"
+        ],
+        "note": "rules.json session_length is the single source (the stale targets.json analytics.session_length copy was removed 2026-10-22)."
+      },
+      {
+        "id": "avg_session_minutes",
+        "label": "Minutes per session",
+        "category": "session",
+        "description": "Mean session_length over training days.",
+        "formula": "sum(session_length) / training days",
+        "evidence": "modeled",
+        "status": "added",
+        "shown_in": [
+          "storyboard Build: strip \"min / session\""
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json analysis_metrics.#avg_session_minutes"
+        ]
+      },
+      {
+        "id": "session_hard_sets",
+        "label": "Hard sets per session",
+        "category": "session",
+        "description": "All working sets in a day against the level cap.",
+        "formula": "rules.json rules.#session_hard_sets",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js",
+          "storyboard Build: flags"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#session_hard_sets"
+        ],
+        "suggestion_types": [
+          "shorten_session"
+        ]
+      },
+      {
+        "id": "sets_per_exercise",
+        "label": "Sets per exercise",
+        "category": "session",
+        "description": "More than 5 sets of one exercise in a day.",
+        "formula": "rules.json rules.#sets_per_exercise",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#sets_per_exercise"
+        ],
+        "suggestion_types": [
+          "program_check"
+        ]
+      },
+      {
+        "id": "many_small_entries",
+        "label": "Many small entries",
+        "category": "session",
+        "description": "Many exercises averaging under 2 sets each.",
+        "formula": "rules.json rules.#many_small_entries",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#many_small_entries"
+        ],
+        "suggestion_types": [
+          "program_check"
+        ]
+      },
+      {
+        "id": "session_density",
+        "label": "Session density",
+        "category": "session",
+        "description": "Hard sets per estimated hour.",
+        "formula": "session_hard_sets / (session_length / 60)",
+        "evidence": "modeled",
+        "status": "proposed",
+        "shown_in": [
+          "proposed"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json rules.#session_length"
+        ],
+        "note": "Depends entirely on the modeled minutes; useful to compare days, not people."
+      },
+      {
+        "id": "logged_hard_sets",
+        "label": "Hard sets per muscle (logged)",
+        "category": "logged",
+        "description": "Credited hard sets per muscle from completed workouts.",
+        "formula": "rules.json logger.completed_analytics.hard_sets (set_tags credit, ratings >= 0.25)",
+        "evidence": "supported",
+        "status": "defined",
+        "shown_in": [
+          "old app: log.js Analytics"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json logger.completed_analytics",
+          "rules.json logger.set_tags"
+        ],
+        "citations": [
+          "schoenfeld2017dose",
+          "pelland2026"
+        ],
+        "suggestion_types": [
+          "progress:under_delivered"
+        ]
+      },
+      {
+        "id": "adherence",
+        "label": "Adherence",
+        "category": "logged",
+        "description": "Planned working sets done / planned; sessions done / planned.",
+        "formula": "rules.json logger.completed_analytics.adherence",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: log.js Adherence"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json logger.completed_analytics.adherence",
+          "rules.json progress.adherence"
+        ],
+        "suggestion_types": [
+          "progress:missed_sets"
+        ]
+      },
+      {
+        "id": "volume_load",
+        "label": "Volume load",
+        "category": "logged",
+        "description": "Load x reps of working sets per session, week and muscle.",
+        "formula": "rules.json logger.completed_analytics.volume",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: log.js Volume per session"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json logger.completed_analytics.volume"
+        ]
+      },
+      {
+        "id": "load_trend",
+        "label": "Best e1RM per session",
+        "category": "logged",
+        "description": "Per exercise, the best estimated 1RM each session.",
+        "formula": "rules.json logger.e1rm_formula (epley) on working sets with reps <= e1rm_max_reps (10)",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: log.js Load trend"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json logger.e1rm_formula",
+          "rules.json logger.e1rm_max_reps"
+        ],
+        "note": "Epley is a coaching formula (logging-spec: no peer-reviewed source); always labelled estimated."
+      },
+      {
+        "id": "prs",
+        "label": "PRs",
+        "category": "logged",
+        "description": "Weight, set-volume, e1RM and rep PRs with the tie rule.",
+        "formula": "rules.json logger.prs",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: log.js PRs this week, finish summary"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json logger.prs"
+        ]
+      },
+      {
+        "id": "progress_signal",
+        "label": "Progress trend",
+        "category": "logged",
+        "description": "Up / stalled / dropping from the e1RM slope over 4 weeks.",
+        "formula": "rules.json logger.progress_signals",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: log.js Progress"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json logger.progress_signals",
+          "rules.json progress.refinement.stall"
+        ],
+        "suggestion_types": [
+          "progress:stall"
+        ]
+      },
+      {
+        "id": "planned_vs_done",
+        "label": "Planned vs done",
+        "category": "logged",
+        "description": "Credited done vs planned sets per muscle this week.",
+        "formula": "rules.json review.on_plan_margin + completed_analytics",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: log.js Planned vs done"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json review"
+        ]
+      },
+      {
+        "id": "finish_vs_last",
+        "label": "Vs last time",
+        "category": "logged",
+        "description": "Finish summary arrows for top set, e1RM and volume against the last session.",
+        "formula": "rules.json review.flat_pct (flat band 1%); data/v29-coach-spec.md D2",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: review.js finishSummary"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json review.flat_pct"
+        ]
+      },
+      {
+        "id": "block_compare",
+        "label": "4 weeks vs previous",
+        "category": "logged",
+        "description": "Block comparison of the last 4 training weeks with the 4 before.",
+        "formula": "rules.json review.block_* (deload and current week excluded)",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: review.js blockCompare"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json review"
+        ]
+      },
+      {
+        "id": "deload_score",
+        "label": "Deload suggestion",
+        "category": "logged",
+        "description": "Points from weeks since deload, stalls, RIR drift, over-target weeks, readiness.",
+        "formula": "rules.json logger.deload_signals",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: deload.js"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json logger.deload_signals"
+        ],
+        "suggestion_types": [
+          "deload"
+        ],
+        "note": "Not a validated fatigue test and not medical advice."
+      },
+      {
+        "id": "suspect_decimal",
+        "label": "Keypad check",
+        "category": "logged",
+        "description": "Loads that look about 10x too high from the old decimal bug.",
+        "formula": "rules.json logger.suspect_decimal",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: log.js"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json logger.suspect_decimal"
+        ]
+      },
+      {
+        "id": "avg_rir_logged",
+        "label": "Average RIR (logged)",
+        "category": "logged",
+        "description": "Mean logged reps in reserve of working sets this week, where RIR was entered.",
+        "formula": "mean(set.rir) over working sets with rir != null; also the share of sets with RIR entered",
+        "evidence": "supported",
+        "status": "proposed",
+        "shown_in": [
+          "proposed"
+        ],
+        "is_suggestion_source": false,
+        "defined_in": [
+          "rules.json logger.hardRIR"
+        ],
+        "citations": [
+          "robinson2024",
+          "refalo2023"
+        ],
+        "note": "Proximity to failure relates to growth (cited); the average itself is descriptive. Many users log RIR 0 or nothing, so show it with the entered share."
+      }
+    ]
+  },
+  "progress": {
+    "version": 1,
+    "note": "Progress stats from logged (completed) workouts only. A model for spotting trends, not a measurement of growth or strength. Every threshold here is modeled. Spec: data/progress-spec.md; reference: tools/progress.py.",
+    "reuses": {
+      "hard_sets": "logger.completed_analytics.hard_sets (credited, set_tags credit fractions, ratings >= 0.25)",
+      "e1rm": "logger.e1rm_formula (epley) on working sets with reps <= logger.e1rm_max_reps (10); set_tags pr_exclude; deload sessions left out",
+      "lift_trend": "logger.progress_signals (4-week window, >= 3 sessions over >= 14 days, up > +0.5 %/wk, dropping < -1.0 %/wk)",
+      "adherence": "logger.completed_analytics.adherence",
+      "flat_band": "review.flat_pct (1%)"
+    },
+    "weeks": "Weeks start Monday (local). The in-progress week is never used for trends or refinements.",
+    "weekly_sets": {
+      "actual": "completed_analytics(history, week).hard_sets.per_muscle",
+      "plan": "routine planned sets x rating (rating >= 0.25), summed over the routine days (no hard-set credit discount)",
+      "ratio": "actual / plan (null when plan = 0)"
+    },
+    "trend": {
+      "weeks": 4,
+      "min_weeks": 3,
+      "skip_weeks_without_sessions": true,
+      "up_pct_per_week": 5.0,
+      "down_pct_per_week": -5.0,
+      "rule": "last 4 completed weeks, weeks with no completed session left out; >= 3 weeks needed. Least-squares slope of actual sets vs week index, as % of the mean: up > +5 %/wk, down < -5 %/wk, else flat; mean 0 -> flat."
+    },
+    "main_lift": {
+      "min_rating": 0.5,
+      "rule": "Among exercises with a progress_signals trend in the window and rating[m] >= 0.5: type primary first, then accessory, then isolation; then the higher rating; then more sessions; then id. Reports first and last e1RM in the window, %/week and status."
+    },
+    "adherence": {
+      "weeks": 4,
+      "rule": "Sum completed_analytics adherence over the last 4 completed weeks: sets_ratio = completed planned sets / planned sets; sessions_ratio = completed / (completed + skipped). Per muscle: sum actual / sum plan over the weeks that had a completed session."
+    },
+    "notes": {
+      "min_rating": 0.5,
+      "max_notes": 3,
+      "rule": "For exercises with rating[m] >= 0.5: Always notes = history.exNotes[exercise] (sticky), This session notes = entries[].notes of completed sessions. Always notes first (exercise id order), then This session notes newest first; at most 3 in total."
+    },
+    "guards": {
+      "min_completed_sessions": 4,
+      "min_logged_weeks": 2,
+      "rule": "No refinement fires before 4 completed sessions spanning 2+ weeks. Each refinement has its own minimum below. One workout never triggers anything."
+    },
+    "refinement": {
+      "stall": {
+        "min_exposures": 4,
+        "recent_exposures": 3,
+        "min_span_days": 21,
+        "rule": "Per routine exercise: its last 4+ non-deload exposures (sessions with a valid e1RM) span >= 21 days, and the best e1RM of the last 3 is not above the best before them x (1 + review.flat_pct/100).",
+        "actions": [
+          "rep_range_change",
+          "swap_variation"
+        ],
+        "rep_range_change": "median top-set reps of the last 3 exposures vs the midpoint of rep_range(exercise, goal): midpoint = floor((low + high) / 2); at or below it -> suggest midpoint .. high, above it -> low .. midpoint. Display only; no board edit (the rep range is a target, not a tile field). Time-based ranges (holds) get no rep change.",
+        "swap_variation": "first tools/swap.py swaps(id, n=40) candidate that is eligible for the exercise's own template slot (tools/templates.py eligible(rule_for(id), level): same slot, type, movement_pattern and, for isolation, primary muscle; level filters) and not already in the routine, same equipment family first (swap.fam), -> {op: swap} on every routine tile of the exercise, same sets."
+      },
+      "missed_sets": {
+        "last_sessions": 3,
+        "min_missed": 2,
+        "rule": "Per routine exercise: of the last 3 completed sessions that planned it (session snapshot), at least 2 have fewer done working sets than planned (a skipped entry counts 0).",
+        "actions": [
+          "trim_sets",
+          "move_sets"
+        ],
+        "trim_sets": "set the routine tile to max(2, round(mean done over those sessions)), only if lower than planned -> {op: sets}.",
+        "move_sets": "move the trimmed sets (at least 2) to the routine day that lacks the exercise and was completed most often in the last 4 completed weeks (then fewest sets, then week order) -> {op: sets} + {op: add}; offered only when it adds no non-info flag (fix_validation)."
+      },
+      "under_delivered": {
+        "weeks": 2,
+        "shortfall": 0.25,
+        "min_plan_sets": 2,
+        "rule": "Muscle with plan >= 2 sets: actual < plan x (1 - 0.25) in each of the last 2 completed weeks, each with >= 1 completed session.",
+        "causes": "missed_sets (a missed_sets refinement on an exercise rating the muscle >= 0.5), else skipped_sessions (a skipped session in those weeks that planned an exercise rating the muscle >= 0.5), else swaps_or_logging (info only).",
+        "actions": "missed_sets -> link to that refinement; skipped_sessions -> link to one skipped_day refinement per weekday; else no edit."
+      },
+      "skipped_day": {
+        "rule": "One per routine weekday that had a skipped session behind an under_delivered muscle (the muscles are listed together, not one card each).",
+        "action": "reschedule: move every tile of that day to the nearest empty weekday (earlier first on a tie) whose result adds no non-info flag -> {op: remove} x n + {op: add} x n; none -> info only."
+      }
+    }
+  }
 }

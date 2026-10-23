@@ -1,0 +1,1720 @@
+{
+  "description": "movement_pattern for every exercise (tools/movement.py). Regenerate with build_round1.py.",
+  "order": [
+    "horizontal_push",
+    "vertical_push",
+    "horizontal_pull",
+    "vertical_pull",
+    "squat",
+    "hinge",
+    "lunge",
+    "isolation",
+    "core",
+    "other"
+  ],
+  "counts": {
+    "horizontal_push": 28,
+    "vertical_push": 12,
+    "horizontal_pull": 24,
+    "vertical_pull": 13,
+    "squat": 16,
+    "hinge": 13,
+    "lunge": 8,
+    "isolation": 92,
+    "core": 25,
+    "other": 8
+  },
+  "exercises": {
+    "barbell-bench-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "primary"
+    },
+    "incline-barbell-bench-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "primary"
+    },
+    "dumbbell-bench-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "incline-dumbbell-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "machine-chest-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "weighted-dip": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push",
+        "triceps"
+      ],
+      "type": "primary"
+    },
+    "push-up": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "cable-fly": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "chest_fly"
+      ],
+      "type": "isolation"
+    },
+    "pec-deck": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "chest_fly"
+      ],
+      "type": "isolation"
+    },
+    "dumbbell-fly": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "chest_fly"
+      ],
+      "type": "isolation"
+    },
+    "overhead-press": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "primary"
+    },
+    "seated-dumbbell-shoulder-press": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "accessory"
+    },
+    "machine-shoulder-press": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "accessory"
+    },
+    "dumbbell-lateral-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "side_delts"
+      ],
+      "type": "isolation"
+    },
+    "cable-lateral-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "side_delts"
+      ],
+      "type": "isolation"
+    },
+    "upright-row": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "side_delts",
+        "traps"
+      ],
+      "type": "accessory"
+    },
+    "reverse-pec-deck": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "rear_delts"
+      ],
+      "type": "isolation"
+    },
+    "face-pull": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "rear_delts"
+      ],
+      "type": "isolation"
+    },
+    "dumbbell-rear-delt-fly": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "rear_delts"
+      ],
+      "type": "isolation"
+    },
+    "front-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "front_delts"
+      ],
+      "type": "isolation"
+    },
+    "pull-up": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "primary"
+    },
+    "chin-up": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull",
+        "biceps"
+      ],
+      "type": "primary"
+    },
+    "lat-pulldown": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "close-grip-pulldown": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "barbell-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "primary"
+    },
+    "pendlay-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "primary"
+    },
+    "one-arm-dumbbell-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "chest-supported-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "seated-cable-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "t-bar-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "primary"
+    },
+    "straight-arm-pulldown": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "lat_iso"
+      ],
+      "type": "isolation"
+    },
+    "barbell-shrug": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "traps"
+      ],
+      "type": "isolation"
+    },
+    "dumbbell-shrug": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "traps"
+      ],
+      "type": "isolation"
+    },
+    "barbell-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "dumbbell-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "hammer-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "incline-dumbbell-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "preacher-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "cable-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "close-grip-bench-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push",
+        "triceps"
+      ],
+      "type": "primary"
+    },
+    "skull-crusher": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "triceps"
+      ],
+      "type": "isolation"
+    },
+    "triceps-pushdown": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "triceps"
+      ],
+      "type": "isolation"
+    },
+    "overhead-cable-triceps-extension": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "triceps"
+      ],
+      "type": "isolation"
+    },
+    "wrist-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "forearms"
+      ],
+      "type": "isolation"
+    },
+    "back-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "front-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "hack-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "leg-press": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "bulgarian-split-squat": {
+      "movement_pattern": "lunge",
+      "patterns": [
+        "lunge"
+      ],
+      "type": "accessory"
+    },
+    "walking-lunge": {
+      "movement_pattern": "lunge",
+      "patterns": [
+        "lunge"
+      ],
+      "type": "accessory"
+    },
+    "leg-extension": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "quads_iso"
+      ],
+      "type": "isolation"
+    },
+    "deadlift": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "primary"
+    },
+    "romanian-deadlift": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "primary"
+    },
+    "stiff-leg-dumbbell-deadlift": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "accessory"
+    },
+    "hip-thrust": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "glute_iso"
+      ],
+      "type": "primary"
+    },
+    "lying-leg-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hamstring_curl"
+      ],
+      "type": "isolation"
+    },
+    "seated-leg-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hamstring_curl"
+      ],
+      "type": "isolation"
+    },
+    "back-extension": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "glute_iso"
+      ],
+      "type": "isolation"
+    },
+    "hip-adduction-machine": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hip_iso"
+      ],
+      "type": "isolation"
+    },
+    "standing-calf-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "calves"
+      ],
+      "type": "isolation"
+    },
+    "seated-calf-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "calves"
+      ],
+      "type": "isolation"
+    },
+    "hanging-leg-raise": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "cable-crunch": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "ab-wheel-rollout": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "hip-abduction-machine": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hip_iso"
+      ],
+      "type": "isolation"
+    },
+    "cable-hip-abduction": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hip_iso"
+      ],
+      "type": "isolation"
+    },
+    "side-lying-hip-abduction": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hip_iso"
+      ],
+      "type": "isolation"
+    },
+    "banded-lateral-walk": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hip_iso"
+      ],
+      "type": "isolation"
+    },
+    "dumbbell-step-up": {
+      "movement_pattern": "lunge",
+      "patterns": [
+        "lunge"
+      ],
+      "type": "accessory"
+    },
+    "smith-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "smith-bench-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "primary"
+    },
+    "smith-incline-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "primary"
+    },
+    "smith-overhead-press": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "primary"
+    },
+    "smith-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "primary"
+    },
+    "smith-rdl": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "primary"
+    },
+    "smith-split-squat": {
+      "movement_pattern": "lunge",
+      "patterns": [
+        "lunge"
+      ],
+      "type": "accessory"
+    },
+    "smith-calf-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "calves"
+      ],
+      "type": "isolation"
+    },
+    "smith-hip-thrust": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "glute_iso"
+      ],
+      "type": "primary"
+    },
+    "smith-shrug": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "traps"
+      ],
+      "type": "isolation"
+    },
+    "incline-cable-pullover": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "lat_iso"
+      ],
+      "type": "isolation"
+    },
+    "dumbbell-pullover": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "lat_iso"
+      ],
+      "type": "isolation"
+    },
+    "pullover-machine": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "lat_iso"
+      ],
+      "type": "isolation"
+    },
+    "landmine-t-bar-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "primary"
+    },
+    "viking-press": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "accessory"
+    },
+    "landmine-press-one-arm": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push",
+        "vertical_push",
+        "front_delts"
+      ],
+      "type": "accessory"
+    },
+    "landmine-press-two-arm": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push",
+        "vertical_push",
+        "front_delts"
+      ],
+      "type": "accessory"
+    },
+    "meadows-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "landmine-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "accessory"
+    },
+    "landmine-rdl": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "accessory"
+    },
+    "landmine-rotation": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "accessory"
+    },
+    "machine-preacher-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "seated-machine-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "cable-rope-hammer-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "bayesian-cable-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "high-cable-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "machine-triceps-extension": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "triceps"
+      ],
+      "type": "isolation"
+    },
+    "dip-machine": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push",
+        "triceps"
+      ],
+      "type": "accessory"
+    },
+    "overhead-triceps-machine": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "triceps"
+      ],
+      "type": "isolation"
+    },
+    "plate-loaded-chest-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "incline-machine-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "decline-machine-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "iso-lateral-chest-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "iso-lateral-shoulder-press": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "accessory"
+    },
+    "lateral-raise-machine": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "side_delts"
+      ],
+      "type": "isolation"
+    },
+    "high-row-machine": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "low-row-machine": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "iso-lateral-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "wide-grip-lat-pulldown": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "neutral-grip-lat-pulldown": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "single-arm-lat-pulldown": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "assisted-pull-up": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "assisted-dip": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push",
+        "triceps"
+      ],
+      "type": "accessory"
+    },
+    "pendulum-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "belt-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "v-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "single-leg-press": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat",
+        "quads_iso"
+      ],
+      "type": "accessory"
+    },
+    "high-foot-leg-press": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "nordic-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hamstring_curl"
+      ],
+      "type": "isolation"
+    },
+    "glute-kickback-machine": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "glute_iso"
+      ],
+      "type": "isolation"
+    },
+    "hip-thrust-machine": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "glute_iso"
+      ],
+      "type": "accessory"
+    },
+    "leg-press-calf-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "calves"
+      ],
+      "type": "isolation"
+    },
+    "ab-crunch-machine": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "45-degree-hyperextension": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "glute_iso"
+      ],
+      "type": "isolation"
+    },
+    "reverse-hyper": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "glute_iso"
+      ],
+      "type": "isolation"
+    },
+    "shrug-machine": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "traps"
+      ],
+      "type": "isolation"
+    },
+    "cable-crossover-low-to-high": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "chest_fly"
+      ],
+      "type": "isolation"
+    },
+    "cable-crossover-high-to-low": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "chest_fly"
+      ],
+      "type": "isolation"
+    },
+    "single-arm-cable-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "wide-grip-cable-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "dumbbell-rdl": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "accessory"
+    },
+    "goblet-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat",
+        "quads_iso"
+      ],
+      "type": "accessory"
+    },
+    "dumbbell-reverse-lunge": {
+      "movement_pattern": "lunge",
+      "patterns": [
+        "lunge"
+      ],
+      "type": "accessory"
+    },
+    "arnold-press": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push",
+        "front_delts"
+      ],
+      "type": "accessory"
+    },
+    "cable-y-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "side_delts"
+      ],
+      "type": "isolation"
+    },
+    "concentration-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "dumbbell-kickback": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "triceps"
+      ],
+      "type": "isolation"
+    },
+    "jm-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "triceps",
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "sissy-squat": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "quads_iso"
+      ],
+      "type": "isolation"
+    },
+    "inverted-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "pike-push-up": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "accessory"
+    },
+    "weighted-decline-crunch": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "cable-woodchop": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "accessory"
+    },
+    "pallof-press": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs",
+        "carry_core"
+      ],
+      "type": "isolation"
+    },
+    "standing-cable-crunch": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "dumbbell-incline-y-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "rear_delts"
+      ],
+      "type": "isolation"
+    },
+    "cable-rear-delt-fly": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "rear_delts"
+      ],
+      "type": "isolation"
+    },
+    "cable-overhead-rope-extension": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "triceps"
+      ],
+      "type": "isolation"
+    },
+    "cable-kickback": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "glute_iso"
+      ],
+      "type": "isolation"
+    },
+    "incline-dumbbell-fly": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "chest_fly"
+      ],
+      "type": "isolation"
+    },
+    "decline-bench-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "primary"
+    },
+    "ez-bar-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "spider-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "reverse-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "forearms",
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "cable-preacher-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "standing-leg-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hamstring_curl"
+      ],
+      "type": "isolation"
+    },
+    "glute-ham-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hamstring_curl"
+      ],
+      "type": "accessory"
+    },
+    "barbell-glute-bridge": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "glute_iso"
+      ],
+      "type": "primary"
+    },
+    "good-morning": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "primary"
+    },
+    "seated-dumbbell-lateral-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "side_delts"
+      ],
+      "type": "isolation"
+    },
+    "deficit-push-up": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "seated-row-machine": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "high-to-low-row-machine": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "arc-lat-pulldown": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "standing-lateral-raise-machine": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "side_delts"
+      ],
+      "type": "isolation"
+    },
+    "converging-smith-bench-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "primary"
+    },
+    "converging-smith-incline-press": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "primary"
+    },
+    "converging-smith-shoulder-press": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "primary"
+    },
+    "selectorized-pulldown-machine": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "plate-loaded-chest-supported-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "rotary-torso-machine": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "accessory"
+    },
+    "standing-cable-adduction": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hip_iso"
+      ],
+      "type": "isolation"
+    },
+    "horizontal-leg-press": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "reverse-hack-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "kneeling-leg-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hamstring_curl"
+      ],
+      "type": "isolation"
+    },
+    "smith-squat-feet-forward": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "primary"
+    },
+    "chest-supported-dumbbell-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "seal-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "primary"
+    },
+    "yates-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "primary"
+    },
+    "rack-pull": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "primary"
+    },
+    "trap-bar-deadlift": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "primary"
+    },
+    "captains-chair-knee-raise": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "back-extension-machine": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "glute_iso"
+      ],
+      "type": "isolation"
+    },
+    "reverse-wrist-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "forearms"
+      ],
+      "type": "isolation"
+    },
+    "farmer-carry": {
+      "movement_pattern": "core",
+      "patterns": [
+        "carry_core"
+      ],
+      "type": "accessory"
+    },
+    "ring-dip": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push",
+        "triceps"
+      ],
+      "type": "accessory"
+    },
+    "ring-push-up": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "ring-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "ring-pull-up": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "ring-fly": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "chest_fly"
+      ],
+      "type": "isolation"
+    },
+    "ring-face-pull": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "rear_delts"
+      ],
+      "type": "isolation"
+    },
+    "ring-biceps-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "ring-triceps-extension": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "triceps"
+      ],
+      "type": "isolation"
+    },
+    "ring-l-sit": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "trx-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "trx-push-up": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "trx-y-t-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "rear_delts"
+      ],
+      "type": "isolation"
+    },
+    "trx-biceps-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "biceps"
+      ],
+      "type": "isolation"
+    },
+    "trx-triceps-extension": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "triceps"
+      ],
+      "type": "isolation"
+    },
+    "trx-assisted-pistol": {
+      "movement_pattern": "lunge",
+      "patterns": [
+        "lunge"
+      ],
+      "type": "accessory"
+    },
+    "trx-hamstring-curl": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hamstring_curl"
+      ],
+      "type": "isolation"
+    },
+    "trx-fallout": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "trx-pike": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "kettlebell-swing": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "accessory"
+    },
+    "kettlebell-front-squat": {
+      "movement_pattern": "squat",
+      "patterns": [
+        "squat"
+      ],
+      "type": "accessory"
+    },
+    "kettlebell-clean": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "accessory"
+    },
+    "kettlebell-press": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "accessory"
+    },
+    "kettlebell-push-press": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "accessory"
+    },
+    "kettlebell-snatch": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "accessory"
+    },
+    "turkish-get-up": {
+      "movement_pattern": "core",
+      "patterns": [
+        "carry_core"
+      ],
+      "type": "accessory"
+    },
+    "kettlebell-single-leg-rdl": {
+      "movement_pattern": "hinge",
+      "patterns": [
+        "hinge"
+      ],
+      "type": "accessory"
+    },
+    "kettlebell-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "kettlebell-windmill": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs",
+        "carry_core"
+      ],
+      "type": "accessory"
+    },
+    "suitcase-carry": {
+      "movement_pattern": "core",
+      "patterns": [
+        "carry_core"
+      ],
+      "type": "accessory"
+    },
+    "kettlebell-halo": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "muscle-up": {
+      "movement_pattern": "vertical_pull",
+      "patterns": [
+        "vertical_pull"
+      ],
+      "type": "accessory"
+    },
+    "archer-push-up": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "pseudo-planche-push-up": {
+      "movement_pattern": "horizontal_push",
+      "patterns": [
+        "horizontal_push"
+      ],
+      "type": "accessory"
+    },
+    "wall-handstand-push-up": {
+      "movement_pattern": "vertical_push",
+      "patterns": [
+        "vertical_push"
+      ],
+      "type": "accessory"
+    },
+    "pistol-squat": {
+      "movement_pattern": "lunge",
+      "patterns": [
+        "lunge"
+      ],
+      "type": "accessory"
+    },
+    "shrimp-squat": {
+      "movement_pattern": "lunge",
+      "patterns": [
+        "lunge"
+      ],
+      "type": "accessory"
+    },
+    "front-lever-row": {
+      "movement_pattern": "horizontal_pull",
+      "patterns": [
+        "horizontal_pull"
+      ],
+      "type": "accessory"
+    },
+    "tuck-front-lever": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "lat_iso"
+      ],
+      "type": "isolation"
+    },
+    "dragon-flag": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "hollow-body-hold": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "l-sit": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "box-jump": {
+      "movement_pattern": "other",
+      "patterns": [
+        "power"
+      ],
+      "type": "accessory"
+    },
+    "broad-jump": {
+      "movement_pattern": "other",
+      "patterns": [
+        "power"
+      ],
+      "type": "accessory"
+    },
+    "depth-jump": {
+      "movement_pattern": "other",
+      "patterns": [
+        "power"
+      ],
+      "type": "accessory"
+    },
+    "jump-squat": {
+      "movement_pattern": "other",
+      "patterns": [
+        "power"
+      ],
+      "type": "accessory"
+    },
+    "bounding": {
+      "movement_pattern": "other",
+      "patterns": [
+        "power"
+      ],
+      "type": "accessory"
+    },
+    "plyo-push-up": {
+      "movement_pattern": "other",
+      "patterns": [
+        "power"
+      ],
+      "type": "accessory"
+    },
+    "med-ball-slam": {
+      "movement_pattern": "other",
+      "patterns": [
+        "power"
+      ],
+      "type": "accessory"
+    },
+    "med-ball-chest-pass": {
+      "movement_pattern": "other",
+      "patterns": [
+        "power"
+      ],
+      "type": "accessory"
+    },
+    "barbell-rollout": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "stability-ball-rollout": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "standing-ab-wheel-rollout": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "dead-hang": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "forearms"
+      ],
+      "type": "isolation"
+    },
+    "active-hang": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "forearms"
+      ],
+      "type": "isolation"
+    },
+    "scapular-pull-up": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "forearms"
+      ],
+      "type": "isolation"
+    }
+  }
+}
