@@ -1,0 +1,5079 @@
+{
+ "description": "Round 2 item 1. Top 5 ranked picks per distinct slot rule under the default goal (Size = muscle_size, intermediate, commercial gym profile), from tools/templates.py ranked() (shared ranker tools/rank.py context preset + 0.10 modeled primary bonus on compound slots). defaults: the pick each template slot actually uses (choose_defaults: best-ranked valid pick at the template level). Scores are model outputs, not measurements. Regenerate with build_round2.py.",
+ "goal": {
+  "goals": [
+   "muscle_size"
+  ],
+  "label": "Size",
+  "level": "intermediate",
+  "gym_profile": "commercial"
+ },
+ "type_bonus": {
+  "primary": 0.1,
+  "accessory": 0.0,
+  "isolation": 0.0
+ },
+ "slots": [
+  {
+   "label": "Abs",
+   "eligibility": {
+    "slot": "abs",
+    "movement_pattern": "core",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "abs"
+   },
+   "eligible_at_intermediate": 12,
+   "top5": [
+    {
+     "id": "ab-wheel-rollout",
+     "name": "Ab Wheel Rollout",
+     "type": "isolation",
+     "score": 0.7172
+    },
+    {
+     "id": "hanging-leg-raise",
+     "name": "Hanging Leg Raise",
+     "type": "isolation",
+     "score": 0.7052
+    },
+    {
+     "id": "cable-crunch",
+     "name": "Cable Crunch",
+     "type": "isolation",
+     "score": 0.69
+    },
+    {
+     "id": "standing-ab-wheel-rollout",
+     "name": "Standing Ab-Wheel Rollout",
+     "type": "isolation",
+     "score": 0.5666
+    },
+    {
+     "id": "barbell-rollout",
+     "name": "Barbell Rollout",
+     "type": "isolation",
+     "score": 0.5401
+    }
+   ],
+   "used_in": 37
+  },
+  {
+   "label": "Biceps",
+   "eligibility": {
+    "slot": "biceps",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "biceps"
+   },
+   "eligible_at_intermediate": 15,
+   "top5": [
+    {
+     "id": "incline-dumbbell-curl",
+     "name": "Incline Dumbbell Curl",
+     "type": "isolation",
+     "score": 0.804
+    },
+    {
+     "id": "preacher-curl",
+     "name": "Preacher Curl",
+     "type": "isolation",
+     "score": 0.764
+    },
+    {
+     "id": "cable-curl",
+     "name": "Cable Curl",
+     "type": "isolation",
+     "score": 0.729
+    },
+    {
+     "id": "barbell-curl",
+     "name": "Barbell Curl",
+     "type": "isolation",
+     "score": 0.7238
+    },
+    {
+     "id": "hammer-curl",
+     "name": "Hammer Curl",
+     "type": "isolation",
+     "score": 0.672
+    }
+   ],
+   "used_in": 50
+  },
+  {
+   "label": "Calves",
+   "eligibility": {
+    "slot": "calves",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "calves"
+   },
+   "eligible_at_intermediate": 8,
+   "top5": [
+    {
+     "id": "standing-calf-raise",
+     "name": "Standing Calf Raise",
+     "type": "isolation",
+     "score": 0.824
+    },
+    {
+     "id": "seated-calf-raise",
+     "name": "Seated Calf Raise",
+     "type": "isolation",
+     "score": 0.784
+    },
+    {
+     "id": "donkey-calf-raise",
+     "name": "Donkey Calf Raise",
+     "type": "isolation",
+     "score": 0.684
+    },
+    {
+     "id": "hack-squat-calf-raise",
+     "name": "Hack Squat Calf Raise",
+     "type": "isolation",
+     "score": 0.684
+    },
+    {
+     "id": "leg-press-calf-raise",
+     "name": "Calf Raise on Leg Press",
+     "type": "isolation",
+     "score": 0.684
+    }
+   ],
+   "used_in": 43
+  },
+  {
+   "label": "Chest fly",
+   "eligibility": {
+    "slot": "chest_fly",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "chest"
+   },
+   "eligible_at_intermediate": 6,
+   "top5": [
+    {
+     "id": "cable-fly",
+     "name": "Cable Fly",
+     "type": "isolation",
+     "score": 0.824
+    },
+    {
+     "id": "pec-deck",
+     "name": "Pec Deck",
+     "type": "isolation",
+     "score": 0.7088
+    },
+    {
+     "id": "cable-crossover-high-to-low",
+     "name": "High-to-Low Cable Fly",
+     "type": "isolation",
+     "score": 0.6839
+    },
+    {
+     "id": "dumbbell-fly",
+     "name": "Dumbbell Fly",
+     "type": "isolation",
+     "score": 0.644
+    },
+    {
+     "id": "cable-crossover-low-to-high",
+     "name": "Low-to-High Cable Fly",
+     "type": "isolation",
+     "score": 0.6438
+    }
+   ],
+   "used_in": 16
+  },
+  {
+   "label": "Dip",
+   "eligibility": {
+    "slot": "horizontal_push",
+    "movement_pattern": "horizontal_push",
+    "types": [
+     "primary",
+     "accessory"
+    ],
+    "variant": "dip"
+   },
+   "eligible_at_intermediate": 3,
+   "top5": [
+    {
+     "id": "weighted-dip",
+     "name": "Weighted Dip",
+     "type": "primary",
+     "score": 0.5801
+    },
+    {
+     "id": "assisted-dip",
+     "name": "Assisted Dip",
+     "type": "accessory",
+     "score": 0.4954
+    },
+    {
+     "id": "dip-machine",
+     "name": "Seated Dip Machine",
+     "type": "accessory",
+     "score": 0.3498
+    }
+   ],
+   "used_in": 6
+  },
+  {
+   "label": "Forearms",
+   "eligibility": {
+    "slot": "forearms",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "forearms"
+   },
+   "eligible_at_intermediate": 5,
+   "top5": [
+    {
+     "id": "wrist-curl",
+     "name": "Wrist Curl",
+     "type": "isolation",
+     "score": 0.719
+    },
+    {
+     "id": "reverse-wrist-curl",
+     "name": "Reverse Wrist Curl",
+     "type": "isolation",
+     "score": 0.624
+    },
+    {
+     "id": "reverse-curl",
+     "name": "EZ-Bar Reverse Curl",
+     "type": "isolation",
+     "score": 0.6069
+    },
+    {
+     "id": "dead-hang",
+     "name": "Dead Hang",
+     "type": "isolation",
+     "score": 0.3054
+    },
+    {
+     "id": "active-hang",
+     "name": "Active (Scapular) Hang",
+     "type": "isolation",
+     "score": 0.2984
+    }
+   ],
+   "used_in": 3
+  },
+  {
+   "label": "Glute",
+   "eligibility": {
+    "slot": "glute_iso",
+    "movement_pattern": "isolation",
+    "types": [
+     "primary"
+    ],
+    "primary_muscle": "glutes"
+   },
+   "eligible_at_intermediate": 3,
+   "top5": [
+    {
+     "id": "hip-thrust",
+     "name": "Hip Thrust",
+     "type": "primary",
+     "score": 0.636
+    },
+    {
+     "id": "smith-hip-thrust",
+     "name": "Smith Machine Hip Thrust",
+     "type": "primary",
+     "score": 0.54
+    },
+    {
+     "id": "barbell-glute-bridge",
+     "name": "Barbell Glute Bridge",
+     "type": "primary",
+     "score": 0.5354
+    }
+   ],
+   "used_in": 11
+  },
+  {
+   "label": "Hinge",
+   "eligibility": {
+    "slot": "hinge",
+    "movement_pattern": "hinge",
+    "types": [
+     "primary",
+     "accessory"
+    ],
+    "variant": "hinge"
+   },
+   "eligible_at_intermediate": 10,
+   "top5": [
+    {
+     "id": "romanian-deadlift",
+     "name": "Romanian Deadlift",
+     "type": "primary",
+     "score": 0.732
+    },
+    {
+     "id": "smith-rdl",
+     "name": "Smith Machine Romanian Deadlift",
+     "type": "primary",
+     "score": 0.6239
+    },
+    {
+     "id": "deadlift",
+     "name": "Deadlift",
+     "type": "primary",
+     "score": 0.5824
+    },
+    {
+     "id": "good-morning",
+     "name": "Good Morning",
+     "type": "primary",
+     "score": 0.5761
+    },
+    {
+     "id": "stiff-leg-dumbbell-deadlift",
+     "name": "Stiff-Leg Dumbbell Deadlift",
+     "type": "accessory",
+     "score": 0.5759
+    }
+   ],
+   "used_in": 31
+  },
+  {
+   "label": "Hip abduction",
+   "eligibility": {
+    "slot": "hip_iso",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "abductors"
+   },
+   "eligible_at_intermediate": 5,
+   "top5": [
+    {
+     "id": "hip-abduction-machine",
+     "name": "Hip Abduction Machine",
+     "type": "isolation",
+     "score": 0.5016
+    },
+    {
+     "id": "cable-hip-abduction",
+     "name": "Cable Hip Abduction",
+     "type": "isolation",
+     "score": 0.3416
+    },
+    {
+     "id": "side-lying-hip-abduction",
+     "name": "Side-Lying Hip Abduction",
+     "type": "isolation",
+     "score": 0.303
+    },
+    {
+     "id": "seated-band-hip-abduction",
+     "name": "Seated Banded Hip Abduction",
+     "type": "isolation",
+     "score": 0.2865
+    },
+    {
+     "id": "banded-lateral-walk",
+     "name": "Banded Lateral Walk",
+     "type": "isolation",
+     "score": 0.272
+    }
+   ],
+   "used_in": 15
+  },
+  {
+   "label": "Hip adduction",
+   "eligibility": {
+    "slot": "hip_iso",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "adductors"
+   },
+   "eligible_at_intermediate": 3,
+   "top5": [
+    {
+     "id": "hip-adduction-machine",
+     "name": "Hip Adduction Machine",
+     "type": "isolation",
+     "score": 0.4614
+    },
+    {
+     "id": "standing-cable-adduction",
+     "name": "Standing Cable Hip Adduction",
+     "type": "isolation",
+     "score": 0.3464
+    },
+    {
+     "id": "copenhagen-plank",
+     "name": "Copenhagen Plank",
+     "type": "isolation",
+     "score": 0.2699
+    }
+   ],
+   "used_in": 2
+  },
+  {
+   "label": "Horizontal press",
+   "eligibility": {
+    "slot": "horizontal_push",
+    "movement_pattern": "horizontal_push",
+    "types": [
+     "primary",
+     "accessory"
+    ],
+    "variant": "horizontal_press"
+   },
+   "eligible_at_intermediate": 14,
+   "top5": [
+    {
+     "id": "barbell-bench-press",
+     "name": "Barbell Bench Press",
+     "type": "primary",
+     "score": 0.5842
+    },
+    {
+     "id": "dumbbell-bench-press",
+     "name": "Dumbbell Bench Press",
+     "type": "accessory",
+     "score": 0.5444
+    },
+    {
+     "id": "converging-smith-bench-press",
+     "name": "Converging Smith Bench Press",
+     "type": "primary",
+     "score": 0.499
+    },
+    {
+     "id": "smith-bench-press",
+     "name": "Smith Machine Bench Press",
+     "type": "primary",
+     "score": 0.4982
+    },
+    {
+     "id": "machine-chest-press",
+     "name": "Machine Chest Press",
+     "type": "accessory",
+     "score": 0.4964
+    }
+   ],
+   "used_in": 35
+  },
+  {
+   "label": "Incline press",
+   "eligibility": {
+    "slot": "horizontal_push",
+    "movement_pattern": "horizontal_push",
+    "types": [
+     "primary",
+     "accessory"
+    ],
+    "variant": "incline_press"
+   },
+   "eligible_at_intermediate": 7,
+   "top5": [
+    {
+     "id": "incline-barbell-bench-press",
+     "name": "Incline Barbell Bench Press",
+     "type": "primary",
+     "score": 0.6719
+    },
+    {
+     "id": "incline-dumbbell-press",
+     "name": "Incline Dumbbell Press",
+     "type": "accessory",
+     "score": 0.632
+    },
+    {
+     "id": "converging-smith-incline-press",
+     "name": "Converging Smith Incline Press",
+     "type": "primary",
+     "score": 0.5869
+    },
+    {
+     "id": "smith-incline-press",
+     "name": "Smith Machine Incline Press",
+     "type": "primary",
+     "score": 0.5859
+    },
+    {
+     "id": "incline-machine-press",
+     "name": "Incline Chest Press Machine",
+     "type": "accessory",
+     "score": 0.5155
+    }
+   ],
+   "used_in": 31
+  },
+  {
+   "label": "Lat isolation",
+   "eligibility": {
+    "slot": "lat_iso",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "lats"
+   },
+   "eligible_at_intermediate": 5,
+   "top5": [
+    {
+     "id": "straight-arm-pulldown",
+     "name": "Straight-Arm Pulldown",
+     "type": "isolation",
+     "score": 0.789
+    },
+    {
+     "id": "incline-cable-pullover",
+     "name": "Incline-Bench Cable Pullover",
+     "type": "isolation",
+     "score": 0.602
+    },
+    {
+     "id": "pullover-machine",
+     "name": "Pullover Machine",
+     "type": "isolation",
+     "score": 0.5825
+    },
+    {
+     "id": "tuck-front-lever",
+     "name": "Tuck Front Lever Hold",
+     "type": "isolation",
+     "score": 0.5064
+    },
+    {
+     "id": "dumbbell-pullover",
+     "name": "Dumbbell Pullover",
+     "type": "isolation",
+     "score": 0.4697
+    }
+   ],
+   "used_in": 2
+  },
+  {
+   "label": "Leg curl",
+   "eligibility": {
+    "slot": "hamstring_curl",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "hamstrings"
+   },
+   "eligible_at_intermediate": 5,
+   "top5": [
+    {
+     "id": "seated-leg-curl",
+     "name": "Seated Leg Curl",
+     "type": "isolation",
+     "score": 0.824
+    },
+    {
+     "id": "lying-leg-curl",
+     "name": "Lying Leg Curl",
+     "type": "isolation",
+     "score": 0.783
+    },
+    {
+     "id": "kneeling-leg-curl",
+     "name": "Kneeling Leg Curl",
+     "type": "isolation",
+     "score": 0.6425
+    },
+    {
+     "id": "standing-leg-curl",
+     "name": "Standing Single-Leg Curl",
+     "type": "isolation",
+     "score": 0.6419
+    },
+    {
+     "id": "nordic-curl",
+     "name": "Nordic Curl",
+     "type": "isolation",
+     "score": 0.6416
+    }
+   ],
+   "used_in": 41
+  },
+  {
+   "label": "Overhead press",
+   "eligibility": {
+    "slot": "vertical_push",
+    "movement_pattern": "vertical_push",
+    "types": [
+     "primary",
+     "accessory"
+    ],
+    "variant": "vertical_press"
+   },
+   "eligible_at_intermediate": 12,
+   "top5": [
+    {
+     "id": "overhead-press",
+     "name": "Overhead Press",
+     "type": "primary",
+     "score": 0.6727
+    },
+    {
+     "id": "seated-dumbbell-shoulder-press",
+     "name": "Seated Dumbbell Shoulder Press",
+     "type": "accessory",
+     "score": 0.596
+    },
+    {
+     "id": "smith-overhead-press",
+     "name": "Smith Machine Overhead Press",
+     "type": "primary",
+     "score": 0.5875
+    },
+    {
+     "id": "converging-smith-shoulder-press",
+     "name": "Converging Smith Shoulder Press",
+     "type": "primary",
+     "score": 0.5758
+    },
+    {
+     "id": "machine-shoulder-press",
+     "name": "Machine Shoulder Press",
+     "type": "accessory",
+     "score": 0.5639
+    }
+   ],
+   "used_in": 20
+  },
+  {
+   "label": "Quad isolation",
+   "eligibility": {
+    "slot": "quads_iso",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "quads"
+   },
+   "eligible_at_intermediate": 2,
+   "top5": [
+    {
+     "id": "leg-extension",
+     "name": "Leg Extension",
+     "type": "isolation",
+     "score": 0.784
+    },
+    {
+     "id": "sissy-squat",
+     "name": "Sissy Squat",
+     "type": "isolation",
+     "score": 0.644
+    }
+   ],
+   "used_in": 16
+  },
+  {
+   "label": "Rear delt",
+   "eligibility": {
+    "slot": "rear_delts",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "rear_delts"
+   },
+   "eligible_at_intermediate": 4,
+   "top5": [
+    {
+     "id": "reverse-pec-deck",
+     "name": "Reverse Pec Deck",
+     "type": "isolation",
+     "score": 0.784
+    },
+    {
+     "id": "face-pull",
+     "name": "Face Pull",
+     "type": "isolation",
+     "score": 0.7639
+    },
+    {
+     "id": "cable-rear-delt-fly",
+     "name": "Cable Rear Delt Fly",
+     "type": "isolation",
+     "score": 0.6223
+    },
+    {
+     "id": "dumbbell-rear-delt-fly",
+     "name": "Dumbbell Rear Delt Fly",
+     "type": "isolation",
+     "score": 0.6023
+    }
+   ],
+   "used_in": 40
+  },
+  {
+   "label": "Row",
+   "eligibility": {
+    "slot": "horizontal_pull",
+    "movement_pattern": "horizontal_pull",
+    "types": [
+     "primary",
+     "accessory"
+    ],
+    "variant": "horizontal_row"
+   },
+   "eligible_at_intermediate": 22,
+   "top5": [
+    {
+     "id": "chest-supported-row",
+     "name": "Chest-Supported Row",
+     "type": "accessory",
+     "score": 0.662
+    },
+    {
+     "id": "barbell-row",
+     "name": "Barbell Row",
+     "type": "primary",
+     "score": 0.6458
+    },
+    {
+     "id": "pendlay-row",
+     "name": "Pendlay Row",
+     "type": "primary",
+     "score": 0.6458
+    },
+    {
+     "id": "seated-cable-row",
+     "name": "Seated Cable Row",
+     "type": "accessory",
+     "score": 0.6371
+    },
+    {
+     "id": "t-bar-row",
+     "name": "T-Bar Row",
+     "type": "primary",
+     "score": 0.6355
+    }
+   ],
+   "used_in": 47
+  },
+  {
+   "label": "Shrug",
+   "eligibility": {
+    "slot": "traps",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "traps"
+   },
+   "eligible_at_intermediate": 4,
+   "top5": [
+    {
+     "id": "barbell-shrug",
+     "name": "Barbell Shrug",
+     "type": "isolation",
+     "score": 0.764
+    },
+    {
+     "id": "dumbbell-shrug",
+     "name": "Dumbbell Shrug",
+     "type": "isolation",
+     "score": 0.744
+    },
+    {
+     "id": "shrug-machine",
+     "name": "Shrug Machine",
+     "type": "isolation",
+     "score": 0.624
+    },
+    {
+     "id": "smith-shrug",
+     "name": "Smith Machine Shrug",
+     "type": "isolation",
+     "score": 0.624
+    }
+   ],
+   "used_in": 14
+  },
+  {
+   "label": "Side delt",
+   "eligibility": {
+    "slot": "side_delts",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "side_delts"
+   },
+   "eligible_at_intermediate": 6,
+   "top5": [
+    {
+     "id": "cable-lateral-raise",
+     "name": "Cable Lateral Raise",
+     "type": "isolation",
+     "score": 0.764
+    },
+    {
+     "id": "dumbbell-lateral-raise",
+     "name": "Dumbbell Lateral Raise",
+     "type": "isolation",
+     "score": 0.764
+    },
+    {
+     "id": "seated-dumbbell-lateral-raise",
+     "name": "Seated Dumbbell Lateral Raise",
+     "type": "isolation",
+     "score": 0.6231
+    },
+    {
+     "id": "lateral-raise-machine",
+     "name": "Seated Lateral Raise Machine (Elbow Pads)",
+     "type": "isolation",
+     "score": 0.623
+    },
+    {
+     "id": "standing-lateral-raise-machine",
+     "name": "Standing Lateral Raise Machine",
+     "type": "isolation",
+     "score": 0.6226
+    }
+   ],
+   "used_in": 48
+  },
+  {
+   "label": "Single-leg",
+   "eligibility": {
+    "slot": "lunge",
+    "movement_pattern": "lunge",
+    "types": [
+     "primary",
+     "accessory"
+    ],
+    "variant": "lunge"
+   },
+   "eligible_at_intermediate": 7,
+   "top5": [
+    {
+     "id": "bulgarian-split-squat",
+     "name": "Bulgarian Split Squat",
+     "type": "accessory",
+     "score": 0.6725
+    },
+    {
+     "id": "smith-split-squat",
+     "name": "Smith Machine Split Squat",
+     "type": "accessory",
+     "score": 0.5419
+    },
+    {
+     "id": "pistol-squat",
+     "name": "Pistol Squat",
+     "type": "accessory",
+     "score": 0.5357
+    },
+    {
+     "id": "shrimp-squat",
+     "name": "Shrimp Squat",
+     "type": "accessory",
+     "score": 0.5225
+    },
+    {
+     "id": "walking-lunge",
+     "name": "Walking Lunge",
+     "type": "accessory",
+     "score": 0.4623
+    }
+   ],
+   "used_in": 14
+  },
+  {
+   "label": "Squat",
+   "eligibility": {
+    "slot": "squat",
+    "movement_pattern": "squat",
+    "types": [
+     "primary",
+     "accessory"
+    ],
+    "variant": "squat"
+   },
+   "eligible_at_intermediate": 16,
+   "top5": [
+    {
+     "id": "hack-squat",
+     "name": "Hack Squat",
+     "type": "primary",
+     "score": 0.7423
+    },
+    {
+     "id": "back-squat",
+     "name": "Back Squat",
+     "type": "primary",
+     "score": 0.726
+    },
+    {
+     "id": "leg-press",
+     "name": "Leg Press",
+     "type": "primary",
+     "score": 0.7208
+    },
+    {
+     "id": "front-squat",
+     "name": "Front Squat",
+     "type": "primary",
+     "score": 0.6665
+    },
+    {
+     "id": "belt-squat",
+     "name": "Belt Squat",
+     "type": "primary",
+     "score": 0.663
+    }
+   ],
+   "used_in": 48
+  },
+  {
+   "label": "Triceps",
+   "eligibility": {
+    "slot": "triceps",
+    "movement_pattern": "isolation",
+    "types": [
+     "isolation"
+    ],
+    "primary_muscle": "triceps"
+   },
+   "eligible_at_intermediate": 7,
+   "top5": [
+    {
+     "id": "overhead-cable-triceps-extension",
+     "name": "Overhead Cable Triceps Extension",
+     "type": "isolation",
+     "score": 0.824
+    },
+    {
+     "id": "skull-crusher",
+     "name": "Skull Crusher",
+     "type": "isolation",
+     "score": 0.784
+    },
+    {
+     "id": "triceps-pushdown",
+     "name": "Triceps Pushdown",
+     "type": "isolation",
+     "score": 0.784
+    },
+    {
+     "id": "cable-overhead-rope-extension",
+     "name": "Overhead Rope Triceps Extension (Low Cable)",
+     "type": "isolation",
+     "score": 0.684
+    },
+    {
+     "id": "overhead-triceps-machine",
+     "name": "Overhead Triceps Extension Machine",
+     "type": "isolation",
+     "score": 0.664
+    }
+   ],
+   "used_in": 50
+  },
+  {
+   "label": "Vertical pull",
+   "eligibility": {
+    "slot": "vertical_pull",
+    "movement_pattern": "vertical_pull",
+    "types": [
+     "primary",
+     "accessory"
+    ],
+    "variant": "vertical_pull"
+   },
+   "eligible_at_intermediate": 12,
+   "top5": [
+    {
+     "id": "pull-up",
+     "name": "Pull-Up",
+     "type": "primary",
+     "score": 0.723
+    },
+    {
+     "id": "close-grip-pulldown",
+     "name": "Close-Grip Pulldown",
+     "type": "accessory",
+     "score": 0.6706
+    },
+    {
+     "id": "lat-pulldown",
+     "name": "Lat Pulldown",
+     "type": "accessory",
+     "score": 0.67
+    },
+    {
+     "id": "chin-up",
+     "name": "Chin-Up",
+     "type": "primary",
+     "score": 0.5918
+    },
+    {
+     "id": "single-arm-lat-pulldown",
+     "name": "Single-Arm Lat Pulldown",
+     "type": "accessory",
+     "score": 0.551
+    }
+   ],
+   "used_in": 44
+  }
+ ],
+ "defaults": {
+  "full-body/beginner/2": {
+   "mon-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "mon-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Vertical pull",
+    "default": "lat-pulldown",
+    "rank": 2,
+    "preset_tile": "lat-pulldown"
+   },
+   "mon-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 2,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "thu-1": {
+    "label": "Squat (main)",
+    "default": "leg-press",
+    "rank": 2,
+    "preset_tile": "leg-press"
+   },
+   "thu-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "thu-3": {
+    "label": "Row",
+    "default": "seated-cable-row",
+    "rank": 2,
+    "preset_tile": "seated-cable-row"
+   },
+   "thu-4": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "thu-5": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "face-pull"
+   },
+   "thu-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "thu-7": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   }
+  },
+  "full-body/beginner/3": {
+   "mon-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 6,
+    "preset_tile": "back-squat"
+   },
+   "mon-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 1,
+    "preset_tile": "lat-pulldown"
+   },
+   "mon-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-7": {
+    "label": "Abs",
+    "default": "cable-crunch",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "wed-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "leg-press"
+   },
+   "wed-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "wed-3": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "seated-cable-row"
+   },
+   "wed-4": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-5": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "face-pull"
+   },
+   "wed-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "wed-7": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "fri-1": {
+    "label": "Squat (main)",
+    "default": "leg-press",
+    "rank": 2,
+    "preset_tile": "hack-squat"
+   },
+   "fri-2": {
+    "label": "Horizontal press (main)",
+    "default": "converging-smith-bench-press",
+    "rank": 2,
+    "preset_tile": "machine-chest-press"
+   },
+   "fri-3": {
+    "label": "Row",
+    "default": "seated-cable-row",
+    "rank": 2,
+    "preset_tile": "chest-supported-row"
+   },
+   "fri-4": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "fri-5": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 2,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "fri-6": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "fri-7": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   }
+  },
+  "full-body/beginner/4": {
+   "mon-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "mon-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 1,
+    "preset_tile": "lat-pulldown"
+   },
+   "mon-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-7": {
+    "label": "Abs",
+    "default": "cable-crunch",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "tue-1": {
+    "label": "Squat (main)",
+    "default": "leg-press",
+    "rank": 2,
+    "preset_tile": "leg-press"
+   },
+   "tue-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "tue-3": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "seated-cable-row"
+   },
+   "tue-4": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "tue-5": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "face-pull"
+   },
+   "tue-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "tue-7": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "thu-1": {
+    "label": "Squat (main)",
+    "default": "belt-squat",
+    "rank": 3,
+    "preset_tile": "hack-squat"
+   },
+   "thu-2": {
+    "label": "Horizontal press (main)",
+    "default": "converging-smith-bench-press",
+    "rank": 2,
+    "preset_tile": "machine-chest-press"
+   },
+   "thu-3": {
+    "label": "Row",
+    "default": "seated-cable-row",
+    "rank": 2,
+    "preset_tile": "chest-supported-row"
+   },
+   "thu-4": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "thu-5": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 2,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "thu-6": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "thu-7": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "fri-1": {
+    "label": "Squat (main)",
+    "default": "v-squat",
+    "rank": 4,
+    "preset_tile": "leg-press"
+   },
+   "fri-2": {
+    "label": "Incline press (main)",
+    "default": "converging-smith-incline-press",
+    "rank": 2,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "fri-3": {
+    "label": "Row (main)",
+    "default": "smith-row",
+    "rank": 3,
+    "preset_tile": "seated-cable-row"
+   },
+   "fri-4": {
+    "label": "Hinge (main)",
+    "default": "smith-rdl",
+    "rank": 2,
+    "preset_tile": "romanian-deadlift"
+   },
+   "fri-5": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "face-pull"
+   },
+   "fri-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 2,
+    "preset_tile": "incline-dumbbell-curl"
+   }
+  },
+  "full-body/intermediate/2": {
+   "mon-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "mon-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "mon-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-8": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "thu-1": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "thu-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "thu-3": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "thu-4": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "thu-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "thu-6": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "face-pull"
+   },
+   "thu-7": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   }
+  },
+  "full-body/intermediate/3": {
+   "mon-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "back-squat"
+   },
+   "mon-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "mon-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "wed-1": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "wed-3": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "wed-4": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "wed-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "wed-6": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "face-pull"
+   },
+   "wed-7": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "fri-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "hack-squat"
+   },
+   "fri-2": {
+    "label": "Dip (main)",
+    "default": "weighted-dip",
+    "rank": 1,
+    "preset_tile": "weighted-dip"
+   },
+   "fri-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "lat-pulldown"
+   },
+   "fri-4": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "fri-5": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "fri-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "hammer-curl"
+   },
+   "fri-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   }
+  },
+  "full-body/intermediate/4": {
+   "mon-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "mon-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "mon-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "tue-1": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "tue-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "tue-3": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "tue-4": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "tue-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "tue-6": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "face-pull"
+   },
+   "tue-7": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "thu-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "hack-squat"
+   },
+   "thu-2": {
+    "label": "Dip (main)",
+    "default": "weighted-dip",
+    "rank": 1,
+    "preset_tile": "weighted-dip"
+   },
+   "thu-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "lat-pulldown"
+   },
+   "thu-4": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "thu-5": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "thu-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "hammer-curl"
+   },
+   "thu-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   },
+   "fri-1": {
+    "label": "Hinge (main)",
+    "default": "smith-rdl",
+    "rank": 2,
+    "preset_tile": "romanian-deadlift"
+   },
+   "fri-2": {
+    "label": "Incline press",
+    "default": "incline-dumbbell-press",
+    "rank": 2,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "fri-3": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "chest-supported-row"
+   },
+   "fri-4": {
+    "label": "Single-leg",
+    "default": "smith-split-squat",
+    "rank": 2,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "fri-5": {
+    "label": "Side delt",
+    "default": "seated-dumbbell-lateral-raise",
+    "rank": 3,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "fri-6": {
+    "label": "Rear delt",
+    "default": "cable-rear-delt-fly",
+    "rank": 3,
+    "preset_tile": "face-pull"
+   },
+   "fri-7": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "standing-calf-raise"
+   }
+  },
+  "full-body/advanced/2": {
+   "mon-1": {
+    "label": "Squat (main)",
+    "default": "front-squat",
+    "rank": 4,
+    "preset_tile": "front-squat"
+   },
+   "mon-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-barbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "mon-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-8": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "thu-1": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "thu-2": {
+    "label": "Horizontal press",
+    "default": "dumbbell-bench-press",
+    "rank": 2,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "thu-3": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "pendlay-row"
+   },
+   "thu-4": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "thu-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "thu-6": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "thu-7": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   }
+  },
+  "full-body/advanced/3": {
+   "mon-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "front-squat"
+   },
+   "mon-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-barbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "mon-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-8": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "seated-calf-raise"
+   },
+   "wed-1": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "wed-3": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "pendlay-row"
+   },
+   "wed-4": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "wed-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "wed-6": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "wed-7": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "standing-calf-raise"
+   },
+   "fri-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "hack-squat"
+   },
+   "fri-2": {
+    "label": "Dip (main)",
+    "default": "weighted-dip",
+    "rank": 1,
+    "preset_tile": "weighted-dip"
+   },
+   "fri-3": {
+    "label": "Vertical pull",
+    "default": "lat-pulldown",
+    "rank": 3,
+    "preset_tile": "lat-pulldown"
+   },
+   "fri-4": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "fri-5": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "face-pull"
+   },
+   "fri-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "cable-curl"
+   },
+   "fri-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   }
+  },
+  "full-body/advanced/4": {
+   "mon-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "front-squat"
+   },
+   "mon-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-barbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "mon-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "tue-1": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "tue-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "tue-3": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "pendlay-row"
+   },
+   "tue-4": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "tue-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "tue-6": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "tue-7": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "thu-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "hack-squat"
+   },
+   "thu-2": {
+    "label": "Dip (main)",
+    "default": "weighted-dip",
+    "rank": 1,
+    "preset_tile": "weighted-dip"
+   },
+   "thu-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "lat-pulldown"
+   },
+   "thu-4": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "thu-5": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "face-pull"
+   },
+   "thu-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "cable-curl"
+   },
+   "thu-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "fri-1": {
+    "label": "Hinge (main)",
+    "default": "smith-rdl",
+    "rank": 2,
+    "preset_tile": "romanian-deadlift"
+   },
+   "fri-2": {
+    "label": "Horizontal press",
+    "default": "dumbbell-bench-press",
+    "rank": 2,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "fri-3": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "pendlay-row"
+   },
+   "fri-4": {
+    "label": "Single-leg",
+    "default": "smith-split-squat",
+    "rank": 2,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "fri-5": {
+    "label": "Side delt",
+    "default": "seated-dumbbell-lateral-raise",
+    "rank": 3,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "fri-6": {
+    "label": "Rear delt",
+    "default": "cable-rear-delt-fly",
+    "rank": 3,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "fri-7": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "standing-calf-raise"
+   }
+  },
+  "upper-lower/beginner/2": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Vertical pull",
+    "default": "lat-pulldown",
+    "rank": 2,
+    "preset_tile": "lat-pulldown"
+   },
+   "mon-3": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "seated-dumbbell-shoulder-press"
+   },
+   "mon-4": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "seated-cable-row"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "thu-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 6,
+    "preset_tile": "back-squat"
+   },
+   "thu-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "thu-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "thu-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "thu-5": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "thu-6": {
+    "label": "Abs",
+    "default": "cable-crunch",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   },
+   "thu-7": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   }
+  },
+  "upper-lower/beginner/4": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 1,
+    "preset_tile": "lat-pulldown"
+   },
+   "mon-3": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "seated-dumbbell-shoulder-press"
+   },
+   "mon-4": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "seated-cable-row"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "tue-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "tue-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "tue-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "tue-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "tue-5": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "tue-6": {
+    "label": "Abs",
+    "default": "cable-crunch",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   },
+   "thu-1": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "thu-2": {
+    "label": "Row",
+    "default": "seated-cable-row",
+    "rank": 2,
+    "preset_tile": "chest-supported-row"
+   },
+   "thu-3": {
+    "label": "Vertical pull",
+    "default": "lat-pulldown",
+    "rank": 2,
+    "preset_tile": "close-grip-pulldown"
+   },
+   "thu-4": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "thu-5": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "face-pull"
+   },
+   "thu-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 2,
+    "preset_tile": "hammer-curl"
+   },
+   "thu-7": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 2,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "fri-1": {
+    "label": "Squat (main)",
+    "default": "leg-press",
+    "rank": 2,
+    "preset_tile": "leg-press"
+   },
+   "fri-2": {
+    "label": "Glute",
+    "default": "hip-thrust",
+    "rank": 1,
+    "preset_tile": "hip-thrust"
+   },
+   "fri-3": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "fri-4": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "fri-5": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "fri-6": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 2,
+    "preset_tile": "hanging-leg-raise"
+   }
+  },
+  "upper-lower/intermediate/2": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "mon-3": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "overhead-press"
+   },
+   "mon-4": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "thu-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "back-squat"
+   },
+   "thu-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "thu-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "thu-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "thu-5": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "thu-6": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   },
+   "thu-7": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   }
+  },
+  "upper-lower/intermediate/4": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "mon-3": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "overhead-press"
+   },
+   "mon-4": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "tue-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "tue-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "tue-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "tue-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "tue-5": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "tue-6": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   },
+   "thu-1": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "thu-2": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "barbell-row"
+   },
+   "thu-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "lat-pulldown"
+   },
+   "thu-4": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "thu-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "thu-6": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "thu-7": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 2,
+    "preset_tile": "triceps-pushdown"
+   },
+   "fri-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "hack-squat"
+   },
+   "fri-2": {
+    "label": "Glute",
+    "default": "hip-thrust",
+    "rank": 1,
+    "preset_tile": "hip-thrust"
+   },
+   "fri-3": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "fri-4": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "fri-5": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "fri-6": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "fri-7": {
+    "label": "Abs",
+    "default": "hanging-leg-raise",
+    "rank": 2,
+    "preset_tile": "hanging-leg-raise"
+   }
+  },
+  "upper-lower/advanced/4": {
+   "mon-1": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "mon-3": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "seated-dumbbell-shoulder-press"
+   },
+   "mon-4": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "tue-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "tue-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "tue-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "tue-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "tue-5": {
+    "label": "Hip adduction",
+    "default": "hip-adduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-adduction-machine"
+   },
+   "tue-6": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "tue-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "thu-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "thu-2": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "pendlay-row"
+   },
+   "thu-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "close-grip-pulldown"
+   },
+   "thu-4": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "thu-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "thu-6": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "thu-7": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 2,
+    "preset_tile": "skull-crusher"
+   },
+   "fri-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "front-squat"
+   },
+   "fri-2": {
+    "label": "Glute",
+    "default": "hip-thrust",
+    "rank": 1,
+    "preset_tile": "hip-thrust"
+   },
+   "fri-3": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "fri-4": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "fri-5": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "fri-6": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "fri-7": {
+    "label": "Abs",
+    "default": "hanging-leg-raise",
+    "rank": 2,
+    "preset_tile": "ab-wheel-rollout"
+   }
+  },
+  "ppl/beginner/3": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "mon-3": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "seated-dumbbell-shoulder-press"
+   },
+   "mon-4": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-5": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 2,
+    "preset_tile": "triceps-pushdown"
+   },
+   "wed-1": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 1,
+    "preset_tile": "lat-pulldown"
+   },
+   "wed-2": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "seated-cable-row"
+   },
+   "wed-3": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "face-pull"
+   },
+   "wed-4": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "wed-5": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 2,
+    "preset_tile": "hammer-curl"
+   },
+   "wed-6": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "dumbbell-shrug"
+   },
+   "fri-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 6,
+    "preset_tile": "back-squat"
+   },
+   "fri-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "fri-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "fri-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "fri-5": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "fri-6": {
+    "label": "Abs",
+    "default": "cable-crunch",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   }
+  },
+  "ppl/beginner/6": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "mon-3": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "seated-dumbbell-shoulder-press"
+   },
+   "mon-4": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-5": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 2,
+    "preset_tile": "triceps-pushdown"
+   },
+   "tue-1": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 1,
+    "preset_tile": "lat-pulldown"
+   },
+   "tue-2": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "seated-cable-row"
+   },
+   "tue-3": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "face-pull"
+   },
+   "tue-4": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "tue-5": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 2,
+    "preset_tile": "hammer-curl"
+   },
+   "tue-6": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "dumbbell-shrug"
+   },
+   "wed-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 6,
+    "preset_tile": "back-squat"
+   },
+   "wed-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "wed-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "wed-5": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "wed-6": {
+    "label": "Abs",
+    "default": "cable-crunch",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   },
+   "thu-1": {
+    "label": "Horizontal press (main)",
+    "default": "converging-smith-bench-press",
+    "rank": 2,
+    "preset_tile": "machine-chest-press"
+   },
+   "thu-2": {
+    "label": "Incline press (main)",
+    "default": "converging-smith-incline-press",
+    "rank": 2,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "thu-3": {
+    "label": "Overhead press (main)",
+    "default": "smith-overhead-press",
+    "rank": 2,
+    "preset_tile": "machine-shoulder-press"
+   },
+   "thu-4": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "thu-5": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 3,
+    "preset_tile": "skull-crusher"
+   },
+   "fri-1": {
+    "label": "Vertical pull",
+    "default": "lat-pulldown",
+    "rank": 2,
+    "preset_tile": "close-grip-pulldown"
+   },
+   "fri-2": {
+    "label": "Row",
+    "default": "seated-cable-row",
+    "rank": 2,
+    "preset_tile": "chest-supported-row"
+   },
+   "fri-3": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "fri-4": {
+    "label": "Biceps",
+    "default": "cable-curl",
+    "rank": 3,
+    "preset_tile": "cable-curl"
+   },
+   "sat-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "leg-press"
+   },
+   "sat-2": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "seated-leg-curl"
+   },
+   "sat-3": {
+    "label": "Glute",
+    "default": "hip-thrust",
+    "rank": 1,
+    "preset_tile": "hip-thrust"
+   },
+   "sat-4": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "sat-5": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 2,
+    "preset_tile": "hanging-leg-raise"
+   }
+  },
+  "ppl/intermediate/3": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "overhead-press"
+   },
+   "mon-3": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "mon-4": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 2,
+    "preset_tile": "triceps-pushdown"
+   },
+   "mon-8": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "seated-calf-raise"
+   },
+   "wed-1": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "wed-2": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "barbell-row"
+   },
+   "wed-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "lat-pulldown"
+   },
+   "wed-4": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "wed-5": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "wed-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "hammer-curl"
+   },
+   "wed-7": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "barbell-shrug"
+   },
+   "fri-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "back-squat"
+   },
+   "fri-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "fri-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "fri-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "fri-5": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "fri-6": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "standing-calf-raise"
+   },
+   "fri-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   }
+  },
+  "ppl/intermediate/6": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "overhead-press"
+   },
+   "mon-3": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "mon-4": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 2,
+    "preset_tile": "triceps-pushdown"
+   },
+   "tue-1": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "tue-2": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "barbell-row"
+   },
+   "tue-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "lat-pulldown"
+   },
+   "tue-4": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "tue-5": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "tue-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "hammer-curl"
+   },
+   "tue-7": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "barbell-shrug"
+   },
+   "wed-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "wed-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "wed-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "wed-5": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "wed-6": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "wed-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "thu-1": {
+    "label": "Incline press",
+    "default": "incline-dumbbell-press",
+    "rank": 2,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "thu-2": {
+    "label": "Horizontal press",
+    "default": "dumbbell-bench-press",
+    "rank": 2,
+    "preset_tile": "machine-chest-press"
+   },
+   "thu-3": {
+    "label": "Overhead press",
+    "default": "seated-dumbbell-shoulder-press",
+    "rank": 2,
+    "preset_tile": "machine-shoulder-press"
+   },
+   "thu-4": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "thu-5": {
+    "label": "Triceps",
+    "default": "cable-overhead-rope-extension",
+    "rank": 4,
+    "preset_tile": "skull-crusher"
+   },
+   "thu-6": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 3,
+    "preset_tile": "triceps-pushdown"
+   },
+   "fri-1": {
+    "label": "Vertical pull",
+    "default": "lat-pulldown",
+    "rank": 3,
+    "preset_tile": "lat-pulldown"
+   },
+   "fri-2": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "chest-supported-row"
+   },
+   "fri-3": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "face-pull"
+   },
+   "fri-4": {
+    "label": "Biceps",
+    "default": "cable-curl",
+    "rank": 3,
+    "preset_tile": "cable-curl"
+   },
+   "fri-5": {
+    "label": "Biceps",
+    "default": "barbell-curl",
+    "rank": 4,
+    "preset_tile": "hammer-curl"
+   },
+   "fri-6": {
+    "label": "Shrug",
+    "default": "dumbbell-shrug",
+    "rank": 2,
+    "preset_tile": "dumbbell-shrug"
+   },
+   "sat-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "hack-squat"
+   },
+   "sat-2": {
+    "label": "Hinge (main)",
+    "default": "smith-rdl",
+    "rank": 2,
+    "preset_tile": "stiff-leg-dumbbell-deadlift"
+   },
+   "sat-3": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "sat-4": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "sat-5": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "sat-6": {
+    "label": "Abs",
+    "default": "hanging-leg-raise",
+    "rank": 2,
+    "preset_tile": "cable-crunch"
+   }
+  },
+  "ppl/advanced/3": {
+   "mon-1": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Overhead press",
+    "default": "seated-dumbbell-shoulder-press",
+    "rank": 2,
+    "preset_tile": "seated-dumbbell-shoulder-press"
+   },
+   "mon-4": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-7": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-8": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "seated-calf-raise"
+   },
+   "mon-9": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "wed-1": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "wed-2": {
+    "label": "Row (main)",
+    "default": "pendlay-row",
+    "rank": 3,
+    "preset_tile": "pendlay-row"
+   },
+   "wed-3": {
+    "label": "Row (main)",
+    "default": "t-bar-row",
+    "rank": 5,
+    "preset_tile": "chest-supported-row"
+   },
+   "wed-4": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "wed-5": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "wed-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "preacher-curl"
+   },
+   "wed-7": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "barbell-shrug"
+   },
+   "fri-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "back-squat"
+   },
+   "fri-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "fri-3": {
+    "label": "Glute",
+    "default": "hip-thrust",
+    "rank": 1,
+    "preset_tile": "hip-thrust"
+   },
+   "fri-4": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "fri-5": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "fri-6": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "standing-calf-raise"
+   },
+   "fri-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   }
+  },
+  "ppl/advanced/6": {
+   "mon-1": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Overhead press",
+    "default": "seated-dumbbell-shoulder-press",
+    "rank": 2,
+    "preset_tile": "seated-dumbbell-shoulder-press"
+   },
+   "mon-4": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 2,
+    "preset_tile": "skull-crusher"
+   },
+   "tue-1": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "tue-2": {
+    "label": "Row (main)",
+    "default": "pendlay-row",
+    "rank": 3,
+    "preset_tile": "pendlay-row"
+   },
+   "tue-3": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "tue-4": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "tue-5": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "tue-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "preacher-curl"
+   },
+   "tue-7": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "barbell-shrug"
+   },
+   "wed-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "wed-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-3": {
+    "label": "Glute",
+    "default": "hip-thrust",
+    "rank": 1,
+    "preset_tile": "hip-thrust"
+   },
+   "wed-4": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "wed-5": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "wed-6": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "wed-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "thu-1": {
+    "label": "Incline press",
+    "default": "incline-dumbbell-press",
+    "rank": 2,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "thu-2": {
+    "label": "Horizontal press",
+    "default": "dumbbell-bench-press",
+    "rank": 2,
+    "preset_tile": "machine-chest-press"
+   },
+   "thu-3": {
+    "label": "Overhead press",
+    "default": "machine-shoulder-press",
+    "rank": 5,
+    "preset_tile": "machine-shoulder-press"
+   },
+   "thu-4": {
+    "label": "Chest fly",
+    "default": "pec-deck",
+    "rank": 2,
+    "preset_tile": "pec-deck"
+   },
+   "thu-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "thu-6": {
+    "label": "Triceps",
+    "default": "cable-overhead-rope-extension",
+    "rank": 4,
+    "preset_tile": "skull-crusher"
+   },
+   "thu-7": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 3,
+    "preset_tile": "triceps-pushdown"
+   },
+   "fri-1": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "close-grip-pulldown"
+   },
+   "fri-2": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "t-bar-row"
+   },
+   "fri-3": {
+    "label": "Lat isolation",
+    "default": "straight-arm-pulldown",
+    "rank": 1,
+    "preset_tile": "straight-arm-pulldown"
+   },
+   "fri-4": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "face-pull"
+   },
+   "fri-5": {
+    "label": "Biceps",
+    "default": "cable-curl",
+    "rank": 3,
+    "preset_tile": "cable-curl"
+   },
+   "fri-6": {
+    "label": "Biceps",
+    "default": "hammer-curl",
+    "rank": 5,
+    "preset_tile": "hammer-curl"
+   },
+   "fri-7": {
+    "label": "Shrug",
+    "default": "dumbbell-shrug",
+    "rank": 2,
+    "preset_tile": "dumbbell-shrug"
+   },
+   "sat-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "hack-squat"
+   },
+   "sat-2": {
+    "label": "Hinge (main)",
+    "default": "good-morning",
+    "rank": 4,
+    "preset_tile": "stiff-leg-dumbbell-deadlift"
+   },
+   "sat-3": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "sat-4": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "sat-5": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "sat-6": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "sat-7": {
+    "label": "Abs",
+    "default": "hanging-leg-raise",
+    "rank": 2,
+    "preset_tile": "ab-wheel-rollout"
+   }
+  },
+  "bro-split/beginner/5": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "mon-3": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "mon-4": {
+    "label": "Abs",
+    "default": "cable-crunch",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   },
+   "mon-5": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "tue-1": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 1,
+    "preset_tile": "lat-pulldown"
+   },
+   "tue-2": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "seated-cable-row"
+   },
+   "tue-3": {
+    "label": "Row",
+    "default": "seated-cable-row",
+    "rank": 2,
+    "preset_tile": "one-arm-dumbbell-row"
+   },
+   "tue-4": {
+    "label": "Lat isolation",
+    "default": "straight-arm-pulldown",
+    "rank": 1,
+    "preset_tile": "straight-arm-pulldown"
+   },
+   "tue-5": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "dumbbell-shrug"
+   },
+   "wed-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "wed-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-3": {
+    "label": "Squat (main)",
+    "default": "leg-press",
+    "rank": 2,
+    "preset_tile": "leg-press"
+   },
+   "wed-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "wed-5": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "fri-1": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "seated-dumbbell-shoulder-press"
+   },
+   "fri-2": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "fri-3": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "face-pull"
+   },
+   "fri-4": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "fri-5": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "sat-1": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 1,
+    "preset_tile": "barbell-curl"
+   },
+   "sat-2": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 2,
+    "preset_tile": "triceps-pushdown"
+   },
+   "sat-3": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 2,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "sat-4": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "sat-5": {
+    "label": "Forearms",
+    "default": "wrist-curl",
+    "rank": 1,
+    "preset_tile": "wrist-curl"
+   }
+  },
+  "bro-split/intermediate/5": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "mon-3": {
+    "label": "Dip (main)",
+    "default": "weighted-dip",
+    "rank": 1,
+    "preset_tile": "weighted-dip"
+   },
+   "mon-4": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "mon-5": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   },
+   "tue-1": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "tue-2": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "barbell-row"
+   },
+   "tue-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "lat-pulldown"
+   },
+   "tue-4": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "tue-5": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "barbell-shrug"
+   },
+   "tue-6": {
+    "label": "Abs",
+    "default": "hanging-leg-raise",
+    "rank": 2,
+    "preset_tile": "cable-crunch"
+   },
+   "wed-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "wed-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-3": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "leg-press"
+   },
+   "wed-4": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "wed-5": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "wed-6": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "wed-7": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "fri-1": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "overhead-press"
+   },
+   "fri-2": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "fri-3": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "fri-4": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "fri-5": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "face-pull"
+   },
+   "fri-6": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "sat-1": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "barbell-curl"
+   },
+   "sat-2": {
+    "label": "Horizontal press",
+    "default": "dumbbell-bench-press",
+    "rank": 2,
+    "preset_tile": "close-grip-bench-press"
+   },
+   "sat-3": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "sat-4": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "sat-5": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 2,
+    "preset_tile": "triceps-pushdown"
+   },
+   "sat-6": {
+    "label": "Forearms",
+    "default": "wrist-curl",
+    "rank": 1,
+    "preset_tile": "wrist-curl"
+   }
+  },
+  "bro-split/advanced/5": {
+   "mon-1": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Dip (main)",
+    "default": "weighted-dip",
+    "rank": 1,
+    "preset_tile": "weighted-dip"
+   },
+   "mon-4": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "mon-5": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "mon-6": {
+    "label": "Glute",
+    "default": "hip-thrust",
+    "rank": 1,
+    "preset_tile": "hip-thrust"
+   },
+   "tue-1": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "tue-2": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "pendlay-row"
+   },
+   "tue-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "close-grip-pulldown"
+   },
+   "tue-4": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "tue-5": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "barbell-shrug"
+   },
+   "tue-6": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "wed-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "back-squat"
+   },
+   "wed-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-3": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "hack-squat"
+   },
+   "wed-4": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "wed-5": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "wed-6": {
+    "label": "Hip adduction",
+    "default": "hip-adduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-adduction-machine"
+   },
+   "wed-7": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "fri-1": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "overhead-press"
+   },
+   "fri-2": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "fri-3": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "fri-4": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "fri-5": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "face-pull"
+   },
+   "fri-6": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "fri-7": {
+    "label": "Abs",
+    "default": "hanging-leg-raise",
+    "rank": 2,
+    "preset_tile": "ab-wheel-rollout"
+   },
+   "sat-1": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "barbell-curl"
+   },
+   "sat-2": {
+    "label": "Horizontal press",
+    "default": "dumbbell-bench-press",
+    "rank": 2,
+    "preset_tile": "close-grip-bench-press"
+   },
+   "sat-3": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "sat-4": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "sat-5": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 2,
+    "preset_tile": "skull-crusher"
+   },
+   "sat-6": {
+    "label": "Forearms",
+    "default": "wrist-curl",
+    "rank": 1,
+    "preset_tile": "wrist-curl"
+   }
+  },
+  "pplul/beginner/5": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "mon-3": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "seated-dumbbell-shoulder-press"
+   },
+   "mon-4": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "mon-5": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 2,
+    "preset_tile": "triceps-pushdown"
+   },
+   "tue-1": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 1,
+    "preset_tile": "lat-pulldown"
+   },
+   "tue-2": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "seated-cable-row"
+   },
+   "tue-3": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "face-pull"
+   },
+   "tue-4": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "tue-5": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 2,
+    "preset_tile": "hammer-curl"
+   },
+   "tue-6": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "dumbbell-shrug"
+   },
+   "wed-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "wed-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "wed-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "wed-5": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "wed-6": {
+    "label": "Abs",
+    "default": "cable-crunch",
+    "rank": 1,
+    "preset_tile": "cable-crunch"
+   },
+   "fri-1": {
+    "label": "Incline press (main)",
+    "default": "converging-smith-incline-press",
+    "rank": 2,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "fri-2": {
+    "label": "Row",
+    "default": "seated-cable-row",
+    "rank": 2,
+    "preset_tile": "chest-supported-row"
+   },
+   "fri-3": {
+    "label": "Vertical pull",
+    "default": "lat-pulldown",
+    "rank": 2,
+    "preset_tile": "close-grip-pulldown"
+   },
+   "fri-4": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "fri-5": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "face-pull"
+   },
+   "fri-6": {
+    "label": "Biceps",
+    "default": "cable-curl",
+    "rank": 3,
+    "preset_tile": "hammer-curl"
+   },
+   "fri-7": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 3,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "sat-1": {
+    "label": "Squat (main)",
+    "default": "leg-press",
+    "rank": 2,
+    "preset_tile": "leg-press"
+   },
+   "sat-2": {
+    "label": "Glute",
+    "default": "hip-thrust",
+    "rank": 1,
+    "preset_tile": "hip-thrust"
+   },
+   "sat-3": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "sat-4": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "sat-5": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "sat-6": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 2,
+    "preset_tile": "hanging-leg-raise"
+   }
+  },
+  "pplul/intermediate/5": {
+   "mon-1": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "overhead-press"
+   },
+   "mon-3": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "mon-4": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 2,
+    "preset_tile": "triceps-pushdown"
+   },
+   "tue-1": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "tue-2": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "barbell-row"
+   },
+   "tue-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "lat-pulldown"
+   },
+   "tue-4": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "tue-5": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "tue-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "hammer-curl"
+   },
+   "tue-7": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "barbell-shrug"
+   },
+   "wed-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "wed-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-3": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "wed-4": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "wed-5": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "wed-6": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "wed-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "fri-1": {
+    "label": "Incline press",
+    "default": "incline-dumbbell-press",
+    "rank": 2,
+    "preset_tile": "incline-dumbbell-press"
+   },
+   "fri-2": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "barbell-row"
+   },
+   "fri-3": {
+    "label": "Vertical pull",
+    "default": "lat-pulldown",
+    "rank": 3,
+    "preset_tile": "lat-pulldown"
+   },
+   "fri-4": {
+    "label": "Chest fly",
+    "default": "pec-deck",
+    "rank": 2,
+    "preset_tile": "cable-fly"
+   },
+   "fri-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "fri-6": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "fri-7": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 3,
+    "preset_tile": "triceps-pushdown"
+   },
+   "sat-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "hack-squat"
+   },
+   "sat-2": {
+    "label": "Glute",
+    "default": "hip-thrust",
+    "rank": 1,
+    "preset_tile": "hip-thrust"
+   },
+   "sat-3": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "sat-4": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "sat-5": {
+    "label": "Hip abduction",
+    "default": "cable-hip-abduction",
+    "rank": 2,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "sat-6": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "sat-7": {
+    "label": "Abs",
+    "default": "hanging-leg-raise",
+    "rank": 2,
+    "preset_tile": "hanging-leg-raise"
+   }
+  },
+  "pplul/advanced/5": {
+   "mon-1": {
+    "label": "Incline press (main)",
+    "default": "incline-barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "incline-barbell-bench-press"
+   },
+   "mon-2": {
+    "label": "Horizontal press (main)",
+    "default": "barbell-bench-press",
+    "rank": 1,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "mon-3": {
+    "label": "Overhead press (main)",
+    "default": "overhead-press",
+    "rank": 1,
+    "preset_tile": "seated-dumbbell-shoulder-press"
+   },
+   "mon-4": {
+    "label": "Chest fly",
+    "default": "cable-fly",
+    "rank": 1,
+    "preset_tile": "cable-fly"
+   },
+   "mon-5": {
+    "label": "Side delt",
+    "default": "cable-lateral-raise",
+    "rank": 1,
+    "preset_tile": "cable-lateral-raise"
+   },
+   "mon-6": {
+    "label": "Triceps",
+    "default": "overhead-cable-triceps-extension",
+    "rank": 1,
+    "preset_tile": "overhead-cable-triceps-extension"
+   },
+   "mon-7": {
+    "label": "Triceps",
+    "default": "skull-crusher",
+    "rank": 2,
+    "preset_tile": "skull-crusher"
+   },
+   "tue-1": {
+    "label": "Vertical pull (main)",
+    "default": "pull-up",
+    "rank": 1,
+    "preset_tile": "pull-up"
+   },
+   "tue-2": {
+    "label": "Row (main)",
+    "default": "pendlay-row",
+    "rank": 3,
+    "preset_tile": "pendlay-row"
+   },
+   "tue-3": {
+    "label": "Row",
+    "default": "chest-supported-row",
+    "rank": 1,
+    "preset_tile": "chest-supported-row"
+   },
+   "tue-4": {
+    "label": "Rear delt",
+    "default": "reverse-pec-deck",
+    "rank": 1,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "tue-5": {
+    "label": "Biceps",
+    "default": "incline-dumbbell-curl",
+    "rank": 1,
+    "preset_tile": "incline-dumbbell-curl"
+   },
+   "tue-6": {
+    "label": "Biceps",
+    "default": "preacher-curl",
+    "rank": 2,
+    "preset_tile": "preacher-curl"
+   },
+   "tue-7": {
+    "label": "Shrug",
+    "default": "barbell-shrug",
+    "rank": 1,
+    "preset_tile": "barbell-shrug"
+   },
+   "wed-1": {
+    "label": "Squat (main)",
+    "default": "hack-squat",
+    "rank": 1,
+    "preset_tile": "back-squat"
+   },
+   "wed-2": {
+    "label": "Hinge (main)",
+    "default": "romanian-deadlift",
+    "rank": 1,
+    "preset_tile": "romanian-deadlift"
+   },
+   "wed-3": {
+    "label": "Glute",
+    "default": "hip-thrust",
+    "rank": 1,
+    "preset_tile": "hip-thrust"
+   },
+   "wed-4": {
+    "label": "Quad isolation",
+    "default": "leg-extension",
+    "rank": 1,
+    "preset_tile": "leg-extension"
+   },
+   "wed-5": {
+    "label": "Leg curl",
+    "default": "seated-leg-curl",
+    "rank": 1,
+    "preset_tile": "seated-leg-curl"
+   },
+   "wed-6": {
+    "label": "Calves",
+    "default": "standing-calf-raise",
+    "rank": 1,
+    "preset_tile": "standing-calf-raise"
+   },
+   "wed-7": {
+    "label": "Abs",
+    "default": "ab-wheel-rollout",
+    "rank": 1,
+    "preset_tile": "hanging-leg-raise"
+   },
+   "fri-1": {
+    "label": "Horizontal press",
+    "default": "dumbbell-bench-press",
+    "rank": 2,
+    "preset_tile": "dumbbell-bench-press"
+   },
+   "fri-2": {
+    "label": "Row (main)",
+    "default": "barbell-row",
+    "rank": 2,
+    "preset_tile": "pendlay-row"
+   },
+   "fri-3": {
+    "label": "Vertical pull",
+    "default": "close-grip-pulldown",
+    "rank": 2,
+    "preset_tile": "close-grip-pulldown"
+   },
+   "fri-4": {
+    "label": "Chest fly",
+    "default": "pec-deck",
+    "rank": 2,
+    "preset_tile": "cable-fly"
+   },
+   "fri-5": {
+    "label": "Side delt",
+    "default": "dumbbell-lateral-raise",
+    "rank": 2,
+    "preset_tile": "dumbbell-lateral-raise"
+   },
+   "fri-6": {
+    "label": "Rear delt",
+    "default": "face-pull",
+    "rank": 2,
+    "preset_tile": "reverse-pec-deck"
+   },
+   "fri-7": {
+    "label": "Triceps",
+    "default": "triceps-pushdown",
+    "rank": 3,
+    "preset_tile": "skull-crusher"
+   },
+   "sat-1": {
+    "label": "Squat (main)",
+    "default": "back-squat",
+    "rank": 2,
+    "preset_tile": "front-squat"
+   },
+   "sat-2": {
+    "label": "Glute",
+    "default": "smith-hip-thrust",
+    "rank": 2,
+    "preset_tile": "hip-thrust"
+   },
+   "sat-3": {
+    "label": "Leg curl",
+    "default": "lying-leg-curl",
+    "rank": 2,
+    "preset_tile": "lying-leg-curl"
+   },
+   "sat-4": {
+    "label": "Single-leg",
+    "default": "bulgarian-split-squat",
+    "rank": 1,
+    "preset_tile": "bulgarian-split-squat"
+   },
+   "sat-5": {
+    "label": "Hip abduction",
+    "default": "hip-abduction-machine",
+    "rank": 1,
+    "preset_tile": "hip-abduction-machine"
+   },
+   "sat-6": {
+    "label": "Calves",
+    "default": "seated-calf-raise",
+    "rank": 2,
+    "preset_tile": "seated-calf-raise"
+   },
+   "sat-7": {
+    "label": "Abs",
+    "default": "hanging-leg-raise",
+    "rank": 2,
+    "preset_tile": "ab-wheel-rollout"
+   }
+  }
+ }
+}

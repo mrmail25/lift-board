@@ -164,3 +164,56 @@ Parity (node, all 0 mismatches): test/analysis.diff.js, movement.diff.js, templa
   - chit sheet "Muscles worked";
   - info sheet and learn "Muscles hit" (label + tag).
   The tray muscle filter and the learn link use `filter_muscle`. Chit colour comes from the region (legs).
+
+## Round 2, Batch B (2026-10-23)
+
+- **Sync**: `sync-ranking-data.sh` also copies `slot-defaults-reference.json`, `analysis-items-reference.json` and
+  `exercise-details.json` (run once). The sync brought back Coach's stale 239-exercise `ranking-reference.json`, so the
+  v13-regenerated copy was put back in `data/`, as in the v13 sync. Coach's copy still needs regenerating.
+- **No Python in the tests**: `rank.diff.js` and `progcheck.diff.js` compare against frozen snapshots
+  (`test/fixtures/*-py-snapshot.json`, frozen at 26fe33a, where the live Python diff was 0). `PY=1` runs Coach's tools live, but
+  only with Coach's OK. Nothing else touches `../../tools`.
+- **Item 3, Analysis** (Coach's `analysis-spec-r2.md`):
+  - Ports from `tools/analysis.py`: `logic/analysis.js` `items`, `flagDetails`, `breakdowns`, `fatigueRating`, `pushPull` and
+    `stretchFocused`. Float sums use `pySum` (Python 3.12+ compensated `sum`) and `pyF` (str of a float). `sheet()` entries
+    carry `section` (type `section` or `section_by_source`). New diff: `test/analysisitems.diff.js` against
+    `analysis-items-reference.json` (46 presets + 3 synthetic boards, items and flag details).
+  - There is no top Suggestions block. The sections are the build_analysis sections in order. Each one shows its own
+    suggestions (top 3 by severity, then "Show all N suggestions") and then its item rows.
+  - Every row has a kind chip (Check / Measure / Info), its value, and an (i) that opens `SBX.explainSheet`. That sheet shows
+    what / how / why, the evidence tag and a Learn button for `page#section`. The route is `#learn-f-<page>~<section>`, which
+    opens that section. The fatigue rating's sheet adds the breakdown (tiers, by day, exercise, muscle, pattern, heavy spine,
+    systemic tag, baseline).
+  - Checks show Pass, Attention or n/a (with the reason). Each flag names its days and exercises (`flagDetails`); for
+    pattern_gap it names the missing pattern.
+  - Muscle rows (volume bars, frequency grid, stretch chips, flags) and pattern rows (movement pattern sets) open a
+    contributor sheet. It lists each exercise with its day, sets and effective sets (the breakdown model). Each has Remove. Add
+    suggested is the shared ranker's top pick, on the training day with the least of that muscle or pattern. Undo is in the
+    sheet.
+  - The 12 progress-tab items are in Progress ("Logged progress"), each with its kind chip and (i). Values come from
+    `logic/progress.js` where it computes them; the others say "Not computed in the storyboard yet".
+- **Item 4, tray and exercise popup**:
+  - Both trays have a Sort row: Best match (the shared ranker, default), A–Z, Most stimulus for the filtered muscle (disabled
+    until a muscle is picked), and Lowest fatigue. Library order became A–Z (`tray-lib` maps to it).
+  - Tapping a tray row (or the workout tray's (i)) opens `SBX.exDetail`, loaded lazily from `exercise-details.json`. It shows:
+    - the body map shaded by `body_map` intensity, and target ratings with credit share;
+    - stretch, fatigue rating and tier, recovery cost per set, stimulus per fatigue, systemic tag, heavy spine, one side, time
+      per set, rep range, pattern and push/pull side, equipment;
+    - a Learn link.
+  - Photos appear only when `show_photo` is true (143 exact name matches); approximate ones never do. `build-photos.py` copies
+    the exact pairs from `../img/ex` into `assets/ex-photos/` (286 files, about 14 MB) with `LICENSE.txt`. Source:
+    free-exercise-db by yuhonas, The Unlicense (public domain dedication). The upstream licence was checked on GitHub.
+  - Template slot defaults are `TEMPLATES.chooseDefaults` (the ranked picks). New diff: `test/slotdefaults.diff.js` against
+    `slot-defaults-reference.json` and templates.json `default_exercise`.
+- **Item 7, Finish**: built from the workout's done sets (`WK`), appended to a copy of the log.
+  - PRs come from `PRS.detect` on that copy.
+  - "vs last time" compares the best working set per lift with the last session that had the lift. Volume is compared with
+    the last session of the same name.
+  - The body map is `sesMus`; the e1RM % overlay is `e1Chart`.
+  - The streak is consecutive Monday-start weeks with a workout. There is also a count for this week against the routine's
+    planned days.
+  - Every line is a computed fact; there is no canned praise.
+  - A cold-loaded `#finish` completes the demo workout at last time's targets. The date is the storyboard's "today" (Wed Oct
+    21).
+- **Tests**: batch B block in `test/sb.test.js` (`b3…`, `b4…`, `b7…`). The round-1 analysis and suggestion checks were rewritten
+  for the inline sections. Shots: `28a…` (Analysis), `29a…` (tray and popup), `30a…` (Finish), light and dark.

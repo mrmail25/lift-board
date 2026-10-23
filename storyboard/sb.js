@@ -393,28 +393,78 @@ function wSwap(xi){const ex=WK.ex[xi];if(!ex)return;const old=ex.id;
     let upd=false;if(also&&WK.ref){const r=ROUTINES.find(x=>x.id===WK.ref.rid),d=r&&r.days[WK.ref.di],e=d&&d.ex.find(x=>x.id===old);if(e){e.id=nid;upd=true}}
     renderEx(xi);toast(upd?`Swapped · ${(ROUTINES.find(x=>x.id===WK.ref.rid)||{}).name||'routine'} updated too`:'Swapped for this workout only')}})}
 
-// 4. FINISH
-V.finish=()=>`<div class="fin">
-  <div class="fin-top"><span class="eyebrow">Wed, Oct 21</span><button class="btn plain" data-go="#log">Done</button></div>
-  <div class="fin-cards noswipe" id="fincards">
-   <article class="fc hero"><div class="fc-logo logo-tile"></div><div class="eyebrow">Workout complete</div><h2>Upper A</h2><p class="sub">6:12 – 7:10 PM</p>
-     <div class="stats"><div><b class="num">58</b><span>minutes</span></div><div><b class="num">18</b><span>sets</span></div><div><b class="num">${S.unit==='kg'?Math.round(21450/KG_LB).toLocaleString('en-US'):'21,450'}</b><span>${S.unit} volume</span></div><div><b class="num acc">2</b><span>PRs</span></div></div>
-     <div class="vs"><span class="up">${I('up',2.4)}</span>2.4% more volume than your last Upper A</div></article>
-   <article class="fc"><div class="eyebrow">Personal records</div><h2>2 new PRs</h2>
-     <div class="pr"><span class="badge">PR</span><div class="grow"><b>Barbell Bench Press</b><span>${uTxt('230 lb × 8','barbell-bench-press')} · heaviest for 8</span></div></div>
-     <div class="pr"><span class="badge">PR</span><div class="grow"><b>Lat Pulldown</b><span>${uTxt('160 lb × 12','lat-pulldown')} · best set volume</span></div></div>
-     <div class="pr dim"><span class="tag">±0</span><div class="grow"><b>Seated DB Shoulder Press</b><span>${uTxt('60 lb × 9','seated-dumbbell-shoulder-press')} · ties your best</span></div></div></article>
-   <article class="fc"><div class="eyebrow">vs last time</div><h2>Up on 4 of 6</h2>
-     ${[['Barbell Bench Press','230 × 8','+5 lb','up'],['Barbell Row','185 × 11','+1 rep','up'],['Seated DB Shoulder Press','60 × 9','±0','flat'],['Lat Pulldown','160 × 12','+10 lb','up'],['EZ-Bar Curl','80 × 12','±0','flat'],['Triceps Pushdown','75 × 11','+5 lb','up']]
-       .map(([n,s,d,c])=>`<div class="cmp"><div class="grow"><b>${n}</b><span class="num">${uTxt(s)}</span></div><span class="dl ${c}">${uTxt(d)}</span></div>`).join('')}</article>
-   <article class="fc"><div class="eyebrow">Muscles worked</div><h2>18 hard sets</h2>
-     ${[['Chest',5],['Lats',4],['Front delts',4],['Triceps',4],['Upper back',3],['Biceps',3]].map(([m,n])=>`<div class="mw"><span>${m}</span><i style="--w:${n/5*100}%"></i><b class="num">${n}</b></div>`).join('')}
-     <p class="foot" style="padding:12px 0 0">Helper muscles count as partial sets.</p></article>
-   <article class="fc ape"><div class="ape-slot"><div class="logo-tile"></div></div><div class="eyebrow">Ape says</div><h2>Ape humor goes here</h2>
-     <p class="sub">Placeholder card. The lines come later. Hidden when Settings › Ape humor is off.</p></article>
-  </div><div class="pdots fin-dots">${[0,1,2,3,4].map(i=>`<i class="${i?'':'on'}"></i>`).join('')}</div>
-  <div class="fin-act"><button class="btn ink block" data-go="#log">Save to Log</button></div></div>`;
-function afterFinish(){const c=$('#fincards');c.addEventListener('scroll',()=>{const i=Math.round(c.scrollLeft/(c.children[0].offsetWidth+12));$$('.fin-dots i').forEach((d,j)=>d.classList.toggle('on',j===i))},{passive:true})}
+// 4. FINISH (round 2 batch B, item 7): everything on this screen is computed from the workout just done (WK's done sets) plus the
+// log (LOGH): the session is appended to a copy of the log, then Coach's PR rules (PRS.detect), the e1RM overlay chart, the
+// session body map (sesMus) and the comparisons run on that copy. No canned praise: every line is a number from the logs.
+// A cold-loaded #finish shows the demo workout completed as last time's targets (the bench sets as already entered).
+const FIN_DAY='2026-10-21'; // the storyboard's "today" (Wed, Oct 21; the synthetic log runs to Tue Oct 20)
+let FIN=null;
+const isoLocal=t=>{const d=new Date(t),p=n=>String(n).padStart(2,'0');return `${FIN_DAY}T${p(d.getHours())}:${p(d.getMinutes())}:00-07:00`};
+function finDemoSets(){WK0.ex.forEach(x=>{const w=WK.ex.find(e=>e.id===x.id);if(!w)return;
+  w.sets.forEach((s,i)=>{if(s.done)return;const m=/^(\d+(?:\.\d+)?)\s*×\s*(\d+)/.exec(s.p||'');if(!m)return;Object.assign(s,{done:true,wv:m[1],rv:m[2]})})})}
+function finBuild(cold){if(cold){Object.assign(WK,JSON.parse(JSON.stringify(WK0)));finDemoSets()}
+  const u=S.unit,sid='fin',H=logLoad(),L=v=>v==null||v===''||isNaN(+v)?0:+v,num=(s,id)=>{const v=L(s.wv);return (s.wu||'lb')===u?v:(s.wu||'lb')==='lb'?v/KG_LB:v*KG_LB};
+  const st=cold?`${FIN_DAY}T18:12:00-07:00`:isoLocal(CLK.start),min=cold?58:Math.max(1,Math.round(WK.elapsed/60)),en=cold?isoPlus(st,58):isoLocal(Date.now());
+  const ses={id:sid,schema:2,status:'completed',date:st,startedAt:st,endedAt:en,unit:u,label:WK.title||'Workout',notes:'',snapshot:{exercises:WK.ex.map(x=>({exerciseId:x.id,sets:x.sets.length}))}},ents=[],sets=[];
+  WK.ex.forEach((x,o)=>{const done=x.sets.filter(s=>s.done&&L(s.rv)>0);if(!done.length)return;const eid=`${sid}-e${o}`;ents.push({id:eid,sessionId:sid,order:o,exerciseId:x.id,skipped:false,notes:''});
+    done.forEach((s,i)=>sets.push({id:`${eid}-t${i}`,entryId:eid,sessionId:sid,idx:i,kind:s.warm?'warmup':'working',load:+nfmt(num(s,x.id)),reps:L(s.rv),rir:null,done:true}))});
+  const X={...H,sessions:[...H.sessions,ses],entries:[...H.entries,...ents],sets:[...H.sets,...sets]};
+  return {ses,ents,sets,X,min,cold}}
+// run fn with LOGH = the log plus this session (sesMus / e1Chart / entsOf read the global)
+function withFin(fn){const keep=LOGH;LOGH=FIN.X;try{return fn()}finally{LOGH=keep}}
+const kgOf=(load,unit)=>unit==='kg'?+load:+load/KG_LB,inU=(v,unit)=>unit===S.unit?v:unit==='lb'?v/KG_LB:v*KG_LB;
+function finStats(){const F=FIN,H=F.X,u=S.unit,W=F.sets.filter(x=>x.kind==='working'),vol=W.reduce((a,x)=>a+x.load*x.reps,0);
+  const prev=H.sessions.filter(s=>s.status==='completed'&&s.id!==F.ses.id&&s.startedAt<F.ses.startedAt).sort((a,b)=>a.startedAt<b.startedAt?-1:1);
+  const work=sid=>H.sets.filter(x=>x.sessionId===sid&&x.kind==='working'&&x.done&&x.reps>0);
+  const same=prev.filter(s=>s.label===F.ses.label).pop(),volOf=s=>work(s.id).reduce((a,x)=>a+inU(x.load*x.reps,s.unit),0);
+  const lastVol=same?volOf(same):null;
+  // per exercise: best working set (heaviest load, then most reps) now vs the last logged session that had the exercise
+  const best=xs=>xs.slice().sort((a,b)=>b.l-a.l||b.reps-a.reps)[0];
+  const cmp=F.ents.map(e=>{const id=e.exerciseId,now=best(W.filter(x=>x.entryId===e.id).map(x=>({l:x.load,reps:x.reps})));if(!now)return null;
+    let ps=null,pe=null;for(let i=prev.length-1;i>=0&&!pe;i--){pe=H.entries.find(z=>z.sessionId===prev[i].id&&z.exerciseId===id);if(pe)ps=prev[i]}
+    if(!pe)return {id,now,first:true};const was=best(H.sets.filter(x=>x.entryId===pe.id&&x.kind==='working'&&x.done&&x.reps>0).map(x=>({l:+nfmt(inU(+x.load,ps.unit)),reps:x.reps})));
+    if(!was)return {id,now,first:true};const step=stepOf(u,id),dl=now.l-was.l;
+    const c=Math.abs(dl)>=step/2-1e-9?(dl>0?'up':'down'):now.reps>was.reps?'up':now.reps<was.reps?'down':'flat';
+    const txt=Math.abs(dl)>=step/2-1e-9?`${dl>0?'+':'−'}${nfmt(Math.abs(dl))} ${u}`:now.reps!==was.reps?`${now.reps>was.reps?'+':'−'}${Math.abs(now.reps-was.reps)} rep${Math.abs(now.reps-was.reps)>1?'s':''}`:'±0';
+    return {id,now,was,c,txt,when:+ps.startedAt.slice(8,10)}}).filter(Boolean);
+  // PRs: Coach's rules (logger.prs) over the log with this session added; only records set today
+  const P=(window.PRS&&RD)?(PRS.detect(RD,H,{aliases:{}})[F.ses.id]||{}):{};
+  // streak: consecutive Monday-start weeks with at least one completed workout, ending with this week
+  const wk=iso=>{const d=new Date(iso.slice(0,10)+'T12:00:00');d.setDate(d.getDate()-((d.getDay()+6)%7));return d.toISOString().slice(0,10)};
+  const weeks=new Set([...prev,F.ses].map(s=>wk(s.startedAt))),tw=wk(F.ses.startedAt);let streak=0;for(let d=new Date(tw+'T12:00:00');weeks.has(d.toISOString().slice(0,10));d.setDate(d.getDate()-7))streak++;
+  const thisWeek=[...prev,F.ses].filter(s=>wk(s.startedAt)===tw).length,plan=(ROUTINES[0]||{days:[]}).days.length;
+  return {vol,sets:W.length,lastVol,same,cmp,P,streak,thisWeek,plan,total:prev.length+1}}
+const fmtVol=v=>Math.round(v).toLocaleString('en-US');
+const dayLong=iso=>{const d=new Date(iso.slice(0,10)+'T12:00:00');return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})};
+V.finish=()=>{if(!FIN)FIN=finBuild(true);const F=FIN,T=finStats(),u=S.unit,nPR=Object.keys(T.P).length,up=T.cmp.filter(c=>c.c==='up').length,dn=T.cmp.filter(c=>c.c==='down').length,cmpN=T.cmp.filter(c=>!c.first).length;
+  const vp=T.lastVol?(T.vol-T.lastVol)/T.lastVol*100:null,vm=withFin(()=>sesMus(F.ses.id)),mw=Object.entries(vm).sort((a,b)=>b[1]-a[1]);
+  // facts only, in this order; each line is skipped when its number is not there
+  const facts=[nPR?`${nPR} lift${nPR>1?'s':''} with a PR today.`:'',
+    vp!=null?`${Math.abs(vp)<0.05?'Same volume as':`${Math.abs(vp).toFixed(1)}% ${vp>0?'more':'less'} volume than`} your last ${esc(F.ses.label)} (${dayLong(T.same.startedAt)}).`:`First ${esc(F.ses.label)} in your log, so there is nothing to compare the volume with yet.`,
+    cmpN?`Matched or beat last time on ${cmpN-dn} of ${cmpN} lift${cmpN>1?'s':''}.`:'',
+    T.streak>=2?`${T.streak} weeks in a row with at least one workout.`:'',
+    `Workout ${T.thisWeek} this week${T.plan?` (your routine plans ${T.plan})`:''}.`].filter(Boolean);
+  const vsCls=vp==null?'':vp>0.05?'up':vp<-0.05?'down':'flat';
+  const prRows=Object.entries(T.P).map(([id,rec])=>`<div class="pr" data-ex="${id}"><span class="badge">PR</span><div class="grow"><b>${exNameP(id)}</b><span>${Object.keys(rec).map(k=>PRL[k]).join(' · ')}</span></div></div>`).join('');
+  const cards=[`<article class="fc hero" data-card="hero"><div class="fc-logo logo-tile"></div><div class="eyebrow">Workout complete</div><h2>${esc(F.ses.label)}</h2><p class="sub">${hm(F.ses.startedAt)} – ${hm(F.ses.endedAt)}</p>
+     <div class="stats"><div><b class="num">${F.min}</b><span>minutes</span></div><div><b class="num">${T.sets}</b><span>sets</span></div><div><b class="num">${fmtVol(T.vol)}</b><span>${u} volume</span></div><div><b class="num acc">${nPR}</b><span>PRs</span></div></div>
+     <ul class="facts">${facts.map(f=>`<li>${f}</li>`).join('')}</ul></article>`,
+   `<article class="fc" data-card="prs"><div class="eyebrow">Personal records</div><h2>${nPR?`${nPR} lift${nPR>1?'s':''} with a PR`:'No PRs today'}</h2>${prRows||`<p class="sub">No set beat your logged bests by more than Coach's tie margin (half a load step or 1%).</p>`}
+     <p class="foot fpad">PR rules from rules.json logger.prs, the same as the Log.</p></article>`,
+   `<article class="fc" data-card="vs"><div class="eyebrow">vs last time</div><h2>${cmpN?`Up on ${up} of ${cmpN}`:'Nothing to compare yet'}</h2>
+     ${T.cmp.map(c=>`<div class="cmp" data-ex="${c.id}"><div class="grow"><b>${exNameP(c.id)}</b><span class="num">${nfmt(c.now.l)} × ${c.now.reps}${c.first?' · first time logged':` · was ${nfmt(c.was.l)} × ${c.was.reps} on Oct ${c.when}`}</span></div><span class="dl ${c.first?'flat':c.c}">${c.first?'new':c.txt}</span></div>`).join('')}
+     <p class="foot fpad">Best working set (heaviest, then most reps) against the last session that had the lift.${T.lastVol!=null?` Volume ${fmtVol(T.vol)} vs ${fmtVol(T.lastVol)} ${u}.`:''}</p></article>`,
+   `<article class="fc" data-card="map"><div class="eyebrow">Muscles worked</div><h2>${T.sets} hard sets</h2><div class="mapcard finmap"><div class="maps">${map('front',rampVol(vm))}${map('back',rampVol(vm))}</div><div class="legend">${rampLegend('sets this workout')}</div></div>
+     ${mw.slice(0,5).map(([m,n])=>`<div class="mw"><span>${ML[m]||m}</span><i style="--w:${Math.min(1,n/Math.max(1,mw[0][1]))*100}%"></i><b class="num">${+n.toFixed(1)}</b></div>`).join('')}
+     <p class="foot fpad">Same effective-set model as Build's Day map; helper muscles count as partial sets.</p></article>`,
+   `<article class="fc" data-card="e1"><div class="eyebrow">Strength trend</div><h2>e1RM vs your best</h2>${withFin(()=>e1Chart(F.ses.id))}</article>`,
+   `<article class="fc ape" data-card="ape"><div class="ape-slot"><div class="logo-tile"></div></div><div class="eyebrow">Ape says</div><h2>Ape humor goes here</h2>
+     <p class="sub">Placeholder card. The lines come later. Hidden when Settings › Ape humor is off.</p></article>`];
+  return `<div class="fin" data-vs="${vsCls}">
+  <div class="fin-top"><span class="eyebrow">${dayLong(F.ses.startedAt)}</span><button class="btn plain" data-go="#log">Done</button></div>
+  <div class="fin-cards noswipe" id="fincards">${cards.join('')}</div><div class="pdots fin-dots">${cards.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>
+  <div class="fin-act"><button class="btn ink block" data-go="#log">Save to Log</button></div></div>`};
+function afterFinish(){const c=$('#fincards');c.addEventListener('scroll',()=>{const i=Math.round(c.scrollLeft/(c.children[0].offsetWidth+12));$$('.fin-dots i').forEach((d,j)=>d.classList.toggle('on',j===i))},{passive:true});}
 
 // 5. EMPTY WORKOUT + exercise tray
 const GAPS=[['side_delts',8,14,'cable-lateral-raise'],['lats',14,16,'lat-pulldown'],['calves',8,10,'seated-calf-raise'],['abs',6,8,'cable-crunch']];
@@ -484,21 +534,23 @@ const anyF=F=>!!(F.mus||F.pat||F.eq||F.fav||F.q);
 function trayList(){
   // search + filters are hard filters in both modes; what passes them goes to rank('tray', candidates)
   const ids=EXL.map(x=>x[0]).filter(id=>{const e=EX[id];return e&&(!TF.fav||isFav(id))&&passF(TF,id)&&(!TF.q||e.name.toLowerCase().includes(TF.q.toLowerCase()))});
-  const sug=TF.mode==='sug'&&RD,cands=SC.cands?SC.cands.filter(i=>ids.includes(i)):ids;
-  const rows=sug?rk('tray',cands,{},null):ids.map(id=>({id}));
+  const md=sortMode(TF.mode,TF.mus),sug=md==='sug'&&RD,cands=SC.cands?SC.cands.filter(i=>ids.includes(i)):ids;
+  const rows=sug?rk('tray',cands,{},null):(RD?sortIds(ids,md,TF.mus):ids).map(id=>({id}));
   const row=r=>{const id=r.id,e=EX[id];return `<div class="row trow" data-id="${id}">${gl(id)}<div class="grow"><div class="t1">${exNameP(id)}${isFav(id)?' <span class="fv">★</span>':''}</div><div class="t2">${exSub(id)} · ${e.eq}</div>${r.reasons?whyR(r):''}</div>${starBtn(id)}<button class="ib-i" data-act="exinfo" data-id="${id}" aria-label="Info">${I('info',1.7)}</button><button class="addc" data-act="add" aria-label="Add">${I('plus',2.2)}</button></div>`};
   const hid=sug?cands.length-rows.length:0;
-  return `<div class="tcount">${rows.length} exercises${sug?` · ranked for ${({mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'})[SC.day]||'today'}${hid?` · ${hid} hidden (on this day or not in your gym)`:''}`:' · library order'}</div>${SC.note?`<div class="scnote">${SC.note}</div>`:''}<div class="group">`+rows.slice(0,80).map(row).join('')+'</div>';
+  return `<div class="tcount">${rows.length} exercises${sug?` · ranked for ${({mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'})[SC.day]||'today'}${hid?` · ${hid} hidden (on this day or not in your gym)`:''}`:` · ${sortNote(md,TF.mus)}`}</div>${SC.note?`<div class="scnote">${SC.note}</div>`:''}<div class="group">`+rows.slice(0,80).map(row).join('')+'</div>';
 }
 function traySheet(){
   const s=sheet({title:'Add exercise',cls:'tall grouped',right:`<button class="btn plain" data-x="close">Done</button>`,
     body:`<div class="srch"><span>${I('search',2)}</span><input id="tq" type="search" placeholder="Search 239 exercises" autocomplete="off"></div>
-    <div class="tftop"><div class="seg sm" id="tmode"><button class="${TF.mode==='sug'?'on':''}" data-m="sug">Suggested</button><button class="${TF.mode==='lib'?'on':''}" data-m="lib">Library</button></div>
-     <button class="chip xs ${TF.fav?'on':''}" data-f="fav" data-v="true"><span class="fv">★</span> Favorites</button><button class="btn plain sm treset" data-x="reset" ${anyF(TF)?'':'disabled'}>Reset</button></div>
+    <div id="tmode">${sortHtml(TF.mode,TF.mus,'m')}</div>
+    <div class="tftop"><button class="chip xs ${TF.fav?'on':''}" data-f="fav" data-v="true"><span class="fv">★</span> Favorites</button><button class="btn plain sm treset" data-x="reset" ${anyF(TF)?'':'disabled'}>Reset</button></div>
     <div id="tfb">${filterHtml(TF,'f')}</div>
     <div class="tlist">${trayList()}</div>`});
-  const upd=()=>{$('.tlist',s.el).innerHTML=trayList();$('[data-x=reset]',s.el).disabled=!anyF(TF)};
-  s.el.addEventListener('click',e=>{const md=e.target.closest('#tmode [data-m]');if(md){TF.mode=md.dataset.m;$$('#tmode button',s.el).forEach(b=>b.classList.toggle('on',b===md));upd();return}
+  const upd=()=>{$('.tlist',s.el).innerHTML=trayList();$('[data-x=reset]',s.el).disabled=!anyF(TF);$('#tmode',s.el).innerHTML=sortHtml(TF.mode,TF.mus,'m')};
+  s.el.addEventListener('click',e=>{const md=e.target.closest('#tmode [data-m]');if(md){if(md.disabled)return;TF.mode=md.dataset.m;upd();return}
+    const inf=e.target.closest('[data-act=exinfo]');if(inf){e.preventDefault();e.stopPropagation();return exDetail(inf.dataset.id,{onAdd:()=>toast('Added to workout')})}
+    const tr=e.target.closest('.trow[data-id]');if(tr&&!e.target.closest('button')){return exDetail(tr.dataset.id,{onAdd:()=>toast('Added to workout')})}
     const f=e.target.closest('[data-f]');if(f){if(f.dataset.f==='fav'){TF.fav=!TF.fav;f.classList.toggle('on',TF.fav);upd();return}TF[f.dataset.f]=TF[f.dataset.f]===f.dataset.v?null:f.dataset.v;
       $$(`[data-f=${f.dataset.f}]`,s.el).forEach(c=>c.classList.toggle('on',TF[c.dataset.f]===c.dataset.v));upd();return}
     if(e.target.closest('[data-x=reset]')){Object.assign(TF,{q:'',mus:null,pat:null,eq:null,fav:false});$('#tq',s.el).value='';$('#tfb',s.el).innerHTML=filterHtml(TF,'f');$('[data-f=fav]',s.el).classList.remove('on');upd();return}
@@ -857,9 +909,20 @@ V.progress=()=>{const pr=RD&&progressData();if(!pr)return header('Progress',book
     <div class="row"><div class="grow t1">Sessions</div><span class="val num" id="padh-n">${A.sessions_completed} done · ${A.sessions_skipped} skipped</span></div></div>
    <div class="sec"><h2>Per muscle</h2><span class="more">credited vs planned · ${W.length} wk trend</span></div>
    <div class="group pml">${Object.entries(pr.muscles).map(([m,v])=>`<button class="row" data-pm="${m}"><div class="grow"><div class="t1">${ML[m]||m}</div><div class="t2 num">${fx1(v.last_week_sets)} of ${fx1(v.plan_sets)} planned last week${v.adherence!=null?` · ${Math.round(v.adherence*100)}% over ${W.length} wk`:''}</div></div><span class="ptr ${v.trend.status}">${TRL[v.trend.status]}</span></button>`).join('')}</div>
+   ${progItemsHtml(pr)}
    ${refHtml(pr)}
    ${routineHtml()}
    <p class="foot">Hard sets are credited per Coach's set tags (drop sets, myo-reps, partials). e1RM uses Epley on working sets of ${RD.rules.logger.e1rm_max_reps} reps or fewer, deload weeks left out. Every threshold is modeled.</p>`};
+// round 2 batch B (item 3): the analysis_metrics items with tab = progress live here, not in Build's Analysis. Values come from
+// logic/progress.js where it computes them; the rest say where they show or that they are not computed yet.
+function progItemsHtml(pr){const am=(RD.rules.analysis_metrics||{}),its=(am.items||[]).filter(i=>i.tab==='progress');if(!its.length)return '';const A=pr.adherence,M=Object.values(pr.muscles);
+  const ml=M.map(v=>v.main_lift).filter(Boolean),cnt=k=>ml.filter(x=>x.status===k).length;
+  const VAL={logged_hard_sets:`${fx1(M.reduce((a,v)=>a+(v.last_week_sets||0),0))} credited sets last week`,adherence:A.sessions_ratio!=null?`${Math.round(A.sessions_ratio*100)}% of sessions`:'',
+    planned_vs_done:`${A.completed_planned_sets} of ${A.planned_sets} sets`,load_trend:ml.length?`${cnt('up')} up · ${cnt('stalled')} stalled · ${cnt('dropping')} dropping`:'',
+    progress_signal:`${pr.refinements.length} card${pr.refinements.length===1?'':'s'} below`,prs:'Log + Finish badges',finish_vs_last:'On the Finish screen'};
+  const sec=(am.sections||[]).find(s=>s.id==='progress')||{label:'Logged progress'};
+  return `<div class="sec"><h2>${sec.label}</h2><span class="more">${its.length} items</span></div>
+   <div class="group pitems">${its.map(it=>`<div class="row pitem" data-metric="${it.id}" data-kind="${it.kind}"><div class="grow"><div class="t1">${kchip(it.kind)} ${it.label}</div><div class="t2 num">${VAL[it.id]||'<span class="nc">Not computed in the storyboard yet</span>'}</div></div>${ibtn(it.id)}</div>`).join('')}</div>`}
 function spark(v){const s=v.weekly_sets,mx=Math.max(1,v.plan_sets,...s),W=v.weeks||[];
   return `<div class="spark" aria-label="Weekly credited sets">${s.map((x,i)=>`<div class="sp"><i style="--h:${x/mx*100}%" class="${x<v.plan_sets*0.75?'lo':''}"></i><small>${(W[i]||'').slice(5).replace('-','/')}</small></div>`).join('')}<b style="--y:${v.plan_sets/mx*100}%" title="Plan"></b></div>`}
 function pmusHtml(m){if(!m)return '';const pr=progressData(),v=pr&&pr.muscles[m];if(!v)return `<div class="card pmus" data-mu="${m}"><b>${ML[m]||m}</b><p class="sub">Nothing logged for this muscle in the last ${RD.rules.progress.trend.weeks} weeks.</p></div>`;
@@ -1021,6 +1084,7 @@ async function afterLearnMuscle(id){
 }
 V.learnFund=()=>`<div class="nav"><div class="l">${backBtn('Learn')}</div><div class="t"></div><div class="r"></div></div><div id="lf"><p class="foot">Loading…</p></div>`;
 async function afterLearnFund(id){
+  const sx=String(id||'').split('~')[1]||null;id=id&&String(id).split('~')[0];
   CITES=[];const idx=await eduLoad();if(!id){const f=idx.pages.find(p=>p.kind==='fundamental'&&p.status==='final');id=f&&f.id}
   const {entry,page:j}=await eduPage(id);
   if(!j){$('#lf').innerHTML=`${header((entry||{}).title||'Fundamentals')}<div class="soonbox"><span class="soon">Coming soon</span></div>`;return}
@@ -1031,14 +1095,71 @@ async function afterLearnFund(id){
       ${(s.points||[]).length?`<div class="pts">${s.points.map(p=>`<div class="pt"><p>${p.text}</p><div class="ptm">${ev(p)}${tagL(p.swap_tags)}${p.app_key?`<code>${p.app_key}</code>`:''}</div></div>`).join('')}</div>`:''}`,i===0,(s.points||[]).length?s.points.length+' points':'')).join('')}
    ${(j.notes||[]).length?sect('Honest limits',`<ul class="bul">${j.notes.map(n=>`<li>${n}</li>`).join('')}</ul>`):''}
    ${refList()}</div><p class="foot">${(EDU.idx||{}).disclaimer||''}</p>`;
+  // page#section from an analysis item's Learn link: open that section and scroll to it
+  const ds=$$('#lf .lsx > details.ls');(j.sections||[]).forEach((x,i)=>{if(ds[i])ds[i].dataset.sec=x.id});
+  if(sx){const k=(j.sections||[]).findIndex(x=>x.id===sx),el=ds[k];if(el){ds.forEach(d=>d.open=false);el.open=true;el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1400);el.scrollIntoView({block:'start'})}}
 }
-function exInfoSheet(id){const e=EX[id]||{rat:{}},rs=Object.entries(e.rat).filter(([,r])=>BAND(r)).sort((a,b)=>b[1]-a[1]),vm={};rs.forEach(([m,r])=>vm[m]=r>=.75?1:r>=.4?.75:.5);
-  const s=sheet({body:`<div class="exi"><div class="exi-h">${gl(id)}<div><h3>${exName(id)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${e.eq||''}</p></div></div>
-    <div class="mapcard small flat"><div class="maps">${map('front',vm)}${map('back',vm)}</div></div>
-    <div class="group inset0">${rs.map(([m,r])=>`<button class="row" data-go="#learn-${m}"><div class="grow t1">${ML[m]||m}</div>${rate(r)}${CHEV}</button>`).join('')}${!rs.length&&utOf(id)?utRow(utOf(id)):''}</div>
-    <p class="foot" style="padding:8px 4px 0">Muscle ratings from exercises.json · tap a muscle to learn about it.</p>
-    <div class="pad two"><button class="btn grey" data-x="sw">${I('swap',1.8)} Swap</button><button class="btn accent" data-x="add">${I('plus',2)} Add</button></div></div>`});
-  s.el.addEventListener('click',ev=>{if(ev.target.closest('[data-go]'))return s.close();const x=ev.target.closest('[data-x]');if(!x)return;s.close();if(x.dataset.x==='sw')swapSheet(id);else toast('Added to workout')});return s}
+// ---- round 2 batch B: analysis item chips + explain sheets (item 3), exercise detail popup + tray sort (item 4)
+// analysis_metrics v2 items: kind chip (Check / Measure / Info) and an (i) that opens what / how / why + the Learn page#section
+const KINDL={check:'Check',measure:'Measure',info:'Info'};
+const kchip=k=>`<span class="kchip k-${k}" data-kind="${k}">${KINDL[k]||k}</span>`;
+const itemDef=id=>(((RD&&RD.rules.analysis_metrics)||{}).items||[]).find(i=>i.id===id);
+const EVT={supported:'Supported',thin:'Thin evidence',modeled:'Modeled'};
+const learnGo=lp=>{const [p,sx]=String(lp).split('#');return `#learn-f-${p}${sx?'~'+sx:''}`};
+const ibtn=(id,attr='data-xpl')=>`<button class="ixb" ${attr}="${id}" aria-label="What is this?">${I('info',1.8)}</button>`;
+function explainSheet(id,extra=''){const it=itemDef(id);if(!it)return null;const x=it.explain||{},lp=x.learn_page;
+  const s=sheet({title:'',cls:'grouped xsheet',right:'<button class="btn plain" data-x="close">Done</button>',
+    body:`<div class="xpl" data-item="${id}"><div class="xh">${kchip(it.kind)}<span class="tag ev ${it.evidence}">${EVT[it.evidence]||'Modeled'}</span>${it.status==='proposed'?'<span class="tag prop">Proposed</span>':''}</div><h3>${it.label}</h3>
+     <div class="group xq"><div class="row"><div class="grow"><div class="xk">What it measures</div><p>${x.what||it.description||''}</p></div></div>
+      <div class="row"><div class="grow"><div class="xk">How it's calculated</div><p>${x.how||it.formula||''}</p></div></div>
+      <div class="row"><div class="grow"><div class="xk">Why it matters</div><p>${x.why||''}</p></div></div></div>
+     ${extra}
+     ${lp?`<div class="pad"><button class="btn grey block xlearn" data-x="learn" data-go="${learnGo(lp)}">${I('book',1.8)} <span>Learn: ${lp.split('#')[0].replace(/-/g,' ')}</span></button></div>`:'<p class="foot">No Learn page for this one yet.</p>'}</div>`});
+  if(lp)eduLoad().then(idx=>{const p=(idx.pages||[]).find(q=>q.id===lp.split('#')[0]),b=$('.xlearn span',s.el);if(p&&b)b.textContent='Learn: '+p.title}).catch(()=>{});
+  s.el.addEventListener('click',e=>{if(e.target.closest('[data-x=close]'))return s.close();const g=e.target.closest('[data-go]');if(g){e.preventDefault();e.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
+// exercise detail popup: data/exercise-details.json (loaded on first open, 590 KB). Photos only when show_photo (exact match);
+// approximate photos are never shown. The files are copied into assets/ex-photos by build-photos.py (free-exercise-db, The Unlicense).
+let EXD=null;
+async function exdLoad(){if(!EXD){try{const j=await fetch(DATA+'exercise-details.json').then(r=>r.json());EXD={};const L=j.exercises||[];(Array.isArray(L)?L:Object.values(L)).forEach(e=>EXD[e.id]=e)}catch(e){EXD={}}}return EXD}
+const yn=b=>b?'Yes':'No',pctS=v=>`${Math.round(v*100)}%`;
+function exDetailBody(id,d){const e=EX[id]||{},f=d.fatigue||{},st=d.stretch||{},sp=d.stimulus_per_fatigue||{},rr=d.rep_range||{},bm=(d.body_map||{}).muscles||{};
+  const vm={};for(const [m,v] of Object.entries(bm))if(v>0)vm[m]=v;const sfor=(st.stretch_biased_for||[]).map(m=>ML[m]||m);
+  const row=(k,v,sub='')=>`<div class="row xm"><div class="grow"><div class="t1">${k}</div>${sub?`<div class="t2">${sub}</div>`:''}</div><span class="val num">${v}</span></div>`;
+  return `${d.show_photo&&d.photos?`<div class="xphotos" data-photo="exact">${['start','end'].map((k,i)=>`<figure><img src="assets/ex-photos/${id}-${i}.jpg" alt="${esc(d.name)} ${k} position" loading="lazy"><figcaption>${k==='start'?'Start':'End'}</figcaption></figure>`).join('')}</div>
+     <p class="foot xcred">Photos: free-exercise-db (“${esc(d.photos.source_name)}”), public domain (The Unlicense).</p>`:''}
+   <div class="mapcard small xmap" data-mus="${Object.keys(vm).join(' ')}"><div class="maps">${map('front',vm)}${map('back',vm)}</div><div class="legend"><span class="mleg"><i style="background:var(--heat-4)"></i>main<i style="background:var(--heat-2)"></i>helper<i style="background:var(--heat-1)"></i>minor</span></div></div>
+   <div class="ghead">Muscles worked · share of each set's credit</div>
+   <div class="group inset0 xtg">${(d.targets||[]).map(t=>`<button class="row" data-go="#learn-${t.muscle}"><div class="grow t1">${ML[t.muscle]||t.muscle}</div>${rate(t.rating)}<span class="val num xsh">${t.counts?pctS(t.share):'map only'}</span>${CHEV}</button>`).join('')}${!(d.targets||[]).length&&d.untracked_target?`<div class="row utn"><div class="grow"><div class="t1">${d.untracked_target.label||'Not tracked'}</div><div class="t2">${d.untracked_target.tag||''}</div></div></div>`:''}</div>
+   <div class="ghead">How Analysis counts it</div>
+   <div class="group inset0 xmet">${row('Stretch',st.stretch_focused?'Stretch-focused':`Emphasis ${st.stretch_emphasis??'–'} of 3`,sfor.length?`Counts as stretch work for ${sfor.join(', ')}`:'Not on a stretch-check list')}
+    ${row('Fatigue rating',`${f.rating??'–'}`,f.tier?f.tier[0].toUpperCase()+f.tier.slice(1):'')}
+    ${row('Recovery cost per set',`${f.recovery_cost_per_set??'–'}`,'Modeled points; adds up to the week’s recovery cost')}
+    ${row('Stimulus per fatigue',`${sp.main??'–'}`,'Top rating ÷ fatigue')}
+    ${row('Systemic fatigue',`${f.systemic_fatigue_tag??'–'} of 3`)}
+    ${row('Heavy spine load',yn(f.heavy_spine),f.heavy_spine?'Counts toward the spinal-load check':'')}
+    ${row('One side at a time',yn(d.one_side))}
+    ${row('Time per set',`${f.minutes_per_set??'–'} min`,`incl. ${f.rest_min??'–'} min rest (session-length model)`)}
+    ${row('Rep range',rr.display?`${rr.display}${rr.unit&&rr.unit!=='reps'?' '+rr.unit:''}`:'–',rr.per_side?'per side':'')}
+    ${row('Movement pattern',d.movement_pattern_label||'–',d.push_pull_side&&d.push_pull_side!=='none'?`${d.push_pull_side[0].toUpperCase()+d.push_pull_side.slice(1)} side of push : pull`:'')}
+    ${row('Equipment',(d.equipment||e.eq||'–'),(d.equipment_needs||[]).map(x=>x.replace(/_/g,' ')).join(', '))}</div>
+   ${!d.show_photo?`<p class="foot xnop">${d.photos?'Only exact photo matches are shown; this exercise’s photo is an approximate match, so the map stands in.':'No photo for this exercise; the map shows what it trains.'}</p>`:''}`}
+function exDetail(id,o={}){const e=EX[id];if(!e)return null;
+  const s=sheet({title:'',cls:'grouped tall xdet',right:'<button class="btn plain" data-x="close">Done</button>',
+    body:`<div class="xd" data-id="${id}"><div class="exi-h">${gl(id)}<div><h3>${exName(id)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${e.eq||''}</p></div></div><div id="xdb"><p class="foot">Loading…</p></div>
+     <div class="pad two">${e.learn!==false?`<button class="btn grey" data-x="learn" data-go="#learn-ex-${id}">${I('book',1.8)} Learn</button>`:''}${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:''}</div></div>`});
+  exdLoad().then(D=>{const d=D[id],b=$('#xdb',s.el);if(!b)return;b.innerHTML=d?exDetailBody(id,d):'<p class="foot">No detail data for this exercise.</p>';
+    const lb=$('[data-x=learn]',s.el);if(lb&&d&&!(d.learn||{}).authored)lb.innerHTML=`${I('book',1.8)} Learn (draft)`});
+  s.el.addEventListener('click',ev=>{if(ev.target.closest('[data-x=close]'))return s.close();if(ev.target.closest('[data-x=add]')){s.close();return o.onAdd&&o.onAdd(id)}
+    const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
+// tray sort (both trays): Best match = the shared ranker (default); A–Z; Most stimulus for the filtered muscle; Lowest fatigue
+const SORTS=[['sug','Best match'],['az','A–Z'],['stim','Most stimulus'],['fat','Lowest fatigue']];
+const sortMode=(m,mus)=>m==='lib'?'az':m==='stim'&&!mus?'sug':(SORTS.some(x=>x[0]===m)?m:'sug');
+const sortHtml=(mode,mus,at)=>{const m=sortMode(mode,mus);return `<div class="tfr tsort noswipe" data-row="sort"><span class="tfl">Sort</span>${SORTS.map(([k,l])=>`<button class="chip xs ${k===m?'on':''}" data-${at}="${k}" ${k==='stim'&&!mus?'disabled title="Pick a muscle filter first"':''} aria-pressed="${k===m}">${k==='stim'&&mus?`Most ${(ML[mus]||mus).toLowerCase()} stimulus`:l}</button>`).join('')}</div>`};
+function sortIds(ids,mode,mus){const E=RD.EX,nm=i=>(E[i]||{}).name||i,byN=(a,b)=>nm(a).localeCompare(nm(b));const L=ids.slice();
+  if(mode==='az')return L.sort(byN);
+  if(mode==='stim')return L.sort((a,b)=>((E[b].muscles[mus]||0)-(E[a].muscles[mus]||0))||(((E[b].muscles[mus]||0)/E[b].fatigue)-((E[a].muscles[mus]||0)/E[a].fatigue))||byN(a,b));
+  if(mode==='fat')return L.sort((a,b)=>(E[a].fatigue-E[b].fatigue)||byN(a,b));return L}
+const sortNote=(mode,mus)=>({az:'A–Z',stim:`most ${(ML[mus]||mus||'').toLowerCase()} stimulus per set first`,fat:'lowest fatigue rating first'})[mode]||'';
 const infoFor=id=>{const e=EX[id];if(!e)return '#learn';const top=Object.entries(e.rat).sort((a,b)=>b[1]-a[1])[0];return top?'#learn-'+top[0]:utOf(id)?'#learn-'+utOf(id).filter_muscle:'#learn'};
 // untracked_target row (all-zero muscle map): label + tag in place of the muscle ratings
 const utRow=u=>`<div class="row utn" data-ut="${u.id}"><div class="grow"><div class="t1">${u.label}</div><div class="t2">${u.tag}</div></div></div>`; // (i) opens the page of the exercise's main muscle
@@ -1176,7 +1297,10 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  'train-start':['train','train',0,0,null,()=>{const b=$('.rt.act [data-act=start]');b&&b.click()}],
  bar:['log','log',0,1],'bar-trash':['log','log',0,1,null,trashSheet],
  finish:['finish','',1,0],'finish-ape':['finish','',1,0,null,()=>{const c=$('#fincards');c.style.scrollBehavior='auto';c.scrollLeft=c.scrollWidth}],
- empty:['empty','',1,1,()=>{SC.day='sat';startWorkout('Empty workout',[],{empty:true})}],tray:['empty','',1,1,null,traySheet],'tray-legs':['empty','',1,1,()=>{SC.note="Coach's case: PPL intermediate legs day (Fri), no goals, bias or favorites";PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],'tray-lib':['empty','',1,1,()=>{TF.mode='lib'},traySheet],
+ empty:['empty','',1,1,()=>{SC.day='sat';startWorkout('Empty workout',[],{empty:true})}],tray:['empty','',1,1,null,traySheet],'tray-legs':['empty','',1,1,()=>{SC.note="Coach's case: PPL intermediate legs day (Fri), no goals, bias or favorites";PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],'tray-lib':['empty','',1,1,()=>{TF.mode='lib'},traySheet],'tray-sort-fat':['empty','',1,1,()=>{TF.mode='fat'},traySheet],'tray-sort-stim':['empty','',1,1,()=>{TF.mode='stim';TF.mus='hamstrings'},traySheet],
+ 'tray-detail':['empty','',1,1,null,()=>{traySheet();setTimeout(()=>exDetail('barbell-bench-press',{onAdd:()=>toast('Added to workout')}),60)}],
+ 'progress-items':['progress','progress',0,0,null,()=>{const e=$('.pitems');if(e)e.scrollIntoView({block:'start'})}],
+ 'progress-explain':['progress','progress',0,0,null,()=>explainSheet('load_trend')],
  'tray-calf':['empty','',1,1,()=>{Object.assign(SC,{board:BOARDS.legsGap,day:'mon',cands:BOARDS.legsGapCands,note:"Coach's calf-gap case: legs-only week, calves at 3 of 5 sets"});PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],
  'swap-lat-home':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Home template ticked (adjustable dumbbells, bench, pull-up bar, bands).';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.home}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
  'swap-lat-com':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Commercial template ticked.';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.commercial}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
@@ -1208,7 +1332,7 @@ function route(){
   if(sess)S.session=true;else if(NAV===0)S.session=false;  // a cold-loaded route shows the state it names
   if(sess&&!S.live&&!S.demo&&scr!=='empty')demoWorkout();   // cold-loaded mid-workout routes = the demo; a real Start resets to 0:00
   SC={board:BOARDS.ppl,day:'fri',cands:null,note:''};PREFS_OVR.p=null;TF={q:'',mus:null,pat:null,eq:null,fav:false,mode:'sug'}; // per-route ranking scenario
-  if(scr==='finish'){S.live=false;S.demo=false}
+  if(scr==='finish'){FIN=finBuild(NAV===0);S.live=false;S.demo=false}
   pre&&pre();S.route=r;S.scr=scr;S.arg=arg;NAV++;
   document.body.classList.toggle('full',!!full);document.body.dataset.route=r;
   render();if(post)setTimeout(post,80);
@@ -1220,6 +1344,7 @@ function render(){
 }
 // one delegated click handler for the whole app
 document.addEventListener('click',e=>{
+  const xp=e.target.closest('[data-xpl]');if(xp){e.preventDefault();return explainSheet(xp.dataset.xpl)}
   const ref=e.target.closest('[data-ref]');if(ref){e.preventDefault();return refSheet(ref.dataset.ref)}
   const fld=e.target.closest('.fld');if(fld&&!fld.classList.contains('demo')){focusField(fld);return}
   const g=e.target.closest('[data-go]'),a=e.target.closest('[data-act]');
@@ -1264,8 +1389,8 @@ document.addEventListener('click',e=>{
 });
 window.SB={sheet,S,WK,CLK,ROUTINES,closeAll,startWorkout,gymPlates,plateCalc,movePat,mpDefs,eqDefs,passF,get sheets(){return SHEETS},get keypad(){return KP}};
 // internals for board.js (the Build whiteboard): same sheet, swap sheet, ranking scenario, muscle map, volume_bands
-window.SBX={logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
-  get RD(){return RD},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
+window.SBX={logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+  get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in
 })();
