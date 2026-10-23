@@ -336,3 +336,17 @@ The suite runs all three (`r3*` checks).
 - In phone landscape the Program check card is hidden (`.pcheck{display:none}` inside the landscape media query), so the board keeps the full height. The card lives under the week view in portrait.
 - Each per-muscle check mark in the stretch-share chart is an ⓘ button (`button.cbx[data-b=anx]`). Tapping it opens that stretch check's explainer, so every item keeps its explainer.
 - The analysis sheet body has a no-op click listener. In WebKit, taps on the map's SVG paths only fire click when an ancestor below body has a listener.
+
+**Round 3 quick fixes (CoS, 2026-10-23)**
+- No kind or status chips anywhere. The "Proposed" status stays in `data-status`, and the explain sheet says it in words (`.xprop`). The evidence tags (Modeled, Thin) are kept as honesty labels.
+- Stretch-share bars: when a muscle has its own stretch check, the bar colour follows that check. A pass is green with a ✓; anything else is amber with no ✓.
+  - Muscles without a check are coloured by their share against the 25% line.
+  - A pass under the line gets a plain note (`.ssn`) naming the stretch-focused exercises behind it.
+- Boundary formatting: `bfmt(v,lo,hi)` and `bpct(x,floor)` format values shown next to a range.
+  - Whole numbers stay whole. Otherwise one decimal, rounded away from the range when normal rounding would put the shown value inside it (7.95 of 8–20 shows 7.9; 24.7% against 25% shows 24.7%).
+  - Used on the card, the suggestion heads and titles, the close-to-target list, the weekly-sets rows, the curve readout, the deep-dive sets row and the stretch bars.
+  - Weekly sets are shown from `A.muscles[m].raw`, not Coach's rounded `target.sets`.
+- Program check copy: `pcSentence(it)` builds one plain sentence per issue from the structured fields (family, source, target, flag tuple, rule thresholds in rules.json). `pcFixText(it)` builds the fix line from `fix.ops`:
+  - Cut to N / Add N sets / Swap / Add / Remove / Move;
+  - `fix.preview` only as a fallback.
+  - No Coach display string is shown verbatim on the card.

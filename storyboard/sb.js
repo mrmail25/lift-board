@@ -1128,7 +1128,7 @@ const learnGo=lp=>{const [p,sx]=String(lp).split('#');return `#learn-f-${p}${sx?
 const ibtn=(id,attr='data-xpl')=>`<button class="ixb" ${attr}="${id}" aria-label="What is this?">${I('info',1.8)}</button>`;
 function explainSheet(id,extra=''){const it=itemDef(id);if(!it)return null;const x=it.explain||{},lp=x.learn_page;
   const s=sheet({title:'',cls:'grouped xsheet',right:'<button class="btn plain" data-x="close">Done</button>',
-    body:`<div class="xpl" data-item="${id}"><div class="xh">${kchip(it.kind)}<span class="tag ev ${it.evidence}">${EVT[it.evidence]||'Modeled'}</span>${it.status==='proposed'?'<span class="tag prop">Proposed</span>':''}</div><h3>${dispL(id,it.label)}</h3>
+    body:`<div class="xpl" data-item="${id}"><div class="xh">${kchip(it.kind)}<span class="tag ev ${it.evidence}">${EVT[it.evidence]||'Modeled'}</span></div><h3>${dispL(id,it.label)}</h3>${it.status==='proposed'?'<p class="xprop">This measure is still proposed in the analysis spec, not yet a settled check.</p>':''}
      <div class="group xq"><div class="row"><div class="grow"><div class="xk">What it measures</div><p>${x.what||it.description||''}</p></div></div>
       <div class="row"><div class="grow"><div class="xk">How it's calculated</div><p>${x.how||it.formula||''}</p></div></div>
       <div class="row"><div class="grow"><div class="xk">Why it matters</div><p>${x.why||''}</p></div></div></div>

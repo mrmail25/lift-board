@@ -262,10 +262,10 @@ const pct=x=>`${Math.round(x*100)}%`,MLB=m=>X.ML[m]||LBL(m);
 function sugTarget(s,days,lv){const t=s.target||{},A=stats().A;
   if(t.flag)return PC.message(RD(),t.flag,days,lv);
   if(s.source==='lower_fatigue_swap')return `${X.exNameP(t.exercise)} has a same-pattern option with more ${MLB(t.muscle).toLowerCase()} stimulus per unit of fatigue.`;
-  if(s.source==='stretch_share')return `${MLB(t.muscle)}: ${pct(t.share)} of its sets are stretch-biased (the flag is below ${pct(RD().targets.analytics.stretch_share_flag_below)}).`;
+  if(s.source==='stretch_share')return `${MLB(t.muscle)}: ${bpct(t.share,RD().targets.analytics.stretch_share_flag_below)} of its sets are stretch-biased (the flag is below ${pct(RD().targets.analytics.stretch_share_flag_below)}).`;
   if(s.source==='effective_frequency')return `${MLB(t.muscle)} gets ${RD().targets.analytics.frequency_min_effective}+ effective sets on ${t.days} day${t.days===1?'':'s'} a week. Two days spreads the same volume.`;
   if(s.source==='recovery_vs_baseline')return `This week's modeled recovery cost is ${t.pct}% of your saved normal week.`;
-  if(s.source==='weekly_band'){const v=A.muscles[t.muscle]||{};return `${MLB(t.muscle)}: ${t.sets} effective sets a week, ${t.side==='under'?'below':'above'} the ${v.min}–${v.max} target.`}
+  if(s.source==='weekly_band'){const v=A.muscles[t.muscle]||{};return `${MLB(t.muscle)}: ${bfmt(v.raw!=null?v.raw:t.sets,v.min,v.max)} effective sets a week, ${t.side==='under'?'below':'above'} the ${v.min}–${v.max} target.`}
   return ''}
 // Logged-progress values for the Analysis sheet and the Progress tab: the synthetic log (data/progress-reference.json), not real data.
 function progressNow(){try{return X.progressData?X.progressData():null}catch(e){console.warn(e);return null}}
@@ -274,7 +274,7 @@ function curve(m,A){const v=A.muscles[m],k=v.k,x=v.x,Sx=z=>1-Math.exp(-z/k),Xm=M
   let d='';for(let i=0;i<=60;i++){const z=i/60*Xm;d+=(i?'L':'M')+px(z).toFixed(1)+','+py(Sx(z)).toFixed(1)}const nx=Sx(x+1)-Sx(x),tk=[];for(let z=0;z<=Xm;z+=Xm>30?10:5)tk.push(`<text x="${px(z)}" y="${H-14}" text-anchor="middle">${z}</text>`);
   return `<svg class="ancurve" viewBox="0 0 ${W} ${H}" data-m="${m}"><rect x="${px(v.min)}" y="8" width="${px(v.max)-px(v.min)}" height="${H-38}" class="band"/>${[0,.5,1].map(z=>`<line x1="30" x2="${W-8}" y1="${py(z)}" y2="${py(z)}"/><text x="26" y="${py(z)+3}" text-anchor="end">${z*100}%</text>`).join('')}${tk.join('')}
    <path d="${d}" class="cv"/><circle cx="${px(x)}" cy="${py(Sx(x))}" r="5" class="dot"/><text x="${px(v.min)+4}" y="20" class="bl">target ${v.min}–${v.max}</text></svg>
-   <div class="anread"><b>${X.ML[m]||m}</b>: ${x.toFixed(1)} effective sets a week → ${Math.round(Sx(x)*100)}% of the modeled max. Next set ≈ +${(nx*100).toFixed(1)}%.</div>`}
+   <div class="anread"><b>${X.ML[m]||m}</b>: ${bfmt(x,v.min,v.max)} effective sets a week → ${Math.round(Sx(x)*100)}% of the modeled max. Next set ≈ +${(nx*100).toFixed(1)}%.</div>`}
 // Round 2 batch B (item 3, Coach's analysis-spec-r2.md): no top Suggestions block. The sections are analysis_metrics v2's
 // build_analysis sections in order; each shows its suggestions inline (sheet() entry .section), then its items from
 // logic/analysis.js items() (port of tools/analysis.py items()). Every item has a kind chip (Check / Measure / Info) and an (i)
@@ -307,6 +307,12 @@ const ICO={pass:'<span class="cki ok" role="img" aria-label="Pass">✓</span>',c
 const mlk=(m,anchor)=>`<button class="mlk" data-b="mus" data-m="${m}"${anchor?` data-anchor="${anchor}"`:''}>${MLB(m)}</button>`;
 const escA=s=>String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
 const nfmt=x=>+(+x).toFixed(2);
+// a value shown next to a target range never looks in range when it isn't: whole numbers stay whole; otherwise one decimal,
+// rounded normally unless that flips the side of the range, then rounded away from the range (7.95 of 8–20 -> 7.9)
+const bfmt=(v,lo,hi)=>{v=+v;if(Number.isInteger(v))return String(v);const side=x=>x<lo?-1:hi!=null&&x>hi?1:0,s=side(v);let r=Math.round(v*10)/10;
+  if(side(r)!==s)r=s<0?Math.floor(v*10+1e-9)/10:s>0?Math.ceil(v*10-1e-9)/10:r;return String(+r.toFixed(1))};
+// same for a share against a floor: 24.7% against 25% shows 24.7%, never 25%
+const bpct=(x,lo)=>{const p=x*100,L=lo*100,r=Math.round(p);return (p<L)===(r<L)?`${r}%`:`${+(Math.floor(p*10+1e-9)/10).toFixed(1)}%`};
 const weekLeg=()=>`<span class="mleg">${['under','in','amber','red'].map(k=>`<i style="background:${X.VFILL[k]}"></i>${({under:'Under',in:'In',amber:'Over',red:'Well over'})[k]}`).join('')}</span>`;
 function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules,lv=B.level;FIX=[];const sc0=AN.body.scrollTop;
   const cur=sigD();APPLIED=APPLIED.filter(a=>a.bsig!==cur); // undone (here or with the Undo bar): drop it
@@ -316,7 +322,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   const VCOL=((IB.weekly_sets_per_muscle||{}).value||{}).muscles||{};
   // Coach's per-muscle colour (G in range, A close, R far): amber shows amber with a Close status and is never green
   const vrow=([m,v])=>{const col=(VCOL[m]||{}).colour,st0=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',st=col==='A'?'amber':col==='R'&&st0==='in'?'red':st0,VB=X.VB,top=v.max*(VB.red_factor!=null?VB.red_factor:1);const ks=col==='A'?(st0==='under'?'close-under':'close-over'):st==='amber'?'close-over':st==='red'?'over':st;
-    return `<button class="row vrow${col==='A'?' vclose':''}" data-vs="${st}" data-st="${ks}" data-col="${col||''}" data-b="mus" data-m="${m}" data-anchor="sets"><span class="vm">${X.ML[m]||m}${ks==='close-under'||ks==='close-over'||ks==='over'?`<small class="vst ${ks==='over'?'red':'amb'}">${X.VLAB[ks]}</small>`:''}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${+v.raw.toFixed(1)}<small>/${v.min}–${v.max}</small></span></button>`};
+    return `<button class="row vrow${col==='A'?' vclose':''}" data-vs="${st}" data-st="${ks}" data-col="${col||''}" data-b="mus" data-m="${m}" data-anchor="sets"><span class="vm">${X.ML[m]||m}${ks==='close-under'||ks==='close-over'||ks==='over'?`<small class="vst ${ks==='over'?'red':'amb'}">${X.VLAB[ks]}</small>`:''}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${bfmt(v.raw,v.min,v.max)}<small>/${v.min}–${v.max}</small></span></button>`};
   const T=Object.entries(A.muscles).filter(([m,v])=>v.raw>0||v.min>0),RU={};R.rules.forEach(r=>RU[r.id]=r);
   const FM=R.frequency_muscles,fq=m=>B.days.map((dd,i)=>{const e=PC.eff(dt,dd.tiles.map(t=>({id:t.id,sets:t.sets})))[m]||0;const ok=e>=dt.targets.analytics.frequency_min_effective;return `<i class="${ok?'on':e>0?'lo':''}" data-r="${RAMPL(e)}" title="${WD[i]} · ${+e.toFixed(1)} sets${ok?' (counts)':''}"></i>`}).join('');
   const SL=RU.session_length,mx=Math.max(SL.warn_min+15,...A.day.map(x=>x.minutes)),SP=A.spinal,cm=Object.keys(A.muscles).includes(AN.mus)?AN.mus:'chest';
@@ -343,10 +349,10 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   const SGS={},seen=new Set(),used=new Set();SH.forEach(s=>{const k=[s.section,sgM(s)||'',(s.fixes[0]||{}).preview||s.type].join('|');if(seen.has(k))return;seen.add(k);(SGS[s.section]=SGS[s.section]||[]).push(s)});
   const fxRow=(f,s)=>{FIX.push(Object.assign({section:s.section},f));return `<div class="fxr"><span>${f.preview}${f.resolves?'':` <em>${R.partial_label}</em>`}</span><button class="btn xs accent" data-b="apply" data-k="${FIX.length-1}">Apply</button></div>`};
   const sgHead=s=>{const t=s.target||{},m=sgM(s),v=m&&A.muscles[m];
-    if(s.source==='weekly_band')return [mlk(m,'sets'),`${nfmt(t.sets)} of ${v.min}–${v.max}`];
+    if(s.source==='weekly_band')return [mlk(m,'sets'),`${bfmt(v.raw!=null?v.raw:t.sets,v.min,v.max)} of ${v.min}–${v.max}`];
     if(s.source==='effective_frequency')return [mlk(m,'frequency'),`${t.days} of 2 days`];
     if(s.source==='low_frequency')return [mlk(m,'frequency'),`${t.flag[3]} of 2 days`];
-    if(s.source==='stretch_share')return [mlk(m,'stretch'),`${pct(t.share)} stretch-focused`];
+    if(s.source==='stretch_share')return [mlk(m,'stretch'),`${bpct(t.share,RD().targets.analytics.stretch_share_flag_below)} stretch-focused`];
     if(s.source==='lower_fatigue_swap')return [mlk(m),X.exNameP(t.exercise)];
     if(s.source==='pattern_gap'){const f=t.flag;return [m?mlk(m):(MPL[f[2]]||f[2].replace(/_/g,' ')),`${f[3]} of ${f[4]} a week`]}
     if(t.flag){const r=ruleOf(t.flag);if(r==='push_pull_imbalance')return [RLAB(r),`${t.flag[2]} pull per push`];if(r==='sets_per_exercise'){const dd=d.find(x=>x.day===t.flag[2]),tl=dd&&dd.tiles.find(x=>x.id===t.flag[3]);return [RLAB(r),`${tl?tl.sets:''} sets of ${X.exNameP(t.flag[3])} on ${dayN(t.flag[2])}`]}return [RLAB(r),'']}
@@ -366,16 +372,16 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   const fdet=(it,f,note)=>`<div class="ckd fdet ${note?'note':f.severity}" data-rule="${f.rule}"${f.muscle?` data-m="${f.muscle}"`:''}><p>${f.muscle?mlk(f.muscle)+' · ':''}${PC.message(dt,f.flag,d,lv)}</p>${who(f)?`<p class="fwho">${who(f)}</p>`:''}</div>${take(it.section,s=>(s.target||{}).flag&&JSON.stringify(s.target.flag)===JSON.stringify(f.flag),true)}`;
   const flagsOf=it=>(it.flags||[]).map(f=>fdet(it,f)).join('')+(it.notes||[]).map(f=>fdet(it,f,1)).join('');
   const ckRow=(id,o={})=>{const it=IB[id];if(!it)return '';const def=AMI[id]||{},s=st(it);
-    return `<div class="ckr${s?'':' ms'}" data-metric="${id}" data-kind="${it.kind}" data-status="${def.status}" data-evidence="${def.evidence}"${it.status?` data-check="${it.status}"`:''}${s?` data-state="${s}"`:''}${id==='volume_in_reach'?` data-amber="${AMB.length}"`:''}>${s?ICO[s]:''}<span class="ckt">${LB(id)}${def.status==='proposed'?' <span class="tag prop">Proposed</span>':''}</span><span class="ckv num">${it.status==='n/a'?`n/a · ${NA(it)}`:o.v!=null?o.v:(VAL[id]||'')}</span>${ibx(id)}</div>${o.after||''}${o.noflags?'':flagsOf(it)}`};
+    return `<div class="ckr${s?'':' ms'}" data-metric="${id}" data-kind="${it.kind}" data-status="${def.status}" data-evidence="${def.evidence}"${it.status?` data-check="${it.status}"`:''}${s?` data-state="${s}"`:''}${id==='volume_in_reach'?` data-amber="${AMB.length}"`:''}>${s?ICO[s]:''}<span class="ckt">${LB(id)}</span><span class="ckv num">${it.status==='n/a'?`n/a · ${NA(it)}`:o.v!=null?o.v:(VAL[id]||'')}</span>${ibx(id)}</div>${o.after||''}${o.noflags?'':flagsOf(it)}`};
   const gfx=(id,inner,o={})=>{const it=IB[id];if(!it)return '';const s=st(it),def=AMI[id]||{};
-    return `<div class="agfx" data-metric="${id}" data-kind="${it.kind}" data-status="${def.status}" data-evidence="${def.evidence}"${it.status?` data-check="${it.status}"`:''}${s?` data-state="${s}"`:''}><div class="ash">${s?ICO[s]:''}<span>${o.label||LB(id)}</span>${(AMI[id]||{}).status==='proposed'?'<span class="tag prop">Proposed</span>':''}${o.mod?'<span class="tag mod">Modeled</span>':''}<span class="ashv num">${o.v!=null?o.v:(VAL[id]||'')}</span>${ibx(id)}</div>${inner}${o.noflags?'':flagsOf(it)}</div>`};
+    return `<div class="agfx" data-metric="${id}" data-kind="${it.kind}" data-status="${def.status}" data-evidence="${def.evidence}"${it.status?` data-check="${it.status}"`:''}${s?` data-state="${s}"`:''}><div class="ash">${s?ICO[s]:''}<span>${o.label||LB(id)}</span>${o.mod?'<span class="tag mod">Modeled</span>':''}<span class="ashv num">${o.v!=null?o.v:(VAL[id]||'')}</span>${ibx(id)}</div>${inner}${o.noflags?'':flagsOf(it)}</div>`};
   const hbar=(lab,w,v,o={})=>`<div class="hbar${o.cls?' '+o.cls:''}"${o.attr||''}><span class="vm hbs">${lab}</span><span class="hbt"><i class="${o.c||''}" style="--w:${Math.max(0,Math.min(100,w))}%"></i>${o.x!=null?`<b style="--x:${o.x}%"></b>`:''}</span><span class="vn num">${v}</span></div>`;
   // ---- Volume: modeled stimulus (curve + one row per muscle with its green ideal band), weekly sets with fixes inline, checklist
   const volFix=new Set((SGS.volume||[]).filter(s=>s.source==='weekly_band'&&s.fixes.length).map(sgM));
   const ambInline=m=>{const a=AMB.find(x=>x.m===m);if(!a||volFix.has(m))return '';const p=cbPick('mus',m);return p?`<div class="sgr inl ambr" data-m="${m}"><div class="sgp">Suggested: ${X.exNameP(p.id)} on ${WDL[DAYS.indexOf(p.day)]}, ${setsFor(p.id)} sets</div><button class="btn xs accent ambadd" data-b="ambadd" data-m="${m}" data-id="${p.id}" data-day="${p.day}">Add</button></div>`:''};
   const stRows=`<div class="strows">${T.map(([m,v])=>{const S=z=>1-Math.exp(-z/v.k),a=S(v.min)*100,b=S(v.max)*100,x=S(v.x)*100;
     return `<div class="strow${m===cm?' on':''}" data-m="${m}"><span class="vm">${mlk(m,'curve')}</span><button class="stt" data-anm="${m}" aria-label="Show the ${MLB(m)} curve"><i class="sband" style="left:${a.toFixed(2)}%;width:${(b-a).toFixed(2)}%"></i><i class="stm" style="left:${x.toFixed(2)}%"></i></button><span class="vn num">${Math.round(x)}%</span></div>`}).join('')}</div>`;
-  const ambList=AMB.length?`<div class="ckd ambl" data-n="${AMB.length}"><p class="ambh">Passing, ${AMB.length} close to target: ${AMB.map(a=>`${mlk(a.m,'sets')} <span class="num">${nfmt(a.sets)} of ${a.min}–${a.max}</span>`).join(', ')}</p>${AMBU&&AMBU.sig===sigD()?`<div class="aplr aplc ambu"><div class="grow"><p>${AMBU.text}</p></div><button class="btn xs ink" data-b="ambundo">Undo</button></div>`:''}</div>`:'';
+  const ambList=AMB.length?`<div class="ckd ambl" data-n="${AMB.length}"><p class="ambh">Passing, ${AMB.length} close to target: ${AMB.map(a=>`${mlk(a.m,'sets')} <span class="num">${bfmt(a.sets,a.min,a.max)} of ${a.min}–${a.max}</span>`).join(', ')}</p>${AMBU&&AMBU.sig===sigD()?`<div class="aplr aplc ambu"><div class="grow"><p>${AMBU.text}</p></div><button class="btn xs ink" data-b="ambundo">Undo</button></div>`:''}</div>`:'';
   const BODY={
     volume:()=>gfx('stimulus_curve',`<div class="curvec card curve">${curve(cm,A)}</div>${stRows}<p class="foot">Green = the modeled stimulus of the muscle's ideal weekly set range; dot = this week. ${A.curveModel}. ${A.disclaimer}</p>`,{mod:1})
       +gfx('weekly_sets_per_muscle',`<div class="group vol">${T.map(r=>vrow(r)+take('volume',s=>s.source==='weekly_band'&&sgM(s)===r[0],true)+ambInline(r[0])).join('')}</div>${X.volLegend(true)}`)
@@ -387,12 +393,17 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
         +gfx('frequency_two_days',`<div class="ckl fnotes">${N.map(nrow).join('')}</div>`,{noflags:1})
         +`<div class="ckl">${ckRow('consecutive_high_volume',{noflags:1})}${ckRow('day_shading')}</div>`+rest('frequency')},
     balance:()=>{const fb=dt.targets.analytics.stretch_share_flag_below,inG=new Set();
+      // bar colour follows the muscle's own stretch check when it has one (pass = green + tick, otherwise amber, no tick);
+      // muscles without a check are coloured by their share against the line. A pass below the line says why in a short note.
+      const SB=dt.rules.stretch_biased||{},onB=new Set(d.flatMap(x=>x.tiles.map(t=>t.id)));
       const ssRows=Object.entries(ss.per_muscle||{}).map(([m,v])=>{const ci=IB['stretch_'+m];if(ci)inG.add(ci.id);
-        return hbar(`${mlk(m,'stretch')}${ci?`<button class="cbx" data-b="anx" data-id="${ci.id}" data-check-item="${ci.id}" data-check="${ci.status}" aria-label="Explain: ${DLAB(ci.id)||ci.id}">${ci.status==='pass'?ICO.pass:ci.status==='attention'?ICO.attention:ICO['n/a']}</button>`:''}`,v*100,pct(v),{cls:'ssr',attr:` data-m="${m}"`,c:v<fb?'amb':'ok',x:fb*100})+take('balance',s=>s.source==='stretch_share'&&sgM(s)===m,true)}).join('');
+        const c=ci&&ci.status!=='n/a'?(ci.status==='pass'?'ok':'amb'):(v<fb?'amb':'ok');
+        const why=ci&&ci.status==='pass'&&v<fb?(()=>{const ex=(SB[m]||[]).filter(i=>onB.has(i)).map(EXN);return `<p class="ssn" data-m="${m}">Passes because ${ex.length?ex.join(' and ')+(ex.length>1?' count':' counts')+' as':'it has'} stretch-focused work. Its share is still under ${pct(fb)}.</p>`})():'';
+        return hbar(`${mlk(m,'stretch')}${ci?`<button class="cbx" data-b="anx" data-id="${ci.id}" data-check-item="${ci.id}" data-check="${ci.status}" aria-label="Explain: ${DLAB(ci.id)||ci.id}">${ci.status==='pass'?ICO.pass:ci.status==='attention'?ICO.close:ICO['n/a']}</button>`:''}`,v*100,bpct(v,fb),{cls:'ssr',attr:` data-m="${m}" data-c="${c}"`,c,x:fb*100})+why+take('balance',s=>s.source==='stretch_share'&&sgM(s)===m,true)}).join('');
       const pmx=Math.max(1,...Object.values(mps));
       const ppBar=pp&&(pp.pull_sets+pp.push_sets)?`<div class="ckd"><div class="ppbar"><span class="pu" style="flex:${pp.pull_sets}">Pull ${pp.pull_sets}</span><span class="ps" style="flex:${pp.push_sets}">Push ${pp.push_sets}</span></div><p class="ppcap">${pp.pull_to_push} pull per push · in balance at 0.75–2</p></div>`:'';
       const stretchChecks=IT.filter(i=>/^stretch_/.test(i.id)&&i.kind==='check'&&(!inG.has(i.id)||i.status!=='pass')).map(i=>ckRow(i.id)).join('');
-      return gfx('stretch_share',`<div class="hbars">${ssRows}</div><p class="foot">Line = ${pct(fb)}: below it a muscle gets few stretch-focused sets. ✓ = the muscle's own stretch check passes.</p>`)
+      return gfx('stretch_share',`<div class="hbars">${ssRows}</div><p class="foot">Line = ${pct(fb)}: below it a muscle gets few stretch-focused sets. ✓ = the muscle's own stretch check passes; the bar colour follows that check.</p>`)
         +gfx('unilateral_share',hbar('All sets',(us.overall||0)*100,pct(us.overall||0)))
         +gfx('movement_pattern_sets',`<div class="hbars pats">${Object.entries(mps).map(([k,v])=>`<button class="hbar prow" data-b="pat" data-p="${k}"><span class="vm hbs">${MPL[k]||k}</span><span class="hbt"><i style="--w:${v/pmx*100}%"></i></span><span class="vn num">${v} sets</span></button>`).join('')}</div>`)
         +`<div class="ckl">${ckRow('push_pull_ratio',{after:ppBar})}${ckRow('pattern_coverage')}${ckRow('redundant_pattern')}${stretchChecks}${ckRow('stretch_coverage')}</div>`+rest('balance')},
@@ -446,7 +457,7 @@ function ddBody(){const m=CB.key,dt=RD(),d=checkDays(),lv=B.level,SH=ANL.sheet(d
   const FN=dt.FN&&window.FREQNOTES?FREQNOTES.notes(dt,d,lv,dt.FN.templates).filter(n=>(n.muscles||[]).includes(m)):[];
   return `<div class="cbh dd" data-st="${stk}"><div class="big num">${+(+s.effective).toFixed(1)}</div><div class="sub">effective sets a week · target ${s.level_min}–${s.max} · <b class="vst ${stk==='in'?'':stk==='over'||stk==='under'?'red':'amb'}">${stl}</b></div></div>
    ${CB.last?`<div class="aplc cbu"><div class="grow"><p>${CB.last}</p></div><button class="btn sm ink" data-b="cbundo">Undo</button></div>`:''}
-   ${sec('sets','Sets vs target',`<div class="hbar ddsets"><span class="vm hbs">This week</span><span class="hbt"><s class="bnd" style="left:${X0(s.level_min)}%;width:${X0(s.max)-X0(s.level_min)}%"></s><i class="${stk==='in'?'ok':stk==='over'||stk==='under'?'bad':'amb'}" style="--w:${X0(s.effective)}%"></i></span><span class="vn num">${nfmt(s.effective)}</span></div>${kv('Ideal band',`${s.level_min}–${s.max} sets`)}${kv('Far under / far over',`below ${s.red_under_below} · above ${s.red_over_above}`)}${kv('Target evidence',s.evidence_tag)}`)}
+   ${sec('sets','Sets vs target',`<div class="hbar ddsets"><span class="vm hbs">This week</span><span class="hbt"><s class="bnd" style="left:${X0(s.level_min)}%;width:${X0(s.max)-X0(s.level_min)}%"></s><i class="${stk==='in'?'ok':stk==='over'||stk==='under'?'bad':'amb'}" style="--w:${X0(s.effective)}%"></i></span><span class="vn num">${bfmt(s.effective,s.level_min,s.max)}</span></div>${kv('Ideal band',`${s.level_min}–${s.max} sets`)}${kv('Far under / far over',`below ${s.red_under_below} · above ${s.red_over_above}`)}${kv('Target evidence',s.evidence_tag)}`)}
    ${sec('curve','Stimulus curve',A.muscles[m]?`<div class="curvec">${curve(m,A)}</div>${kv('Position',({below:'Below the ideal band',in_band:'In the ideal band',above:'Above the ideal band'})[P.curve.position])}${kv('Next set',`+${(P.curve.next_set*100).toFixed(1)}%`)}`:'',{mod:1,v:`${Math.round(P.curve.stimulus*100)}% of max`})}
    ${sec('frequency','Frequency',`<div class="ddfq">${Object.entries(P.frequency.effective_by_day).map(([k,v])=>`<span><i data-r="${RAMP(v)}"></i>${WD[DAYS.indexOf(k)]} ${nfmt(v)}</span>`).join('')}</div>${FN.map(n=>`<div class="nrow" data-note="${n.id}" data-pol="${n.polarity}">${n.polarity==='positive'?ICO.pass:ICO.close}<span>${n.text}</span></div>`).join('')}`,{v:`${P.frequency.days_hit} day${P.frequency.days_hit===1?'':'s'} with ${P.frequency.min_effective_per_day}+ sets`})}
    ${sec('stretch','Stretch',P.stretch.share==null?'<p class="foot">No stretch list for this muscle, or no sets.</p>':`<div class="hbar"><span class="vm hbs">Share${P.stretch.checked?(P.stretch.check_pass?ICO.pass:ICO.attention):''}</span><span class="hbt"><i class="${P.stretch.share<dt.targets.analytics.stretch_share_flag_below?'amb':'ok'}" style="--w:${P.stretch.share*100}%"></i><b style="--x:${dt.targets.analytics.stretch_share_flag_below*100}%"></b></span><span class="vn num">${pct(P.stretch.share)}</span></div>${P.stretch.checked?kv('Stretch check',P.stretch.check_pass?'Passes':'Needs stretch-focused work'):''}`)}
@@ -483,24 +494,59 @@ function analysisSheet(){SUGX.clear();AN=X.sheet({title:'Analysis',cls:'tall gro
 // without a validated fix (action see_analysis) links to its Analysis item instead. A board with no issue still shows the card.
 let PCI=[],PCAP=null;
 const pcItem=id=>{if(!id)return null;if(id.includes('<muscle>'))return 'stretch_share';return id.split(' / ')[0]};
-function pcHead(it){const dt=RD(),t=it.target||{},m=it.muscle,A=stats().A,f=t.flag;
-  if(it.family==='weekly_volume'){const v=A.muscles[m]||{};return [mlk(m,'sets'),`${nfmt('sets' in t?t.sets:f[3])} of ${v.min}–${v.max} sets`]}
-  if(it.family==='stretch')return [mlk(m,'stretch'),'share' in t?`${pct(t.share)} stretch-focused · below ${pct(dt.targets.analytics.stretch_share_flag_below)}`:'no stretch-focused work'];
-  if(f){const r=ruleOf(f),ds=(it.days||[]).map(dayN).join(', ');
-    if(r==='push_pull_imbalance')return [RLAB(r),`${f[2]} pull per push · 0.75–2`];
-    if(r==='pattern_gap')return [m?mlk(m):RLAB(r),`${f[3]} of ${f[4]} a week`];
-    return [m?mlk(m):RLAB(r),ds]}
-  return [m?mlk(m):(DLAB(pcItem(it.analysis_item))||it.family),'']}
+// Round 3 quick fixes: plain card sentences built here from the issue's structured fields (family, source, target, flag,
+// muscle, days, exercises) and the fix ops, so no Coach string is shown verbatim on the card. Values next to a target
+// range use bfmt / bpct (one decimal when whole-number rounding would make an out-of-range value look in range).
+const SNM=id=>X.exNameP(id); // full name: short names like "BB Bench Press" / "DB Bench Press" read as codes, and a bare "Bench press" would be ambiguous
+const EXN=id=>X.exNameP(id);
+function pcSentence(it){const dt=RD(),t=it.target||{},m=it.muscle,A=stats().A,f=t.flag,r=f?ruleOf(f):it.source,lv=B.level,RU=id=>dt.rules.rules.find(x=>x.id===id)||{};
+  const M=x=>mlk(x||m,'sets'),D=d=>dayN(d),N=x=>`<span class="num">${x}</span>`;
+  const wk=(mm,sets)=>{const v=A.muscles[mm]||{},raw=v.raw!=null?v.raw:sets;return `${mlk(mm,'sets')}: ${N(`${bfmt(raw,v.min,v.max)} of ${v.min}–${v.max}`)} sets a week`};
+  if(r==='weekly_band'||r==='weekly_volume')return wk(m||f[2],'sets' in t?t.sets:f&&f[3]);
+  if(r==='stretch_share'){const fb=dt.targets.analytics.stretch_share_flag_below;return `${mlk(m,'stretch')}: ${N(bpct(t.share,fb,1))} of its sets are stretch-focused (aim ${pct(fb)} or more)`}
+  if(r==='missing_stretch')return `${mlk(m||f[2],'stretch')}: no stretch-focused exercise this week`;
+  if(r==='effective_frequency')return `${mlk(m,'frequency')}: ${dt.targets.analytics.frequency_min_effective}+ sets on only ${N(t.days)} day${t.days===1?'':'s'} a week (aim 2)`;
+  if(r==='recovery_vs_baseline')return `Recovery cost: ${N(t.pct+'%')} of your normal week`;
+  if(!f)return m?M():(DLAB(pcItem(it.analysis_item))||it.family);
+  const x=RU(r);
+  switch(f[1]){
+    case 'sets_per_exercise':{const dd=B.days.find(d=>d.day===f[2]),tl=dd&&dd.tiles.find(q=>q.id===f[3]);return `${SNM(f[3])}: ${N((tl?tl.sets:'')+' sets')} in one session (${D(f[2])})`}
+    case 'push_pull_imbalance':{const q=+f[2];if(q===0)return 'No pulling this week';if(q===99)return 'No pushing this week';
+      return `${q<x.min_ratio?'Pulling is low':'Pushing is low'}: ${N(q)} pull sets per push set (aim ${x.min_ratio}–${x.max_ratio})`}
+    case 'pattern_gap':{const S=(dt.patterns.slots||{})[f[2]]||{name:f[2]};return `${S.name}: ${N(f[3])} exercise${f[3]===1?'':'s'} this week (aim ${f[4]||1} or more)`}
+    case 'redundant_pattern':return `${mlk(f[5]||m,'session')}: ${N(nfmt(f[6])+' sets')} from ${String(f[3]).replace(/_/g,' ')} exercises in one session (${D(f[2])})`;
+    case 'junk_volume_session':return `${mlk(f[3]||m,'session')}: ${N(nfmt(f[4])+' sets')} in one session (${D(f[2])})`;
+    case 'consecutive_high_volume':{const d2=DAYS[(DAYS.indexOf(f[2])+1)%7];return `${mlk(f[3]||m,'frequency')}: hard sessions on back-to-back days (${D(f[2])}, ${D(d2)})`}
+    case 'low_frequency':return f[3]===0?`${mlk(f[2],'frequency')}: only indirect work this week`:`${mlk(f[2],'frequency')}: trained on only ${N(f[3])} day a week (aim 2)`;
+    case 'session_hard_sets':return `${D(f[2])}: ${N(f[3]+' hard sets')} in one session (limit ${x.warn_above[lv]})`;
+    case 'session_length':return `${D(f[2])}: about ${N(f[3]+' minutes')} (aim under ${x.warn_min})`;
+    case 'spinal_load_session':return `${D(f[2])}: ${N(f[3])} heavy squat and deadlift sets (limit ${RU('spinal_load').session_warn_above[lv]})`;
+    case 'spinal_load_week':return `This week: ${N(f[2])} heavy squat and deadlift sets (limit ${RU('spinal_load').week_warn_above[lv]})`;
+    case 'many_small_entries':return `${D(f[2])}: ${N(f[3])} exercises with under 2 sets each`;
+    case 'hinge_before_squat':{const d2=DAYS[(DAYS.indexOf(f[2])+1)%7];return `Heavy deadlifts on ${D(f[2])}, then heavy squats on ${D(d2)}`}
+    case 'beginner_squat_and_deadlift':return `${D(f[2])}: heavy squats and deadlifts on the same day`;
+    case 'recovery_vs_baseline':return `Recovery cost: ${N(f[2]+'%')} of your normal week`}
+  return m?M():RLAB(r)}
+// the fix as a short plain line, from its ops (swap / sets / add / remove; remove + add of one exercise = a move)
+function pcFixText(it){const ops=(it.fix||{}).ops||[],sub=(it.target||{}).flag&&it.target.flag[1]==='sets_per_exercise'?it.target.flag[3]:null,D=dayN,out=[];
+  for(let k=0;k<ops.length;k++){const o=ops[k],nx=ops[k+1];
+    if(o.op==='remove'&&nx&&nx.op==='add'&&nx.id===o.id){out.push(`Move ${EXN(o.id)} from ${D(o.day)} to ${D(nx.day)}`);k++;continue}
+    if(o.op==='sets'){if(o.id===sub&&ops.length===1)out.push(o.to<o.from?`Cut to ${o.to}`:`Raise to ${o.to}`);
+      else{const n=o.to-o.from;out.push(n>0?`Add ${n} set${n===1?'':'s'} to ${EXN(o.id)} (${D(o.day)}, ${o.from} → ${o.to})`:`Cut ${EXN(o.id)} to ${o.to} sets (${D(o.day)})`)}}
+    else if(o.op==='swap')out.push(`Swap ${EXN(o.from_id)} for ${EXN(o.to_id)} (${D(o.day)})`);
+    else if(o.op==='add')out.push(`Add ${EXN(o.id)}, ${o.sets} set${o.sets===1?'':'s'} (${D(o.day)})`);
+    else if(o.op==='remove')out.push(`Remove ${EXN(o.id)} (${D(o.day)})`)}
+  return out.join('; ')}
 function pcheckHtml(){const dt=RD();if(!dt||!window.CHECKPRIORITY||!dt.rules.check_priority)return '';PCI=[];
   const foot=`<div class="pcfoot"><button class="btn plain" data-b="analysis">See full analysis ›</button></div>`;
   const head=n=>`<div class="pch"><b>Program check</b><span class="sub">${n}</span></div>`;
   if(openSlots())return head('Fill slots to check')+foot;
-  const L=CHECKPRIORITY.top(dt,checkDays(),B.level);PCI=L;
-  const ap=PCAP&&PCAP.asig===sigD()?`<div class="pcap"><p><b>Applied</b> · ${PCAP.preview}</p><button class="btn xs ink" data-b="pcundo">Undo</button></div>`:'';
+  const L=CHECKPRIORITY.top(dt,checkDays(),B.level);PCI=L;const fxT=it=>pcFixText(it)||it.fix.preview;
+  const ap=PCAP&&PCAP.asig===sigD()?`<div class="pcap"><p><b>Applied</b> · ${PCAP.text||PCAP.preview}</p><button class="btn xs ink" data-b="pcundo">Undo</button></div>`:'';
   if(!L.length)return head('')+ap+`<div class="pcr none" data-state="none">${ICO.pass}<div class="sgt">No pressing issues</div></div>`+foot;
-  return head(`${L.length} most pressing`)+ap+L.map((it,i)=>{const [w,n]=pcHead(it);
-    return `<div class="pcr" data-id="${it.id}" data-state="${it.state}" data-action="${it.action}" data-score="${it.score}"><span class="cki dot ${it.state==='red'?'bad':'amb'}" role="img" aria-label="${it.state==='red'?'Needs attention':'Close to target'}"></span><div class="sgt">${w}${n?` <span class="num">${n}</span>`:''}</div>
-      ${it.fix?`<button class="btn xs accent" data-b="pcapply" data-k="${i}">Apply</button><div class="sgp">${it.fix.preview}${it.fix.resolves?'':` <em>${dt.rules.partial_label}</em>`}</div>`:`<button class="btn xs grey" data-b="pcsee" data-item="${pcItem(it.analysis_item)}">See analysis</button><div class="sgp">No one-tap fix passes the checks.</div>`}</div>`}).join('')+foot}
+  return head(`${L.length} most pressing`)+ap+L.map((it,i)=>{const w=pcSentence(it);
+    return `<div class="pcr" data-id="${it.id}" data-state="${it.state}" data-action="${it.action}" data-score="${it.score}"><span class="cki dot ${it.state==='red'?'bad':'amb'}" role="img" aria-label="${it.state==='red'?'Needs attention':'Close to target'}"></span><div class="sgt">${w}</div>
+      ${it.fix?`<button class="btn xs accent" data-b="pcapply" data-k="${i}">Apply</button><div class="sgp">${fxT(it)}${it.fix.resolves?'':` <em>${dt.rules.partial_label}</em>`}</div>`:`<button class="btn xs grey" data-b="pcsee" data-item="${pcItem(it.analysis_item)}">See analysis</button><div class="sgp">No one-tap fix passes the checks.</div>`}</div>`}).join('')+foot}
 function paintPcheck(){const el=$('#pcheck');if(el)el.innerHTML=pcheckHtml()}
 // open the Analysis sheet at one item (its section expanded)
 function analysisAt(item){const S=analysisSheet();const el=item&&S.body.querySelector(`[data-metric="${item}"],[data-check-item="${item}"]`);if(!el)return S;
@@ -575,7 +621,7 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   if(k==='mus'||k==='pat')return contribSheet(k,b.dataset[k==='mus'?'m':'p'],b.dataset.anchor);
   if(k==='asec'){const s=b.closest('.asec');const o=s.dataset.open!=='1';s.dataset.open=o?'1':'0';b.setAttribute('aria-expanded',String(o));setAnOpen(s.dataset.cat,o);return}
   if(k==='pcsee')return analysisAt(b.dataset.item);
-  if(k==='pcapply'){const it=PCI[+b.dataset.k];if(!it||!it.fix)return;const before=snap();commit(()=>applyOpsBoard(it.fix.ops),`Applied: ${it.fix.preview}`);PCAP={id:it.id,preview:it.fix.preview,undo:it.fix.undo,before,asig:sigD()};paintPcheck();return}
+  if(k==='pcapply'){const it=PCI[+b.dataset.k];if(!it||!it.fix)return;const before=snap();const tx=pcFixText(it)||it.fix.preview;commit(()=>applyOpsBoard(it.fix.ops),`Applied: ${tx}`);PCAP={id:it.id,preview:it.fix.preview,text:tx,undo:it.fix.undo,before,asig:sigD()};paintPcheck();return}
   if(k==='pcundo'){if(!PCAP)return;const P0=PCAP;PCAP=null;B.hist.push(snap());if(P0.asig===sigD()){try{applyOpsBoard(P0.undo)}catch(x){restore(P0.before)}}else restore(P0.before);paint();hideUndo();X.toast('Suggestion undone');return}
   if(k==='ddapply'){const z=CFIX[+b.dataset.k];if(!z)return;commit(()=>applyOpsBoard(z.ops),`Applied: ${z.preview}`);if(CB){CB.last=`Applied: ${z.preview}`;cbRe()}return}if(k==='cbclose')return CB&&CB.close();
   if(k==='cbrm'){const f=findT(b.dataset.u);if(!f)return;const nm=X.exNameP(f.t.id),dn=WD[DAYS.indexOf(f.d.day)];commit(()=>removeU([b.dataset.u]),`Removed ${nm}`);if(CB){CB.last=`Removed ${nm} from ${dn}.`;cbRe()}return}
@@ -633,5 +679,5 @@ Object.assign(X.ROUTES,{
  'build-tray-detail-nophoto':['build','build',0,0,()=>{Object.assign(TFB,{mus:null,pat:null,eq:null,mode:'sug'})},()=>{traySheet('wed');setTimeout(()=>X.exDetail('cable-fly',{addLabel:'Add to Wed',onAdd:trayAdd}),60)}],
  'build-tray-filter':['build','build',0,0,()=>{Object.assign(TFB,{mus:null,pat:'vertical_pull',eq:null})},()=>traySheet('thu')],
 });
-window.BOARD={loadPreset:id=>{const [sp,lv,n]=id.split('/'),s=RD().splits.splits.find(x=>x.id===sp);loadDays(s.levels[lv][n],`${s.name} · ${n} days`);B.level=lv;B.hist=[];PCAP=null;APPLIED=[];X.render()},applyOps:ops=>{applyOpsBoard(ops);paint()},get pcheck(){return PCI},get detail(){return BD.detail},fracLine,muscleShort,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
+window.BOARD={fmt:{bfmt:(...a)=>bfmt(...a),bpct:(...a)=>bpct(...a)},loadPreset:id=>{const [sp,lv,n]=id.split('/'),s=RD().splits.splits.find(x=>x.id===sp);loadDays(s.levels[lv][n],`${s.name} · ${n} days`);B.level=lv;B.hist=[];PCAP=null;APPLIED=[];X.render()},applyOps:ops=>{applyOpsBoard(ops);paint()},get pcheck(){return PCI},get detail(){return BD.detail},fracLine,muscleShort,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
 })();
