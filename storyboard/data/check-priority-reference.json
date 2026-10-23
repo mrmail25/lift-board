@@ -1,0 +1,2711 @@
+{
+ "description": "Program-check card issues for every preset, no saved baseline, from tools/check_priority.py top(): red then amber (info never shown), score within a state, cap 3, no minimum score. Each issue has its score components, action (apply | see_analysis) and the Apply fix (ops + undo, null for see_analysis). builder_interim = the Builder's interim order (fails, then amber, then biggest gap; info left out) for comparison. A model, not a measurement.",
+ "weights": "data/check-priority-weights.json",
+ "presets": {
+  "full-body/beginner/2": {
+   "level": "beginner",
+   "top": [
+    {
+     "id": "weekly_volume:upper_back",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "upper_back",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "face-pull",
+      "lat-pulldown",
+      "romanian-deadlift",
+      "seated-cable-row"
+     ],
+     "target": {
+      "muscle": "upper_back",
+      "sets": 6.0,
+      "side": "under"
+     },
+     "distance": 0.0,
+     "severity": 0.4,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 1.0,
+      "value": 1.0
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.08,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:triceps",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "dumbbell-bench-press",
+      "incline-dumbbell-press",
+      "overhead-cable-triceps-extension"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "sets": 4.4,
+      "side": "under"
+     },
+     "distance": 0.12,
+     "severity": 0.424,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.8,
+      "value": 0.8
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0678,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:abs",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "abs",
+     "days": [
+      "mon"
+     ],
+     "exercises": [
+      "hanging-leg-raise"
+     ],
+     "target": {
+      "muscle": "abs",
+      "sets": 2,
+      "side": "under"
+     },
+     "distance": 0.2,
+     "severity": 0.44,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.6,
+      "value": 0.6
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0528,
+     "action": "see_analysis",
+     "fix": null
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:abductors",
+    "weekly_volume:abs",
+    "weekly_volume:triceps"
+   ],
+   "candidates": 12
+  },
+  "full-body/beginner/3": {
+   "level": "beginner",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 6
+  },
+  "full-body/beginner/4": {
+   "level": "beginner",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 5
+  },
+  "full-body/intermediate/2": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "weekly_volume:side_delts",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "side_delts",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "cable-lateral-raise",
+      "dumbbell-lateral-raise"
+     ],
+     "target": {
+      "muscle": "side_delts",
+      "sets": 5,
+      "side": "under"
+     },
+     "distance": 0.2308,
+     "severity": 0.4462,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.85,
+      "value": 0.85
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0759,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:triceps",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "barbell-bench-press",
+      "incline-dumbbell-press",
+      "overhead-cable-triceps-extension"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "sets": 5.6,
+      "side": "under"
+     },
+     "distance": 0.1385,
+     "severity": 0.4277,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.8,
+      "value": 0.8
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0684,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:calves",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "calves",
+     "days": [
+      "thu"
+     ],
+     "exercises": [
+      "standing-calf-raise"
+     ],
+     "target": {
+      "muscle": "calves",
+      "sets": 3,
+      "side": "under"
+     },
+     "distance": 0.4,
+     "severity": 0.48,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.7,
+      "value": 0.7
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0672,
+     "action": "see_analysis",
+     "fix": null
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:calves",
+    "weekly_volume:side_delts",
+    "weekly_volume:triceps"
+   ],
+   "candidates": 10
+  },
+  "full-body/intermediate/3": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "mon",
+      "wed",
+      "fri"
+     ],
+     "exercises": [
+      "chest-supported-row",
+      "hammer-curl",
+      "incline-dumbbell-curl",
+      "lat-pulldown",
+      "pull-up"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.247
+     },
+     "distance": 0.012,
+     "severity": 0.4024,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2253,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "hammer-curl",
+        "to_id": "incline-dumbbell-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Hammer Curl for Incline Dumbbell Curl on Friday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "incline-dumbbell-curl",
+        "to_id": "hammer-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 4
+  },
+  "full-body/intermediate/4": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "mon",
+      "tue",
+      "thu",
+      "fri"
+     ],
+     "exercises": [
+      "chest-supported-row",
+      "hammer-curl",
+      "incline-dumbbell-curl",
+      "lat-pulldown",
+      "pull-up"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.215
+     },
+     "distance": 0.14,
+     "severity": 0.428,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2397,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "thu",
+        "from_id": "hammer-curl",
+        "to_id": "incline-dumbbell-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Hammer Curl for Incline Dumbbell Curl on Thursday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "thu",
+        "from_id": "incline-dumbbell-curl",
+        "to_id": "hammer-curl",
+        "sets": 2
+       }
+      ]
+     }
+    },
+    {
+     "id": "stretch:triceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_triceps",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon",
+      "tue",
+      "thu",
+      "fri"
+     ],
+     "exercises": [
+      "barbell-bench-press",
+      "incline-dumbbell-press",
+      "overhead-cable-triceps-extension",
+      "weighted-dip"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "share": 0.241
+     },
+     "distance": 0.036,
+     "severity": 0.4072,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.228,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "thu",
+        "from_id": "weighted-dip",
+        "to_id": "ring-triceps-extension",
+        "sets": 3
+       }
+      ],
+      "preview": "Swap Weighted Dip for Ring Triceps Extension on Thursday (more stretch for triceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "thu",
+        "from_id": "ring-triceps-extension",
+        "to_id": "weighted-dip",
+        "sets": 3
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps",
+    "stretch:triceps"
+   ],
+   "candidates": 3
+  },
+  "full-body/advanced/2": {
+   "level": "advanced",
+   "top": [
+    {
+     "id": "weekly_volume:biceps",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "incline-dumbbell-curl",
+      "pendlay-row",
+      "pull-up"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "sets": 7.0,
+      "side": "under"
+     },
+     "distance": 0.125,
+     "severity": 0.425,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.8,
+      "value": 0.8
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.34,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "sets",
+        "day": "mon",
+        "id": "incline-dumbbell-curl",
+        "from": 2,
+        "to": 3
+       }
+      ],
+      "preview": "Add sets to Incline Dumbbell Curl on Monday (2→3)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "sets",
+        "day": "mon",
+        "id": "incline-dumbbell-curl",
+        "from": 3,
+        "to": 2
+       }
+      ]
+     }
+    },
+    {
+     "id": "weekly_volume:hamstrings",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "hamstrings",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "romanian-deadlift",
+      "seated-leg-curl"
+     ],
+     "target": {
+      "muscle": "hamstrings",
+      "sets": 6,
+      "side": "under"
+     },
+     "distance": 0.25,
+     "severity": 0.45,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 1.0,
+      "value": 1.0
+     },
+     "fixability": {
+      "rule": "partial",
+      "value": 0.4
+     },
+     "score": 0.18,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "sets",
+        "day": "mon",
+        "id": "seated-leg-curl",
+        "from": 2,
+        "to": 3
+       }
+      ],
+      "preview": "Add sets to Seated Leg Curl on Monday (2→3)",
+      "resolves": false,
+      "undo": [
+       {
+        "op": "sets",
+        "day": "mon",
+        "id": "seated-leg-curl",
+        "from": 3,
+        "to": 2
+       }
+      ]
+     }
+    },
+    {
+     "id": "weekly_volume:side_delts",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "side_delts",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "cable-lateral-raise",
+      "dumbbell-lateral-raise"
+     ],
+     "target": {
+      "muscle": "side_delts",
+      "sets": 6,
+      "side": "under"
+     },
+     "distance": 0.25,
+     "severity": 0.45,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.85,
+      "value": 0.85
+     },
+     "fixability": {
+      "rule": "partial",
+      "value": 0.4
+     },
+     "score": 0.153,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "sets",
+        "day": "mon",
+        "id": "cable-lateral-raise",
+        "from": 3,
+        "to": 4
+       }
+      ],
+      "preview": "Add sets to Cable Lateral Raise on Monday (3→4)",
+      "resolves": false,
+      "undo": [
+       {
+        "op": "sets",
+        "day": "mon",
+        "id": "cable-lateral-raise",
+        "from": 4,
+        "to": 3
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:abs",
+    "weekly_volume:obliques",
+    "weekly_volume:calves"
+   ],
+   "candidates": 13
+  },
+  "full-body/advanced/3": {
+   "level": "advanced",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 4
+  },
+  "full-body/advanced/4": {
+   "level": "advanced",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 2
+  },
+  "upper-lower/beginner/2": {
+   "level": "beginner",
+   "top": [
+    {
+     "id": "weekly_volume:side_delts",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "side_delts",
+     "days": [
+      "mon"
+     ],
+     "exercises": [
+      "dumbbell-lateral-raise",
+      "seated-dumbbell-shoulder-press"
+     ],
+     "target": {
+      "muscle": "side_delts",
+      "sets": 4.0,
+      "side": "under"
+     },
+     "distance": 0.2,
+     "severity": 0.44,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.85,
+      "value": 0.85
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0748,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:rear_delts",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "rear_delts",
+     "days": [
+      "mon"
+     ],
+     "exercises": [
+      "lat-pulldown",
+      "seated-cable-row"
+     ],
+     "target": {
+      "muscle": "rear_delts",
+      "sets": 2.5,
+      "side": "under"
+     },
+     "distance": 0.2857,
+     "severity": 0.4571,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.75,
+      "value": 0.75
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0686,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:triceps",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon"
+     ],
+     "exercises": [
+      "dumbbell-bench-press",
+      "overhead-cable-triceps-extension",
+      "seated-dumbbell-shoulder-press"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "sets": 4.6,
+      "side": "under"
+     },
+     "distance": 0.08,
+     "severity": 0.416,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.8,
+      "value": 0.8
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0666,
+     "action": "see_analysis",
+     "fix": null
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:rear_delts",
+    "weekly_volume:side_delts",
+    "weekly_volume:calves"
+   ],
+   "candidates": 15
+  },
+  "upper-lower/beginner/4": {
+   "level": "beginner",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "chest-supported-row",
+      "close-grip-pulldown",
+      "hammer-curl",
+      "incline-dumbbell-curl",
+      "lat-pulldown",
+      "seated-cable-row"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.208
+     },
+     "distance": 0.168,
+     "severity": 0.4336,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2428,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "thu",
+        "from_id": "hammer-curl",
+        "to_id": "incline-dumbbell-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Hammer Curl for Incline Dumbbell Curl on Thursday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "thu",
+        "from_id": "incline-dumbbell-curl",
+        "to_id": "hammer-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 3
+  },
+  "upper-lower/intermediate/2": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "weekly_volume:side_delts",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "side_delts",
+     "days": [
+      "mon"
+     ],
+     "exercises": [
+      "cable-lateral-raise",
+      "overhead-press"
+     ],
+     "target": {
+      "muscle": "side_delts",
+      "sets": 4.5,
+      "side": "under"
+     },
+     "distance": 0.3077,
+     "severity": 0.4615,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.85,
+      "value": 0.85
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0785,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:triceps",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon"
+     ],
+     "exercises": [
+      "dumbbell-bench-press",
+      "overhead-cable-triceps-extension",
+      "overhead-press"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "sets": 5.8,
+      "side": "under"
+     },
+     "distance": 0.1077,
+     "severity": 0.4215,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.8,
+      "value": 0.8
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0674,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:calves",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "calves",
+     "days": [
+      "thu"
+     ],
+     "exercises": [
+      "standing-calf-raise"
+     ],
+     "target": {
+      "muscle": "calves",
+      "sets": 3,
+      "side": "under"
+     },
+     "distance": 0.4,
+     "severity": 0.48,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.7,
+      "value": 0.7
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0672,
+     "action": "see_analysis",
+     "fix": null
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:calves",
+    "weekly_volume:side_delts",
+    "weekly_volume:obliques"
+   ],
+   "candidates": 18
+  },
+  "upper-lower/intermediate/4": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "stretch:triceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_triceps",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "dumbbell-bench-press",
+      "incline-dumbbell-press",
+      "overhead-cable-triceps-extension",
+      "overhead-press",
+      "triceps-pushdown"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "share": 0.244
+     },
+     "distance": 0.024,
+     "severity": 0.4048,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2267,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "thu",
+        "from_id": "triceps-pushdown",
+        "to_id": "cable-overhead-rope-extension",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Triceps Pushdown for Overhead Rope Triceps Extension (Low Cable) on Thursday (more stretch for triceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "thu",
+        "from_id": "cable-overhead-rope-extension",
+        "to_id": "triceps-pushdown",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:triceps"
+   ],
+   "candidates": 1
+  },
+  "upper-lower/advanced/4": {
+   "level": "advanced",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 1
+  },
+  "ppl/beginner/3": {
+   "level": "beginner",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 11
+  },
+  "ppl/beginner/6": {
+   "level": "beginner",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "tue",
+      "fri"
+     ],
+     "exercises": [
+      "cable-curl",
+      "chest-supported-row",
+      "close-grip-pulldown",
+      "hammer-curl",
+      "incline-dumbbell-curl",
+      "lat-pulldown",
+      "seated-cable-row"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.172
+     },
+     "distance": 0.312,
+     "severity": 0.4624,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2589,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "cable-curl",
+        "to_id": "bayesian-cable-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Cable Curl for Bayesian Cable Curl on Friday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "bayesian-cable-curl",
+        "to_id": "cable-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 1
+  },
+  "ppl/intermediate/3": {
+   "level": "intermediate",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 11
+  },
+  "ppl/intermediate/6": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "tue",
+      "fri"
+     ],
+     "exercises": [
+      "barbell-row",
+      "cable-curl",
+      "chest-supported-row",
+      "hammer-curl",
+      "incline-dumbbell-curl",
+      "lat-pulldown",
+      "pull-up"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.197
+     },
+     "distance": 0.212,
+     "severity": 0.4424,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2477,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "cable-curl",
+        "to_id": "bayesian-cable-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Cable Curl for Bayesian Cable Curl on Friday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "bayesian-cable-curl",
+        "to_id": "cable-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 1
+  },
+  "ppl/advanced/3": {
+   "level": "advanced",
+   "top": [
+    {
+     "id": "weekly_volume:quads",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "quads",
+     "days": [
+      "fri"
+     ],
+     "exercises": [
+      "back-squat",
+      "leg-extension"
+     ],
+     "target": {
+      "muscle": "quads",
+      "sets": 9,
+      "side": "under"
+     },
+     "distance": 0.1,
+     "severity": 0.42,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 1.0,
+      "value": 1.0
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.42,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "add",
+        "day": "wed",
+        "id": "bulgarian-split-squat",
+        "sets": 2
+       }
+      ],
+      "preview": "Add Bulgarian Split Squat (2 sets) on Wednesday",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "remove",
+        "day": "wed",
+        "id": "bulgarian-split-squat",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:quads"
+   ],
+   "candidates": 11
+  },
+  "ppl/advanced/6": {
+   "level": "advanced",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "tue",
+      "fri"
+     ],
+     "exercises": [
+      "cable-curl",
+      "chest-supported-row",
+      "close-grip-pulldown",
+      "hammer-curl",
+      "incline-dumbbell-curl",
+      "pendlay-row",
+      "preacher-curl",
+      "pull-up",
+      "t-bar-row"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.172
+     },
+     "distance": 0.312,
+     "severity": 0.4624,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2589,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "cable-curl",
+        "to_id": "bayesian-cable-curl",
+        "sets": 3
+       }
+      ],
+      "preview": "Swap Cable Curl for Bayesian Cable Curl on Friday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "bayesian-cable-curl",
+        "to_id": "cable-curl",
+        "sets": 3
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 1
+  },
+  "bro-split/beginner/5": {
+   "level": "beginner",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 8
+  },
+  "bro-split/intermediate/5": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "stretch:triceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_triceps",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon",
+      "fri",
+      "sat"
+     ],
+     "exercises": [
+      "barbell-bench-press",
+      "close-grip-bench-press",
+      "incline-dumbbell-press",
+      "overhead-cable-triceps-extension",
+      "overhead-press",
+      "triceps-pushdown",
+      "weighted-dip"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "share": 0.204
+     },
+     "distance": 0.184,
+     "severity": 0.4368,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2446,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "sat",
+        "from_id": "close-grip-bench-press",
+        "to_id": "skull-crusher",
+        "sets": 3
+       }
+      ],
+      "preview": "Swap Close-Grip Bench Press for Skull Crusher on Saturday (more stretch for triceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "sat",
+        "from_id": "skull-crusher",
+        "to_id": "close-grip-bench-press",
+        "sets": 3
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:triceps"
+   ],
+   "candidates": 8
+  },
+  "bro-split/advanced/5": {
+   "level": "advanced",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 7
+  },
+  "pplu/beginner/4": {
+   "level": "beginner",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "tue",
+      "fri"
+     ],
+     "exercises": [
+      "chest-supported-row",
+      "close-grip-pulldown",
+      "hammer-curl",
+      "incline-dumbbell-curl",
+      "lat-pulldown",
+      "seated-cable-row"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.179
+     },
+     "distance": 0.284,
+     "severity": 0.4568,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2558,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "tue",
+        "from_id": "hammer-curl",
+        "to_id": "machine-preacher-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Hammer Curl for Preacher Curl Machine on Tuesday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "tue",
+        "from_id": "machine-preacher-curl",
+        "to_id": "hammer-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 7
+  },
+  "pplu/intermediate/4": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "stretch:triceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_triceps",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon",
+      "fri"
+     ],
+     "exercises": [
+      "barbell-bench-press",
+      "incline-dumbbell-press",
+      "overhead-cable-triceps-extension",
+      "overhead-press",
+      "triceps-pushdown"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "share": 0.236
+     },
+     "distance": 0.056,
+     "severity": 0.4112,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2303,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "triceps-pushdown",
+        "to_id": "cable-overhead-rope-extension",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Triceps Pushdown for Overhead Rope Triceps Extension (Low Cable) on Monday (more stretch for triceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "cable-overhead-rope-extension",
+        "to_id": "triceps-pushdown",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:triceps"
+   ],
+   "candidates": 6
+  },
+  "pplu/advanced/4": {
+   "level": "advanced",
+   "top": [
+    {
+     "id": "weekly_volume:quads",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "quads",
+     "days": [
+      "thu"
+     ],
+     "exercises": [
+      "back-squat",
+      "leg-extension"
+     ],
+     "target": {
+      "muscle": "quads",
+      "sets": 9,
+      "side": "under"
+     },
+     "distance": 0.1,
+     "severity": 0.42,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 1.0,
+      "value": 1.0
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.42,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "add",
+        "day": "mon",
+        "id": "bulgarian-split-squat",
+        "sets": 2
+       }
+      ],
+      "preview": "Add Bulgarian Split Squat (2 sets) on Monday",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "remove",
+        "day": "mon",
+        "id": "bulgarian-split-squat",
+        "sets": 2
+       }
+      ]
+     }
+    },
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "tue",
+      "fri"
+     ],
+     "exercises": [
+      "chest-supported-row",
+      "close-grip-pulldown",
+      "incline-dumbbell-curl",
+      "pendlay-row",
+      "preacher-curl",
+      "pull-up"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.234
+     },
+     "distance": 0.064,
+     "severity": 0.4128,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2312,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "tue",
+        "from_id": "preacher-curl",
+        "to_id": "machine-preacher-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Preacher Curl for Preacher Curl Machine on Tuesday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "tue",
+        "from_id": "machine-preacher-curl",
+        "to_id": "preacher-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:quads",
+    "stretch:biceps"
+   ],
+   "candidates": 6
+  },
+  "pplul/beginner/5": {
+   "level": "beginner",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "tue",
+      "fri"
+     ],
+     "exercises": [
+      "chest-supported-row",
+      "close-grip-pulldown",
+      "hammer-curl",
+      "incline-dumbbell-curl",
+      "lat-pulldown",
+      "seated-cable-row"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.179
+     },
+     "distance": 0.284,
+     "severity": 0.4568,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2558,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "tue",
+        "from_id": "hammer-curl",
+        "to_id": "machine-preacher-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Hammer Curl for Preacher Curl Machine on Tuesday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "tue",
+        "from_id": "machine-preacher-curl",
+        "to_id": "hammer-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 2
+  },
+  "pplul/intermediate/5": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "stretch:triceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_triceps",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon",
+      "fri"
+     ],
+     "exercises": [
+      "barbell-bench-press",
+      "incline-dumbbell-press",
+      "overhead-cable-triceps-extension",
+      "overhead-press",
+      "triceps-pushdown"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "share": 0.236
+     },
+     "distance": 0.056,
+     "severity": 0.4112,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2303,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "triceps-pushdown",
+        "to_id": "cable-overhead-rope-extension",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Triceps Pushdown for Overhead Rope Triceps Extension (Low Cable) on Monday (more stretch for triceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "cable-overhead-rope-extension",
+        "to_id": "triceps-pushdown",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:triceps"
+   ],
+   "candidates": 1
+  },
+  "pplul/advanced/5": {
+   "level": "advanced",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "tue",
+      "fri"
+     ],
+     "exercises": [
+      "chest-supported-row",
+      "close-grip-pulldown",
+      "incline-dumbbell-curl",
+      "pendlay-row",
+      "preacher-curl",
+      "pull-up"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.234
+     },
+     "distance": 0.064,
+     "severity": 0.4128,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2312,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "tue",
+        "from_id": "preacher-curl",
+        "to_id": "machine-preacher-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Preacher Curl for Preacher Curl Machine on Tuesday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "tue",
+        "from_id": "machine-preacher-curl",
+        "to_id": "preacher-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 1
+  },
+  "arnold/beginner/3": {
+   "level": "beginner",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 9
+  },
+  "arnold/beginner/6": {
+   "level": "beginner",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 0
+  },
+  "arnold/intermediate/3": {
+   "level": "intermediate",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 8
+  },
+  "arnold/intermediate/6": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "weekly_volume:triceps",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon",
+      "tue",
+      "thu",
+      "fri"
+     ],
+     "exercises": [
+      "barbell-bench-press",
+      "incline-dumbbell-press",
+      "overhead-cable-triceps-extension",
+      "overhead-press",
+      "triceps-pushdown"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "sets": 19.0,
+      "side": "over"
+     },
+     "distance": 0.0556,
+     "severity": 0.4111,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.8,
+      "value": 0.8
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.3289,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "sets",
+        "day": "fri",
+        "id": "overhead-cable-triceps-extension",
+        "from": 3,
+        "to": 2
+       }
+      ],
+      "preview": "Drop Overhead Cable Triceps Extension on Friday 3→2 sets",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "sets",
+        "day": "fri",
+        "id": "overhead-cable-triceps-extension",
+        "from": 2,
+        "to": 3
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:triceps"
+   ],
+   "candidates": 1
+  },
+  "arnold/advanced/3": {
+   "level": "advanced",
+   "top": [
+    {
+     "id": "weekly_volume:quads",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "quads",
+     "days": [
+      "fri"
+     ],
+     "exercises": [
+      "back-squat",
+      "leg-extension"
+     ],
+     "target": {
+      "muscle": "quads",
+      "sets": 9,
+      "side": "under"
+     },
+     "distance": 0.1,
+     "severity": 0.42,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 1.0,
+      "value": 1.0
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.42,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "add",
+        "day": "mon",
+        "id": "bulgarian-split-squat",
+        "sets": 2
+       }
+      ],
+      "preview": "Add Bulgarian Split Squat (2 sets) on Monday",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "remove",
+        "day": "mon",
+        "id": "bulgarian-split-squat",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:quads"
+   ],
+   "candidates": 9
+  },
+  "arnold/advanced/6": {
+   "level": "advanced",
+   "top": [
+    {
+     "id": "weekly_volume:lats",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "lats",
+     "days": [
+      "mon",
+      "wed",
+      "thu"
+     ],
+     "exercises": [
+      "chest-supported-row",
+      "pull-up",
+      "romanian-deadlift",
+      "straight-arm-pulldown",
+      "t-bar-row"
+     ],
+     "target": {
+      "muscle": "lats",
+      "sets": 20.4,
+      "side": "over"
+     },
+     "distance": 0.02,
+     "severity": 0.404,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 1.0,
+      "value": 1.0
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.404,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "sets",
+        "day": "mon",
+        "id": "pull-up",
+        "from": 4,
+        "to": 3
+       }
+      ],
+      "preview": "Drop Pull-Up on Monday 4→3 sets",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "sets",
+        "day": "mon",
+        "id": "pull-up",
+        "from": 3,
+        "to": 4
+       }
+      ]
+     }
+    },
+    {
+     "id": "weekly_volume:triceps",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon",
+      "tue",
+      "thu",
+      "fri"
+     ],
+     "exercises": [
+      "dumbbell-bench-press",
+      "incline-barbell-bench-press",
+      "overhead-cable-triceps-extension",
+      "seated-dumbbell-shoulder-press",
+      "skull-crusher"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "sets": 19.4,
+      "side": "over"
+     },
+     "distance": 0.0778,
+     "severity": 0.4156,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.8,
+      "value": 0.8
+     },
+     "fixability": {
+      "rule": "partial",
+      "value": 0.4
+     },
+     "score": 0.133,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "sets",
+        "day": "fri",
+        "id": "overhead-cable-triceps-extension",
+        "from": 3,
+        "to": 2
+       }
+      ],
+      "preview": "Drop Overhead Cable Triceps Extension on Friday 3→2 sets",
+      "resolves": false,
+      "undo": [
+       {
+        "op": "sets",
+        "day": "fri",
+        "id": "overhead-cable-triceps-extension",
+        "from": 2,
+        "to": 3
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:triceps",
+    "weekly_volume:lats"
+   ],
+   "candidates": 4
+  },
+  "torso-limbs/beginner/2": {
+   "level": "beginner",
+   "top": [
+    {
+     "id": "weekly_volume:quads",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "quads",
+     "days": [
+      "thu"
+     ],
+     "exercises": [
+      "back-squat"
+     ],
+     "target": {
+      "muscle": "quads",
+      "sets": 5,
+      "side": "under"
+     },
+     "distance": 0.1667,
+     "severity": 0.4333,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 1.0,
+      "value": 1.0
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0867,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:upper_back",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "upper_back",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "face-pull",
+      "lat-pulldown",
+      "romanian-deadlift",
+      "seated-cable-row"
+     ],
+     "target": {
+      "muscle": "upper_back",
+      "sets": 6.0,
+      "side": "under"
+     },
+     "distance": 0.0,
+     "severity": 0.4,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 1.0,
+      "value": 1.0
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.08,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:side_delts",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "side_delts",
+     "days": [
+      "mon"
+     ],
+     "exercises": [
+      "dumbbell-lateral-raise",
+      "seated-dumbbell-shoulder-press"
+     ],
+     "target": {
+      "muscle": "side_delts",
+      "sets": 4.5,
+      "side": "under"
+     },
+     "distance": 0.1,
+     "severity": 0.42,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.85,
+      "value": 0.85
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0714,
+     "action": "see_analysis",
+     "fix": null
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:abs",
+    "weekly_volume:quads",
+    "weekly_volume:side_delts"
+   ],
+   "candidates": 13
+  },
+  "torso-limbs/beginner/4": {
+   "level": "beginner",
+   "top": [
+    {
+     "id": "stretch:lats",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "lats",
+     "days": [
+      "mon",
+      "tue",
+      "thu"
+     ],
+     "exercises": [
+      "close-grip-pulldown",
+      "lat-pulldown",
+      "one-arm-dumbbell-row",
+      "romanian-deadlift",
+      "seated-cable-row"
+     ],
+     "target": {
+      "muscle": "lats",
+      "share": 0.247
+     },
+     "distance": 0.012,
+     "severity": 0.4024,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 1.0,
+      "value": 0.7
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2817,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "thu",
+        "from_id": "close-grip-pulldown",
+        "to_id": "neutral-grip-lat-pulldown",
+        "sets": 3
+       }
+      ],
+      "preview": "Swap Close-Grip Pulldown for Neutral-Grip Lat Pulldown on Thursday (more stretch for lats)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "thu",
+        "from_id": "neutral-grip-lat-pulldown",
+        "to_id": "close-grip-pulldown",
+        "sets": 3
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:lats"
+   ],
+   "candidates": 5
+  },
+  "torso-limbs/intermediate/2": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "weekly_volume:quads",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "quads",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "back-squat",
+      "leg-extension"
+     ],
+     "target": {
+      "muscle": "quads",
+      "sets": 7,
+      "side": "under"
+     },
+     "distance": 0.125,
+     "severity": 0.425,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 1.0,
+      "value": 1.0
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.085,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:side_delts",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "side_delts",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "cable-lateral-raise",
+      "dumbbell-lateral-raise"
+     ],
+     "target": {
+      "muscle": "side_delts",
+      "sets": 5,
+      "side": "under"
+     },
+     "distance": 0.2308,
+     "severity": 0.4462,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.85,
+      "value": 0.85
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0759,
+     "action": "see_analysis",
+     "fix": null
+    },
+    {
+     "id": "weekly_volume:triceps",
+     "family": "weekly_volume",
+     "source": "weekly_band",
+     "analysis_item": "volume_in_reach",
+     "state": "amber",
+     "muscle": "triceps",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "barbell-bench-press",
+      "incline-dumbbell-press",
+      "overhead-cable-triceps-extension"
+     ],
+     "target": {
+      "muscle": "triceps",
+      "sets": 5.7,
+      "side": "under"
+     },
+     "distance": 0.1231,
+     "severity": 0.4246,
+     "importance": {
+      "check_weight": 1.0,
+      "muscle_weight": 0.8,
+      "value": 0.8
+     },
+     "fixability": {
+      "rule": "none",
+      "value": 0.2
+     },
+     "score": 0.0679,
+     "action": "see_analysis",
+     "fix": null
+    }
+   ],
+   "builder_interim_ids": [
+    "weekly_volume:calves",
+    "weekly_volume:abs",
+    "weekly_volume:obliques"
+   ],
+   "candidates": 16
+  },
+  "torso-limbs/intermediate/4": {
+   "level": "intermediate",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 3
+  },
+  "torso-limbs/advanced/4": {
+   "level": "advanced",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "mon",
+      "tue",
+      "thu",
+      "fri"
+     ],
+     "exercises": [
+      "close-grip-pulldown",
+      "hammer-curl",
+      "incline-dumbbell-curl",
+      "one-arm-dumbbell-row",
+      "pendlay-row",
+      "pull-up"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.244
+     },
+     "distance": 0.024,
+     "severity": 0.4048,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2267,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "hammer-curl",
+        "to_id": "incline-dumbbell-curl",
+        "sets": 3
+       }
+      ],
+      "preview": "Swap Hammer Curl for Incline Dumbbell Curl on Friday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "fri",
+        "from_id": "incline-dumbbell-curl",
+        "to_id": "hammer-curl",
+        "sets": 3
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 4
+  },
+  "phul/beginner/4": {
+   "level": "beginner",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "barbell-curl",
+      "barbell-row",
+      "chest-supported-row",
+      "incline-dumbbell-curl",
+      "lat-pulldown",
+      "pull-up"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.2
+     },
+     "distance": 0.2,
+     "severity": 0.44,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2464,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "barbell-curl",
+        "to_id": "incline-dumbbell-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Barbell Curl for Incline Dumbbell Curl on Monday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "incline-dumbbell-curl",
+        "to_id": "barbell-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 4
+  },
+  "phul/intermediate/4": {
+   "level": "intermediate",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "barbell-curl",
+      "barbell-row",
+      "chest-supported-row",
+      "incline-dumbbell-curl",
+      "lat-pulldown",
+      "pull-up"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.2
+     },
+     "distance": 0.2,
+     "severity": 0.44,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.2464,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "barbell-curl",
+        "to_id": "incline-dumbbell-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Barbell Curl for Incline Dumbbell Curl on Monday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "incline-dumbbell-curl",
+        "to_id": "barbell-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 2
+  },
+  "phul/advanced/4": {
+   "level": "advanced",
+   "top": [
+    {
+     "id": "stretch:biceps",
+     "family": "stretch",
+     "source": "stretch_share",
+     "analysis_item": "stretch_<muscle>",
+     "state": "amber",
+     "muscle": "biceps",
+     "days": [
+      "mon",
+      "thu"
+     ],
+     "exercises": [
+      "barbell-curl",
+      "barbell-row",
+      "chest-supported-row",
+      "incline-dumbbell-curl",
+      "lat-pulldown",
+      "pull-up"
+     ],
+     "target": {
+      "muscle": "biceps",
+      "share": 0.183
+     },
+     "distance": 0.268,
+     "severity": 0.4536,
+     "importance": {
+      "check_weight": 0.7,
+      "muscle_weight": 0.8,
+      "value": 0.56
+     },
+     "fixability": {
+      "rule": "single_op",
+      "value": 1.0
+     },
+     "score": 0.254,
+     "action": "apply",
+     "fix": {
+      "ops": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "barbell-curl",
+        "to_id": "incline-dumbbell-curl",
+        "sets": 2
+       }
+      ],
+      "preview": "Swap Barbell Curl for Incline Dumbbell Curl on Monday (more stretch for biceps)",
+      "resolves": true,
+      "undo": [
+       {
+        "op": "swap",
+        "day": "mon",
+        "from_id": "incline-dumbbell-curl",
+        "to_id": "barbell-curl",
+        "sets": 2
+       }
+      ]
+     }
+    }
+   ],
+   "builder_interim_ids": [
+    "stretch:biceps"
+   ],
+   "candidates": 3
+  },
+  "upper-lower-full/beginner/3": {
+   "level": "beginner",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 5
+  },
+  "upper-lower-full/intermediate/3": {
+   "level": "intermediate",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 3
+  },
+  "upper-lower-full/advanced/3": {
+   "level": "advanced",
+   "top": [],
+   "builder_interim_ids": [],
+   "candidates": 3
+  }
+ }
+}

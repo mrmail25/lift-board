@@ -261,3 +261,78 @@ Parity (node, all 0 mismatches): test/analysis.diff.js, movement.diff.js, templa
 - **Popup levels**: the popup map and its rating labels both read Coach's `exercise-details.json` `body_map.levels`
   (primary / secondary / minor / trace) and `body_map.level_labels` (Main mover / Helper / Minor / Not counted). Helper is now 0.4
   to under 0.75, matching the library bands. Check: `cPopupShadingMatchesRatingLabelsAllExercises` (247 exercises).
+
+## Round 3 (Mr Dude markup, 2026-10-23): data first, graphic first, consolidated
+
+**New modules (loaded after `logic/analysis.js`; plain scripts, also `require`-able by the node diffs)**
+- `logic/checkpriority.js` (`window.CHECKPRIORITY`) is an exact port of Coach's `check-priority-spec.md` v2. It computes score = severity × importance × fixability. Severity comes from the state bands. Importance is the check weight × the muscle weight (board-level issues use 1.0). Fixability uses the best fix's rule.
+  - Issues are deduped by `<family>:<key>`, keeping the higher score.
+  - Ordering is state first (`sort_order`): red, then amber, and only then −score, −distance, −muscle weight, id.
+  - Only `card_states` (red, amber) reach the card. Info never does (`exclude_kinds`). There is no minimum score.
+  - An issue with no passing fix gets `action: see_analysis` and `fix: null` (`no_fix_action`).
+  - One flag switches the order: `CHECKPRIORITY.setStateFirst(false)` returns to the v1 score-first order with `min_score`. `CHECKPRIORITY.STATE_FIRST` reads it.
+  - The interim `logic/priority.js` is deleted.
+- `logic/muscledive.js` (`window.MUSCLEDIVE`) is the deep-dive payload from `muscle-deepdive-spec.md`. `muscle(dt,days,level,m)` returns sets, curve, frequency, stretch, one-side share, recovery cost, stimulus per fatigue, contributors and suggestions. Both the deep-dive sheet and the diff use this one function.
+- `logic/freqnotes.js` (`window.FREQNOTES`): `notes(dt,days,level,templates)` fills Coach's `frequency-notes.json` templates in Coach's order.
+
+**Synced from ../data (copies only; no Coach tool was run)**
+- Files: `check-priority-weights.json` (v2), `check-priority-reference.json`, `check-priority-spec.md`, `muscle-deepdive-reference.json`, `muscle-deepdive-spec.md`, `frequency-notes.json`, `analysis-display.json` and `round3-charts-vs-checklist.md`.
+- `data/rules.json` is ../data `rules.json` plus the `check_priority` key from the weights file, merged with indent 2. Nothing else differs, and the suite checks this (`r3SyncedFilesAreCopies`).
+- `sync-ranking-data.sh` copies the same files and does the same merge.
+
+**Display rules**
+- `analysis-display.json` supplies every checklist label (`items[id].display_label`).
+- `render_kind:false` means the words Check, Measure and Info never render. `kchip` returns an empty string.
+- State is a mark only: a green tick for pass, amber for close, red for attention. Measures show values only. The ⓘ explainers stay, and so do the honesty tags (Proposed, Modeled, Thin evidence).
+
+**Build tab**
+- The map uses the cropped viewBox `190 50 644 1410` (`.mmap.crop`). It is 182px tall in portrait, against 150px uncropped before. The key moved to the right column (`#bmleg`).
+- Week/Day and Clean/Detail toggles: thumbs stretch to their track (`.seg.xs button{height:auto;align-self:stretch}`). Equal insets within 1px in light and dark is checked by `r3ToggleThumbInTrackLightDark`.
+- The Program check card (`#pcheck`) sits under the week view and shows `CHECKPRIORITY.top`.
+  - Each row has a state dot, the muscle (linked) with its numbers, the fix preview, and either Apply (`pcapply`) or See analysis (`pcsee`).
+  - See analysis opens the sheet at the item and expands its section.
+  - Undo (`pcundo`) applies `fix.undo` when the board is unchanged. Otherwise it restores the snapshot.
+  - The footer reads "See full analysis ›".
+  - A board with no card issues shows "No pressing issues" (`.pcr.none`) and keeps the footer.
+
+**Analysis sheet**
+- A large two-view map sits at the top. Tapping a muscle opens its deep-dive.
+- It has five boxed sections: volume, frequency, balance, recovery_fatigue and session.
+  - Each section header (`.asech`) is sticky and shows a chevron and the section's pass count.
+  - The open/closed state is stored in localStorage under `apechit.sb.anOpen`.
+- Inside each section, the graphic comes first (`.agfx` with a light `.ash` subhead), then a compact checklist (`.ckr`).
+- A suggestion sits right under the data row it fixes (`.sgr.inl`). The remaining suggestions are an end list: top 3, then "Show all N".
+- Muscle names are `.mlk` links into the deep-dive. They carry an anchor, so a frequency note opens `#deepdive-<m>-frequency`.
+- Volume: the stimulus curve card has its green band restored (`--vol-in-range`), and every muscle row has a green `.sband`. Weekly sets rows follow. The `volume_in_reach` row lists the close muscles.
+- Frequency: the effective-frequency grid comes first, then Coach's notes.
+- Balance: the stretch-share bars (25% threshold line), the one-side bar and the movement-pattern bars, then push/pull and pattern checks.
+- Recovery & fatigue: recovery cost by day, stimulus per fatigue and the fatigue tier bar, then the checklist.
+- Session: session-length bars, then the session checks.
+- The deep-dive (`ddBody`) has sections `#deepdive-<m>-{sets,curve,frequency,stretch,fatigue,session,suggest}`, contributors with Remove, and suggestions with Apply/Undo.
+
+**New routes**
+- `build-deepdive` (calves)
+- `build-deepdive-freq` (upper back, frequency anchor)
+- `build-pcheck`
+- `build-pcheck-none` (the first preset with no card issues)
+
+**Diffs (all at 0)**
+- `test/checkpriority.diff.js`: 46 presets, 47 issues, 16 empty, 29 Apply, 18 See analysis. All Apply/Undo and move (remove + add) round trips pass.
+- `test/muscledive.diff.js`: 4 presets × 19 muscles at 1e-4.
+- `test/freqnotes.diff.js`: 46 presets.
+
+The suite runs all three (`r3*` checks).
+
+**rules.json question.** Neither this run nor any earlier run of mine wrote to `/workspace/lift-board/data/rules.json`. Every write went to `storyboard/data/rules.json`:
+- the batch B copy at 00:55 PT;
+- today's merge of `check_priority`.
+
+**Asks for Coach**
+- For stretch issues on unchecked muscles, `analysis_item` is the literal `stretch_<muscle>` (for example `stretch_biceps`), which is not an analysis item id. The board maps it to `stretch_share`. Please either emit `stretch_share` or confirm that the mapping is right.
+- Per-day fatigue tiers would allow stacked recovery bars.
+- Should "Add suggested" stay as the fallback when an amber muscle has no Coach fix?
+
+**Round 3 notes**
+- In phone landscape the Program check card is hidden (`.pcheck{display:none}` inside the landscape media query), so the board keeps the full height. The card lives under the week view in portrait.
+- Each per-muscle check mark in the stretch-share chart is an ⓘ button (`button.cbx[data-b=anx]`). Tapping it opens that stretch check's explainer, so every item keeps its explainer.
+- The analysis sheet body has a no-op click listener. In WebKit, taps on the map's SVG paths only fire click when an ancestor below body has a listener.

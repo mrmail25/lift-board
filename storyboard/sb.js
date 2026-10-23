@@ -892,8 +892,11 @@ const FILL=v=>typeof v==='string'?(VFILL[v]||v):v==null||!(v>0)?'var(--map-empty
 const HLV={main:'var(--hl-main)',helper:'var(--hl-helper)',minor:'var(--hl-minor)'},LV2HL={primary:'main',secondary:'helper',minor:'minor'};
 const hlLevel=r=>r>=.75?'main':r>=.4?'helper':r>=.25?'minor':null;
 const hlLegend=(L={main:'main',helper:'helper',minor:'minor'})=>`<span class="mleg hleg">${['main','helper','minor'].map(k=>`<i style="background:var(--hl-${k})"></i>${L[k]}`).join('')}</span>`;
+// Round 3: crop = the figures' own extent (both sides' outlines sit inside x 200-820, y 64-1444 of the 1024x1536 art), so
+// the same box height draws the body about 30% larger: the Build card and the Analysis sheet use it
+const MAPCROP='190 50 644 1410';
 function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
-  return `<svg viewBox="0 0 ${w} ${h}" class="mmap" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>
+  return `<svg viewBox="${opt.crop?MAPCROP:`0 0 ${w} ${h}`}" class="mmap${opt.crop?' crop':''}" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>
    ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="var(--map-base)" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */return `<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'var(--map-off)'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"/>`}).join('')}
    ${side==='front'&&opt.ape?`<g class="ape-head"><circle cx="512" cy="148" r="92" fill="var(--paper)" stroke="var(--accent)" stroke-width="7" stroke-dasharray="18 13"/><text x="512" y="138" text-anchor="middle" font-size="46" font-weight="800" fill="var(--accent-press)" font-family="-apple-system,sans-serif">APE</text><text x="512" y="186" text-anchor="middle" font-size="32" fill="var(--text-2)" font-family="-apple-system,sans-serif">head slot</text></g>`:''}</svg>`}
 const VOL_X=[['traps',8,6,12],['forearms',6,4,12],['obliques',4,4,10],['lower_back',6,4,10],['adductors',4,4,10],['abductors',3,4,10]];
@@ -936,7 +939,7 @@ function progItemsHtml(pr){const am=(RD.rules.analysis_metrics||{}),its=(am.item
     progress_signal:`${pr.refinements.length} card${pr.refinements.length===1?'':'s'} below`,prs:'Log + Finish badges',finish_vs_last:'On the Finish screen'};
   const sec=(am.sections||[]).find(s=>s.id==='progress')||{label:'Logged progress'};
   return `<div class="sec"><h2>${sec.label}</h2><span class="more">${its.length} items</span></div>
-   <div class="group pitems">${its.map(it=>`<div class="row pitem" data-metric="${it.id}" data-kind="${it.kind}"><div class="grow"><div class="t1">${kchip(it.kind)} ${it.label}</div><div class="t2 num">${VAL[it.id]||'<span class="nc">Not computed in the storyboard yet</span>'}</div></div>${ibtn(it.id)}</div>`).join('')}</div>`}
+   <div class="group pitems">${its.map(it=>`<div class="row pitem" data-metric="${it.id}" data-kind="${it.kind}"><div class="grow"><div class="t1">${kchip(it.kind)}${dispL(it.id,it.label)}</div><div class="t2 num">${VAL[it.id]||'<span class="nc">Not computed in the storyboard yet</span>'}</div></div>${ibtn(it.id)}</div>`).join('')}</div>`}
 function spark(v){const s=v.weekly_sets,mx=Math.max(1,v.plan_sets,...s),W=v.weeks||[];
   return `<div class="spark" aria-label="Weekly credited sets">${s.map((x,i)=>`<div class="sp"><i style="--h:${x/mx*100}%" class="${x<v.plan_sets*0.75?'lo':''}"></i><small>${(W[i]||'').slice(5).replace('-','/')}</small></div>`).join('')}<b style="--y:${v.plan_sets/mx*100}%" title="Plan"></b></div>`}
 function pmusHtml(m){if(!m)return '';const pr=progressData(),v=pr&&pr.muscles[m];if(!v)return `<div class="card pmus" data-mu="${m}"><b>${ML[m]||m}</b><p class="sub">Nothing logged for this muscle in the last ${RD.rules.progress.trend.weeks} weeks.</p></div>`;
@@ -1116,14 +1119,16 @@ async function afterLearnFund(id){
 // ---- round 2 batch B: analysis item chips + explain sheets (item 3), exercise detail popup + tray sort (item 4)
 // analysis_metrics v2 items: kind chip (Check / Measure / Info) and an (i) that opens what / how / why + the Learn page#section
 const KINDL={check:'Check',measure:'Measure',info:'Info'};
-const kchip=k=>`<span class="kchip k-${k}" data-kind="${k}">${KINDL[k]||k}</span>`;
+// Round 3: data/analysis-display.json render_kind false: the kind words (check / measure / info) never render; labels = display_label
+const kchip=k=>((RD&&RD.DISP)||{}).render_kind===false?'':`<span class="kchip k-${k}" data-kind="${k}">${KINDL[k]||k}</span>`;
+const dispL=(id,fb)=>((((RD&&RD.DISP)||{}).items||{})[id]||{}).display_label||fb;
 const itemDef=id=>(((RD&&RD.rules.analysis_metrics)||{}).items||[]).find(i=>i.id===id);
 const EVT={supported:'Supported',thin:'Thin evidence',modeled:'Modeled'};
 const learnGo=lp=>{const [p,sx]=String(lp).split('#');return `#learn-f-${p}${sx?'~'+sx:''}`};
 const ibtn=(id,attr='data-xpl')=>`<button class="ixb" ${attr}="${id}" aria-label="What is this?">${I('info',1.8)}</button>`;
 function explainSheet(id,extra=''){const it=itemDef(id);if(!it)return null;const x=it.explain||{},lp=x.learn_page;
   const s=sheet({title:'',cls:'grouped xsheet',right:'<button class="btn plain" data-x="close">Done</button>',
-    body:`<div class="xpl" data-item="${id}"><div class="xh">${kchip(it.kind)}<span class="tag ev ${it.evidence}">${EVT[it.evidence]||'Modeled'}</span>${it.status==='proposed'?'<span class="tag prop">Proposed</span>':''}</div><h3>${it.label}</h3>
+    body:`<div class="xpl" data-item="${id}"><div class="xh">${kchip(it.kind)}<span class="tag ev ${it.evidence}">${EVT[it.evidence]||'Modeled'}</span>${it.status==='proposed'?'<span class="tag prop">Proposed</span>':''}</div><h3>${dispL(id,it.label)}</h3>
      <div class="group xq"><div class="row"><div class="grow"><div class="xk">What it measures</div><p>${x.what||it.description||''}</p></div></div>
       <div class="row"><div class="grow"><div class="xk">How it's calculated</div><p>${x.how||it.formula||''}</p></div></div>
       <div class="row"><div class="grow"><div class="xk">Why it matters</div><p>${x.why||''}</p></div></div></div>
@@ -1208,13 +1213,13 @@ let RD=null;
 async function loadRank(){if(RD)return RD;if(RDP)return RDP;
   // Every file comes from the storyboard's own synced data/ (sync-ranking-data.sh); the live app's ../data is never needed.
   // getJ never throws: a 404, a parse error or a fetch aborted by navigation all give null, and nothing falls through to another folder.
-  RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-reference.json'].map(n=>getJ(DATA+n));
+  RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-reference.json','analysis-display.json','frequency-notes.json'].map(n=>getJ(DATA+n));
     const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(n=>getJ(DATA+n)));
-    const [tj,tref,pref]=await Promise.all(opt);
+    const [tj,tref,pref,disp,fnotes]=await Promise.all(opt);
     if(!(exercises&&rules&&targets&&patterns&&splits)){if(!UNLOADING)console.warn('ranking data missing: suggestions fall back to library order');return null}
     const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
     const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
-    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PREF=pref;RD=R;return RD})();
+    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PREF=pref;R.DISP=disp;R.FN=fnotes;RD=R;return RD})();
   const r=await RDP;RDP=null;return r}
 const LSK2={equip:'apechit.sb.equip'};
 let EQUIP=ld(LSK2.equip,{});                                  // gym profile `equipment` {name: bool} (ranking-spec §5, Builder items)

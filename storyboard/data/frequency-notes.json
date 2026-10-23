@@ -1,0 +1,3942 @@
+{
+ "version": 1,
+ "description": "Round 3 frequency notes: one-liners with polarity, the muscle(s) they name and a link target (muscle id + deep-dive anchor). tools/frequency_notes.py notes(days, level). One line each, no kind words, no claims beyond the model. Frequency notes are scheduling suggestions: volume-equated studies (schoenfeld2019freq, pelland2026) find little growth difference between frequencies, so no note says twice a week grows more.",
+ "templates": [
+  {
+   "id": "freq_two_plus",
+   "polarity": "positive",
+   "scope": "muscle",
+   "text": "{Muscle}: trained on {n} days, so its sets are spread out.",
+   "when": "muscle in frequency_muscles with effective days >= 2, only when freq_all_main_twice does not apply"
+  },
+  {
+   "id": "freq_all_main_twice",
+   "polarity": "positive",
+   "scope": "board",
+   "text": "Every main muscle gets work on 2+ days.",
+   "when": "all frequency_muscles at >= 2 days (2+ training days)"
+  },
+  {
+   "id": "freq_one_day",
+   "polarity": "negative",
+   "scope": "muscle",
+   "text": "{Muscle}: only {day_name} this week; a second day would make its sets easier to do well.",
+   "when": "low_frequency: frequency muscle on 1 day, 2+ training days"
+  },
+  {
+   "id": "freq_none",
+   "polarity": "negative",
+   "scope": "muscle",
+   "text": "{Muscle}: no day with 2+ effective sets this week.",
+   "when": "frequency muscle with 0 effective days"
+  },
+  {
+   "id": "back_to_back",
+   "polarity": "negative",
+   "scope": "muscle",
+   "text": "{Muscle}: hard on {day1} and {day2} back to back; a day between helps.",
+   "when": "consecutive_high_volume"
+  },
+  {
+   "id": "crowded_session",
+   "polarity": "negative",
+   "scope": "muscle",
+   "text": "{Muscle}: {sets} sets on {day_name}; past about 10 in one session, extra sets add little.",
+   "when": "junk_volume_session"
+  },
+  {
+   "id": "session_cap_ok",
+   "polarity": "positive",
+   "scope": "board",
+   "text": "No muscle goes past about 10 sets in one session.",
+   "when": "no junk_volume_session and 1+ training day"
+  }
+ ],
+ "fields": {
+  "id": "template id",
+  "polarity": "positive | negative",
+  "muscles": "muscle ids named (empty = whole board)",
+  "text": "display line",
+  "link": "{muscle, anchor}: anchor = deepdive-<muscle>-frequency (or -session); null for board-level notes"
+ },
+ "order": "negative first, then positive; muscle notes before board notes; by muscle importance (check-priority-weights.json) then id",
+ "replaces": {
+  "low_frequency message": "freq_one_day (no claim that twice a week grows more)",
+  "consecutive_high_volume message": "back_to_back (no \"48 hours\" claim)",
+  "junk_volume_session message": "crowded_session"
+ },
+ "presets": {
+  "full-body/beginner/2": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "full-body/beginner/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "full-body/beginner/4": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 4 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 4 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: trained on 4 days, so its sets are spread out.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 4 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 4 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "full-body/intermediate/2": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "full-body/intermediate/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "full-body/intermediate/4": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "full-body/advanced/2": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "full-body/advanced/3": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "full-body/advanced/4": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "upper-lower/beginner/2": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "upper-lower/beginner/4": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "upper-lower/intermediate/2": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "upper-lower/intermediate/4": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "upper-lower/advanced/4": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "ppl/beginner/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "ppl/beginner/6": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "ppl/intermediate/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "ppl/intermediate/6": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "ppl/advanced/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "ppl/advanced/6": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "bro-split/beginner/5": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Tuesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "bro-split/intermediate/5": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Tuesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "bro-split/advanced/5": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Tuesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 3 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "pplu/beginner/4": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "pplu/intermediate/4": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "pplu/advanced/4": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "pplul/beginner/5": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "pplul/intermediate/5": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "pplul/advanced/5": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "arnold/beginner/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "arnold/beginner/6": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "arnold/intermediate/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "arnold/intermediate/6": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "arnold/advanced/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Friday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "arnold/advanced/6": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "torso-limbs/beginner/2": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "torso-limbs/beginner/4": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "torso-limbs/intermediate/2": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "torso-limbs/intermediate/4": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "torso-limbs/advanced/4": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "phul/beginner/4": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Thursday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "phul/intermediate/4": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "phul/advanced/4": [
+   {
+    "id": "freq_all_main_twice",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "Every main muscle gets work on 2+ days.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "upper-lower-full/beginner/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: only Wednesday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "upper-lower-full/intermediate/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ],
+  "upper-lower-full/advanced/3": [
+   {
+    "id": "freq_one_day",
+    "polarity": "negative",
+    "muscles": [
+     "biceps"
+    ],
+    "text": "Biceps: only Monday this week; a second day would make its sets easier to do well.",
+    "link": {
+     "muscle": "biceps",
+     "anchor": "deepdive-biceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "glutes"
+    ],
+    "text": "Glutes: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "glutes",
+     "anchor": "deepdive-glutes-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "hamstrings"
+    ],
+    "text": "Hamstrings: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "hamstrings",
+     "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "quads"
+    ],
+    "text": "Quads: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "quads",
+     "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "side_delts"
+    ],
+    "text": "Side delts: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "side_delts",
+     "anchor": "deepdive-side_delts-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "triceps"
+    ],
+    "text": "Triceps: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "triceps",
+     "anchor": "deepdive-triceps-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "calves"
+    ],
+    "text": "Calves: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "calves",
+     "anchor": "deepdive-calves-frequency"
+    }
+   },
+   {
+    "id": "session_cap_ok",
+    "polarity": "positive",
+    "muscles": [],
+    "text": "No muscle goes past about 10 sets in one session.",
+    "link": {
+     "muscle": null,
+     "anchor": null
+    }
+   }
+  ]
+ }
+}

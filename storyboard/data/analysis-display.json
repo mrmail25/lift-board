@@ -1,0 +1,218 @@
+{
+  "version": 1,
+  "note": "Round 3 display copy. Do NOT render the kind words (check / measure / info) anywhere in the UI: no badges, no headers, no labels. `kind` stays in rules.json analysis_metrics for logic (checks_pass counting, pass / attention state). Use display_label; a check shows only its state icon (pass / attention).",
+  "render_kind": false,
+  "items": {
+    "suggestion_list": {
+      "display_label": "Suggestions",
+      "kind": "info",
+      "state_icon": false
+    },
+    "checks_pass": {
+      "display_label": "Passing",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "weekly_sets_per_muscle": {
+      "display_label": "Weekly sets per muscle",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "volume_in_reach": {
+      "display_label": "Every muscle within reach of its weekly range",
+      "kind": "check",
+      "state_icon": true
+    },
+    "stimulus_curve": {
+      "display_label": "Modeled stimulus",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "weekly_sets_per_region": {
+      "display_label": "Sets per body region",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "effective_frequency": {
+      "display_label": "Days per muscle",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "frequency_two_days": {
+      "display_label": "Main muscles on 2+ days",
+      "kind": "info",
+      "state_icon": false
+    },
+    "consecutive_high_volume": {
+      "display_label": "Hard days for a muscle are not back to back",
+      "kind": "check",
+      "state_icon": true
+    },
+    "day_shading": {
+      "display_label": "Day shading",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "push_pull_ratio": {
+      "display_label": "Pulling and pressing in balance",
+      "kind": "check",
+      "state_icon": true
+    },
+    "pattern_coverage": {
+      "display_label": "Covers the key movement patterns",
+      "kind": "check",
+      "state_icon": true
+    },
+    "redundant_pattern": {
+      "display_label": "Same-pattern work spread out",
+      "kind": "check",
+      "state_icon": true
+    },
+    "stretch_share": {
+      "display_label": "Stretch share",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "stretch_hamstrings": {
+      "display_label": "Includes stretch-focused work for hamstrings",
+      "kind": "check",
+      "state_icon": true
+    },
+    "stretch_calves": {
+      "display_label": "Includes stretch-focused work for calves",
+      "kind": "check",
+      "state_icon": true
+    },
+    "stretch_triceps": {
+      "display_label": "Includes stretch-focused work for triceps",
+      "kind": "check",
+      "state_icon": true
+    },
+    "stretch_quads": {
+      "display_label": "Includes stretch-focused work for quads",
+      "kind": "check",
+      "state_icon": true
+    },
+    "stretch_glutes": {
+      "display_label": "Includes stretch-focused work for glutes",
+      "kind": "check",
+      "state_icon": true
+    },
+    "stretch_coverage": {
+      "display_label": "Stretch-focused work for other muscles",
+      "kind": "info",
+      "state_icon": false
+    },
+    "unilateral_share": {
+      "display_label": "One-side share",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "movement_pattern_sets": {
+      "display_label": "Sets per movement pattern",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "fatigue_rating": {
+      "display_label": "Fatigue rating",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "recovery_cost": {
+      "display_label": "Recovery cost",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "recovery_vs_baseline": {
+      "display_label": "Recovery cost near your normal week",
+      "kind": "check",
+      "state_icon": true
+    },
+    "stimulus_per_fatigue": {
+      "display_label": "Stimulus per fatigue",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "spinal_load": {
+      "display_label": "Heavy spine sets within the level caps",
+      "kind": "check",
+      "state_icon": true
+    },
+    "lower_back_fatigue": {
+      "display_label": "Lower-back fatigue between days",
+      "kind": "info",
+      "state_icon": false
+    },
+    "session_design": {
+      "display_label": "Sessions are well sized",
+      "kind": "check",
+      "state_icon": true
+    },
+    "session_length": {
+      "display_label": "Sessions under 90 minutes",
+      "kind": "check",
+      "state_icon": true
+    },
+    "logged_hard_sets": {
+      "display_label": "Hard sets per muscle (logged)",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "adherence": {
+      "display_label": "Adherence",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "volume_load": {
+      "display_label": "Volume load",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "load_trend": {
+      "display_label": "Best e1RM per session",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "prs": {
+      "display_label": "PRs",
+      "kind": "info",
+      "state_icon": false
+    },
+    "progress_signal": {
+      "display_label": "Progress trend",
+      "kind": "info",
+      "state_icon": false
+    },
+    "planned_vs_done": {
+      "display_label": "Planned vs done",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "finish_vs_last": {
+      "display_label": "Vs last time",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "block_compare": {
+      "display_label": "4 weeks vs previous",
+      "kind": "measure",
+      "state_icon": false
+    },
+    "deload_score": {
+      "display_label": "Deload suggestion",
+      "kind": "info",
+      "state_icon": false
+    },
+    "suspect_decimal": {
+      "display_label": "Possible keypad slip",
+      "kind": "info",
+      "state_icon": false
+    },
+    "avg_rir_logged": {
+      "display_label": "Average RIR (logged)",
+      "kind": "measure",
+      "state_icon": false
+    }
+  },
+  "checks_pass_display": "Passing: {pass} of {total}"
+}

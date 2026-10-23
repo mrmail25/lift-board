@@ -731,6 +731,7 @@ body[data-route^="build"] .scroller{padding-bottom:calc(var(--tab-h) + var(--saf
   body[data-route^="build"] .board{flex:1 1 auto;min-height:0;overflow-y:auto;margin-bottom:calc(var(--safe-b) + 6px)}
   body[data-route^="build"] .cols{min-height:100%}
   body[data-route^="build"] .bundo{bottom:calc(var(--safe-b) + 14px)}
+  body[data-route^="build"] .pcheck{display:none} /* Round 3: the card lives under the week in portrait; landscape keeps the full-height board */
 }
 .flag .ftl{font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--text-2);margin-bottom:2px}.flag.warn .ftl{color:var(--accent-press)}
 .rrn{font-size:12px}
@@ -973,3 +974,129 @@ details.ls.flash{box-shadow:0 0 0 3px var(--accent);border-radius:var(--r-md)}
 .vst.red{color:var(--vol-red)}
 .vleg{flex-wrap:wrap;row-gap:4px}
 .vleg .vcap{color:var(--warn-ink);font-weight:600}
+/* ===== Round 3 (Mr Dude markup): data first, graphic first, consolidated ===== */
+/* 2. segmented toggles: the thumb fills its segment (track height minus the 2px inset on every side), so it is centred in
+   both axes; the old fixed 32px button overflowed the 26-30px tracks. Checked to 1px by cSegToggleGeometry. */
+.seg.xs button{height:auto;align-self:stretch;min-height:0;line-height:1}
+.seg.xs{align-items:stretch;box-sizing:border-box}
+/* 1. bigger Build map: the cropped viewBox (sb.js MAPCROP) drops the art's empty margins; the key moved to the right column */
+@media (max-width:699px){
+  .bsum{grid-template-areas:"map segs" "map stats";grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto 1fr;padding:6px 10px 6px 8px;column-gap:8px;row-gap:6px}
+  .bsum .bsmap{max-width:none;gap:2px}.bsmap .mmap.crop{height:182px}
+  .bsr .astrip{gap:2px}
+  .bsum .bsr{align-self:stretch;justify-content:space-between;gap:6px}
+  .bsr .bmleg .mleg{flex-wrap:wrap;justify-content:center;white-space:normal;row-gap:2px;column-gap:8px;font-size:11.5px}
+}
+.bsr .bmleg:empty{display:none}
+@media (min-width:700px){.bsr .bmleg{display:none}}
+/* 3. Program check card under the weekly view */
+.pcheck{margin:10px var(--s4) 6px;background:var(--paper);border-radius:var(--r-md);box-shadow:0 0 0 .5px var(--line);overflow:hidden}
+.pcheck:empty{display:none}
+.pch{display:flex;align-items:baseline;gap:8px;padding:10px 12px 6px}.pch b{font-size:15px}.pch .sub{font-size:12px;color:var(--text-2)}
+.pcr{display:grid;grid-template-columns:14px minmax(0,1fr) auto;column-gap:8px;align-items:center;padding:8px 12px;border-top:.5px solid var(--line)}
+.pcr .sgt{font-size:14px;line-height:1.25}.pcr .sgp{font-size:12.5px;color:var(--text-2);line-height:1.3;grid-column:2}
+.pcr .btn{grid-row:1 / span 2;grid-column:3}
+.pcfoot{display:flex;justify-content:flex-end;padding:8px 12px;border-top:.5px solid var(--line)}
+.pcfoot .btn{font-size:14px;font-weight:600;color:var(--accent-press)}
+.pcap{display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:.5px solid var(--line);background:color-mix(in srgb,var(--vol-in-range) 10%,transparent);font-size:13px}
+.pcap p{flex:1;margin:0}
+/* status marks: a pass is a subtle green tick, close is amber, a fail red; n/a grey. No Check / Measure / Info chips. */
+.cki{width:14px;height:14px;flex:none;display:inline-grid;place-items:center;font-size:11px;font-weight:700;line-height:1;border-radius:7px}
+.cki.ok{color:var(--vol-in-range-ink)}
+.cki.amb{background:var(--vol-amber);color:#3a2600}
+.cki.bad{background:var(--vol-red);color:#fff}
+.cki.na{color:var(--text-3)}
+.cki.dot{width:9px;height:9px;border-radius:5px;justify-self:center}
+/* muscle links */
+.mlk{font:inherit;font-weight:600;color:inherit;padding:0;text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 35%,transparent);text-underline-offset:2px;text-decoration-thickness:1px}
+.mlk:active{opacity:.6}
+/* Analysis: large map on top */
+.anh .anmap{display:flex;justify-content:center;gap:6px;padding:4px 0 2px}.anh .anmap .mmap{height:250px;width:auto}
+.anh .anmapleg{display:flex;justify-content:center;padding:0 0 8px}.anh .anmapleg .mleg{flex-wrap:wrap;justify-content:center}
+.anh{text-align:center}.anh .anbig{justify-content:center}
+/* 4. five sections: one contained box each, a sticky header with a chevron, collapsible (localStorage) */
+.asec{margin:10px var(--s4) 0;background:var(--paper);border-radius:var(--r-md);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.04);overflow:clip}
+.asech{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:8px;width:100%;padding:11px 12px;background:var(--paper);border-bottom:1px solid var(--line);text-align:left}
+.asec[data-open="0"] .asech{border-bottom:0}
+.asech .asl{font-size:17px;font-weight:700}.asech .ass{flex:1;font-size:12.5px;color:var(--text-2);display:flex;align-items:center;gap:5px;justify-content:flex-end}
+.asech .chev{width:9px;height:15px;flex:none;transition:transform var(--t-med);color:var(--text-3);transform:rotate(90deg)}.asec[data-open="0"] .chev{transform:none}
+.asec[data-open="0"] .asecb{display:none}
+.asecb{padding:2px 12px 10px}.asecb .cdesc{font-size:12.5px;color:var(--text-2);margin:8px 0 2px}
+/* light subheads: small caps over a hairline, never a separate tile */
+.ash{display:flex;align-items:center;gap:6px;margin:12px 0 4px;padding-top:9px;border-top:.5px solid var(--line);font-variant:all-small-caps;letter-spacing:.04em;font-size:14px;font-weight:600;color:var(--text-2)}
+.ash .ashv{font-variant:normal;letter-spacing:0;font-weight:500;font-size:12px;color:var(--text-2)}.ash .ixb{margin:-8px -6px -8px auto}
+.asecb>.cdesc+.agfx>.ash,.asecb>.cdesc+.ckl{border-top:0;padding-top:2px}
+.ash>span:first-of-type{white-space:nowrap}.ash .ashv{flex:1;text-align:right;min-width:0}.ash .ixb{margin:-8px -6px -8px 0}
+.tag.mod{font-variant:normal;letter-spacing:0;font-size:10.5px;padding:1px 6px;border-radius:8px;background:var(--fill);color:var(--text-2);font-weight:600}
+/* consolidated checklist: compact rows */
+.ckl{display:flex;flex-direction:column}
+.ckr{display:flex;align-items:center;gap:8px;min-height:34px;padding:5px 0;border-top:.5px solid var(--line)}
+.ckl>.ckr:first-child{border-top:0}
+.ckr .ckt{flex:1;min-width:0;font-size:14px;line-height:1.25}.ckr .ckv{font-size:12.5px;color:var(--text-2);text-align:right;max-width:55%}
+.ckr .ixb{margin:-6px -6px -6px 0}
+.ckr.ms .ckt{padding-left:22px}
+.ckd{margin:-2px 0 4px 22px;font-size:12.5px;color:var(--text-2);line-height:1.35}.ckd p{margin:2px 0}
+.ckd .fwho{color:var(--text-3)}
+/* suggestion rows: muscle highlighted, fix inline, a small Apply */
+.sgr{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:8px;align-items:center;padding:5px 0 5px 22px;border-top:.5px dashed var(--line)}
+.sgr .sgt{font-size:13.5px;line-height:1.25}.sgr .sgt .num{color:var(--text-2);font-weight:500}
+.sgr .sgp{grid-column:1;font-size:12.5px;color:var(--text-2);line-height:1.3}.sgr .sgp em{font-style:normal;color:var(--text-3)}
+.sgr>.btn,.sgr>.sgnf{grid-column:2;grid-row:1 / span 2}
+.sgr .sgnf{font-size:11.5px;color:var(--text-3);max-width:110px;text-align:right}
+.sgr.inl{padding-left:12px;border-top:0;margin-top:-2px}
+.sgr details{grid-column:1 / span 2;font-size:12.5px;color:var(--text-2)}.sgr details summary{color:var(--accent-press);font-size:12px;list-style:none;cursor:pointer}
+.sgr details .fxr{display:flex;align-items:center;gap:8px;padding:4px 0}.sgr details .fxr span{flex:1}
+.btn.xs{height:28px;padding:0 11px;font-size:13px;border-radius:14px}
+.sgl .more{margin-top:4px}
+.aplr{display:flex;align-items:center;gap:8px;margin:8px 0 2px;padding:7px 10px;border-radius:10px;background:color-mix(in srgb,var(--vol-in-range) 12%,transparent);font-size:13px}.aplr .grow p{margin:0}
+.aplr .sub{font-size:11.5px}
+/* graphics */
+.agfx{margin-bottom:2px}
+.strow{display:grid;grid-template-columns:88px minmax(0,1fr) 38px;align-items:center;column-gap:8px;min-height:24px;width:100%;text-align:left}
+.strow .vm{font-size:13px;white-space:normal;line-height:1.15}.strow .vn{font-size:12px;text-align:right;color:var(--text-2)}
+.stt{position:relative;height:10px;border-radius:5px;background:var(--fill)}
+.stt .sband{position:absolute;top:0;bottom:0;border-radius:5px;background:color-mix(in srgb,var(--vol-in-range) 55%,transparent)}
+.stt .stm{position:absolute;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:5px;background:var(--ink);box-shadow:0 0 0 2px var(--paper)}
+.strow.on .vm{color:var(--accent-press)}.strow.on .stt{box-shadow:0 0 0 1.5px var(--accent)}
+.ancurve .band{fill:var(--vol-in-range);fill-opacity:.3}
+.curvec{margin:6px 0 4px}.curvec .ancurve{width:100%;height:auto}
+.hbar{display:grid;grid-template-columns:88px minmax(0,1fr) 46px;align-items:center;column-gap:8px;min-height:24px;width:100%;text-align:left}
+.hbar .vm{font-size:13px;line-height:1.15}.hbar .vn{font-size:12px;text-align:right;color:var(--text-2)}
+.hbt{position:relative;height:9px;border-radius:5px;background:var(--fill)}
+.hbt>i{position:absolute;left:0;top:0;bottom:0;width:var(--w);border-radius:5px;background:var(--ramp-3)}
+.hbt>i.ok{background:var(--vol-in-range)}.hbt>i.amb{background:var(--vol-amber)}.hbt>i.bad{background:var(--vol-red)}
+.hbt>b{position:absolute;top:-3px;bottom:-3px;left:var(--x);width:1.5px;background:var(--ink);opacity:.7}
+.hbar .hbs{display:flex;align-items:center;gap:4px}
+.ppbar{display:flex;height:22px;border-radius:6px;overflow:hidden;font-size:11.5px;font-weight:600;color:#fff}
+.ppbar>span{display:flex;align-items:center;padding:0 8px;min-width:0;white-space:nowrap}
+.ppbar .pu{background:var(--ramp-4)}.ppbar .ps{background:var(--ramp-2);color:var(--ink);justify-content:flex-end}
+.ppcap{font-size:12px;color:var(--text-2);margin:4px 0 2px}
+.tierbar{display:flex;height:14px;border-radius:5px;overflow:hidden;margin:2px 0 4px}.tierbar>i{display:block;height:100%}
+.tierbar>i:nth-child(1){background:var(--ramp-4)}.tierbar>i:nth-child(2){background:var(--ramp-3)}.tierbar>i:nth-child(3){background:var(--ramp-2)}.tierbar>i:nth-child(4){background:var(--ramp-1)}
+.tierleg{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11.5px;color:var(--text-2)}.tierleg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.asecb .group{margin:0;box-shadow:none;background:none;border-radius:0}
+.asecb .group .row{padding-left:0;padding-right:0}
+.asecb .vol .vrow{min-height:30px}
+.nrow{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-top:.5px solid var(--line);font-size:13.5px;line-height:1.3}
+.ckl>.nrow:first-child{border-top:0}.nrow .cki{margin-top:2px}.nrow>span:nth-child(2){flex:1}
+/* 8. muscle deep-dive (extended contributor sheet) */
+.ddsec{margin:10px var(--s4) 0;padding:4px 12px 8px;background:var(--paper);border-radius:var(--r-md);box-shadow:0 0 0 .5px var(--line)}
+.ddsec .ash:first-child{border-top:0;padding-top:4px;margin-top:4px}
+.ddkv{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:13.5px;padding:3px 0}.ddkv .num{color:var(--text-2)}
+.ddfq{display:flex;gap:4px;margin:4px 0}.ddfq span{flex:1;text-align:center;font-size:11px;color:var(--text-2)}.ddfq i{display:block;height:16px;border-radius:4px;background:var(--ramp-0);margin-bottom:2px}
+.ddfq i[data-r="1"]{background:var(--ramp-1)}.ddfq i[data-r="2"]{background:var(--ramp-2)}.ddfq i[data-r="3"]{background:var(--ramp-3)}.ddfq i[data-r="4"]{background:var(--ramp-4)}
+.cbsheet .cbl{margin:0}
+.hbt>s.bnd{position:absolute;top:-3px;bottom:-3px;border-radius:4px;background:color-mix(in srgb,var(--vol-in-range) 30%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--vol-in-range) 60%,transparent)}
+.hbt>i.ok{z-index:1}
+.flash{animation:flash 1.2s ease-out}@keyframes flash{0%{background:color-mix(in srgb,var(--accent) 18%,transparent)}100%{background:transparent}}
+.pcr.none{grid-template-columns:14px minmax(0,1fr)}.pcr.none .sgt{color:var(--text-2)}
+.pcr .btn.grey{background:var(--fill);color:var(--ink)}
+.ddsheet .cbh.dd .vst{font-weight:600}
+.ckd.fdet,.ckd.fdet.warn,.ckd.fdet.note,.ckd.fdet.info{background:none;padding:0;border:0;border-radius:0;box-shadow:none;margin:-2px 0 4px 22px}
+.ckd.fdet p{font-size:12.5px;color:var(--text-2)}
+.hbar .vn,.strow .vn{white-space:nowrap}
+/* links stay quiet inside charts (the row itself is the target); underlined where a muscle carries a flag or a fix */
+.hbar .mlk,.strow .mlk{text-decoration:none;font-weight:500}
+.hbar:has(+ .sgr) .mlk,.strow.flg .mlk{text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 35%,transparent);font-weight:600}
+.anmap .mp{cursor:pointer}
+.ansheet .hbar button.cbx{-webkit-appearance:none;appearance:none;display:inline-grid;place-items:center;padding:0;margin:0 0 0 3px;background:none;border:0;box-shadow:none;width:16px;height:16px;min-width:0;min-height:0;vertical-align:-2px}

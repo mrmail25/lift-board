@@ -1,0 +1,249 @@
+{
+  "check_priority": {
+    "version": 2,
+    "note": "Round 3 program-check card priority. Shaped as a rules.json key: merge `check_priority` into rules.json as-is. Card order (CoS call 2026-10-23): state first (red, then amber), score only within a state; info items never show on the card (they stay in the full analysis); red / amber always show (no minimum score) and an issue without a validated fix shows with action see_analysis instead of Apply. Cap 3; a board with no red / amber issue shows none. score = severity x importance x fixability; importance = check weight x muscle weight. Design choices, not evidence; scores are a model. Reference: tools/check_priority.py; spec: data/check-priority-spec.md; fixture: data/check-priority-reference.json.",
+    "formula": "score = severity * importance * fixability",
+    "severity": {
+      "state_band": {
+        "red": [
+          0.7,
+          1.0
+        ],
+        "amber": [
+          0.4,
+          0.6
+        ],
+        "info": [
+          0.1,
+          0.3
+        ]
+      },
+      "rule": "severity = lo + (hi - lo) * d, where [lo, hi] = state_band[state] and d in [0, 1] is the distance from range (see distance). red = a failing check (non-info flag); amber = close to target (weekly_band, stretch share below 0.25); info = an info note.",
+      "distance": {
+        "weekly_volume / weekly_band under": "min(1, (level_min - sets) / level_min)",
+        "weekly_volume / weekly_band over": "min(1, (sets - max) / max)",
+        "stretch_share": "min(1, (0.25 - share) / 0.25)",
+        "missing_stretch": "1",
+        "low_frequency / effective_frequency": "(2 - days) / 2",
+        "session_length": "info: (min - 75) / 15; warn: min(1, (min - 90) / 30)",
+        "session_hard_sets": "info: (sets - (cap - info_band)) / info_band; warn: min(1, (sets - cap) / cap)",
+        "junk_volume_session / redundant_pattern": "min(1, (sets - 10) / 10)",
+        "pattern_gap": "(min - count) / min",
+        "push_pull_imbalance": "min(1, distance of the ratio outside 0.75-2.0 / 0.75)",
+        "recovery_vs_baseline": "min(1, (ratio - 1.15) / 0.35)",
+        "other": "1"
+      }
+    },
+    "importance": {
+      "rule": "check_weight[family] * muscle_weight[muscle] (board-level issues use muscle weight 1.0)",
+      "check_weight": {
+        "weekly_volume": {
+          "weight": 1.0,
+          "sources": [
+            "weekly_volume",
+            "weekly_band"
+          ],
+          "item": "volume_in_reach",
+          "note": "weekly sets per muscle: the main lever"
+        },
+        "stretch": {
+          "weight": 0.7,
+          "sources": [
+            "missing_stretch",
+            "stretch_share"
+          ],
+          "item": "stretch_<muscle>",
+          "note": "per-muscle stretch checks; low share (amber) for checked or measure-only muscles"
+        },
+        "push_pull": {
+          "weight": 0.9,
+          "sources": [
+            "push_pull_imbalance"
+          ],
+          "item": "push_pull_ratio",
+          "note": ""
+        },
+        "pattern_gap": {
+          "weight": 0.85,
+          "sources": [
+            "pattern_gap"
+          ],
+          "item": "pattern_coverage",
+          "note": ""
+        },
+        "redundant_pattern": {
+          "weight": 0.7,
+          "sources": [
+            "redundant_pattern"
+          ],
+          "item": "redundant_pattern",
+          "note": ""
+        },
+        "consecutive": {
+          "weight": 0.75,
+          "sources": [
+            "consecutive_high_volume"
+          ],
+          "item": "consecutive_high_volume",
+          "note": ""
+        },
+        "frequency": {
+          "weight": 0.45,
+          "sources": [
+            "low_frequency",
+            "effective_frequency"
+          ],
+          "item": "frequency_two_days",
+          "note": "scheduling suggestion only (volume-equated studies find little effect)"
+        },
+        "spinal_load": {
+          "weight": 0.9,
+          "sources": [
+            "spinal_load",
+            "spinal_load_session",
+            "spinal_load_week"
+          ],
+          "item": "spinal_load",
+          "note": ""
+        },
+        "recovery": {
+          "weight": 0.8,
+          "sources": [
+            "recovery_vs_baseline"
+          ],
+          "item": "recovery_vs_baseline",
+          "note": ""
+        },
+        "session_volume": {
+          "weight": 0.8,
+          "sources": [
+            "junk_volume_session"
+          ],
+          "item": "session_design",
+          "note": ""
+        },
+        "session_size": {
+          "weight": 0.8,
+          "sources": [
+            "session_hard_sets",
+            "session_length"
+          ],
+          "item": "session_design / session_length",
+          "note": ""
+        },
+        "sets_per_exercise": {
+          "weight": 0.6,
+          "sources": [
+            "sets_per_exercise"
+          ],
+          "item": "session_design",
+          "note": ""
+        },
+        "small_entries": {
+          "weight": 0.35,
+          "sources": [
+            "many_small_entries"
+          ],
+          "item": "session_design",
+          "note": ""
+        },
+        "lower_back": {
+          "weight": 0.3,
+          "sources": [
+            "hinge_before_squat",
+            "beginner_squat_and_deadlift"
+          ],
+          "item": "lower_back_fatigue",
+          "note": "thin evidence (Belcher 2019); info only"
+        }
+      },
+      "muscle_weight": {
+        "chest": 1.0,
+        "lats": 1.0,
+        "upper_back": 1.0,
+        "quads": 1.0,
+        "glutes": 1.0,
+        "hamstrings": 1.0,
+        "side_delts": 0.85,
+        "rear_delts": 0.75,
+        "front_delts": 0.6,
+        "triceps": 0.8,
+        "biceps": 0.8,
+        "calves": 0.7,
+        "traps": 0.6,
+        "abs": 0.6,
+        "adductors": 0.55,
+        "obliques": 0.45,
+        "abductors": 0.45,
+        "lower_back": 0.45,
+        "forearms": 0.4
+      },
+      "muscle_weight_rationale": "Big prime movers that carry most of a physique and most weekly sets (chest, back, quads, glutes, hamstrings) = 1.0. Delts and arms, which the app targets directly and users notice, 0.75-0.85; front delts 0.6 because pressing already covers them. Calves 0.7. Muscles that mostly get indirect work or small targets (traps, abs, adductors, obliques, abductors, lower back, forearms) 0.4-0.6. A design choice for ordering the card, not evidence about which muscles matter more. The app has no neck muscle.",
+      "board_level_muscle_weight": 1.0
+    },
+    "fixability": {
+      "rules": [
+        {
+          "id": "single_op",
+          "value": 1.0,
+          "when": "a validated fix resolves the issue with one op (sets, swap, add or move one tile)"
+        },
+        {
+          "id": "two_ops",
+          "value": 0.8,
+          "when": "a validated fix resolves it with two ops"
+        },
+        {
+          "id": "restructure",
+          "value": 0.6,
+          "when": "a validated fix resolves it with three or more ops"
+        },
+        {
+          "id": "partial",
+          "value": 0.4,
+          "when": "only partial fixes (move toward the goal without meeting it)"
+        },
+        {
+          "id": "none",
+          "value": 0.2,
+          "when": "no validated fix: needs restructuring by hand"
+        }
+      ],
+      "source": "the validated fixes of tools/analysis.py sheet() (suggestions.validation: never adds a non-info flag, so every fix stays within session limits)"
+    },
+    "excluded_sources": {
+      "lower_fatigue_swap": "An optimisation, not a check: it never appears on the program-check card (it stays in the Recovery & fatigue suggestions)."
+    },
+    "dedupe": "One issue per (family, muscle or day): weekly_volume + weekly_band, low_frequency + effective_frequency, missing_stretch + stretch_share collapse to the highest score.",
+    "sort_order": [
+      "state: red, then amber",
+      "score (rounded to 4 decimals) desc",
+      "distance d desc",
+      "muscle weight desc",
+      "issue id asc"
+    ],
+    "card_states": [
+      "red",
+      "amber"
+    ],
+    "exclude_kinds": {
+      "states": [
+        "info"
+      ],
+      "sources": [
+        "lower_fatigue_swap"
+      ],
+      "note": "info-state issues and excluded sources never appear on the program-check card; they stay in the full analysis"
+    },
+    "no_fix_action": {
+      "action": "see_analysis",
+      "when": "no validated fix (fixability rule none)",
+      "fix": null,
+      "note": "show the issue with a link to its Analysis item (analysis_item) instead of Apply; no Apply / Undo ops. Not dropped: there is no minimum score on the card."
+    },
+    "cap": 3,
+    "min_score": null,
+    "action": "apply when fix is set, else no_fix_action.action",
+    "apply": "Each issue carries fix = the best validated fix (resolving first, then fewest ops): ops (swap / add / sets / move as analysis.py apply_ops diff), preview, resolves, and undo ops (invert_ops)."
+  }
+}
