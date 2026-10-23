@@ -16,11 +16,13 @@ const REP_STEP={reps:1,seconds:5,meters:5};
 const setsFor=id=>{const G=RD().rules.pattern_gap_fix.sets_by_kind;return ex(id).type==='isolation'?G.isolation:G.compound}; // rules.json pattern_gap_fix
 let UID=0;const T=(id,sets,reps,from)=>Object.assign({u:'c'+(++UID),id,sets,reps:reps||null},from?{from}:{}); // from: {sid,i} when the chit filled a template slot
 // Clean / Detail (item 5): Detail adds one line under each chit name with its top 3 muscle fractions (exercises.json muscles).
-// Muscle abbreviations are a storyboard table (the data has no muscle short_label yet).
-const MSH={chest:'Chest',front_delts:'FD',side_delts:'SD',rear_delts:'RD',lats:'Lats',upper_back:'UB',traps:'Traps',biceps:'Bi',triceps:'Tri',forearms:'Fore',abs:'Abs',quads:'Quads',hamstrings:'Hams',glutes:'Glutes',calves:'Calves',adductors:'Add',lower_back:'LB',obliques:'Obl',abductors:'Abd'};
+// Labels: exercises.json muscle_short_labels (.muscles, .heads); a head id with no label uses its muscle's label, any other id its full name.
 const fr=v=>v>=1?'1':String(+v.toFixed(2)).replace(/^0/,'');
-const fracs=id=>{const M=(ex(id)||{}).muscles||{},O=RD().exl.muscles||Object.keys(M);return O.filter(m=>M[m]>0).map(m=>[m,M[m]]).sort((a,b)=>b[1]-a[1]||O.indexOf(a[0])-O.indexOf(b[0]))};
-const fracLine=id=>fracs(id).slice(0,3).map(([m,v])=>`${MSH[m]||m} ${fr(v)}`).join(' · ');
+const fracs=id=>{const M=(ex(id)||{}).muscles||{},O=(RD().exl.muscles||Object.keys(M)).map(x=>typeof x==='object'?x.id:x);return O.filter(m=>M[m]>0).map(m=>[m,M[m]]).sort((a,b)=>b[1]-a[1]||O.indexOf(a[0])-O.indexOf(b[0]))};
+const MSL=()=>(RD().exl||{}).muscle_short_labels||{muscles:{},heads:{}};
+const headMuscle=h=>{const M=RD().exl.muscles;return M.includes(h)?h:M.find(m=>h.startsWith(m+'_'))||M.find(m=>h.startsWith(m.replace(/s$/,'')+'_'))||null};
+const muscleShort=m=>{const L=MSL(),mu=L.muscles||{},hd=L.heads||{};if(mu[m])return mu[m];if(hd[m])return hd[m];const pm=headMuscle(m);if(pm&&mu[pm])return mu[pm];return X.ML[m]||m.replace(/_/g,' ')};
+const fracLine=id=>fracs(id).slice(0,3).map(([m,v])=>`${muscleShort(m)} ${fr(v)}`).join(' · ');
 const BD={detail:(()=>{try{return localStorage.getItem('apechit.sb.boardDetail')==='1'}catch(e){return false}})()};
 // ------------------------------------------------------------- state
 const B={name:'',level:'intermediate',version:0,dirty:false,edited:0,days:[],sel:new Set(),hist:[],tpl:null};
@@ -49,7 +51,7 @@ const LVL=()=>` · <span class="blv">${B.level[0].toUpperCase()+B.level.slice(1)
 // ------------------------------------------------------------- stats (live: board, or the drag preview)
 function stats(days){const d=checkDays(days),A=PC.analytics(RD(),d,B.level),C=PC.checks(RD(),d,B.level);
   // check count = rules.analysis_metrics checks_pass (analysis.py): pass = rules with no non-info flag, total = len(rules); strip and sheet header agree
-  const CP=window.ANALYSIS.checksPass(RD(),d,B.level);C.pass=CP.pass;C.total=CP.total;return {A,C,d}}
+  const CP=window.ANALYSIS.checksPass(RD(),d,B.level);C.pass=CP.pass;C.total=CP.total;C.failing=CP.failing;C.na=CP.not_applicable;return {A,C,d}}
 function volMap(A){const o={};for(const [m,v] of Object.entries(A.muscles))o[m]=v.raw>0?X.volFill(v.raw,v.min,v.max):null;return o} // same fill as the Progress map
 // Summary map (bigger, markup round 1): Week = weekly sets vs target (same fill as Progress); Day = that day's sets per muscle.
 // Tapping a day in the strip or a day header switches the map to that day. Tapping a muscle opens its Learn page.
@@ -65,7 +67,7 @@ function setMap(mode,i){MAPV.mode=mode;if(i!=null)MAPV.day=i;$$('#mapseg button'
 function stripHtml(st){const {A,C,d}=st,avg=d.length?A.weekMinutes/d.length:0,fail=C.total-C.pass;
   return `<span class="ast"><b class="num" data-s="sets">${A.weekSets}</b><small>sets / wk</small></span>
    <span class="ast"><b class="num" data-s="min">${d.length?'≈ '+mins5(avg):'–'}</b><small>min / session</small></span>
-   <span class="ast chk ${fail?'bad':'ok'}"><b class="num" data-s="checks">${C.pass}/${C.total}</b><small>checks pass</small></span><span class="ago">Analysis ›</span>`}
+   ${openSlots()?`<span class="ast chk pend"><b class="num" data-s="checks">–</b><small>Fill slots to check</small></span>`:`<span class="ast chk ${fail?'bad':'ok'}"><b class="num" data-s="checks">${C.pass}/${C.total}</b><small>checks pass</small></span>`}<span class="ago">Analysis ›</span>`}
 function dayMeta(day){const n=sum(day.tiles.map(t=>t.sets));return day.tiles.length?`${n} sets · ≈ ${mins5(PC.sessionMinutes(RD(),day.tiles.map(t=>({id:t.id,sets:t.sets}))))} min`:''}
 function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bmap');if(mp)mp.innerHTML=mapHtml(st,days);const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);s.setAttribute('aria-label',`Analysis: ${st.A.weekSets} sets a week, ${st.C.pass} of ${st.C.total} checks pass`)}
   days.forEach((d,i)=>{const n=sum(d.tiles.map(t=>t.sets));const b=$(`#dstrip [data-jump="${i}"] .dn`);if(b){b.textContent=stripTxt(d);b.parentNode.classList.toggle('rd',isRest(d))}
@@ -235,11 +237,12 @@ const LBL=m=>(RD().rules.ranking.labels.regions[m])||X.ML[m]||m.replace(/_/g,' '
 // Analysis (round 1, Coach's audit): headers, order and metrics come from rules.json analysis_metrics (7 ordered categories,
 // 43 metrics, each with label, description, evidence and status; 'proposed' is marked). Suggestions are the 11 typed
 // suggestions of rules.json suggestions.analysis_sheet, from logic/analysis.js (port of tools/analysis.py sheet()).
-// Apply = board days := fix.days (Undo keeps the pre-Apply board). A rule is filed under the category of the metric whose
-// defined_in names it (rules.json rules.#id); a rule no metric names lands in "More checks" (only shown when one exists).
-const ANL=window.ANALYSIS;let SUGN=6;
-const RULE_CAT=id=>{const M=(RD().rules.analysis_metrics||{metrics:[]}).metrics,re=new RegExp('rules\\.#'+id+'(?![A-Za-z_])');
-  const own=M.find(m=>m.id===id&&(m.defined_in||[]).some(d=>re.test(d)))||M.find(m=>(m.defined_in||[]).some(d=>re.test(d)));return own?own.category:'more'};
+// Apply = board days := fix.days (Undo keeps the pre-Apply board). Each rule is filed under its
+// rules.json rules[].category; only rules whose applies holds are listed and counted.
+const ANL=window.ANALYSIS;const SUG_TOP=3;let SUGN=SUG_TOP; // CoS: top 3 by severity (sheet order), then "Show all N"
+// CoS: one sentence on the card; the rest of the explanation behind "Why?"
+const oneSentence=t=>{const m=/^([\s\S]*?[.!?])\s+(?=[A-Z(])([\s\S]+)$/.exec(t||'');return m?[m[1],m[2]]:[t||'','']};
+const RULE_CAT=id=>{const r=RD().rules.rules.find(x=>x.id===id);return r&&r.category}; // rules.json rules[].category (Coach round 1 data)
 const ruleOf=f=>PC._x.RULE_OF(f[1]);
 let APPLIED=[];const sigD=()=>JSON.stringify(B.days.map(d=>[d.label,isRest(d),d.tiles.map(t=>[t.id,t.sets])]));
 const pct=x=>`${Math.round(x*100)}%`,MLB=m=>X.ML[m]||LBL(m);
@@ -258,7 +261,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   const fxRow=f=>{FIX.push(f);return `<div class="fxr"><span>${f.preview}${f.resolves?'':` <em>${R.partial_label}</em>`}</span><button class="btn sm accent" data-b="apply" data-k="${FIX.length-1}">Apply</button></div>`};
   const sevL={warn:'Warning',info:'Info',suggest:'Suggestion'};
   const sugCard=s=>`<div class="flag sugc ${s.severity}${s.fixes.length?' hasfix':''}" data-type="${s.type}" data-src="${s.source}"${(s.target||{}).flag?` data-rule="${ruleOf(s.target.flag)}"`:''}>
-     <div class="ftl">${(TY[s.type]||{}).label||s.type} <span class="tag sev ${s.severity}">${sevL[s.severity]||s.severity}</span></div><p>${sugTarget(s,d,lv)}</p>
+     <div class="ftl">${(TY[s.type]||{}).label||s.type} <span class="tag sev ${s.severity}">${sevL[s.severity]||s.severity}</span></div>${(([a,b])=>`<p class="s1">${a}</p>${b?`<details class="why"><summary class="whys">Why?</summary><p>${b}</p></details>`:''}`)(oneSentence(sugTarget(s,d,lv)))}
      ${s.fixes.length?s.fixes.map(fxRow).join(''):'<p class="sub nofix">No one-tap change passes the checks. Change it by hand.</p>'}</div>`;
   const vrow=([m,v])=>{const st=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',VB=X.VB,top=v.max*(VB.red_factor!=null?VB.red_factor:1);return `<div class="row vrow" data-vs="${st}"><span class="vm">${X.ML[m]||m}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${+v.raw.toFixed(1)}<small>/${v.min}–${v.max}</small></span></div>`};
   const T=Object.entries(A.muscles).filter(([m,v])=>v.raw>0||v.min>0),RU={};R.rules.forEach(r=>RU[r.id]=r);
@@ -292,19 +295,17 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
     session_density:chips(Object.entries(M.session_density).map(([k,v])=>[WD[DAYS.indexOf(k)],`${v} sets/h`]))};
   const evTag=m=>`<span class="tag ev ${m.evidence}" title="${(m.citations||[]).join(', ')}">${m.evidence==='supported'?'Supported':'Modeled'}</span>${m.status==='proposed'?'<span class="tag prop">Proposed</span>':''}`;
   const mrow=m=>`<div class="mrow" data-metric="${m.id}" data-status="${m.status}" data-evidence="${m.evidence}"><div class="mh"><b>${m.label}</b>${evTag(m)}<span class="mval num">${VAL[m.id]||''}</span></div><p class="mdesc">${m.description}</p>${EXTRA[m.id]||''}</div>`;
-  const ruleList=R.rules.filter(r=>!r.app_only&&(!r.levels||r.levels.includes(lv)));
-  const rstat=cat=>ruleList.filter(r=>RULE_CAT(r.id)===cat).map(r=>{const c=C.list.find(x=>x.id===r.id),bad=c?c.warn.length:flagsOf(r.id);return `<span class="tag rs ${bad?'bad':'ok'}" data-rule="${r.id}">${bad?'!':'✓'} ${RLAB(r.id)}</span>`}).join('');
-  const sec=c=>{const rs=ruleList.filter(r=>RULE_CAT(r.id)===c.id),bad=rs.filter(r=>{const x=C.list.find(y=>y.id===r.id);return x&&x.warn.length}).length;
+  const ruleList=R.rules.filter(r=>!C.na.includes(r.id)); // rules[].applies (level, requires)
+  const rstat=cat=>ruleList.filter(r=>RULE_CAT(r.id)===cat).map(r=>{const bad=C.failing.includes(r.id);return `<span class="tag rs ${bad?'bad':'ok'}" data-rule="${r.id}">${bad?'!':'✓'} ${RLAB(r.id)}</span>`}).join('');
+  const sec=c=>{const rs=ruleList.filter(r=>RULE_CAT(r.id)===c.id),bad=rs.filter(r=>C.failing.includes(r.id)).length;
     const body=c.id==='suggestions'?suggestions():'';
     return `<section class="acat${c.id==='suggestions'?' sugs':''}" data-cat="${c.id}"><div class="ghead cath${c.id==='suggestions'?' sugh':''}">${c.label} <span class="gsub">${rs.length?`${rs.length-bad} of ${rs.length} checks pass`:''}</span></div>
-      <p class="cdesc">${c.description}</p>${rs.length?`<div class="rstat">${rstat(c.id)}</div>`:''}${body}<div class="mlist">${(c.metrics||[]).map(mrow).join('')}</div></section>`};
+      ${c.id==='suggestions'?'':`<p class="cdesc">${c.description}</p>`}${rs.length?`<div class="rstat">${rstat(c.id)}</div>`:''}${body}<div class="mlist">${(c.metrics||[]).map(mrow).join('')}</div></section>`};
   const suggestions=()=>{const top=SH.slice(0,SUGN),rest=SH.slice(SUGN);
     return `${APPLIED.length?`<div class="flags">${APPLIED.map((a,i)=>`<div class="aplc" data-k="${i}"><div class="grow"><div class="ftl">Applied</div><p>${a.preview}</p>${a.asig===cur?'':'<p class="sub">The board changed after this. Undo puts the whole board back as it was just before Apply, so later edits are lost.</p>'}</div><button class="btn sm ink" data-b="unapply" data-k="${i}">Undo</button></div>`).join('')}</div>`:''}
-     ${SH.length?`<div class="flags" id="sugl">${top.map(sugCard).join('')}</div>${rest.length?`<button class="btn plain block more" data-b="sugmore">Show ${rest.length} more suggestion${rest.length>1?'s':''}</button>`:''}`:(APPLIED.length?'':'<p class="foot">No suggestions: nothing on this board needs a change.</p>')}`};
-  const more=ruleList.some(r=>RULE_CAT(r.id)==='more');
-  AN.body.innerHTML=`<div class="anh"><div class="big num">${M.checks_pass.pass} of ${M.checks_pass.total}</div><div class="sub">checks pass · ${SH.filter(s=>s.severity==='warn').length} need attention · ${SH.length} suggestion${SH.length===1?'':'s'}</div></div>
+     ${SH.length?`<div class="flags" id="sugl">${top.map(sugCard).join('')}</div>${rest.length?`<button class="btn plain block more" data-b="sugmore">Show all ${SH.length}</button>`:''}`:(APPLIED.length?'':'<p class="foot">No suggestions: nothing on this board needs a change.</p>')}`};
+  AN.body.innerHTML=`<div class="anh">${openSlots()?`<div class="big pend" data-pend="1">Fill slots to check</div><div class="sub">${openSlots()} open slots · the check count is pending until every slot is filled</div>`:`<div class="big num">${M.checks_pass.pass} of ${M.checks_pass.total}</div><div class="sub">checks pass · ${SH.filter(s=>s.severity==='warn').length} need attention · ${SH.length} suggestion${SH.length===1?'':'s'}</div>`}</div>
    ${CATS.map(sec).join('')}
-   ${more?`<section class="acat" data-cat="more"><div class="ghead cath">More checks <span class="gsub">not yet filed under a metric</span></div><div class="rstat">${rstat('more')}</div></section>`:''}
    <div class="ghead">Still sample data <span class="smp">sample</span></div><div class="group asks" id="anasks">${DATA_ASKS.map(t=>`<div class="row"><div class="grow t2">${t}</div></div>`).join('')}</div>
    <p class="foot">${EV.note}</p><div style="height:24px"></div>`}
 // Logged-progress values for the Analysis sheet and the Progress tab: the synthetic log (data/progress-reference.json), not real data.
@@ -315,7 +316,7 @@ function curve(m,A){const v=A.muscles[m],k=v.k,x=v.x,Sx=z=>1-Math.exp(-z/k),Xm=M
   return `<svg class="ancurve" viewBox="0 0 ${W} ${H}" data-m="${m}"><rect x="${px(v.min)}" y="8" width="${px(v.max)-px(v.min)}" height="${H-38}" class="band"/>${[0,.5,1].map(z=>`<line x1="30" x2="${W-8}" y1="${py(z)}" y2="${py(z)}"/><text x="26" y="${py(z)+3}" text-anchor="end">${z*100}%</text>`).join('')}${tk.join('')}
    <path d="${d}" class="cv"/><circle cx="${px(x)}" cy="${py(Sx(x))}" r="5" class="dot"/><text x="${px(v.min)+4}" y="20" class="bl">target ${v.min}–${v.max}</text></svg>
    <div class="anread"><b>${X.ML[m]||m}</b>: ${x.toFixed(1)} effective sets a week → ${Math.round(Sx(x)*100)}% of the modeled max. Next set ≈ +${(nx*100).toFixed(1)}%.</div>`}
-function analysisSheet(){SUGN=6;AN=X.sheet({title:'Analysis',cls:'tall grouped ansheet',right:'<button class="btn plain" data-b="anclose">Done</button>',onClose(){AN=null}});AN.mus='chest';renderAnalysis();return AN}
+function analysisSheet(){SUGN=SUG_TOP;AN=X.sheet({title:'Analysis',cls:'tall grouped ansheet',right:'<button class="btn plain" data-b="anclose">Done</button>',onClose(){AN=null}});AN.mus='chest';renderAnalysis();return AN}
 // ------------------------------------------------------------- New menu (blank, split template, library preset)
 let NW=null;const NS={split:'upper-lower',level:'intermediate',n:'4'};
 const TJT=()=>((RD().TJ||{}).templates||[]);
@@ -417,5 +418,5 @@ Object.assign(X.ROUTES,{
  'build-tray-slot':['build','build',0,0,()=>{BD.detail=false;loadTemplate(TP().find(RD().TJ,'upper-lower/intermediate/4'));B.hist=[]},()=>slotTray('mon','mon-4')],
  'build-tray-filter':['build','build',0,0,()=>{Object.assign(TFB,{mus:null,pat:'vertical_pull',eq:null})},()=>traySheet('thu')],
 });
-window.BOARD={get detail(){return BD.detail},fracLine,MSH,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
+window.BOARD={get detail(){return BD.detail},fracLine,muscleShort,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
 })();

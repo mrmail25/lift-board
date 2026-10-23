@@ -104,11 +104,16 @@ const VOL=[['chest',16,10,20],['lats',14,10,18],['upper_back',12,10,18],['front_
 // OVER-VOLUME BANDS: one key for the volume panel AND the body map, rules.json volume_bands (Coach, CoS decision 2026-10-21).
 // amber when sets > max, red when sets > max * red_factor. No factor is hardcoded here: until the key loads, nothing is red.
 const VB={amber_above:'max',red_factor:null,src:null};
-async function loadVB(){for(const u of ['data/rules.json','../data/rules.json']){try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)continue;const j=await r.json(),b=j.volume_bands||(j.rules||{}).volume_bands;if(b&&typeof b.red_factor==='number'){Object.assign(VB,b,{src:u});return VB}}catch(e){}}console.warn('rules.json volume_bands missing: over-volume red disabled');return VB}
+// storyboard data loading: only the storyboard's own data/ folder; a fetch aborted by navigation (pagehide) is not an error
+const DATA='data/';let UNLOADING=false,RDP=null;addEventListener('pagehide',()=>{UNLOADING=true});addEventListener('pageshow',()=>{UNLOADING=false});
+const getJ=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+async function loadVB(){const u=DATA+'rules.json',j=await getJ(u),b=j&&(j.volume_bands||(j.rules||{}).volume_bands);if(b&&typeof b.red_factor==='number'){Object.assign(VB,b,{src:u});return VB}if(!UNLOADING)console.warn('rules.json volume_bands missing: over-volume red disabled');return VB}
 const vStat=(n,min,max)=>n<min?'under':VB.red_factor!=null&&n>max*VB.red_factor?'red':n>max?'amber':'in';
 const VLAB={under:'Under',in:'In range',amber:'Over max',red:'Well over'};
 
-const S={tab:'train',route:'train',session:false,pick:null,day:{},buildDay:0,unit:'lb',bar:'Olympic',plate:225,logSel:15,month:9,year:2026,split:1};
+// units setting (CoS): localStorage apechit.sb.unit, default lb. Progress converts Coach's kg sample log for display.
+const UNIT_K='apechit.sb.unit',KG_LB=2.20462262;
+const S={tab:'train',route:'train',session:false,pick:null,day:{},buildDay:0,unit:(()=>{try{return localStorage.getItem('apechit.sb.unit')==='kg'?'kg':'lb'}catch(e){return 'lb'}})(),bar:'Olympic',plate:225,logSel:15,month:9,year:2026,split:1};
 const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
 let tick=null;
 function startTick(){clearInterval(tick);tick=setInterval(()=>{if(WK.rest.left>0)WK.rest.left--;paintTime()},1000)}
@@ -644,7 +649,7 @@ V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#b
    <button class="row"><span class="ico gr">${I('build',1.8)}</span><div class="grow"><div class="t1">Gold's Gym</div><div class="t2">Commercial · full equipment</div></div>${CHEV}</button>
    <button class="row addrow">${I('plus',2)} Add gym</button></div>
   <div class="ghead">Units & bars</div>
-  <div class="group"><div class="row"><div class="grow t1">Units</div><div class="seg sm2"><button class="on">lb</button><button>kg</button></div></div>
+  <div class="group"><div class="row"><div class="grow t1">Units</div><div class="seg sm2" id="unitseg">${['lb','kg'].map(u=>`<button class="${S.unit===u?'on':''}" data-act="unit" data-v="${u}">${u}</button>`).join('')}</div></div>
    <button class="row"><div class="grow t1">Bars</div><span class="val">5 bars</span>${CHEV}</button>
    <button class="row"><div class="grow t1">Week starts on</div><span class="val">Monday</span>${CHEV}</button></div>
   <div class="ghead">Rest timer</div>
@@ -686,7 +691,7 @@ function progRoutine(){const P=RD&&RD.PREF;if(!P)return null;if(!PROG.routine){P
 function progressData(){const P=RD&&RD.PREF;if(!P||!window.PROGRESS)return null;const rt=progRoutine(),notes=Object.assign({},P.history.exNotes||{},ld(LSN,{}));
   const sig=JSON.stringify([rt,notes]);if(PROG.sig===sig&&PROG.res)return PROG.res;
   const h=Object.assign({},P.history,{exNotes:notes});PROG.res=PROGRESS.progress(RD,h,rt.filter(d=>d.tiles.length),P.as_of,P.level,P.goal||null);PROG.sig=sig;return PROG.res}
-const kg=v=>v==null?'–':`${(+v).toFixed(1)} kg`,fx1=v=>v==null?'–':(+v).toFixed(1).replace(/\.0$/,'');
+const wt=v=>v==null?'–':S.unit==='kg'?`${(+v).toFixed(1)} kg`:`${(v*KG_LB).toFixed(1)} lb`,fx1=v=>v==null?'–':(+v).toFixed(1).replace(/\.0$/,'');
 const TRL={up:'Up',down:'Down',flat:'Flat',insufficient:'Not enough weeks'},LFT={up:'Up',stalled:'Stalled',dropping:'Dropping',insufficient:'Too few sessions'};
 const DNL=d=>RD.rules.day_names[d]||d,DSH=d=>DNL(d).slice(0,3);
 function bandOf(m){const T=RD.targets.targets[m],lv=(RD.PREF||{}).level||'intermediate';if(!T)return null;return [RANK.pyRound(T.min*RD.targets.levelMinFactor[lv]*2)/2,T.max]}
@@ -712,7 +717,7 @@ function pmusHtml(m){if(!m)return '';const pr=progressData(),v=pr&&pr.muscles[m]
   return `<div class="card pmus" data-mu="${m}"><div class="pmh"><b>${ML[m]||m}</b><span class="ptr ${v.trend.status}">${TRL[v.trend.status]}${v.trend.pct_per_week!=null?` ${v.trend.pct_per_week>0?'+':''}${Math.round(v.trend.pct_per_week)}%/wk`:''}</span></div>
    <div class="pav"><div class="pvl"><span>Credited last week</span><b class="num">${fx1(v.last_week_sets)}</b></div><div class="pvl"><span>Planned</span><b class="num">${fx1(v.plan_sets)}</b></div><div class="pvl"><span>This week so far</span><b class="num">${fx1(v.this_week_sets)}</b></div><div class="pvl"><span>Adherence</span><b class="num" data-k="adh">${v.adherence!=null?Math.round(v.adherence*100)+'%':'–'}</b></div></div>
    ${spark(v)}<p class="sub sparkc">Weekly credited sets, last ${v.weeks.length} completed weeks · line = plan${b?` · target ${b[0]}–${b[1]}`:''}</p>
-   <div class="ghead sub2">Main lift</div>${ml?`<div class="pml1" data-ex="${ml.id}"><div class="t1">${exNameP(ml.id)}</div><div class="t2 num">e1RM ${kg(ml.first_e1rm_kg)} → ${kg(ml.last_e1rm_kg)} · ${ml.sessions} sessions · <span class="ptr ${ml.status==='stalled'?'flat':ml.status==='dropping'?'down':ml.status}">${LFT[ml.status]}${ml.pct_per_week!=null?` ${ml.pct_per_week>0?'+':''}${ml.pct_per_week.toFixed(1)}%/wk`:''}</span></div><div class="t2">From sets of ${RD.rules.logger.e1rm_max_reps} reps or fewer</div></div>`:'<p class="sub">No lift with enough sessions for a trend yet.</p>'}
+   <div class="ghead sub2">Main lift</div>${ml?`<div class="pml1" data-ex="${ml.id}"><div class="t1">${exNameP(ml.id)}</div><div class="t2 num">e1RM ${wt(ml.first_e1rm_kg)} → ${wt(ml.last_e1rm_kg)} · ${ml.sessions} sessions · <span class="ptr ${ml.status==='stalled'?'flat':ml.status==='dropping'?'down':ml.status}">${LFT[ml.status]}${ml.pct_per_week!=null?` ${ml.pct_per_week>0?'+':''}${ml.pct_per_week.toFixed(1)}%/wk`:''}</span></div><div class="t2">From sets of ${RD.rules.logger.e1rm_max_reps} reps or fewer</div></div>`:'<p class="sub">No lift with enough sessions for a trend yet.</p>'}
    <div class="ghead sub2">Notes</div>${v.notes.length?`<div class="pnotes">${v.notes.map(n=>`<div class="pn ${n.kind}"><span class="tag ${n.kind==='always'?'al':'ss'}">${n.kind==='always'?'Always':'This session'}</span><div class="grow"><div class="t2">${exNameP(n.exercise)}${n.date?` · ${n.date.slice(5).replace('-','/')}`:''}</div><div class="t1">${esc(n.text)}</div></div></div>`).join('')}</div>`:'<p class="sub">No notes on exercises for this muscle.</p>'}</div>`}
 // refinement cards
 const opsLine=ops=>{const rm=ops.filter(o=>o.op==='remove'),ad=ops.filter(o=>o.op==='add');
@@ -724,7 +729,7 @@ function refHtml(pr){PEDIT=[];const G=pr.guards,R=pr.refinements;
   const ed=(label,ops)=>{PEDIT.push({label,ops});return `<div class="fxr"><span>${label}<small class="sub opl">${opsLine(ops)}</small></span><button class="btn sm accent" data-act="papply" data-k="${PEDIT.length-1}">Apply</button></div>`};
   const idx={};R.forEach((r,i)=>idx[r.type+':'+(r.exercise||r.day||r.muscle)]=i);
   const card=(r,i)=>{if(r.type==='stall'){const a=r.actions,rr=a.rep_range_change,sw=a.swap_variation;
-      return `<div class="flag pref" data-rt="stall" id="pref-${i}"><div class="ftl">Stalled lift <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>Best e1RM of the last 3 sessions is ${kg(r.best_recent_kg)}, not above the ${kg(r.best_before_kg)} before them (${r.exposures} sessions).</p>
+      return `<div class="flag pref" data-rt="stall" id="pref-${i}"><div class="ftl">Stalled lift <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>Best e1RM of the last 3 sessions is ${wt(r.best_recent_kg)}, not above the ${wt(r.best_before_kg)} before them (${r.exposures} sessions).</p>
        ${rr?`<div class="fxr disp"><span>Try ${rr.suggest_range[0]}–${rr.suggest_range[1]} reps for a while (your top sets were ${rr.from_reps_median}; range ${rr.rep_range[0]}–${rr.rep_range[1]})</span><span class="tag">Display only</span></div>`:''}
        ${sw?ed(`Swap for ${exNameP(sw.to_id)}, a variation for the same slot`,sw.diff):''}</div>`}
     if(r.type==='missed_sets'){const a=r.actions;return `<div class="flag pref" data-rt="missed_sets" id="pref-${i}"><div class="ftl">Missed sets <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>${r.missed} of the last ${r.sessions.length} sessions had fewer sets than planned (${r.sessions.map(s=>`${s.done}/${s.planned}`).join(', ')}).</p>
@@ -787,8 +792,7 @@ const BANDL={main:'Main',helper:'Helper',minor:'Minor'};
 const XBANDL={main:'Main mover',helper:'Helper',minor:'Minor',nc:'Not counted'}; // exercise-page labels (exercise-pages-spec §7)
 async function eduLoad(){
   if(EDU.idx)return EDU.idx;
-  for(const b of ['../data/education/','data/education/']){ // next to the live app's data first, then the storyboard's synced copy
-    try{const r=await fetch(b+'index.json',{cache:'no-store'});if(r.ok){EDU.idx=await r.json();EDU.base=b;break}}catch(e){}}
+  {const b=DATA+'education/',j=await getJ(b+'index.json');if(j){EDU.idx=j;EDU.base=b}} // the storyboard's synced copy (sync-education.sh) only
   if(!EDU.idx)EDU.idx={pages:[]};
   try{const r=await fetch(EDU.base+(EDU.idx.references||'references.json'),{cache:'no-store'});if(r.ok)EDU.refs=(await r.json()).references||{}}catch(e){}
   // exercise pages cite from a second file; merge so every [n] resolves the same way
@@ -913,15 +917,17 @@ const whyL=(id,ctx)=>`<div class="why">${why(id,ctx)}</div>`;
 // One scorer for swap, tray, empty workout and preset. Weights, labels, reason strings, favorite margin and volume_bands all
 // come from rules.json; nothing ranking-related is hardcoded here. Mock week = window.BOARDS (same boards as Coach's cases).
 let RD=null;
-async function loadRank(){if(RD)return RD;
-  for(const b of ['data/','../data/']){try{const f=n=>fetch(b+n,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(n);return r.json()});
-    // round 1: slot templates (rules.json templates -> templates.json), their resolved eligibility, and the synthetic progress log load in parallel
-    const opt=n=>f(n).catch(()=>null),O=['templates.json','templates-reference.json','progress-reference.json'].map(opt);
-    const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(f));
-    const [tj,tref,pref]=await Promise.all(O),tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
-    RD=RANK.makeData({exercises,rules,targets,patterns,splits});RD.splits=splits;RD.base=b;
-    RD.TJ=tf==='templates.json'?tj:await opt(tf);RD.TREF=tref;RD.PREF=pref;return RD}catch(e){}}
-  console.warn('ranking data missing: suggestions fall back to library order');return null}
+async function loadRank(){if(RD)return RD;if(RDP)return RDP;
+  // Every file comes from the storyboard's own synced data/ (sync-ranking-data.sh); the live app's ../data is never needed.
+  // getJ never throws: a 404, a parse error or a fetch aborted by navigation all give null, and nothing falls through to another folder.
+  RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-reference.json'].map(n=>getJ(DATA+n));
+    const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(n=>getJ(DATA+n)));
+    const [tj,tref,pref]=await Promise.all(opt);
+    if(!(exercises&&rules&&targets&&patterns&&splits)){if(!UNLOADING)console.warn('ranking data missing: suggestions fall back to library order');return null}
+    const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
+    const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
+    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PREF=pref;RD=R;return RD})();
+  const r=await RDP;RDP=null;return r}
 const LSK2={equip:'apechit.sb.equip'};
 let EQUIP=ld(LSK2.equip,{});                                  // gym profile `equipment` {name: bool} (ranking-spec §5, Builder items)
 const gymProfile=()=>Object.assign({},RD.rules.logger.gym_profile_default.lb,Object.keys(EQUIP).length?{equipment:EQUIP}:{},GYM&&Array.isArray(GYM.plates)?{plates:GYM.plates}:{});
@@ -1070,6 +1076,7 @@ document.addEventListener('click',e=>{
     if(k==='start'){const r=ROUTINES.find(x=>x.id===id)||ROUTINES[0],di=S.day[r.id]??(r.active?r.next:0),d=r.days[di];
       startWorkout(d.n,d.ex,{sub:`${r.name} · Day ${di+1}`,ref:{rid:r.id,di}});return go('#workout')}
     if(k==='sundo'){const f=SUF;hideSnack();if(f)f();return}
+    if(k==='unit'){S.unit=a.dataset.v==='kg'?'kg':'lb';try{localStorage.setItem(UNIT_K,S.unit)}catch(x){}$$('#unitseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===S.unit));return toast(`Units: ${S.unit}`)}
     if(k==='papply')return progApply(a.dataset.k);if(k==='pundo')return progUndo(a.dataset.k);
     if(k==='psee'){const el=$('#pref-'+a.dataset.k);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1200)}return}
     if(k==='notes')return notesSheet(+a.dataset.xi);if(k==='exmenu')return exMenu(+a.dataset.xi);if(k==='wswap')return wSwap(+a.dataset.xi);

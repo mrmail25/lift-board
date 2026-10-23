@@ -441,7 +441,17 @@
         "merge_tiles",
         "remove_tile"
       ],
-      "short_label": "Many small exercise entries"
+      "short_label": "Many small exercise entries",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "session",
+      "metric": "many_small_entries"
     },
     {
       "id": "session_hard_sets",
@@ -463,7 +473,17 @@
       "short_label": "Too many hard sets",
       "short_label_variants": {
         "info": "Close to hard-set cap"
-      }
+      },
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "session",
+      "metric": "session_hard_sets"
     },
     {
       "id": "session_length",
@@ -489,7 +509,17 @@
       "short_label": "Session runs long",
       "short_label_variants": {
         "info": "Session getting long"
-      }
+      },
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "session",
+      "metric": "session_length"
     },
     {
       "id": "spinal_load",
@@ -517,7 +547,17 @@
       "short_label_variants": {
         "session": "Heavy spinal load today",
         "week": "Heavy spinal load this week"
-      }
+      },
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "recovery_fatigue",
+      "metric": "spinal_load"
     },
     {
       "id": "junk_volume_session",
@@ -530,7 +570,17 @@
         "move_sets_to_day",
         "move_tile"
       ],
-      "short_label": "Muscle volume high in session"
+      "short_label": "Muscle volume high in session",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "recovery_fatigue",
+      "metric": "junk_volume_session"
     },
     {
       "id": "sets_per_exercise",
@@ -543,7 +593,17 @@
         "move_sets_to_day",
         "reduce_sets(to 5)"
       ],
-      "short_label": "Too many sets, one exercise"
+      "short_label": "Too many sets, one exercise",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "session",
+      "metric": "sets_per_exercise"
     },
     {
       "id": "low_frequency",
@@ -562,7 +622,19 @@
       "short_label": "Muscle trained only once",
       "short_label_variants": {
         "indirect_only": "Only indirect muscle work"
-      }
+      },
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": [
+          "training_days>=2"
+        ]
+      },
+      "category": "frequency",
+      "metric": "effective_frequency"
     },
     {
       "id": "redundant_pattern",
@@ -576,7 +648,17 @@
         "move_sets_to_day",
         "move_tile"
       ],
-      "short_label": "Same-pattern sets stack up"
+      "short_label": "Same-pattern sets stack up",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "balance",
+      "metric": "redundant_pattern"
     },
     {
       "id": "push_pull_imbalance",
@@ -607,7 +689,17 @@
       "short_label_variants": {
         "no_pull": "No pulling this week",
         "no_push": "No pushing this week"
-      }
+      },
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "balance",
+      "metric": "push_pull_ratio"
     },
     {
       "id": "missing_stretch",
@@ -618,7 +710,17 @@
         "swap_exercise:stretch_biased",
         "add_exercise(stretch_biased)"
       ],
-      "short_label": "No stretch-biased exercise"
+      "short_label": "No stretch-biased exercise",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "balance",
+      "metric": "missing_stretch"
     },
     {
       "id": "hinge_before_squat",
@@ -630,7 +732,17 @@
         "move_tile(squat)",
         "swap_exercise:lower_spinal(squat)"
       ],
-      "short_label": "Deadlift right before squats"
+      "short_label": "Deadlift right before squats",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "recovery_fatigue",
+      "metric": "hinge_before_squat"
     },
     {
       "id": "consecutive_high_volume",
@@ -642,7 +754,17 @@
         "move_sets_to_day",
         "reduce_sets:highest_contributor"
       ],
-      "short_label": "Muscle trained back-to-back"
+      "short_label": "Muscle trained back-to-back",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "frequency",
+      "metric": "consecutive_high_volume"
     },
     {
       "id": "beginner_squat_and_deadlift",
@@ -657,7 +779,15 @@
         "move_tile(squat)",
         "swap_exercise:lower_spinal"
       ],
-      "short_label": "Squat and deadlift together"
+      "short_label": "Squat and deadlift together",
+      "applies": {
+        "levels": [
+          "beginner"
+        ],
+        "requires": []
+      },
+      "category": "recovery_fatigue",
+      "metric": "beginner_squat_and_deadlift"
     },
     {
       "id": "weekly_volume",
@@ -678,7 +808,17 @@
       "short_label_variants": {
         "over": "Weekly volume above target",
         "under": "Weekly volume below target"
-      }
+      },
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "volume",
+      "metric": "volume_status"
     },
     {
       "id": "recovery_vs_baseline",
@@ -694,7 +834,19 @@
         "reduce_sets:highest_fatigue",
         "swap_exercise:lower_fatigue"
       ],
-      "short_label": "Recovery cost above normal"
+      "short_label": "Recovery cost above normal",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": [
+          "baseline_saved"
+        ]
+      },
+      "category": "recovery_fatigue",
+      "metric": "recovery_cost"
     },
     {
       "id": "pattern_gap",
@@ -712,7 +864,17 @@
       "short_label": "Movement pattern missing",
       "short_label_variants": {
         "info": "Pattern below level minimum"
-      }
+      },
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "category": "balance",
+      "metric": "pattern_coverage"
     }
   ],
   "fix_actions": {
@@ -4481,8 +4643,8 @@
         "id": "checks_pass",
         "label": "Checks passing",
         "category": "suggestions",
-        "description": "Program-check rules with no warning this week, out of all rules that apply.",
-        "formula": "pass = rules with no non-info flag (spinal_load_session/_week count as spinal_load); total = len(rules); info flags do not fail a check",
+        "description": "Program-check rules that pass, out of the rules that apply to this board at this level.",
+        "formula": "total = rules r in rules.json rules[] whose r.applies holds: level in r.applies.levels AND every r.applies.requires is met (baseline_saved: a normal-week recovery baseline is saved; training_days>=2: at least 2 days with a filled tile). pass = total minus the applicable rules with at least one non-info flag (spinal_load_session and spinal_load_week both count as spinal_load; recovery_vs_baseline fails above its warn_above, 130%). Info flags never fail a check. Only filled tiles are checked: unfilled template slots are not counted (the Builder shows them as pending). Clean board, no baseline: beginner 15/15, intermediate 14/14, advanced 14/14; with a saved baseline one more each.",
         "evidence": "modeled",
         "status": "added",
         "shown_in": [
@@ -4490,8 +4652,10 @@
         ],
         "is_suggestion_source": false,
         "defined_in": [
+          "rules.json rules[].applies",
           "rules.json analysis_metrics.#checks_pass"
-        ]
+        ],
+        "note": "Per-level counts and a clean-preset fixture: data/analysis-reference.json checks_pass_expected."
       },
       {
         "id": "weekly_sets_per_muscle",
@@ -4943,6 +5107,52 @@
         ]
       },
       {
+        "id": "hinge_before_squat",
+        "label": "Deadlift the day before squats",
+        "category": "recovery_fatigue",
+        "description": "A heavy hinge on one day followed by heavy squats the next day.",
+        "formula": "rules.json rules.#hinge_before_squat (heavy_hinges on day d, heavy_squats on day d+1)",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js",
+          "storyboard Build: flags"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#hinge_before_squat",
+          "rules.json heavy_hinges",
+          "rules.json heavy_squats"
+        ],
+        "suggestion_types": [
+          "program_check"
+        ],
+        "note": "Recovery & fatigue, not Session: it is about fatigue carried from one day into the next (lower back and hips), not about one session's layout."
+      },
+      {
+        "id": "beginner_squat_and_deadlift",
+        "label": "Squat and deadlift together",
+        "category": "recovery_fatigue",
+        "description": "Beginner level only: heavy squats and heavy deadlifts on the same day.",
+        "formula": "rules.json rules.#beginner_squat_and_deadlift (applies.levels = [beginner]; same heavy_squats / heavy_hinges lists as spinal_load)",
+        "evidence": "modeled",
+        "status": "defined",
+        "shown_in": [
+          "old app: check.js",
+          "storyboard Build: flags"
+        ],
+        "is_suggestion_source": true,
+        "defined_in": [
+          "rules.json rules.#beginner_squat_and_deadlift",
+          "rules.json heavy_squats",
+          "rules.json heavy_hinges"
+        ],
+        "suggestion_types": [
+          "program_check"
+        ],
+        "note": "Recovery & fatigue with spinal_load: both limit heavy squat + hinge work by the fatigue it adds; the beginner rule is a coaching convention."
+      },
+      {
         "id": "junk_volume_session",
         "label": "Muscle sets per session",
         "category": "recovery_fatigue",
@@ -5292,7 +5502,9 @@
         ],
         "note": "Proximity to failure relates to growth (cited); the average itself is descriptive. Many users log RIR 0 or nothing, so show it with the entered share."
       }
-    ]
+    ],
+    "rule_applicability": "applies: when the rule counts toward checks_pass. levels = levels it is evaluated at; requires = inputs it needs: baseline_saved (a saved normal-week recovery baseline), training_days>=2 (at least 2 days with a filled tile). Unfilled template slots are not tiles and are never checked.",
+    "rule_categories": "Every rules[] entry has category (one of categories[].id) and metric (the analysis_metrics id that shows it); no rule is left uncategorised."
   },
   "progress": {
     "version": 1,

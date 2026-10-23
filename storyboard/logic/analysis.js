@@ -126,8 +126,16 @@ function sheet(dt,days,level,baseline=null){const res=suggest(dt,days,level,base
   const rank={warn:0,suggest:1,info:2};
   return sortBy(out,s=>[rank[s.severity]??1,order.includes(s.type)?order.indexOf(s.type):99,pyDumps(s.target)])}
 // ---------- analysis.py metrics ----------
-function checksPass(dt,days,level){const ids=dt.rules.rules.map(r=>r.id),fl=PC.check(dt,days,level)[0],failing=new Set(fl.filter(f=>f[0]!=='info').map(f=>RULE_OF(f[1])));
-  return {pass:ids.filter(r=>!failing.has(r)).length,total:ids.length,failing:[...failing].sort()}}
+// analysis_metrics checks_pass: total = rules whose applies holds (level in applies.levels, every applies.requires met:
+// baseline_saved, training_days>=2 = at least 2 days with a filled tile); pass = total minus applicable rules with a non-info flag
+// (spinal_load_session/_week -> spinal_load; recovery_vs_baseline fails above warn_above). Only filled tiles are passed in.
+function ruleApplies(dt,r,days,level,baseline){const A=r.applies;if(!A)return !r.app_only&&(!r.levels||r.levels.includes(level));
+  if(!(A.levels||[]).includes(level))return false;const td=days.filter(d=>(d.tiles||[]).length).length;
+  return (A.requires||[]).every(q=>q==='baseline_saved'?baseline!=null&&baseline>0:/^training_days>=(\d+)$/.test(q)?td>=+/\d+$/.exec(q)[0]:false)}
+function checksPass(dt,days,level,baseline=null){const R=dt.rules.rules,app=R.filter(r=>ruleApplies(dt,r,days,level,baseline)),ids=new Set(app.map(r=>r.id));
+  const fl=PC.check(dt,days,level)[0],failing=new Set(fl.filter(f=>f[0]!=='info').map(f=>RULE_OF(f[1])).filter(i=>ids.has(i)));
+  const rb=R.find(r=>r.id==='recovery_vs_baseline');if(rb&&ids.has('recovery_vs_baseline')&&weekCost(dt,days)/baseline>rb.warn_above)failing.add('recovery_vs_baseline');
+  return {pass:app.length-failing.size,total:app.length,failing:[...failing].sort(),not_applicable:R.filter(r=>!ids.has(r.id)).map(r=>r.id)}}
 const mpOrder=dt=>((dt.rules.movement_patterns||{}).order)||[];
 function metrics(dt,days,level){const [,week]=PC.check(dt,days,level),train=days.filter(d=>d.tiles.length),R=dt.rules;
   const allsets=days.reduce((a,d)=>a+total(d),0),mins=train.map(d=>PC.sessionMinutes(dt,d.tiles)),regions={};
@@ -137,12 +145,12 @@ function metrics(dt,days,level){const [,week]=PC.check(dt,days,level),train=days
   const sbs={};for(const m of Object.keys(R.stretch_biased)){const [sh,tot]=stretchShare(dt,days,m);if(tot>0)sbs[m]=pyR(sh,4)}
   const mps={};for(const k of mpOrder(dt))if(k in mp)mps[k]=mp[k];
   const dens={};for(const d of train)dens[d.day]=pyR(total(d)/(PC.sessionMinutes(dt,d.tiles)/60),2);
-  return {checks_pass:checksPass(dt,days,level),week_sets_total:allsets,avg_session_minutes:mins.length?pyR(mins.reduce((a,b)=>a+b,0)/mins.length,1):0,
+  return {checks_pass:checksPass(dt,days,level),checks_pass_with_baseline:checksPass(dt,days,level,weekCost(dt,days)/1.25),week_sets_total:allsets,avg_session_minutes:mins.length?pyR(mins.reduce((a,b)=>a+b,0)/mins.length,1):0,
     stretch_biased_share:sbs,weekly_sets_per_region:regions,movement_pattern_sets:mps,
     lengthened_bias_share:share(e=>(e.swap||{}).stretch_emphasis===3),unilateral_share:share(e=>((e.swap||{}).flags||[]).includes('unilateral')),session_density:dens}}
 // the metric catalogue (rules.json analysis_metrics), grouped and ordered by category
 function catalogue(dt){const AM=dt.rules.analysis_metrics||{categories:[],metrics:[]};
   return AM.categories.map(c=>Object.assign({},c,{metrics:AM.metrics.filter(m=>m.category===c.id)}))}
-const API={applyOps,invertOps,diff,suggest,sheet,metrics,checksPass,catalogue,typeOf,weekCost,stretchShare,lowerFatigueCandidates,pyDumps};
+const API={applyOps,invertOps,diff,suggest,sheet,metrics,checksPass,ruleApplies,catalogue,typeOf,weekCost,stretchShare,lowerFatigueCandidates,pyDumps};
 if(isNode)module.exports=API;else root.ANALYSIS=API;
 })(typeof window!=='undefined'?window:this);

@@ -847,3 +847,7 @@ body.full .bundo{bottom:calc(var(--safe-b) + 24px)}
 .tvol .row .t2{white-space:normal}.dot.amber{display:inline-block;width:9px;height:9px;border-radius:50%;background:#F2A93B;margin-right:6px}
 .glegend .bdseg2{display:none}
 @media (orientation:landscape),(min-width:700px){.bsr .bdseg{display:none}.glegend .bdseg2{display:inline-flex;width:130px;height:26px;margin-left:8px}.glegend .bdseg2 button{font-size:12px}}
+/* CoS fixes: pending check count on an unfilled template; one-sentence suggestion with "Why?" */
+.ast.chk.pend b{color:var(--text-3)}.ast.chk.pend small{color:var(--text-2)}.anh .big.pend{font-size:24px;color:var(--text-2)}
+.sugc .s1{font-size:var(--t-sub);line-height:1.35}.sugc details.why{margin-top:2px}.sugc details.why summary{display:inline-block;font-size:var(--t-foot);font-weight:600;color:var(--accent-press);cursor:pointer;list-style:none;padding:4px 0}
+.sugc details.why summary::-webkit-details-marker{display:none}.sugc details.why[open] summary{color:var(--text-2)}.sugc details.why p{font-size:var(--t-foot);color:var(--text-2);line-height:1.38}
