@@ -22,7 +22,9 @@ const fracs=id=>{const M=(ex(id)||{}).muscles||{},O=(RD().exl.muscles||Object.ke
 const MSL=()=>(RD().exl||{}).muscle_short_labels||{muscles:{},heads:{}};
 const headMuscle=h=>{const M=RD().exl.muscles;return M.includes(h)?h:M.find(m=>h.startsWith(m+'_'))||M.find(m=>h.startsWith(m.replace(/s$/,'')+'_'))||null};
 const muscleShort=m=>{const L=MSL(),mu=L.muscles||{},hd=L.heads||{};if(mu[m])return mu[m];if(hd[m])return hd[m];const pm=headMuscle(m);if(pm&&mu[pm])return mu[pm];return X.ML[m]||m.replace(/_/g,' ')};
-const fracLine=id=>fracs(id).slice(0,3).map(([m,v])=>`${muscleShort(m)} ${fr(v)}`).join(' · ');
+// all-zero muscle map (tibialis-raise): the untracked_target tag stands where the fractions would go
+const utOf=id=>(ex(id)||{}).untracked_target||null;
+const fracLine=id=>{const f=fracs(id);if(!f.length&&utOf(id))return utOf(id).tag;return f.slice(0,3).map(([m,v])=>`${muscleShort(m)} ${fr(v)}`).join(' · ')};
 const BD={detail:(()=>{try{return localStorage.getItem('apechit.sb.boardDetail')==='1'}catch(e){return false}})()};
 // ------------------------------------------------------------- state
 const B={name:'',level:'intermediate',version:0,dirty:false,edited:0,days:[],sel:new Set(),hist:[],tpl:null};
@@ -56,11 +58,13 @@ function volMap(A){const o={};for(const [m,v] of Object.entries(A.muscles))o[m]=
 // Summary map (bigger, markup round 1): Week = weekly sets vs target (same fill as Progress); Day = that day's sets per muscle.
 // Tapping a day in the strip or a day header switches the map to that day. Tapping a muscle opens its Learn page.
 const MAPV={mode:'week',day:0};
-const DAYF=r=>r>=5?'var(--day-4)':r>=3?'var(--day-3)':r>=1.5?'var(--day-2)':r>0?'var(--day-1)':null;
+// Round 2: ONE sequential ramp (tokens --ramp-0..4) for the Day-mode map AND the days-per-muscle grid. Level by effective sets that day.
+const RAMPT=[0,1.5,3,5],RAMPL=r=>!(r>0)?0:r>=5?4:r>=3?3:r>=1.5?2:1,DAYF=r=>{const l=RAMPL(r);return l?`var(--ramp-${l})`:null};
+const rampLeg=(cls='')=>`<span class="mleg mlday ${cls}"><i style="background:var(--ramp-1)"></i>&lt;1.5<i style="background:var(--ramp-2)"></i>1.5<i style="background:var(--ramp-3)"></i>3<i style="background:var(--ramp-4)"></i>5+ sets</span>`;
 function dayMap(d){const o={};if(!d||!d.tiles.length)return o;const A=PC.analytics(RD(),[{day:d.day,tiles:d.tiles.map(t=>({id:t.id,sets:t.sets}))}],B.level);for(const [m,v] of Object.entries(A.muscles))o[m]=DAYF(v.raw);return o}
 function mapHtml(st,days){const day=MAPV.mode==='day',d=days[MAPV.day],vm=day?dayMap(d):volMap(st.A);
   const cap=day?`<b>${WD[MAPV.day]}</b> · ${isRest(d)?'Rest':`${dayLabel(d)} · ${sum(d.tiles.map(t=>t.sets))} sets`}`:'<b>This week</b> · vs targets';
-  const leg=day?`<span class="mleg mlday"><i style="background:var(--day-1)"></i>1<i style="background:var(--day-2)"></i>1.5<i style="background:var(--day-3)"></i>3<i style="background:var(--day-4)"></i>5+ sets</span>`
+  const leg=day?rampLeg()
     :`<span class="mleg">${['under','in','amber','red'].map(k=>`<i style="background:${X.VFILL[k]}"></i>${({under:'Under',in:'In',amber:'Over',red:'Well over'})[k]}`).join('')}</span>`;
   return `<div class="bmaps" data-mode="${MAPV.mode}" data-day="${d?d.day:''}">${X.map('front',vm)}${X.map('back',vm)}</div><div class="bmcap" id="bmcap">${cap}</div><div class="bmleg">${leg}</div>`}
 function setMap(mode,i){MAPV.mode=mode;if(i!=null)MAPV.day=i;$$('#mapseg button').forEach(b=>b.classList.toggle('on',b.dataset.mm===MAPV.mode));paintStats()}
@@ -87,15 +91,14 @@ X.V.build=()=>{if(!B.days.length)initBoard();
   <div class="bname"><div class="bn">${B.name||'New routine'}</div>
    <div class="bacts"><button class="btn ink" data-b="push" aria-label="Push to Library">${X.I('up',2.2)}<span class="bl-l">Push to Library</span><span class="bl-s">Push</span></button><button class="btn accent" data-b="start" aria-label="Start training">${X.I('play')}<span class="bl-l">Start training</span><span class="bl-s">Start</span></button></div>
    <div class="bstate" id="bstate">${stateLine()}</div></div>
-  <div class="bsum"><div class="bsmap" id="bmap"></div>
-   <div class="bsr"><div class="seg xs" id="mapseg"><button data-b="mapm" data-mm="week" class="${MAPV.mode==='week'?'on':''}">Week</button><button data-b="mapm" data-mm="day" class="${MAPV.mode==='day'?'on':''}">Day</button></div>
-    <button class="astrip" id="astrip" data-b="analysis"></button><div class="seg xs bdseg" id="bdseg" role="group" aria-label="Board: clean or detail">${bdsegHtml()}</div></div></div>
+  <div class="bsum"><div class="bsegs"><div class="seg xs" id="mapseg" role="group" aria-label="Map: week or day"><button data-b="mapm" data-mm="week" class="${MAPV.mode==='week'?'on':''}">Week</button><button data-b="mapm" data-mm="day" class="${MAPV.mode==='day'?'on':''}">Day</button></div><div class="seg xs bdseg" id="bdseg" role="group" aria-label="Board: clean or detail">${bdsegHtml()}</div></div>
+   <div class="bsmap" id="bmap"></div><div class="bsr"><button class="astrip" id="astrip" data-b="analysis"></button></div></div>
   <div class="bstick">
    <div class="dstrip" id="dstrip">${WD.map((w,i)=>`<button data-jump="${i}" aria-label="Jump to ${WDL[i]}"><span>${w}</span><small class="dn"></small></button>`).join('')}</div>
    <div class="selbar" id="selbar"><span id="selt"></span><button class="btn plain" data-b="seldone">Done</button></div></div>
   <div class="btools" id="btools">${toolsHtml()}</div>
   <div class="board${BD.detail?' b-detail':''}" id="board">${boardHtml()}</div>
-  <div class="glegend" aria-label="Chit shapes">${['primary','accessory','isolation'].map(t=>`<span><span class="cg ${t}">${X.GLY[t]}</span>${t[0].toUpperCase()+t.slice(1)}</span>`).join('')}<div class="seg xs bdseg bdseg2" role="group" aria-label="Board: clean or detail">${bdsegHtml()}</div></div>
+  <div class="glegend" aria-label="Chit shapes">${['primary','accessory','isolation'].map(t=>`<span><span class="cg ${t}">${X.GLY[t]}</span>${t[0].toUpperCase()+t.slice(1)}</span>`).join('')}</div>
   <p class="foot bhint">Tap a muscle on the map to learn about it. Hold a chit to lift it. Drag it to another day, or off the board to remove it. Tap a day's name to rename it or make it a Rest day.</p></div>`};
 X.AFTER.build=()=>{paint(true);const bd=$('#board');bd.addEventListener('scroll',markDay,{passive:true});markDay()};
 const bdsegHtml=()=>`<button data-b="bmode" data-v="clean" class="${BD.detail?'':'on'}">Clean</button><button data-b="bmode" data-v="detail" class="${BD.detail?'on':''}">Detail</button>`;
@@ -176,7 +179,7 @@ function chitSheet(u){const f=findT(u);if(!f)return;const id=f.t.id,e=ex(id),day
     return `<div class="csh"><div class="csh-h">${X.gl(t.id)}<div class="grow"><div class="t1">${X.exNameP(t.id)}</div><div class="t2">${X.exSub(t.id)} · ${WDL[DAYS.indexOf(g.d.day)]}</div></div></div>
      <div class="group"><div class="row"><div class="grow t1">Sets</div><div class="step"><button data-b="sets-" aria-label="Fewer sets">−</button><b class="num" id="cs-sets">${t.sets}</b><button data-b="sets+" aria-label="More sets">+</button></div></div>
       <div class="row"><div class="grow"><div class="t1">${rr.unit==='reps'?'Reps':rr.unit==='seconds'?'Seconds':'Meters'}</div><div class="t2 rrn">${t.reps?'Your range':(X.prefs().goals||[]).length?'Typical for your goals':'Typical range'}${rr.per_side?' · per side':''}${rr.not_to_failure?' · stop well short of failure':''}</div></div><div class="step"><button data-b="reps-" aria-label="Lower reps">−</button><b class="num" id="cs-reps">${rp}</b><button data-b="reps+" aria-label="Higher reps">+</button></div></div></div>
-     <div class="ghead">Muscles worked · set credit per set</div><div class="group csfr">${fracs(t.id).map(([m,v])=>`<div class="row" data-fm="${m}"><span class="fn">${X.ML[m]||m.replace(/_/g,' ')}</span><span class="fb"><i style="--w:${Math.round(v*100)}%;--mc:var(--region-${WB.primaryRegion(RD(),t.id)})"></i></span><b class="fv num">${fr(v)}</b></div>`).join('')}</div>
+     <div class="ghead">Muscles worked · set credit per set</div><div class="group csfr">${!fracs(t.id).length&&utOf(t.id)?`<div class="row utn" data-ut="${utOf(t.id).id}"><span class="fn">${utOf(t.id).label}</span><span class="sub">${utOf(t.id).tag}</span></div>`:''}${fracs(t.id).map(([m,v])=>`<div class="row" data-fm="${m}"><span class="fn">${X.ML[m]||m.replace(/_/g,' ')}</span><span class="fb"><i style="--w:${Math.round(v*100)}%;--mc:var(--region-${WB.primaryRegion(RD(),t.id)})"></i></span><b class="fv num">${fr(v)}</b></div>`).join('')}</div>
      <div class="cacts"><button data-b="c-swap">${X.I('swap',1.8)}<span>Swap</span></button><button data-b="c-info">${X.I('info',1.8)}<span>Info</span></button><button data-b="c-dup">${X.I('plus',2)}<span>Duplicate</span></button><button data-b="c-del" class="dl">${X.I('trash',1.8)}<span>Delete</span></button></div></div>`};
   CS=X.sheet({title:'',cls:'grouped csheet',body:body(),onClose(){CS=null}});CS.u=u;CS.re=()=>{CS.body.innerHTML=body()};return CS}
 function chitAct(k){if(!CS)return;const u=CS.u,f=findT(u);if(!f)return;const t=f.t;
@@ -265,7 +268,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
      ${s.fixes.length?s.fixes.map(fxRow).join(''):'<p class="sub nofix">No one-tap change passes the checks. Change it by hand.</p>'}</div>`;
   const vrow=([m,v])=>{const st=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',VB=X.VB,top=v.max*(VB.red_factor!=null?VB.red_factor:1);return `<div class="row vrow" data-vs="${st}"><span class="vm">${X.ML[m]||m}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${+v.raw.toFixed(1)}<small>/${v.min}–${v.max}</small></span></div>`};
   const T=Object.entries(A.muscles).filter(([m,v])=>v.raw>0||v.min>0),RU={};R.rules.forEach(r=>RU[r.id]=r);
-  const FM=R.frequency_muscles,fq=m=>B.days.map((dd,i)=>{const e=PC.eff(dt,dd.tiles.map(t=>({id:t.id,sets:t.sets})))[m]||0;return `<i class="${e>=dt.targets.analytics.frequency_min_effective?'on':e>0?'lo':''}" title="${WD[i]}"></i>`}).join('');
+  const FM=R.frequency_muscles,fq=m=>B.days.map((dd,i)=>{const e=PC.eff(dt,dd.tiles.map(t=>({id:t.id,sets:t.sets})))[m]||0;const ok=e>=dt.targets.analytics.frequency_min_effective;return `<i class="${ok?'on':e>0?'lo':''}" data-r="${RAMPL(e)}" title="${WD[i]} · ${+e.toFixed(1)} sets${ok?' (counts)':''}"></i>`}).join('');
   const SL=RU.session_length,mx=Math.max(SL.warn_min+15,...A.day.map(x=>x.minutes)),SP=A.spinal,cm=Object.keys(A.muscles).includes(AN.mus)?AN.mus:'chest';
   const chips=o=>`<div class="mchips">${o.map(([k,v])=>`<span class="tag mv"><b>${k}</b> ${v}</span>`).join('')}</div>`;
   const pp=(()=>{let push=0,pull=0;for(const dd of d)for(const t of dd.tiles){if(R.push_patterns.includes(dt.PAT[t.id]))push+=t.sets;if(R.pull_patterns.includes(dt.PAT[t.id]))pull+=t.sets}return push?(pull/push).toFixed(2):pull?'no pressing':'—'})();
@@ -287,17 +290,20 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   const EXTRA={weekly_sets_per_muscle:`<div class="group vol">${T.map(vrow).join('')}</div>`,volume_status:X.volLegend(),
     stimulus_curve:`<div class="chips fl noswipe" id="anmus">${T.filter(([,v])=>v.raw>0).map(([m])=>`<button class="chip ${m===cm?'on':''}" data-anm="${m}">${X.ML[m]||m}</button>`).join('')}</div><div class="card curve">${curve(cm,A)}</div><p class="foot">${A.curveModel}. ${A.disclaimer}</p>`,
     weekly_sets_per_region:chips(Object.entries(M.weekly_sets_per_region).map(([k,v])=>[RGL(k),+(+v).toFixed(1)])),
-    effective_frequency:`<div class="group freq"><div class="row fqh"><span class="vm"></span><span class="fq">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>${FM.map(m=>`<div class="row"><span class="vm">${X.ML[m]}</span><span class="fq">${fq(m)}</span></div>`).join('')}</div>`,
+    effective_frequency:`<div class="group freq"><div class="row fqh"><span class="vm"></span><span class="fq">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>${FM.map(m=>`<div class="row"><span class="vm">${X.ML[m]}</span><span class="fq">${fq(m)}</span></div>`).join('')}<div class="row fqleg">${rampLeg()}</div></div>`,
     stretch_biased_share:chips(Object.entries(M.stretch_biased_share).map(([k,v])=>[MLB(k),pct(v)])),
     movement_pattern_sets:chips(Object.entries(M.movement_pattern_sets).map(([k,v])=>[MPL[k]||k,v])),
     spinal_load:`<div class="group sess">${A.day.map(x=>`<div class="row"><span class="vm">${WD[DAYS.indexOf(x.day)]}</span><span class="fz num">${x.cost.toFixed(1)} <small>fatigue</small></span><span class="fz num ${x.spinal>SP.session_max?'over':''}">${x.spinal}/${SP.session_max} <small>spine sets</small></span></div>`).join('')}</div>`,
     session_length:`<div class="group sess">${A.day.map(x=>`<div class="row"><span class="vm">${WD[DAYS.indexOf(x.day)]}</span><span class="sbar"><i style="--w:${x.minutes/mx*100}%" class="${x.minutes>=SL.warn_min?'w':x.minutes>=SL.info_min?'i':''}"></i><b style="--x:${SL.info_min/mx*100}%"></b><b class="w" style="--x:${SL.warn_min/mx*100}%"></b></span><span class="vn num">${Math.round(x.minutes)}</span></div>`).join('')||'<div class="row sub">No training days yet</div>'}</div>`,
     session_density:chips(Object.entries(M.session_density).map(([k,v])=>[WD[DAYS.indexOf(k)],`${v} sets/h`]))};
-  const evTag=m=>`<span class="tag ev ${m.evidence}" title="${(m.citations||[]).join(', ')}">${m.evidence==='supported'?'Supported':'Modeled'}</span>${m.status==='proposed'?'<span class="tag prop">Proposed</span>':''}`;
+  const evTag=m=>`<span class="tag ev ${m.evidence}" title="${(m.citations||[]).join(', ')}">${({supported:'Supported',thin:'Thin evidence'})[m.evidence]||'Modeled'}</span>${m.status==='proposed'?'<span class="tag prop">Proposed</span>':''}`;
   const mrow=m=>`<div class="mrow" data-metric="${m.id}" data-status="${m.status}" data-evidence="${m.evidence}"><div class="mh"><b>${m.label}</b>${evTag(m)}<span class="mval num">${VAL[m.id]||''}</span></div><p class="mdesc">${m.description}</p>${EXTRA[m.id]||''}</div>`;
-  const ruleList=R.rules.filter(r=>!C.na.includes(r.id)); // rules[].applies (level, requires)
-  const rstat=cat=>ruleList.filter(r=>RULE_CAT(r.id)===cat).map(r=>{const bad=C.failing.includes(r.id);return `<span class="tag rs ${bad?'bad':'ok'}" data-rule="${r.id}">${bad?'!':'✓'} ${RLAB(r.id)}</span>`}).join('');
-  const sec=c=>{const rs=ruleList.filter(r=>RULE_CAT(r.id)===c.id),bad=rs.filter(r=>C.failing.includes(r.id)).length;
+  // rules v10 (analysis_metrics v2): the pass / attention chips are the applicable kind=check items of the section (checks_pass counts
+  // the same items); v1 data: rules[] with applies, filed under rules[].category
+  const V2=!!(EV&&EV.items),ruleList=V2?EV.items.filter(it=>it.kind==='check'&&!C.na.includes(it.id)):R.rules.filter(r=>!C.na.includes(r.id));
+  const catOf=r=>V2?r.section:RULE_CAT(r.id),labOf=r=>V2?r.label:RLAB(r.id);
+  const rstat=cat=>ruleList.filter(r=>catOf(r)===cat).map(r=>{const bad=C.failing.includes(r.id);return `<span class="tag rs ${bad?'bad':'ok'}" data-${V2?'item':'rule'}="${r.id}">${bad?'!':'✓'} ${labOf(r)}</span>`}).join('');
+  const sec=c=>{const rs=ruleList.filter(r=>catOf(r)===c.id),bad=rs.filter(r=>C.failing.includes(r.id)).length;
     const body=c.id==='suggestions'?suggestions():'';
     return `<section class="acat${c.id==='suggestions'?' sugs':''}" data-cat="${c.id}"><div class="ghead cath${c.id==='suggestions'?' sugh':''}">${c.label} <span class="gsub">${rs.length?`${rs.length-bad} of ${rs.length} checks pass`:''}</span></div>
       ${c.id==='suggestions'?'':`<p class="cdesc">${c.description}</p>`}${rs.length?`<div class="rstat">${rstat(c.id)}</div>`:''}${body}<div class="mlist">${(c.metrics||[]).map(mrow).join('')}</div></section>`};

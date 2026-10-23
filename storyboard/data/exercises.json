@@ -1,5 +1,5 @@
 {
- "version": 12,
+ "version": 13,
  "muscles": [
   "chest",
   "front_delts",
@@ -22148,6 +22148,744 @@
     "flags": [
      "active_shoulders",
      "grip_demand"
+    ]
+   }
+  },
+  {
+   "id": "donkey-calf-raise",
+   "name": "Donkey Calf Raise",
+   "short_name": "Donkey Calf",
+   "type": "isolation",
+   "equipment": "machine",
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "muscles": {
+    "chest": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps": 0,
+    "biceps": 0,
+    "triceps": 0,
+    "forearms": 0,
+    "abs": 0,
+    "quads": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "calves": 1,
+    "adductors": 0,
+    "lower_back": 0,
+    "obliques": 0,
+    "abductors": 0
+   },
+   "heads": {
+    "chest_upper": 0,
+    "chest_lower": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps_upper": 0,
+    "traps_mid_lower": 0,
+    "biceps": 0,
+    "triceps_long": 0,
+    "triceps_short": 0,
+    "forearms": 0,
+    "abs": 0,
+    "obliques": 0,
+    "quads_rf": 0,
+    "quads_vasti": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "adductors": 0,
+    "calves_gastroc": 1,
+    "calves_soleus": 0.6,
+    "lower_back": 0,
+    "abductors": 0
+   },
+   "description": "A straight-knee calf raise with the hips bent forward, for the gastrocnemius through a long range.",
+   "howTo": [
+    "Set the pad on your hips and the balls of your feet on the platform edge.",
+    "Keep your knees straight and let your heels drop into a deep stretch.",
+    "Rise as high as you can on your toes.",
+    "Lower slowly back to the stretch."
+   ],
+   "tip": "Pause at the bottom of each rep instead of bouncing.",
+   "youtube": "",
+   "fatigue": 0.8,
+   "howto": {
+    "setup": "Hips under the pad, torso leaning on the support, balls of the feet on the edge.",
+    "cues": [
+     "Knees straight",
+     "Deep heel drop",
+     "Pause, then rise high"
+    ],
+    "mistake": "Bending the knees to bounce the weight up."
+   },
+   "patterns": [
+    "calves"
+   ],
+   "movement_pattern": "isolation",
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 3,
+    "stability": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": [
+     "gastrocnemius_bias"
+    ]
+   }
+  },
+  {
+   "id": "single-leg-dumbbell-calf-raise",
+   "name": "Single-Leg Dumbbell Calf Raise",
+   "short_name": "SL DB Calf Raise",
+   "type": "isolation",
+   "equipment": "dumbbell",
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "muscles": {
+    "chest": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps": 0,
+    "biceps": 0,
+    "triceps": 0,
+    "forearms": 0,
+    "abs": 0,
+    "quads": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "calves": 1,
+    "adductors": 0,
+    "lower_back": 0,
+    "obliques": 0,
+    "abductors": 0
+   },
+   "heads": {
+    "chest_upper": 0,
+    "chest_lower": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps_upper": 0,
+    "traps_mid_lower": 0,
+    "biceps": 0,
+    "triceps_long": 0,
+    "triceps_short": 0,
+    "forearms": 0,
+    "abs": 0,
+    "obliques": 0,
+    "quads_rf": 0,
+    "quads_vasti": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "adductors": 0,
+    "calves_gastroc": 1,
+    "calves_soleus": 0.6,
+    "lower_back": 0,
+    "abductors": 0
+   },
+   "description": "A one-leg standing calf raise on a step with a dumbbell, for the calves one side at a time.",
+   "howTo": [
+    "Stand on one foot on a step, holding a dumbbell on the same side and a support with the other hand.",
+    "Let the heel drop into a deep stretch.",
+    "Rise as high as you can on the ball of the foot.",
+    "Lower slowly, finish the set, then switch legs."
+   ],
+   "tip": "Use the support for balance only, not to pull yourself up.",
+   "youtube": "",
+   "fatigue": 0.8,
+   "howto": {
+    "setup": "One foot on a step edge, dumbbell in the same-side hand, other hand on a rail.",
+    "cues": [
+     "Deep heel drop",
+     "Pause at the bottom",
+     "Rise high on the big toe"
+    ],
+    "mistake": "Rushing short reps at the top."
+   },
+   "patterns": [
+    "calves"
+   ],
+   "movement_pattern": "isolation",
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": [
+     "gastrocnemius_bias",
+     "unilateral"
+    ]
+   }
+  },
+  {
+   "id": "hack-squat-calf-raise",
+   "name": "Hack Squat Calf Raise",
+   "short_name": "Hack Calf Raise",
+   "type": "isolation",
+   "equipment": "machine",
+   "equipment_needs": [
+    "hack_squat"
+   ],
+   "muscles": {
+    "chest": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps": 0,
+    "biceps": 0,
+    "triceps": 0,
+    "forearms": 0,
+    "abs": 0,
+    "quads": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "calves": 1,
+    "adductors": 0,
+    "lower_back": 0,
+    "obliques": 0,
+    "abductors": 0
+   },
+   "heads": {
+    "chest_upper": 0,
+    "chest_lower": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps_upper": 0,
+    "traps_mid_lower": 0,
+    "biceps": 0,
+    "triceps_long": 0,
+    "triceps_short": 0,
+    "forearms": 0,
+    "abs": 0,
+    "obliques": 0,
+    "quads_rf": 0,
+    "quads_vasti": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "adductors": 0,
+    "calves_gastroc": 1,
+    "calves_soleus": 0.6,
+    "lower_back": 0,
+    "abductors": 0
+   },
+   "description": "A straight-knee calf raise on the hack squat machine, with the shoulders under the pads.",
+   "howTo": [
+    "Face into the hack squat with the balls of your feet on the bottom edge of the platform.",
+    "Unlock the sled with straight legs.",
+    "Let your heels drop for a deep stretch.",
+    "Rise as high as you can, then lower slowly."
+   ],
+   "tip": "Keep the knees straight but not locked hard, so the calves do the work.",
+   "youtube": "",
+   "fatigue": 0.8,
+   "howto": {
+    "setup": "Shoulders under the pads, balls of the feet on the platform edge.",
+    "cues": [
+     "Straight knees",
+     "Deep stretch",
+     "Full rise"
+    ],
+    "mistake": "Turning it into a short bouncing rep."
+   },
+   "patterns": [
+    "calves"
+   ],
+   "movement_pattern": "isolation",
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 3,
+    "stability": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": [
+     "gastrocnemius_bias",
+     "spinal_load"
+    ]
+   }
+  },
+  {
+   "id": "tibialis-raise",
+   "name": "Tibialis Raise",
+   "short_name": "Tibialis Raise",
+   "type": "isolation",
+   "equipment": "bodyweight",
+   "equipment_needs": [],
+   "muscles": {
+    "chest": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps": 0,
+    "biceps": 0,
+    "triceps": 0,
+    "forearms": 0,
+    "abs": 0,
+    "quads": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "calves": 0,
+    "adductors": 0,
+    "lower_back": 0,
+    "obliques": 0,
+    "abductors": 0
+   },
+   "heads": {
+    "chest_upper": 0,
+    "chest_lower": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps_upper": 0,
+    "traps_mid_lower": 0,
+    "biceps": 0,
+    "triceps_long": 0,
+    "triceps_short": 0,
+    "forearms": 0,
+    "abs": 0,
+    "obliques": 0,
+    "quads_rf": 0,
+    "quads_vasti": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "adductors": 0,
+    "calves_gastroc": 0,
+    "calves_soleus": 0,
+    "lower_back": 0,
+    "abductors": 0
+   },
+   "description": "Lifting the toes toward the shins with your back against a wall, for the muscle on the front of the shin (tibialis anterior). That muscle is not tracked, so this adds no sets to any muscle in the app.",
+   "howTo": [
+    "Lean your back on a wall with your heels about a foot in front of you.",
+    "Keep your legs straight.",
+    "Pull your toes up toward your shins as far as you can.",
+    "Lower them slowly without letting them touch the floor between reps."
+   ],
+   "tip": "Move your heels further from the wall to make it harder.",
+   "youtube": "",
+   "fatigue": 0.8,
+   "howto": {
+    "setup": "Back against a wall, heels out in front, legs straight.",
+    "cues": [
+     "Toes up high",
+     "Slow lowering",
+     "Heels stay down"
+    ],
+    "mistake": "Bending the knees to swing the toes up."
+   },
+   "patterns": [
+    "calves"
+   ],
+   "movement_pattern": "isolation",
+   "untracked_target": {
+    "id": "tibialis_anterior",
+    "label": "Shin (tibialis)",
+    "tag": "shin work, not tracked as a muscle",
+    "filter_muscle": "calves"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   }
+  },
+  {
+   "id": "seated-band-hip-abduction",
+   "name": "Seated Banded Hip Abduction",
+   "short_name": "Banded Abduction",
+   "type": "isolation",
+   "equipment": "band",
+   "equipment_needs": [
+    "bands"
+   ],
+   "muscles": {
+    "chest": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps": 0,
+    "biceps": 0,
+    "triceps": 0,
+    "forearms": 0,
+    "abs": 0,
+    "quads": 0,
+    "hamstrings": 0,
+    "glutes": 0.4,
+    "calves": 0,
+    "adductors": 0,
+    "lower_back": 0,
+    "obliques": 0,
+    "abductors": 0.9
+   },
+   "heads": {
+    "chest_upper": 0,
+    "chest_lower": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps_upper": 0,
+    "traps_mid_lower": 0,
+    "biceps": 0,
+    "triceps_long": 0,
+    "triceps_short": 0,
+    "forearms": 0,
+    "abs": 0,
+    "obliques": 0,
+    "quads_rf": 0,
+    "quads_vasti": 0,
+    "hamstrings": 0,
+    "glutes": 0.4,
+    "adductors": 0,
+    "calves_gastroc": 0,
+    "calves_soleus": 0,
+    "lower_back": 0,
+    "abductors": 0.9
+   },
+   "description": "Pushing the knees apart against a loop band while seated, for the outer hip (hip abductors).",
+   "howTo": [
+    "Sit on a bench with a loop band just above your knees and feet hip-width apart.",
+    "Push your knees out against the band as far as you can.",
+    "Hold for a moment.",
+    "Let them come back in slowly."
+   ],
+   "tip": "Lean forward a little to shift more of the work toward the glutes.",
+   "youtube": "",
+   "fatigue": 0.8,
+   "howto": {
+    "setup": "Seated, loop band above the knees, feet flat.",
+    "cues": [
+     "Knees out",
+     "Pause",
+     "Slow return"
+    ],
+    "mistake": "Letting the band snap the knees back together."
+   },
+   "patterns": [
+    "hip_iso"
+   ],
+   "movement_pattern": "isolation",
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 1,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   }
+  },
+  {
+   "id": "side-plank",
+   "name": "Side Plank",
+   "short_name": "Side Plank",
+   "type": "isolation",
+   "equipment": "bodyweight",
+   "equipment_needs": [],
+   "muscles": {
+    "chest": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps": 0,
+    "biceps": 0,
+    "triceps": 0,
+    "forearms": 0,
+    "abs": 0.3,
+    "quads": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "calves": 0,
+    "adductors": 0,
+    "lower_back": 0,
+    "obliques": 0.7,
+    "abductors": 0.3
+   },
+   "heads": {
+    "chest_upper": 0,
+    "chest_lower": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps_upper": 0,
+    "traps_mid_lower": 0,
+    "biceps": 0,
+    "triceps_long": 0,
+    "triceps_short": 0,
+    "forearms": 0,
+    "abs": 0.3,
+    "obliques": 0.7,
+    "quads_rf": 0,
+    "quads_vasti": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "adductors": 0,
+    "calves_gastroc": 0,
+    "calves_soleus": 0,
+    "lower_back": 0,
+    "abductors": 0.3
+   },
+   "description": "A side-on plank held on one forearm, for the obliques and the side of the trunk.",
+   "howTo": [
+    "Lie on your side with your elbow under your shoulder and your legs stacked.",
+    "Lift your hips until your body is in a straight line.",
+    "Hold the position, breathing steadily.",
+    "Lower, then repeat on the other side."
+   ],
+   "tip": "Make it easier by bending the knees; make it harder by lifting the top leg.",
+   "youtube": "",
+   "fatigue": 0.8,
+   "howto": {
+    "setup": "On one forearm, elbow under the shoulder, feet stacked.",
+    "cues": [
+     "Hips up",
+     "Straight line",
+     "Breathe"
+    ],
+    "mistake": "Letting the hips sag toward the floor."
+   },
+   "patterns": [
+    "carry_core"
+   ],
+   "movement_pattern": "core",
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": [
+     "unilateral",
+     "static_hold"
+    ]
+   }
+  },
+  {
+   "id": "dumbbell-side-bend",
+   "name": "Dumbbell Side Bend",
+   "short_name": "DB Side Bend",
+   "type": "isolation",
+   "equipment": "dumbbell",
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "muscles": {
+    "chest": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps": 0,
+    "biceps": 0,
+    "triceps": 0,
+    "forearms": 0,
+    "abs": 0.25,
+    "quads": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "calves": 0,
+    "adductors": 0,
+    "lower_back": 0.2,
+    "obliques": 1,
+    "abductors": 0
+   },
+   "heads": {
+    "chest_upper": 0,
+    "chest_lower": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps_upper": 0,
+    "traps_mid_lower": 0,
+    "biceps": 0,
+    "triceps_long": 0,
+    "triceps_short": 0,
+    "forearms": 0,
+    "abs": 0.25,
+    "obliques": 1,
+    "quads_rf": 0,
+    "quads_vasti": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "adductors": 0,
+    "calves_gastroc": 0,
+    "calves_soleus": 0,
+    "lower_back": 0.2,
+    "abductors": 0
+   },
+   "description": "Bending sideways with one dumbbell, for the obliques.",
+   "howTo": [
+    "Stand tall with a dumbbell in one hand at your side.",
+    "Bend sideways toward the dumbbell, letting it slide down your leg.",
+    "Pull yourself back upright using the opposite side of your waist.",
+    "Finish the set, then switch hands."
+   ],
+   "tip": "Move only sideways; do not twist or lean forward.",
+   "youtube": "",
+   "fatigue": 0.8,
+   "howto": {
+    "setup": "Standing, one dumbbell at your side, free hand on your hip.",
+    "cues": [
+     "Bend straight sideways",
+     "Feel the opposite side stretch",
+     "Pull back up"
+    ],
+    "mistake": "Holding dumbbells in both hands, which cancels the load."
+   },
+   "patterns": [
+    "abs"
+   ],
+   "movement_pattern": "core",
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   }
+  },
+  {
+   "id": "copenhagen-plank",
+   "name": "Copenhagen Plank",
+   "short_name": "Copenhagen Plank",
+   "type": "isolation",
+   "equipment": "bodyweight",
+   "equipment_needs": [
+    "flat_bench"
+   ],
+   "muscles": {
+    "chest": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps": 0,
+    "biceps": 0,
+    "triceps": 0,
+    "forearms": 0,
+    "abs": 0.25,
+    "quads": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "calves": 0,
+    "adductors": 0.8,
+    "lower_back": 0,
+    "obliques": 0.5,
+    "abductors": 0
+   },
+   "heads": {
+    "chest_upper": 0,
+    "chest_lower": 0,
+    "front_delts": 0,
+    "side_delts": 0,
+    "rear_delts": 0,
+    "lats": 0,
+    "upper_back": 0,
+    "traps_upper": 0,
+    "traps_mid_lower": 0,
+    "biceps": 0,
+    "triceps_long": 0,
+    "triceps_short": 0,
+    "forearms": 0,
+    "abs": 0.25,
+    "obliques": 0.5,
+    "quads_rf": 0,
+    "quads_vasti": 0,
+    "hamstrings": 0,
+    "glutes": 0,
+    "adductors": 0.8,
+    "calves_gastroc": 0,
+    "calves_soleus": 0,
+    "lower_back": 0,
+    "abductors": 0
+   },
+   "description": "A side plank with the top leg on a bench, for the inner thigh (hip adductors) and the obliques.",
+   "howTo": [
+    "Lie on your side next to a bench and rest your top leg on it (knee for an easier version, ankle for a harder one).",
+    "Prop yourself on your forearm.",
+    "Lift your hips and bottom leg off the floor, holding with the top leg.",
+    "Hold, lower, then switch sides."
+   ],
+   "tip": "Start with the knee on the bench and short holds.",
+   "youtube": "",
+   "fatigue": 0.8,
+   "howto": {
+    "setup": "Side-lying, forearm down, top knee or ankle on a bench.",
+    "cues": [
+     "Squeeze the top leg down",
+     "Hips up",
+     "Straight line"
+    ],
+    "mistake": "Letting the hips drop or rotate."
+   },
+   "patterns": [
+    "hip_iso"
+   ],
+   "movement_pattern": "isolation",
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": [
+     "unilateral",
+     "static_hold"
     ]
    }
   }

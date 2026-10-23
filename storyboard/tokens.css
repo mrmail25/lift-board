@@ -24,18 +24,38 @@
   --danger:#E5242B;
   /* over-volume colours (functional, like --danger). Thresholds are NOT here: rules.json volume_bands */
   --vol-under:#B9B9BE; --vol-amber:#F0A830; --vol-red:#D93B30;
-  --day-1:#B4B4BA; --day-2:#8A8A90; --day-3:#48484D; --day-4:#0B0B0C; /* Build map in Day mode: sets that day (ink scale, not a range colour) */
+  /* ONE sequential ramp (round 2): Build Day-mode map + days-per-muscle grid. Effective sets that day: 0, >0, >=1.5, >=3, >=5.
+     Single hue (blue), monotonic in contrast against the surface in both themes; never a range colour (green/grey/amber/red). */
+  --ramp-0:var(--fill); --ramp-1:#C9DCF5; --ramp-2:#8DB5EA; --ramp-3:#4C82D2; --ramp-4:#1D4E9E;
+  --ramp-fg-hi:#fff; /* text on ramp-3/4 */
   --vol-in-range:#5cc48c; /* in range, both body maps + volume bars (CoS 2026-10-22; Mr Dude's live-app mid green, Oct 11). Darkens toward max via color-mix */
   /* Build chit edge: body region of the exercise's main muscle (functional, never brand) */
   /* body-region edge colours (rules.json body_regions.order; names from body_regions.tokens_suggested) */
   --region-chest:#C4513F; --region-back:#3F6FB0; --region-shoulders:#8B68C4; --region-arms:#2B9A8E; --region-legs:#C99A2E; --region-core:#7A7F89;
   /* Build whiteboard surface + magnet chits */
-  --wb:#FBFBFC; --wb-frame:#D9DADF; --wb-line:rgba(0,0,0,.07);
+  --wb:#FBFBFC; --wb-frame:#D9DADF; --wb-line:rgba(0,0,0,.07); --wb-inset:rgba(255,255,255,.8);
   --chit-top:#FFFFFF; --chit-bot:#F3F3F6;
   --chit-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(0,0,0,.06),0 1px 1.5px rgba(0,0,0,.18),0 3px 7px rgba(0,0,0,.07);
   --chit-lift:inset 0 1px 0 rgba(255,255,255,.95),0 10px 22px rgba(0,0,0,.26),0 3px 6px rgba(0,0,0,.12);
 
   /* Type: system stack, SF Pro on Apple devices */
+  /* semantic additions (round 2, so dark mode is one token swap) */
+  --on-ink:#fff;          /* text/icons on an --ink background (buttons, selected chips) */
+  --surface-ink:var(--ink); --on-surface-ink:#fff; /* big dark surfaces (rest bar, toast, finish hero, selection bar): stay dark in dark mode */
+  --vol-mix:var(--ink);   /* in-range map fill darkens toward this at max */
+  --ink-press:#333;
+  --glyph-bg:#000; --glyph-fg:#fff; --glyph-ring:transparent; /* exercise-type icon: white symbol on a black disc, all types */
+  --fill-press:#DCDCE0; --row-press:#ECECEF; --row-hi:#F6F6F8;
+  --line-strong:#C4C4C9; --grab:#C7C7CC; --tab-off:#999A9F;
+  --kp-bg:#D6D7DC; --kp-press:#B9BAC0;
+  --map-base:#ECECEF; --map-line:#D6D6DA; --map-empty:#DCDCE0; --map-off:#D9D9DD;
+  --heat-1:#C4C4C9; --heat-2:#A8A8AD; --heat-3:#5A5A5F; --heat-4:#0B0B0C; /* Learn guide-ready map (greys of ink) */
+  --warn-tint:#FFF3D6; --warn-ink:#7A5300; --warn-line:#D9A93A;
+  --ok-tint:#E4F4EA; --ok-ink:#1E6B3A; --bad-tint:#FDECEC;
+  --slot-bg:rgba(255,255,255,.55);
+  --series-1:#E8430C; --series-2:#2557A8; --series-3:#1E8A4C; --series-4:#8E44AD; --series-5:#B07D00; --series-6:#0E8C9C; /* e1RM overlay lines */
+  color-scheme:light;
+
   --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
   --font-num:"SF Pro Rounded",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   --t-large:34px;  /* large title */
@@ -57,3 +77,59 @@
   --tab-h:50px;--nav-h:44px;
   --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
 }
+/* Dark theme (round 2). Follows the system (prefers-color-scheme) unless html[data-theme] is set by Settings › Appearance
+   (localStorage apechit.sb.theme: system | light | dark). The two blocks below carry the SAME values (test darkTokensSame). */
+html[data-theme=dark]{
+  --ink:#F2F2F4; --paper:#1C1C1E; --bg:#000; --fill:#2C2C2E; --line:rgba(255,255,255,.12);
+  --text-2:#A1A1A8; --text-3:#6C6C72; --chrome:rgba(24,24,26,.82);
+  --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10;
+  --danger:#FF453A;
+  --vol-under:#5E5E63; --vol-amber:#F2B23F; --vol-red:#FF5A4E; --vol-in-range:#4CC285;
+  --ramp-1:#1F3A63; --ramp-2:#2F5D9E; --ramp-3:#4F86D6; --ramp-4:#A9C9F5; --ramp-fg-hi:#000;
+  --wb:#161618; --wb-frame:#2E2E31; --wb-line:rgba(255,255,255,.07); --wb-inset:rgba(255,255,255,.05);
+  --chit-top:#2C2C2F; --chit-bot:#242427;
+  --chit-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 1px 1.5px rgba(0,0,0,.6),0 3px 7px rgba(0,0,0,.35);
+  --chit-lift:inset 0 1px 0 rgba(255,255,255,.08),0 10px 22px rgba(0,0,0,.7),0 3px 6px rgba(0,0,0,.4);
+  --on-ink:#000; --ink-press:#C8C8CC;
+  --surface-ink:#2C2C2E; --on-surface-ink:#F2F2F4; --vol-mix:#000;
+  --glyph-bg:#000; --glyph-fg:#fff; --glyph-ring:rgba(255,255,255,.38);
+  --fill-press:#3A3A3C; --row-press:#2C2C2E; --row-hi:#232325;
+  --line-strong:#48484A; --grab:#545458; --tab-off:#7C7C82;
+  --kp-bg:#1C1C1E; --kp-press:#4A4A4D;
+  --map-base:#2A2A2D; --map-line:#3C3C40; --map-empty:#3A3A3E; --map-off:#3A3A3E;
+  --heat-1:#4F4F54; --heat-2:#76767B; --heat-3:#B0B0B5; --heat-4:#F2F2F4;
+  --warn-tint:#3A2E12; --warn-ink:#F2C46A; --warn-line:#8A6A22;
+  --ok-tint:#143322; --ok-ink:#7FD8A4; --bad-tint:#3A1616;
+  --slot-bg:rgba(255,255,255,.04);
+  --shadow-sheet:0 -1px 0 rgba(255,255,255,.06),0 -12px 40px rgba(0,0,0,.6);
+  --shadow-float:0 6px 24px rgba(0,0,0,.7);
+  --series-1:#FF7A45; --series-2:#79A8EC; --series-3:#4CC285; --series-4:#C38BE0; --series-5:#F2C14E; --series-6:#4FD1DE;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:dark){html:not([data-theme=light]){
+  --ink:#F2F2F4; --paper:#1C1C1E; --bg:#000; --fill:#2C2C2E; --line:rgba(255,255,255,.12);
+  --text-2:#A1A1A8; --text-3:#6C6C72; --chrome:rgba(24,24,26,.82);
+  --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10;
+  --danger:#FF453A;
+  --vol-under:#5E5E63; --vol-amber:#F2B23F; --vol-red:#FF5A4E; --vol-in-range:#4CC285;
+  --ramp-1:#1F3A63; --ramp-2:#2F5D9E; --ramp-3:#4F86D6; --ramp-4:#A9C9F5; --ramp-fg-hi:#000;
+  --wb:#161618; --wb-frame:#2E2E31; --wb-line:rgba(255,255,255,.07); --wb-inset:rgba(255,255,255,.05);
+  --chit-top:#2C2C2F; --chit-bot:#242427;
+  --chit-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 1px 1.5px rgba(0,0,0,.6),0 3px 7px rgba(0,0,0,.35);
+  --chit-lift:inset 0 1px 0 rgba(255,255,255,.08),0 10px 22px rgba(0,0,0,.7),0 3px 6px rgba(0,0,0,.4);
+  --on-ink:#000; --ink-press:#C8C8CC;
+  --surface-ink:#2C2C2E; --on-surface-ink:#F2F2F4; --vol-mix:#000;
+  --glyph-bg:#000; --glyph-fg:#fff; --glyph-ring:rgba(255,255,255,.38);
+  --fill-press:#3A3A3C; --row-press:#2C2C2E; --row-hi:#232325;
+  --line-strong:#48484A; --grab:#545458; --tab-off:#7C7C82;
+  --kp-bg:#1C1C1E; --kp-press:#4A4A4D;
+  --map-base:#2A2A2D; --map-line:#3C3C40; --map-empty:#3A3A3E; --map-off:#3A3A3E;
+  --heat-1:#4F4F54; --heat-2:#76767B; --heat-3:#B0B0B5; --heat-4:#F2F2F4;
+  --warn-tint:#3A2E12; --warn-ink:#F2C46A; --warn-line:#8A6A22;
+  --ok-tint:#143322; --ok-ink:#7FD8A4; --bad-tint:#3A1616;
+  --slot-bg:rgba(255,255,255,.04);
+  --shadow-sheet:0 -1px 0 rgba(255,255,255,.06),0 -12px 40px rgba(0,0,0,.6);
+  --shadow-float:0 6px 24px rgba(0,0,0,.7);
+  --series-1:#FF7A45; --series-2:#79A8EC; --series-3:#4CC285; --series-4:#C38BE0; --series-5:#F2C14E; --series-6:#4FD1DE;
+  color-scheme:dark;
+}}

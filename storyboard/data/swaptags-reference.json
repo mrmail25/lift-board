@@ -1311,9 +1311,9 @@
   ]
  },
  "tagless": {
-  "method": "For every exercise (239), its top-6 swap candidates from swap_list(id, n=6) (= tools/swap.py swaps(id, n=6) = rank.py swap context with no state or prefs, self excluded). Exercises with fewer than 6 candidates give fewer pairs (v1/v2: 11 exercises, 1,399 pairs; v3: 10 exercises, 1,400 pairs, because the one-arm kettlebell push press now joins the Turkish get-up candidates). tagless = pairs whose diff_tags is empty.",
-  "pairs": 1400,
-  "tagless": 108,
+  "method": "For every exercise (247), its top-6 swap candidates from swap_list(id, n=6) (= tools/swap.py swaps(id, n=6) = rank.py swap context with no state or prefs, self excluded). Exercises with fewer than 6 candidates give fewer pairs (v1/v2: 11 exercises, 1,399 pairs; v3: 10 exercises, 1,400 pairs, because the one-arm kettlebell push press now joins the Turkish get-up candidates; round 2 adds 8 exercises: 1,460 pairs, 116 tagless, mostly the new calf raises and planks next to near-identical neighbours). tagless = pairs whose diff_tags is empty.",
+  "pairs": 1460,
+  "tagless": 116,
   "tagless_v1": 219,
   "tagless_v2": 123,
   "pairs_v1_v2": 1399

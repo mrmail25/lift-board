@@ -3,13 +3,17 @@
 (function(){
 'use strict';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
-const EX={};(window.EXL||[]).forEach(([id,name,type,eq,mus,rat])=>EX[id]={id,name,type,eq,mus,rat:rat||{}});
+const EX={};(window.EXL||[]).forEach(([id,name,type,eq,mus,rat,ut])=>EX[id]={id,name,type,eq,mus,rat:rat||{},ut:ut||null});
+// exercises v13: an all-zero muscle map (tibialis-raise) carries untracked_target {label, tag, filter_muscle}; its tag is shown where
+// the muscle list would go, and it files under filter_muscle (tray muscle filter, learn link), like swap.py / whiteboard.py
+const utOf=id=>{if(EX[id]&&EX[id].ut)return EX[id].ut;try{return ((RD&&RD.EX[id])||{}).untracked_target||null}catch(e){return null}};
+const noCredit=e=>!!e&&!Object.values(e.muscles||e.rat||{}).some(v=>v>0);
 const ML={chest:'Chest',front_delts:'Front delts',side_delts:'Side delts',rear_delts:'Rear delts',lats:'Lats',upper_back:'Upper back',traps:'Traps',biceps:'Biceps',triceps:'Triceps',forearms:'Forearms',abs:'Abs',quads:'Quads',hamstrings:'Hamstrings',glutes:'Glutes',calves:'Calves',adductors:'Adductors',lower_back:'Lower back',obliques:'Obliques',abductors:'Abductors',brachialis:'Brachialis'};
 // Exercise type is SHAPE-coded (colour already means body region): star = primary, triangle = accessory, circle = isolation.
 const GLY={primary:'★',accessory:'▲',isolation:'●'};
 const exNameP=id=>(EX[id]||{}).name||id;
 const exName=id=>exNameP(id)+(typeof isFav==='function'&&isFav(id)?' <span class="fv" aria-label="Favorite">★</span>':'');
-const exSub=id=>{const e=EX[id];return e?e.mus.map(m=>ML[m]||m).join(' · '):''};
+const exSub=id=>{const e=EX[id];if(!e)return '';if(!e.mus.length&&utOf(id))return utOf(id).tag;return e.mus.slice(0,3).map(m=>ML[m]||m).join(' · ')}; // top 3 (v13 data rates more muscles >= 0.5; the row stays two lines)
 const gl=id=>{const t=(EX[id]||{}).type||'isolation';return `<span class="gl ${t}" title="${t}">${GLY[t]}</span>`};
 
 // ---------------------------------------------------------------- icons (SF-Symbol-like strokes)
@@ -78,13 +82,13 @@ Object.defineProperty(WK,'elapsed',{get(){const now=CLK.pausedAt??Date.now();ret
 Object.defineProperty(WK,'paused',{get(){return CLK.pausedAt!=null},set(p){if(p&&CLK.pausedAt==null)CLK.pausedAt=Date.now();else if(!p&&CLK.pausedAt!=null){CLK.pausedMs+=Date.now()-CLK.pausedAt;CLK.pausedAt=null}}});
 const WK0=JSON.parse(JSON.stringify({title:WK.title,sub:WK.sub,ref:WK.ref,ex:WK.ex}));
 function resetClock(sec){CLK.start=Date.now()-sec*1000;CLK.pausedAt=null;CLK.pausedMs=0}
-function demoWorkout(){Object.assign(WK,JSON.parse(JSON.stringify(WK0)),{notes:{},empty:false,restLab:'Bench set 3'});WK.rest={left:108,total:180};resetClock(32*60+14);S.demo=true}
+function demoWorkout(){Object.assign(WK,JSON.parse(JSON.stringify(WK0)),{notes:{},empty:false,restLab:'Bench set 3'});applyOrder();WK.rest={left:108,total:180};resetClock(32*60+14);S.demo=true}
 // start a real workout: clock at 0:00, no sets done, no rest running, session notes empty
 function startWorkout(title,list,o={}){const prev={};WK0.ex.forEach(x=>prev[x.id]=x);
   WK.title=title;WK.sub=o.sub||'';WK.ref=o.ref||null;WK.empty=!!o.empty;WK.notes={};WK.rest={left:0,total:180};
   WK.ex=list.map(e=>{const p=prev[e.id],eq=((EX[e.id]||{}).eq)||'';const ps=p?p.sets.filter(s=>!s.warm).map(s=>s.p):[];
     return {id:e.id,bar:/barbell|trap bar|smith/.test(eq)||/ez-bar/.test(e.id),cue:p?p.cue:'',sets:Array.from({length:e.sets||e.s||3},(_,i)=>({p:ps[i]||ps[ps.length-1]||''}))}});
-  resetClock(0);S.live=true;S.demo=false;S.session=true;startTick()} // restart the 1 s tick so the display lands on whole seconds from 0:00
+  applyOrder();resetClock(0);S.live=true;S.demo=false;S.session=true;startTick()} // restart the 1 s tick so the display lands on whole seconds from 0:00
 const setsDone=()=>WK.ex.reduce((a,x)=>a+x.sets.filter(s=>s.done).length,0),setsAll=()=>WK.ex.reduce((a,x)=>a+x.sets.length,0);
 const clockTime=t=>{const d=new Date(t);let h=d.getHours(),m=d.getMinutes();const ap=h>=12?'PM':'AM';h=h%12||12;return `${h}:${String(m).padStart(2,'0')} ${ap}`};
 const LOGS={ // Oct 2026, day -> workout
@@ -113,6 +117,21 @@ const VLAB={under:'Under',in:'In range',amber:'Over max',red:'Well over'};
 
 // units setting (CoS): localStorage apechit.sb.unit, default lb. Progress converts Coach's kg sample log for display.
 const UNIT_K='apechit.sb.unit',KG_LB=2.20462262;
+// theme (round 2): Settings › Appearance = System (follow prefers-color-scheme) | Light | Dark. Stored in localStorage apechit.sb.theme;
+// Light/Dark set html[data-theme], which tokens.css uses to override the system choice. index.html applies it before first paint.
+const THEME_K='apechit.sb.theme',THEMES=['system','light','dark'];
+const getTheme=()=>{try{const t=localStorage.getItem(THEME_K);return THEMES.includes(t)?t:'system'}catch(e){return 'system'}};
+function setTheme(t){t=THEMES.includes(t)?t:'system';try{localStorage.setItem(THEME_K,t)}catch(e){}const h=document.documentElement;if(t==='system')h.removeAttribute('data-theme');else h.setAttribute('data-theme',t);return t}
+// Units everywhere (round 2, CoS): fixture loads are lb. In kg they are converted and rounded to that equipment's kg step
+// (rules.json logger.load_step.kg[equipment], e.g. barbell 2.5, dumbbell 2); kg typed by the user stays as typed (sets remember s.wu).
+const eqOf=id=>((typeof RD!=='undefined'&&RD&&RD.EX[id])||{}).equipment||'default';
+const stepOf=(u,id)=>{const t=(typeof RD!=='undefined'&&RD&&RD.rules.logger.load_step[u])||{default:u==='kg'?2.5:5};return t[eqOf(id)]??t.default};
+const nfmt=v=>String(+(+v).toFixed(2));
+function cvt(v,from,to,id,step){if(v===''||v==null||isNaN(+v)||from===to)return v;const x=from==='lb'?+v/KG_LB:+v*KG_LB,s=step||stepOf(to,id);return nfmt(Math.round(x/s)*s)}
+const uw=(v,id,from='lb')=>cvt(v,from,S.unit,id);                       // one load, fixture lb -> current unit
+const uP=(p,id)=>p?String(p).replace(/(\d+(?:\.\d+)?)(?= ×)/g,m=>uw(m,id)):p;   // "225 × 8" -> "102.5 × 8"
+const uTxt=(t,id)=>S.unit==='lb'||!t?t:String(t).replace(/([+−-]?)(\d[\d,]*(?:\.\d+)?) lb\b/g,(m,sg,n)=>{const v=+n.replace(/,/g,'');return sg+(v>=1000?Math.round(v/KG_LB).toLocaleString('en-US'):uw(v,id))+' kg'}).replace(/(\d+(?:\.\d+)?)(?= ×)/g,m=>uw(m,id));
+const isDark=()=>{const t=document.documentElement.getAttribute('data-theme');return t?t==='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)};
 const S={tab:'train',route:'train',session:false,pick:null,day:{},buildDay:0,unit:(()=>{try{return localStorage.getItem('apechit.sb.unit')==='kg'?'kg':'lb'}catch(e){return 'lb'}})(),bar:'Olympic',plate:225,logSel:15,month:9,year:2026,split:1};
 const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
 let tick=null;
@@ -275,10 +294,10 @@ function afterTrain(){
 // 2. WORKOUT
 // Set rows swipe left to delete ONLY that set (Undo). The exercise is deleted from its ⋯ menu or by swiping its header.
 const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-function setRow(s,i,xi,si){
-  return `<div class="swipe sws" data-del="set" data-xi="${xi}" data-si="${si}"><button class="del">Delete</button><div class="in"><div class="srow sgrid ${s.done?'done':''}" data-xi="${xi}" data-si="${si}"><div class="sn ${s.warm?'w':''}">${s.warm?'W':i}</div><div class="prev">${s.p||'—'}</div>
-    <input class="fld ${s.wauto?'auto':''}" data-kind="w" readonly inputmode="none" value="${s.wv||''}" placeholder="${(s.p||'').split(' × ')[0]}" aria-label="Weight">
-    <input class="fld" data-kind="r" readonly inputmode="none" value="${s.rv||''}" placeholder="${(s.p||'').split(' × ')[1]||''}" aria-label="Reps">
+function setRow(s,i,xi,si){const id=(WK.ex[xi]||{}).id,p=uP(s.p,id),wv=s.wv?cvt(s.wv,s.wu||'lb',S.unit,id):'';
+  return `<div class="swipe sws" data-del="set" data-xi="${xi}" data-si="${si}"><button class="del">Delete</button><div class="in"><div class="srow sgrid ${s.done?'done':''}" data-xi="${xi}" data-si="${si}"><div class="sn ${s.warm?'w':''}">${s.warm?'W':i}</div><div class="prev">${p||'—'}</div>
+    <input class="fld ${s.wauto?'auto':''}" data-kind="w" readonly inputmode="none" value="${wv}" placeholder="${(p||'').split(' × ')[0]}" aria-label="Weight (${S.unit})">
+    <input class="fld" data-kind="r" readonly inputmode="none" value="${s.rv||''}" placeholder="${(p||'').split(' × ')[1]||''}" aria-label="Reps">
     <button class="ck" data-act="ck" aria-label="Done">${I('check',2.4)}</button></div></div></div>`;
 }
 // per-exercise notes: "Always" (saved on this device, shown every time) and "This session" (this workout only)
@@ -289,13 +308,13 @@ function notesHtml(id,xi){const a=noteA(id),s=noteS(id);if(!a&&!s)return '';
 function exBlock(ex,xi){
   let n=0;
   return `<section class="exb" data-ex="${ex.id}" data-xi="${xi}">
-   <div class="swipe swh" data-del="ex" data-xi="${xi}"><button class="del">Delete</button><div class="in"><div class="exh">${gl(ex.id)}<button class="grow exnm" data-act="info" data-id="${ex.id}" aria-label="Learn about ${exNameP(ex.id)}"><div class="nm">${exName(ex.id)}</div><div class="mu">${exSub(ex.id)}</div></button>
+   <div class="swipe swh" data-del="ex" data-xi="${xi}"><button class="del">Delete</button><div class="in"><div class="exh"><button class="exgrip" aria-label="Reorder ${esc(exNameP(ex.id))}: press and hold, then drag" title="Hold to reorder">${I('grip',2)}</button>${gl(ex.id)}<button class="grow exnm" data-act="info" data-id="${ex.id}" aria-label="Learn about ${exNameP(ex.id)}"><div class="nm">${exName(ex.id)}</div><div class="mu">${exSub(ex.id)}</div></button>
     <button class="mini" data-act="notes" data-xi="${xi}" aria-label="Notes">${I('note',1.7)}</button>
     ${ex.bar?`<button class="mini" data-act="plates" data-xi="${xi}" aria-label="Plate calculator">${I('plate',1.6)}</button>`:''}
     <button class="mini" data-act="wswap" data-xi="${xi}" data-id="${ex.id}" aria-label="Swap">${I('swap',1.7)}</button>
     <button class="mini" data-act="exmenu" data-xi="${xi}" aria-label="More">${I('more',1.7)}</button></div></div></div>
    ${notesHtml(ex.id,xi)}
-   ${ex.cue?`<div class="cue">${ex.cue}</div>`:''}
+   ${ex.cue?`<div class="cue">${uTxt(ex.cue,ex.id)}</div>`:''}
    <div class="sgrid shd"><div>Set</div><div>Previous</div><div>${S.unit}</div><div>Reps</div><div></div></div>
    <div class="sets">${ex.sets.map((s,si)=>setRow(s,s.warm?0:++n,xi,si)).join('')}</div>
    <button class="addset" data-act="addset" data-xi="${xi}">${I('plus',2)} Add set</button></section>`;
@@ -313,22 +332,52 @@ function renderWk(){const x=$('#wkx');if(!x)return;x.innerHTML=WK.ex.map(exBlock
 function renderEx(xi){const old=$(`.exb[data-xi="${xi}"]`);if(!old)return renderWk();const t=document.createElement('div');t.innerHTML=exBlock(WK.ex[xi],xi);old.replaceWith(t.firstElementChild);bindSwipes($(`.exb[data-xi="${xi}"]`));renderBar()}
 // keep typed values in the workout model, so a re-render (delete, undo, swap) never loses them
 function syncField(f){const r=f.closest('.srow');if(!r||r.dataset.xi==null)return;const s=((WK.ex[+r.dataset.xi]||{}).sets||[])[+r.dataset.si];if(!s)return;
-  if(f.dataset.kind==='w'){s.wv=f.value;s.wauto=f.classList.contains('auto')}else s.rv=f.value}
+  if(f.dataset.kind==='w'){s.wv=f.value;s.wu=S.unit;s.wauto=f.classList.contains('auto')}else s.rv=f.value}
 const DEL={
  set(row){const xi=+row.dataset.xi,si=+row.dataset.si,ex=WK.ex[xi];if(!ex)return;const [s]=ex.sets.splice(si,1);
    const lab=s.warm?'Warm-up set':'Set '+(ex.sets.slice(0,si).filter(x=>!x.warm).length+1);
    row.style.transition='height .26s var(--ease),opacity .2s';row.style.height=row.offsetHeight+'px';requestAnimationFrame(()=>{row.style.height='0';row.style.opacity='0'});
    setTimeout(()=>renderEx(xi),270);undoSnack(`${lab} of ${exNameP(ex.id)} deleted`,()=>{ex.sets.splice(si,0,s);renderEx(xi)})},
  ex(row){delEx(+row.dataset.xi)}};
+// 5. Reorder mid-workout (round 2): press and hold the grip (280 ms, works with touch: the grip has touch-action:none), the
+// blocks collapse to their headers, drag to the new place, release. The order is saved for this workout (WK.ex) and in
+// localStorage apechit.sb.wkOrder keyed by the routine day, so a reload or the next start of the same day keeps it.
+const LSO='apechit.sb.wkOrder',HOLD_MS=280;
+const orderKey=()=>WK.ref?`${WK.ref.rid}:${WK.ref.di}`:'empty';
+function saveOrder(){const o=ld(LSO,{});o[orderKey()]=WK.ex.map(x=>x.id);sv(LSO,o)}
+function applyOrder(){const ids=ld(LSO,{})[orderKey()];if(!Array.isArray(ids))return;const pos=id=>{const i=ids.indexOf(id);return i<0?1e3:i};
+  WK.ex=WK.ex.map((x,k)=>[x,k]).sort((a,b)=>(pos(a[0].id)-pos(b[0].id))||(a[1]-b[1])).map(p=>p[0])}
+function moveEx(from,to){to=Math.max(0,Math.min(WK.ex.length-1,to));if(from===to)return false;const [x]=WK.ex.splice(from,1);WK.ex.splice(to,0,x);saveOrder();renderWk();return true}
+let REO=null;
+document.addEventListener('pointerdown',e=>{const h=e.target.closest&&e.target.closest('.exgrip');if(!h)return;e.stopPropagation();e.preventDefault();
+  const blk=h.closest('.exb'),x0=e.clientX,y0=e.clientY;let lifted=false,t=setTimeout(lift,HOLD_MS),st=null;
+  try{h.setPointerCapture(e.pointerId)}catch(_){}
+  function lift(){lifted=true;const v=$('#view'),before=blk.getBoundingClientRect().top;document.body.classList.add('wk-reorder');blk.classList.add('lifting');
+    const r=blk.getBoundingClientRect();v.scrollTop+=r.top-before;  // keep the grabbed header under the finger after the collapse
+    const bs=$$('#wkx .exb'),R=bs.map(b=>b.getBoundingClientRect()),i=bs.indexOf(blk),P=bs.length>1?(R[1].top-R[0].top):r.height;
+    st={bs,i,P,y:e.clientY};if(navigator.vibrate)try{navigator.vibrate(10)}catch(_){}}
+  const tgt=ev=>Math.max(-st.i,Math.min(st.bs.length-1-st.i,Math.round((ev.clientY-st.y)/st.P)));
+  const mv=ev=>{if(!lifted){if(Math.hypot(ev.clientX-x0,ev.clientY-y0)>8){clearTimeout(t);end()}return}ev.preventDefault();
+    const dy=ev.clientY-st.y,n=tgt(ev);blk.style.transform=`translateY(${dy}px) scale(1.02)`;
+    st.bs.forEach((b,j)=>{if(b===blk)return;b.style.transform=(n>0&&j>st.i&&j<=st.i+n)?`translateY(${-st.P}px)`:(n<0&&j<st.i&&j>=st.i+n)?`translateY(${st.P}px)`:''})};
+  const end=ev=>{clearTimeout(t);removeEventListener('pointermove',mv,true);removeEventListener('pointerup',up,true);removeEventListener('pointercancel',cancel,true);REO=null;
+    if(!lifted)return;const n=ev?tgt(ev):0;document.body.classList.remove('wk-reorder');st.bs.forEach(b=>{b.style.transform='';b.classList.remove('lifting')});
+    const name=exNameP(WK.ex[st.i].id);if(moveEx(st.i,st.i+n))toast(`${name} moved · order saved`);else renderWk()};
+  const up=ev=>end(ev),cancel=()=>end(null);
+  addEventListener('pointermove',mv,{capture:true,passive:false});addEventListener('pointerup',up,true);addEventListener('pointercancel',cancel,true);REO={end}},true);
+// a plain tap on the grip explains the gesture; the ⋯ menu has Move up / Move down for one-handed and assistive use
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.exgrip')){e.stopPropagation();e.preventDefault();toast('Hold, then drag to reorder')}},true);
 function delEx(xi){const ex=WK.ex[xi];if(!ex)return;WK.ex.splice(xi,1);renderWk();undoSnack(`${exNameP(ex.id)} removed`,()=>{WK.ex.splice(xi,0,ex);renderWk()})}
 function exMenu(xi){const ex=WK.ex[xi];if(!ex)return;
   const s=sheet({title:exNameP(ex.id),cls:'grouped',body:`<div class="group"><button class="row" data-x="notes"><span class="ico gr">${I('note',1.7)}</span><div class="grow t1">Notes</div>${CHEV}</button>
     <button class="row" data-x="swap"><span class="ico gr">${I('swap',1.7)}</span><div class="grow t1">Swap exercise</div>${CHEV}</button>
     <button class="row" data-x="info"><span class="ico gr">${I('info',1.7)}</span><div class="grow t1">About this exercise</div>${CHEV}</button></div>
+    <div class="group" style="margin-top:20px"><button class="row" data-x="up"${xi===0?' disabled':''}><span class="ico gr">${I('up',2)}</span><div class="grow t1">Move up</div></button>
+    <button class="row" data-x="down"${xi===WK.ex.length-1?' disabled':''}><span class="ico gr mdown">${I('up',2)}</span><div class="grow t1">Move down</div></button></div>
     <div class="group" style="margin-top:20px"><button class="row dangerrow" data-x="del">Delete exercise</button></div>
     <p class="foot">Delete removes ${exNameP(ex.id)} and its ${ex.sets.length} sets from this workout. You can undo. To delete one set, swipe it left.</p>`});
   s.el.addEventListener('click',e=>{const a=e.target.closest('[data-x]');if(!a)return;s.close();const k=a.dataset.x;
-    if(k==='del')delEx(xi);if(k==='notes')setTimeout(()=>notesSheet(xi),60);if(k==='swap')setTimeout(()=>wSwap(xi),60);if(k==='info')go('#learn-ex-'+ex.id)});return s}
+    if(k==='del')delEx(xi);if(k==='notes')setTimeout(()=>notesSheet(xi),60);if(k==='swap')setTimeout(()=>wSwap(xi),60);if(k==='info')go('#learn-ex-'+ex.id);if(k==='up'||k==='down'){if(moveEx(xi,xi+(k==='up'?-1:1)))toast(`${exNameP(ex.id)} moved ${k} · order saved`)}});return s}
 function notesSheet(xi){const ex=WK.ex[xi];if(!ex)return;const id=ex.id;
   const s=sheet({title:'Notes',cls:'grouped nsheet',right:`<button class="btn plain strong" data-x="close">Done</button>`,body:`<div class="nsh-h">${gl(id)}<b>${exNameP(id)}</b></div>
     <div class="ghead">Always <span class="gsub">shown every time you do this exercise</span></div>
@@ -349,15 +398,15 @@ V.finish=()=>`<div class="fin">
   <div class="fin-top"><span class="eyebrow">Wed, Oct 21</span><button class="btn plain" data-go="#log">Done</button></div>
   <div class="fin-cards noswipe" id="fincards">
    <article class="fc hero"><div class="fc-logo logo-tile"></div><div class="eyebrow">Workout complete</div><h2>Upper A</h2><p class="sub">6:12 – 7:10 PM</p>
-     <div class="stats"><div><b class="num">58</b><span>minutes</span></div><div><b class="num">18</b><span>sets</span></div><div><b class="num">21,450</b><span>lb volume</span></div><div><b class="num acc">2</b><span>PRs</span></div></div>
+     <div class="stats"><div><b class="num">58</b><span>minutes</span></div><div><b class="num">18</b><span>sets</span></div><div><b class="num">${S.unit==='kg'?Math.round(21450/KG_LB).toLocaleString('en-US'):'21,450'}</b><span>${S.unit} volume</span></div><div><b class="num acc">2</b><span>PRs</span></div></div>
      <div class="vs"><span class="up">${I('up',2.4)}</span>2.4% more volume than your last Upper A</div></article>
    <article class="fc"><div class="eyebrow">Personal records</div><h2>2 new PRs</h2>
-     <div class="pr"><span class="badge">PR</span><div class="grow"><b>Barbell Bench Press</b><span>230 lb × 8 · heaviest for 8</span></div></div>
-     <div class="pr"><span class="badge">PR</span><div class="grow"><b>Lat Pulldown</b><span>160 lb × 12 · best set volume</span></div></div>
-     <div class="pr dim"><span class="tag">±0</span><div class="grow"><b>Seated DB Shoulder Press</b><span>60 lb × 9 · ties your best</span></div></div></article>
+     <div class="pr"><span class="badge">PR</span><div class="grow"><b>Barbell Bench Press</b><span>${uTxt('230 lb × 8','barbell-bench-press')} · heaviest for 8</span></div></div>
+     <div class="pr"><span class="badge">PR</span><div class="grow"><b>Lat Pulldown</b><span>${uTxt('160 lb × 12','lat-pulldown')} · best set volume</span></div></div>
+     <div class="pr dim"><span class="tag">±0</span><div class="grow"><b>Seated DB Shoulder Press</b><span>${uTxt('60 lb × 9','seated-dumbbell-shoulder-press')} · ties your best</span></div></div></article>
    <article class="fc"><div class="eyebrow">vs last time</div><h2>Up on 4 of 6</h2>
      ${[['Barbell Bench Press','230 × 8','+5 lb','up'],['Barbell Row','185 × 11','+1 rep','up'],['Seated DB Shoulder Press','60 × 9','±0','flat'],['Lat Pulldown','160 × 12','+10 lb','up'],['EZ-Bar Curl','80 × 12','±0','flat'],['Triceps Pushdown','75 × 11','+5 lb','up']]
-       .map(([n,s,d,c])=>`<div class="cmp"><div class="grow"><b>${n}</b><span class="num">${s}</span></div><span class="dl ${c}">${d}</span></div>`).join('')}</article>
+       .map(([n,s,d,c])=>`<div class="cmp"><div class="grow"><b>${n}</b><span class="num">${uTxt(s)}</span></div><span class="dl ${c}">${uTxt(d)}</span></div>`).join('')}</article>
    <article class="fc"><div class="eyebrow">Muscles worked</div><h2>18 hard sets</h2>
      ${[['Chest',5],['Lats',4],['Front delts',4],['Triceps',4],['Upper back',3],['Biceps',3]].map(([m,n])=>`<div class="mw"><span>${m}</span><i style="--w:${n/5*100}%"></i><b class="num">${n}</b></div>`).join('')}
      <p class="foot" style="padding:12px 0 0">Helper muscles count as partial sets.</p></article>
@@ -425,7 +474,7 @@ const EQ_LAB={'smith machine':'Smith','plate-loaded machine':'Plate-loaded'};
 function eqDefs(){const c={};Object.values(RD?RD.EX:{}).forEach(e=>c[e.equipment]=(c[e.equipment]||0)+1);const top=Object.keys(c).filter(k=>c[k]>=12).sort((a,b)=>c[b]-c[a]);
   return [...top.map(k=>[k,EQ_LAB[k]||k[0].toUpperCase()+k.slice(1)]),...(Object.keys(c).length>top.length?[['other','Other']]:[])]}
 function passF(F,id){const e=RD&&RD.EX[id];if(!e)return false;
-  if(F.mus&&!((e.muscles[F.mus]||0)>=0.5))return false;if(F.pat&&movePat(id)!==F.pat)return false;
+  if(F.mus&&!((e.muscles[F.mus]||0)>=0.5)&&!(noCredit(e)&&e.untracked_target&&e.untracked_target.filter_muscle===F.mus))return false;if(F.pat&&movePat(id)!==F.pat)return false;
   if(F.eq){const top=eqDefs().map(x=>x[0]).filter(x=>x!=='other');if(F.eq==='other'?top.includes(e.equipment):e.equipment!==F.eq)return false}return true}
 function filterHtml(F,at){const c=(k,v,l)=>`<button class="chip xs ${F[k]===v?'on':''}" data-${at}="${k}" data-v="${v}">${l}</button>`;
   return `<div class="tfilt noswipe"><div class="tfr" data-row="mus"><span class="tfl">Muscle</span>${MUS_F.map(([m,l])=>c('mus',m,l)).join('')}</div>
@@ -470,10 +519,129 @@ function cal(){
     <div class="cal-w">${'MTWTFSS'.split('').map(x=>`<span>${x}</span>`).join('')}</div><div class="cal-g">${c}</div>
     <div class="cal-f"><span><i class="k1"></i>Workout</span><span><i class="k2"></i>Today</span><span class="num">12 workouts · 10 h 47 m</span></div></div>`;
 }
-const logRow=d=>{const w=LOGS[d],dt=new Date(2026,9,d);return `<div class="swipe"><button class="del">Delete</button><div class="in">
-  <button class="row lrow" data-act="edit" data-d="${d}"><div class="ld"><span>${WD[(dt.getDay()+6)%7]}</span><b>${d}</b></div>
-   <div class="grow"><div class="t1">${w.n}${w.pr?` <span class="badge">${w.pr} PR</span>`:''}</div><div class="t2 num">${w.min} min · ${w.sets} sets · ${w.vol} lb</div></div>${CHEV}</button></div></div>`};
-V.log=()=>header('Log',`<button class="ibtn" data-act="day" data-d="${TODAY}" aria-label="Add workout">${I('plus',2)}</button>`)+cal()+
+// ---- 6b. Log data (round 2): ONE history in Coach's logger shape (sessions / entries / sets, loads in each session's unit).
+// Generated from the Oct fixture (LOGS0 + routine days) the first time, then saved to localStorage apechit.sb.log.v1 on any edit.
+// PRs = logic/prs.js (port of Coach's prs.py detect_prs, diffed in test/prs.diff.js) over the whole history, recomputed after every edit.
+const LOG_K='apechit.sb.log.v1',LOGS0=JSON.parse(JSON.stringify(LOGS));
+const LOGFIX={'barbell-bench-press':[225,[8,8,7,7]],'barbell-row':[185,[10,10,9]],'seated-dumbbell-shoulder-press':[60,[9,8,8]],'lat-pulldown':[150,[12,11,10]],'ez-bar-curl':[80,[12,10]],'triceps-pushdown':[70,[12,12]],
+ 'back-squat':[265,[6,6,5,5]],'romanian-deadlift':[215,[9,9,8]],'leg-press':[380,[12,11,10]],'lying-leg-curl':[95,[12,11,10]],'standing-calf-raise':[190,[14,13,12,12]],
+ 'incline-dumbbell-press':[70,[10,9,8]],'chest-supported-row':[130,[10,9,9]],'pull-up':[0,[9,8,7]],'cable-lateral-raise':[20,[15,13,12]],'incline-dumbbell-curl':[30,[11,10]],'overhead-cable-triceps-extension':[55,[12,11]],
+ 'deadlift':[335,[5,5,4]],'hack-squat':[250,[10,9,8]],'bulgarian-split-squat':[45,[10,9,8]],'seated-leg-curl':[105,[12,11,10]],'hanging-leg-raise':[0,[14,12,11]]};
+const LOGNOTE={8:'Short on sleep, kept every set at RIR 2.',12:'Gym busy, did the rows before the presses.',15:'Bench felt strong. Left shoulder fine after the warm-up.',16:'Squat depth looked good on video.',20:'Calves cramped on the last set.'};
+const LOGSTART={1:'18:05',2:'18:20',5:'07:10',6:'18:12',8:'18:12',9:'18:30',12:'07:05',13:'18:15',15:'18:12',16:'18:25',19:'07:00',20:'18:10'};
+const isoPlus=(st,min)=>new Date(Date.parse(st)+min*6e4-7*36e5).toISOString().slice(0,16)+':00-07:00'; // Oct 2026 is PDT (UTC-7)
+function genLog(){const H={schema:2,sessions:[],entries:[],sets:[],bodyweights:[{date:'2026-10-01',value:182.4,unit:'lb'}]},occ={};
+  for(const d of Object.keys(LOGS0).map(Number).sort((a,b)=>a-b)){const w=LOGS0[d],rd=ROUTINES[0].days.find(x=>x.n===w.n);if(!rd)continue;const k=occ[w.n]=(occ[w.n]??-1)+1,sid='s'+d;
+    const st=`2026-10-${String(d).padStart(2,'0')}T${LOGSTART[d]||'18:12'}:00-07:00`;
+    H.sessions.push({id:sid,schema:2,status:'completed',date:st,startedAt:st,endedAt:isoPlus(st,w.min),unit:'lb',label:w.n,notes:LOGNOTE[d]||'',snapshot:{exercises:rd.ex.map(e=>({exerciseId:e.id,sets:e.s}))}});
+    rd.ex.forEach((e,o)=>{const eid=`${sid}-e${o}`,[L,rr]=LOGFIX[e.id]||[50,[10,10,10]],stp=stepOf('lb',e.id),hi=+(String(e.r||'').split('–')[1])||rr[0]+2;
+      H.entries.push({id:eid,sessionId:sid,order:o,exerciseId:e.id,skipped:false,notes:''});let idx=0;
+      if(o===0&&L>0)H.sets.push({id:`${eid}-t${idx}`,entryId:eid,sessionId:sid,idx:idx++,kind:'warmup',load:Math.round(L*.6/5)*5,reps:8,rir:null,done:true});
+      for(let j=0;j<e.s;j++){const r0=rr[Math.min(j,rr.length-1)];H.sets.push({id:`${eid}-t${idx}`,entryId:eid,sessionId:sid,idx:idx++,kind:'working',load:k>=2||L===0?L:L-stp,reps:k===1?Math.min(hi,r0+1):r0,rir:null,done:true})}})}
+  return H}
+let LOGH=null,LPR={};
+function logLoad(){if(!LOGH){const s=ld(LOG_K,null);LOGH=s&&Array.isArray(s.sessions)&&Array.isArray(s.sets)?s:genLog()}logDerive();return LOGH}
+const sesDay=s=>+s.startedAt.slice(8,10),sesOf=sid=>LOGH.sessions.find(s=>s.id===sid),entsOf=sid=>LOGH.entries.filter(e=>e.sessionId===sid).sort((a,b)=>a.order-b.order);
+const setsOfE=eid=>LOGH.sets.filter(x=>x.entryId===eid).sort((a,b)=>a.idx-b.idx),exOfE=eid=>(LOGH.entries.find(e=>e.id===eid)||{}).exerciseId;
+function logDerive(){LPR=(RD&&window.PRS)?PRS.detect(RD,LOGH,{aliases:{}}):{};for(const k of Object.keys(LOGS))delete LOGS[k];
+  for(const s of LOGH.sessions){if(s.status!=='completed'||!String(s.startedAt).startsWith('2026-10'))continue;const xs=LOGH.sets.filter(x=>x.sessionId===s.id&&x.kind==='working'&&x.done);
+    LOGS[sesDay(s)]={sid:s.id,n:s.label,min:Math.round((Date.parse(s.endedAt)-Date.parse(s.startedAt))/6e4),sets:xs.length,volU:s.unit,vol:xs.reduce((a,x)=>a+(+x.load||0)*x.reps,0),pr:Object.keys(LPR[s.id]||{}).length}}}
+const volTxt=w=>{const v=w.volU===S.unit?w.vol:w.volU==='lb'?w.vol/KG_LB:w.vol*KG_LB;return `${Math.round(v).toLocaleString('en-US')} ${S.unit}`};
+// sets per muscle in one session: the same effective-set model as Build's Day map (progcheck analytics), shaded with the same ramp
+function sesMus(sid){if(!RD||!window.PCHECK)return {};const tiles=entsOf(sid).map(e=>({id:e.exerciseId,sets:setsOfE(e.id).filter(x=>x.kind==='working'&&x.done&&x.reps>0).length})).filter(t=>t.sets&&RD.EX[t.id]);
+  if(!tiles.length)return {};const A=PCHECK.analytics(RD,[{day:'mon',tiles}],'intermediate'),o={};for(const [m,v] of Object.entries(A.muscles))if(v.raw>0)o[m]=v.raw;return o}
+const RAMPL=r=>!(r>0)?0:r>=5?4:r>=3?3:r>=1.5?2:1,rampFill=r=>{const l=RAMPL(r);return l?`var(--ramp-${l})`:null};
+const rampVol=m=>{const o={};for(const [k,v] of Object.entries(m)){const f=rampFill(v);if(f)o[k]=f}return o};
+const rampLegend=(t='sets')=>`<span class="mleg mlday"><i style="background:var(--ramp-1)"></i>&lt;1.5<i style="background:var(--ramp-2)"></i>1.5<i style="background:var(--ramp-3)"></i>3<i style="background:var(--ramp-4)"></i>5+ ${t}</span>`;
+// mini body map for Log rows: two shared <symbol>s (front/back); each row only sets CSS variables --mm-<muscle>, so 12 rows stay light
+function mmSyms(){if($('#mmsyms')||!window.MM)return;const d=document.createElement('div');
+  d.innerHTML=`<svg id="mmsyms" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>${['front','back'].map(s=>{const m=MM[s],[,,w,h]=m.vb.split(' ');
+    return `<symbol id="mm-${s}" viewBox="0 0 ${w} ${h}"><path d="${m.outline.join(' ')}" fill="var(--map-base)"/>${m.m.map(([,reg,dd])=>{const mu=REG2M(reg);return `<path d="${dd}" fill="${mu?`var(--mm-${mu},var(--map-empty))`:'var(--map-base)'}" stroke="var(--paper)" stroke-width="8"/>`}).join('')}</symbol>`}).join('')}</defs></svg>`;
+  document.body.appendChild(d.firstChild)}
+function miniMap(vol){mmSyms();const st=Object.entries(vol).map(([m,v])=>`--mm-${m}:${v}`).join(';');
+  return `<span class="lmini" style="${st}" data-mus="${Object.keys(vol).join(' ')}" aria-hidden="true">${['front','back'].map(s=>`<svg viewBox="${(window.MM&&MM[s].vb)||'0 0 1024 1536'}"><use href="#mm-${s}"/></svg>`).join('')}</span>`}
+const logRow=d=>{const w=LOGS[d],dt=new Date(2026,9,d),s=sesOf(w.sid),nt=(s&&s.notes)||'';return `<div class="swipe" data-d="${d}"><button class="del">Delete</button><div class="in">
+  <button class="row lrow" data-go="#log-d${d}" data-d="${d}"><div class="ld"><span>${WD[(dt.getDay()+6)%7]}</span><b>${d}</b></div>
+   <div class="grow"><div class="t1">${esc(w.n)}${w.pr?` <span class="badge">${w.pr} PR</span>`:''}</div><div class="t2 num">${w.min} min · ${w.sets} sets · ${volTxt(w)}</div>${nt?`<div class="t3 lnote">${esc(nt)}</div>`:''}</div>${miniMap(rampVol(sesMus(w.sid)))}${CHEV}</button></div></div>`};
+// ---- Log detail (#log-d<day>): PR badges, body map, e1RM overlay chart, Edit
+const PRL={weight:'Weight PR',set_volume:'Volume PR',e1rm:'e1RM PR',reps_at_load:'Rep PR'};
+const hm=iso=>{let h=+iso.slice(11,13);const m=iso.slice(14,16),ap=h>=12?'PM':'AM';h=h%12||12;return `${h}:${m} ${ap}`};
+const showLoad=(v,from,id)=>v===''||v==null?'—':cvt(+v,from,S.unit,id);
+const kgShow=kg=>S.unit==='kg'?kg:kg*KG_LB;
+// e1RM per session per exercise: best working set with reps <= logger.e1rm_max_reps (10), effective load as prs.py flatten (bodyweight share included)
+function e1Table(){const fl=PROGRESS.flatten(Object.assign({},RD,{_lr:undefined,aliases:{}}),LOGH),out=[];
+  for(const q of fl){const b={};for(const x of q.sets){const v=PRS.e1rmSet(RD,x.load_kg,x.reps,x.kind);if(v!=null)b[x.ex]=Math.max(b[x.ex]||0,v)}out.push({sid:q.s.id,day:sesDay(q.s),best:b})}return out}
+function e1Chart(sid){if(!RD||!window.PRS||!window.PROGRESS)return '<p class="foot">Chart needs the logger rules.</p>';
+  const T=e1Table(),vi=T.findIndex(t=>t.sid===sid);if(vi<0)return '';const exs=Object.keys(T[vi].best);if(!exs.length)return '<p class="foot">No sets of 10 reps or fewer with load in this workout.</p>';
+  const W=340,H=176,pl=34,pr=10,pt=10,pb=22,days=T.map(t=>t.day),x0=Math.min(...days),x1=Math.max(...days),X=d=>pl+(x1>x0?(d-x0)/(x1-x0):.5)*(W-pl-pr);
+  const ser=exs.map((ex,i)=>{const prev=T.slice(0,vi).map(t=>t.best[ex]).filter(v=>v!=null),base=prev.length?Math.max(...prev):T[vi].best[ex];
+    return {ex,i,base,pts:T.map(t=>t.best[ex]!=null?{day:t.day,sid:t.sid,v:t.best[ex],p:t.best[ex]/base*100}:null).filter(Boolean)}});
+  const all=ser.flatMap(s=>s.pts.map(p=>p.p)),lo=Math.floor(Math.min(90,...all)/5)*5,hi=Math.ceil(Math.max(110,...all)/5)*5,Y=p=>pt+(hi-p)/(hi-lo)*(H-pt-pb);
+  const grid=[lo,100,hi].map(p=>`<line x1="${pl}" x2="${W-pr}" y1="${Y(p)}" y2="${Y(p)}" class="${p===100?'g100':'gl'}"/><text x="${pl-4}" y="${Y(p)+3.5}" text-anchor="end">${p}%</text>`).join('');
+  const vx=X(T[vi].day),u=S.unit;
+  const lines=ser.map(s=>`<g class="ser" style="--c:var(--series-${s.i%6+1})"><polyline points="${s.pts.map(p=>`${X(p.day)},${Y(p.p)}`).join(' ')}"/>${s.pts.map(p=>`<circle class="ept${p.sid===sid?' cur':''}" cx="${X(p.day)}" cy="${Y(p.p)}" r="${p.sid===sid?4.5:3.2}"/><circle class="ehit" cx="${X(p.day)}" cy="${Y(p.p)}" r="12" data-e1="${esc(`${exNameP(s.ex)} · Oct ${p.day}: ${nfmt(kgShow(p.v).toFixed(1))} ${u} e1RM · ${Math.round(p.p)}% of the previous best (${nfmt(kgShow(s.base).toFixed(1))} ${u})`)}" data-ex="${s.ex}" data-day="${p.day}" data-abs="${nfmt(kgShow(p.v).toFixed(1))}" data-unit="${u}"/>`).join('')}</g>`).join('');
+  return `<div class="e1c"><svg viewBox="0 0 ${W} ${H}" class="e1svg" role="img" aria-label="Estimated 1RM over time, percent of each exercise's previous best">${grid}
+     <line x1="${vx}" x2="${vx}" y1="${pt}" y2="${H-pb}" class="gnow"/>${[...new Set(days)].map(d=>`<text x="${X(d)}" y="${H-6}" text-anchor="middle" class="dx">${d}</text>`).join('')}${lines}</svg>
+   <div class="ctip" id="ctip" hidden></div>
+   <div class="eleg">${ser.map(s=>`<span><i style="background:var(--series-${s.i%6+1})"></i>${exNameP(s.ex)}</span>`).join('')}</div>
+   <p class="foot">Estimated 1RM (load × (1 + reps/30), sets of ${RD.rules.logger.e1rm_max_reps} reps or fewer) as % of that exercise's best before this workout. Tap a point for the value. A model, not a tested max.</p></div>`}
+V.logDay=()=>{logLoad();const d=S.logDay,w=LOGS[d],nav=t=>`<div class="nav"><div class="l"><button class="back" data-go="#log">${I('chevL',2.4)}Log</button></div><div class="t">${t}</div><div class="r">${w?`<button class="btn plain strong" data-act="ledit" data-d="${d}">Edit</button>`:''}</div></div>`;
+  if(!w)return nav('')+'<p class="foot">No workout on this day.</p>';
+  const s=sesOf(w.sid),dt=new Date(2026,9,d),P=LPR[s.id]||{},vm=rampVol(sesMus(s.id)),npr=Object.values(P).reduce((a,t)=>a+Object.keys(t).length,0);
+  const exHtml=e=>{const id=e.exerciseId,rec=P[id]||{},badgeSet={};for(const [k,r] of Object.entries(rec))(badgeSet[r.set_id]=badgeSet[r.set_id]||[]).push(k);let n=0;
+    return `<div class="ghead gx ldx" data-ex="${id}">${gl(id)}<span class="grow">${exName(id)}</span>${Object.keys(rec).map(k=>`<span class="badge prb" data-pr="${k}">${PRL[k]}</span>`).join('')}</div>
+     <div class="group lsets">${setsOfE(e.id).map(x=>`<div class="row lset${badgeSet[x.id]?' haspr':''}"><span class="sn ${x.kind==='warmup'?'w':''}">${x.kind==='warmup'?'W':++n}</span><span class="grow num">${showLoad(x.load,s.unit,id)} ${S.unit} × ${x.reps}</span>${badgeSet[x.id]?`<span class="badge">PR</span>`:''}</div>`).join('')}</div>`};
+  return nav(`${WD[(dt.getDay()+6)%7]}, Oct ${d}`)+`<div class="ldh"><h1>${esc(s.label)}</h1><p class="sub">${hm(s.startedAt)} – ${hm(s.endedAt)} · ${w.min} min</p>
+    <div class="ldstats"><div><b class="num">${w.sets}</b><span>sets</span></div><div><b class="num">${volTxt(w).split(' ')[0]}</b><span>${S.unit} volume</span></div><div><b class="num acc" title="${npr} PR badges">${w.pr}</b><span>lifts with a PR</span></div></div></div>
+   <div class="ghead">Session notes</div><div class="card lnotes">${s.notes?esc(s.notes):`<span class="sub">No notes.</span> <button class="btn plain" data-act="ledit" data-d="${d}">Add</button>`}</div>
+   <div class="ghead">Muscles trained</div><div class="card mapcard ldmap"><div class="maps">${map('front',vm)}${map('back',vm)}</div><div class="legend">${rampLegend('sets this workout')}</div></div>
+   <div class="ghead">Strength trend</div><div class="card" id="e1card">${e1Chart(s.id)}</div>
+   ${entsOf(s.id).map(exHtml).join('')}<p class="foot">PRs follow Coach's rules (logger.prs): the first logged session of an exercise is the baseline, ties within half a load step or 1% are not PRs. Editing a workout recalculates them.</p>`};
+function afterLogDay(){}
+document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest('[data-e1]');if(!h)return;const t=$('#ctip');if(!t)return;
+  $$('.ept.sel').forEach(c=>c.classList.remove('sel'));const dot=h.previousElementSibling;dot&&dot.classList.add('sel');t.textContent=h.dataset.e1;t.hidden=false;t.dataset.ex=h.dataset.ex;t.dataset.day=h.dataset.day});
+function editSheet(d){logLoad();
+  const w=LOGS[d],dt=new Date(2026,9,d),lbl=`${WD[(dt.getDay()+6)%7]}, Oct ${d}`;
+  if(!w){const a=sheet({title:lbl,body:`<div class="nolog"><div class="nl-ico">${I('log',1.6)}</div><h3>No workout logged</h3><p class="sub">Forgot to log it? Add it now and it counts toward that week.</p>
+    <div class="pad"><button class="btn accent block" data-x="add">${I('plus',2)} Add workout for ${lbl}</button></div>
+    <div class="ghead">Or copy a routine day</div><div class="group">${ROUTINES[0].days.map(x=>`<button class="row" data-x="add"><div class="grow"><div class="t1">${x.n}</div><div class="t2">${x.ex.length} exercises · ${setsOf(x)} sets</div></div>${CHEV}</button>`).join('')}</div></div>`});
+    a.el.addEventListener('click',e=>{if(e.target.closest('[data-x=add]')){a.close();setTimeout(()=>editSheet(15),380)}});return a}
+  const s=sesOf(w.sid);
+  const srow=(i,x,id)=>`<div class="swipe"><button class="del">Delete</button><div class="in"><div class="row er" data-kind="${x.kind}"><span class="sn">${x.kind==='warmup'?'W':i}</span>
+        <input class="fld" data-kind="w" readonly inputmode="none" value="${x.load===''?'':showLoad(x.load,s.unit,id)}" placeholder="—" aria-label="Weight (${S.unit})"><span class="x">${S.unit}</span><span class="x">×</span><input class="fld" data-kind="r" readonly inputmode="none" value="${x.reps===''?'':x.reps}" placeholder="—" aria-label="Reps"><span class="x">reps</span></div></div></div>`;
+  const rows=e=>{let n=0;return setsOfE(e.id).map(x=>srow(x.kind==='warmup'?0:++n,x,e.exerciseId)).join('')};
+  const sh=sheet({title:'Edit workout',cls:'tall grouped',left:`<button class="btn plain" data-x="close">Cancel</button>`,right:`<button class="btn plain strong" data-x="save">Save</button>`,
+    body:`<div class="group">
+      <div class="row"><div class="grow t1">Name</div><span class="val">${esc(s.label)}</span></div>
+      <label class="row"><div class="grow t1">Date</div><input class="pill ein" type="date" id="ed-date" value="${s.startedAt.slice(0,10)}" min="2026-10-01" max="2026-10-${String(TODAY).padStart(2,'0')}"></label>
+      <label class="row"><div class="grow t1">Started</div><input class="pill ein" type="time" id="ed-time" value="${s.startedAt.slice(11,16)}"></label>
+      <label class="row"><div class="grow t1">Duration</div><span class="pill num"><input class="ein emin" id="ed-min" type="number" inputmode="numeric" min="1" max="300" value="${w.min}"> min</span></label></div>
+      <div class="ghead">Session notes</div><div class="group"><textarea class="ednotes" id="ed-notes" rows="3" placeholder="How did it go?">${esc(s.notes||'')}</textarea></div>
+      ${entsOf(s.id).map(e=>`<div class="ghead gx">${gl(e.exerciseId)}${exName(e.exerciseId)}</div><div class="group eset" data-eid="${e.id}">${rows(e)}
+        <button class="row addrow" data-x="addrow">${I('plus',2)} Add set</button></div>`).join('')}
+      <div class="group" style="margin-top:20px"><button class="row addrow" data-x="tray">${I('plus',2)} Add exercise</button></div>
+      <div class="group" style="margin-top:20px"><button class="row dangerrow" data-x="delw">Delete workout</button></div>
+      <p class="foot">Weights in ${S.unit} (Settings › Units). Save recalculates PRs for every workout.</p>`});
+  bindSwipes(sh.el);
+  sh.el.addEventListener('click',e=>{const a=e.target.closest('[data-x]');if(!a)return;const k=a.dataset.x;
+    if(k==='close')sh.close();if(k==='tray')traySheet();if(k==='save'){const nd=saveEdit(s,sh.el);if(nd){sh.close();if(S.scr==='logDay'){if(nd!==S.logDay)go('#log-d'+nd);else render()}else if(S.scr==='log')render()}}
+    if(k==='addrow'){const g=a.parentNode,n=$$('.swipe',g).filter(r=>$('.er',r).dataset.kind!=='warmup').length+1;a.insertAdjacentHTML('beforebegin',srow(n,{kind:'working',load:'',reps:''}));bindSwipes(g)}
+    if(k==='delw')confirmSheet('Delete this workout?',`${s.label} on ${lbl} is removed from your Log and PRs are recalculated.`,'Delete workout',()=>{sh.close();
+      LOGH.sessions=LOGH.sessions.filter(x=>x.id!==s.id);LOGH.entries=LOGH.entries.filter(x=>x.sessionId!==s.id);LOGH.sets=LOGH.sets.filter(x=>x.sessionId!==s.id);sv(LOG_K,LOGH);logDerive();toast('Workout deleted · PRs recalculated');go('#log')})});
+  return sh;
+}
+// Save: date (Oct 1 – today, one workout per day), start time, duration, notes, every set's weight and reps. Weights are typed in
+// the display unit, so the session is stored in that unit from now on. Then PRs are recomputed over the whole history.
+function saveEdit(s,el){const date=$('#ed-date',el).value,tm=$('#ed-time',el).value,min=Math.round(+$('#ed-min',el).value||0),notes=$('#ed-notes',el).value.trim();
+  if(!/^2026-10-\d\d$/.test(date)||+date.slice(8)<1||+date.slice(8)>TODAY){toast(`Pick a day from Oct 1 to Oct ${TODAY}`);return 0}
+  const nd=+date.slice(8);if(nd!==sesDay(s)&&LOGS[nd]){toast(`Oct ${nd} already has a workout`);return 0}
+  if(!/^\d\d:\d\d$/.test(tm)){toast('Pick a start time');return 0}if(!(min>=1&&min<=300)){toast('Duration: 1 to 300 min');return 0}
+  const st=`${date}T${tm}:00-07:00`;s.date=s.startedAt=st;s.endedAt=isoPlus(st,min);s.notes=notes;s.unit=S.unit;
+  for(const g of $$('.eset',el)){const eid=g.dataset.eid;LOGH.sets=LOGH.sets.filter(x=>x.entryId!==eid);let idx=0;
+    for(const r of $$('.row.er',g)){const sw=r.closest('.swipe');if(!sw||!sw.isConnected||sw.style.height==='0px')continue;const wv=$('[data-kind=w]',r).value,rv=$('[data-kind=r]',r).value;if(wv===''&&rv==='')continue;
+      LOGH.sets.push({id:`${eid}-x${idx}`,entryId:eid,sessionId:s.id,idx:idx++,kind:r.dataset.kind||'working',load:wv===''?0:+wv,reps:Math.trunc(+rv||0),rir:null,done:true})}}
+  sv(LOG_K,LOGH);logDerive();const n=Object.values(LPR[s.id]||{}).reduce((a,t)=>a+Object.keys(t).length,0);toast(`Saved · PRs recalculated (${n} in this workout)`);return nd}
+V.log=()=>(logLoad(),'')+header('Log',`<button class="ibtn" data-act="day" data-d="${TODAY}" aria-label="Add workout">${I('plus',2)}</button>`)+cal()+
   `<div class="sec"><h2>${MONTHS[S.month]}</h2><span class="more num">${S.month===9&&S.year===2026?Object.keys(LOGS).length:0} workouts</span></div>
    ${S.month===9&&S.year===2026?`<div class="group">${Object.keys(LOGS).map(Number).sort((a,b)=>b-a).map(logRow).join('')}</div>`:'<div class="card emptyc sub">No workouts this month.</div>'}
    <p class="foot">Swipe left on a workout to delete it. Tap any day to add one after the fact.</p>`;
@@ -486,32 +654,6 @@ function monthSheet(){
   s.el.addEventListener('click',e=>{const y=e.target.closest('[data-y]'),m=e.target.closest('[data-m]');
     if(y){S.year=+y.dataset.y;$$('[data-y]',s.el).forEach(c=>c.classList.toggle('on',c===y))}
     if(m){S.month=+m.dataset.m;if(m.dataset.today)S.year=2026;s.close();render()}if(e.target.closest('[data-x=close]')){s.close();render()}});
-  return s;
-}
-function editSheet(d){
-  const w=LOGS[d],dt=new Date(2026,9,d),lbl=`${WD[(dt.getDay()+6)%7]}, Oct ${d}`;
-  if(!w){const a=sheet({title:lbl,body:`<div class="nolog"><div class="nl-ico">${I('log',1.6)}</div><h3>No workout logged</h3><p class="sub">Forgot to log it? Add it now and it counts toward that week.</p>
-    <div class="pad"><button class="btn accent block" data-x="add">${I('plus',2)} Add workout for ${lbl}</button></div>
-    <div class="ghead">Or copy a routine day</div><div class="group">${ROUTINES[0].days.map(x=>`<button class="row" data-x="add"><div class="grow"><div class="t1">${x.n}</div><div class="t2">${x.ex.length} exercises · ${setsOf(x)} sets</div></div>${CHEV}</button>`).join('')}</div></div>`});
-    a.el.addEventListener('click',e=>{if(e.target.closest('[data-x=add]')){a.close();setTimeout(()=>editSheet(15),380)}});return a}
-  const exs=[['barbell-bench-press',[['230','8'],['230','8'],['225','7']]],['barbell-row',[['185','11'],['185','10'],['185','9']]],['lat-pulldown',[['160','12'],['150','11']]]];
-  const srow=(i,x)=>`<div class="swipe"><button class="del">Delete</button><div class="in"><div class="row er"><span class="sn">${i}</span>
-        <input class="fld" data-kind="w" readonly inputmode="none" value="${x[0]}" placeholder="—"><span class="x">lb</span><span class="x">×</span><input class="fld" data-kind="r" readonly inputmode="none" value="${x[1]}" placeholder="—"><span class="x">reps</span></div></div></div>`;
-  const s=sheet({title:'Edit workout',cls:'tall grouped',left:`<button class="btn plain" data-x="close">Cancel</button>`,right:`<button class="btn plain strong" data-x="close">Save</button>`,
-    body:`<div class="group">
-      <div class="row"><div class="grow t1">Name</div><span class="val">${w.n}</span></div>
-      <div class="row"><div class="grow t1">Date</div><span class="pill">${lbl}, 2026</span></div>
-      <div class="row"><div class="grow t1">Started</div><span class="pill">6:12 PM</span></div>
-      <div class="row"><div class="grow t1">Duration</div><span class="pill num">${w.min} min</span></div></div>
-      ${exs.map(([id,ss])=>`<div class="ghead gx">${gl(id)}${exName(id)}</div><div class="group eset">${ss.map((x,i)=>srow(i+1,x)).join('')}
-        <button class="row addrow" data-x="addrow">${I('plus',2)} Add set</button></div>`).join('')}
-      <div class="group" style="margin-top:20px"><button class="row addrow" data-x="tray">${I('plus',2)} Add exercise</button></div>
-      <div class="group" style="margin-top:20px"><button class="row dangerrow" data-x="delw">Delete workout</button></div>`});
-  bindSwipes(s.el);
-  s.el.addEventListener('click',e=>{const a=e.target.closest('[data-x]');if(!a)return;const k=a.dataset.x;
-    if(k==='close')s.close();if(k==='tray')traySheet();
-    if(k==='addrow'){const g=a.parentNode,n=$$('.swipe',g).length+1;a.insertAdjacentHTML('beforebegin',srow(n,['','']));bindSwipes(g)}
-    if(k==='delw')confirmSheet('Delete this workout?',`${w.n} on ${lbl} is removed from your Log and PRs are recalculated.`,'Delete workout',()=>{s.close();toast('Workout deleted · Undo')})});
   return s;
 }
 
@@ -570,28 +712,34 @@ function swapSheet(id,opt={}){
 }
 
 // 8. PLATES
-const BARS=[['Olympic',45],['SSB',70],['Smith',15],['EZ',35],['Trap',75]];
-const PL=[[45,'#0b0b0c',100,15],[35,'#2a2a2d',90,13],[25,'#47474b',78,11],[10,'#6e6e73',58,9],[5,'#97979c',46,7],[2.5,'#E8430C',38,6]];
+// Units (round 2): bars, plate sizes and the plate list follow Settings › Units. kg plates = rules.json gym_profile_default.kg.
+const BARS_U={lb:[['Olympic',45],['SSB',70],['Smith',15],['EZ',35],['Trap',75]],kg:[['Olympic',20],['SSB',30],['Smith',7],['EZ',10],['Trap',25]]};
+const PL_U={lb:[[45,'#0b0b0c',100,15],[35,'#2a2a2d',90,13],[25,'#47474b',78,11],[10,'#6e6e73',58,9],[5,'#97979c',46,7],[2.5,'#E8430C',38,6]],
+  kg:null}; // kg sizes come from the data (gym_profile_default.kg.plates + a 25 kg plate), largest first, styled by rank
+const PL_STYLE=[['#0b0b0c',100,16],['#1e1e21',100,15],['#2a2a2d',90,13],['#47474b',78,11],['#6e6e73',58,9],['#97979c',46,7],['#E8430C',38,6]];
+const plKg=()=>{const ws=[...new Set([25,...(RD?RD.rules.logger.gym_profile_default.kg.plates.map(p=>+p.weight):[20,15,10,5,2.5])])].sort((a,b)=>b-a);return ws.map((w,i)=>[w,...PL_STYLE[Math.min(i,PL_STYLE.length-1)]])};
+let BARS=BARS_U.lb,PL=PL_U.lb;const unitPlates=()=>{BARS=BARS_U[S.unit];PL=S.unit==='kg'?plKg():PL_U.lb};
 // Plate sizes live in the gym profile (rules.json logger.gym_profile_default.lb.plates [{weight,pairs}]); toggling a size
 // off/on saves the gym's plate list to localStorage (apechit.sb.gym) and ranking sees the same list (gymProfile()).
 const LSG='apechit.sb.gym';let GYM=(()=>{try{return JSON.parse(localStorage.getItem(LSG))}catch(e){return null}})();
-const defPlates=()=>RD?RD.rules.logger.gym_profile_default.lb.plates:PL.map(([w])=>({weight:w,pairs:2}));
-const gymPlates=()=>(GYM&&Array.isArray(GYM.plates))?GYM.plates:defPlates();
+const defPlates=()=>RD?RD.rules.logger.gym_profile_default[S.unit].plates:PL.map(([w])=>({weight:w,pairs:2}));
+const GKEY=()=>S.unit==='kg'?'plates_kg':'plates'; // lb list stays under GYM.plates (ranking reads it); kg list under GYM.plates_kg
+const gymPlates=()=>(GYM&&Array.isArray(GYM[GKEY()]))?GYM[GKEY()]:defPlates();
 function togglePlate(w){const all=defPlates(),cur=gymPlates(),on=cur.some(p=>p.weight===w);
-  const next=on?cur.filter(p=>p.weight!==w):[...cur,all.find(p=>p.weight===w)||{weight:w,pairs:2}].sort((a,b)=>b.weight-a.weight);GYM=Object.assign({},GYM||{},{plates:next});sv(LSG,GYM)}
+  const next=on?cur.filter(p=>p.weight!==w):[...cur,all.find(p=>p.weight===w)||{weight:w,pairs:2}].sort((a,b)=>b.weight-a.weight);GYM=Object.assign({},GYM||{},{[GKEY()]:next});sv(LSG,GYM)}
 function plateCalc(total,bar,plates){let side=(total-bar)/2;const out=[];if(side<0)return {out,left:0};for(const p of (plates||gymPlates()).slice().sort((a,b)=>b.weight-a.weight)){let n=0;while(side>=p.weight-1e-9&&n<(p.pairs||99)){out.push(p.weight);side-=p.weight;n++}}return {out,left:Math.round(side*2*100)/100}}
 // target weight: the exercise's lb field (first set not ticked: typed value, else the value shown in the field)
 function plateTarget(xi){const blk=$(`.exb[data-xi="${xi}"]`)||$$('.exb').find(b=>$('.plate,[data-act=plates]',b));if(!blk)return null;
   const rows=$$('.srow',blk),r=rows.find(x=>!x.classList.contains('done'))||rows[rows.length-1];if(!r)return null;const f=$('[data-kind=w]',r),v=parseFloat(f.value||f.placeholder);
   const sn=$('.sn',r).textContent;return isFinite(v)&&v>0?{w:v,set:sn==='W'?'warm-up':'set '+sn,id:blk.dataset.ex,typed:!!f.value}:null}
-function plateBody(){
+function plateBody(){unitPlates();if(S.plateU!==S.unit){S.plate=+cvt(S.plate,S.plateU||'lb',S.unit,'barbell-bench-press');S.plateU=S.unit}
   const bar=(BARS.find(b=>b[0]===S.bar)||['Custom',20])[1],pc=plateCalc(S.plate,bar),ps=pc.out,on=new Set(gymPlates().map(p=>p.weight)),sizes=[...new Set([...defPlates().map(p=>p.weight),...PL.map(p=>p[0])])].sort((a,b)=>b-a);
   let off=0;const side=ps.map(w=>{const p=PL.find(x=>x[0]===w),r=`<rect x="${off}" y="${-p[2]*.55}" width="${p[3]}" height="${p[2]*1.1}" rx="3" fill="${p[1]}"/>`;off+=p[3]+1.5;return r}).join('');
   const sv=`<svg viewBox="-175 -64 350 128" class="barsvg"><rect x="-172" y="-5" width="344" height="10" rx="4" fill="#cfcfd4"/><rect x="-58" y="-3.5" width="116" height="7" fill="#b4b4b9"/>
     <rect x="58" y="-13" width="6" height="26" rx="2" fill="#8e8e93"/><rect x="-64" y="-13" width="6" height="26" rx="2" fill="#8e8e93"/>
     <g transform="translate(66,0)">${side}</g><g transform="translate(-66,0) scale(-1,1)">${side}</g></svg>`;
   const per={};ps.forEach(w=>per[w]=(per[w]||0)+1);
-  return `<div class="pw"><button class="rnd" data-pl="-5" aria-label="Minus 5">−</button><div class="pv"><b class="num">${S.plate}</b><span>${S.unit}</span></div><button class="rnd" data-pl="5" aria-label="Plus 5">+</button></div>
+  return `<div class="pw"><button class="rnd" data-pl="-${PSTEP()}" aria-label="Minus ${PSTEP()}">−</button><div class="pv"><b class="num">${S.plate}</b><span>${S.unit}</span></div><button class="rnd" data-pl="${PSTEP()}" aria-label="Plus ${PSTEP()}">+</button></div>
    ${S.plateFrom?`<p class="pfrom sub">From the ${S.unit} field · ${exNameP(S.plateFrom.id)}, ${S.plateFrom.set}${S.plateFrom.typed?'':' (last time)'}</p>`:''}
    ${sv}<div class="pside">${ps.length?Object.entries(per).sort((a,b)=>b[0]-a[0]).map(([w,n])=>`<span class="pc"><b class="num">${n} ×</b> ${w}</span>`).join(''):'<span class="sub">Bar only</span>'}<span class="sub">per side · bar ${bar}</span></div>
    ${pc.left>0?`<p class="pleft">${pc.left} ${S.unit} can't be loaded with the plates turned on · nearest ${S.plate-pc.left} ${S.unit}</p>`:''}
@@ -601,11 +749,12 @@ function plateBody(){
    <div class="chips barpick noswipe">${BARS.map(([n,w])=>`<button class="chip ${S.bar===n?'on':''}" data-bar="${n}">${n} <span class="num op">${w}</span></button>`).join('')}<button class="chip" data-bar="Custom">${I('plus',2.2)} Custom</button></div>
    <p class="foot" style="padding:14px 20px 4px">Plate sizes are saved to your <b>Home gym</b> profile.</p>`;
 }
-function plateSheet(xi){const t=plateTarget(xi==null?0:xi);S.plateFrom=t;if(t)S.plate=t.w;
+const PSTEP=()=>S.unit==='kg'?2.5:5;
+function plateSheet(xi){const t=plateTarget(xi==null?0:xi);S.plateFrom=t;if(t){S.plate=t.w;S.plateU=S.unit}
   const s=sheet({title:'Plate calculator',right:`<button class="btn plain" data-x="close">Done</button>`,body:`<div id="plb">${plateBody()}</div>`});
   s.el.addEventListener('click',e=>{const a=e.target.closest('[data-pl],[data-bar],[data-x],[data-pt]');if(!a)return;if(a.dataset.x)return s.close();
     if(a.dataset.pt){togglePlate(+a.dataset.pt);const w=+a.dataset.pt;toast(gymPlates().some(p=>p.weight===w)?`${w} ${S.unit} plates on`:`${w} ${S.unit} plates off · saved to Home gym`)}
-    if(a.dataset.pl){S.plate=Math.max(15,S.plate+ +a.dataset.pl);S.plateFrom=null}if(a.dataset.bar)S.bar=a.dataset.bar;$('#plb',s.el).innerHTML=plateBody()});return s}
+    if(a.dataset.pl){S.plate=Math.max(S.unit==='kg'?7:15,+(S.plate+ +a.dataset.pl).toFixed(2));S.plateFrom=null}if(a.dataset.bar)S.bar=a.dataset.bar;$('#plb',s.el).innerHTML=plateBody()});return s}
 
 // clock sheet: Pause + fast minute wheel to roll the time back
 function clockSheet(){
@@ -649,7 +798,8 @@ V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#b
    <button class="row"><span class="ico gr">${I('build',1.8)}</span><div class="grow"><div class="t1">Gold's Gym</div><div class="t2">Commercial · full equipment</div></div>${CHEV}</button>
    <button class="row addrow">${I('plus',2)} Add gym</button></div>
   <div class="ghead">Units & bars</div>
-  <div class="group"><div class="row"><div class="grow t1">Units</div><div class="seg sm2" id="unitseg">${['lb','kg'].map(u=>`<button class="${S.unit===u?'on':''}" data-act="unit" data-v="${u}">${u}</button>`).join('')}</div></div>
+  <div class="group"><div class="row"><div class="grow t1">Appearance</div><div class="seg sm3" id="themeseg">${[['system','System'],['light','Light'],['dark','Dark']].map(([v,l])=>`<button class="${getTheme()===v?'on':''}" data-act="theme" data-v="${v}">${l}</button>`).join('')}</div></div></div>
+  <div class="group" style="margin-top:20px"><div class="row"><div class="grow t1">Units</div><div class="seg sm2" id="unitseg">${['lb','kg'].map(u=>`<button class="${S.unit===u?'on':''}" data-act="unit" data-v="${u}">${u}</button>`).join('')}</div></div>
    <button class="row"><div class="grow t1">Bars</div><span class="val">5 bars</span>${CHEV}</button>
    <button class="row"><div class="grow t1">Week starts on</div><span class="val">Monday</span>${CHEV}</button></div>
   <div class="ghead">Rest timer</div>
@@ -673,13 +823,13 @@ const VFILL={under:'var(--vol-under)',in:'var(--vol-in-range)',amber:'var(--vol-
 // at min the fill is exactly var(--vol-in-range); toward max it is mixed with ink, up to IN_DARK %. Other bands are flat (VFILL).
 const IN_DARK=40;
 const volFill=(n,min,max)=>{const st=vStat(n,min,max);if(st!=='in')return VFILL[st];const p=max>min?Math.min(1,Math.max(0,(n-min)/(max-min))):0,k=Math.round(p*IN_DARK);
-  return k?`color-mix(in oklch, var(--vol-in-range), var(--ink) ${k}%)`:VFILL.in};
+  return k?`color-mix(in oklch, var(--vol-in-range), var(--vol-mix) ${k}%)`:VFILL.in};
 const volLegend=()=>`<div class="legend vleg">${['under','in','amber','red'].map(k=>`<span><i style="background:${VFILL[k]}"></i>${VLAB[k]}</span>`).join('')}</div><p class="foot vfoot">Amber above max, red above ${VB.red_factor!=null?VB.red_factor+'×':'(factor pending)'} max · rules.json volume_bands</p>`;
-const FILL=v=>typeof v==='string'?(VFILL[v]||v):v==null?'#dcdce0':v>=.95?'#0b0b0c':v>=.75?'#5a5a5f':v>=.45?'#a8a8ad':'#c4c4c9';
+const FILL=v=>typeof v==='string'?(VFILL[v]||v):v==null?'var(--map-empty)':v>=.95?'var(--heat-4)':v>=.75?'var(--heat-3)':v>=.45?'var(--heat-2)':'var(--heat-1)'; // tokens so the map reads in dark mode
 function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
-  return `<svg viewBox="0 0 ${w} ${h}" class="mmap" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="#ececef" stroke="#d6d6da" stroke-width="3"/>
-   ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="#ececef" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */return `<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'#d9d9dd'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"/>`}).join('')}
-   ${side==='front'&&opt.ape?`<g class="ape-head"><circle cx="512" cy="148" r="92" fill="#fff" stroke="var(--accent)" stroke-width="7" stroke-dasharray="18 13"/><text x="512" y="138" text-anchor="middle" font-size="46" font-weight="800" fill="var(--accent-press)" font-family="-apple-system,sans-serif">APE</text><text x="512" y="186" text-anchor="middle" font-size="32" fill="#6b6b70" font-family="-apple-system,sans-serif">head slot</text></g>`:''}</svg>`}
+  return `<svg viewBox="0 0 ${w} ${h}" class="mmap" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>
+   ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="var(--map-base)" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */return `<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'var(--map-off)'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"/>`}).join('')}
+   ${side==='front'&&opt.ape?`<g class="ape-head"><circle cx="512" cy="148" r="92" fill="var(--paper)" stroke="var(--accent)" stroke-width="7" stroke-dasharray="18 13"/><text x="512" y="138" text-anchor="middle" font-size="46" font-weight="800" fill="var(--accent-press)" font-family="-apple-system,sans-serif">APE</text><text x="512" y="186" text-anchor="middle" font-size="32" fill="var(--text-2)" font-family="-apple-system,sans-serif">head slot</text></g>`:''}</svg>`}
 const VOL_X=[['traps',8,6,12],['forearms',6,4,12],['obliques',4,4,10],['lower_back',6,4,10],['adductors',4,4,10],['abductors',3,4,10]];
 const volMap=()=>{const o={};[...VOL,...VOL_X].forEach(([m,n,lo,hi])=>o[m]=volFill(n,lo,hi));return o}; // same vStat bands as the panel, in-range shaded from --vol-in-range
 // PROGRESS (round 1, Coach's rules.json progress + data/progress-spec.md): logged workouts only, through logic/progress.js
@@ -827,7 +977,7 @@ async function afterLearn(){
   const fpages=await Promise.all(fun.map(p=>p.status==='final'?eduPage(p.id):Promise.resolve({entry:p})));
   const xi=await exIndex(),xp=(xi.pages||[]).slice().sort((x,y)=>x.rank-y.rank),xf=xp.filter(p=>p.status==='final'),xtop=[...xf,...xp.filter(p=>p.status!=='final')].slice(0,8);
   $('#learnbody').innerHTML=`<div class="card mapcard"><div class="maps">${map('front',vm)}${map('back',vm)}</div>
-    <div class="legend"><span><i style="background:#0b0b0c"></i>Guide ready</span>${nf<mus.length?'<span><i style="background:#c4c4c9"></i>Coming soon</span>':''}</div><p class="maptip">Tap any muscle</p></div>
+    <div class="legend"><span><i style="background:var(--heat-4)"></i>Guide ready</span>${nf<mus.length?'<span><i style="background:var(--heat-1)"></i>Coming soon</span>':''}</div><p class="maptip">Tap any muscle</p></div>
    <div class="sec"><h2>Muscles</h2><span class="more num">${nf} of ${mus.length} ready</span></div>
    <div class="group">${mus.map(p=>`<button class="row ${p.status==='final'?'':'planned'}" data-go="#learn-${p.id}"><div class="grow t1">${p.title}</div>${p.status==='final'?'':'<span class="soon">Coming soon</span>'}${CHEV}</button>`).join('')}</div>
    <div class="sec"><h2>Fundamentals</h2></div>
@@ -885,11 +1035,13 @@ async function afterLearnFund(id){
 function exInfoSheet(id){const e=EX[id]||{rat:{}},rs=Object.entries(e.rat).filter(([,r])=>BAND(r)).sort((a,b)=>b[1]-a[1]),vm={};rs.forEach(([m,r])=>vm[m]=r>=.75?1:r>=.4?.75:.5);
   const s=sheet({body:`<div class="exi"><div class="exi-h">${gl(id)}<div><h3>${exName(id)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${e.eq||''}</p></div></div>
     <div class="mapcard small flat"><div class="maps">${map('front',vm)}${map('back',vm)}</div></div>
-    <div class="group inset0">${rs.map(([m,r])=>`<button class="row" data-go="#learn-${m}"><div class="grow t1">${ML[m]||m}</div>${rate(r)}${CHEV}</button>`).join('')}</div>
+    <div class="group inset0">${rs.map(([m,r])=>`<button class="row" data-go="#learn-${m}"><div class="grow t1">${ML[m]||m}</div>${rate(r)}${CHEV}</button>`).join('')}${!rs.length&&utOf(id)?utRow(utOf(id)):''}</div>
     <p class="foot" style="padding:8px 4px 0">Muscle ratings from exercises.json · tap a muscle to learn about it.</p>
     <div class="pad two"><button class="btn grey" data-x="sw">${I('swap',1.8)} Swap</button><button class="btn accent" data-x="add">${I('plus',2)} Add</button></div></div>`});
   s.el.addEventListener('click',ev=>{if(ev.target.closest('[data-go]'))return s.close();const x=ev.target.closest('[data-x]');if(!x)return;s.close();if(x.dataset.x==='sw')swapSheet(id);else toast('Added to workout')});return s}
-const infoFor=id=>{const e=EX[id];if(!e)return '#learn';const top=Object.entries(e.rat).sort((a,b)=>b[1]-a[1])[0];return top?'#learn-'+top[0]:'#learn'}; // (i) opens the page of the exercise's main muscle
+const infoFor=id=>{const e=EX[id];if(!e)return '#learn';const top=Object.entries(e.rat).sort((a,b)=>b[1]-a[1])[0];return top?'#learn-'+top[0]:utOf(id)?'#learn-'+utOf(id).filter_muscle:'#learn'};
+// untracked_target row (all-zero muscle map): label + tag in place of the muscle ratings
+const utRow=u=>`<div class="row utn" data-ut="${u.id}"><div class="grow"><div class="t1">${u.label}</div><div class="t2">${u.tag}</div></div></div>`; // (i) opens the page of the exercise's main muscle
 
 // ---------------------------------------------------------------- favorites, profile (goals + bias), mock ranking "why" lines
 // Mock state in localStorage. In the rebuild, ranking + reasons come from ONE logic/rank.js (port of Coach's tools/rank.py).
@@ -962,7 +1114,7 @@ async function afterLearnEx(id){
   const live=m=>e.rat[m]!=null?e.rat[m]:(pm[m]||{}).rating||0;
   const ids=j&&j.muscles?j.muscles.map(m=>m.muscle_id):Object.keys(e.rat).filter(m=>e.rat[m]>0);
   const shown=ids.map(m=>[m,live(m)]).sort((a,b)=>b[1]-a[1]),hidden=0;
-  const hit=sect('Muscles hit',`<div class="mhit">${shown.map(([m,r])=>{const x=pm[m]||{};return `<button class="mh" data-r="${r}" data-go="#learn-${m}"><span class="mn">${ML[m]||m}</span><span class="mb ${BAND(r)||'nc'}"><i style="--w:${r*100}%"></i></span><span class="rate ${BAND(r)||'nc'}"><b class="num">${+(+r).toFixed(2)}</b>${XBANDL[BAND(r)||'nc']}</span></button>${x.why?`<p class="mwhy">${x.why} ${x.evidence?ev(x):''}</p>`:''}${(x.region_notes||[]).map(n=>`<p class="mwhy rn"><b>${(window.RNAME||{})[n.region_id]||n.region_id.replace(/_/g,' ')}</b> ${n.text} ${ev(n)}</p>`).join('')}`}).join('')}</div>
+  const hit=sect('Muscles hit',`<div class="mhit">${!shown.length&&utOf(id)?`<div class="utn" data-ut="${utOf(id).id}"><b>${utOf(id).label}</b><p class="sub">${utOf(id).tag}</p></div>`:''}${shown.map(([m,r])=>{const x=pm[m]||{};return `<button class="mh" data-r="${r}" data-go="#learn-${m}"><span class="mn">${ML[m]||m}</span><span class="mb ${BAND(r)||'nc'}"><i style="--w:${r*100}%"></i></span><span class="rate ${BAND(r)||'nc'}"><b class="num">${+(+r).toFixed(2)}</b>${XBANDL[BAND(r)||'nc']}</span></button>${x.why?`<p class="mwhy">${x.why} ${x.evidence?ev(x):''}</p>`:''}${(x.region_notes||[]).map(n=>`<p class="mwhy rn"><b>${(window.RNAME||{})[n.region_id]||n.region_id.replace(/_/g,' ')}</b> ${n.text} ${ev(n)}</p>`).join('')}`}).join('')}</div>
     <p class="foot" style="padding:6px 0 0">Live ratings from exercises.json. Bands are a model: main mover 0.75+, helper 0.4–0.75, minor 0.25–0.4, not counted under 0.25.</p>`,true,shown.length);
   const has=a=>a&&a.length,ph=j&&(j.placeholder||/PLACEHOLDER/.test(j.notice||''));
   const tw=t=>t.change?{h:t.change,tg:(t.target_muscle_ids||[]).map(m=>ML[m]||m).join(', '),k:t.kind}:{h:t.tweak,tg:ML[t.target]||t.target,k:''};
@@ -1033,12 +1185,14 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  'swap-c':['build','build',0,0,()=>{SC.day='mon';SC.note='Worked example (c): goal Longevity & joint-friendly.';PREFS_OVR.p={goals:['joint_friendly'],bias_muscles:[],favorites:[]}},()=>swapSheet('barbell-bench-press',{n:8,debug:1})],
  'swap-d':['build','build',0,0,()=>{SC.day='mon';SC.note='Worked example (d): bias upper chest; incline presses count as related pattern.';PREFS_OVR.p={goals:[],bias_muscles:['chest_upper'],favorites:[]}},()=>swapSheet('barbell-bench-press',{n:8,debug:1})],
  log:['log','log'],'log-month':['log','log',0,0,null,monthSheet],'log-edit':['log','log',0,0,null,()=>editSheet(15)],'log-add':['log','log',0,0,()=>{S.logSel=14},()=>editSheet(14)],
+ 'log-detail':['logDay','log',0,0,()=>{S.logDay=15}],'log-detail-edit':['logDay','log',0,0,()=>{S.logDay=15},()=>editSheet(15)],
+ 'log-detail-tip':['logDay','log',0,0,()=>{S.logDay=15},()=>{const h=$$('#e1card .ehit').find(c=>c.dataset.day==='15');h&&h.dispatchEvent(new MouseEvent('click',{bubbles:true}))}],
  'log-swipe':['log','log',0,0,null,()=>{const r=$$('#view .swipe')[0];r&&r.classList.add('open')}],
  build:['build','build',0,0,()=>{SC.day='mon'}],'build-list':['buildList','build',0,0,()=>{SC.day='mon'}],swap:['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('barbell-bench-press')],'swap-curl':['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('ez-bar-curl')],
  settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress',0,0,()=>{S.pmus=null}],'progress-muscle':['progress','progress',0,0,()=>{S.pmus='chest'}],'progress-refine':['progress','progress',0,0,()=>{S.pmus=null},()=>{const e=$('#prefs');if(e)$('#view').scrollTop=e.offsetTop-60}],style:['style','build'],
  learn:['learn',''],'tray-fav':['empty','',1,1,()=>{TF.fav=true},traySheet],'settings-favs':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#favs').offsetTop-60}],'settings-goals':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#profile').offsetTop-40}],'learn-fundamental':['learnFund',''],
 };
-const AFTER={train:afterTrain,workout:afterWorkout,finish:afterFinish,log:afterLog,buildList:afterBuildList,progress:afterProgress,learn:afterLearn};
+const AFTER={logDay:afterLogDay,train:afterTrain,workout:afterWorkout,finish:afterFinish,log:afterLog,buildList:afterBuildList,progress:afterProgress,learn:afterLearn};
 let NAV=0;
 function go(h){if(location.hash===h)route();else location.hash=h}
 function route(){
@@ -1046,6 +1200,7 @@ function route(){
   if(!def&&/^learn-ex-/.test(r)){def=['learnEx',''];arg=r.slice(9)}
   else if(!def&&/^learn-f-/.test(r)){def=['learnFund',''];arg=r.slice(8)}
   else if(!def&&/^learn-/.test(r)){def=['learnMuscle',''];arg=r.slice(6)}
+  else if(!def&&/^log-d\d+$/.test(r)){const n=+r.slice(5);def=['logDay','log',0,0,()=>{S.logDay=n}]}
   if(!def){r='train';def=ROUTES.train}
   const [scr,tab,full,sess,pre,post]=def;
   closeAll();if(AF){AF.classList.remove('active');AF=null}
@@ -1076,6 +1231,7 @@ document.addEventListener('click',e=>{
     if(k==='start'){const r=ROUTINES.find(x=>x.id===id)||ROUTINES[0],di=S.day[r.id]??(r.active?r.next:0),d=r.days[di];
       startWorkout(d.n,d.ex,{sub:`${r.name} · Day ${di+1}`,ref:{rid:r.id,di}});return go('#workout')}
     if(k==='sundo'){const f=SUF;hideSnack();if(f)f();return}
+    if(k==='theme'){const t=setTheme(a.dataset.v);$$('#themeseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===t));return}
     if(k==='unit'){S.unit=a.dataset.v==='kg'?'kg':'lb';try{localStorage.setItem(UNIT_K,S.unit)}catch(x){}$$('#unitseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===S.unit));return toast(`Units: ${S.unit}`)}
     if(k==='papply')return progApply(a.dataset.k);if(k==='pundo')return progUndo(a.dataset.k);
     if(k==='psee'){const el=$('#pref-'+a.dataset.k);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1200)}return}
@@ -1090,9 +1246,9 @@ document.addEventListener('click',e=>{
     if(k==='ck'){const r=a.closest('.srow');r.classList.toggle('done');const st=((WK.ex[+r.dataset.xi]||{}).sets||[])[+r.dataset.si];if(st)st.done=r.classList.contains('done');
       if(r.classList.contains('done')){$$('.fld',r).forEach(f=>{if(!f.value)f.value=f.placeholder;f.classList.remove('auto');syncField(f)});const ex=WK.ex[+r.dataset.xi];
         WK.restLab=ex?`${(RD&&RD.EX[ex.id]&&RD.EX[ex.id].short_name)||exNameP(ex.id)} set ${ex.sets.slice(0,+r.dataset.si+1).filter(x=>!x.warm).length}`:'';WK.rest.left=WK.rest.total=180;const l=$('.rlb');if(l)l.textContent='Rest · '+WK.restLab;paintTime()}renderBar();return}
-    if(k==='addset'){const xi=+a.dataset.xi,ex=WK.ex[xi];if(!ex)return;const last=ex.sets[ex.sets.length-1]||{};ex.sets.push({p:'',wv:last.wv||'',wauto:!!last.wv});renderEx(xi);return}
-    if(k==='day'){const d=+a.dataset.d;S.logSel=d;$$('.cd').forEach(c=>c.classList.toggle('sel',+c.dataset.d===d));return editSheet(d)}
-    if(k==='edit')return editSheet(+a.dataset.d);if(k==='month')return monthSheet();
+    if(k==='addset'){const xi=+a.dataset.xi,ex=WK.ex[xi];if(!ex)return;const last=ex.sets[ex.sets.length-1]||{};ex.sets.push({p:'',wv:last.wv||'',wu:last.wu,wauto:!!last.wv});renderEx(xi);return}
+    if(k==='day'){const d=+a.dataset.d;S.logSel=d;$$('.cd').forEach(c=>c.classList.toggle('sel',+c.dataset.d===d));return LOGS[d]?go('#log-d'+d):editSheet(d)}
+    if(k==='edit'||k==='ledit')return editSheet(+a.dataset.d);if(k==='month')return monthSheet();
     if(k==='mprev'||k==='mnext'){S.month+=k==='mnext'?1:-1;if(S.month<0){S.month=11;S.year--}if(S.month>11){S.month=0;S.year++}return render()}
     if(k==='add')return toast('Added to workout');if(k==='push')return toast('Pushed to Library · v4');
     if(k==='tg'){a.classList.toggle('on');a.setAttribute('aria-checked',a.classList.contains('on'));return}
@@ -1108,7 +1264,7 @@ document.addEventListener('click',e=>{
 });
 window.SB={sheet,S,WK,CLK,ROUTINES,closeAll,startWorkout,gymPlates,plateCalc,movePat,mpDefs,eqDefs,passF,get sheets(){return SHEETS},get keypad(){return KP}};
 // internals for board.js (the Build whiteboard): same sheet, swap sheet, ranking scenario, muscle map, volume_bands
-window.SBX={progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

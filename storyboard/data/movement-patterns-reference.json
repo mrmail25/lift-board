@@ -20,8 +20,8 @@
     "squat": 16,
     "hinge": 13,
     "lunge": 8,
-    "isolation": 92,
-    "core": 25,
+    "isolation": 98,
+    "core": 27,
     "other": 8
   },
   "exercises": {
@@ -1713,6 +1713,62 @@
       "movement_pattern": "isolation",
       "patterns": [
         "forearms"
+      ],
+      "type": "isolation"
+    },
+    "donkey-calf-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "calves"
+      ],
+      "type": "isolation"
+    },
+    "single-leg-dumbbell-calf-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "calves"
+      ],
+      "type": "isolation"
+    },
+    "hack-squat-calf-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "calves"
+      ],
+      "type": "isolation"
+    },
+    "tibialis-raise": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "calves"
+      ],
+      "type": "isolation"
+    },
+    "seated-band-hip-abduction": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hip_iso"
+      ],
+      "type": "isolation"
+    },
+    "side-plank": {
+      "movement_pattern": "core",
+      "patterns": [
+        "carry_core"
+      ],
+      "type": "isolation"
+    },
+    "dumbbell-side-bend": {
+      "movement_pattern": "core",
+      "patterns": [
+        "abs"
+      ],
+      "type": "isolation"
+    },
+    "copenhagen-plank": {
+      "movement_pattern": "isolation",
+      "patterns": [
+        "hip_iso"
       ],
       "type": "isolation"
     }

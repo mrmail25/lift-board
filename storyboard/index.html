@@ -6,11 +6,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#F2F2F4">
+<meta name="theme-color" content="#F2F2F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="noindex">
 <title>Ape-Chit · Storyboard</title>
 <link rel="icon" href="assets/logo/icon-black-v3.png">
 <link rel="apple-touch-icon" href="assets/logo/icon-black-v3.png">
+<!-- theme override before first paint (Settings › Appearance; localStorage apechit.sb.theme = system | light | dark) -->
+<script>try{var t=localStorage.getItem('apechit.sb.theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <link rel="stylesheet" href="tokens.css">
 <link rel="stylesheet" href="sb.css">
 </head>
@@ -34,6 +37,7 @@
 <script src="logic/analysis.js"></script>
 <script src="logic/templates.js"></script>
 <script src="logic/progress.js"></script>
+<script src="logic/prs.js"></script>
 <script src="sb.js"></script>
 <script src="board.js"></script>
 </body>

@@ -22,6 +22,7 @@ const r6=x=>Math.round(x*1e6)/1e6;
 function regionScores(dt,id){const M=dt.rules.body_regions.muscles,e=dt.EX[id],top={},tot={};
   for(const [m,v] of Object.entries(e.muscles)){if(v<=0)continue;const r=M[m];top[r]=Math.max(top[r]||0,v);tot[r]=r6((tot[r]||0)+v)}return [top,tot]}
 function primaryRegion(dt,id,explain){const B=dt.rules.body_regions,e=dt.EX[id],[top,tot]=regionScores(dt,id);
+  if(!Object.keys(top).length){const ut=e.untracked_target,r=ut?B.muscles[ut.filter_muscle]:B.order[B.order.length-1];return explain?[r,'untracked target']:r} // r2fix: no muscle credit -> untracked_target.filter_muscle's region
   const best=Math.max(...Object.values(top));let cand=B.order.filter(r=>top[r]===best),why='top muscle';
   if(cand.length>1){const bs=Math.max(...cand.map(r=>tot[r]));let c2=cand.filter(r=>tot[r]===bs);why='tie: region sum';
     if(c2.length>1){const pr=e.patterns&&e.patterns.length?B.pattern_region[e.patterns[0]]:null;c2=c2.includes(pr)?[pr]:c2;why=cand.includes(pr)&&c2.length===1?'tie: first pattern':'tie: region order'}

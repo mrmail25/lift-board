@@ -35,15 +35,15 @@ function check(dt,days,level){const {R,RU,T,S,HEAVY}=ctx(dt),PAT=dt.PAT,f=[],wee
     for(const [p,c] of pc){if(c<2)continue;const pv=eff(dt,d.tiles.filter(t=>(PAT[t.id]??null)===p));const over=Object.keys(pv).filter(m=>pv[m]>RU.redundant_pattern.threshold);
       if(over.length)f.push(['warn','redundant_pattern',d.day,p,c,over[0],pyR(pv[over[0]],1)])}
     const v=eff(dt,d.tiles);for(const m in v){const x=v[m];week[m]+=x;if(x>=2)freq[m]+=1;if(x>10)f.push(['warn','junk_volume_session',d.day,m,pyR(x,1)])}
-    const ids=new Set(d.tiles.map(t=>t.id));if(level==='beginner'&&[...ids].some(i=>HS.has(i))&&[...ids].some(i=>HH.has(i)))f.push(['warn','beginner_squat_and_deadlift',d.day])}
+    const ids=new Set(d.tiles.map(t=>t.id));if(level==='beginner'&&[...ids].some(i=>HS.has(i))&&[...ids].some(i=>HH.has(i)))f.push([RU.beginner_squat_and_deadlift.severity||'warn','beginner_squat_and_deadlift',d.day])} // r2fix: severity from rules[]
   for(let i=0;i<6;i++){const dd=ORDER[i],a=byday[dd],b=byday[ORDER[i+1]];if(!(a&&b))continue;
-    if(a.tiles.some(t=>HH.has(t.id))&&b.tiles.some(t=>HS.has(t.id)))f.push(['warn','hinge_before_squat',dd]);
+    if(a.tiles.some(t=>HH.has(t.id))&&b.tiles.some(t=>HS.has(t.id)))f.push([RU.hinge_before_squat.severity||'warn','hinge_before_squat',dd]);
     const va=eff(dt,a.tiles),vb=eff(dt,b.tiles);for(const m in T)if(va[m]>=S[m].solid&&vb[m]>=S[m].solid)f.push(['warn','consecutive_high_volume',dd,m])}
   if(spw>RU.spinal_load.week_warn_above[level])f.push(['warn','spinal_load_week',spw]);
   if(push===0&&pull>0)f.push(['warn','push_pull_imbalance',99.0]);
   if(push){const r=pull/push;if(r<0.75||r>2.0)f.push(['warn','push_pull_imbalance',pyR(r,2)])}
   const all=new Set(days.flatMap(d=>d.tiles.map(t=>t.id)));
-  for(const [m,ids] of Object.entries(R.stretch_biased))if(!ids.some(i=>all.has(i)))f.push(['info','missing_stretch',m]);
+  for(const [m,ids] of Object.entries(R.stretch_biased))if(!ids.some(i=>all.has(i)))f.push([(RU.missing_stretch.check_muscles||[]).includes(m)?'warn':'info','missing_stretch',m]); // r2fix: stretch_check muscles warn
   for(const m of R.frequency_muscles)if(freq[m]<2&&days.length>=2)f.push(['info','low_frequency',m,freq[m]]);
   for(const m in week)if(col(dt,m,week[m],level)==='R')f.push(['warn','weekly_volume',m,pyR(week[m],1)]);
   f.push(...patternFlags(dt,days,level));return [f,week]}

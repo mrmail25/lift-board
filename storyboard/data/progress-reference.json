@@ -6953,13 +6953,13 @@
       ]
      },
      "swap_variation": {
-      "to_id": "landmine-press-two-arm",
+      "to_id": "barbell-bench-press",
       "diff": [
        {
         "op": "swap",
         "day": "mon",
         "from_id": "dumbbell-bench-press",
-        "to_id": "landmine-press-two-arm",
+        "to_id": "barbell-bench-press",
         "sets": 3
        }
       ]

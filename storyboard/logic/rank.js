@@ -41,7 +41,8 @@ const fam=e=>FAM[e.equipment]||'other';
 function vec(e,MUS){return MUS.map(m=>e.muscles[m])}
 function cos(a,b){let sa=0,sb=0,d=0;for(const x of a)sa+=x*x;for(const x of b)sb+=x*x;const na=Math.sqrt(sa),nb=Math.sqrt(sb);
   if(!na||!nb)return 0;for(let k=0;k<a.length;k++)d+=a[k]*b[k];return d/(na*nb)}
-function primaryMuscle(e,MUS){return maxBy(MUS,m=>e.muscles[m])}
+// r2fix (swap.py primary_muscle): an exercise with no muscle credit (tibialis-raise) files under its untracked_target.filter_muscle
+function primaryMuscle(e,MUS){if(!MUS.some(m=>e.muscles[m])&&e.untracked_target)return e.untracked_target.filter_muscle;return maxBy(MUS,m=>e.muscles[m])}
 function swapScore(dt,cur,cand,pool){pool=pool||dt.EX;const MUS=dt.exl.muscles,c=pool[cur],k=pool[cand];
   const pc=c.pattern||dt.PAT[cur],pk=k.pattern||dt.PAT[cand];const sp=pc!=null&&pc===pk;
   const cs=cos(vec(c,MUS),vec(k,MUS));let big=MUS.filter(m=>c.muscles[m]>=0.5);if(!big.length)big=[primaryMuscle(c,MUS)];

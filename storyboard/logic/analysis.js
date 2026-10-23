@@ -132,10 +132,22 @@ function sheet(dt,days,level,baseline=null){const res=suggest(dt,days,level,base
 function ruleApplies(dt,r,days,level,baseline){const A=r.applies;if(!A)return !r.app_only&&(!r.levels||r.levels.includes(level));
   if(!(A.levels||[]).includes(level))return false;const td=days.filter(d=>(d.tiles||[]).length).length;
   return (A.requires||[]).every(q=>q==='baseline_saved'?baseline!=null&&baseline>0:/^training_days>=(\d+)$/.test(q)?td>=+/\d+$/.exec(q)[0]:false)}
-function checksPass(dt,days,level,baseline=null){const R=dt.rules.rules,app=R.filter(r=>ruleApplies(dt,r,days,level,baseline)),ids=new Set(app.map(r=>r.id));
+// analysis_metrics v2 (rules v10, r2fix): port of analysis.py applicable() / checks_pass(). The count is over kind=check items
+// (13 without a saved baseline, 14 with one); a flag counts against the item that owns its rule (rules[].metric), and missing_stretch
+// for a stretch_check.checked muscle counts against stretch_<muscle>. Falls back to the v1 rules[].applies count for older data.
+const items=dt=>((dt.rules.analysis_metrics||{}).items)||null;
+function itemOf(dt,f){const rid=f[1],rule=RULE_OF(rid),r=dt.rules.rules.find(q=>q.id===rule);
+  if(rid==='missing_stretch'&&f[2] in (((dt.rules.stretch_check||{}).checked)||{}))return 'stretch_'+f[2];return r?r.metric:null}
+function applicable(dt,days,level,baseline=null){const td=days.filter(d=>(d.tiles||[]).length).length,met={baseline_saved:!!baseline,'training_days>=2':td>=2};
+  return (items(dt)||[]).filter(it=>it.kind==='check'&&it.applies.levels.includes(level)&&it.applies.requires.every(q=>met[q])).map(it=>it.id)}
+function checksPass(dt,days,level,baseline=null){if(items(dt))return checksPass2(dt,days,level,baseline);const R=dt.rules.rules,app=R.filter(r=>ruleApplies(dt,r,days,level,baseline)),ids=new Set(app.map(r=>r.id));
   const fl=PC.check(dt,days,level)[0],failing=new Set(fl.filter(f=>f[0]!=='info').map(f=>RULE_OF(f[1])).filter(i=>ids.has(i)));
   const rb=R.find(r=>r.id==='recovery_vs_baseline');if(rb&&ids.has('recovery_vs_baseline')&&weekCost(dt,days)/baseline>rb.warn_above)failing.add('recovery_vs_baseline');
   return {pass:app.length-failing.size,total:app.length,failing:[...failing].sort(),not_applicable:R.filter(r=>!ids.has(r.id)).map(r=>r.id)}}
+function checksPass2(dt,days,level,baseline){const app=applicable(dt,days,level,baseline),A=new Set(app),att=new Set();
+  for(const f of PC.check(dt,days,level)[0])if(f[0]!=='info'){const it=itemOf(dt,f);if(it&&A.has(it))att.add(it)}
+  if(baseline&&A.has('recovery_vs_baseline')){const rr=dt.rules.rules.find(q=>q.id==='recovery_vs_baseline');if(weekCost(dt,days)/baseline>rr.warn_above+1e-9)att.add('recovery_vs_baseline')}
+  return {pass:app.length-att.size,total:app.length,failing:[...att].sort(),not_applicable:items(dt).filter(it=>it.kind==='check'&&!A.has(it.id)).map(it=>it.id)}}
 const mpOrder=dt=>((dt.rules.movement_patterns||{}).order)||[];
 function metrics(dt,days,level){const [,week]=PC.check(dt,days,level),train=days.filter(d=>d.tiles.length),R=dt.rules;
   const allsets=days.reduce((a,d)=>a+total(d),0),mins=train.map(d=>PC.sessionMinutes(dt,d.tiles)),regions={};
@@ -149,8 +161,10 @@ function metrics(dt,days,level){const [,week]=PC.check(dt,days,level),train=days
     stretch_biased_share:sbs,weekly_sets_per_region:regions,movement_pattern_sets:mps,
     lengthened_bias_share:share(e=>(e.swap||{}).stretch_emphasis===3),unilateral_share:share(e=>((e.swap||{}).flags||[]).includes('unilateral')),session_density:dens}}
 // the metric catalogue (rules.json analysis_metrics), grouped and ordered by category
+// v2 (sections + items): same shape for the current sheet (section -> category, items -> metrics); the Analysis restructure is batch B
 function catalogue(dt){const AM=dt.rules.analysis_metrics||{categories:[],metrics:[]};
+  if(AM.sections&&AM.items)return AM.sections.map(s=>Object.assign({},s,{metrics:AM.items.filter(m=>m.section===s.id)}));
   return AM.categories.map(c=>Object.assign({},c,{metrics:AM.metrics.filter(m=>m.category===c.id)}))}
-const API={applyOps,invertOps,diff,suggest,sheet,metrics,checksPass,ruleApplies,catalogue,typeOf,weekCost,stretchShare,lowerFatigueCandidates,pyDumps};
+const API={applyOps,invertOps,diff,suggest,sheet,metrics,checksPass,applicable,itemOf,ruleApplies,catalogue,typeOf,weekCost,stretchShare,lowerFatigueCandidates,pyDumps};
 if(isNode)module.exports=API;else root.ANALYSIS=API;
 })(typeof window!=='undefined'?window:this);

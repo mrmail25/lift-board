@@ -2,32 +2,32 @@
  "description": "tools/analysis.py metrics() and sheet() types for every preset (baseline = week cost / 1.25). Regenerate with build_round1.py.",
  "checks_pass_expected": {
   "beginner": {
-   "no_baseline": 15,
-   "with_baseline": 16
+   "no_baseline": 13,
+   "with_baseline": 14
   },
   "intermediate": {
-   "no_baseline": 14,
-   "with_baseline": 15
+   "no_baseline": 13,
+   "with_baseline": 14
   },
   "advanced": {
-   "no_baseline": 14,
-   "with_baseline": 15
+   "no_baseline": 13,
+   "with_baseline": 14
   }
  },
  "presets": {
   "full-body/beginner/2": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -41,7 +41,7 @@
      "quads": 0.5,
      "calves": 1.0,
      "lats": 0.4878,
-     "glutes": 0.0
+     "glutes": 0.7
     },
     "weekly_sets_per_region": {
      "chest": 6,
@@ -161,26 +161,6 @@
       "days": 1
      },
      "fixes": []
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
     },
     {
      "type": "swap_lower_fatigue",
@@ -456,29 +436,6 @@
      "fixes": []
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -571,16 +528,16 @@
   "full-body/beginner/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -594,7 +551,7 @@
      "quads": 0.6667,
      "calves": 1.0,
      "lats": 0.375,
-     "glutes": 0.0
+     "glutes": 0.6757
     },
     "weekly_sets_per_region": {
      "chest": 9,
@@ -662,26 +619,6 @@
         "day": "wed",
         "id": "standing-calf-raise",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -1030,29 +967,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -1205,16 +1119,16 @@
   "full-body/beginner/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -1228,7 +1142,7 @@
      "quads": 0.5,
      "calves": 1.0,
      "lats": 0.2752,
-     "glutes": 0.0
+     "glutes": 0.6038
     },
     "weekly_sets_per_region": {
      "chest": 12,
@@ -1287,26 +1201,6 @@
         "day": "fri",
         "id": "standing-calf-raise",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -1690,29 +1584,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -1879,21 +1750,18 @@
   "full-body/intermediate/2": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 48,
     "avg_session_minutes": 79.8,
@@ -1905,7 +1773,7 @@
      "quads": 1.0,
      "calves": 1.0,
      "lats": 0.4969,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -2006,26 +1874,6 @@
       "days": 1
      },
      "fixes": []
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "thu",
-        "from_id": "bulgarian-split-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
     },
     {
      "type": "swap_lower_fatigue",
@@ -2259,29 +2107,6 @@
      "fixes": []
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -2411,21 +2236,18 @@
   "full-body/intermediate/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 61,
     "avg_session_minutes": 66.6,
@@ -2437,7 +2259,7 @@
      "quads": 1.0,
      "calves": 1.0,
      "lats": 0.678,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 8.4,
@@ -2524,26 +2346,6 @@
         "day": "fri",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -2888,29 +2690,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -2986,21 +2765,18 @@
   "full-body/intermediate/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 77,
     "avg_session_minutes": 63.6,
@@ -3012,7 +2788,7 @@
      "quads": 1.0,
      "calves": 1.0,
      "lats": 0.5128,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 11.4,
@@ -3066,26 +2842,6 @@
         "day": "tue",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -3469,29 +3225,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -3520,21 +3253,18 @@
   "full-body/advanced/2": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 52,
     "avg_session_minutes": 88.0,
@@ -3546,7 +3276,7 @@
      "quads": 1.0,
      "calves": 1.0,
      "lats": 0.5,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 10,
@@ -3729,16 +3459,6 @@
      "target": {
       "muscle": "calves",
       "days": 1
-     },
-     "fixes": []
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
      },
      "fixes": []
     },
@@ -3946,19 +3666,6 @@
      "fixes": []
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": []
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -4067,21 +3774,18 @@
   "full-body/advanced/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 75,
     "avg_session_minutes": 80.6,
@@ -4093,7 +3797,7 @@
      "quads": 1.0,
      "calves": 0.7143,
      "lats": 0.6731,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 10.4,
@@ -4122,26 +3826,6 @@
     }
    },
    "suggestions": [
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "bulgarian-split-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
     {
      "type": "swap_lower_fatigue",
      "source": "lower_fatigue_swap",
@@ -4421,29 +4105,6 @@
         "day": "wed",
         "from_id": "bulgarian-split-squat",
         "to_id": "trx-assisted-pistol",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "front-squat",
-        "to_id": "reverse-hack-squat",
         "sets": 4
        }
       ]
@@ -4739,21 +4400,18 @@
   "full-body/advanced/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 85,
     "avg_session_minutes": 70.2,
@@ -4765,7 +4423,7 @@
      "quads": 1.0,
      "calves": 1.0,
      "lats": 0.5263,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 11.4,
@@ -4795,26 +4453,6 @@
     }
    },
    "suggestions": [
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "bulgarian-split-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
     {
      "type": "swap_lower_fatigue",
      "source": "lower_fatigue_swap",
@@ -5142,29 +4780,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "front-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -5217,16 +4832,16 @@
   "upper-lower/beginner/2": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -5240,7 +4855,7 @@
      "quads": 0.6667,
      "calves": 1.0,
      "lats": 0.4167,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 6,
@@ -5401,26 +5016,6 @@
       "days": 1
      },
      "fixes": []
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "thu",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
     },
     {
      "type": "swap_lower_fatigue",
@@ -5725,29 +5320,6 @@
      "fixes": []
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "thu",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -5841,16 +5413,16 @@
   "upper-lower/beginner/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -5864,7 +5436,7 @@
      "quads": 0.375,
      "calves": 0.5,
      "lats": 0.2667,
-     "glutes": 0.0
+     "glutes": 0.4375
     },
     "weekly_sets_per_region": {
      "chest": 6,
@@ -5918,26 +5490,6 @@
         "day": "tue",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "hip-thrust",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -6278,29 +5830,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -6399,21 +5928,18 @@
   "upper-lower/intermediate/2": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 48,
     "avg_session_minutes": 79.2,
@@ -6425,7 +5951,7 @@
      "quads": 0.625,
      "calves": 1.0,
      "lats": 0.4571,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -6608,26 +6134,6 @@
       "days": 1
      },
      "fixes": []
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "thu",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 5
-       }
-      ]
-     ]
     },
     {
      "type": "swap_lower_fatigue",
@@ -6925,29 +6431,6 @@
      "fixes": []
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "thu",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 5
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -7075,21 +6558,18 @@
   "upper-lower/intermediate/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 74,
     "avg_session_minutes": 61.2,
@@ -7101,7 +6581,7 @@
      "quads": 0.7273,
      "calves": 0.5,
      "lats": 0.5333,
-     "glutes": 0.0
+     "glutes": 0.6697
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -7132,26 +6612,6 @@
     }
    },
    "suggestions": [
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "hip-thrust",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
     {
      "type": "swap_stretch_biased",
      "source": "stretch_share",
@@ -7517,50 +6977,24 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
     }
    ]
   },
   "upper-lower/advanced/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 88,
     "avg_session_minutes": 70.4,
@@ -7572,7 +7006,7 @@
      "quads": 0.7692,
      "calves": 0.5714,
      "lats": 0.3265,
-     "glutes": 0.0
+     "glutes": 0.6929
     },
     "weekly_sets_per_region": {
      "chest": 10,
@@ -7603,26 +7037,6 @@
     }
    },
    "suggestions": [
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
     {
      "type": "swap_lower_fatigue",
      "source": "lower_fatigue_swap",
@@ -7955,29 +7369,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_length",
      "severity": "info",
@@ -8036,16 +7427,16 @@
   "ppl/beginner/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -8059,7 +7450,7 @@
      "quads": 0.6667,
      "calves": 1.0,
      "lats": 0.4688,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 6,
@@ -8340,26 +7731,6 @@
         "day": "mon",
         "id": "seated-cable-row",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -8874,29 +8245,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -8955,16 +8303,16 @@
   "ppl/beginner/6": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -8978,7 +8326,7 @@
      "quads": 0.375,
      "calves": 0.5,
      "lats": 0.2667,
-     "glutes": 0.0
+     "glutes": 0.525
     },
     "weekly_sets_per_region": {
      "chest": 10,
@@ -9034,26 +8382,6 @@
         "day": "fri",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -9453,50 +8781,24 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
     }
    ]
   },
   "ppl/intermediate/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 66,
     "avg_session_minutes": 70.8,
@@ -9508,7 +8810,7 @@
      "quads": 0.5,
      "calves": 0.6,
      "lats": 0.5435,
-     "glutes": 0.0
+     "glutes": 0.8615
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -9716,26 +9018,6 @@
       "days": 1
      },
      "fixes": []
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
     },
     {
      "type": "swap_lower_fatigue",
@@ -10187,29 +9469,6 @@
      "fixes": []
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -10383,21 +9642,18 @@
   "ppl/intermediate/6": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 101,
     "avg_session_minutes": 55.0,
@@ -10409,7 +9665,7 @@
      "quads": 0.7273,
      "calves": 0.5,
      "lats": 0.6038,
-     "glutes": 0.0
+     "glutes": 0.9381
     },
     "weekly_sets_per_region": {
      "chest": 13,
@@ -10466,26 +9722,6 @@
         "day": "thu",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -10906,50 +10142,24 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
     }
    ]
   },
   "ppl/advanced/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 76,
     "avg_session_minutes": 80.7,
@@ -10961,7 +10171,7 @@
      "quads": 0.5556,
      "calves": 0.6667,
      "lats": 0.367,
-     "glutes": 0.0
+     "glutes": 0.6774
     },
     "weekly_sets_per_region": {
      "chest": 10,
@@ -11210,16 +10420,6 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": []
     },
     {
      "type": "swap_lower_fatigue",
@@ -11726,19 +10926,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": []
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -11951,21 +11138,18 @@
   "ppl/advanced/6": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 118,
     "avg_session_minutes": 62.3,
@@ -11977,7 +11161,7 @@
      "quads": 0.75,
      "calves": 0.5714,
      "lats": 0.3604,
-     "glutes": 0.0
+     "glutes": 0.792
     },
     "weekly_sets_per_region": {
      "chest": 16,
@@ -12034,26 +11218,6 @@
         "day": "fri",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "sat",
-        "from_id": "bulgarian-split-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -12534,45 +11698,22 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
     }
    ]
   },
   "bro-split/beginner/5": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -12586,7 +11727,7 @@
      "quads": 0.5714,
      "calves": 0.5714,
      "lats": 0.4926,
-     "glutes": 0.0
+     "glutes": 0.6712
     },
     "weekly_sets_per_region": {
      "chest": 9,
@@ -12772,26 +11913,6 @@
         "day": "tue",
         "id": "dumbbell-lateral-raise",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -13251,29 +12372,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -13372,21 +12470,18 @@
   "bro-split/intermediate/5": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 88,
     "avg_session_minutes": 59.1,
@@ -13398,7 +12493,7 @@
      "quads": 0.4,
      "calves": 0.5714,
      "lats": 0.5556,
-     "glutes": 0.0
+     "glutes": 0.7
     },
     "weekly_sets_per_region": {
      "chest": 11.4,
@@ -13575,26 +12670,6 @@
         "day": "mon",
         "id": "dumbbell-lateral-raise",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -14113,29 +13188,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -14241,21 +13293,18 @@
   "bro-split/advanced/5": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 98,
     "avg_session_minutes": 64.4,
@@ -14267,7 +13316,7 @@
      "quads": 0.7,
      "calves": 0.5,
      "lats": 0.3704,
-     "glutes": 0.0
+     "glutes": 0.732
     },
     "weekly_sets_per_region": {
      "chest": 11.4,
@@ -14449,26 +13498,6 @@
         "day": "mon",
         "id": "dumbbell-lateral-raise",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -14994,29 +14023,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "mon",
-        "from_id": "hip-thrust",
-        "to_id": "reverse-hack-squat",
-        "sets": 2
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -15122,16 +14128,16 @@
   "pplu/beginner/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -15145,7 +14151,7 @@
      "quads": 0.6667,
      "calves": 1.0,
      "lats": 0.2609,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -15311,26 +14317,6 @@
         "day": "mon",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "thu",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -15738,29 +14724,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "thu",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -15866,21 +14829,18 @@
   "pplu/intermediate/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 81,
     "avg_session_minutes": 65.6,
@@ -15892,7 +14852,7 @@
      "quads": 0.5,
      "calves": 0.6,
      "lats": 0.5797,
-     "glutes": 0.0
+     "glutes": 0.8615
     },
     "weekly_sets_per_region": {
      "chest": 13,
@@ -15996,26 +14956,6 @@
         "day": "tue",
         "id": "leg-extension",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "thu",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -16421,29 +15361,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "thu",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -16610,21 +15527,18 @@
   "pplu/advanced/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 90,
     "avg_session_minutes": 71.8,
@@ -16636,7 +15550,7 @@
      "quads": 0.5556,
      "calves": 0.6667,
      "lats": 0.2685,
-     "glutes": 0.0
+     "glutes": 0.6774
     },
     "weekly_sets_per_region": {
      "chest": 14,
@@ -16807,16 +15721,6 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": []
     },
     {
      "type": "swap_lower_fatigue",
@@ -17230,19 +16134,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": []
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -17347,16 +16238,16 @@
   "pplul/beginner/5": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -17370,7 +16261,7 @@
      "quads": 0.375,
      "calves": 0.5,
      "lats": 0.2667,
-     "glutes": 0.0
+     "glutes": 0.4375
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -17425,26 +16316,6 @@
         "day": "mon",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "sat",
-        "from_id": "hip-thrust",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -17799,29 +16670,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -17873,21 +16721,18 @@
   "pplul/intermediate/5": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 92,
     "avg_session_minutes": 60.8,
@@ -17899,7 +16744,7 @@
      "quads": 0.7273,
      "calves": 0.5,
      "lats": 0.5904,
-     "glutes": 0.0
+     "glutes": 0.6348
     },
     "weekly_sets_per_region": {
      "chest": 13,
@@ -17931,26 +16776,6 @@
     }
    },
    "suggestions": [
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "sat",
-        "from_id": "hip-thrust",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
     {
      "type": "swap_stretch_biased",
      "source": "stretch_share",
@@ -18341,50 +17166,24 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
     }
    ]
   },
   "pplul/advanced/5": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 103,
     "avg_session_minutes": 66.2,
@@ -18396,7 +17195,7 @@
      "quads": 0.75,
      "calves": 0.5714,
      "lats": 0.273,
-     "glutes": 0.0
+     "glutes": 0.5786
     },
     "weekly_sets_per_region": {
      "chest": 14,
@@ -18452,26 +17251,6 @@
         "day": "mon",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "sat",
-        "from_id": "hip-thrust",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -18855,45 +17634,22 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
     }
    ]
   },
   "arnold/beginner/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -18907,7 +17663,7 @@
      "quads": 0.6667,
      "calves": 1.0,
      "lats": 0.4688,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -19126,26 +17882,6 @@
         "day": "wed",
         "id": "seated-cable-row",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -19573,29 +18309,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -19654,16 +18367,16 @@
   "arnold/beginner/6": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -19677,7 +18390,7 @@
      "quads": 0.375,
      "calves": 0.5,
      "lats": 0.5195,
-     "glutes": 0.0
+     "glutes": 0.525
     },
     "weekly_sets_per_region": {
      "chest": 16,
@@ -19709,26 +18422,6 @@
     }
    },
    "suggestions": [
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
     {
      "type": "swap_lower_fatigue",
      "source": "lower_fatigue_swap",
@@ -20069,50 +18762,24 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
     }
    ]
   },
   "arnold/intermediate/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 65,
     "avg_session_minutes": 70.1,
@@ -20124,7 +18791,7 @@
      "quads": 0.5,
      "calves": 0.6,
      "lats": 0.5435,
-     "glutes": 0.0
+     "glutes": 0.8615
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -20299,26 +18966,6 @@
         "day": "wed",
         "id": "seated-cable-row",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -20731,29 +19378,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -20910,21 +19534,18 @@
   "arnold/intermediate/6": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 107,
     "avg_session_minutes": 59.6,
@@ -20936,7 +19557,7 @@
      "quads": 0.7273,
      "calves": 0.5,
      "lats": 0.6431,
-     "glutes": 0.0
+     "glutes": 0.9381
     },
     "weekly_sets_per_region": {
      "chest": 16,
@@ -20986,26 +19607,6 @@
         "id": "overhead-cable-triceps-extension",
         "from": 3,
         "to": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -21394,50 +19995,24 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
     }
    ]
   },
   "arnold/advanced/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 74,
     "avg_session_minutes": 78.5,
@@ -21449,7 +20024,7 @@
      "quads": 0.5556,
      "calves": 0.6667,
      "lats": 0.5556,
-     "glutes": 0.0
+     "glutes": 0.6774
     },
     "weekly_sets_per_region": {
      "chest": 10,
@@ -21693,16 +20268,6 @@
        }
       ]
      ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": []
     },
     {
      "type": "swap_lower_fatigue",
@@ -22189,19 +20754,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": []
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -22353,21 +20905,18 @@
   "arnold/advanced/6": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 123,
     "avg_session_minutes": 66.2,
@@ -22379,7 +20928,7 @@
      "quads": 0.75,
      "calves": 0.5714,
      "lats": 0.5897,
-     "glutes": 0.0
+     "glutes": 0.792
     },
     "weekly_sets_per_region": {
      "chest": 20,
@@ -22450,26 +20999,6 @@
         "id": "overhead-cable-triceps-extension",
         "from": 3,
         "to": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "sat",
-        "from_id": "bulgarian-split-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -22891,29 +21420,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_length",
      "severity": "info",
@@ -23012,16 +21518,16 @@
   "torso-limbs/beginner/2": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -23035,7 +21541,7 @@
      "quads": 1.0,
      "calves": 1.0,
      "lats": 0.4878,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 6,
@@ -23174,16 +21680,6 @@
      "target": {
       "muscle": "upper_back",
       "days": 1
-     },
-     "fixes": []
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
      },
      "fixes": []
     },
@@ -23462,19 +21958,6 @@
      "fixes": []
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": []
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -23561,16 +22044,16 @@
   "torso-limbs/beginner/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -23584,7 +22067,7 @@
      "quads": 0.5,
      "calves": 0.5,
      "lats": 0.2469,
-     "glutes": 0.0
+     "glutes": 0.4375
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -23614,26 +22097,6 @@
     }
    },
    "suggestions": [
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "hip-thrust",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
     {
      "type": "swap_stretch_biased",
      "source": "stretch_share",
@@ -24025,29 +22488,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -24268,21 +22708,18 @@
   "torso-limbs/intermediate/2": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 48,
     "avg_session_minutes": 80.0,
@@ -24294,7 +22731,7 @@
      "quads": 0.7143,
      "calves": 1.0,
      "lats": 0.4969,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -24455,16 +22892,6 @@
      "target": {
       "muscle": "upper_back",
       "days": 1
-     },
-     "fixes": []
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
      },
      "fixes": []
     },
@@ -24722,19 +23149,6 @@
      "fixes": []
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": []
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -24846,21 +23260,18 @@
   "torso-limbs/intermediate/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 81,
     "avg_session_minutes": 65.2,
@@ -24872,7 +23283,7 @@
      "quads": 0.5,
      "calves": 0.5,
      "lats": 0.2532,
-     "glutes": 0.0
+     "glutes": 0.4495
     },
     "weekly_sets_per_region": {
      "chest": 11,
@@ -24901,26 +23312,6 @@
     }
    },
    "suggestions": [
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "hip-thrust",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
     {
      "type": "swap_lower_fatigue",
      "source": "lower_fatigue_swap",
@@ -25264,29 +23655,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -25416,21 +23784,18 @@
   "torso-limbs/advanced/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 87,
     "avg_session_minutes": 70.4,
@@ -25442,7 +23807,7 @@
      "quads": 0.5,
      "calves": 0.5,
      "lats": 0.3042,
-     "glutes": 0.0
+     "glutes": 0.4107
     },
     "weekly_sets_per_region": {
      "chest": 13,
@@ -25495,26 +23860,6 @@
         "day": "thu",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "fri",
-        "from_id": "leg-press",
-        "to_id": "high-foot-leg-press",
-        "sets": 5
        }
       ]
      ]
@@ -25573,7 +23918,7 @@
         "op": "swap",
         "day": "tue",
         "from_id": "hack-squat",
-        "to_id": "horizontal-leg-press",
+        "to_id": "belt-squat",
         "sets": 5
        }
       ]
@@ -25847,7 +24192,7 @@
         "op": "swap",
         "day": "tue",
         "from_id": "hack-squat",
-        "to_id": "horizontal-leg-press",
+        "to_id": "belt-squat",
         "sets": 5
        },
        {
@@ -25877,29 +24222,6 @@
         "from_id": "hip-thrust",
         "to_id": "barbell-glute-bridge",
         "sets": 3
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "hack-squat",
-        "to_id": "high-foot-leg-press",
-        "sets": 5
        }
       ]
      ]
@@ -26027,16 +24349,16 @@
   "phul/beginner/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -26050,7 +24372,7 @@
      "quads": 0.6429,
      "calves": 0.5,
      "lats": 0.5333,
-     "glutes": 0.0
+     "glutes": 0.8163
     },
     "weekly_sets_per_region": {
      "chest": 9.2,
@@ -26139,26 +24461,6 @@
         "day": "mon",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -26519,29 +24821,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -26661,21 +24940,18 @@
   "phul/intermediate/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 72,
     "avg_session_minutes": 60.9,
@@ -26687,7 +24963,7 @@
      "quads": 0.6,
      "calves": 0.5,
      "lats": 0.531,
-     "glutes": 0.0
+     "glutes": 0.6344
     },
     "weekly_sets_per_region": {
      "chest": 9.2,
@@ -26742,26 +25018,6 @@
         "day": "tue",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -27064,29 +25320,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -27115,21 +25348,18 @@
   "phul/advanced/4": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 83,
     "avg_session_minutes": 69.6,
@@ -27141,7 +25371,7 @@
      "quads": 0.5714,
      "calves": 0.5714,
      "lats": 0.4545,
-     "glutes": 0.0
+     "glutes": 0.5678
     },
     "weekly_sets_per_region": {
      "chest": 10.2,
@@ -27196,26 +25426,6 @@
         "day": "tue",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -27525,29 +25735,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "tue",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
-       }
-      ]
-     ]
-    },
-    {
      "type": "fill_pattern_gap",
      "source": "pattern_gap",
      "severity": "info",
@@ -27613,16 +25800,16 @@
   "upper-lower-full/beginner/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 15,
-     "total": 15,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 16,
-     "total": 16,
+     "pass": 14,
+     "total": 14,
      "failing": [],
      "not_applicable": []
     },
@@ -27636,7 +25823,7 @@
      "quads": 0.375,
      "calves": 1.0,
      "lats": 0.3315,
-     "glutes": 0.0
+     "glutes": 0.7568
     },
     "weekly_sets_per_region": {
      "chest": 6,
@@ -27748,26 +25935,6 @@
         "day": "fri",
         "id": "overhead-cable-triceps-extension",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -28130,29 +26297,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -28251,21 +26395,18 @@
   "upper-lower-full/intermediate/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 60,
     "avg_session_minutes": 65.2,
@@ -28277,7 +26418,7 @@
      "quads": 0.625,
      "calves": 1.0,
      "lats": 0.3448,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 8,
@@ -28341,26 +26482,6 @@
         "day": "wed",
         "id": "overhead-cable-triceps-extension",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
        }
       ]
      ]
@@ -28685,29 +26806,6 @@
      ]
     },
     {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 3
-       }
-      ]
-     ]
-    },
-    {
      "type": "shorten_session",
      "source": "session_hard_sets",
      "severity": "info",
@@ -28759,21 +26857,18 @@
   "upper-lower-full/advanced/3": {
    "metrics": {
     "checks_pass": {
-     "pass": 14,
-     "total": 14,
+     "pass": 13,
+     "total": 13,
      "failing": [],
      "not_applicable": [
-      "beginner_squat_and_deadlift",
       "recovery_vs_baseline"
      ]
     },
     "checks_pass_with_baseline": {
-     "pass": 15,
-     "total": 15,
+     "pass": 14,
+     "total": 14,
      "failing": [],
-     "not_applicable": [
-      "beginner_squat_and_deadlift"
-     ]
+     "not_applicable": []
     },
     "week_sets_total": 72,
     "avg_session_minutes": 77.3,
@@ -28785,7 +26880,7 @@
      "quads": 0.7,
      "calves": 1.0,
      "lats": 0.4,
-     "glutes": 0.0
+     "glutes": 1.0
     },
     "weekly_sets_per_region": {
      "chest": 10,
@@ -28845,26 +26940,6 @@
         "day": "wed",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "stretch_share",
-     "severity": "suggest",
-     "target": {
-      "muscle": "glutes",
-      "share": 0.0
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]
@@ -29167,29 +27242,6 @@
         "day": "wed",
         "id": "incline-dumbbell-curl",
         "sets": 2
-       }
-      ]
-     ]
-    },
-    {
-     "type": "swap_stretch_biased",
-     "source": "missing_stretch",
-     "severity": "info",
-     "target": {
-      "flag": [
-       "info",
-       "missing_stretch",
-       "glutes"
-      ]
-     },
-     "fixes": [
-      [
-       {
-        "op": "swap",
-        "day": "wed",
-        "from_id": "back-squat",
-        "to_id": "reverse-hack-squat",
-        "sets": 4
        }
       ]
      ]

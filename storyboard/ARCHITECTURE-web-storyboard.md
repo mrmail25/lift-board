@@ -129,3 +129,38 @@ Parity (node, all 0 mismatches): test/analysis.diff.js, movement.diff.js, templa
 - Data loading: every file comes from the storyboard's own `data/` (synced by sync-ranking-data.sh and sync-education.sh). There is no `../data` fallback, so the live app's data folder is never needed. `getJ()` never throws: a 404 or a fetch aborted by navigation gives null and is not retried in another folder.
 - Check count = `ANALYSIS.checksPass` (analysis_metrics checks_pass). Only rules whose `applies` holds are counted (level, plus requires baseline_saved / training_days>=2). Info flags never fail, and the two spinal-load flags count as one rule. The totals are 14/14 at intermediate and advanced and 15/15 at beginner, +1 with a baseline. While any template slot is open, the strip and the Analysis header say "Fill slots to check".
 - Units: Settings › Units (localStorage `apechit.sb.unit`, default lb). Progress converts Coach's kg sample log for display only; progress.diff stays in kg.
+
+## Round 2, Batch A (2026-10-22)
+- **Tokens / dark mode** (`tokens.css`): new semantic tokens (`--on-ink`, `--surface-ink`, `--glyph-*`, `--fill-press`, `--row-*`, `--line-strong`, `--kp-*`, `--map-*`, `--heat-1..4`, `--warn-*`, `--ok-*`, `--slot-bg`, `--wb-inset`, `--vol-mix`, `--series-1..6`). One dark set, written twice with identical values: `html[data-theme=dark]` and `@media (prefers-color-scheme:dark){html:not([data-theme=light])}`. Settings › Appearance (System / Light / Dark) stores `apechit.sb.theme`; `index.html` applies it before first paint; `SBX.setTheme()` for tests. Hardcoded light colours in `sb.css` and the map SVG fills in `sb.js` now use tokens. Plate colours stay literal (they are the plates' real colours).
+- **Ramp**: `--ramp-0..4` (one blue hue, light and dark versions) is the only scale for "sets per muscle" in Build Day mode, the days-per-muscle grid (`.fq i[data-r]`) and the Log maps. Levels: >0, ≥1.5, ≥3, ≥5 effective sets (`RAMPL` in board.js and sb.js). Range colours (`--vol-*`) are unchanged in meaning and have dark values.
+- **Icons**: every `.gl` / `.cg` uses `--glyph-bg` (black) and `--glyph-fg` (white). Dark mode adds a faint `--glyph-ring`.
+- **Build card**: `.bsegs` holds Week/Day and Clean/Detail, centred on one row (portrait) or stacked in the middle column (landscape and iPad). The map is 176 px tall in portrait. The duplicate `.bdseg2` in the legend is gone.
+- **Units**: the fixture loads are lb. `cvt/uw/uP/uTxt` convert to kg and round to `logger.load_step.kg[equipment]`. Typed values remember their unit (`s.wu`). The plate calculator uses `gym_profile_default[unit]` plates, kg bars and a 2.5 kg step. GYM plates are stored per unit: `plates` (lb, read by ranking) and `plates_kg`. Finish strings are converted too.
+- **Train reorder**: press and hold `.exgrip` for 280 ms. The blocks collapse to their headers; drag and release. The ⋯ menu has Move up / Move down. Order is saved in `WK.ex` and in `localStorage apechit.sb.wkOrder[rid:di]`, and `applyOrder()` applies it on the demo, on reload and on the next start of that routine day. The routine itself is not changed.
+- **Log**: a single history in Coach's logger shape (`LOGH`: sessions/entries/sets). It is generated from the Oct fixture and saved to `apechit.sb.log.v1` after edits. `LOGS` is derived from it. PRs come from the new `logic/prs.js`, a port of `tools/prs.py detect_prs` plus `loads.py available_loads`, diffed by `test/prs.diff.js` against `data/prs-reference.json` and `data/prs-tie-reference.json` (10 cases, 136 badges).
+  - Rows show a mini map (shared `<symbol>`s plus per-row `--mm-<muscle>` variables) and a notes preview.
+  - `#log-d<day>` is the detail view: stats, notes, body map (ramp), and an e1RM overlay chart. Each exercise's best e1RM per session (Epley, reps ≤ `e1rm_max_reps` = 10, effective load as in `flatten`) is plotted as % of its best before this workout, and tapping a point shows the absolute value and unit. Exercise blocks carry PR badges per type, with the badge set marked.
+  - The edit sheet covers date (Oct 1 to today, one workout per day), start, duration, notes, and sets and weights in the display unit. Save stores the history, recomputes PRs for all sessions, and re-renders (moving to the new day).
+- **Tests**: 11 new checks in the round-2 block of `test/sb.test.js` (icons, ramp, dark tokens, theme switch, dark range colours, Build layout, kg, reorder, Log list, Log detail, Log edit). Shots: `26a…26y` in `test/shots.js`.
+
+## v13 sync (r2fix, 2026-10-23)
+
+- `sync-ranking-data.sh` run once: rules v10, exercises v13 (247), templates v2, analysis_metrics v2. `prs-reference.json` /
+  `prs-tie-reference.json` kept. `data/ranking-reference.json` is the output of Coach's `tools/gen_ranking_reference.py` against
+  v13 (the copy in `../data` was still the 239-exercise v12 file). Replace it with the next synced copy once Coach regenerates.
+- `build-mock-ex.py` rebuilds `assets/mock-ex.js` (window.EXL, REGION_GROUP) from `data/exercises.json`. Rows now carry
+  `untracked_target` as a 7th field.
+- Ported from Coach's Python:
+  - `rank.primaryMuscle` and `whiteboard.primaryRegion` fall back to `untracked_target.filter_muscle` when every rating is 0.
+  - `progcheck`: severity for beginner_squat_and_deadlift and hinge_before_squat now comes from `rules[]`. missing_stretch is warn
+    for `stretch_check` muscles.
+  - `templates`: v2 rule (`types`, `variant` = rules.patterns group) and `presetFill`. `default_exercise` is now Coach's ranked
+    pick, so the preset_exercise fill is the one that reproduces the preset.
+  - `analysis`: `applicable` / `checksPass` over kind=check items (13 without a baseline, 14 with one). `catalogue` maps
+    sections/items onto the current sheet. The Analysis restructure itself is batch B.
+- All-zero muscle map (tibialis-raise): the untracked_target tag stands wherever the muscle info would go:
+  - tray/workout subtitle (`exSub`);
+  - chit Detail line (`fracLine`);
+  - chit sheet "Muscles worked";
+  - info sheet and learn "Muscles hit" (label + tag).
+  The tray muscle filter and the learn link use `filter_muscle`. Chit colour comes from the region (legs).

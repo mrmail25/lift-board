@@ -17696,6 +17696,598 @@
     "not_to_failure": false,
     "source": "type:isolation"
    }
+  },
+  "donkey-calf-raise": {
+   "default": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "strength": {
+    "low": 8,
+    "high": 15,
+    "display": "8–15",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "muscle_size": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "joint_friendly": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "maintain": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "aesthetic_v_taper": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "aesthetic_lower_emphasis": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "conditioning": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   }
+  },
+  "single-leg-dumbbell-calf-raise": {
+   "default": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "strength": {
+    "low": 8,
+    "high": 15,
+    "display": "8–15",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "muscle_size": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "joint_friendly": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "maintain": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "aesthetic_v_taper": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "aesthetic_lower_emphasis": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "conditioning": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:calves"
+   }
+  },
+  "hack-squat-calf-raise": {
+   "default": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "strength": {
+    "low": 8,
+    "high": 15,
+    "display": "8–15",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "muscle_size": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "joint_friendly": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "maintain": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "aesthetic_v_taper": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "aesthetic_lower_emphasis": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "conditioning": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   }
+  },
+  "tibialis-raise": {
+   "default": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "strength": {
+    "low": 8,
+    "high": 15,
+    "display": "8–15",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "muscle_size": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "joint_friendly": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "maintain": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "aesthetic_v_taper": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "aesthetic_lower_emphasis": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   },
+   "conditioning": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "override:calves"
+   }
+  },
+  "seated-band-hip-abduction": {
+   "default": {
+    "low": 10,
+    "high": 15,
+    "display": "10–15",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "type:isolation"
+   },
+   "strength": {
+    "low": 10,
+    "high": 15,
+    "display": "10–15",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "type:isolation"
+   },
+   "muscle_size": {
+    "low": 10,
+    "high": 15,
+    "display": "10–15",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "type:isolation"
+   },
+   "joint_friendly": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "type:isolation"
+   },
+   "maintain": {
+    "low": 10,
+    "high": 15,
+    "display": "10–15",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "type:isolation"
+   },
+   "aesthetic_v_taper": {
+    "low": 10,
+    "high": 15,
+    "display": "10–15",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "type:isolation"
+   },
+   "aesthetic_lower_emphasis": {
+    "low": 10,
+    "high": 15,
+    "display": "10–15",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "type:isolation"
+   },
+   "conditioning": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": false,
+    "not_to_failure": false,
+    "source": "type:isolation"
+   }
+  },
+  "side-plank": {
+   "default": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "strength": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "muscle_size": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "joint_friendly": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "maintain": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "aesthetic_v_taper": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "aesthetic_lower_emphasis": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "conditioning": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   }
+  },
+  "dumbbell-side-bend": {
+   "default": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:abs_flexion"
+   },
+   "strength": {
+    "low": 8,
+    "high": 15,
+    "display": "8–15",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:abs_flexion"
+   },
+   "muscle_size": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:abs_flexion"
+   },
+   "joint_friendly": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:abs_flexion"
+   },
+   "maintain": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:abs_flexion"
+   },
+   "aesthetic_v_taper": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:abs_flexion"
+   },
+   "aesthetic_lower_emphasis": {
+    "low": 10,
+    "high": 20,
+    "display": "10–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:abs_flexion"
+   },
+   "conditioning": {
+    "low": 12,
+    "high": 20,
+    "display": "12–20",
+    "unit": "reps",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:abs_flexion"
+   }
+  },
+  "copenhagen-plank": {
+   "default": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "strength": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "muscle_size": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "joint_friendly": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "maintain": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "aesthetic_v_taper": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "aesthetic_lower_emphasis": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   },
+   "conditioning": {
+    "low": 15,
+    "high": 45,
+    "display": "15–45 s",
+    "unit": "seconds",
+    "per_side": true,
+    "not_to_failure": false,
+    "source": "override:side_holds"
+   }
   }
  },
  "multi_goal": [
