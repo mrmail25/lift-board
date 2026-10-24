@@ -37,13 +37,35 @@ function make(D,EXJ,R){
   const pm=e=>RANK.primaryMuscle(e,MUSCLES);
   function makeId(name,taken=[],rnd=Math.random){const t=new Set(taken);for(;;){let r='';for(let k=0;k<6;k++)r+=B36[Math.floor(rnd()*36)%36];
     const i=`custom-${slug(name)}-${r}`;if(!LIBIDS.has(i)&&!t.has(i))return i}}
-  function shortName(name,taken=[]){let s=spaces(name);
-    if(s.length>16)s=spaces(s.replace(/\s*\([^)]*\)/g,''))||s;
-    for(const [a,b] of ABBR){if(s.length<=16)break;s=s.replace(new RegExp(reEsc(a),'gi'),b)}
-    let w=s.split(' ');while(s.length>16&&w.length>2){w=w.slice(1);s=w.join(' ')}
-    s=s.slice(0,16).replace(/\s+$/,'');
-    const lib=new Set([...LIBSHORT,...taken]),base=s;let k=2;
-    while(lib.has(s)){const suf=` ${k}`;s=base.slice(0,16-suf.length).replace(/\s+$/,'')+suf;k++}return s}
+  // ---- short name (Coach's brandfix rule, 2026-10-24): brands, abbreviations and max length come from D.short_name, never hardcoded.
+  // Python's \w is Unicode, so W = letters / digits / underscore in any script (the 'u' flag).
+  const SN=D.short_name||{},MAXS=SN.max_len||16,ABBRS=SN.abbreviations||ABBR,W='[\\p{L}\\p{N}_]';
+  const BRX=(SN.brands||[]).slice().sort((a,b)=>b.brand.length-a.brand.length)
+    .map(b=>({b,rx:new RegExp(`(?<!${W.slice(0,-1)}-])`+b.brand.split(/[ -]+/).map(reEsc).join('[ -]?')+`(?!${W.slice(0,-1)}-])`,'giu')}));
+  const findBrands=name=>BRX.filter(x=>{x.rx.lastIndex=0;return x.rx.test(name)}).map(x=>x.b);
+  const strip=(s,cs)=>{s=String(s);while(s&&cs.includes(s[0]))s=s.slice(1);while(s&&cs.includes(s[s.length-1]))s=s.slice(0,-1);return s};
+  function stripBrands(name){let s=name;for(const x of BRX)s=s.replace(x.rx,'');return strip(spaces(s.split(' - ').join(' ')),' -')}
+  function shorten(s,n=MAXS){s=spaces(s);
+    if(s.length>n)s=spaces(s.replace(/\s*\([^)]*\)/g,''))||s;
+    for(const [a,b] of ABBRS){if(s.length<=n)break;s=s.replace(new RegExp(`(?<!${W.slice(0,-1)}-])`+reEsc(a)+`(?!${W})`,'giu'),b)}
+    let w=s.split(' ');
+    while(s.length>n&&w.length>2){w=w.slice(1);s=w.join(' ')}
+    if(s.length>n&&w.length===2&&w[0].includes('-')){let h=w[0].split('-');   // 'Pseudo-Planche Push-Up' -> 'Planche Push-Up'
+      while(h.length>1&&h[h.length-1].length&&[h.join('-'),w[1]].join(' ').length>n)h=h.slice(1);w=[h.join('-'),w[1]];s=w.join(' ')}
+    if(s.length>n&&w.length===2&&n-w[1].length-2>=4)s=w[0].slice(0,n-w[1].length-2)+'. '+w[1];   // 'Concentrat. Curl': a period, never a silent cut
+    if(s.length>n&&w.length===2&&w[1].length<=n)s=w[1];   // keep the movement noun
+    if(s.length>n)s=s.slice(0,n);   // one over-long word (never a brand: brands are gone by now)
+    return s.replace(/[ -]+$/,'')}
+  function unique(s,taken){let k=2;const base=s;
+    while(taken.has(s)){const suf=` ${k}`;let w=base.split(' '),t=base;while(t.length+suf.length>MAXS&&w.length>1){w=w.slice(1);t=w.join(' ')}
+      s=t.slice(0,MAXS-suf.length).replace(/\s+$/,'')+suf;k++}return s}
+  function shortName(name,taken=[],exclude=[]){const s0=spaces(name),ex=new Set(exclude),T=new Set([...LIBSHORT,...taken].filter(x=>!ex.has(x)));
+    if(s0.length<=MAXS&&!T.has(s0))return s0;
+    let br=findBrands(s0),core=br.length?stripBrands(s0):s0;
+    if(!core){core=br[0].brand.length<=MAXS?br[0].brand:br[0].abbr;br=[]}
+    let s=shorten(core);
+    if(br.length&&T.has(s)){const pre=br.map(b=>b.abbr).join(' ');s=strip(`${pre} ${shorten(core,MAXS-pre.length-1)}`,' ')}
+    return unique(s,T)}
   function validate(form,customNames=[]){const err=[],warn=[],n=String(form.name||'').trim();
     if(!n)err.push('name: required');if(n.length>60)err.push('name: at most 60 characters');
     if(n&&customNames.some(x=>String(x).toLowerCase()===n.toLowerCase()))err.push('name: already used by another custom exercise');
@@ -90,7 +112,7 @@ function make(D,EXJ,R){
   // the form back from a record (edit): bands from the ratios, toggles from the record
   function formFromRecord(e){const ms={};for(const [m,r] of Object.entries(e.muscles)){const b=Object.keys(BANDS).find(k=>Math.abs(BANDS[k].ratio-r)<1e-9);if(r>0&&b)ms[m]=b}
     return {name:e.name,short_name:e.short_name,equipment:e.equipment,movement_pattern:e.movement_pattern,muscles:ms,unilateral:(e.swap.flags||[]).includes('unilateral'),stretch_focused:(e.stretch_biased_for||[]).length>0||e.swap.stretch_emphasis===3}}
-  return {D,BANDS,PATTERNS,EQUIPMENT,MUSCLES,HEADS_OF,REGIONS,pm,makeId,shortName,validate,build,formOf,formFromRecord,toggleDefaults,slotsFor,
+  return {D,BANDS,PATTERNS,EQUIPMENT,MUSCLES,HEADS_OF,REGIONS,pm,makeId,shortName,findBrands,stripBrands,shorten,validate,build,formOf,formFromRecord,toggleDefaults,slotsFor,
     labels:{pattern:Object.fromEntries(D.form.movement_patterns.map(x=>[x.id,x.label])),equipment:Object.fromEntries(D.form.equipment.map(x=>[x.id,x.label])),muscle:Object.fromEntries(D.form.muscles.map(x=>[x.id,x.label])),toggles:D.form.toggles}}
 }
 // ---- registration (md "Registering a custom exercise", steps 1-5). Idempotent; unregister reverses it.

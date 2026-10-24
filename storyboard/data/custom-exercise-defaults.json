@@ -402,7 +402,248 @@
    "more than 6 muscles (library median 3 counted muscles)"
   ]
  },
- "short_name_rule": "1) name if <= 16 chars; 2) drop a parenthetical; 3) the library abbreviations (short_name_note) in order until it fits; 4) drop leading\nwords, keeping at least the last two (the movement noun, e.g. 'Chest Press'); 5) hard cut to 16. Unique: if taken (library or custom),\nreplace the tail with ' 2', ' 3', ...",
+ "short_name_rule": "1) name if it fits (<= 16) and is free: kept as typed (a brand stays whole). 2) Otherwise equipment brands (BRANDS) are dropped as a whole\nunit, then the name is shortened: drop a parenthetical, library abbreviations (whole words) in order, drop leading words keeping the last two\n(the movement noun, e.g. 'Chest Press'), then leading hyphen parts, then the first word shortened with a period ('Concentrat. Curl'), then the last word alone, then a hard cut for one over-long word. 3) If that collides with a library or custom short name and the name had a\nbrand, use the brand abbreviation as a pinned prefix ('HmS Iso Row') and shorten the rest to fit. 4) Still taken: ' 2', ' 3', ... (dropping\nleading words before cutting). A brand fragment can never show: brands are removed or replaced whole before any word is dropped or cut.",
+ "short_name": {
+  "max_len": 16,
+  "brands": [
+   {
+    "brand": "Hammer Strength",
+    "abbr": "HmS"
+   },
+   {
+    "brand": "Life Fitness",
+    "abbr": "LF"
+   },
+   {
+    "brand": "Arsenal Strength",
+    "abbr": "ArsS"
+   },
+   {
+    "brand": "Rep Fitness",
+    "abbr": "RepF"
+   },
+   {
+    "brand": "Titan Fitness",
+    "abbr": "TitanF"
+   },
+   {
+    "brand": "Star Trac",
+    "abbr": "StarT"
+   },
+   {
+    "brand": "Pure Strength",
+    "abbr": "PureS"
+   },
+   {
+    "brand": "Body-Solid",
+    "abbr": "BSolid"
+   },
+   {
+    "brand": "Prime",
+    "abbr": "Prime"
+   },
+   {
+    "brand": "Nautilus",
+    "abbr": "Naut"
+   },
+   {
+    "brand": "Cybex",
+    "abbr": "Cybex"
+   },
+   {
+    "brand": "Matrix",
+    "abbr": "Matrix"
+   },
+   {
+    "brand": "Technogym",
+    "abbr": "TGym"
+   },
+   {
+    "brand": "Precor",
+    "abbr": "Precor"
+   },
+   {
+    "brand": "Rogue",
+    "abbr": "Rogue"
+   },
+   {
+    "brand": "Panatta",
+    "abbr": "Panatta"
+   },
+   {
+    "brand": "Gym80",
+    "abbr": "Gym80"
+   },
+   {
+    "brand": "Atlantis",
+    "abbr": "Atl"
+   },
+   {
+    "brand": "Freemotion",
+    "abbr": "FM"
+   },
+   {
+    "brand": "Hoist",
+    "abbr": "Hoist"
+   },
+   {
+    "brand": "Keiser",
+    "abbr": "Keiser"
+   },
+   {
+    "brand": "Eleiko",
+    "abbr": "Eleiko"
+   },
+   {
+    "brand": "Watson",
+    "abbr": "Watson"
+   },
+   {
+    "brand": "Newtech",
+    "abbr": "Newtech"
+   },
+   {
+    "brand": "Booty Builder",
+    "abbr": "BootyB"
+   },
+   {
+    "brand": "Glute Builder",
+    "abbr": "GluteB"
+   }
+  ],
+  "brand_rule": "Equipment brands are one unit, matched whole-word and case-insensitive (a space or hyphen between brand words matches either). When the name must be shortened, the whole brand is dropped; only if the result collides with a library or custom short name is the brand abbreviation used as a pinned prefix. A brand is never split, so a fragment like \"Strength Iso Row\" cannot appear. A name that already fits (<= 16) is kept as typed, brand included.",
+  "abbreviations": [
+   [
+    "Smith Machine",
+    "Smith"
+   ],
+   [
+    "One-Arm",
+    "1-Arm"
+   ],
+   [
+    "Single-Arm",
+    "1-Arm"
+   ],
+   [
+    "Plate-Loaded",
+    "Plate-Load"
+   ],
+   [
+    "Chest-Supported",
+    "Supp"
+   ],
+   [
+    "Chest Supported",
+    "Supp"
+   ],
+   [
+    "Single-Leg",
+    "SL"
+   ],
+   [
+    "Single Leg",
+    "SL"
+   ],
+   [
+    "Close-Grip",
+    "CG"
+   ],
+   [
+    "Close Grip",
+    "CG"
+   ],
+   [
+    "Romanian Deadlift",
+    "RDL"
+   ],
+   [
+    "Straight-Arm",
+    "Str-Arm"
+   ],
+   [
+    "Dumbbell",
+    "DB"
+   ],
+   [
+    "Barbell",
+    "BB"
+   ],
+   [
+    "Kettlebell",
+    "KB"
+   ],
+   [
+    "Overhead",
+    "OH"
+   ],
+   [
+    "Deadlift",
+    "DL"
+   ],
+   [
+    "Handstand",
+    "HS"
+   ],
+   [
+    "Suspension",
+    "Susp"
+   ],
+   [
+    "Machine",
+    "Mach"
+   ],
+   [
+    "Converging",
+    "Conv"
+   ],
+   [
+    "Reverse",
+    "Rev"
+   ],
+   [
+    "Standing",
+    "Stand"
+   ],
+   [
+    "Forward",
+    "Fwd"
+   ],
+   [
+    "Hamstring",
+    "Ham"
+   ],
+   [
+    "Triceps",
+    "Tri"
+   ],
+   [
+    "Isolateral",
+    "Iso"
+   ],
+   [
+    "Iso-Lateral",
+    "Iso"
+   ],
+   [
+    "Lateral",
+    "Lat"
+   ]
+  ],
+  "abbreviation_rule": "whole words, applied in order until the name fits (the library short_name_note abbreviations)",
+  "examples": {
+   "Hammer Strength Iso Row": "Iso Row",
+   "Hammer Strength Iso-Lateral Chest Press": "HmS Chest Press",
+   "Life Fitness Leg Press": "LF Leg Press",
+   "Prime Plate-Loaded Row": "Plate-Loaded Row",
+   "Nautilus Pullover": "Pullover",
+   "Cybex Arm Curl": "Cybex Arm Curl",
+   "Arsenal Strength Hip Thrust": "ArsS Hip Thrust",
+   "Body Solid Lat Pulldown": "BSolid Pulldown",
+   "Nautilus Leg Extension": "Naut Extension",
+   "Hammer-Strength Seated Calf Raise": "Calf Raise"
+  }
+ },
  "fields": [
   {
    "field": "id",
@@ -417,7 +658,7 @@
   {
    "field": "short_name",
    "from": "rule",
-   "rule": "short_name(): name if <= 16; drop parenthetical; library abbreviations; drop leading words keeping the last two; cut to 16; unique with \" 2\", \" 3\""
+   "rule": "short_name(): name if it fits (<= 16) and is free; else drop equipment brands as a whole (short_name.brands), drop a parenthetical, library abbreviations, drop leading words keeping the last two, then hyphen parts / a period-marked first word / the last word; on a collision use the brand abbreviation as a prefix; unique with \" 2\", \" 3\". Never a brand fragment."
   },
   {
    "field": "type",
