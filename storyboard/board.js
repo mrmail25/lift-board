@@ -408,10 +408,15 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
         +gfx('movement_pattern_sets',`<div class="hbars pats">${Object.entries(mps).map(([k,v])=>`<button class="hbar prow" data-b="pat" data-p="${k}"><span class="vm hbs">${MPL[k]||k}</span><span class="hbt"><i style="--w:${v/pmx*100}%"></i></span><span class="vn num">${v} sets</span></button>`).join('')}</div>`)
         +`<div class="ckl">${ckRow('push_pull_ratio',{after:ppBar})}${ckRow('pattern_coverage')}${ckRow('redundant_pattern')}${stretchChecks}${ckRow('stretch_coverage')}</div>`+rest('balance')},
     recovery_fatigue:()=>{const bd=rc.by_day||{},bmx=Math.max(1e-9,...Object.values(bd)),sm=Object.entries(spf).sort((a,b)=>a[1]-b[1]),smx=Math.max(1e-9,...sm.map(x=>x[1]));
-      const tiers=(fz.components||{}).tiers||[];
-      return gfx('recovery_cost',`<div class="hbars">${Object.entries(bd).map(([k,v])=>hbar(dayN(k),v/bmx*100,v)).join('')||'<p class="foot">No training days yet.</p>'}</div>`,{mod:1})
+      const tiers=(fz.components||{}).tiers||[],FTI=l=>['heavy axial compound','other compound','lighter compound','isolation'].indexOf(l)+1; // week tier list: same tier colours as the day stacks
+      // r3fu: each day's bar stacked by fatigue tier (MUSCLEDIVE.recoveryTiers, port of Coach's recovery_tiers; tier costs sum exactly to the day total)
+      const RTD=window.MUSCLEDIVE&&MUSCLEDIVE.recoveryTiers?MUSCLEDIVE.recoveryTiers(dt,checkDays()):null,TI=id=>(RTD?RTD.tiers.findIndex(t=>t.id===id):0)+1,TL=id=>RGL(((RTD&&RTD.tiers.find(t=>t.id===id))||{label:id}).label);
+      const stk=(k,v)=>{const T=((RTD||{}).by_day||{})[k];if(!T)return hbar(dayN(k),v/bmx*100,v);
+        return `<div class="hbar rtrow" data-day="${k}" data-total="${T.total}"><span class="vm hbs">${dayN(k)}</span><span class="hbt rtk"><span class="rtstk" style="--w:${T.total/bmx*100}%">${T.tiers.map(t=>`<i data-tier="${t.tier}" data-cost="${t.cost}" style="--tw:${T.total?t.cost/T.total*100:0}%;background:var(--tier-${TI(t.tier)})" title="${TL(t.tier)} · ${t.cost} pts · ${t.sets} sets"></i>`).join('')}</span></span><span class="vn num">${T.total}</span></div>`};
+      const rleg=RTD?`<div class="tierleg rtleg">${RTD.tiers.map(t=>`<span data-tier="${t.id}"><i style="background:var(--tier-${TI(t.id)})"></i>${RGL(t.label)}</span>`).join('')}</div>`:'';
+      return gfx('recovery_cost',`<div class="hbars">${Object.entries(bd).map(([k,v])=>stk(k,v)).join('')||'<p class="foot">No training days yet.</p>'}</div>${Object.keys(bd).length?rleg:''}`,{mod:1})
         +gfx('stimulus_per_fatigue',`<div class="hbars">${sm.map(([m,v])=>hbar(mlk(m,'fatigue'),v/smx*100,(+v).toFixed(2))).join('')}</div><p class="foot">Effective sets per fatigue point; lowest first.</p>`,{mod:1})
-        +gfx('fatigue_rating',fz.sets?`<div class="tierbar">${tiers.map(t=>`<i style="flex:${t.share_of_cost}" title="${RGL(t.tier)}"></i>`).join('')}</div><div class="tierleg">${tiers.map((t,i)=>`<span><i style="background:var(--ramp-${4-i})"></i>${RGL(t.tier)} ${pct(t.share_of_cost)}</span>`).join('')}</div><button class="btn plain sm fzmore" data-b="anx" data-id="fatigue_rating">Full breakdown ›</button>`:'',{mod:1})
+        +gfx('fatigue_rating',fz.sets?`<div class="tierbar">${tiers.map(t=>`<i style="flex:${t.share_of_cost};background:var(--tier-${FTI(t.tier)})" title="${RGL(t.tier)}"></i>`).join('')}</div><div class="tierleg">${tiers.map(t=>`<span><i style="background:var(--tier-${FTI(t.tier)})"></i>${RGL(t.tier)} ${pct(t.share_of_cost)}</span>`).join('')}</div><button class="btn plain sm fzmore" data-b="anx" data-id="fatigue_rating">Full breakdown ›</button>`:'',{mod:1})
         +`<div class="ckl">${ckRow('recovery_vs_baseline')}${ckRow('spinal_load',{after:A.day.length?`<div class="ckd">${A.day.map(x=>`<span class="${x.spinal>SP.session_max?'over':''}">${WD[DAYS.indexOf(x.day)]} ${x.spinal}/${SP.session_max}</span>`).join(' · ')} spine sets</div>`:''})}${ckRow('lower_back_fatigue')}</div>`+rest('recovery_fatigue','Lower-fatigue swaps')},
     session:()=>gfx('session_length',`<div class="group sess">${A.day.map(x=>`<div class="row"><span class="vm">${WD[DAYS.indexOf(x.day)]}</span><span class="sbar"><i style="--w:${x.minutes/mx*100}%" class="${x.minutes>=SL.warn_min?'w':x.minutes>=SL.info_min?'i':''}"></i><b style="--x:${SL.info_min/mx*100}%"></b><b class="w" style="--x:${SL.warn_min/mx*100}%"></b></span><span class="vn num">${Math.round(x.minutes)}</span></div>`).join('')||'<div class="row sub">No training days yet</div>'}</div><p class="foot">Minutes per day; lines at ${SL.info_min} and ${SL.warn_min} min.</p>`)
       +`<div class="ckl">${ckRow('session_design')}</div>`+rest('session')};
@@ -493,7 +498,8 @@ function analysisSheet(){SUGX.clear();AN=X.sheet({title:'Analysis',cls:'tall gro
 // issue's fix.ops on the board; Undo runs fix.undo (inverse ops: swap / sets / add / remove; a move = remove + add). An issue
 // without a validated fix (action see_analysis) links to its Analysis item instead. A board with no issue still shows the card.
 let PCI=[],PCAP=null;
-const pcItem=id=>{if(!id)return null;if(id.includes('<muscle>'))return 'stretch_share';return id.split(' / ')[0]};
+// r3fu: issue.analysis_item is always a real analysis item id and issue.analysis_item_muscle the row to highlight (null = board-level);
+// the card uses both as-is (the old stretch_<muscle> -> stretch_share fallback is gone).
 // Round 3 quick fixes: plain card sentences built here from the issue's structured fields (family, source, target, flag,
 // muscle, days, exercises) and the fix ops, so no Coach string is shown verbatim on the card. Values next to a target
 // range use bfmt / bpct (one decimal when whole-number rounding would make an out-of-range value look in range).
@@ -507,7 +513,7 @@ function pcSentence(it){const dt=RD(),t=it.target||{},m=it.muscle,A=stats().A,f=
   if(r==='missing_stretch')return `${mlk(m||f[2],'stretch')}: no stretch-focused exercise this week`;
   if(r==='effective_frequency')return `${mlk(m,'frequency')}: ${dt.targets.analytics.frequency_min_effective}+ sets on only ${N(t.days)} day${t.days===1?'':'s'} a week (aim 2)`;
   if(r==='recovery_vs_baseline')return `Recovery cost: ${N(t.pct+'%')} of your normal week`;
-  if(!f)return m?M():(DLAB(pcItem(it.analysis_item))||it.family);
+  if(!f)return m?M():(DLAB(it.analysis_item)||it.family);
   const x=RU(r);
   switch(f[1]){
     case 'sets_per_exercise':{const dd=B.days.find(d=>d.day===f[2]),tl=dd&&dd.tiles.find(q=>q.id===f[3]);return `${SNM(f[3])}: ${N((tl?tl.sets:'')+' sets')} in one session (${D(f[2])})`}
@@ -546,12 +552,15 @@ function pcheckHtml(){const dt=RD();if(!dt||!window.CHECKPRIORITY||!dt.rules.che
   if(!L.length)return head('')+ap+`<div class="pcr none" data-state="none">${ICO.pass}<div class="sgt">No pressing issues</div></div>`+foot;
   return head(`${L.length} most pressing`)+ap+L.map((it,i)=>{const w=pcSentence(it);
     return `<div class="pcr" data-id="${it.id}" data-state="${it.state}" data-action="${it.action}" data-score="${it.score}"><span class="cki dot ${it.state==='red'?'bad':'amb'}" role="img" aria-label="${it.state==='red'?'Needs attention':'Close to target'}"></span><div class="sgt">${w}</div>
-      ${it.fix?`<button class="btn xs accent" data-b="pcapply" data-k="${i}">Apply</button><div class="sgp">${fxT(it)}${it.fix.resolves?'':` <em>${dt.rules.partial_label}</em>`}</div>`:`<button class="btn xs grey" data-b="pcsee" data-item="${pcItem(it.analysis_item)}">See analysis</button><div class="sgp">No one-tap fix passes the checks.</div>`}</div>`}).join('')+foot}
+      ${it.fix?`<button class="btn xs accent" data-b="pcapply" data-k="${i}">Apply</button><div class="sgp">${fxT(it)}${it.fix.resolves?'':` <em>${dt.rules.partial_label}</em>`}</div><button class="pcin" data-b="pcin"${pcAt(it)}>In analysis ›</button>`:`<button class="btn xs grey" data-b="pcsee"${pcAt(it)}>See analysis</button><div class="sgp">No one-tap fix passes the checks.</div>`}</div>`}).join('')+foot}
+const pcAt=it=>` data-item="${it.analysis_item||''}"${it.analysis_item_muscle?` data-m="${it.analysis_item_muscle}"`:''}`;
 function paintPcheck(){const el=$('#pcheck');if(el)el.innerHTML=pcheckHtml()}
 // open the Analysis sheet at one item (its section expanded)
-function analysisAt(item){const S=analysisSheet();const el=item&&S.body.querySelector(`[data-metric="${item}"],[data-check-item="${item}"]`);if(!el)return S;
+// (r3fu) with a muscle, its row inside that item (or, failing that, inside the item's section) is highlighted and scrolled to
+function analysisAt(item,m=null){const S=analysisSheet();const el=item&&S.body.querySelector(`[data-metric="${item}"],[data-check-item="${item}"]`);if(!el)return S;
   const sc=el.closest('.asec');if(sc&&sc.dataset.open==='0'){sc.dataset.open='1';setAnOpen(sc.dataset.cat,1)}
-  requestAnimationFrame(()=>{const top=el.getBoundingClientRect().top-S.body.getBoundingClientRect().top+S.body.scrollTop-56;S.body.scrollTop=Math.max(0,top);el.classList.add('flash')});return S}
+  const row=m?(el.querySelector(`[data-m="${m}"]`)||(sc&&sc.querySelector(`[data-m="${m}"]`))):null;if(row){row.classList.add('anhl');row.dataset.hl=item}
+  requestAnimationFrame(()=>{const tg=row||el,top=tg.getBoundingClientRect().top-S.body.getBoundingClientRect().top+S.body.scrollTop-(row?140:56);S.body.scrollTop=Math.max(0,top);el.classList.add('flash')});return S}
 // ------------------------------------------------------------- New menu (blank, split template, library preset)
 let NW=null;const NS={split:'upper-lower',level:'intermediate',n:'4'};
 const TJT=()=>((RD().TJ||{}).templates||[]);
@@ -620,7 +629,7 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   if(k==='analysis')return analysisSheet();if(k==='sugmore'){SUGX.add(b.dataset.sec);renderAnalysis();return}if(k==='anx')return explainItem(b.dataset.id);
   if(k==='mus'||k==='pat')return contribSheet(k,b.dataset[k==='mus'?'m':'p'],b.dataset.anchor);
   if(k==='asec'){const s=b.closest('.asec');const o=s.dataset.open!=='1';s.dataset.open=o?'1':'0';b.setAttribute('aria-expanded',String(o));setAnOpen(s.dataset.cat,o);return}
-  if(k==='pcsee')return analysisAt(b.dataset.item);
+  if(k==='pcsee'||k==='pcin')return analysisAt(b.dataset.item,b.dataset.m||null);
   if(k==='pcapply'){const it=PCI[+b.dataset.k];if(!it||!it.fix)return;const before=snap();const tx=pcFixText(it)||it.fix.preview;commit(()=>applyOpsBoard(it.fix.ops),`Applied: ${tx}`);PCAP={id:it.id,preview:it.fix.preview,text:tx,undo:it.fix.undo,before,asig:sigD()};paintPcheck();return}
   if(k==='pcundo'){if(!PCAP)return;const P0=PCAP;PCAP=null;B.hist.push(snap());if(P0.asig===sigD()){try{applyOpsBoard(P0.undo)}catch(x){restore(P0.before)}}else restore(P0.before);paint();hideUndo();X.toast('Suggestion undone');return}
   if(k==='ddapply'){const z=CFIX[+b.dataset.k];if(!z)return;commit(()=>applyOpsBoard(z.ops),`Applied: ${z.preview}`);if(CB){CB.last=`Applied: ${z.preview}`;cbRe()}return}if(k==='cbclose')return CB&&CB.close();

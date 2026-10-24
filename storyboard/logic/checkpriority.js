@@ -5,6 +5,7 @@
    and excluded sources (lower_fatigue_swap) never show (card_states / exclude_kinds); no minimum score; an issue with no
    validated fix has action 'see_analysis' and fix null (no Apply / Undo). Cap 3.
    STATE_FIRST is the one switch: false gives the v1 order (score first, then state) with v1's min_score, for comparison only.
+   r3fu (2026-10-23): every issue carries a real analysis_item id plus analysis_item_muscle.
    Parity: node test/checkpriority.diff.js (vs data/check-priority-reference.json, 46 presets). Browser: window.CHECKPRIORITY. */
 (function(root){'use strict';
 const isNode=typeof module!=='undefined'&&module.exports;
@@ -35,6 +36,11 @@ function _where(dt,days,level,tg,m,FD){const f=tg.flag;if(f){const k=JSON.string
   if(m){const mr=((dt.targets.counting||{}).min_rating_to_count??0.25),hit=[];days.forEach(d=>d.tiles.forEach(t=>{if((dt.EX[t.id].muscles[m]||0)>=mr)hit.push([d.day,t.id])}));
     return [[...new Set(hit.map(h=>h[0]))].sort((a,b)=>ORDER.indexOf(a)-ORDER.indexOf(b)),[...new Set(hit.map(h=>h[1]))].sort()]}
   return [[],[]]}
+// r3fu: analysis_item is always a real rules.json analysis_metrics item id (weights analysis_item block): missing_stretch ->
+// stretch_<m> for a stretch_check.checked muscle, else stretch_coverage; stretch_share / session_hard_sets / session_length ->
+// analysis_item.item_by_source; any other source -> check_weight[family].item. analysis_item_muscle = the row to highlight (null = board).
+function _item(C,src,fam,m,chk){if(src==='missing_stretch'||(C.FAM[src]==='stretch'&&src!=='stretch_share'))return m in chk?`stretch_${m}`:'stretch_coverage';
+  const IB=((C.w.analysis_item||{}).item_by_source)||{};return IB[src]||C.CW[fam].item}
 const cmp=(a,b)=>{for(let k=0;k<a.length;k++){if(a[k]<b[k])return -1;if(a[k]>b[k])return 1}return 0};
 function sortKey(i){const s=STATE_RANK[i.state];return STATE_FIRST?[s,-i.score,-i.distance,-i.importance.muscle_weight,i.id]:[-i.score,s,-i.distance,-i.importance.muscle_weight,i.id]}
 // every candidate issue, scored and deduped (one per family + muscle / day), in card order. sheet: pass the caller's ANALYSIS.sheet() to reuse it
@@ -44,7 +50,7 @@ function issues(dt,days,level,baseline=null,sheet=null){const C=cfg(dt),out=new 
     const fam=C.FAM[src],tg=e.target||{},f=tg.flag,m=_muscle(src,tg),st=_state(C,src,e.severity),[lo,hi]=C.BAND[st],d=pyR(_distance(dt,src,tg,level),4);
     const sev=pyR(lo+(hi-lo)*d,4),mw=m?(m in C.MW?C.MW[m]:C.BOARD):C.BOARD,cw=C.CW[fam].weight,[fix,fr]=_fix(C,e.fixes);
     const key=m||(f&&f.length>2&&typeof f[2]==='string'?f[2]:'board'),[dd,ex]=_where(dt,days,level,tg,m,FD);
-    const it={id:`${fam}:${key}`,family:fam,source:src,analysis_item:fam==='stretch'&&m in chk?`stretch_${m}`:C.CW[fam].item,state:st,muscle:m,days:dd,exercises:ex,target:tg,distance:d,
+    const it={id:`${fam}:${key}`,family:fam,source:src,analysis_item:_item(C,src,fam,m,chk),analysis_item_muscle:m||null,state:st,muscle:m,days:dd,exercises:ex,target:tg,distance:d,
       severity:sev,importance:{check_weight:cw,muscle_weight:mw,value:pyR(cw*mw,4)},fixability:{rule:fr.id,value:fr.value},score:pyR(sev*cw*mw*fr.value,4),
       action:fix?'apply':((C.w.no_fix_action||{}).action||'see_analysis'),fix};
     const o=out.get(it.id);if(!o||it.score>o.score)out.set(it.id,it)}

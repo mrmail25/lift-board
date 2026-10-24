@@ -1,0 +1,3714 @@
+{
+ "meta": {
+  "version": 2,
+  "changelog": "v2 (gap-fill): +2 channels ([P]rehab, Mark Wildman), gaps filled, uncertain close variants re-checked by oEmbed title + watch-page description; backup of v1 in data/exercise-videos.pre-gapfill.json",
+  "generated": "2026-10-23",
+  "generated_by": "tools/build_exercise_videos.py (picks in tools/exercise_videos_picks.py)",
+  "method": "Candidates came from YouTube search-results and channel-search pages for each exercise name, limited to the channel list below. Each pick was reviewed by title; one video may serve several close variants. No video IDs were typed from memory. Gaps are left as confidence 'none'.",
+  "verification": "Every video_id: oEmbed GET returned 200, author_name matches an allowed channel, and the watch page reports playableInEmbed=true. title/channel come from oEmbed; duration_s from the watch page lengthSeconds. Re-check with tools/check_exercise_videos.py --online.",
+  "display_note": "Technique demos from third-party channels; shown as links/embeds on the Learn page. No medical claims.",
+  "counts": {
+   "exact": 143,
+   "close_variant": 85,
+   "none": 19
+  },
+  "total": 247,
+  "unique_videos": 182
+ },
+ "channels": [
+  {
+   "key": "rp",
+   "name": "Renaissance Periodization",
+   "handle": "@RenaissancePeriodization",
+   "why": "Dr Mike Israetel's team; largest library of short single-exercise demo clips plus hypertrophy technique videos"
+  },
+  {
+   "key": "jn",
+   "name": "Jeff Nippard",
+   "handle": "@JeffNippard",
+   "why": "Evidence-based coach; short 'perfect technique' tutorials for the main lifts"
+  },
+  {
+   "key": "su",
+   "name": "Squat University",
+   "handle": "@SquatUniversity",
+   "why": "Dr Aaron Horschig (physical therapist); squat, hinge, kettlebell and core technique"
+  },
+  {
+   "key": "at",
+   "name": "Alan Thrall (Untamed Strength)",
+   "handle": "@UntamedStrength",
+   "why": "Plain-spoken barbell technique tutorials (press, row, kettlebell front squat)"
+  },
+  {
+   "key": "ff",
+   "name": "FitnessFAQs",
+   "handle": "@FitnessFAQs",
+   "why": "Daniel Vadnal; calisthenics, rings and skill progressions not covered by the gym channels"
+  },
+  {
+   "key": "pg",
+   "name": "[P]rehab",
+   "handle": "@ThePrehabGuys",
+   "added": "gap-fill v2",
+   "why": "Added in gap-fill v2: The Prehab Guys, a team of licensed physical therapists posting short, clearly cued demos of band/cable hip work, anti-rotation core, plyometric and med-ball drills, calf and suspension-trainer work - the categories the five gym channels did not cover. Low-hype, single-exercise clips. Display name on YouTube is '[P]rehab'."
+  },
+  {
+   "key": "mw",
+   "name": "Mark Wildman",
+   "handle": "@MarkWildman",
+   "added": "gap-fill v2",
+   "why": "Added in gap-fill v2: kettlebell coach (Wildman Athletica) with long-running, step-by-step kettlebell technique tutorials (clean, press, push press, snatch, windmill, halo, rows) and clear front/side demos; filled the kettlebell gaps none of the other channels covered."
+  }
+ ],
+ "videos": [
+  {
+   "exercise_id": "barbell-bench-press",
+   "video_id": "hWbUlkb5Ms4",
+   "url": "https://www.youtube.com/watch?v=hWbUlkb5Ms4",
+   "title": "How To Bench Press With Perfect Technique (5 Steps)",
+   "channel": "Jeff Nippard",
+   "duration_s": 50,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short 5-step bench press technique tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "incline-barbell-bench-press",
+   "video_id": "lJ2o89kcnxY",
+   "url": "https://www.youtube.com/watch?v=lJ2o89kcnxY",
+   "title": "Incline Medium Grip Bench Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); medium grip",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-bench-press",
+   "video_id": "YQ2s_Y7g5Qk",
+   "url": "https://www.youtube.com/watch?v=YQ2s_Y7g5Qk",
+   "title": "Flat Dumbbell Bench Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "incline-dumbbell-press",
+   "video_id": "5CECBjd7HLQ",
+   "url": "https://www.youtube.com/watch?v=5CECBjd7HLQ",
+   "title": "Incline Dumbbell Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "machine-chest-press",
+   "video_id": "NwzUje3z0qY",
+   "url": "https://www.youtube.com/watch?v=NwzUje3z0qY",
+   "title": "Machine Chest Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "weighted-dip",
+   "video_id": "yN6Q1UI_xkE",
+   "url": "https://www.youtube.com/watch?v=yN6Q1UI_xkE",
+   "title": "How To Do Dips For A Bigger Chest and Shoulders (Fix Mistakes!)",
+   "channel": "Jeff Nippard",
+   "duration_s": 430,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Dip technique tutorial (bodyweight shown; add load with a belt). Longer than 3 min",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "push-up",
+   "video_id": "mm6_WcoCVTA",
+   "url": "https://www.youtube.com/watch?v=mm6_WcoCVTA",
+   "title": "Pushup",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-fly",
+   "video_id": "4mfLHnFL0Uw",
+   "url": "https://www.youtube.com/watch?v=4mfLHnFL0Uw",
+   "title": "Cable Flye",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "pec-deck",
+   "video_id": "O-OBCfyh9Fw",
+   "url": "https://www.youtube.com/watch?v=O-OBCfyh9Fw",
+   "title": "Pec Deck Flye",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-fly",
+   "video_id": "JFm8KbhjibM",
+   "url": "https://www.youtube.com/watch?v=JFm8KbhjibM",
+   "title": "Flat Dumbbell Flye",
+   "channel": "Renaissance Periodization",
+   "duration_s": 17,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); flat bench",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "overhead-press",
+   "video_id": "QWBjwGqVLW0",
+   "url": "https://www.youtube.com/watch?v=QWBjwGqVLW0",
+   "title": "3 Overhead Press Tips: Untamed Strength",
+   "channel": "Alan Thrall (Untamed Strength)",
+   "duration_s": 161,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Three short standing overhead press technique tips",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "seated-dumbbell-shoulder-press",
+   "video_id": "HzIiNhHhhtA",
+   "url": "https://www.youtube.com/watch?v=HzIiNhHhhtA",
+   "title": "Seated Dumbbell Shoulder Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "machine-shoulder-press",
+   "video_id": "WvLMauqrnK8",
+   "url": "https://www.youtube.com/watch?v=WvLMauqrnK8",
+   "title": "Machine Shoulder Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-lateral-raise",
+   "video_id": "OuG1smZTsQQ",
+   "url": "https://www.youtube.com/watch?v=OuG1smZTsQQ",
+   "title": "Lateral Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-lateral-raise",
+   "video_id": "lq7eLC30b9w",
+   "url": "https://www.youtube.com/watch?v=lq7eLC30b9w",
+   "title": "Leaning Cable Lateral Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); leaning cable lateral raise",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "upright-row",
+   "video_id": "um3VVzqunPU",
+   "url": "https://www.youtube.com/watch?v=um3VVzqunPU",
+   "title": "Barbell Upright Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); barbell",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "reverse-pec-deck",
+   "video_id": "5YK4bgzXDp0",
+   "url": "https://www.youtube.com/watch?v=5YK4bgzXDp0",
+   "title": "Machine Reverse Flye",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); machine reverse fly",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "face-pull",
+   "video_id": "-MODnZdnmAQ",
+   "url": "https://www.youtube.com/watch?v=-MODnZdnmAQ",
+   "title": "Cable Rope Facepull",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); cable rope",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-rear-delt-fly",
+   "video_id": "34gVHrkaiz0",
+   "url": "https://www.youtube.com/watch?v=34gVHrkaiz0",
+   "title": "Bent Lateral Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bent-over lateral raise (rear-delt fly pattern)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "front-raise",
+   "video_id": "hRJ6tR5-if0",
+   "url": "https://www.youtube.com/watch?v=hRJ6tR5-if0",
+   "title": "Dumbbell Front Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); dumbbell",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "pull-up",
+   "video_id": "iWpoegdfgtc",
+   "url": "https://www.youtube.com/watch?v=iWpoegdfgtc",
+   "title": "Normal Grip Pullup",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); normal grip",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "chin-up",
+   "video_id": "9JC1EwqezGY",
+   "url": "https://www.youtube.com/watch?v=9JC1EwqezGY",
+   "title": "Underhand Pullup",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); underhand pull-up",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "lat-pulldown",
+   "video_id": "jhnxJEzX8rY",
+   "url": "https://www.youtube.com/watch?v=jhnxJEzX8rY",
+   "title": "How To Do a PERFECT Lat Pulldown",
+   "channel": "Renaissance Periodization",
+   "duration_s": 47,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short lat pulldown technique tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "close-grip-pulldown",
+   "video_id": "GRHLNfmr_oI",
+   "url": "https://www.youtube.com/watch?v=GRHLNfmr_oI",
+   "title": "Narrow Grip Pulldown",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); narrow grip",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "barbell-row",
+   "video_id": "RQU8wZPbioA",
+   "url": "https://www.youtube.com/watch?v=RQU8wZPbioA",
+   "title": "How To Barbell Row",
+   "channel": "Alan Thrall (Untamed Strength)",
+   "duration_s": 317,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Barbell row tutorial (~5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "pendlay-row",
+   "video_id": "axoeDmW0oAY",
+   "url": "https://www.youtube.com/watch?v=axoeDmW0oAY",
+   "title": "How To Build a Thick Back With Perfect Rowing Technique (Pendlay Row/ Helms Row)",
+   "channel": "Jeff Nippard",
+   "duration_s": 510,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Pendlay/Helms row technique (~8.5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "one-arm-dumbbell-row",
+   "video_id": "DMo3HJoawrU",
+   "url": "https://www.youtube.com/watch?v=DMo3HJoawrU",
+   "title": "Single Arm Supported Dumbbell Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bench-supported",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "chest-supported-row",
+   "video_id": "0UBRfiO4zDs",
+   "url": "https://www.youtube.com/watch?v=0UBRfiO4zDs",
+   "title": "Chest Supported Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "seated-cable-row",
+   "video_id": "UCXxvVItLoM",
+   "url": "https://www.youtube.com/watch?v=UCXxvVItLoM",
+   "title": "Seated Cable Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 17,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "t-bar-row",
+   "video_id": "yPis7nlbqdY",
+   "url": "https://www.youtube.com/watch?v=yPis7nlbqdY",
+   "title": "T Bar Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 15,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "straight-arm-pulldown",
+   "video_id": "G9uNaXGTJ4w",
+   "url": "https://www.youtube.com/watch?v=G9uNaXGTJ4w",
+   "title": "Straight Arm Pulldown",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "barbell-shrug",
+   "video_id": "M_MjF5Nm_h4",
+   "url": "https://www.youtube.com/watch?v=M_MjF5Nm_h4",
+   "title": "Barbell Shrug",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-shrug",
+   "video_id": "_t3lrPI6Ns4",
+   "url": "https://www.youtube.com/watch?v=_t3lrPI6Ns4",
+   "title": "Dumbbell Shrug",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "barbell-curl",
+   "video_id": "JnLFSFurrqQ",
+   "url": "https://www.youtube.com/watch?v=JnLFSFurrqQ",
+   "title": "Barbell Curl Normal Grip",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-curl",
+   "video_id": "iixND1P2lik",
+   "url": "https://www.youtube.com/watch?v=iixND1P2lik",
+   "title": "Alternating Dumbbell Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); alternating",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "hammer-curl",
+   "video_id": "XOEL4MgekYE",
+   "url": "https://www.youtube.com/watch?v=XOEL4MgekYE",
+   "title": "Hammer Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "incline-dumbbell-curl",
+   "video_id": "aTYlqC_JacQ",
+   "url": "https://www.youtube.com/watch?v=aTYlqC_JacQ",
+   "title": "Incline Dumbbell Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "preacher-curl",
+   "video_id": "sxA__DoLsgo",
+   "url": "https://www.youtube.com/watch?v=sxA__DoLsgo",
+   "title": "EZ Bar Preacher Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); EZ-bar",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-curl",
+   "video_id": "opFVuRi_3b8",
+   "url": "https://www.youtube.com/watch?v=opFVuRi_3b8",
+   "title": "Cable EZ Bar Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); EZ-bar attachment",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "close-grip-bench-press",
+   "video_id": "g4VkufehmUU",
+   "url": "https://www.youtube.com/watch?v=g4VkufehmUU",
+   "title": "RP Close Grip Bench Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 48,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short close-grip bench press demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "skull-crusher",
+   "video_id": "l3rHYPtMUo8",
+   "url": "https://www.youtube.com/watch?v=l3rHYPtMUo8",
+   "title": "Barbell Skullcrusher",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); barbell",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "triceps-pushdown",
+   "video_id": "6Fzep104f0s",
+   "url": "https://www.youtube.com/watch?v=6Fzep104f0s",
+   "title": "Cable Triceps Pushdown",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "overhead-cable-triceps-extension",
+   "video_id": "1u18yJELsh0",
+   "url": "https://www.youtube.com/watch?v=1u18yJELsh0",
+   "title": "Cable Overhead Triceps Extension",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "wrist-curl",
+   "video_id": "2wPpcJBe03o",
+   "url": "https://www.youtube.com/watch?v=2wPpcJBe03o",
+   "title": "Dumbbell Bench Wrist Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); dumbbell on bench",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "back-squat",
+   "video_id": "7v_V6xiA_AA",
+   "url": "https://www.youtube.com/watch?v=7v_V6xiA_AA",
+   "title": "How to Perform A Back Squat",
+   "channel": "Squat University",
+   "duration_s": 195,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Back squat tutorial (~3 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "front-squat",
+   "video_id": "uQeCK1vfj4E",
+   "url": "https://www.youtube.com/watch?v=uQeCK1vfj4E",
+   "title": "How to Perform A Front Squat",
+   "channel": "Squat University",
+   "duration_s": 271,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Front squat tutorial (~4.5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "hack-squat",
+   "video_id": "rYgNArpwE7E",
+   "url": "https://www.youtube.com/watch?v=rYgNArpwE7E",
+   "title": "Hack Squat",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "leg-press",
+   "video_id": "nDh_BlnLCGc",
+   "url": "https://www.youtube.com/watch?v=nDh_BlnLCGc",
+   "title": "How To Leg Press With Perfect Technique",
+   "channel": "Jeff Nippard",
+   "duration_s": 58,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short leg press technique tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "bulgarian-split-squat",
+   "video_id": "lG3MsPmEQQk",
+   "url": "https://www.youtube.com/watch?v=lG3MsPmEQQk",
+   "title": "🔥 Bulgarian Split Squat Tutorial",
+   "channel": "Squat University",
+   "duration_s": 60,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short Bulgarian split squat tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "walking-lunge",
+   "video_id": "eFWCn5iEbTU",
+   "url": "https://www.youtube.com/watch?v=eFWCn5iEbTU",
+   "title": "Dumbbell Walking Lunge",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); dumbbell",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "leg-extension",
+   "video_id": "m0FOpMEgero",
+   "url": "https://www.youtube.com/watch?v=m0FOpMEgero",
+   "title": "Leg Extension",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "deadlift",
+   "video_id": "ZaTM37cfiDs",
+   "url": "https://www.youtube.com/watch?v=ZaTM37cfiDs",
+   "title": "How To Deadlift With Perfect Technique (Step By Step)",
+   "channel": "Jeff Nippard",
+   "duration_s": 55,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short step-by-step deadlift technique tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "romanian-deadlift",
+   "video_id": "_oyxCn2iSjU",
+   "url": "https://www.youtube.com/watch?v=_oyxCn2iSjU",
+   "title": "HOW TO DO ROMANIAN DEADLIFTS (RDLs): Build Beefy Hamstrings With Perfect Technique",
+   "channel": "Jeff Nippard",
+   "duration_s": 381,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RDL technique tutorial (~6 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "stiff-leg-dumbbell-deadlift",
+   "video_id": "cYKYGwcg0U8",
+   "url": "https://www.youtube.com/watch?v=cYKYGwcg0U8",
+   "title": "Dumbbell Stiff Legged Deadlift",
+   "channel": "Renaissance Periodization",
+   "duration_s": 17,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "hip-thrust",
+   "video_id": "kqi4_EPpwCk",
+   "url": "https://www.youtube.com/watch?v=kqi4_EPpwCk",
+   "title": "How To Do Hip Thrusts The Right Way",
+   "channel": "Renaissance Periodization",
+   "duration_s": 175,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Hip thrust technique tutorial (~3 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "lying-leg-curl",
+   "video_id": "n5WDXD_mpVY",
+   "url": "https://www.youtube.com/watch?v=n5WDXD_mpVY",
+   "title": "Lying Leg Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "seated-leg-curl",
+   "video_id": "Orxowest56U",
+   "url": "https://www.youtube.com/watch?v=Orxowest56U",
+   "title": "Seated Leg Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "back-extension",
+   "video_id": "EBui4Bt5N7o",
+   "url": "https://www.youtube.com/watch?v=EBui4Bt5N7o",
+   "title": "STOP Doing Back Extensions Like This!",
+   "channel": "Squat University",
+   "duration_s": 59,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short back extension technique short",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "hip-adduction-machine",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "standing-calf-raise",
+   "video_id": "xxyQ0EWHVlQ",
+   "url": "https://www.youtube.com/watch?v=xxyQ0EWHVlQ",
+   "title": "Seated VS Standing Calf Raises",
+   "channel": "[P]rehab",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Upgraded v2: [P]rehab (physical therapists) short demo: seated vs standing calf raise machines (old RP 'Calf Machine' clip did not confirm standing)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "seated-calf-raise",
+   "video_id": "xxyQ0EWHVlQ",
+   "url": "https://www.youtube.com/watch?v=xxyQ0EWHVlQ",
+   "title": "Seated VS Standing Calf Raises",
+   "channel": "[P]rehab",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "[P]rehab (physical therapists) short demo: seated vs standing calf raise machines",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "hanging-leg-raise",
+   "video_id": "7FwGZ8qY5OU",
+   "url": "https://www.youtube.com/watch?v=7FwGZ8qY5OU",
+   "title": "Hanging Straight Leg Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 9,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); straight-leg",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-crunch",
+   "video_id": "6GMKPQVERzw",
+   "url": "https://www.youtube.com/watch?v=6GMKPQVERzw",
+   "title": "Rope Crunch",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); rope crunch",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ab-wheel-rollout",
+   "video_id": "YgIf-8yklUA",
+   "url": "https://www.youtube.com/watch?v=YgIf-8yklUA",
+   "title": "Ab Wheel Roll-Out: Correct Form Mistakes! #abs #technique",
+   "channel": "Squat University",
+   "duration_s": 65,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short ab-wheel rollout form short",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "hip-abduction-machine",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "cable-hip-abduction",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "side-lying-hip-abduction",
+   "video_id": "-rDiQXjeXO0",
+   "url": "https://www.youtube.com/watch?v=-rDiQXjeXO0",
+   "title": "Foolproof Guide to Side Lying Hip Abduction",
+   "channel": "[P]rehab",
+   "duration_s": 47,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "[P]rehab (physical therapists) short demo: side-lying hip abduction form",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "banded-lateral-walk",
+   "video_id": "X0jsl2ZrXug",
+   "url": "https://www.youtube.com/watch?v=X0jsl2ZrXug",
+   "title": "How to Do Banded Side Steps Properly",
+   "channel": "[P]rehab",
+   "duration_s": 50,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "[P]rehab (physical therapists) short demo: banded side steps form",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-step-up",
+   "video_id": "vjIvnLHv1ZM",
+   "url": "https://www.youtube.com/watch?v=vjIvnLHv1ZM",
+   "title": "Step Ups Will Transform Your Legs",
+   "channel": "FitnessFAQs",
+   "duration_s": 55,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Short step-up explainer (bodyweight shown)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-squat",
+   "video_id": "-eO_VydErV0",
+   "url": "https://www.youtube.com/watch?v=-eO_VydErV0",
+   "title": "Feet Forward Smith Squat",
+   "channel": "Renaissance Periodization",
+   "duration_s": 15,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); feet-forward Smith squat",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-bench-press",
+   "video_id": "O5viuEPDXKY",
+   "url": "https://www.youtube.com/watch?v=O5viuEPDXKY",
+   "title": "Smith Machine Bench Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-incline-press",
+   "video_id": "8urE8Z8AMQ4",
+   "url": "https://www.youtube.com/watch?v=8urE8Z8AMQ4",
+   "title": "Smith Machine Incline Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-overhead-press",
+   "video_id": "OLqZDUUD2b0",
+   "url": "https://www.youtube.com/watch?v=OLqZDUUD2b0",
+   "title": "Smith Machine Seated Shoulder Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); seated",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-row",
+   "video_id": "3QcJggd_L24",
+   "url": "https://www.youtube.com/watch?v=3QcJggd_L24",
+   "title": "Smith Machine Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-rdl",
+   "video_id": "_oyxCn2iSjU",
+   "url": "https://www.youtube.com/watch?v=_oyxCn2iSjU",
+   "title": "HOW TO DO ROMANIAN DEADLIFTS (RDLs): Build Beefy Hamstrings With Perfect Technique",
+   "channel": "Jeff Nippard",
+   "duration_s": 381,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Barbell RDL tutorial; same hip-hinge cues",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-split-squat",
+   "video_id": "jNihW0WDIL4",
+   "url": "https://www.youtube.com/watch?v=jNihW0WDIL4",
+   "title": "Split Squat",
+   "channel": "Renaissance Periodization",
+   "duration_s": 9,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); free-weight split squat",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-calf-raise",
+   "video_id": "hh5516HCu4k",
+   "url": "https://www.youtube.com/watch?v=hh5516HCu4k",
+   "title": "Smith Machine Calves",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-hip-thrust",
+   "video_id": "EF7jXP17DPE",
+   "url": "https://www.youtube.com/watch?v=EF7jXP17DPE",
+   "title": "Barbell Hip Thrust",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); barbell hip thrust",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-shrug",
+   "video_id": "M_MjF5Nm_h4",
+   "url": "https://www.youtube.com/watch?v=M_MjF5Nm_h4",
+   "title": "Barbell Shrug",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Barbell shrug demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "incline-cable-pullover",
+   "video_id": "G9uNaXGTJ4w",
+   "url": "https://www.youtube.com/watch?v=G9uNaXGTJ4w",
+   "title": "Straight Arm Pulldown",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Straight-arm cable pulldown demo (same shoulder-extension pattern)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-pullover",
+   "video_id": "jQjWlIwG4sI",
+   "url": "https://www.youtube.com/watch?v=jQjWlIwG4sI",
+   "title": "Dumbbell Pullover",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "pullover-machine",
+   "video_id": "oxpAl14EYyc",
+   "url": "https://www.youtube.com/watch?v=oxpAl14EYyc",
+   "title": "Machine Pullover",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "landmine-t-bar-row",
+   "video_id": "0UBRfiO4zDs",
+   "url": "https://www.youtube.com/watch?v=0UBRfiO4zDs",
+   "title": "Chest Supported Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Chest-supported row demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "viking-press",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "Downgraded v2: old Squat U landmine-press pick (irJhtqfJscs) has an empty description and a different implement; too loose a stand-in",
+   "verified": null
+  },
+  {
+   "exercise_id": "landmine-press-one-arm",
+   "video_id": "6cSTRPhpubs",
+   "url": "https://www.youtube.com/watch?v=6cSTRPhpubs",
+   "title": "Standing Landmine Shoulder Press - Developing Overhead Control",
+   "channel": "[P]rehab",
+   "duration_s": 22,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Replaced v2: [P]rehab (physical therapists) short demo: standing landmine shoulder press (old Squat U pick had a hype title and empty description); one- vs two-arm not confirmed",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "landmine-press-two-arm",
+   "video_id": "irJhtqfJscs",
+   "url": "https://www.youtube.com/watch?v=irJhtqfJscs",
+   "title": "Build HEALTHY Shoulders (Landmine Press)",
+   "channel": "Squat University",
+   "duration_s": 94,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Short landmine press tutorial; two-arm grip may differ",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "meadows-row",
+   "video_id": "j-H6OxNlhi8",
+   "url": "https://www.youtube.com/watch?v=j-H6OxNlhi8",
+   "title": "The Meadows Row is Underrated!",
+   "channel": "Renaissance Periodization",
+   "duration_s": 55,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short Meadows row explainer",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "landmine-squat",
+   "video_id": "qjYBnObR_z0",
+   "url": "https://www.youtube.com/watch?v=qjYBnObR_z0",
+   "title": "Use the Landmine Squat to Learn to Hip Hinge",
+   "channel": "[P]rehab",
+   "duration_s": 15,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "[P]rehab (physical therapists) short demo: landmine squat",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "landmine-rdl",
+   "video_id": "KLNTTbOebQM",
+   "url": "https://www.youtube.com/watch?v=KLNTTbOebQM",
+   "title": "Landmine RDL",
+   "channel": "[P]rehab",
+   "duration_s": 22,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Upgraded v2: [P]rehab (physical therapists) short demo: landmine RDL (was barbell RDL stand-in)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "landmine-rotation",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "machine-preacher-curl",
+   "video_id": "Ja6ZlIDONac",
+   "url": "https://www.youtube.com/watch?v=Ja6ZlIDONac",
+   "title": "Machine Preacher Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "seated-machine-curl",
+   "video_id": "Ja6ZlIDONac",
+   "url": "https://www.youtube.com/watch?v=Ja6ZlIDONac",
+   "title": "Machine Preacher Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Machine preacher curl demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-rope-hammer-curl",
+   "video_id": "2CDKTFFp5fA",
+   "url": "https://www.youtube.com/watch?v=2CDKTFFp5fA",
+   "title": "Rope Twist Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); rope twist curl",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "bayesian-cable-curl",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No short trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "high-cable-curl",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "machine-triceps-extension",
+   "video_id": "Bx8ga1BLHLE",
+   "url": "https://www.youtube.com/watch?v=Bx8ga1BLHLE",
+   "title": "Machine Triceps Extension",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dip-machine",
+   "video_id": "4LA1kF7yCGo",
+   "url": "https://www.youtube.com/watch?v=4LA1kF7yCGo",
+   "title": "Dip",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bodyweight dip",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "overhead-triceps-machine",
+   "video_id": "1u18yJELsh0",
+   "url": "https://www.youtube.com/watch?v=1u18yJELsh0",
+   "title": "Cable Overhead Triceps Extension",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Cable overhead triceps extension demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "plate-loaded-chest-press",
+   "video_id": "0Wa9CfRXUkA",
+   "url": "https://www.youtube.com/watch?v=0Wa9CfRXUkA",
+   "title": "Hammer Machine Chest Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Hammer Strength plate-loaded press",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "incline-machine-press",
+   "video_id": "TrTSvn5-MTk",
+   "url": "https://www.youtube.com/watch?v=TrTSvn5-MTk",
+   "title": "Incline Machine Chest Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "decline-machine-press",
+   "video_id": "NwzUje3z0qY",
+   "url": "https://www.youtube.com/watch?v=NwzUje3z0qY",
+   "title": "Machine Chest Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Flat machine chest press demo; decline machine path differs",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "iso-lateral-chest-press",
+   "video_id": "aV1U_mK3XOs",
+   "url": "https://www.youtube.com/watch?v=aV1U_mK3XOs",
+   "title": "Flat Hammer Machine Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Hammer Strength flat press",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "iso-lateral-shoulder-press",
+   "video_id": "WvLMauqrnK8",
+   "url": "https://www.youtube.com/watch?v=WvLMauqrnK8",
+   "title": "Machine Shoulder Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Machine shoulder press demo; iso-lateral machine works each arm independently",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "lateral-raise-machine",
+   "video_id": "0o07iGKUarI",
+   "url": "https://www.youtube.com/watch?v=0o07iGKUarI",
+   "title": "Machine Lateral Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "high-row-machine",
+   "video_id": "gg5hwJuv6KI",
+   "url": "https://www.youtube.com/watch?v=gg5hwJuv6KI",
+   "title": "Hammer High Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Hammer Strength high row",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "low-row-machine",
+   "video_id": "opjbouBmUWg",
+   "url": "https://www.youtube.com/watch?v=opjbouBmUWg",
+   "title": "Hammer Low Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Hammer Strength low row",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "iso-lateral-row",
+   "video_id": "opjbouBmUWg",
+   "url": "https://www.youtube.com/watch?v=opjbouBmUWg",
+   "title": "Hammer Low Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Hammer Strength low row demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "wide-grip-lat-pulldown",
+   "video_id": "YCKPD4BSD2E",
+   "url": "https://www.youtube.com/watch?v=YCKPD4BSD2E",
+   "title": "Wide Grip Pulldown",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "neutral-grip-lat-pulldown",
+   "video_id": "--utaPT7XYQ",
+   "url": "https://www.youtube.com/watch?v=--utaPT7XYQ",
+   "title": "Parallel Pulldown",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); parallel (neutral) grip",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "single-arm-lat-pulldown",
+   "video_id": "EUIri47Epcg",
+   "url": "https://www.youtube.com/watch?v=EUIri47Epcg",
+   "title": "Normal Grip Pulldown",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Two-arm pulldown demo; single-arm uses one handle",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "assisted-pull-up",
+   "video_id": "8ygapPMYK1I",
+   "url": "https://www.youtube.com/watch?v=8ygapPMYK1I",
+   "title": "Assisted Normal Grip Pullup",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "assisted-dip",
+   "video_id": "yZ83t4mrPrI",
+   "url": "https://www.youtube.com/watch?v=yZ83t4mrPrI",
+   "title": "Assisted Dip",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "pendulum-squat",
+   "video_id": "rYgNArpwE7E",
+   "url": "https://www.youtube.com/watch?v=rYgNArpwE7E",
+   "title": "Hack Squat",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Hack squat demo (similar machine squat)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "belt-squat",
+   "video_id": "UC5pSSb8YKw",
+   "url": "https://www.youtube.com/watch?v=UC5pSSb8YKw",
+   "title": "the BELT SQUAT is an S-TIER Exercise!",
+   "channel": "Renaissance Periodization",
+   "duration_s": 55,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short belt squat explainer",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "v-squat",
+   "video_id": "rYgNArpwE7E",
+   "url": "https://www.youtube.com/watch?v=rYgNArpwE7E",
+   "title": "Hack Squat",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Hack squat demo (similar machine squat)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "single-leg-press",
+   "video_id": "nDh_BlnLCGc",
+   "url": "https://www.youtube.com/watch?v=nDh_BlnLCGc",
+   "title": "How To Leg Press With Perfect Technique",
+   "channel": "Jeff Nippard",
+   "duration_s": 58,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Two-leg press tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "high-foot-leg-press",
+   "video_id": "Pp7N_Strcxs",
+   "url": "https://www.youtube.com/watch?v=Pp7N_Strcxs",
+   "title": "Best Foot Position For Leg Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 41,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Short explainer on leg press foot position",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "nordic-curl",
+   "video_id": "htyDuCI8cm8",
+   "url": "https://www.youtube.com/watch?v=htyDuCI8cm8",
+   "title": "How To Nordic Hamstring Curl",
+   "channel": "Squat University",
+   "duration_s": 46,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short Nordic hamstring curl tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "glute-kickback-machine",
+   "video_id": "NLDBFtSNhqg",
+   "url": "https://www.youtube.com/watch?v=NLDBFtSNhqg",
+   "title": "Machine Glute Kickback",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "hip-thrust-machine",
+   "video_id": "ZSPmIyX9RZs",
+   "url": "https://www.youtube.com/watch?v=ZSPmIyX9RZs",
+   "title": "Machine Hip Thrust",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "leg-press-calf-raise",
+   "video_id": "KxEYX_cuesM",
+   "url": "https://www.youtube.com/watch?v=KxEYX_cuesM",
+   "title": "Leg Press Calves",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ab-crunch-machine",
+   "video_id": "-OUSBPnHvsQ",
+   "url": "https://www.youtube.com/watch?v=-OUSBPnHvsQ",
+   "title": "Machine Crunch",
+   "channel": "Renaissance Periodization",
+   "duration_s": 9,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "45-degree-hyperextension",
+   "video_id": "5_ejbGfdAQE",
+   "url": "https://www.youtube.com/watch?v=5_ejbGfdAQE",
+   "title": "45 Degree Back Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); 45-degree back raise",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "reverse-hyper",
+   "video_id": "ZeRsNzFcQLQ",
+   "url": "https://www.youtube.com/watch?v=ZeRsNzFcQLQ",
+   "title": "The Forgotten Bodyweight Exercise (REVERSE HYPER ALTERNATIVE)",
+   "channel": "FitnessFAQs",
+   "duration_s": 454,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Bodyweight reverse-hyper alternative (~7.5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "shrug-machine",
+   "video_id": "M_MjF5Nm_h4",
+   "url": "https://www.youtube.com/watch?v=M_MjF5Nm_h4",
+   "title": "Barbell Shrug",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Barbell shrug demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-crossover-low-to-high",
+   "video_id": "e_8HLu59-to",
+   "url": "https://www.youtube.com/watch?v=e_8HLu59-to",
+   "title": "Cable Underhand Flye",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); underhand cable fly (low-to-high style)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-crossover-high-to-low",
+   "video_id": "Cj6P91eFXkM",
+   "url": "https://www.youtube.com/watch?v=Cj6P91eFXkM",
+   "title": "Cable Bent Flye",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bent-forward cable fly (high-to-low style)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "single-arm-cable-row",
+   "video_id": "UCXxvVItLoM",
+   "url": "https://www.youtube.com/watch?v=UCXxvVItLoM",
+   "title": "Seated Cable Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 17,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Two-handed seated cable row demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "wide-grip-cable-row",
+   "video_id": "UCXxvVItLoM",
+   "url": "https://www.youtube.com/watch?v=UCXxvVItLoM",
+   "title": "Seated Cable Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 17,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Close-grip seated cable row demo; use a wide bar",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-rdl",
+   "video_id": "2POPaloE-SM",
+   "url": "https://www.youtube.com/watch?v=2POPaloE-SM",
+   "title": "How To CORRECTLY Do An RDL",
+   "channel": "Squat University",
+   "duration_s": 59,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Short RDL technique short; implement may differ",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "goblet-squat",
+   "video_id": "oYjpyoifOQc",
+   "url": "https://www.youtube.com/watch?v=oYjpyoifOQc",
+   "title": "Goblet Squat Mistakes to Avoid",
+   "channel": "Mark Wildman",
+   "duration_s": 69,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Upgraded v2: Mark Wildman goblet squat form short (was a goblet-squat mobility stretch)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-reverse-lunge",
+   "video_id": "TQfhY5oJ_Sc",
+   "url": "https://www.youtube.com/watch?v=TQfhY5oJ_Sc",
+   "title": "Reverse Lunge",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "arnold-press",
+   "video_id": "HzIiNhHhhtA",
+   "url": "https://www.youtube.com/watch?v=HzIiNhHhhtA",
+   "title": "Seated Dumbbell Shoulder Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Seated dumbbell shoulder press demo; Arnold press adds the palm rotation",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-y-raise",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "concentration-curl",
+   "video_id": "fuK3nFvwgXk",
+   "url": "https://www.youtube.com/watch?v=fuK3nFvwgXk",
+   "title": "Dumbbell Single Arm Preacher Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 15,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); single-arm dumbbell preacher curl (braced one-arm curl)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-kickback",
+   "video_id": "qgJlAKYUkYg",
+   "url": "https://www.youtube.com/watch?v=qgJlAKYUkYg",
+   "title": "Tricep Kickback Proper Form With EMG",
+   "channel": "[P]rehab",
+   "duration_s": 53,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "[P]rehab (physical therapists) short demo: dumbbell triceps kickback form",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "jm-press",
+   "video_id": "Tih5iHyELsE",
+   "url": "https://www.youtube.com/watch?v=Tih5iHyELsE",
+   "title": "JM Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "sissy-squat",
+   "video_id": "Kwcpzy1C6UE",
+   "url": "https://www.youtube.com/watch?v=Kwcpzy1C6UE",
+   "title": "Sissy Squat",
+   "channel": "FitnessFAQs",
+   "duration_s": 87,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short sissy squat demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "inverted-row",
+   "video_id": "KOaCM1HMwU0",
+   "url": "https://www.youtube.com/watch?v=KOaCM1HMwU0",
+   "title": "Inverted Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "pike-push-up",
+   "video_id": "18mNeuH4D1k",
+   "url": "https://www.youtube.com/watch?v=18mNeuH4D1k",
+   "title": "How To Pike Push-Up For Beginners",
+   "channel": "FitnessFAQs",
+   "duration_s": 93,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short beginner pike push-up tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "weighted-decline-crunch",
+   "video_id": "DAnTf16NcT0",
+   "url": "https://www.youtube.com/watch?v=DAnTf16NcT0",
+   "title": "Slant Board Situp",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); slant-board sit-up",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-woodchop",
+   "video_id": "c1a1k8ADw0I",
+   "url": "https://www.youtube.com/watch?v=c1a1k8ADw0I",
+   "title": "Half Kneeling Chop Isometrics",
+   "channel": "[P]rehab",
+   "duration_s": 50,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "[P]rehab (physical therapists) short demo: half-kneeling cable chop isometric (no full woodchop swing)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "pallof-press",
+   "video_id": "wESzEvpR_Wk",
+   "url": "https://www.youtube.com/watch?v=wESzEvpR_Wk",
+   "title": "Trunk Stabilizers, Anti-Rotation Press",
+   "channel": "[P]rehab",
+   "duration_s": 31,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "[P]rehab (physical therapists) short demo: anti-rotation (Pallof) press",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "standing-cable-crunch",
+   "video_id": "6GMKPQVERzw",
+   "url": "https://www.youtube.com/watch?v=6GMKPQVERzw",
+   "title": "Rope Crunch",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); kneeling rope crunch",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-incline-y-raise",
+   "video_id": "aFtzZl4ySMo",
+   "url": "https://www.youtube.com/watch?v=aFtzZl4ySMo",
+   "title": "Prone Y's, T's, & I's",
+   "channel": "[P]rehab",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "[P]rehab (physical therapists) short demo: prone Y/T/I raises (Y portion matches; bench angle differs)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-rear-delt-fly",
+   "video_id": "qz1OLup4W_M",
+   "url": "https://www.youtube.com/watch?v=qz1OLup4W_M",
+   "title": "Cable Single Arm Rear Delt Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); single-arm cable rear-delt raise",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-overhead-rope-extension",
+   "video_id": "kqidUIf1eJE",
+   "url": "https://www.youtube.com/watch?v=kqidUIf1eJE",
+   "title": "Rope Overhead Triceps Extension",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); rope",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "cable-kickback",
+   "video_id": "dJa_Nf4zdik",
+   "url": "https://www.youtube.com/watch?v=dJa_Nf4zdik",
+   "title": "Build Bigger Glutes With Perfect Training Technique ft. Stephanie Buttermore (Glute Kickback)",
+   "channel": "Jeff Nippard",
+   "duration_s": 432,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Glute kickback technique (~7 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "incline-dumbbell-fly",
+   "video_id": "8oR5hBwbIBc",
+   "url": "https://www.youtube.com/watch?v=8oR5hBwbIBc",
+   "title": "Incline Dumbbell Flye",
+   "channel": "Renaissance Periodization",
+   "duration_s": 17,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "decline-bench-press",
+   "video_id": "hWbUlkb5Ms4",
+   "url": "https://www.youtube.com/watch?v=hWbUlkb5Ms4",
+   "title": "How To Bench Press With Perfect Technique (5 Steps)",
+   "channel": "Jeff Nippard",
+   "duration_s": 50,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Flat barbell bench technique; same setup cues on a decline bench",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ez-bar-curl",
+   "video_id": "cdmnvo3augg",
+   "url": "https://www.youtube.com/watch?v=cdmnvo3augg",
+   "title": "EZ Bar Curl Narrow Grip",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); narrow grip",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "spider-curl",
+   "video_id": "ke2shAeQ0O8",
+   "url": "https://www.youtube.com/watch?v=ke2shAeQ0O8",
+   "title": "Dumbbell Spider Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); dumbbell",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "reverse-curl",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "cable-preacher-curl",
+   "video_id": "Ja6ZlIDONac",
+   "url": "https://www.youtube.com/watch?v=Ja6ZlIDONac",
+   "title": "Machine Preacher Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Machine preacher curl demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "standing-leg-curl",
+   "video_id": "N6FVnaasdq0",
+   "url": "https://www.youtube.com/watch?v=N6FVnaasdq0",
+   "title": "Single Leg Leg Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); single-leg leg curl",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "glute-ham-raise",
+   "video_id": "SBGYSfoqyfU",
+   "url": "https://www.youtube.com/watch?v=SBGYSfoqyfU",
+   "title": "Glute Ham Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 8,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "barbell-glute-bridge",
+   "video_id": "LFvZ-d4rDac",
+   "url": "https://www.youtube.com/watch?v=LFvZ-d4rDac",
+   "title": "Glute Bridge Exercise Tutorial & Progressions",
+   "channel": "FitnessFAQs",
+   "duration_s": 309,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Glute bridge tutorial (bodyweight; ~5 min); add a barbell",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "good-morning",
+   "video_id": "dEJ0FTm-CEk",
+   "url": "https://www.youtube.com/watch?v=dEJ0FTm-CEk",
+   "title": "High Bar Good Morning",
+   "channel": "Renaissance Periodization",
+   "duration_s": 17,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); high bar",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "seated-dumbbell-lateral-raise",
+   "video_id": "OuG1smZTsQQ",
+   "url": "https://www.youtube.com/watch?v=OuG1smZTsQQ",
+   "title": "Lateral Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Standing dumbbell lateral raise demo; seated version is the same arm path",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "deficit-push-up",
+   "video_id": "gmNlqsE3Onc",
+   "url": "https://www.youtube.com/watch?v=gmNlqsE3Onc",
+   "title": "Deficit Pushup",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "seated-row-machine",
+   "video_id": "_FrrYQxA6kc",
+   "url": "https://www.youtube.com/watch?v=_FrrYQxA6kc",
+   "title": "Machine Chest Supported Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Chest-supported machine row demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "high-to-low-row-machine",
+   "video_id": "gg5hwJuv6KI",
+   "url": "https://www.youtube.com/watch?v=gg5hwJuv6KI",
+   "title": "Hammer High Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Hammer high row demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "arc-lat-pulldown",
+   "video_id": "jhnxJEzX8rY",
+   "url": "https://www.youtube.com/watch?v=jhnxJEzX8rY",
+   "title": "How To Do a PERFECT Lat Pulldown",
+   "channel": "Renaissance Periodization",
+   "duration_s": 47,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Cable lat pulldown tutorial; converging machine path differs",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "standing-lateral-raise-machine",
+   "video_id": "0o07iGKUarI",
+   "url": "https://www.youtube.com/watch?v=0o07iGKUarI",
+   "title": "Machine Lateral Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Seated lateral raise machine demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "converging-smith-bench-press",
+   "video_id": "O5viuEPDXKY",
+   "url": "https://www.youtube.com/watch?v=O5viuEPDXKY",
+   "title": "Smith Machine Bench Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Standard Smith bench demo; converging Smith path differs",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "converging-smith-incline-press",
+   "video_id": "8urE8Z8AMQ4",
+   "url": "https://www.youtube.com/watch?v=8urE8Z8AMQ4",
+   "title": "Smith Machine Incline Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Standard Smith incline demo; converging Smith path differs",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "converging-smith-shoulder-press",
+   "video_id": "OLqZDUUD2b0",
+   "url": "https://www.youtube.com/watch?v=OLqZDUUD2b0",
+   "title": "Smith Machine Seated Shoulder Press",
+   "channel": "Renaissance Periodization",
+   "duration_s": 12,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Standard Smith seated press demo; converging path differs",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "selectorized-pulldown-machine",
+   "video_id": "jhnxJEzX8rY",
+   "url": "https://www.youtube.com/watch?v=jhnxJEzX8rY",
+   "title": "How To Do a PERFECT Lat Pulldown",
+   "channel": "Renaissance Periodization",
+   "duration_s": 47,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Cable lat pulldown tutorial; machine version has a fixed path",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "plate-loaded-chest-supported-row",
+   "video_id": "_FrrYQxA6kc",
+   "url": "https://www.youtube.com/watch?v=_FrrYQxA6kc",
+   "title": "Machine Chest Supported Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "rotary-torso-machine",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "standing-cable-adduction",
+   "video_id": "taJHe5HwnUI",
+   "url": "https://www.youtube.com/watch?v=taJHe5HwnUI",
+   "title": "Standing Hip Adduction for Groin Rehab",
+   "channel": "[P]rehab",
+   "duration_s": 56,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "[P]rehab (physical therapists) short demo: standing hip adduction with ankle resistance (band/cable); title is rehab-framed, use for movement only",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "horizontal-leg-press",
+   "video_id": "nDh_BlnLCGc",
+   "url": "https://www.youtube.com/watch?v=nDh_BlnLCGc",
+   "title": "How To Leg Press With Perfect Technique",
+   "channel": "Jeff Nippard",
+   "duration_s": 58,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "45-degree leg press tutorial; same foot and depth cues",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "reverse-hack-squat",
+   "video_id": "rYgNArpwE7E",
+   "url": "https://www.youtube.com/watch?v=rYgNArpwE7E",
+   "title": "Hack Squat",
+   "channel": "Renaissance Periodization",
+   "duration_s": 14,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Forward-facing hack squat demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kneeling-leg-curl",
+   "video_id": "N6FVnaasdq0",
+   "url": "https://www.youtube.com/watch?v=N6FVnaasdq0",
+   "title": "Single Leg Leg Curl",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); single-leg leg curl",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "smith-squat-feet-forward",
+   "video_id": "-eO_VydErV0",
+   "url": "https://www.youtube.com/watch?v=-eO_VydErV0",
+   "title": "Feet Forward Smith Squat",
+   "channel": "Renaissance Periodization",
+   "duration_s": 15,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "chest-supported-dumbbell-row",
+   "video_id": "tZUYS7X50so",
+   "url": "https://www.youtube.com/watch?v=tZUYS7X50so",
+   "title": "Incline Dumbbell Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 17,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); incline-bench dumbbell row",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "seal-row",
+   "video_id": "4H2ItXwUTp8",
+   "url": "https://www.youtube.com/watch?v=4H2ItXwUTp8",
+   "title": "Seal Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 15,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "yates-row",
+   "video_id": "H260SUUyJBM",
+   "url": "https://www.youtube.com/watch?v=H260SUUyJBM",
+   "title": "Underhand EZ Bar Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); underhand EZ-bar row (Yates-style grip)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "rack-pull",
+   "video_id": "AweC3UaM14o",
+   "url": "https://www.youtube.com/watch?v=AweC3UaM14o",
+   "title": "Deadlift",
+   "channel": "Renaissance Periodization",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); full deadlift (rack pull starts from pins)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "trap-bar-deadlift",
+   "video_id": "v709aJKv-gM",
+   "url": "https://www.youtube.com/watch?v=v709aJKv-gM",
+   "title": "Trap Bar Deadlift",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "captains-chair-knee-raise",
+   "video_id": "RD_A-Z15ER4",
+   "url": "https://www.youtube.com/watch?v=RD_A-Z15ER4",
+   "title": "Hanging Knee Raise",
+   "channel": "Renaissance Periodization",
+   "duration_s": 9,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); hanging knee raise",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "back-extension-machine",
+   "video_id": "EBui4Bt5N7o",
+   "url": "https://www.youtube.com/watch?v=EBui4Bt5N7o",
+   "title": "STOP Doing Back Extensions Like This!",
+   "channel": "Squat University",
+   "duration_s": 59,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Back extension (bench) technique short",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "reverse-wrist-curl",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "farmer-carry",
+   "video_id": "Vtj3YlJDKOw",
+   "url": "https://www.youtube.com/watch?v=Vtj3YlJDKOw",
+   "title": "9 Farmer Walk Variations (STRONG CORE!)",
+   "channel": "Squat University",
+   "duration_s": 60,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short farmer walk variations clip",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ring-dip",
+   "video_id": "AYyGZpZg6kQ",
+   "url": "https://www.youtube.com/watch?v=AYyGZpZg6kQ",
+   "title": "Why Dips Are Better On Rings",
+   "channel": "FitnessFAQs",
+   "duration_s": 67,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Short ring dip explainer",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ring-push-up",
+   "video_id": "88VsOyIKYMU",
+   "url": "https://www.youtube.com/watch?v=88VsOyIKYMU",
+   "title": "Why Push-Ups On Rings Are Better",
+   "channel": "FitnessFAQs",
+   "duration_s": 57,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Downgraded v2 (exact -> close): 'Why Push-Ups On Rings Are Better' is an explainer; description has no technique content",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ring-row",
+   "video_id": "KOaCM1HMwU0",
+   "url": "https://www.youtube.com/watch?v=KOaCM1HMwU0",
+   "title": "Inverted Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bar inverted row",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ring-pull-up",
+   "video_id": "iWpoegdfgtc",
+   "url": "https://www.youtube.com/watch?v=iWpoegdfgtc",
+   "title": "Normal Grip Pullup",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bar pull-up",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ring-fly",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "ring-face-pull",
+   "video_id": "5xC9DpNA2-4",
+   "url": "https://www.youtube.com/watch?v=5xC9DpNA2-4",
+   "title": "Face Pull - Bodyweight Rotator Cuff Exercise",
+   "channel": "FitnessFAQs",
+   "duration_s": 171,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Bodyweight face pull tutorial (~3 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ring-biceps-curl",
+   "video_id": "vByJfI8acOw",
+   "url": "https://www.youtube.com/watch?v=vByJfI8acOw",
+   "title": "Build Huge Biceps Without Weights (Bodyweight Curls)",
+   "channel": "FitnessFAQs",
+   "duration_s": 277,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Replaced v2: FitnessFAQs bodyweight curls tutorial (old pick was a question-style short)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ring-triceps-extension",
+   "video_id": "kzqJ9rhBO4s",
+   "url": "https://www.youtube.com/watch?v=kzqJ9rhBO4s",
+   "title": "Bodyweight tricep extensions: Tricep extension tutorial",
+   "channel": "FitnessFAQs",
+   "duration_s": 120,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Bodyweight triceps extension tutorial (~2 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "ring-l-sit",
+   "video_id": "cu0fHp8HCDo",
+   "url": "https://www.youtube.com/watch?v=cu0fHp8HCDo",
+   "title": "Best Exercises To Increase L-SIT HOLD",
+   "channel": "FitnessFAQs",
+   "duration_s": 437,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Floor/parallette L-sit progressions",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "trx-row",
+   "video_id": "KOaCM1HMwU0",
+   "url": "https://www.youtube.com/watch?v=KOaCM1HMwU0",
+   "title": "Inverted Row",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bar inverted row",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "trx-push-up",
+   "video_id": "mm6_WcoCVTA",
+   "url": "https://www.youtube.com/watch?v=mm6_WcoCVTA",
+   "title": "Pushup",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); floor push-up",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "trx-y-t-raise",
+   "video_id": "aFtzZl4ySMo",
+   "url": "https://www.youtube.com/watch?v=aFtzZl4ySMo",
+   "title": "Prone Y's, T's, & I's",
+   "channel": "[P]rehab",
+   "duration_s": 11,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "[P]rehab (physical therapists) short demo: prone Y/T/I raises; same arm shapes, done lying instead of in straps",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "trx-biceps-curl",
+   "video_id": "Ow6jBPOYCQE",
+   "url": "https://www.youtube.com/watch?v=Ow6jBPOYCQE",
+   "title": "TRX Arms and Abs",
+   "channel": "[P]rehab",
+   "duration_s": 60,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Replaced v2: [P]rehab (physical therapists) short demo: TRX arms circuit; curl variations come first",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "trx-triceps-extension",
+   "video_id": "Ow6jBPOYCQE",
+   "url": "https://www.youtube.com/watch?v=Ow6jBPOYCQE",
+   "title": "TRX Arms and Abs",
+   "channel": "[P]rehab",
+   "duration_s": 60,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Replaced v2: [P]rehab (physical therapists) short demo: TRX arms circuit; triceps/extension moves follow the curls",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "trx-assisted-pistol",
+   "video_id": "gCHdCTFYvp0",
+   "url": "https://www.youtube.com/watch?v=gCHdCTFYvp0",
+   "title": "Suspension Training",
+   "channel": "[P]rehab",
+   "duration_s": 187,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Replaced v2: [P]rehab (physical therapists) short demo: suspension-trainer single-leg progressions incl. assisted pistol (~3 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "trx-hamstring-curl",
+   "video_id": "R_ixoqCNuNE",
+   "url": "https://www.youtube.com/watch?v=R_ixoqCNuNE",
+   "title": "Hamstring Swiss Ball Curls",
+   "channel": "[P]rehab",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "[P]rehab (physical therapists) short demo: Swiss-ball hamstring curl (same curl pattern as feet-in-straps)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "trx-fallout",
+   "video_id": "YgIf-8yklUA",
+   "url": "https://www.youtube.com/watch?v=YgIf-8yklUA",
+   "title": "Ab Wheel Roll-Out: Correct Form Mistakes! #abs #technique",
+   "channel": "Squat University",
+   "duration_s": 65,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Ab-wheel rollout; same anti-extension pattern",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "trx-pike",
+   "video_id": "iTrXmZO2wDk",
+   "url": "https://www.youtube.com/watch?v=iTrXmZO2wDk",
+   "title": "Walk out to pike up",
+   "channel": "[P]rehab",
+   "duration_s": 18,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "[P]rehab (physical therapists) short demo: walk-out to pike on sliders (same pike pattern as feet-in-straps)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kettlebell-swing",
+   "video_id": "aSYap2yhW8s",
+   "url": "https://www.youtube.com/watch?v=aSYap2yhW8s",
+   "title": "The BEST Kettlebell Swing Tutorial",
+   "channel": "Squat University",
+   "duration_s": 58,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short kettlebell swing tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kettlebell-front-squat",
+   "video_id": "NBYSVlO8oRE",
+   "url": "https://www.youtube.com/watch?v=NBYSVlO8oRE",
+   "title": "KB Front Squats",
+   "channel": "Alan Thrall (Untamed Strength)",
+   "duration_s": 65,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short kettlebell front squat clip",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kettlebell-clean",
+   "video_id": "RyIq9ZBxnNo",
+   "url": "https://www.youtube.com/watch?v=RyIq9ZBxnNo",
+   "title": "Kettlebell Clean",
+   "channel": "Mark Wildman",
+   "duration_s": 353,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Mark Wildman kettlebell clean tutorial (~6 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kettlebell-press",
+   "video_id": "XHkI03S6Pls",
+   "url": "https://www.youtube.com/watch?v=XHkI03S6Pls",
+   "title": "Kettlebell 14 - intro to the Single arm Kettlebell overhead press - essential athletic development",
+   "channel": "Mark Wildman",
+   "duration_s": 335,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Mark Wildman intro to the single-arm kettlebell overhead press (~5.5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kettlebell-push-press",
+   "video_id": "mRAV8-JVYX8",
+   "url": "https://www.youtube.com/watch?v=mRAV8-JVYX8",
+   "title": "Kettlebell 44 - intro to push press - developing endurance weight lifting in the overhead position",
+   "channel": "Mark Wildman",
+   "duration_s": 458,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Mark Wildman intro to the kettlebell push press (~7.5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kettlebell-snatch",
+   "video_id": "WhGxFwGtf2M",
+   "url": "https://www.youtube.com/watch?v=WhGxFwGtf2M",
+   "title": "The Safest Way to Learn The Kettlebell Snatch",
+   "channel": "Mark Wildman",
+   "duration_s": 81,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Mark Wildman short on learning the kettlebell snatch step by step",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "turkish-get-up",
+   "video_id": "jFK8FOiLa_M",
+   "url": "https://www.youtube.com/watch?v=jFK8FOiLa_M",
+   "title": "Master the Turkish Get-Up (Avoid These 3 Mistakes!)",
+   "channel": "Squat University",
+   "duration_s": 346,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Turkish get-up tutorial (~6 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kettlebell-single-leg-rdl",
+   "video_id": "Rrqji4U6gws",
+   "url": "https://www.youtube.com/watch?v=Rrqji4U6gws",
+   "title": "Kettlebell basic single leg Romanian Deadlift",
+   "channel": "Mark Wildman",
+   "duration_s": 415,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Upgraded v2: Mark Wildman kettlebell single-leg RDL tutorial (was a Squat U short with unconfirmed implement)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kettlebell-row",
+   "video_id": "l_cgMGUbFfc",
+   "url": "https://www.youtube.com/watch?v=l_cgMGUbFfc",
+   "title": "Kettlebell Single Arm Bench Supported Row - Intro to Kettlebell Rows",
+   "channel": "Mark Wildman",
+   "duration_s": 387,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Upgraded v2: Mark Wildman single-arm bench-supported kettlebell row (was RP dumbbell-row stand-in)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kettlebell-windmill",
+   "video_id": "VFHj4FehsfM",
+   "url": "https://www.youtube.com/watch?v=VFHj4FehsfM",
+   "title": "Kettlebell Windmill (Straight Leg) Part 2 - Standing Abs series",
+   "channel": "Mark Wildman",
+   "duration_s": 260,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Mark Wildman straight-leg kettlebell windmill tutorial (~4 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "suitcase-carry",
+   "video_id": "7D96dK6oaP8",
+   "url": "https://www.youtube.com/watch?v=7D96dK6oaP8",
+   "title": "Core Stability: Side  Bends or Suitcase Carry? |#AskSquatU Show Ep. 47|",
+   "channel": "Squat University",
+   "duration_s": 398,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Side bends vs suitcase carry explainer (~6.5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "kettlebell-halo",
+   "video_id": "1hPB6j4cgw8",
+   "url": "https://www.youtube.com/watch?v=1hPB6j4cgw8",
+   "title": "Work on Your Halo",
+   "channel": "Mark Wildman",
+   "duration_s": 60,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Mark Wildman one-minute kettlebell halo demo",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "muscle-up",
+   "video_id": "N4u_sP0bbWI",
+   "url": "https://www.youtube.com/watch?v=N4u_sP0bbWI",
+   "title": "How To Muscle-Up For Beginners",
+   "channel": "FitnessFAQs",
+   "duration_s": 60,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short beginner muscle-up tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "archer-push-up",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "pseudo-planche-push-up",
+   "video_id": "odcPqBOlJhI",
+   "url": "https://www.youtube.com/watch?v=odcPqBOlJhI",
+   "title": "Planche Training: Pseudo Planche Done RIGHT!",
+   "channel": "FitnessFAQs",
+   "duration_s": 68,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Short pseudo-planche lean/push-up cues",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "wall-handstand-push-up",
+   "video_id": "B7eo-wHS7Fc",
+   "url": "https://www.youtube.com/watch?v=B7eo-wHS7Fc",
+   "title": "How To Handstand Push-Up",
+   "channel": "FitnessFAQs",
+   "duration_s": 58,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Short handstand push-up tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "pistol-squat",
+   "video_id": "dncNXHvazQw",
+   "url": "https://www.youtube.com/watch?v=dncNXHvazQw",
+   "title": "How to Pistol Squat (FULL TUTORIAL)",
+   "channel": "Squat University",
+   "duration_s": 58,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short pistol squat tutorial",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "shrimp-squat",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "front-lever-row",
+   "video_id": "GcEHM620IzU",
+   "url": "https://www.youtube.com/watch?v=GcEHM620IzU",
+   "title": "Front Lever Rows Will Transform You",
+   "channel": "FitnessFAQs",
+   "duration_s": 24,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short front lever row clip",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "tuck-front-lever",
+   "video_id": "AGhb8V8M758",
+   "url": "https://www.youtube.com/watch?v=AGhb8V8M758",
+   "title": "Front Lever for Beginners (ALL PROGRESSIONS)",
+   "channel": "FitnessFAQs",
+   "duration_s": 393,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Front lever progressions including tuck (~6.5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dragon-flag",
+   "video_id": "pvz7k5gO-DE",
+   "url": "https://www.youtube.com/watch?v=pvz7k5gO-DE",
+   "title": "Master the DRAGON FLAG | Learn in 5 Minutes",
+   "channel": "FitnessFAQs",
+   "duration_s": 274,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Dragon flag tutorial (~4.5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "hollow-body-hold",
+   "video_id": "Qlfd9kbLuxw",
+   "url": "https://www.youtube.com/watch?v=Qlfd9kbLuxw",
+   "title": "5 Ways to Master the Hollow Body Exercise",
+   "channel": "FitnessFAQs",
+   "duration_s": 207,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Hollow body tutorial (~3.5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "l-sit",
+   "video_id": "cu0fHp8HCDo",
+   "url": "https://www.youtube.com/watch?v=cu0fHp8HCDo",
+   "title": "Best Exercises To Increase L-SIT HOLD",
+   "channel": "FitnessFAQs",
+   "duration_s": 437,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "L-sit progressions (~7 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "box-jump",
+   "video_id": "ykst-6-KUwU",
+   "url": "https://www.youtube.com/watch?v=ykst-6-KUwU",
+   "title": "When is Too High for Box Jumps?",
+   "channel": "[P]rehab",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "[P]rehab (physical therapists) short demo: box jumps with a note on choosing box height",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "broad-jump",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "depth-jump",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "jump-squat",
+   "video_id": "js2hzzXs0f0",
+   "url": "https://www.youtube.com/watch?v=js2hzzXs0f0",
+   "title": "Jumping Squats - A Better Version",
+   "channel": "Mark Wildman",
+   "duration_s": 142,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Mark Wildman controlled jump-squat variation (~2.5 min); not a max-height jump",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "bounding",
+   "video_id": "9mupaxMYWkE",
+   "url": "https://www.youtube.com/watch?v=9mupaxMYWkE",
+   "title": "Bounding",
+   "channel": "[P]rehab",
+   "duration_s": 31,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "[P]rehab (physical therapists) short demo: bounding",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "plyo-push-up",
+   "video_id": "vXTmstmkGwc",
+   "url": "https://www.youtube.com/watch?v=vXTmstmkGwc",
+   "title": "Plyometric Push Up",
+   "channel": "[P]rehab",
+   "duration_s": 16,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "[P]rehab (physical therapists) short demo: plyometric push-up",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "med-ball-slam",
+   "video_id": "VZjTyvUtln4",
+   "url": "https://www.youtube.com/watch?v=VZjTyvUtln4",
+   "title": "Linear Med Ball Slam Progressions",
+   "channel": "[P]rehab",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "[P]rehab (physical therapists) short demo: linear med-ball slam progressions",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "med-ball-chest-pass",
+   "video_id": "9gUx2KBWxq0",
+   "url": "https://www.youtube.com/watch?v=9gUx2KBWxq0",
+   "title": "Medicine Ball Plyometric Exercises (3 of 4)",
+   "channel": "[P]rehab",
+   "duration_s": 37,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "[P]rehab (physical therapists) short demo: med-ball throw series; chest pass is the first throw shown",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "barbell-rollout",
+   "video_id": "YgIf-8yklUA",
+   "url": "https://www.youtube.com/watch?v=YgIf-8yklUA",
+   "title": "Ab Wheel Roll-Out: Correct Form Mistakes! #abs #technique",
+   "channel": "Squat University",
+   "duration_s": 65,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Ab-wheel rollout; same pattern with a barbell",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "stability-ball-rollout",
+   "video_id": "nEMqDN1qLIw",
+   "url": "https://www.youtube.com/watch?v=nEMqDN1qLIw",
+   "title": "Swiss ball roll out",
+   "channel": "[P]rehab",
+   "duration_s": 15,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Upgraded v2: [P]rehab (physical therapists) short demo: Swiss ball rollout (old pick was an ab-wheel progression)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "standing-ab-wheel-rollout",
+   "video_id": "YgIf-8yklUA",
+   "url": "https://www.youtube.com/watch?v=YgIf-8yklUA",
+   "title": "Ab Wheel Roll-Out: Correct Form Mistakes! #abs #technique",
+   "channel": "Squat University",
+   "duration_s": 65,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "Kneeling ab-wheel rollout; standing is a harder progression",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dead-hang",
+   "video_id": "dOCQjaasbGs",
+   "url": "https://www.youtube.com/watch?v=dOCQjaasbGs",
+   "title": "How To Dead Hang Correctly",
+   "channel": "FitnessFAQs",
+   "duration_s": 55,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Short dead hang technique short",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "active-hang",
+   "video_id": "Gv6wTBFHt34",
+   "url": "https://www.youtube.com/watch?v=Gv6wTBFHt34",
+   "title": "How To Hang In Rock Climbing - Dead Hang vs Engaged Hang",
+   "channel": "[P]rehab",
+   "duration_s": 32,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Upgraded v2: [P]rehab (physical therapists) short demo: dead hang vs engaged (active) hang",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "scapular-pull-up",
+   "video_id": "iByUaJ5IWq4",
+   "url": "https://www.youtube.com/watch?v=iByUaJ5IWq4",
+   "title": "Master Your Pull Ups!",
+   "channel": "[P]rehab",
+   "duration_s": 146,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "[P]rehab (physical therapists) short demo: initiating pull-ups from the shoulder blades (scap pull-up cue)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "donkey-calf-raise",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "Downgraded v2: old RP 'Calf Machine' clip (N3awlEyTY98) description gives only the filming location; the donkey (hip-hinged) position is not confirmed",
+   "verified": null
+  },
+  {
+   "exercise_id": "single-leg-dumbbell-calf-raise",
+   "video_id": "_gEx2ijsmNM",
+   "url": "https://www.youtube.com/watch?v=_gEx2ijsmNM",
+   "title": "Single Leg Stair Claves",
+   "channel": "Renaissance Periodization",
+   "duration_s": 10,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); single-leg stair calf raise",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "hack-squat-calf-raise",
+   "video_id": "KxEYX_cuesM",
+   "url": "https://www.youtube.com/watch?v=KxEYX_cuesM",
+   "title": "Leg Press Calves",
+   "channel": "Renaissance Periodization",
+   "duration_s": 13,
+   "start_s": null,
+   "confidence": "close_variant",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); leg press calf raise (same machine-calf cues)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "tibialis-raise",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "Downgraded v2: old Squat U pick (G7UkrWFSOWg) has a hype title and an empty description, so a tibialis-raise demo could not be confirmed; no other trusted demo without injury framing",
+   "verified": null
+  },
+  {
+   "exercise_id": "seated-band-hip-abduction",
+   "video_id": null,
+   "url": null,
+   "title": null,
+   "channel": null,
+   "duration_s": null,
+   "start_s": null,
+   "confidence": "none",
+   "note": "No trusted-channel demo found",
+   "verified": null
+  },
+  {
+   "exercise_id": "side-plank",
+   "video_id": "jfK1l-mNm3Q",
+   "url": "https://www.youtube.com/watch?v=jfK1l-mNm3Q",
+   "title": "Side Plank",
+   "channel": "[P]rehab",
+   "duration_s": 44,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Upgraded v2: [P]rehab (physical therapists) short demo: side plank and progressions",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "dumbbell-side-bend",
+   "video_id": "7D96dK6oaP8",
+   "url": "https://www.youtube.com/watch?v=7D96dK6oaP8",
+   "title": "Core Stability: Side  Bends or Suitcase Carry? |#AskSquatU Show Ep. 47|",
+   "channel": "Squat University",
+   "duration_s": 398,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Side bends vs suitcase carry explainer (~6.5 min)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  },
+  {
+   "exercise_id": "copenhagen-plank",
+   "video_id": "1NNqUQvMYGc",
+   "url": "https://www.youtube.com/watch?v=1NNqUQvMYGc",
+   "title": "Copenhagen Plank Progressions",
+   "channel": "[P]rehab",
+   "duration_s": 21,
+   "start_s": null,
+   "confidence": "exact",
+   "note": "Replaced v2: [P]rehab (physical therapists) short demo: Copenhagen plank progressions (old Squat U pick had a hype title and empty description)",
+   "verified": {
+    "oembed": 200,
+    "embeddable": true
+   }
+  }
+ ]
+}

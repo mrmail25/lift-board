@@ -103,7 +103,8 @@ Builder fields to mirror: `sort_order`, `card_states`, `exclude_kinds` (states [
 |---|---|
 | id | `<family>:<muscle or day or slot>` |
 | family, source | check family (weights) and the sheet source / rule id |
-| analysis_item | the Analysis item that shows it |
+| analysis_item | a real rules.json analysis_metrics item id (weights `analysis_item.rule`): missing_stretch -> stretch_<m> for checked muscles, else stretch_coverage; stretch_share -> stretch_share; session_hard_sets -> session_design; session_length -> session_length; others -> check_weight[family].item |
+| analysis_item_muscle | the muscle row to highlight inside analysis_item (= muscle; null for board-level issues) |
 | state | red (failing check) or amber (close to target); info issues exist in issues() but never reach the card |
 | muscle, days, exercises | what it is about and what causes it |
 | target | the sheet target (muscle, sets, share, flag) |

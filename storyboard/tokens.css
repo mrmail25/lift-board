@@ -57,6 +57,8 @@
   --ok-tint:#E4F4EA; --ok-ink:#1E6B3A; --bad-tint:#FDECEC;
   --slot-bg:rgba(255,255,255,.55);
   --series-1:#E8430C; --series-2:#2557A8; --series-3:#1E8A4C; --series-4:#8E44AD; --series-5:#B07D00; --series-6:#0E8C9C; /* e1RM overlay lines */
+  /* r3fu: recovery cost stacked by fatigue tier (heaviest first). One violet scale, apart from the blue sets ramp and the green / amber / red range colours */
+  --tier-1:#3B1F78; --tier-2:#6A47C8; --tier-3:#9B7EE6; --tier-4:#C4B2F0;
   color-scheme:light;
 
   --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
@@ -108,6 +110,7 @@ html[data-theme=dark]{
   --shadow-sheet:0 -1px 0 rgba(255,255,255,.06),0 -12px 40px rgba(0,0,0,.6);
   --shadow-float:0 6px 24px rgba(0,0,0,.7);
   --series-1:#FF7A45; --series-2:#79A8EC; --series-3:#4CC285; --series-4:#C38BE0; --series-5:#F2C14E; --series-6:#4FD1DE;
+  --tier-1:#DCD0FA; --tier-2:#A88EEC; --tier-3:#7558C6; --tier-4:#4B3B84;
   color-scheme:dark;
 }
 @media (prefers-color-scheme:dark){html:not([data-theme=light]){
@@ -136,5 +139,6 @@ html[data-theme=dark]{
   --shadow-sheet:0 -1px 0 rgba(255,255,255,.06),0 -12px 40px rgba(0,0,0,.6);
   --shadow-float:0 6px 24px rgba(0,0,0,.7);
   --series-1:#FF7A45; --series-2:#79A8EC; --series-3:#4CC285; --series-4:#C38BE0; --series-5:#F2C14E; --series-6:#4FD1DE;
+  --tier-1:#DCD0FA; --tier-2:#A88EEC; --tier-3:#7558C6; --tier-4:#4B3B84;
   color-scheme:dark;
 }}

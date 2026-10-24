@@ -40,8 +40,22 @@ function deepdive(dt,days,level,baseline=null,goals=null,profile=null,only=null,
       contributors:cl,
       suggestions:{apply,ranked_adds:{day,context:'tray',goals,level,items:ranked.map(r=>({id:r.id,name:r.name,score:r.score,reasons:r.reasons||[],stretch_focused:AN.stretchFocused(dt,r.id)}))}}}}
   return out}
+// r3fu: recovery cost per day stacked by fatigue tier (port of muscle_deepdive.py recovery_tiers). Board-level, not per muscle.
+// Tiers = analysis.js FAT_TIER cutoffs (same as the week tier list): heavy_axial_compound >= 1.5, other_compound >= 1.1,
+// lighter_compound >= 1.0, isolation < 1.0, stacked heaviest first. total = round(sum(sets x fatigue), 2) = recovery_cost.by_day[day];
+// tier costs are rounded on hundredths by largest remainder so the stack always sums exactly to total. Spec: muscle-deepdive-spec.md.
+const RT=[['heavy_axial_compound','heavy axial compound',1.5],['other_compound','other compound',1.1],['lighter_compound','lighter compound',1.0],['isolation','isolation',0.0]];
+const rtOf=f=>RT.find(t=>f>=t[2]-1e-9)[0];
+function rtBlock(dt,tiles){const acc={};for(const t of tiles){const k=rtOf(dt.EX[t.id].fatigue),a=acc[k]||(acc[k]={tiles:[],sets:0,ex:new Set()});a.tiles.push(t);a.sets+=t.sets;a.ex.add(t.id)}
+  const total=_r(AN.weekCost(dt,[{tiles}]),2),H=RT.filter(([id])=>acc[id]).map(([id])=>{const a=acc[id],h=AN.weekCost(dt,[{tiles:a.tiles}])*100,fl=Math.floor(h+1e-7);return {id,a,fl,rem:h-fl}});
+  let left=Math.round(total*100)-H.reduce((p,q)=>p+q.fl,0);   // largest remainder on hundredths: the stack sums exactly to total
+  [...H].sort((x,y)=>y.rem-x.rem||RT.findIndex(t=>t[0]===x.id)-RT.findIndex(t=>t[0]===y.id)).forEach(h=>{if(left>0){h.fl++;left--}});
+  return {total,tiers:H.map(h=>({tier:h.id,cost:_r(h.fl/100,2),sets:h.a.sets,exercises:[...h.a.ex].sort()}))}}
+function recoveryTiers(dt,days){const tr=days.filter(d=>d.tiles.length);
+  return {scheme:'fatigue_tier',tiers:RT.map(([id,label,fatigue_min])=>({id,label,fatigue_min})),unit:'fatigue points (sets x exercise fatigue rating)',
+    by_day:Object.fromEntries(tr.map(d=>[d.day,rtBlock(dt,d.tiles)])),week:rtBlock(dt,tr.flatMap(d=>d.tiles))}}
 // the board's single entry point: one muscle's payload
 const muscle=(dt,days,level,m,opt={})=>deepdive(dt,days,level,opt.baseline??null,opt.goals,opt.profile,m,opt)[m];
-const API={deepdive,muscle,DEFAULT_GOALS};
+const API={deepdive,muscle,recoveryTiers,RECOVERY_TIERS:RT,DEFAULT_GOALS};
 if(isNode)module.exports=API;else root.MUSCLEDIVE=API;
 })(this);

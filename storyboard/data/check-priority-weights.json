@@ -52,7 +52,7 @@
             "missing_stretch",
             "stretch_share"
           ],
-          "item": "stretch_<muscle>",
+          "item": "stretch_share",
           "note": "per-muscle stretch checks; low share (amber) for checked or measure-only muscles"
         },
         "push_pull": {
@@ -128,7 +128,7 @@
             "session_hard_sets",
             "session_length"
           ],
-          "item": "session_design / session_length",
+          "item": "session_design",
           "note": ""
         },
         "sets_per_exercise": {
@@ -244,6 +244,22 @@
     "cap": 3,
     "min_score": null,
     "action": "apply when fix is set, else no_fix_action.action",
+    "analysis_item": {
+      "rule": {
+        "missing_stretch": "stretch_<muscle> when the muscle is in rules.stretch_check.checked (its own check item), else stretch_coverage",
+        "stretch_share": "stretch_share (the measure item; the muscle is in analysis_item_muscle, matching stretch_share.per_muscle)",
+        "session_hard_sets": "session_design",
+        "session_length": "session_length",
+        "other sources": "check_weight[family].item"
+      },
+      "item_by_source": {
+        "stretch_share": "stretch_share",
+        "session_hard_sets": "session_design",
+        "session_length": "session_length"
+      },
+      "muscle_field": "analysis_item_muscle: the muscle row to highlight inside analysis_item (same as issue.muscle; null for board-level issues)",
+      "note": "r3fu: replaces the literal stretch_<muscle> placeholder; always a real analysis_metrics item id"
+    },
     "apply": "Each issue carries fix = the best validated fix (resolving first, then fewest ops): ops (swap / add / sets / move as analysis.py apply_ops diff), preview, resolves, and undo ops (invert_ops)."
   }
 }

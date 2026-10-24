@@ -1169,6 +1169,7 @@ function exDetail(id,o={}){const e=EX[id];if(!e)return null;
      <div class="pad two">${e.learn!==false?`<button class="btn grey" data-x="learn" data-go="#learn-ex-${id}">${I('book',1.8)} Learn</button>`:''}${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:''}</div></div>`});
   exdLoad().then(D=>{const d=D[id],b=$('#xdb',s.el);if(!b)return;b.innerHTML=d?exDetailBody(id,d):'<p class="foot">No detail data for this exercise.</p>';
     const lb=$('[data-x=learn]',s.el);if(lb&&d&&!(d.learn||{}).authored)lb.innerHTML=`${I('book',1.8)} Learn (draft)`});
+  xvLoad().then(()=>{const h=$('.exi-h',s.el);if(h&&xvOf(id)&&e.learn!==false&&!$('.xwatch',s.el))h.insertAdjacentHTML('beforeend',`<button class="xwatch" data-go="#learn-ex-${id}~video" aria-label="Watch the technique video">${I('play')}Watch</button>`)});
   s.el.addEventListener('click',ev=>{if(ev.target.closest('[data-x=close]'))return s.close();if(ev.target.closest('[data-x=add]')){s.close();return o.onAdd&&o.onAdd(id)}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
 // tray sort (both trays): Best match = the shared ranker (default); A–Z; Most stimulus for the filtered muscle; Lowest fatigue
@@ -1247,9 +1248,33 @@ async function exPage(id){
   for(const u of tries){if(!(u in EDU.cache)){try{const r=await fetch(u,{cache:'no-store'});EDU.cache[u]=r.ok?await r.json():null}catch(e){EDU.cache[u]=null}}if(EDU.cache[u])return {entry:p,page:EDU.cache[u]}}
   return {entry:p,page:null};
 }
+// EXERCISE VIDEOS (Coach's data/exercise-videos.json, display notes in exercise-videos.md). Read at runtime, never hardcoded: one entry per
+// exercise with confidence exact | close_variant | none. none (or no entry / no video_id) = no block at all. Lazy: a thumbnail
+// (i.ytimg.com) with a play button; the youtube-nocookie iframe is only inserted on tap. Close variants get a muted inline label
+// (.evl, same as Modeled / Thin evidence) and a "Similar movement: …" line from `note`. Third-party demos: no endorsement wording.
+let XV=null,XVP=null;
+function xvLoad(){if(XV)return Promise.resolve(XV);if(XVP)return XVP;
+  XVP=getJ(DATA+'exercise-videos.json').then(j=>{const m={};((j&&j.videos)||[]).forEach(v=>{if(v&&v.exercise_id)m[v.exercise_id]=v});XV=m;XVP=null;return XV});return XVP}
+const xvOf=id=>{const v=XV&&XV[id];return v&&v.confidence!=='none'&&/^[\w-]{6,20}$/.test(v.video_id||'')?v:null};
+// channel display names (data keeps the oEmbed author_name; '[P]rehab' is The Prehab Guys' YouTube name)
+const XV_CH={'[P]rehab':'The Prehab Guys'},xvCh=c=>XV_CH[c]||c||'';
+const xvDur=s=>s==null?'':s<60?`${s} s`:`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+const xvSimilar=n=>{const t=String(n||'').split('; ').pop().trim();return t?t[0].toUpperCase()+t.slice(1):''};
+// The video's own title is never shown or used in attributes: the label is always our exercise name (no third-party health claims).
+function xvBlock(id){const v=xvOf(id);if(!v)return '';const cv=v.confidence==='close_variant',nm=esc(exNameP(id));
+  return `<section class="xvid" id="xvid" data-video="${v.video_id}" data-conf="${v.confidence}"><div class="xvh"><span>Technique video</span>${cv?'<span class="evl" data-ev="close_variant">Close variant</span>':''}</div>
+   <button class="xvth" data-act="xvplay" data-v="${v.video_id}" data-name="${nm}"${v.start_s?` data-start="${v.start_s}"`:''} aria-label="Play technique video: ${nm}"><img data-src="https://i.ytimg.com/vi/${v.video_id}/hqdefault.jpg" alt="${nm} technique video" loading="lazy" referrerpolicy="no-referrer"><span class="xvpl">${I('play')}</span>${v.duration_s!=null?`<span class="xvd num">${xvDur(v.duration_s)}</span>`:''}</button>
+   <div class="xvm"><div class="t1">${nm}</div><div class="t2 xvc">${esc(xvCh(v.channel))}${v.duration_s!=null?` · ${xvDur(v.duration_s)}`:''}</div>${cv&&xvSimilar(v.note)?`<div class="t2 xvs">Similar movement: ${esc(xvSimilar(v.note))}</div>`:''}</div>
+   <p class="foot xvf">Third-party technique demo on YouTube. Not an endorsement or medical advice.</p></section>`}
+function xvPlay(b){const v=b.dataset.v,st=b.dataset.start;const f=document.createElement('iframe');
+  f.src=`https://www.youtube-nocookie.com/embed/${v}?autoplay=1&playsinline=1&rel=0${st?'&start='+st:''}`;f.title=`${b.dataset.name||'Exercise'} technique video`;f.className='xvif';
+  f.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen');f.setAttribute('allowfullscreen','');f.setAttribute('loading','lazy');b.replaceWith(f)}
 V.learnEx=()=>`<div class="nav"><div class="l">${backBtn()}</div><div class="t" id="lxt"></div><div class="r" id="lxr"></div></div><div id="lx"><p class="foot">Loading…</p></div>`;
 async function afterLearnEx(id){
-  CITES=[];const e=EX[id]||{rat:{},mus:[]},{page:j}=await exPage(id),nm=(j&&j.title)||e.name||id;$('#lxr').innerHTML=starBtn(id);
+  const sx=String(id||'').split('~')[1]||null;id=String(id||'').split('~')[0];await xvLoad();
+  const e=EX[id]||{rat:{},mus:[]},{page:j}=await exPage(id),nm=(j&&j.title)||e.name||id;
+  if(S.scr!=='learnEx'||String(S.arg||'').split('~')[0]!==id)return; // a newer Learn page was opened while this one loaded: don't paint stale content
+  CITES=[];$('#lxr').innerHTML=starBtn(id);
   // live ratings come from exercises.json (EX.rat); Coach's page only adds the explanation per muscle
   const pm={};((j&&j.muscles)||[]).forEach(m=>pm[m.muscle_id]=m);
   const live=m=>e.rat[m]!=null?e.rat[m]:(pm[m]||{}).rating||0;
@@ -1273,7 +1298,10 @@ async function afterLearnEx(id){
   $('#lx').innerHTML=`<div class="exhero">${gl(id)}<div><h1>${nm}</h1><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${e.eq||''}${isFav(id)?' · ★ Favorite':''}</p></div></div>
    ${j&&j.summary?`<p class="lsum">${j.summary}</p>`:''}
    ${j&&j.equipment_needs&&j.equipment_needs.text?`<p class="needs">${I('build',1.8)}<span>${j.equipment_needs.text}</span></p>`:''}
-   <div class="pad two"><button class="btn grey" data-act="swap" data-id="${id}">${I('swap',1.8)} Swap</button><button class="btn accent" data-act="add">${I('plus',2)} Add to workout</button></div>${body}`;
+   <div class="pad two"><button class="btn grey" data-act="swap" data-id="${id}">${I('swap',1.8)} Swap</button><button class="btn accent" data-act="add">${I('plus',2)} Add to workout</button></div>${xvBlock(id)}${body}`;
+  // the thumbnail is requested only after the page has painted, and only if this page is still the one on screen
+  setTimeout(()=>{const im=$('#xvid .xvth img[data-src]');if(im&&S.scr==='learnEx'&&String(S.arg||'').split('~')[0]===id){im.src=im.dataset.src;im.removeAttribute('data-src')}},250);
+  if(sx==='video'){const vb=$('#xvid');if(vb){const V0=$('#view');V0.scrollTop+=vb.getBoundingClientRect().top-V0.getBoundingClientRect().top-60;vb.classList.add('flash')}}
 }
 
 // SETTINGS additions: goals, bias muscles (from the map), favorites (swipe remove, drag reorder)
@@ -1369,6 +1397,7 @@ document.addEventListener('click',e=>{
   const fld=e.target.closest('.fld');if(fld&&!fld.classList.contains('demo')){focusField(fld);return}
   const g=e.target.closest('[data-go]'),a=e.target.closest('[data-act]');
   if(a&&(!g||g.contains(a))){const k=a.dataset.act,id=a.dataset.id;
+    if(k==='xvplay'){e.preventDefault();return xvPlay(a)}
     if(k==='trash'){e.stopPropagation();return trashSheet()}
     if(k==='pick'){const r=ROUTINES.find(x=>x.id===id);if(r.active&&!S.pick)return;S.pick=(S.pick===id||r.active)?null:id;
       $$('.rt').forEach(el=>{const on=S.pick?el.dataset.rt===S.pick:el.classList.contains('act');el.classList.toggle('open',on);el.classList.toggle('closed',!on)});

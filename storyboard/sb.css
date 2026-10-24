@@ -1106,3 +1106,26 @@ details.ls.flash{box-shadow:0 0 0 3px var(--accent);border-radius:var(--r-md)}
 /* evidence labels (Modeled / Thin evidence / Supported): quiet inline text beside the subhead, no chip; the full note is in the (i) sheet */
 .evl{display:inline;background:none;border:0;padding:0;margin:0 0 0 6px;border-radius:0;font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0;font-variant:normal;text-transform:none;white-space:nowrap;line-height:inherit;vertical-align:baseline}
 .xpsh{display:block;align-self:stretch;width:auto;padding:6px var(--s4) 4px}.xpl .xpsh h3{display:inline;padding:0;margin:0 6px 0 0}.xpsh .evl{margin-left:0}
+/* r3fu: recovery cost per day stacked by fatigue tier; a hairline paper gap keeps neighbouring tiers apart in light and dark */
+.rtstk{position:absolute;left:0;top:0;bottom:0;width:var(--w);display:flex;border-radius:5px;overflow:hidden;gap:1.5px}
+.rtstk>i{display:block;height:100%;flex:0 0 auto;width:var(--tw);min-width:2px}
+.rtstk>i:not(:last-child){width:calc(var(--tw) - 1.5px)}
+.rtleg{margin:6px 0 2px}
+/* r3fu: the muscle row a Program check link points at */
+.anhl{background:var(--accent-tint);box-shadow:0 0 0 2px var(--accent);border-radius:6px}
+.pcr .pcin{grid-column:2;justify-self:start;background:none;border:0;padding:2px 0 0;margin:0;font-size:12.5px;font-weight:600;color:var(--accent-press);min-height:0;-webkit-appearance:none;appearance:none}
+/* Exercise videos (Learn page): thumbnail first, iframe only on tap; channel + duration under it; close variant = muted .evl */
+.xvid{margin:14px var(--s4) 6px}
+.xvh{font-size:13px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px;display:flex;align-items:baseline}
+.xvh .evl{text-transform:none;letter-spacing:0}
+.xvth{position:relative;display:block;width:100%;aspect-ratio:16/9;padding:0;border:0;border-radius:var(--r-md);overflow:hidden;background:var(--fill);-webkit-appearance:none;appearance:none;cursor:pointer}
+.xvth img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.xvpl{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.55);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.xvpl svg{width:26px;height:26px;margin-left:3px}
+.xvd{position:absolute;right:8px;bottom:8px;padding:2px 6px;border-radius:5px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;font-weight:600}
+.xvif{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:var(--r-md);background:#000}
+.xvm{padding:8px 2px 0}.xvm .t1{font-size:15px;font-weight:600;line-height:1.25;color:var(--ink)}.xvm .t2{font-size:13px;color:var(--text-2);margin-top:2px}
+.xvf{padding:6px 2px 0!important;font-size:11.5px}
+.xwatch{display:inline-flex;align-items:center;gap:4px;margin-left:auto;align-self:center;background:none;border:0;padding:6px 0;font-size:15px;font-weight:600;color:var(--accent-press);-webkit-appearance:none;appearance:none}
+.xwatch svg{width:14px;height:14px}
+

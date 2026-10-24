@@ -10,6 +10,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "upper_back",
      "state": "amber",
      "muscle": "upper_back",
      "days": [
@@ -47,6 +48,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -83,6 +85,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "abs",
      "state": "amber",
      "muscle": "abs",
      "days": [
@@ -139,6 +142,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "side_delts",
      "state": "amber",
      "muscle": "side_delts",
      "days": [
@@ -174,6 +178,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -210,6 +215,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "calves",
      "state": "amber",
      "muscle": "calves",
      "days": [
@@ -253,7 +259,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -321,7 +328,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -381,7 +389,8 @@
      "id": "stretch:triceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_triceps",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -451,6 +460,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -508,6 +518,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "hamstrings",
      "state": "amber",
      "muscle": "hamstrings",
      "days": [
@@ -564,6 +575,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "side_delts",
      "state": "amber",
      "muscle": "side_delts",
      "days": [
@@ -643,6 +655,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "side_delts",
      "state": "amber",
      "muscle": "side_delts",
      "days": [
@@ -677,6 +690,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "rear_delts",
      "state": "amber",
      "muscle": "rear_delts",
      "days": [
@@ -711,6 +725,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -756,7 +771,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -825,6 +841,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "side_delts",
      "state": "amber",
      "muscle": "side_delts",
      "days": [
@@ -859,6 +876,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -894,6 +912,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "calves",
      "state": "amber",
      "muscle": "calves",
      "days": [
@@ -937,7 +956,8 @@
      "id": "stretch:triceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_triceps",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -1016,7 +1036,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -1091,7 +1112,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -1161,6 +1183,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "quads",
      "state": "amber",
      "muscle": "quads",
      "days": [
@@ -1222,7 +1245,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -1299,7 +1323,8 @@
      "id": "stretch:triceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_triceps",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -1375,7 +1400,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -1443,7 +1469,8 @@
      "id": "stretch:triceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_triceps",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -1511,6 +1538,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "quads",
      "state": "amber",
      "muscle": "quads",
      "days": [
@@ -1563,7 +1591,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -1632,7 +1661,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -1700,7 +1730,8 @@
      "id": "stretch:triceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_triceps",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -1767,7 +1798,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -1854,6 +1886,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -1924,6 +1957,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "quads",
      "state": "amber",
      "muscle": "quads",
      "days": [
@@ -1986,6 +2020,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "lats",
      "state": "amber",
      "muscle": "lats",
      "days": [
@@ -2046,6 +2081,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -2117,6 +2153,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "quads",
      "state": "amber",
      "muscle": "quads",
      "days": [
@@ -2150,6 +2187,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "upper_back",
      "state": "amber",
      "muscle": "upper_back",
      "days": [
@@ -2187,6 +2225,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "side_delts",
      "state": "amber",
      "muscle": "side_delts",
      "days": [
@@ -2231,7 +2270,8 @@
      "id": "stretch:lats",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "lats",
      "state": "amber",
      "muscle": "lats",
      "days": [
@@ -2300,6 +2340,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "quads",
      "state": "amber",
      "muscle": "quads",
      "days": [
@@ -2335,6 +2376,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "side_delts",
      "state": "amber",
      "muscle": "side_delts",
      "days": [
@@ -2370,6 +2412,7 @@
      "family": "weekly_volume",
      "source": "weekly_band",
      "analysis_item": "volume_in_reach",
+     "analysis_item_muscle": "triceps",
      "state": "amber",
      "muscle": "triceps",
      "days": [
@@ -2422,7 +2465,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -2492,7 +2536,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -2560,7 +2605,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [
@@ -2628,7 +2674,8 @@
      "id": "stretch:biceps",
      "family": "stretch",
      "source": "stretch_share",
-     "analysis_item": "stretch_<muscle>",
+     "analysis_item": "stretch_share",
+     "analysis_item_muscle": "biceps",
      "state": "amber",
      "muscle": "biceps",
      "days": [

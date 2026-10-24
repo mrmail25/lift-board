@@ -3765,6 +3765,197 @@
       }
      }
     }
+   },
+   "recovery": {
+    "scheme": "fatigue_tier",
+    "tiers": [
+     {
+      "id": "heavy_axial_compound",
+      "label": "heavy axial compound",
+      "fatigue_min": 1.5
+     },
+     {
+      "id": "other_compound",
+      "label": "other compound",
+      "fatigue_min": 1.1
+     },
+     {
+      "id": "lighter_compound",
+      "label": "lighter compound",
+      "fatigue_min": 1.0
+     },
+     {
+      "id": "isolation",
+      "label": "isolation",
+      "fatigue_min": 0.0
+     }
+    ],
+    "unit": "fatigue points (sets x exercise fatigue rating)",
+    "by_day": {
+     "mon": {
+      "total": 20.8,
+      "tiers": [
+       {
+        "tier": "other_compound",
+        "cost": 14.4,
+        "sets": 12,
+        "exercises": [
+         "chest-supported-row",
+         "dumbbell-bench-press",
+         "overhead-press",
+         "pull-up"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 6.4,
+        "sets": 8,
+        "exercises": [
+         "cable-lateral-raise",
+         "incline-dumbbell-curl",
+         "overhead-cable-triceps-extension"
+        ]
+       }
+      ]
+     },
+     "tue": {
+      "total": 18.6,
+      "tiers": [
+       {
+        "tier": "heavy_axial_compound",
+        "cost": 9.0,
+        "sets": 6,
+        "exercises": [
+         "back-squat",
+         "romanian-deadlift"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 9.6,
+        "sets": 12,
+        "exercises": [
+         "cable-crunch",
+         "leg-extension",
+         "seated-leg-curl",
+         "standing-calf-raise"
+        ]
+       }
+      ]
+     },
+     "thu": {
+      "total": 18.9,
+      "tiers": [
+       {
+        "tier": "heavy_axial_compound",
+        "cost": 4.5,
+        "sets": 3,
+        "exercises": [
+         "barbell-row"
+        ]
+       },
+       {
+        "tier": "other_compound",
+        "cost": 7.2,
+        "sets": 6,
+        "exercises": [
+         "incline-dumbbell-press",
+         "lat-pulldown"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 7.2,
+        "sets": 9,
+        "exercises": [
+         "cable-fly",
+         "dumbbell-lateral-raise",
+         "reverse-pec-deck",
+         "triceps-pushdown"
+        ]
+       }
+      ]
+     },
+     "fri": {
+      "total": 17.6,
+      "tiers": [
+       {
+        "tier": "other_compound",
+        "cost": 9.6,
+        "sets": 8,
+        "exercises": [
+         "bulgarian-split-squat",
+         "hack-squat",
+         "hip-thrust"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 8.0,
+        "sets": 10,
+        "exercises": [
+         "hanging-leg-raise",
+         "hip-abduction-machine",
+         "lying-leg-curl",
+         "seated-calf-raise"
+        ]
+       }
+      ]
+     }
+    },
+    "week": {
+     "total": 75.9,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 13.5,
+       "sets": 9,
+       "exercises": [
+        "back-squat",
+        "barbell-row",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 31.2,
+       "sets": 26,
+       "exercises": [
+        "bulgarian-split-squat",
+        "chest-supported-row",
+        "dumbbell-bench-press",
+        "hack-squat",
+        "hip-thrust",
+        "incline-dumbbell-press",
+        "lat-pulldown",
+        "overhead-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 31.2,
+       "sets": 39,
+       "exercises": [
+        "cable-crunch",
+        "cable-fly",
+        "cable-lateral-raise",
+        "dumbbell-lateral-raise",
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "incline-dumbbell-curl",
+        "leg-extension",
+        "lying-leg-curl",
+        "overhead-cable-triceps-extension",
+        "reverse-pec-deck",
+        "seated-calf-raise",
+        "seated-leg-curl",
+        "standing-calf-raise",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    }
    }
   },
   "full-body/beginner/3": {
@@ -7185,6 +7376,171 @@
        ]
       }
      }
+    }
+   },
+   "recovery": {
+    "scheme": "fatigue_tier",
+    "tiers": [
+     {
+      "id": "heavy_axial_compound",
+      "label": "heavy axial compound",
+      "fatigue_min": 1.5
+     },
+     {
+      "id": "other_compound",
+      "label": "other compound",
+      "fatigue_min": 1.1
+     },
+     {
+      "id": "lighter_compound",
+      "label": "lighter compound",
+      "fatigue_min": 1.0
+     },
+     {
+      "id": "isolation",
+      "label": "isolation",
+      "fatigue_min": 0.0
+     }
+    ],
+    "unit": "fatigue points (sets x exercise fatigue rating)",
+    "by_day": {
+     "mon": {
+      "total": 20.5,
+      "tiers": [
+       {
+        "tier": "heavy_axial_compound",
+        "cost": 4.5,
+        "sets": 3,
+        "exercises": [
+         "back-squat"
+        ]
+       },
+       {
+        "tier": "other_compound",
+        "cost": 7.2,
+        "sets": 6,
+        "exercises": [
+         "dumbbell-bench-press",
+         "lat-pulldown"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 8.8,
+        "sets": 11,
+        "exercises": [
+         "dumbbell-lateral-raise",
+         "hanging-leg-raise",
+         "overhead-cable-triceps-extension",
+         "seated-leg-curl"
+        ]
+       }
+      ]
+     },
+     "wed": {
+      "total": 18.6,
+      "tiers": [
+       {
+        "tier": "heavy_axial_compound",
+        "cost": 3.0,
+        "sets": 2,
+        "exercises": [
+         "romanian-deadlift"
+        ]
+       },
+       {
+        "tier": "other_compound",
+        "cost": 10.8,
+        "sets": 9,
+        "exercises": [
+         "incline-dumbbell-press",
+         "leg-press",
+         "seated-cable-row"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 4.8,
+        "sets": 6,
+        "exercises": [
+         "dumbbell-lateral-raise",
+         "face-pull",
+         "incline-dumbbell-curl"
+        ]
+       }
+      ]
+     },
+     "fri": {
+      "total": 18.8,
+      "tiers": [
+       {
+        "tier": "other_compound",
+        "cost": 10.8,
+        "sets": 9,
+        "exercises": [
+         "chest-supported-row",
+         "hack-squat",
+         "machine-chest-press"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 8.0,
+        "sets": 10,
+        "exercises": [
+         "hip-abduction-machine",
+         "lying-leg-curl",
+         "overhead-cable-triceps-extension",
+         "standing-calf-raise"
+        ]
+       }
+      ]
+     }
+    },
+    "week": {
+     "total": 57.9,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 7.5,
+       "sets": 5,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 28.8,
+       "sets": 24,
+       "exercises": [
+        "chest-supported-row",
+        "dumbbell-bench-press",
+        "hack-squat",
+        "incline-dumbbell-press",
+        "lat-pulldown",
+        "leg-press",
+        "machine-chest-press",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 21.6,
+       "sets": 27,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "incline-dumbbell-curl",
+        "lying-leg-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
     }
    }
   },
@@ -11649,6 +12005,271 @@
       }
      }
     }
+   },
+   "recovery": {
+    "scheme": "fatigue_tier",
+    "tiers": [
+     {
+      "id": "heavy_axial_compound",
+      "label": "heavy axial compound",
+      "fatigue_min": 1.5
+     },
+     {
+      "id": "other_compound",
+      "label": "other compound",
+      "fatigue_min": 1.1
+     },
+     {
+      "id": "lighter_compound",
+      "label": "lighter compound",
+      "fatigue_min": 1.0
+     },
+     {
+      "id": "isolation",
+      "label": "isolation",
+      "fatigue_min": 0.0
+     }
+    ],
+    "unit": "fatigue points (sets x exercise fatigue rating)",
+    "by_day": {
+     "mon": {
+      "total": 18.4,
+      "tiers": [
+       {
+        "tier": "other_compound",
+        "cost": 9.6,
+        "sets": 8,
+        "exercises": [
+         "dumbbell-bench-press",
+         "incline-barbell-bench-press",
+         "seated-dumbbell-shoulder-press"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 8.8,
+        "sets": 11,
+        "exercises": [
+         "cable-fly",
+         "cable-lateral-raise",
+         "overhead-cable-triceps-extension",
+         "skull-crusher"
+        ]
+       }
+      ]
+     },
+     "tue": {
+      "total": 21.7,
+      "tiers": [
+       {
+        "tier": "heavy_axial_compound",
+        "cost": 4.5,
+        "sets": 3,
+        "exercises": [
+         "pendlay-row"
+        ]
+       },
+       {
+        "tier": "other_compound",
+        "cost": 8.4,
+        "sets": 7,
+        "exercises": [
+         "chest-supported-row",
+         "pull-up"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 8.8,
+        "sets": 11,
+        "exercises": [
+         "barbell-shrug",
+         "incline-dumbbell-curl",
+         "preacher-curl",
+         "reverse-pec-deck"
+        ]
+       }
+      ]
+     },
+     "wed": {
+      "total": 21.8,
+      "tiers": [
+       {
+        "tier": "heavy_axial_compound",
+        "cost": 9.0,
+        "sets": 6,
+        "exercises": [
+         "back-squat",
+         "romanian-deadlift"
+        ]
+       },
+       {
+        "tier": "other_compound",
+        "cost": 2.4,
+        "sets": 2,
+        "exercises": [
+         "hip-thrust"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 10.4,
+        "sets": 13,
+        "exercises": [
+         "hanging-leg-raise",
+         "leg-extension",
+         "seated-leg-curl",
+         "standing-calf-raise"
+        ]
+       }
+      ]
+     },
+     "thu": {
+      "total": 18.4,
+      "tiers": [
+       {
+        "tier": "other_compound",
+        "cost": 9.6,
+        "sets": 8,
+        "exercises": [
+         "incline-dumbbell-press",
+         "machine-chest-press",
+         "machine-shoulder-press"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 8.8,
+        "sets": 11,
+        "exercises": [
+         "dumbbell-lateral-raise",
+         "pec-deck",
+         "skull-crusher",
+         "triceps-pushdown"
+        ]
+       }
+      ]
+     },
+     "fri": {
+      "total": 16.8,
+      "tiers": [
+       {
+        "tier": "other_compound",
+        "cost": 7.2,
+        "sets": 6,
+        "exercises": [
+         "close-grip-pulldown",
+         "t-bar-row"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 9.6,
+        "sets": 12,
+        "exercises": [
+         "cable-curl",
+         "dumbbell-shrug",
+         "face-pull",
+         "hammer-curl",
+         "straight-arm-pulldown"
+        ]
+       }
+      ]
+     },
+     "sat": {
+      "total": 19.6,
+      "tiers": [
+       {
+        "tier": "other_compound",
+        "cost": 10.8,
+        "sets": 9,
+        "exercises": [
+         "bulgarian-split-squat",
+         "hack-squat",
+         "stiff-leg-dumbbell-deadlift"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 8.8,
+        "sets": 11,
+        "exercises": [
+         "ab-wheel-rollout",
+         "hip-abduction-machine",
+         "lying-leg-curl",
+         "seated-calf-raise"
+        ]
+       }
+      ]
+     }
+    },
+    "week": {
+     "total": 116.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 13.5,
+       "sets": 9,
+       "exercises": [
+        "back-squat",
+        "pendlay-row",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 48.0,
+       "sets": 40,
+       "exercises": [
+        "bulgarian-split-squat",
+        "chest-supported-row",
+        "close-grip-pulldown",
+        "dumbbell-bench-press",
+        "hack-squat",
+        "hip-thrust",
+        "incline-barbell-bench-press",
+        "incline-dumbbell-press",
+        "machine-chest-press",
+        "machine-shoulder-press",
+        "pull-up",
+        "seated-dumbbell-shoulder-press",
+        "stiff-leg-dumbbell-deadlift",
+        "t-bar-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 55.2,
+       "sets": 69,
+       "exercises": [
+        "ab-wheel-rollout",
+        "barbell-shrug",
+        "cable-curl",
+        "cable-fly",
+        "cable-lateral-raise",
+        "dumbbell-lateral-raise",
+        "dumbbell-shrug",
+        "face-pull",
+        "hammer-curl",
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "incline-dumbbell-curl",
+        "leg-extension",
+        "lying-leg-curl",
+        "overhead-cable-triceps-extension",
+        "pec-deck",
+        "preacher-curl",
+        "reverse-pec-deck",
+        "seated-calf-raise",
+        "seated-leg-curl",
+        "skull-crusher",
+        "standing-calf-raise",
+        "straight-arm-pulldown",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    }
    }
   },
   "bro-split/intermediate/5": {
@@ -15670,6 +16291,8721 @@
       }
      }
     }
+   },
+   "recovery": {
+    "scheme": "fatigue_tier",
+    "tiers": [
+     {
+      "id": "heavy_axial_compound",
+      "label": "heavy axial compound",
+      "fatigue_min": 1.5
+     },
+     {
+      "id": "other_compound",
+      "label": "other compound",
+      "fatigue_min": 1.1
+     },
+     {
+      "id": "lighter_compound",
+      "label": "lighter compound",
+      "fatigue_min": 1.0
+     },
+     {
+      "id": "isolation",
+      "label": "isolation",
+      "fatigue_min": 0.0
+     }
+    ],
+    "unit": "fatigue points (sets x exercise fatigue rating)",
+    "by_day": {
+     "mon": {
+      "total": 13.6,
+      "tiers": [
+       {
+        "tier": "other_compound",
+        "cost": 9.6,
+        "sets": 8,
+        "exercises": [
+         "barbell-bench-press",
+         "incline-dumbbell-press",
+         "weighted-dip"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 4.0,
+        "sets": 5,
+        "exercises": [
+         "cable-crunch",
+         "cable-fly"
+        ]
+       }
+      ]
+     },
+     "tue": {
+      "total": 18.1,
+      "tiers": [
+       {
+        "tier": "heavy_axial_compound",
+        "cost": 4.5,
+        "sets": 3,
+        "exercises": [
+         "barbell-row"
+        ]
+       },
+       {
+        "tier": "other_compound",
+        "cost": 9.6,
+        "sets": 8,
+        "exercises": [
+         "chest-supported-row",
+         "lat-pulldown",
+         "pull-up"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 4.0,
+        "sets": 5,
+        "exercises": [
+         "barbell-shrug",
+         "cable-crunch"
+        ]
+       }
+      ]
+     },
+     "wed": {
+      "total": 25.2,
+      "tiers": [
+       {
+        "tier": "heavy_axial_compound",
+        "cost": 12.0,
+        "sets": 8,
+        "exercises": [
+         "back-squat",
+         "romanian-deadlift"
+        ]
+       },
+       {
+        "tier": "other_compound",
+        "cost": 3.6,
+        "sets": 3,
+        "exercises": [
+         "leg-press"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 9.6,
+        "sets": 12,
+        "exercises": [
+         "hip-abduction-machine",
+         "leg-extension",
+         "seated-leg-curl",
+         "standing-calf-raise"
+        ]
+       }
+      ]
+     },
+     "fri": {
+      "total": 17.6,
+      "tiers": [
+       {
+        "tier": "other_compound",
+        "cost": 4.8,
+        "sets": 4,
+        "exercises": [
+         "overhead-press"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 12.8,
+        "sets": 16,
+        "exercises": [
+         "cable-lateral-raise",
+         "dumbbell-lateral-raise",
+         "face-pull",
+         "reverse-pec-deck",
+         "seated-calf-raise"
+        ]
+       }
+      ]
+     },
+     "sat": {
+      "total": 14.0,
+      "tiers": [
+       {
+        "tier": "other_compound",
+        "cost": 3.6,
+        "sets": 3,
+        "exercises": [
+         "close-grip-bench-press"
+        ]
+       },
+       {
+        "tier": "isolation",
+        "cost": 10.4,
+        "sets": 13,
+        "exercises": [
+         "barbell-curl",
+         "incline-dumbbell-curl",
+         "overhead-cable-triceps-extension",
+         "triceps-pushdown",
+         "wrist-curl"
+        ]
+       }
+      ]
+     }
+    },
+    "week": {
+     "total": 88.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 16.5,
+       "sets": 11,
+       "exercises": [
+        "back-squat",
+        "barbell-row",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 31.2,
+       "sets": 26,
+       "exercises": [
+        "barbell-bench-press",
+        "chest-supported-row",
+        "close-grip-bench-press",
+        "incline-dumbbell-press",
+        "lat-pulldown",
+        "leg-press",
+        "overhead-press",
+        "pull-up",
+        "weighted-dip"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 40.8,
+       "sets": 51,
+       "exercises": [
+        "barbell-curl",
+        "barbell-shrug",
+        "cable-crunch",
+        "cable-fly",
+        "cable-lateral-raise",
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "hip-abduction-machine",
+        "incline-dumbbell-curl",
+        "leg-extension",
+        "overhead-cable-triceps-extension",
+        "reverse-pec-deck",
+        "seated-calf-raise",
+        "seated-leg-curl",
+        "standing-calf-raise",
+        "triceps-pushdown",
+        "wrist-curl"
+       ]
+      }
+     ]
+    }
+   }
+  }
+ },
+ "recovery_by_preset": {
+  "full-body/beginner/2": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 20.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "back-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "dumbbell-bench-press",
+        "lat-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "hanging-leg-raise",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 21.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "incline-dumbbell-press",
+        "leg-press",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "face-pull",
+        "incline-dumbbell-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 42.2,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 9.0,
+      "sets": 6,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 18.0,
+      "sets": 15,
+      "exercises": [
+       "dumbbell-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "seated-cable-row"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 15.2,
+      "sets": 19,
+      "exercises": [
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "full-body/beginner/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 20.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "back-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "dumbbell-bench-press",
+        "lat-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "hanging-leg-raise",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 18.6,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 3.0,
+       "sets": 2,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "incline-dumbbell-press",
+        "leg-press",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.8,
+       "sets": 6,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "incline-dumbbell-curl"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 18.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "chest-supported-row",
+        "hack-squat",
+        "machine-chest-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "overhead-cable-triceps-extension",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 57.9,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 7.5,
+      "sets": 5,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 28.8,
+      "sets": 24,
+      "exercises": [
+       "chest-supported-row",
+       "dumbbell-bench-press",
+       "hack-squat",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "machine-chest-press",
+       "seated-cable-row"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 21.6,
+      "sets": 27,
+      "exercises": [
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "full-body/beginner/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 20.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "back-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "dumbbell-bench-press",
+        "lat-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "hanging-leg-raise",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 18.6,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 3.0,
+       "sets": 2,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "incline-dumbbell-press",
+        "leg-press",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.8,
+       "sets": 6,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "incline-dumbbell-curl"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 18.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "chest-supported-row",
+        "hack-squat",
+        "machine-chest-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "overhead-cable-triceps-extension",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 17.0,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 3.0,
+       "sets": 2,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "incline-dumbbell-press",
+        "leg-press",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 3.2,
+       "sets": 4,
+       "exercises": [
+        "face-pull",
+        "incline-dumbbell-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 74.9,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 10.5,
+      "sets": 7,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 39.6,
+      "sets": 33,
+      "exercises": [
+       "chest-supported-row",
+       "dumbbell-bench-press",
+       "hack-squat",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "machine-chest-press",
+       "seated-cable-row"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 24.8,
+      "sets": 31,
+      "exercises": [
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "full-body/intermediate/2": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 25.2,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 6.0,
+       "sets": 4,
+       "exercises": [
+        "back-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "barbell-bench-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "hanging-leg-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 27.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 7.5,
+       "sets": 5,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 14.4,
+       "sets": 12,
+       "exercises": [
+        "bulgarian-split-squat",
+        "chest-supported-row",
+        "incline-dumbbell-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "cable-lateral-raise",
+        "face-pull",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 52.7,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 13.5,
+      "sets": 9,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 24.0,
+      "sets": 20,
+      "exercises": [
+       "barbell-bench-press",
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "incline-dumbbell-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 15.2,
+      "sets": 19,
+      "exercises": [
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "full-body/intermediate/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 20.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "back-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "barbell-bench-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 22.1,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "bulgarian-split-squat",
+        "chest-supported-row",
+        "incline-dumbbell-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "cable-lateral-raise",
+        "face-pull",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 19.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "hack-squat",
+        "lat-pulldown",
+        "weighted-dip"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-crunch",
+        "hammer-curl",
+        "lying-leg-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 62.2,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 9.0,
+      "sets": 6,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 27.6,
+      "sets": 23,
+      "exercises": [
+       "barbell-bench-press",
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "hack-squat",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "pull-up",
+       "weighted-dip"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 25.6,
+      "sets": 32,
+      "exercises": [
+       "cable-crunch",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hammer-curl",
+       "incline-dumbbell-curl",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "full-body/intermediate/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 19.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "back-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "barbell-bench-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 20.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "bulgarian-split-squat",
+        "chest-supported-row",
+        "incline-dumbbell-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "cable-lateral-raise",
+        "face-pull",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 19.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "hack-squat",
+        "lat-pulldown",
+        "weighted-dip"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-crunch",
+        "hammer-curl",
+        "lying-leg-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 20.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "bulgarian-split-squat",
+        "chest-supported-row",
+        "incline-dumbbell-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "cable-lateral-raise",
+        "face-pull",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 80.3,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 13.5,
+      "sets": 9,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 37.2,
+      "sets": 31,
+      "exercises": [
+       "barbell-bench-press",
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "hack-squat",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "pull-up",
+       "weighted-dip"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 29.6,
+      "sets": 37,
+      "exercises": [
+       "cable-crunch",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hammer-curl",
+       "incline-dumbbell-curl",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "full-body/advanced/2": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 26.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 6.0,
+       "sets": 4,
+       "exercises": [
+        "front-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 12.0,
+       "sets": 10,
+       "exercises": [
+        "incline-barbell-bench-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-lateral-raise",
+        "hanging-leg-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 31.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 13.5,
+       "sets": 9,
+       "exercises": [
+        "pendlay-row",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "bulgarian-split-squat",
+        "dumbbell-bench-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 58.3,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 19.5,
+      "sets": 13,
+      "exercises": [
+       "front-squat",
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 22.8,
+      "sets": 19,
+      "exercises": [
+       "bulgarian-split-squat",
+       "dumbbell-bench-press",
+       "incline-barbell-bench-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 16.0,
+      "sets": 20,
+      "exercises": [
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "full-body/advanced/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 27.6,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 6.0,
+       "sets": 4,
+       "exercises": [
+        "front-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "incline-barbell-bench-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.0,
+       "sets": 15,
+       "exercises": [
+        "cable-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-calf-raise",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 29.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 10.5,
+       "sets": 7,
+       "exercises": [
+        "pendlay-row",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "bulgarian-split-squat",
+        "dumbbell-bench-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 20.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "hack-squat",
+        "lat-pulldown",
+        "weighted-dip"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-curl",
+        "face-pull",
+        "hanging-leg-raise",
+        "lying-leg-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 77.7,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 16.5,
+      "sets": 11,
+      "exercises": [
+       "front-squat",
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 30.0,
+      "sets": 25,
+      "exercises": [
+       "bulgarian-split-squat",
+       "dumbbell-bench-press",
+       "hack-squat",
+       "incline-barbell-bench-press",
+       "lat-pulldown",
+       "pull-up",
+       "weighted-dip"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 31.2,
+      "sets": 39,
+      "exercises": [
+       "cable-curl",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "full-body/advanced/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 22.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "front-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "incline-barbell-bench-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 23.4,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "pendlay-row",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "bulgarian-split-squat",
+        "dumbbell-bench-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 20.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "hack-squat",
+        "lat-pulldown",
+        "weighted-dip"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-curl",
+        "face-pull",
+        "hanging-leg-raise",
+        "lying-leg-curl"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 23.4,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "pendlay-row",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "bulgarian-split-squat",
+        "dumbbell-bench-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 89.7,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 22.5,
+      "sets": 15,
+      "exercises": [
+       "front-squat",
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 33.6,
+      "sets": 28,
+      "exercises": [
+       "bulgarian-split-squat",
+       "dumbbell-bench-press",
+       "hack-squat",
+       "incline-barbell-bench-press",
+       "lat-pulldown",
+       "pull-up",
+       "weighted-dip"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 33.6,
+      "sets": 42,
+      "exercises": [
+       "cable-curl",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "upper-lower/beginner/2": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 21.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 15.6,
+       "sets": 13,
+       "exercises": [
+        "dumbbell-bench-press",
+        "lat-pulldown",
+        "seated-cable-row",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 21.6,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 12.0,
+       "sets": 8,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-crunch",
+        "cable-fly",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 42.8,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 12.0,
+      "sets": 8,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 15.6,
+      "sets": 13,
+      "exercises": [
+       "dumbbell-bench-press",
+       "lat-pulldown",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 15.2,
+      "sets": 19,
+      "exercises": [
+       "cable-crunch",
+       "cable-fly",
+       "dumbbell-lateral-raise",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "upper-lower/beginner/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 18.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 13.2,
+       "sets": 11,
+       "exercises": [
+        "dumbbell-bench-press",
+        "lat-pulldown",
+        "seated-cable-row",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 16.2,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-crunch",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 18.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "chest-supported-row",
+        "close-grip-pulldown",
+        "incline-dumbbell-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-lateral-raise",
+        "face-pull",
+        "hammer-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 15.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "hip-thrust",
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 68.2,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 9.0,
+      "sets": 6,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 31.2,
+      "sets": 26,
+      "exercises": [
+       "chest-supported-row",
+       "close-grip-pulldown",
+       "dumbbell-bench-press",
+       "hip-thrust",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 28.0,
+      "sets": 35,
+      "exercises": [
+       "cable-crunch",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "upper-lower/intermediate/2": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 26.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 20.4,
+       "sets": 17,
+       "exercises": [
+        "chest-supported-row",
+        "dumbbell-bench-press",
+        "overhead-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "cable-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 26.2,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 15.0,
+       "sets": 10,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 11.2,
+       "sets": 14,
+       "exercises": [
+        "cable-crunch",
+        "cable-fly",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 52.2,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 15.0,
+      "sets": 10,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 20.4,
+      "sets": 17,
+      "exercises": [
+       "chest-supported-row",
+       "dumbbell-bench-press",
+       "overhead-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 16.8,
+      "sets": 21,
+      "exercises": [
+       "cable-crunch",
+       "cable-fly",
+       "cable-lateral-raise",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "upper-lower/intermediate/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 20.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 14.4,
+       "sets": 12,
+       "exercises": [
+        "chest-supported-row",
+        "dumbbell-bench-press",
+        "overhead-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "cable-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 18.6,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-crunch",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 18.9,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "incline-dumbbell-press",
+        "lat-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-fly",
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 17.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "bulgarian-split-squat",
+        "hack-squat",
+        "hip-thrust"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 75.9,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 13.5,
+      "sets": 9,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 31.2,
+      "sets": 26,
+      "exercises": [
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "dumbbell-bench-press",
+       "hack-squat",
+       "hip-thrust",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "overhead-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 31.2,
+      "sets": 39,
+      "exercises": [
+       "cable-crunch",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "upper-lower/advanced/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 24.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 16.8,
+       "sets": 14,
+       "exercises": [
+        "chest-supported-row",
+        "incline-barbell-bench-press",
+        "pull-up",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "cable-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 22.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 10.5,
+       "sets": 7,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.0,
+       "sets": 15,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-adduction-machine",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 21.3,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "pendlay-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "close-grip-pulldown",
+        "dumbbell-bench-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-fly",
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "skull-crusher"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 21.3,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "front-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "bulgarian-split-squat",
+        "hip-thrust"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "ab-wheel-rollout",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 89.9,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 19.5,
+      "sets": 13,
+      "exercises": [
+       "back-squat",
+       "front-squat",
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 31.2,
+      "sets": 26,
+      "exercises": [
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "close-grip-pulldown",
+       "dumbbell-bench-press",
+       "hip-thrust",
+       "incline-barbell-bench-press",
+       "pull-up",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 39.2,
+      "sets": 49,
+      "exercises": [
+       "ab-wheel-rollout",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "hip-adduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "skull-crusher",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "ppl/beginner/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 16.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 14.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "lat-pulldown",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "dumbbell-shrug",
+        "face-pull",
+        "hammer-curl",
+        "incline-dumbbell-curl"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 20.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 12.0,
+       "sets": 8,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-crunch",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 51.2,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 12.0,
+      "sets": 8,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 16.8,
+      "sets": 14,
+      "exercises": [
+       "barbell-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 22.4,
+      "sets": 28,
+      "exercises": [
+       "cable-crunch",
+       "dumbbell-lateral-raise",
+       "dumbbell-shrug",
+       "face-pull",
+       "hammer-curl",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "ppl/beginner/6": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 14.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 14.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "lat-pulldown",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "dumbbell-shrug",
+        "face-pull",
+        "hammer-curl",
+        "incline-dumbbell-curl"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 16.2,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-crunch",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 12.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "incline-dumbbell-press",
+        "machine-chest-press",
+        "machine-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.0,
+       "sets": 5,
+       "exercises": [
+        "cable-lateral-raise",
+        "skull-crusher"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 10.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "chest-supported-row",
+        "close-grip-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 3.2,
+       "sets": 4,
+       "exercises": [
+        "cable-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 12.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 6.0,
+       "sets": 5,
+       "exercises": [
+        "hip-thrust",
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "hanging-leg-raise",
+        "seated-calf-raise",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 79.8,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 9.0,
+      "sets": 6,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 37.2,
+      "sets": 31,
+      "exercises": [
+       "barbell-bench-press",
+       "chest-supported-row",
+       "close-grip-pulldown",
+       "hip-thrust",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "machine-chest-press",
+       "machine-shoulder-press",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 33.6,
+      "sets": 42,
+      "exercises": [
+       "cable-crunch",
+       "cable-curl",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "dumbbell-shrug",
+       "face-pull",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "skull-crusher",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "ppl/intermediate/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 22.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "overhead-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 11.2,
+       "sets": 14,
+       "exercises": [
+        "cable-fly",
+        "cable-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "seated-calf-raise",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 20.0,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 6.0,
+       "sets": 4,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 6.0,
+       "sets": 5,
+       "exercises": [
+        "lat-pulldown",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "barbell-shrug",
+        "hammer-curl",
+        "incline-dumbbell-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 24.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 12.0,
+       "sets": 8,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.8,
+       "sets": 16,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 66.8,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 18.0,
+      "sets": 12,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 16.8,
+      "sets": 14,
+      "exercises": [
+       "barbell-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "overhead-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 32.0,
+      "sets": 40,
+      "exercises": [
+       "barbell-shrug",
+       "cable-fly",
+       "cable-lateral-raise",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "ppl/intermediate/6": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 18.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "overhead-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "cable-fly",
+        "cable-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 18.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 6.0,
+       "sets": 5,
+       "exercises": [
+        "lat-pulldown",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "barbell-shrug",
+        "hammer-curl",
+        "incline-dumbbell-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 19.4,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 14.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "incline-dumbbell-press",
+        "machine-chest-press",
+        "machine-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "skull-crusher",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 14.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "chest-supported-row",
+        "lat-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-curl",
+        "dumbbell-shrug",
+        "face-pull",
+        "hammer-curl"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 16.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "bulgarian-split-squat",
+        "hack-squat",
+        "stiff-leg-dumbbell-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "cable-crunch",
+        "lying-leg-curl",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 101.1,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 13.5,
+      "sets": 9,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 42.0,
+      "sets": 35,
+      "exercises": [
+       "barbell-bench-press",
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "hack-squat",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "machine-chest-press",
+       "machine-shoulder-press",
+       "overhead-press",
+       "pull-up",
+       "stiff-leg-dumbbell-deadlift"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 45.6,
+      "sets": 57,
+      "exercises": [
+       "barbell-shrug",
+       "cable-crunch",
+       "cable-curl",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "dumbbell-shrug",
+       "face-pull",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "skull-crusher",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "ppl/advanced/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 28.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 16.8,
+       "sets": 14,
+       "exercises": [
+        "chest-supported-row",
+        "dumbbell-bench-press",
+        "incline-barbell-bench-press",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 11.2,
+       "sets": 14,
+       "exercises": [
+        "cable-fly",
+        "cable-lateral-raise",
+        "dumbbell-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 21.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "pendlay-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "chest-supported-row",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "barbell-shrug",
+        "incline-dumbbell-curl",
+        "preacher-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 29.1,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 13.5,
+       "sets": 9,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "hip-thrust"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.0,
+       "sets": 15,
+       "exercises": [
+        "hanging-leg-raise",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 78.8,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 18.0,
+      "sets": 12,
+      "exercises": [
+       "back-squat",
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 28.8,
+      "sets": 24,
+      "exercises": [
+       "chest-supported-row",
+       "dumbbell-bench-press",
+       "hip-thrust",
+       "incline-barbell-bench-press",
+       "pull-up",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 32.0,
+      "sets": 40,
+      "exercises": [
+       "barbell-shrug",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "preacher-curl",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "ppl/advanced/6": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 18.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "dumbbell-bench-press",
+        "incline-barbell-bench-press",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-fly",
+        "cable-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "skull-crusher"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 21.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "pendlay-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "chest-supported-row",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "barbell-shrug",
+        "incline-dumbbell-curl",
+        "preacher-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 21.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 2.4,
+       "sets": 2,
+       "exercises": [
+        "hip-thrust"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "hanging-leg-raise",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 18.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "incline-dumbbell-press",
+        "machine-chest-press",
+        "machine-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "pec-deck",
+        "skull-crusher",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 16.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "close-grip-pulldown",
+        "t-bar-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-curl",
+        "dumbbell-shrug",
+        "face-pull",
+        "hammer-curl",
+        "straight-arm-pulldown"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 19.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "bulgarian-split-squat",
+        "hack-squat",
+        "stiff-leg-dumbbell-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "ab-wheel-rollout",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 116.7,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 13.5,
+      "sets": 9,
+      "exercises": [
+       "back-squat",
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 48.0,
+      "sets": 40,
+      "exercises": [
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "close-grip-pulldown",
+       "dumbbell-bench-press",
+       "hack-squat",
+       "hip-thrust",
+       "incline-barbell-bench-press",
+       "incline-dumbbell-press",
+       "machine-chest-press",
+       "machine-shoulder-press",
+       "pull-up",
+       "seated-dumbbell-shoulder-press",
+       "stiff-leg-dumbbell-deadlift",
+       "t-bar-row"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 55.2,
+      "sets": 69,
+      "exercises": [
+       "ab-wheel-rollout",
+       "barbell-shrug",
+       "cable-curl",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "dumbbell-shrug",
+       "face-pull",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "pec-deck",
+       "preacher-curl",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "skull-crusher",
+       "standing-calf-raise",
+       "straight-arm-pulldown",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "bro-split/beginner/5": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 13.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "cable-crunch",
+        "cable-fly",
+        "hip-abduction-machine"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 13.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "lat-pulldown",
+        "one-arm-dumbbell-row",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.0,
+       "sets": 5,
+       "exercises": [
+        "dumbbell-shrug",
+        "straight-arm-pulldown"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 19.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 10.5,
+       "sets": 7,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 15.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 4.8,
+       "sets": 4,
+       "exercises": [
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "reverse-pec-deck",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 11.2,
+     "tiers": [
+      {
+       "tier": "isolation",
+       "cost": 11.2,
+       "sets": 14,
+       "exercises": [
+        "barbell-curl",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "triceps-pushdown",
+        "wrist-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 73.3,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 10.5,
+      "sets": 7,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 25.2,
+      "sets": 21,
+      "exercises": [
+       "barbell-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "one-arm-dumbbell-row",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 37.6,
+      "sets": 47,
+      "exercises": [
+       "barbell-curl",
+       "cable-crunch",
+       "cable-fly",
+       "dumbbell-lateral-raise",
+       "dumbbell-shrug",
+       "face-pull",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "straight-arm-pulldown",
+       "triceps-pushdown",
+       "wrist-curl"
+      ]
+     }
+    ]
+   }
+  },
+  "bro-split/intermediate/5": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 13.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "weighted-dip"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.0,
+       "sets": 5,
+       "exercises": [
+        "cable-crunch",
+        "cable-fly"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 18.1,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "chest-supported-row",
+        "lat-pulldown",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.0,
+       "sets": 5,
+       "exercises": [
+        "barbell-shrug",
+        "cable-crunch"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 25.2,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 12.0,
+       "sets": 8,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "hip-abduction-machine",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 17.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 4.8,
+       "sets": 4,
+       "exercises": [
+        "overhead-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.8,
+       "sets": 16,
+       "exercises": [
+        "cable-lateral-raise",
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "reverse-pec-deck",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 14.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "close-grip-bench-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "barbell-curl",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "triceps-pushdown",
+        "wrist-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 88.5,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 16.5,
+      "sets": 11,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 31.2,
+      "sets": 26,
+      "exercises": [
+       "barbell-bench-press",
+       "chest-supported-row",
+       "close-grip-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "overhead-press",
+       "pull-up",
+       "weighted-dip"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 40.8,
+      "sets": 51,
+      "exercises": [
+       "barbell-curl",
+       "barbell-shrug",
+       "cable-crunch",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown",
+       "wrist-curl"
+      ]
+     }
+    ]
+   }
+  },
+  "bro-split/advanced/5": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 16.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 12.0,
+       "sets": 10,
+       "exercises": [
+        "dumbbell-bench-press",
+        "hip-thrust",
+        "incline-barbell-bench-press",
+        "weighted-dip"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.0,
+       "sets": 5,
+       "exercises": [
+        "cable-fly",
+        "hanging-leg-raise"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 18.1,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "pendlay-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "chest-supported-row",
+        "close-grip-pulldown",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.0,
+       "sets": 5,
+       "exercises": [
+        "barbell-shrug",
+        "hip-abduction-machine"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 26.0,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 12.0,
+       "sets": 8,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "hack-squat"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "hip-adduction-machine",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 21.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 4.8,
+       "sets": 4,
+       "exercises": [
+        "overhead-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 16.8,
+       "sets": 21,
+       "exercises": [
+        "ab-wheel-rollout",
+        "cable-lateral-raise",
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "reverse-pec-deck",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 15.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "close-grip-bench-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.0,
+       "sets": 15,
+       "exercises": [
+        "barbell-curl",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "skull-crusher",
+        "wrist-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 97.3,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 16.5,
+      "sets": 11,
+      "exercises": [
+       "back-squat",
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 33.6,
+      "sets": 28,
+      "exercises": [
+       "chest-supported-row",
+       "close-grip-bench-press",
+       "close-grip-pulldown",
+       "dumbbell-bench-press",
+       "hack-squat",
+       "hip-thrust",
+       "incline-barbell-bench-press",
+       "overhead-press",
+       "pull-up",
+       "weighted-dip"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 47.2,
+      "sets": 59,
+      "exercises": [
+       "ab-wheel-rollout",
+       "barbell-curl",
+       "barbell-shrug",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "hip-adduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "skull-crusher",
+       "standing-calf-raise",
+       "wrist-curl"
+      ]
+     }
+    ]
+   }
+  },
+  "pplu/beginner/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 14.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 14.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "lat-pulldown",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "dumbbell-shrug",
+        "face-pull",
+        "hammer-curl",
+        "incline-dumbbell-curl"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 20.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 12.0,
+       "sets": 8,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-crunch",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 18.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "chest-supported-row",
+        "close-grip-pulldown",
+        "incline-dumbbell-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-lateral-raise",
+        "face-pull",
+        "hammer-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 67.2,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 12.0,
+      "sets": 8,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 26.4,
+      "sets": 22,
+      "exercises": [
+       "barbell-bench-press",
+       "chest-supported-row",
+       "close-grip-pulldown",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 28.8,
+      "sets": 36,
+      "exercises": [
+       "cable-crunch",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "dumbbell-shrug",
+       "face-pull",
+       "hammer-curl",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "pplu/intermediate/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 20.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "overhead-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-fly",
+        "cable-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "seated-calf-raise",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 18.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 6.0,
+       "sets": 5,
+       "exercises": [
+        "lat-pulldown",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "barbell-shrug",
+        "hammer-curl",
+        "incline-dumbbell-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 24.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 12.0,
+       "sets": 8,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.8,
+       "sets": 16,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 18.9,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "incline-dumbbell-press",
+        "lat-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-fly",
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 82.6,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 21.0,
+      "sets": 14,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 24.0,
+      "sets": 20,
+      "exercises": [
+       "barbell-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "overhead-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 37.6,
+      "sets": 47,
+      "exercises": [
+       "barbell-shrug",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "pplu/advanced/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 20.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "dumbbell-bench-press",
+        "incline-barbell-bench-press",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "cable-fly",
+        "cable-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "seated-calf-raise",
+        "skull-crusher"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 21.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "pendlay-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "chest-supported-row",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "barbell-shrug",
+        "incline-dumbbell-curl",
+        "preacher-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 29.1,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 13.5,
+       "sets": 9,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "hip-thrust"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.0,
+       "sets": 15,
+       "exercises": [
+        "hanging-leg-raise",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 21.3,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "pendlay-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "close-grip-pulldown",
+        "dumbbell-bench-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-fly",
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "skull-crusher"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 92.1,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 22.5,
+      "sets": 15,
+      "exercises": [
+       "back-squat",
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 28.8,
+      "sets": 24,
+      "exercises": [
+       "chest-supported-row",
+       "close-grip-pulldown",
+       "dumbbell-bench-press",
+       "hip-thrust",
+       "incline-barbell-bench-press",
+       "pull-up",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 40.8,
+      "sets": 51,
+      "exercises": [
+       "barbell-shrug",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "preacher-curl",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "skull-crusher",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "pplul/beginner/5": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 14.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 14.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "lat-pulldown",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "dumbbell-shrug",
+        "face-pull",
+        "hammer-curl",
+        "incline-dumbbell-curl"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 16.2,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-crunch",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 18.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "chest-supported-row",
+        "close-grip-pulldown",
+        "incline-dumbbell-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-lateral-raise",
+        "face-pull",
+        "hammer-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 15.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "hip-thrust",
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 77.8,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 9.0,
+      "sets": 6,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 33.6,
+      "sets": 28,
+      "exercises": [
+       "barbell-bench-press",
+       "chest-supported-row",
+       "close-grip-pulldown",
+       "hip-thrust",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 35.2,
+      "sets": 44,
+      "exercises": [
+       "cable-crunch",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "dumbbell-shrug",
+       "face-pull",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "pplul/intermediate/5": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 18.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "overhead-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "cable-fly",
+        "cable-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 18.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 6.0,
+       "sets": 5,
+       "exercises": [
+        "lat-pulldown",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "barbell-shrug",
+        "hammer-curl",
+        "incline-dumbbell-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 19.4,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 18.9,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "incline-dumbbell-press",
+        "lat-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-fly",
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 17.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "bulgarian-split-squat",
+        "hack-squat",
+        "hip-thrust"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 93.2,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 18.0,
+      "sets": 12,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 33.6,
+      "sets": 28,
+      "exercises": [
+       "barbell-bench-press",
+       "bulgarian-split-squat",
+       "hack-squat",
+       "hip-thrust",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "overhead-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 41.6,
+      "sets": 52,
+      "exercises": [
+       "barbell-shrug",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "pplul/advanced/5": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 18.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "dumbbell-bench-press",
+        "incline-barbell-bench-press",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-fly",
+        "cable-lateral-raise",
+        "overhead-cable-triceps-extension",
+        "skull-crusher"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 21.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "pendlay-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "chest-supported-row",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "barbell-shrug",
+        "incline-dumbbell-curl",
+        "preacher-curl",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 21.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 2.4,
+       "sets": 2,
+       "exercises": [
+        "hip-thrust"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "hanging-leg-raise",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 21.3,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "pendlay-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "close-grip-pulldown",
+        "dumbbell-bench-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-fly",
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "skull-crusher"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 21.3,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "front-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "bulgarian-split-squat",
+        "hip-thrust"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "ab-wheel-rollout",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 104.5,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 22.5,
+      "sets": 15,
+      "exercises": [
+       "back-squat",
+       "front-squat",
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 34.8,
+      "sets": 29,
+      "exercises": [
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "close-grip-pulldown",
+       "dumbbell-bench-press",
+       "hip-thrust",
+       "incline-barbell-bench-press",
+       "pull-up",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 47.2,
+      "sets": 59,
+      "exercises": [
+       "ab-wheel-rollout",
+       "barbell-shrug",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "preacher-curl",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "skull-crusher",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "arnold/beginner/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 16.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 14.4,
+       "sets": 12,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "lat-pulldown",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 1.6,
+       "sets": 2,
+       "exercises": [
+        "cable-fly"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 14.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 20.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 12.0,
+       "sets": 8,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-crunch",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 50.8,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 12.0,
+      "sets": 8,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 18.0,
+      "sets": 15,
+      "exercises": [
+       "barbell-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 20.8,
+      "sets": 26,
+      "exercises": [
+       "cable-crunch",
+       "cable-fly",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "arnold/beginner/6": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 16.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 14.4,
+       "sets": 12,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "lat-pulldown",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 1.6,
+       "sets": 2,
+       "exercises": [
+        "cable-fly"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 13.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 16.2,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-crunch",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 16.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 14.4,
+       "sets": 12,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "lat-pulldown",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 1.6,
+       "sets": 2,
+       "exercises": [
+        "cable-fly"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 13.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 12.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 6.0,
+       "sets": 5,
+       "exercises": [
+        "hip-thrust",
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "hanging-leg-raise",
+        "seated-calf-raise",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 87.0,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 9.0,
+      "sets": 6,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 42.0,
+      "sets": 35,
+      "exercises": [
+       "barbell-bench-press",
+       "hip-thrust",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 36.0,
+      "sets": 45,
+      "exercises": [
+       "cable-crunch",
+       "cable-fly",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "arnold/intermediate/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 24.0,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 6.0,
+       "sets": 4,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 13.2,
+       "sets": 11,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "lat-pulldown",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.8,
+       "sets": 6,
+       "exercises": [
+        "cable-fly",
+        "dumbbell-lateral-raise",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 17.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "overhead-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 13.6,
+       "sets": 17,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "hammer-curl",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "reverse-pec-deck",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 24.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 12.0,
+       "sets": 8,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.8,
+       "sets": 16,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 66.0,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 18.0,
+      "sets": 12,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 16.8,
+      "sets": 14,
+      "exercises": [
+       "barbell-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "overhead-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 31.2,
+      "sets": 39,
+      "exercises": [
+       "cable-fly",
+       "dumbbell-lateral-raise",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "arnold/intermediate/6": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 19.3,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 13.2,
+       "sets": 11,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "lat-pulldown",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 1.6,
+       "sets": 2,
+       "exercises": [
+        "cable-fly"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 17.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "overhead-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 13.6,
+       "sets": 17,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "hammer-curl",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "reverse-pec-deck",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 19.4,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-abduction-machine",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 19.3,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 13.2,
+       "sets": 11,
+       "exercises": [
+        "barbell-bench-press",
+        "incline-dumbbell-press",
+        "lat-pulldown",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 1.6,
+       "sets": 2,
+       "exercises": [
+        "cable-fly"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 17.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "overhead-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 13.6,
+       "sets": 17,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "hammer-curl",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "reverse-pec-deck",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 16.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "bulgarian-split-squat",
+        "hack-squat",
+        "stiff-leg-dumbbell-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "cable-crunch",
+        "lying-leg-curl",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 108.4,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 18.0,
+      "sets": 12,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 43.2,
+      "sets": 36,
+      "exercises": [
+       "barbell-bench-press",
+       "bulgarian-split-squat",
+       "hack-squat",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "overhead-press",
+       "pull-up",
+       "stiff-leg-dumbbell-deadlift"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 47.2,
+      "sets": 59,
+      "exercises": [
+       "cable-crunch",
+       "cable-fly",
+       "dumbbell-lateral-raise",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "arnold/advanced/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 24.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 19.2,
+       "sets": 16,
+       "exercises": [
+        "chest-supported-row",
+        "dumbbell-bench-press",
+        "incline-barbell-bench-press",
+        "pull-up",
+        "t-bar-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "cable-fly",
+        "seated-calf-raise",
+        "straight-arm-pulldown"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 20.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 4.8,
+       "sets": 4,
+       "exercises": [
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 16.0,
+       "sets": 20,
+       "exercises": [
+        "barbell-shrug",
+        "cable-lateral-raise",
+        "dumbbell-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 29.1,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 13.5,
+       "sets": 9,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "hip-thrust"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.0,
+       "sets": 15,
+       "exercises": [
+        "hanging-leg-raise",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 74.7,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 13.5,
+      "sets": 9,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 27.6,
+      "sets": 23,
+      "exercises": [
+       "chest-supported-row",
+       "dumbbell-bench-press",
+       "hip-thrust",
+       "incline-barbell-bench-press",
+       "pull-up",
+       "seated-dumbbell-shoulder-press",
+       "t-bar-row"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 33.6,
+      "sets": 42,
+      "exercises": [
+       "barbell-shrug",
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "straight-arm-pulldown"
+      ]
+     }
+    ]
+   }
+  },
+  "arnold/advanced/6": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 23.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 19.2,
+       "sets": 16,
+       "exercises": [
+        "chest-supported-row",
+        "dumbbell-bench-press",
+        "incline-barbell-bench-press",
+        "pull-up",
+        "t-bar-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.0,
+       "sets": 5,
+       "exercises": [
+        "cable-fly",
+        "straight-arm-pulldown"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 17.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 13.6,
+       "sets": 17,
+       "exercises": [
+        "barbell-shrug",
+        "cable-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "reverse-pec-deck",
+        "skull-crusher"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 21.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 2.4,
+       "sets": 2,
+       "exercises": [
+        "hip-thrust"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "hanging-leg-raise",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 23.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 19.2,
+       "sets": 16,
+       "exercises": [
+        "chest-supported-row",
+        "dumbbell-bench-press",
+        "incline-barbell-bench-press",
+        "pull-up",
+        "t-bar-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.0,
+       "sets": 5,
+       "exercises": [
+        "cable-fly",
+        "straight-arm-pulldown"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 17.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 13.6,
+       "sets": 17,
+       "exercises": [
+        "barbell-shrug",
+        "cable-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "reverse-pec-deck",
+        "skull-crusher"
+       ]
+      }
+     ]
+    },
+    "sat": {
+     "total": 19.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "bulgarian-split-squat",
+        "hack-squat",
+        "stiff-leg-dumbbell-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "ab-wheel-rollout",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 122.2,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 9.0,
+      "sets": 6,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 58.8,
+      "sets": 49,
+      "exercises": [
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "dumbbell-bench-press",
+       "hack-squat",
+       "hip-thrust",
+       "incline-barbell-bench-press",
+       "pull-up",
+       "seated-dumbbell-shoulder-press",
+       "stiff-leg-dumbbell-deadlift",
+       "t-bar-row"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 54.4,
+      "sets": 68,
+      "exercises": [
+       "ab-wheel-rollout",
+       "barbell-shrug",
+       "cable-fly",
+       "cable-lateral-raise",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "skull-crusher",
+       "standing-calf-raise",
+       "straight-arm-pulldown"
+      ]
+     }
+    ]
+   }
+  },
+  "torso-limbs/beginner/2": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 21.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 15.6,
+       "sets": 13,
+       "exercises": [
+        "dumbbell-bench-press",
+        "lat-pulldown",
+        "seated-cable-row",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "hanging-leg-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 21.6,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 12.0,
+       "sets": 8,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 9.6,
+       "sets": 12,
+       "exercises": [
+        "cable-fly",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 42.8,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 12.0,
+      "sets": 8,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 15.6,
+      "sets": 13,
+      "exercises": [
+       "dumbbell-bench-press",
+       "lat-pulldown",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 15.2,
+      "sets": 19,
+      "exercises": [
+       "cable-fly",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "torso-limbs/beginner/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 20.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 14.4,
+       "sets": 12,
+       "exercises": [
+        "dumbbell-bench-press",
+        "lat-pulldown",
+        "seated-cable-row",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "face-pull",
+        "hanging-leg-raise"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 17.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 18.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 13.2,
+       "sets": 11,
+       "exercises": [
+        "close-grip-pulldown",
+        "incline-dumbbell-press",
+        "machine-chest-press",
+        "one-arm-dumbbell-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "dumbbell-shrug",
+        "face-pull"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 18.4,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 7.2,
+       "sets": 6,
+       "exercises": [
+        "hip-thrust",
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 11.2,
+       "sets": 14,
+       "exercises": [
+        "hammer-curl",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 75.8,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 9.0,
+      "sets": 6,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 34.8,
+      "sets": 29,
+      "exercises": [
+       "close-grip-pulldown",
+       "dumbbell-bench-press",
+       "hip-thrust",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "machine-chest-press",
+       "one-arm-dumbbell-row",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 32.0,
+      "sets": 40,
+      "exercises": [
+       "dumbbell-lateral-raise",
+       "dumbbell-shrug",
+       "face-pull",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "torso-limbs/intermediate/2": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 25.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 19.2,
+       "sets": 16,
+       "exercises": [
+        "barbell-bench-press",
+        "chest-supported-row",
+        "incline-dumbbell-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "barbell-shrug",
+        "cable-lateral-raise",
+        "leg-extension",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 26.2,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 15.0,
+       "sets": 10,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 11.2,
+       "sets": 14,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "hanging-leg-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 51.8,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 15.0,
+      "sets": 10,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 19.2,
+      "sets": 16,
+      "exercises": [
+       "barbell-bench-press",
+       "chest-supported-row",
+       "incline-dumbbell-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 17.6,
+      "sets": 22,
+      "exercises": [
+       "barbell-shrug",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "torso-limbs/intermediate/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 20.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 14.4,
+       "sets": 12,
+       "exercises": [
+        "barbell-bench-press",
+        "chest-supported-row",
+        "incline-dumbbell-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "barbell-shrug",
+        "cable-lateral-raise",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 22.5,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 10.5,
+       "sets": 7,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.0,
+       "sets": 15,
+       "exercises": [
+        "hanging-leg-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 18.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 13.2,
+       "sets": 11,
+       "exercises": [
+        "close-grip-pulldown",
+        "incline-dumbbell-press",
+        "machine-chest-press",
+        "one-arm-dumbbell-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 5.6,
+       "sets": 7,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "dumbbell-shrug",
+        "face-pull"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 19.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 8.4,
+       "sets": 7,
+       "exercises": [
+        "hip-thrust",
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 11.2,
+       "sets": 14,
+       "exercises": [
+        "hammer-curl",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 81.7,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 10.5,
+      "sets": 7,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 36.0,
+      "sets": 30,
+      "exercises": [
+       "barbell-bench-press",
+       "chest-supported-row",
+       "close-grip-pulldown",
+       "hip-thrust",
+       "incline-dumbbell-press",
+       "leg-press",
+       "machine-chest-press",
+       "one-arm-dumbbell-row",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 35.2,
+      "sets": 44,
+      "exercises": [
+       "barbell-shrug",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "dumbbell-shrug",
+       "face-pull",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "torso-limbs/advanced/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 23.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "pendlay-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 12.0,
+       "sets": 10,
+       "exercises": [
+        "dumbbell-bench-press",
+        "incline-barbell-bench-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "cable-fly",
+        "cable-lateral-raise",
+        "reverse-pec-deck"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 23.3,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 6.0,
+       "sets": 5,
+       "exercises": [
+        "hack-squat"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.8,
+       "sets": 16,
+       "exercises": [
+        "hanging-leg-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 19.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 13.2,
+       "sets": 11,
+       "exercises": [
+        "close-grip-pulldown",
+        "incline-dumbbell-press",
+        "machine-chest-press",
+        "one-arm-dumbbell-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "dumbbell-shrug",
+        "face-pull"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 20.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "hip-thrust",
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 11.2,
+       "sets": 14,
+       "exercises": [
+        "hammer-curl",
+        "hip-abduction-machine",
+        "lying-leg-curl",
+        "seated-calf-raise",
+        "triceps-pushdown"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 87.4,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 9.0,
+      "sets": 6,
+      "exercises": [
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 40.8,
+      "sets": 34,
+      "exercises": [
+       "close-grip-pulldown",
+       "dumbbell-bench-press",
+       "hack-squat",
+       "hip-thrust",
+       "incline-barbell-bench-press",
+       "incline-dumbbell-press",
+       "leg-press",
+       "machine-chest-press",
+       "one-arm-dumbbell-row",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 37.6,
+      "sets": 47,
+      "exercises": [
+       "cable-fly",
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "dumbbell-shrug",
+       "face-pull",
+       "hammer-curl",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise",
+       "triceps-pushdown"
+      ]
+     }
+    ]
+   }
+  },
+  "phul/beginner/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 18.1,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 12.0,
+       "sets": 10,
+       "exercises": [
+        "barbell-bench-press",
+        "close-grip-bench-press",
+        "overhead-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 1.6,
+       "sets": 2,
+       "exercises": [
+        "barbell-curl"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 17.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 10.5,
+       "sets": 7,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 2.4,
+       "sets": 2,
+       "exercises": [
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 4.8,
+       "sets": 6,
+       "exercises": [
+        "lying-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 19.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "chest-supported-row",
+        "incline-dumbbell-press",
+        "lat-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-fly",
+        "dumbbell-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 17.2,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 6.0,
+       "sets": 5,
+       "exercises": [
+        "bulgarian-split-squat",
+        "hack-squat"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 11.2,
+       "sets": 14,
+       "exercises": [
+        "cable-crunch",
+        "hip-abduction-machine",
+        "leg-extension",
+        "seated-calf-raise",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 72.6,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 15.0,
+      "sets": 10,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 31.2,
+      "sets": 26,
+      "exercises": [
+       "barbell-bench-press",
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "close-grip-bench-press",
+       "hack-squat",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "overhead-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 26.4,
+      "sets": 33,
+      "exercises": [
+       "barbell-curl",
+       "cable-crunch",
+       "cable-fly",
+       "dumbbell-lateral-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "phul/intermediate/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 19.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 12.0,
+       "sets": 10,
+       "exercises": [
+        "barbell-bench-press",
+        "close-grip-bench-press",
+        "overhead-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 3.2,
+       "sets": 4,
+       "exercises": [
+        "barbell-curl",
+        "dumbbell-lateral-raise"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 17.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 2.4,
+       "sets": 2,
+       "exercises": [
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "hanging-leg-raise",
+        "lying-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 19.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "chest-supported-row",
+        "incline-dumbbell-press",
+        "lat-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-fly",
+        "dumbbell-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 18.1,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "front-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 2.4,
+       "sets": 2,
+       "exercises": [
+        "bulgarian-split-squat"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 11.2,
+       "sets": 14,
+       "exercises": [
+        "cable-crunch",
+        "hip-abduction-machine",
+        "leg-extension",
+        "seated-calf-raise",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 75.2,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 18.0,
+      "sets": 12,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "deadlift",
+       "front-squat"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 27.6,
+      "sets": 23,
+      "exercises": [
+       "barbell-bench-press",
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "close-grip-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "overhead-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 29.6,
+      "sets": 37,
+      "exercises": [
+       "barbell-curl",
+       "cable-crunch",
+       "cable-fly",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "phul/advanced/4": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 24.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 6.0,
+       "sets": 4,
+       "exercises": [
+        "barbell-row"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 15.6,
+       "sets": 13,
+       "exercises": [
+        "barbell-bench-press",
+        "close-grip-bench-press",
+        "overhead-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 3.2,
+       "sets": 4,
+       "exercises": [
+        "barbell-curl",
+        "dumbbell-lateral-raise"
+       ]
+      }
+     ]
+    },
+    "tue": {
+     "total": 22.1,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 10.5,
+       "sets": 7,
+       "exercises": [
+        "back-squat",
+        "deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "leg-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.0,
+       "sets": 10,
+       "exercises": [
+        "hanging-leg-raise",
+        "lying-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "thu": {
+     "total": 20.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 12.0,
+       "sets": 10,
+       "exercises": [
+        "chest-supported-row",
+        "incline-dumbbell-press",
+        "lat-pulldown"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-fly",
+        "dumbbell-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 20.1,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "front-squat"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 3.6,
+       "sets": 3,
+       "exercises": [
+        "bulgarian-split-squat"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.0,
+       "sets": 15,
+       "exercises": [
+        "cable-crunch",
+        "hip-abduction-machine",
+        "leg-extension",
+        "seated-calf-raise",
+        "seated-leg-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 87.8,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 21.0,
+      "sets": 14,
+      "exercises": [
+       "back-squat",
+       "barbell-row",
+       "deadlift",
+       "front-squat"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 34.8,
+      "sets": 29,
+      "exercises": [
+       "barbell-bench-press",
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "close-grip-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "overhead-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 32.0,
+      "sets": 40,
+      "exercises": [
+       "barbell-curl",
+       "cable-crunch",
+       "cable-fly",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "hip-abduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "lying-leg-curl",
+       "overhead-cable-triceps-extension",
+       "seated-calf-raise",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "upper-lower-full/beginner/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 19.6,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 13.2,
+       "sets": 11,
+       "exercises": [
+        "dumbbell-bench-press",
+        "lat-pulldown",
+        "seated-cable-row",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 17.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-crunch",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 17.0,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 3.0,
+       "sets": 2,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "incline-dumbbell-press",
+        "leg-press",
+        "seated-cable-row"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 3.2,
+       "sets": 4,
+       "exercises": [
+        "face-pull",
+        "incline-dumbbell-curl"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 54.4,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 12.0,
+      "sets": 8,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 24.0,
+      "sets": 20,
+      "exercises": [
+       "dumbbell-bench-press",
+       "incline-dumbbell-press",
+       "lat-pulldown",
+       "leg-press",
+       "seated-cable-row",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 18.4,
+      "sets": 23,
+      "exercises": [
+       "cable-crunch",
+       "dumbbell-lateral-raise",
+       "face-pull",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "upper-lower-full/intermediate/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 22.0,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 15.6,
+       "sets": 13,
+       "exercises": [
+        "chest-supported-row",
+        "dumbbell-bench-press",
+        "overhead-press",
+        "pull-up"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "cable-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 19.4,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 10.4,
+       "sets": 13,
+       "exercises": [
+        "cable-crunch",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 21.7,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 4.5,
+       "sets": 3,
+       "exercises": [
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 10.8,
+       "sets": 9,
+       "exercises": [
+        "bulgarian-split-squat",
+        "chest-supported-row",
+        "incline-dumbbell-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 6.4,
+       "sets": 8,
+       "exercises": [
+        "cable-lateral-raise",
+        "face-pull",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 63.1,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 13.5,
+      "sets": 9,
+      "exercises": [
+       "back-squat",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 26.4,
+      "sets": 22,
+      "exercises": [
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "dumbbell-bench-press",
+       "incline-dumbbell-press",
+       "overhead-press",
+       "pull-up"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 23.2,
+      "sets": 29,
+      "exercises": [
+       "cable-crunch",
+       "cable-lateral-raise",
+       "face-pull",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
+   }
+  },
+  "upper-lower-full/advanced/3": {
+   "scheme": "fatigue_tier",
+   "tiers": [
+    {
+     "id": "heavy_axial_compound",
+     "label": "heavy axial compound",
+     "fatigue_min": 1.5
+    },
+    {
+     "id": "other_compound",
+     "label": "other compound",
+     "fatigue_min": 1.1
+    },
+    {
+     "id": "lighter_compound",
+     "label": "lighter compound",
+     "fatigue_min": 1.0
+    },
+    {
+     "id": "isolation",
+     "label": "isolation",
+     "fatigue_min": 0.0
+    }
+   ],
+   "unit": "fatigue points (sets x exercise fatigue rating)",
+   "by_day": {
+    "mon": {
+     "total": 26.8,
+     "tiers": [
+      {
+       "tier": "other_compound",
+       "cost": 18.0,
+       "sets": 15,
+       "exercises": [
+        "chest-supported-row",
+        "incline-barbell-bench-press",
+        "pull-up",
+        "seated-dumbbell-shoulder-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 8.8,
+       "sets": 11,
+       "exercises": [
+        "cable-lateral-raise",
+        "incline-dumbbell-curl",
+        "overhead-cable-triceps-extension"
+       ]
+      }
+     ]
+    },
+    "wed": {
+     "total": 23.3,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 10.5,
+       "sets": 7,
+       "exercises": [
+        "back-squat",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 12.8,
+       "sets": 16,
+       "exercises": [
+        "hanging-leg-raise",
+        "hip-adduction-machine",
+        "leg-extension",
+        "seated-leg-curl",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    },
+    "fri": {
+     "total": 25.8,
+     "tiers": [
+      {
+       "tier": "heavy_axial_compound",
+       "cost": 9.0,
+       "sets": 6,
+       "exercises": [
+        "pendlay-row",
+        "romanian-deadlift"
+       ]
+      },
+      {
+       "tier": "other_compound",
+       "cost": 9.6,
+       "sets": 8,
+       "exercises": [
+        "bulgarian-split-squat",
+        "dumbbell-bench-press"
+       ]
+      },
+      {
+       "tier": "isolation",
+       "cost": 7.2,
+       "sets": 9,
+       "exercises": [
+        "dumbbell-lateral-raise",
+        "reverse-pec-deck",
+        "standing-calf-raise"
+       ]
+      }
+     ]
+    }
+   },
+   "week": {
+    "total": 75.9,
+    "tiers": [
+     {
+      "tier": "heavy_axial_compound",
+      "cost": 19.5,
+      "sets": 13,
+      "exercises": [
+       "back-squat",
+       "pendlay-row",
+       "romanian-deadlift"
+      ]
+     },
+     {
+      "tier": "other_compound",
+      "cost": 27.6,
+      "sets": 23,
+      "exercises": [
+       "bulgarian-split-squat",
+       "chest-supported-row",
+       "dumbbell-bench-press",
+       "incline-barbell-bench-press",
+       "pull-up",
+       "seated-dumbbell-shoulder-press"
+      ]
+     },
+     {
+      "tier": "isolation",
+      "cost": 28.8,
+      "sets": 36,
+      "exercises": [
+       "cable-lateral-raise",
+       "dumbbell-lateral-raise",
+       "hanging-leg-raise",
+       "hip-adduction-machine",
+       "incline-dumbbell-curl",
+       "leg-extension",
+       "overhead-cable-triceps-extension",
+       "reverse-pec-deck",
+       "seated-leg-curl",
+       "standing-calf-raise"
+      ]
+     }
+    ]
    }
   }
  }
