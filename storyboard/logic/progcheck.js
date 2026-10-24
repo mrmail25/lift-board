@@ -84,7 +84,7 @@ function* gMoveSets(dt,days,day,muscle=null,ids=null,need=1){const d=_day(days,d
       yield ['move_sets_to_day',{target:t.id,sets:k,to_day:to,name:nm(dt,t.id),day},n]}}}
 function* gSwap(dt,days,day,criteria,ids=null,muscle=null){const {R,HEAVY}=ctx(dt),PAT=dt.PAT,ds=day?[_day(days,day)]:days,N=Object.keys(dt.EX).length;
   for(const d of ds)for(let i=0;i<d.tiles.length;i++){const t=d.tiles[i];if(ids!=null&&!ids.includes(t.id))continue;if(muscle&&(dt.EX[t.id].muscles[muscle]||0)<0.5)continue;
-    for(const c of RANK.swaps(dt,t.id,N)){const k=dt.EX[c.id],e=dt.EX[t.id];
+    for(const c of RANK.swaps(dt,t.id,N)){const k=dt.EX[c.id],e=dt.EX[t.id];if(k.custom)continue; // fixes never suggest a custom exercise (custom-exercise-defaults.md Limits)
       if(criteria==='stretch_biased'&&!(R.stretch_biased[muscle||pm(dt,t.id)]||[]).includes(c.id))continue;
       if(criteria==='lower_fatigue'&&k.fatigue>=e.fatigue)continue;
       if(criteria==='lower_spinal'&&(HEAVY.has(c.id)||k.muscles.lower_back>=e.muscles.lower_back))continue;
@@ -94,7 +94,7 @@ function* gSwap(dt,days,day,criteria,ids=null,muscle=null){const {R,HEAVY}=ctx(d
 const RARE_EQ=new Set(['rings','suspension','medicine ball','stability ball']);
 function bestFor(dt,days,muscle,stretch=false,patterns=null){const {R}=ctx(dt),PAT=dt.PAT,used=new Set(days.flatMap(d=>d.tiles.map(t=>dt.EX[t.id].equipment)));
   let ref=null;for(const d of days)for(const t of d.tiles){const c=[t.sets*dt.EX[t.id].muscles[muscle],t.id];if(ref===null||cmpT(c,ref)>0)ref=c}if(ref===null)ref=[0,null]; // python max(..., default=(0,None))
-  const ok=i=>{const e=dt.EX[i];return (e.muscles[muscle]||0)>=0.75&&['isolation','accessory'].includes(e.type)&&PAT[i]!=='plyometric'&&(!RARE_EQ.has(e.equipment)||used.has(e.equipment))
+  const ok=i=>{const e=dt.EX[i];return !e.custom&&(e.muscles[muscle]||0)>=0.75&&['isolation','accessory'].includes(e.type)&&PAT[i]!=='plyometric'&&(!RARE_EQ.has(e.equipment)||used.has(e.equipment))
     &&(!stretch||(R.stretch_biased[muscle]||[]).includes(i))&&(!patterns||patterns.includes(PAT[i]))};
   let c=(R.staples||[]).filter(i=>i in dt.EX&&ok(i));if(!c.length)c=Object.keys(dt.EX).filter(ok);
   const sc=i=>ref[0]>0?RANK.swapScore(dt,ref[1],i)[0]+20*dt.EX[i].muscles[muscle]:100*dt.EX[i].muscles[muscle]-10*dt.EX[i].fatigue;
@@ -112,7 +112,7 @@ function* gReorder(dt,days,day){const d=_day(days,day),o=ordIdx(dt,d);if(o.some(
 function* gSplitPattern(dt,days,day,pattern=null,tile=null){const PAT=dt.PAT,d=_day(days,day),N=Object.keys(dt.EX).length;
   const ts=d.tiles.map((t,i)=>[t.sets,i]).filter(([,i])=>(tile&&d.tiles[i].id===tile)||(pattern&&PAT[d.tiles[i].id]===pattern)).sort((a,b)=>cmpT(b,a));
   for(const [,i] of ts){const t=d.tiles[i],mv=Math.floor(t.sets/2);if(mv<2)continue;
-    for(const c of RANK.swaps(dt,t.id,N)){if(PAT[c.id]!==PAT[t.id]||d.tiles.some(x=>x.id===c.id))continue;const n=clone(days),tl=_day(n,day).tiles;tl[i].sets-=mv;tl.splice(i+1,0,{id:c.id,sets:mv});
+    for(const c of RANK.swaps(dt,t.id,N)){if(dt.EX[c.id].custom||PAT[c.id]!==PAT[t.id]||d.tiles.some(x=>x.id===c.id))continue;const n=clone(days),tl=_day(n,day).tiles;tl[i].sets-=mv;tl.splice(i+1,0,{id:c.id,sets:mv});
       yield ['split_pattern',{target:t.id,move_sets:mv,name:nm(dt,t.id),new_name:dt.EX[c.id].name,day,from:t.sets,keep:t.sets-mv,moved:mv},n]}}}
 function* gMerge(dt,days,day){const PAT=dt.PAT,d=_day(days,day);for(const i of sortBy(d.tiles.map((_,i)=>i),i=>[d.tiles[i].sets])){const t=d.tiles[i];
   for(let j=0;j<d.tiles.length;j++){const u=d.tiles[j];if(j===i||PAT[u.id]!==PAT[t.id]||u.sets+t.sets>5)continue;const n=clone(days),tl=_day(n,day).tiles;tl[j].sets+=t.sets;tl.splice(i,1);

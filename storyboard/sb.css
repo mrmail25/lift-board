@@ -1145,3 +1145,22 @@ details.ls.flash{box-shadow:0 0 0 3px var(--accent);border-radius:var(--r-md)}
 #tmode .tsort{padding:0 12px 8px}
 /* tray search stays pinned at the top of the sheet while the filters and results scroll under it (both trays; --bg is the grouped sheet's colour, light and dark) */
 .sheet.grouped .sh-body>.srch:first-child{position:sticky;top:0;z-index:3;box-shadow:0 0 0 4px var(--bg),-16px 0 0 var(--bg),16px 0 0 var(--bg),0 -8px 0 var(--bg),0 10px 0 var(--bg),-16px 10px 0 var(--bg),16px 10px 0 var(--bg),-16px -8px 0 var(--bg),16px -8px 0 var(--bg)}
+/* ---- custom exercises (piece C): '+ New exercise' tray entry, one-screen form, iOS switch, Custom label (same quiet .evl rule) */
+.nxg{margin-bottom:6px}.nxrow{gap:12px}.nxrow .nxi{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;flex:none}.nxrow .nxi svg{width:16px;height:16px}
+.nxrow .t1.acc,.nxadd .acc{color:var(--accent-press);font-weight:600}
+.tnone .nxnone{margin-top:12px;display:inline-flex;align-items:center;gap:6px}.tnone .nxnone svg{width:14px;height:14px}
+.nx{padding-bottom:28px}.nx .ghead .nxh{font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-3)}
+.nxc{padding:0 12px 4px;gap:5px 4px}.nxc .chip .nxb{font-weight:500;opacity:.75;margin-left:3px}
+.nxc .chip.on .nxb{opacity:.85}
+.nx .row .dsin{width:100%}.nxsr{gap:10px}.nxsr .t2{flex:none;color:var(--text-2)}.nxsr .dsin{text-align:right}
+.nxt{cursor:pointer}
+.nxsw{-webkit-appearance:none;appearance:none;flex:none;width:51px;height:31px;border-radius:16px;background:var(--fill-press);position:relative;transition:background var(--t-med,.2s);margin:0;cursor:pointer}
+.nxsw::after{content:'';position:absolute;left:2px;top:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform var(--t-med,.2s)}
+.nxsw:checked{background:var(--ok,#34C759)}.nxsw:checked::after{transform:translateX(20px)}
+.nxph{gap:12px}.nxph img{width:56px;height:56px;border-radius:10px;object-fit:cover;flex:none}.nxadd{cursor:pointer}.nxadd .acc{display:inline-flex;align-items:center;gap:6px}.nxadd svg{width:15px;height:15px}
+.nxmsg{padding:0 20px}.nxmsg p{margin:8px 0 0;font-size:var(--t-sub);line-height:1.4}.nxerr{color:var(--danger,#FF3B30)}.nxwarn{color:var(--text-2)}
+.nxsave{font-weight:600}
+.cxd .sub .evl{margin-left:8px}.cxd .nxsn{margin-top:2px}.cxph figure{margin:0}.cxph img{width:100%;max-height:240px;object-fit:cover;border-radius:12px;display:block}
+.cxph figcaption{font-size:var(--t-foot);color:var(--text-3);margin-top:4px}
+.cxd .dl,.nx .dl{color:var(--danger,#FF3B30)}
+.nx .chip:not(.on),.nx label.row,.nx label.row .t1{color:var(--ink)}

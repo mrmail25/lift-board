@@ -24,7 +24,7 @@ const P={
  progress:'<path d="M5 19.5V12M12 19.5V5M19 19.5v-9"/>',
  gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
  book:'<path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5zM12 6.5v13"/>',
- trash:'<path d="M4 6.5h16M9 6.5V4.8c0-.7.5-1.3 1.2-1.3h3.6c.7 0 1.2.6 1.2 1.3v1.7M6 6.5l.9 12.6c.1 1 .9 1.9 2 1.9h6.2c1.1 0 1.9-.9 2-1.9L18 6.5M10 10.5v6M14 10.5v6"/>',
+ edit:'<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>',trash:'<path d="M4 6.5h16M9 6.5V4.8c0-.7.5-1.3 1.2-1.3h3.6c.7 0 1.2.6 1.2 1.3v1.7M6 6.5l.9 12.6c.1 1 .9 1.9 2 1.9h6.2c1.1 0 1.9-.9 2-1.9L18 6.5M10 10.5v6M14 10.5v6"/>',
  chevD:'<path d="M6 9.5l6 6 6-6"/>',chevL:'<path d="M15 5l-7 7 7 7"/>',chevR:'<path d="M9 5l7 7-7 7"/>',
  plus:'<path d="M12 5v14M5 12h14"/>',check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
  swap:'<path d="M7 4v16M7 4L3.5 7.5M7 4l3.5 3.5M17 20V4M17 20l-3.5-3.5M17 20l3.5-3.5"/>',
@@ -1173,7 +1173,7 @@ function exDetailBody(id,d){const e=EX[id]||{},f=d.fatigue||{},st=d.stretch||{},
     ${row('Movement pattern',d.movement_pattern_label||'–',d.push_pull_side&&d.push_pull_side!=='none'?`${d.push_pull_side[0].toUpperCase()+d.push_pull_side.slice(1)} side of push : pull`:'')}
     ${row('Equipment',(d.equipment||e.eq||'–'),(d.equipment_needs||[]).map(x=>x.replace(/_/g,' ')).join(', '))}</div>
    ${!d.show_photo?`<p class="foot xnop">${d.photos?'Only exact photo matches are shown; this exercise’s photo is an approximate match, so the map stands in.':'No photo for this exercise; the map shows what it trains.'}</p>`:''}`}
-function exDetail(id,o={}){const e=EX[id];if(!e)return null;
+function exDetail(id,o={}){if(isCx(id))return cxDetail(id,o);const e=EX[id];if(!e)return null;
   const s=sheet({title:'',cls:'grouped tall xdet',right:'<button class="btn plain" data-x="close">Done</button>',
     body:`<div class="xd" data-id="${id}"><div class="exi-h">${gl(id)}<div><h3>${exName(id)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${e.eq||''}</p></div></div><div id="xdb"><p class="foot">Loading…</p></div>
      <div class="pad two">${e.learn!==false?`<button class="btn grey" data-x="learn" data-go="#learn-ex-${id}">${I('book',1.8)} Learn</button>`:''}${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:''}</div></div>`});
@@ -1228,13 +1228,15 @@ let RD=null;
 async function loadRank(){if(RD)return RD;if(RDP)return RDP;
   // Every file comes from the storyboard's own synced data/ (sync-ranking-data.sh); the live app's ../data is never needed.
   // getJ never throws: a 404, a parse error or a fetch aborted by navigation all give null, and nothing falls through to another folder.
-  RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-reference.json','analysis-display.json','frequency-notes.json'].map(n=>getJ(DATA+n));
+  RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-reference.json','analysis-display.json','frequency-notes.json','custom-exercise-defaults.json'].map(n=>getJ(DATA+n));
     const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(n=>getJ(DATA+n)));
-    const [tj,tref,pref,disp,fnotes]=await Promise.all(opt);
+    const [tj,tref,pref,disp,fnotes,cxd]=await Promise.all(opt);   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
     if(!(exercises&&rules&&targets&&patterns&&splits)){if(!UNLOADING)console.warn('ranking data missing: suggestions fall back to library order');return null}
     const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
     const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
-    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PREF=pref;R.DISP=disp;R.FN=fnotes;RD=R;return RD})();
+    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PREF=pref;R.DISP=disp;R.FN=fnotes;
+    try{await cxLoad(R,exercises,rules,cxd)}catch(x){console.warn('custom exercises not loaded',x)}   // custom exercises: defaults loader + registration (before anything reads RD)
+    RD=R;return RD})();
   const r=await RDP;RDP=null;return r}
 const LSK2={equip:'apechit.sb.equip'};
 let EQUIP=ld(LSK2.equip,{});                                  // gym profile `equipment` {name: bool} (ranking-spec §5, Builder items)
@@ -1474,7 +1476,130 @@ const devSkip=n=>{const p=n.parentElement;return !p||!!p.closest('script,style,t
 function devScrub(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode())){if(devSkip(n))continue;const v=n.nodeValue,c=devClean(v);if(c!==v)n.nodeValue=c}}
 new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData'){if(!devSkip(m.target)){const c=devClean(m.target.nodeValue);if(c!==m.target.nodeValue)m.target.nodeValue=c}}else m.addedNodes.forEach(x=>x.nodeType===3?(devSkip(x)||(x.nodeValue=devClean(x.nodeValue))):x.nodeType===1&&devScrub(x))}})
   .observe(document.documentElement,{childList:true,subtree:true,characterData:true});
-window.SBX={devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+// ---------------------------------------------------------------- CUSTOM EXERCISES (piece C, 2026-10-24)
+// New exercise from the Build tray. Logic = logic/customex.js (port of Coach's tools/custom_exercise.py); defaults = ONE loader:
+// data/custom-exercise-defaults.json (Coach's modelled pattern x equipment defaults, not evidence). Records are full exercises.json-shaped
+// records + custom/estimated/pattern/stretch_biased_for/rep_range/defaults_source, stored in localStorage and registered into RD at load
+// (exercise table, legacy pattern map, stretch lists, rep-range override with an id; never heavy lists or staples).
+// Photo: the v29 app's machine-photo code (lift-board-site a35ee0b v14.js resizeImg: FileReader -> canvas, longest side 800, white
+// background, JPEG 0.82, stored as a data URL; 'Not enough browser storage' fallback), kept per id under its own key.
+const CXK='apechit.sb.customEx',CXP='apechit.sb.customExPhoto.',CXGONE='apechit.sb.customExGone',CXPL='apechit.sb.customExPlaced';
+let CX=null;
+const cxList=()=>{const L=ld(CXK,[]);return Array.isArray(L)?L.filter(e=>e&&typeof e.id==='string'&&window.CUSTOMEX&&CUSTOMEX.ID_RE.test(e.id)):[]};
+const isCx=id=>!!(RD&&RD.EX[id]&&RD.EX[id].custom);
+const cxL=id=>isCx(id)?' <span class="evl cxl" data-ev="custom">Custom</span>':'';
+const cxPhoto=id=>{try{return localStorage.getItem(CXP+id)||null}catch(e){return null}};
+function cxMock(e){const rat={};for(const [m,r] of Object.entries(e.muscles))if(r>0)rat[m]=r;const mus=Object.keys(rat).filter(m=>rat[m]>=0.5).sort((a,b)=>rat[b]-rat[a]);
+  EX[e.id]={id:e.id,name:e.name,type:e.type,eq:e.equipment,mus,rat,ut:null,custom:true,learn:false};delete HAY[e.id];
+  const row=[e.id,e.name,e.type,e.equipment,mus,rat,null],k=EXL.findIndex(x=>x[0]===e.id);if(k>=0)EXL[k]=row;else EXL.push(row)}
+function cxUnmock(id){delete EX[id];delete HAY[id];const k=EXL.findIndex(x=>x[0]===id);if(k>=0)EXL.splice(k,1)}
+// load step (called from loadRank once RD exists): the single defaults loader + registration of every stored record
+async function cxLoad(R,exercises,rules,d0){const d=d0!==undefined?d0:await getJ(DATA+'custom-exercise-defaults.json');if(!d||!window.CUSTOMEX)return;
+  R.CXD=d;CX=CUSTOMEX.make(d,exercises,rules);const L=cxList();CUSTOMEX.register(R,L);L.forEach(cxMock)}
+function cxStore(rec,photo){const L=cxList(),k=L.findIndex(x=>x.id===rec.id);if(k>=0)L[k]=rec;else L.push(rec);localStorage.setItem(CXK,JSON.stringify(L));
+  let photoOk=true;if(photo===null){try{localStorage.removeItem(CXP+rec.id)}catch(e){}}
+  else if(photo){try{localStorage.setItem(CXP+rec.id,photo)}catch(e){photoOk=false}}
+  CUSTOMEX.register(RD,[rec]);cxMock(rec);return photoOk}
+function cxDelete(id){const L=cxList().filter(x=>x.id!==id);sv(CXK,L);try{localStorage.removeItem(CXP+id)}catch(e){}
+  sv(CXGONE,[...new Set([...ld(CXGONE,[]),id])]);  // never reuse an id after delete (history keys on it)
+  CUSTOMEX.unregister(RD,id);cxUnmock(id);if(window.BOARD&&BOARD.removeExercise)BOARD.removeExercise(id)}
+// export / import: the storyboard's Back up / Restore rows are static mocks, so this is the API they would call
+const cxExport=()=>({kind:'apechit.customExercises',version:1,exercises:cxList().map(e=>Object.assign({},e,cxPhoto(e.id)?{photo:cxPhoto(e.id)}:{}))});
+function cxImport(o){const L=(o&&o.exercises)||[];let n=0;for(const x of L){if(!x||!CUSTOMEX.ID_RE.test(x.id||'')||!x.muscles)continue;const {photo,...rec}=x;cxStore(Object.assign(rec,{custom:true,estimated:true}),photo||undefined);n++}return n}
+// band labels come from exercise-details.json body_map.level_labels (Main mover / Helper / Minor), never raw ratios
+let CXLL=null;
+async function cxBandLabels(){if(CXLL)return CXLL;const D=await exdLoad(),any=Object.values(D).find(d=>d.body_map&&d.body_map.level_labels),L=(any&&any.body_map.level_labels)||{};
+  const B=(CX&&CX.BANDS)||{};CXLL={main:L.primary||(B.main||{}).label||'Main mover',helper:L.secondary||(B.helper||{}).label||'Helper',minor:L.minor||(B.minor||{}).label||'Minor'};return CXLL}
+// v29 resizeImg (a35ee0b v14.js)
+function resizeImg(file,max){return new Promise((res,rej)=>{const r=new FileReader();r.onerror=rej;r.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+  const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.82))};im.src=r.result};r.readAsDataURL(file)})}
+// ---- the one-screen form: name (+ editable short name), equipment, movement pattern, one Main mover, optional helpers, two toggles, photo
+async function newExSheet(o={}){if(!CX){toast('Custom exercises need the defaults file');return null}const LL=await cxBandLabels();
+  const ed=o.editId&&RD.EX[o.editId]&&RD.EX[o.editId].custom?RD.EX[o.editId]:null,f0=ed?CX.formFromRecord(ed):null;
+  const F={name:f0?f0.name:String(o.q||'').trim().slice(0,60),short:f0?f0.short_name:'',shortEdited:!!f0,equipment:f0?f0.equipment:null,pattern:f0?f0.movement_pattern:null,
+    main:f0?Object.keys(f0.muscles).find(m=>f0.muscles[m]==='main'):null,extra:{},uni:f0?f0.unilateral:null,st:f0?f0.stretch_focused:null,photo:ed?cxPhoto(ed.id):null,photoTouched:false,tried:false};
+  if(f0)for(const [m,b] of Object.entries(f0.muscles))if(b!=='main')F.extra[m]=b;
+  const others=cxList().filter(x=>!ed||x.id!==ed.id);
+  const form=()=>({name:F.name,equipment:F.equipment,movement_pattern:F.pattern,muscles:Object.assign(F.main?{[F.main]:'main'}:{},...Object.entries(F.extra).filter(([m])=>m!==F.main).map(([m,b])=>({[m]:b}))),
+    unilateral:F.uni==null?undefined:F.uni,stretch_focused:F.st==null?undefined:F.st});
+  const autoShort=()=>F.name.trim()?CX.shortName(F.name,others.map(x=>x.short_name)):'';
+  const tdef=()=>F.pattern&&F.equipment?CX.toggleDefaults(F.pattern,F.equipment,F.main):{unilateral:false,stretch_focused:false};
+  const chip=(k,v,l,on,extra='')=>`<button type="button" class="chip xs ${on?'on':''}" data-nx="${k}" data-v="${esc(v)}"${extra}>${l}</button>`;
+  const ML2=CX.labels.muscle,PL=CX.labels.pattern,QL=CX.labels.equipment;
+  const tg=(k,l,on)=>`<label class="row nxt"><div class="grow t1">${l}</div><input type="checkbox" class="nxsw" data-tg="${k}" role="switch" ${on?'checked':''} aria-label="${l}"></label>`;
+  const photoRow=()=>F.photo?`<div class="row nxph"><img src="${F.photo}" alt="${esc(F.name||'Exercise')} photo"><div class="grow t2">Stored on this device only</div><button type="button" class="btn plain sm dl" data-nx="rmphoto">Remove</button></div>`
+    :`<label class="row nxph nxadd"><span class="acc">${I('plus',2)} Add photo</span><span class="t2">optional, e.g. the machine</span><input type="file" id="nxfile" accept="image/*" capture="environment" hidden></label>`;
+  const msg=()=>{const v=CX.validate(form(),others.map(x=>x.name)),E=F.tried?v.errors:[],nice=t=>t.replace(/^name: required$/,'Add a name').replace(/^name: at most 60 characters$/,'Keep the name to 60 characters').replace(/^name: already used.*$/,'You already have a custom exercise with this name')
+      .replace(/^equipment: .*/,'Pick the equipment').replace(/^movement_pattern: .*/,'Pick a movement pattern').replace(/^muscles: exactly one Main mover$/,`Pick one ${LL.main.toLowerCase()}`).replace(/^name: same as a library exercise.*$/,'A library exercise already has this name; you can use that one instead')
+      .replace(/^muscles: more than 6 muscles.*$/,'More than 6 muscles is unusual; credit may be overestimated');
+    return [...E.map(t=>`<p class="nxerr" data-err>${nice(t)}</p>`),...v.warnings.map(t=>`<p class="nxwarn" data-warn>${nice(t)}</p>`)].join('')};
+  const body=()=>{const td=tdef(),uni=F.uni==null?td.unilateral:F.uni,st=F.st==null?td.stretch_focused:F.st;
+    return `<div class="nx">
+    <div class="group"><div class="row"><input id="nxname" class="dsin" type="text" maxlength="60" autocomplete="off" enterkeyhint="done" placeholder="Name, e.g. Hammer Strength Row" value="${esc(F.name)}" aria-label="Name"></div>
+     <div class="row nxsr"><span class="t2">Short name</span><input id="nxshort" class="dsin" type="text" maxlength="16" autocomplete="off" enterkeyhint="done" placeholder="${esc(autoShort()||'shown on the board')}" value="${F.shortEdited?esc(F.short):''}" aria-label="Short name on the board"></div></div>
+    <div class="ghead">Equipment</div><div class="tfr nxc noswipe" data-row="equipment">${CX.EQUIPMENT.map(q=>chip('equipment',q,QL[q],F.equipment===q)).join('')}</div>
+    <div class="ghead">Movement pattern</div><div class="tfr nxc noswipe" data-row="pattern">${CX.PATTERNS.map(p=>chip('pattern',p,PL[p],F.pattern===p)).join('')}</div>
+    <div class="ghead">${LL.main} <span class="nxh">one muscle</span></div><div class="tfr nxc noswipe" data-row="main">${CX.MUSCLES.map(m=>chip('main',m,ML2[m],F.main===m)).join('')}</div>
+    <div class="ghead">${LL.helper} muscles <span class="nxh">optional · tap again for ${LL.minor}</span></div><div class="tfr nxc noswipe" data-row="extra">${CX.MUSCLES.filter(m=>m!==F.main).map(m=>{const b=F.extra[m];
+      return chip('extra',m,`${ML2[m]}${b?` <span class="nxb" data-band="${b}">${LL[b]}</span>`:''}`,!!b,` data-band="${b||''}"`)}).join('')}</div>
+    <div class="group nxtg">${tg('st','Hardest when stretched',st)}${tg('uni','One side at a time',uni)}</div>
+    <div class="ghead">Photo</div><div class="group" id="nxphoto">${photoRow()}</div>
+    <div id="nxmsg" class="nxmsg">${msg()}</div>
+    <p class="foot">${LL.main}, ${LL.helper} and ${LL.minor} set how much of each set counts for that muscle. Fatigue, rep range and the other numbers are modeled from library exercises with the same pattern and equipment, not measured. Shown as <span class="evl">Custom</span> and <span class="evl">Estimated</span>.</p></div>`};
+  const s=sheet({title:ed?'Edit exercise':'New exercise',cls:'grouped tall nxsheet',left:'<button class="btn plain" data-x="nxcancel">Cancel</button>',right:`<button class="btn plain nxsave" data-x="nxsave">${ed?'Save':'Add'}</button>`,body:body()});
+  const re=()=>{const sc=s.body.scrollTop;s.body.innerHTML=body();s.body.scrollTop=sc;wire()};
+  const upd=()=>{$('#nxmsg',s.el).innerHTML=msg();const sh=$('#nxshort',s.el);if(sh)sh.placeholder=autoShort()||'shown on the board'};
+  function wire(){const n=$('#nxname',s.el),sh=$('#nxshort',s.el),fi=$('#nxfile',s.el);
+    n.addEventListener('input',()=>{F.name=n.value;upd()});sh.addEventListener('input',()=>{F.short=sh.value;F.shortEdited=!!sh.value.trim();upd()});
+    [n,sh].forEach(x=>x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();x.blur()}}));
+    $$('[data-tg]',s.el).forEach(c=>c.addEventListener('change',()=>{F[c.dataset.tg]=c.checked}));
+    if(fi)fi.addEventListener('change',()=>{const f=fi.files&&fi.files[0];if(!f)return;resizeImg(f,800).then(u=>{F.photo=u;F.photoTouched=true;$('#nxphoto',s.el).innerHTML=photoRow();wire()}).catch(()=>toast('Could not read that image'))})}
+  wire();
+  s.el.addEventListener('click',e=>{const c=e.target.closest('[data-nx]');
+    if(c){const k=c.dataset.nx,v=c.dataset.v;
+      if(k==='rmphoto'){F.photo=null;F.photoTouched=true;$('#nxphoto',s.el).innerHTML=photoRow();wire();return}
+      if(k==='equipment'||k==='pattern'){F[k]=F[k]===v?null:v;return re()}
+      if(k==='main'){F.main=F.main===v?null:v;delete F.extra[v];return re()}
+      if(k==='extra'){const b=F.extra[v];if(!b)F.extra[v]='helper';else if(b==='helper')F.extra[v]='minor';else delete F.extra[v];return re()}}
+    if(e.target.closest('[data-x=nxcancel]'))return s.close();
+    if(e.target.closest('[data-x=nxsave]')){F.tried=true;const fm=form(),v=CX.validate(fm,others.map(x=>x.name));
+      if(v.errors.length){upd();const m=$('#nxmsg',s.el);m.scrollIntoView({block:'center'});return}
+      const keepShort=F.shortEdited&&F.short.trim()?F.short:(ed&&spaces2(F.name)===ed.name?ed.short_name:undefined);
+      let rec;try{rec=CX.build(fm,{id:ed?ed.id:undefined,short_name:keepShort,takenIds:[...cxList().map(x=>x.id),...ld(CXGONE,[])],takenShort:others.map(x=>x.short_name)})}catch(x){toast('Could not save: '+x.message);return}
+      let ok=true;try{ok=cxStore(rec,F.photoTouched?(F.photo||null):undefined)}catch(x){toast('Not enough browser storage to save this exercise');return}
+      if(!ok)toast('Saved without the photo: not enough browser storage');
+      s.close();if(o.onSave)o.onSave(rec.id,!!ed)}});
+  return s}
+const spaces2=t=>String(t||'').split(/\s+/).filter(Boolean).join(' ');
+// ---- detail card built from the record (the library popup is library-only): body map, set credit, Analysis numbers, honesty labels, Edit / Delete
+function cxDetailData(e){const LL=CXLL||{main:'Main mover',helper:'Helper',minor:'Minor'},mus={},lv={};
+  for(const [m,r] of Object.entries(e.muscles))if(r>0){mus[m]=r;lv[m]=r>=0.75?'primary':r>=0.4?'secondary':r>=0.25?'minor':'trace'}
+  const cnt=Object.values(mus).filter(r=>r>=0.25).reduce((a,r)=>a+r,0),ord=(RD.exl.muscles||[]);
+  const targets=Object.entries(mus).sort((a,b)=>b[1]-a[1]||ord.indexOf(a[0])-ord.indexOf(b[0])).map(([m,r])=>({muscle:m,rating:r,counts:r>=0.25,share:r>=0.25&&cnt?r/cnt:0}));
+  const SL=(RD.rules.rules||[]).find(r=>r.id==='session_length')||{},rest=((SL.rest_min_by_type||{})[e.type]),work=SL.work_min_per_set;
+  const rr=WHITEBOARD.repRange(RD,e.id,null),T=(window.MUSCLEDIVE&&MUSCLEDIVE.RECOVERY_TIERS)||[],tier=(T.find(t=>e.fatigue>=t[2]-1e-9)||[])[1]||'';
+  const side=RD.PAT[e.id],pps=(RD.rules.push_patterns||[]).includes(side)?'push':(RD.rules.pull_patterns||[]).includes(side)?'pull':null;
+  return {name:e.name,body_map:{muscles:mus,levels:lv,level_labels:{primary:LL.main,secondary:LL.helper,minor:LL.minor,trace:'Not counted'}},targets,
+    stretch:{stretch_emphasis:e.swap.stretch_emphasis,stretch_biased_for:e.stretch_biased_for||[],stretch_focused:(e.stretch_biased_for||[]).length>0},
+    fatigue:{rating:e.fatigue,tier,recovery_cost_per_set:e.fatigue,systemic_fatigue_tag:e.swap.systemic_fatigue,heavy_spine:false,rest_min:rest,minutes_per_set:rest!=null&&work!=null?+(rest+work).toFixed(2):null},
+    stimulus_per_fatigue:{main:+(Math.max(...Object.values(mus),0)/e.fatigue).toFixed(2)},one_side:(e.swap.flags||[]).includes('unilateral'),
+    rep_range:{display:rr.display,unit:rr.unit,per_side:rr.per_side},movement_pattern_label:CX?CX.labels.pattern[e.movement_pattern]:e.movement_pattern,push_pull_side:pps,
+    equipment:CX?CX.labels.equipment[e.equipment]:e.equipment,equipment_needs:e.equipment_needs,show_photo:false,photos:null}}
+async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBandLabels();const ph=cxPhoto(id),src=e.defaults_source||{},cell=(RD.CXD&&RD.CXD.cells[src.cell])||{};
+  const s=sheet({title:'',cls:'grouped tall xdet',right:'<button class="btn plain" data-x="close">Done</button>',
+    body:`<div class="xd cxd" data-id="${id}" data-custom="1"><div class="exi-h">${gl(id)}<div><h3>${esc(e.name)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${esc(e.equipment)}<span class="evl cxl" data-ev="custom">Custom</span><span class="evl" data-ev="modeled">Estimated</span></p><p class="sub nxsn">On the board: ${esc(e.short_name)}</p></div></div>
+     ${ph?`<div class="xphotos cxph" data-photo="custom"><figure><img src="${ph}" alt="${esc(e.name)} photo"><figcaption>Your photo</figcaption></figure></div>`:''}
+     <div id="xdb">${exDetailBody(id,cxDetailData(e))}</div>
+     <p class="foot cxsrc">Your exercise. Muscle credit comes from the bands you picked; fatigue, rep range and the rest are modeled from ${cell.n_library?`${cell.n_library} library exercise${cell.n_library===1?'':'s'} with the same pattern and equipment`:'library exercises with the same pattern'}, not measured.</p>
+     <div class="pad two"><button class="btn grey" data-x="cxedit">${I('edit',1.8)} Edit</button>${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:`<button class="btn grey dl" data-x="cxdel">${I('trash',1.8)} Delete</button>`}</div>
+     ${o.onAdd?`<div class="pad"><button class="btn plain block dl" data-x="cxdel">Delete exercise</button></div>`:''}</div>`});
+  if(ph){const x=$('.xnop',s.el);if(x)x.remove()}
+  s.el.addEventListener('click',ev=>{if(ev.target.closest('[data-x=close]'))return s.close();if(ev.target.closest('[data-x=add]')){s.close();return o.onAdd&&o.onAdd(id)}
+    if(ev.target.closest('[data-x=cxedit]')){s.close();return newExSheet({editId:id,onSave:nid=>{if(window.BOARD&&BOARD.repaint)BOARD.repaint();toast('Saved');setTimeout(()=>cxDetail(nid,o),80)}})}
+    if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
+      return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
+    const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
+window.SBX={newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

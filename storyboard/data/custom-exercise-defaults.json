@@ -1,0 +1,6807 @@
+{
+ "version": 1,
+ "date": "2026-10-24",
+ "description": "Defaults for custom exercises created from the Build tray. A MODELLED DEFAULT derived from the 247 library exercises (median / most common value per movement_pattern x equipment cell), not evidence. Keys, enums and units are those of exercises.json. Built by tools/build_custom_defaults.py from tools/custom_exercise.py; spec in data/custom-exercise-defaults.md.",
+ "form": {
+  "fields": [
+   "name",
+   "equipment",
+   "movement_pattern",
+   "muscles (one main mover + optional helpers / minors)",
+   "unilateral (toggle, default from the cell)",
+   "stretch_focused (toggle, default from pattern x main muscle)"
+  ],
+  "movement_patterns": [
+   {
+    "id": "horizontal_push",
+    "label": "Horizontal push",
+    "n_library": 28
+   },
+   {
+    "id": "vertical_push",
+    "label": "Vertical push",
+    "n_library": 12
+   },
+   {
+    "id": "horizontal_pull",
+    "label": "Horizontal pull",
+    "n_library": 24
+   },
+   {
+    "id": "vertical_pull",
+    "label": "Vertical pull",
+    "n_library": 13
+   },
+   {
+    "id": "squat",
+    "label": "Squat",
+    "n_library": 16
+   },
+   {
+    "id": "hinge",
+    "label": "Hinge",
+    "n_library": 13
+   },
+   {
+    "id": "lunge",
+    "label": "Lunge / single-leg",
+    "n_library": 8
+   },
+   {
+    "id": "isolation",
+    "label": "Isolation",
+    "n_library": 98
+   },
+   {
+    "id": "core",
+    "label": "Core & carry",
+    "n_library": 27
+   },
+   {
+    "id": "other",
+    "label": "Power & other",
+    "n_library": 8
+   }
+  ],
+  "equipment": [
+   {
+    "id": "machine",
+    "label": "Machine",
+    "n_library": 46
+   },
+   {
+    "id": "bodyweight",
+    "label": "Bodyweight",
+    "n_library": 40
+   },
+   {
+    "id": "dumbbell",
+    "label": "Dumbbell",
+    "n_library": 33
+   },
+   {
+    "id": "cable",
+    "label": "Cable",
+    "n_library": 32
+   },
+   {
+    "id": "barbell",
+    "label": "Barbell",
+    "n_library": 26
+   },
+   {
+    "id": "smith machine",
+    "label": "Smith machine",
+    "n_library": 14
+   },
+   {
+    "id": "kettlebell",
+    "label": "Kettlebell",
+    "n_library": 12
+   },
+   {
+    "id": "plate-loaded machine",
+    "label": "Plate-loaded machine",
+    "n_library": 12
+   },
+   {
+    "id": "rings",
+    "label": "Rings",
+    "n_library": 9
+   },
+   {
+    "id": "suspension",
+    "label": "Suspension",
+    "n_library": 9
+   },
+   {
+    "id": "landmine",
+    "label": "Landmine",
+    "n_library": 8
+   },
+   {
+    "id": "band",
+    "label": "Band",
+    "n_library": 2
+   },
+   {
+    "id": "medicine ball",
+    "label": "Medicine ball",
+    "n_library": 2
+   },
+   {
+    "id": "stability ball",
+    "label": "Stability ball",
+    "n_library": 1
+   },
+   {
+    "id": "trap bar",
+    "label": "Trap bar",
+    "n_library": 1
+   }
+  ],
+  "muscles": [
+   {
+    "id": "chest",
+    "label": "Chest",
+    "short_label": "Ch",
+    "region": "chest"
+   },
+   {
+    "id": "front_delts",
+    "label": "Front delts",
+    "short_label": "FD",
+    "region": "shoulders"
+   },
+   {
+    "id": "side_delts",
+    "label": "Side delts",
+    "short_label": "SD",
+    "region": "shoulders"
+   },
+   {
+    "id": "rear_delts",
+    "label": "Rear delts",
+    "short_label": "RD",
+    "region": "shoulders"
+   },
+   {
+    "id": "lats",
+    "label": "Lats",
+    "short_label": "Lat",
+    "region": "back"
+   },
+   {
+    "id": "upper_back",
+    "label": "Upper back",
+    "short_label": "UB",
+    "region": "back"
+   },
+   {
+    "id": "traps",
+    "label": "Traps",
+    "short_label": "Trp",
+    "region": "back"
+   },
+   {
+    "id": "biceps",
+    "label": "Biceps",
+    "short_label": "Bi",
+    "region": "arms"
+   },
+   {
+    "id": "triceps",
+    "label": "Triceps",
+    "short_label": "Tri",
+    "region": "arms"
+   },
+   {
+    "id": "forearms",
+    "label": "Forearms",
+    "short_label": "FA",
+    "region": "arms"
+   },
+   {
+    "id": "abs",
+    "label": "Abs",
+    "short_label": "Abs",
+    "region": "core"
+   },
+   {
+    "id": "quads",
+    "label": "Quads",
+    "short_label": "Qd",
+    "region": "legs"
+   },
+   {
+    "id": "hamstrings",
+    "label": "Hamstrings",
+    "short_label": "Ham",
+    "region": "legs"
+   },
+   {
+    "id": "glutes",
+    "label": "Glutes",
+    "short_label": "Glu",
+    "region": "legs"
+   },
+   {
+    "id": "calves",
+    "label": "Calves",
+    "short_label": "Clf",
+    "region": "legs"
+   },
+   {
+    "id": "adductors",
+    "label": "Adductors (inner thigh)",
+    "short_label": "HAd",
+    "region": "legs"
+   },
+   {
+    "id": "lower_back",
+    "label": "Lower back",
+    "short_label": "LoB",
+    "region": "back"
+   },
+   {
+    "id": "obliques",
+    "label": "Obliques",
+    "short_label": "Obl",
+    "region": "core"
+   },
+   {
+    "id": "abductors",
+    "label": "Abductors (outer hip)",
+    "short_label": "HAb",
+    "region": "legs"
+   }
+  ],
+  "bands": {
+   "main": {
+    "label": "Main mover",
+    "ratio": 1.0,
+    "range": [
+     0.75,
+     1.0
+    ]
+   },
+   "helper": {
+    "label": "Helper",
+    "ratio": 0.5,
+    "range": [
+     0.4,
+     0.75
+    ]
+   },
+   "minor": {
+    "label": "Minor",
+    "ratio": 0.3,
+    "range": [
+     0.25,
+     0.4
+    ]
+   }
+  },
+  "toggles": {
+   "unilateral": "One side at a time",
+   "stretch_focused": "Hardest when the muscle is stretched"
+  }
+ },
+ "band_ratios": {
+  "ratios": {
+   "main": 1.0,
+   "helper": 0.5,
+   "minor": 0.3
+  },
+  "why": "Each ratio is the median (and most common value) of library ratings inside its band: main 1.0, helper 0.5, minor 0.3. Minor uses 0.3, not 0.25: 0.3 is the library median for minor, and 0.25 sits exactly on the counting threshold (min_rating_to_count). data/custom-rules.json v1 (the copy-a-template flow) uses minor 0.25; the band form uses 0.3.",
+  "library_distribution": {
+   "main": {
+    "n_ratings": 264,
+    "median": 1.0,
+    "mean": 0.954,
+    "most_common": [
+     [
+      1,
+      195
+     ],
+     [
+      0.8,
+      48
+     ],
+     [
+      0.9,
+      18
+     ],
+     [
+      0.75,
+      3
+     ]
+    ]
+   },
+   "helper": {
+    "n_ratings": 346,
+    "median": 0.5,
+    "mean": 0.513,
+    "most_common": [
+     [
+      0.5,
+      128
+     ],
+     [
+      0.4,
+      91
+     ],
+     [
+      0.6,
+      74
+     ],
+     [
+      0.7,
+      28
+     ]
+    ]
+   },
+   "minor": {
+    "n_ratings": 152,
+    "median": 0.3,
+    "mean": 0.292,
+    "most_common": [
+     [
+      0.3,
+      108
+     ],
+     [
+      0.25,
+      34
+     ],
+     [
+      0.35,
+      10
+     ]
+    ]
+   },
+   "trace": {
+    "n_ratings": 81,
+    "median": 0.2,
+    "mean": 0.192,
+    "most_common": [
+     [
+      0.2,
+      70
+     ],
+     [
+      0.15,
+      9
+     ],
+     [
+      0.1,
+      2
+     ]
+    ]
+   },
+   "note": "All non-zero muscles[] ratings of the 247 library exercises, bucketed by the body_map level bands. trace (< 0.25) is not counted by the planner, so the form has no trace band."
+  }
+ },
+ "id": {
+  "format": "custom-<slug>-<6 base36>",
+  "regex": "^custom-[a-z0-9]+(-[a-z0-9]+)*-[a-z0-9]{6}$",
+  "slug": "name lowercased, ASCII-folded, runs of other characters -> \"-\", trimmed, max 40 chars",
+  "collision": "library ids never start with \"custom-\" (tested); redraw the 6 random characters until the id is unused among custom exercises; never reuse an id after delete (history keys on it)",
+  "same_as": "data/custom-rules.json id_format"
+ },
+ "validation": {
+  "errors": [
+   "name required, 1-60 chars, unique among custom exercises (case-insensitive)",
+   "equipment in form.equipment",
+   "movement_pattern in form.movement_patterns",
+   "muscles: known ids, each listed once, band in main / helper / minor",
+   "exactly one Main mover"
+  ],
+  "warnings": [
+   "name equals a library exercise name",
+   "more than 6 muscles (library median 3 counted muscles)"
+  ]
+ },
+ "short_name_rule": "1) name if <= 16 chars; 2) drop a parenthetical; 3) the library abbreviations (short_name_note) in order until it fits; 4) drop leading\nwords, keeping at least the last two (the movement noun, e.g. 'Chest Press'); 5) hard cut to 16. Unique: if taken (library or custom),\nreplace the tail with ' 2', ' 3', ...",
+ "fields": [
+  {
+   "field": "id",
+   "from": "custom-<slug>-<6 base36>",
+   "rule": "make_id: slug = name lowercased, ASCII, non-alphanumerics -> \"-\", max 40; redraw on collision. Library ids never start with custom- (tested). Same format as data/custom-rules.json id_format."
+  },
+  {
+   "field": "name",
+   "from": "form",
+   "rule": "trimmed, single spaces, 1-60 chars, unique among custom exercises (case-insensitive)"
+  },
+  {
+   "field": "short_name",
+   "from": "rule",
+   "rule": "short_name(): name if <= 16; drop parenthetical; library abbreviations; drop leading words keeping the last two; cut to 16; unique with \" 2\", \" 3\""
+  },
+  {
+   "field": "type",
+   "from": "cell",
+   "rule": "lower median of the cell on primary < accessory < isolation; isolation pattern -> isolation; compound pattern never isolation; core / other never primary"
+  },
+  {
+   "field": "equipment",
+   "from": "form",
+   "rule": "one of the exercises.json equipment values"
+  },
+  {
+   "field": "equipment_needs",
+   "from": "cell / equipment",
+   "rule": "most common list in the cell, else the equipment, else the rules.json equipment_items token"
+  },
+  {
+   "field": "muscles",
+   "from": "form",
+   "rule": "all 19 muscles; main 1.0, helper 0.5, minor 0.3, others 0. Stimulus per set: a set credits each muscle sets x rating (ratings >= 0.25 count)"
+  },
+  {
+   "field": "heads",
+   "from": "pattern",
+   "rule": "head = muscle rating x the pattern's median head/muscle ratio, scaled so the strongest head equals the muscle rating (group = max of heads, as data/custom-rules.json); single-head muscles copy the muscle"
+  },
+  {
+   "field": "description, howTo, tip, youtube, howto",
+   "from": "empty",
+   "rule": "\"\" / [] / {setup: \"\", cues: [], mistake: \"\"}; the user may add text"
+  },
+  {
+   "field": "fatigue",
+   "from": "cell",
+   "rule": "lower median of the cell (always a library value: 0.8, 1.0, 1.1, 1.2, 1.5); sets the recovery tier (heavy_axial_compound >= 1.5, other_compound >= 1.1, lighter_compound >= 1.0, isolation)"
+  },
+  {
+   "field": "patterns",
+   "from": "pattern x main muscle",
+   "rule": "most common slot list for that movement pattern and main muscle, else the pattern; checked so movement.py movement_pattern(e) == the chosen pattern"
+  },
+  {
+   "field": "movement_pattern",
+   "from": "form",
+   "rule": "one of rules.json movement_patterns.order"
+  },
+  {
+   "field": "swap.*",
+   "from": "cell",
+   "rule": "ordinals: lower median of the cell (stability from the equipment side); stretch_emphasis 3 when stretch_focused else <= 2; muscle_isolation: compound 1, isolation 2 (3 on stable equipment). flags: the cell majority among unilateral, constant_tension, grip_demand, spinal_load, static_hold, overhead_finish, peak_contraction_focus; the form toggle overrides unilateral; bias flags (upper_chest_bias, ...) are never defaulted"
+  },
+  {
+   "field": "categories",
+   "from": "cell / equipment",
+   "rule": "most common list (calisthenics for most bodyweight / rings cells); omitted when empty"
+  },
+  {
+   "field": "bodyweight_fraction, bodyweight_basis",
+   "from": "cell / equipment",
+   "rule": "only when most of the cell has a fraction: lower median, basis \"modeling\"; bodyweight_ref and bodyweight_assisted are never set"
+  },
+  {
+   "field": "untracked_target",
+   "from": "never",
+   "rule": "custom exercises always credit a tracked muscle"
+  },
+  {
+   "field": "custom, estimated",
+   "from": "constant",
+   "rule": "true / true (custom: excluded from library suggestion pools, as suggest.py / rank.py / patterns.py already do; estimated: the est. badge)"
+  },
+  {
+   "field": "pattern",
+   "from": "pattern x main muscle",
+   "rule": "legacy rules.json patterns key (push / pull ratio, redundant pattern, same-pattern swaps); swap.py already reads e.pattern; the Builder must also register the id in rules.patterns[pattern]"
+  },
+  {
+   "field": "stretch_biased_for",
+   "from": "toggle",
+   "rule": "when stretch_focused: the main muscle (if it has a rules.stretch_biased list) plus glutes when glutes are main or helper on a squat / lunge / hinge (the glute stretch rule); register the id in those lists (credit for the per-muscle stretch check)"
+  },
+  {
+   "field": "rep_range",
+   "from": "cell",
+   "rule": "{low, high, unit, not_to_failure}: the cell's most common whiteboard rep range (unit reps / seconds / meters); register as a per-id rep_ranges override"
+  },
+  {
+   "field": "defaults_source",
+   "from": "info",
+   "rule": "which cell / fallback each group came from (for the \"estimated\" tooltip and debugging)"
+  }
+ ],
+ "lookup": {
+  "cells": "cells[\"<movement_pattern>|<equipment>\"]: every one of the 10 x 15 combinations, already resolved. source.movement_fields = cell (>= 3 library exercises) | pattern | global; source.equipment_fields = cell | equipment | equipment_rule.",
+  "slots": "slots_by_pattern_muscle[\"<movement_pattern>|<main muscle>\"], else slots_by_pattern[movement_pattern]",
+  "min_n": 3,
+  "median": "lower median (the lower middle value for an even count), so every default is a value the library actually uses"
+ },
+ "register": [
+  "Add the record to the exercise table (EX) used by the planner, analysis, ranker, whiteboard, warm-up and logger.",
+  "rules.patterns[record.pattern].push(id) (legacy pattern map: push / pull ratio, redundant pattern, same-pattern swaps).",
+  "For m in record.stretch_biased_for: rules.stretch_biased[m].push(id) (per-muscle stretch check credit and stretch share).",
+  "rules.rep_ranges.overrides.push({id, exercises: [id], unit, range: {low, high}, not_to_failure}) from record.rep_range (whiteboard rep_range reports source override:<id>).",
+  "Never add custom ids to rules.heavy_squats / heavy_hinges or staples: heavy spine sets and fix staples stay library-only.",
+  "Pass customs to the ranker as state.custom (rank.py already supports it); suggestion pools skip custom: true."
+ ],
+ "reads_audit": {
+  "check_program.py": "muscles, type (rest minutes), patterns (pattern_gap slots), legacy PAT map (push / pull, redundant_pattern), HEAVY id lists (spine sets), stretch_biased id lists",
+  "analysis.py": "muscles, fatigue, type, swap.flags (unilateral), swap.stretch_emphasis, swap.systemic_fatigue, movement_pattern via movement.py, stretch_biased id lists",
+  "suggest.py": "muscles, fatigue, type, name, custom (excluded from candidates)",
+  "swap.py": "muscles, equipment, fatigue, type, name, pattern / PAT, patterns, untracked_target, stretch lists",
+  "rank.py": "muscles, heads, type, equipment, equipment_needs, patterns, swap ordinals + flags (spinal_load, systemic_fatigue), custom; state.custom pool",
+  "whiteboard.py": "muscles (primary_region via rules.body_regions), swap.flags (unilateral -> per side), rep_ranges overrides by id, short_name",
+  "warmup.py / prs.py / exercise_dsl.py": "equipment, bodyweight_fraction, bodyweight_assisted, type, muscles (prs.py already merges history.customExercises)",
+  "check_priority.py / muscle_deepdive.py": "muscles, name, fatigue, type (through analysis / check_program); deep-dive ranked_adds skips custom",
+  "templates.py": "movement_pattern, patterns, type, name (preset slots use library ids only)",
+  "exercise_detail.py": "every field above plus heads, howto, tip (the Builder builds the custom detail popup from the record)"
+ },
+ "limits": [
+  "Custom exercises never count as heavy spine sets (spinal_load check) or heavy squat / hinge for the beginner and hinge-before-squat notes: those lists are id-based and stay library-only. The swap flag spinal_load and fatigue 1.5 still feed the ranker and recovery cost.",
+  "Stretch credit needs the stretch_focused toggle (it adds the id to rules.stretch_biased[main]); the default comes from the share of library exercises with that pattern and main muscle on the list.",
+  "The stretch toggle credits the main mover. 7 library squats / lunges are on the glute stretch list but not the quads list; a custom clone of them with the toggle on would also get quads credit (test: 239 / 246 clones match the library lists exactly, the rest only add the main mover).",
+  "exercise_detail.py builds the popup for library ids only; the Builder builds a custom popup from the record (body_map from muscles / heads, fatigue tier, rep range, est. badge).",
+  "Templates and presets never use custom ids; fix staples stay library-only, so a fix never suggests a custom exercise."
+ ],
+ "round_trip": {
+  "method": "leave-one-out over the library (defaults recomputed without the exercise); the form uses the exercise's real bands (main = its top muscle, helper >= 0.4, minor >= 0.25), unilateral flag and stretch-list membership",
+  "n": 246,
+  "muscles": {
+   "mean_abs_err_per_muscle": 0.0107,
+   "mean_credit_err_per_set": 0.2028,
+   "mean_rel_err_total_credit": 0.0819,
+   "note": "error from snapping real ratings to 1.0 / 0.5 / 0.3 (counted ratings only)"
+  },
+  "heads_mean_abs_err": 0.017,
+  "exact_match_pct": {
+   "type": 88.2,
+   "fatigue": 72.4,
+   "recovery_tier": 72.8,
+   "movement_pattern": 100.0,
+   "slot_patterns0": 97.2,
+   "legacy_pattern": 87.8,
+   "rep_range": 74.4,
+   "equipment_needs": 65.4,
+   "bodyweight_presence": 91.5,
+   "stretch_default": 79.7,
+   "swap": {
+    "stretch_emphasis": 90.7,
+    "muscle_isolation": 95.9,
+    "stability": 95.1,
+    "systemic_fatigue": 83.7,
+    "loading_potential": 80.9,
+    "skill_demand": 77.2,
+    "grip_width": 95.5
+   },
+   "flags": {
+    "unilateral": 100.0,
+    "constant_tension": 98.8,
+    "grip_demand": 89.4,
+    "spinal_load": 93.5,
+    "static_hold": 96.7,
+    "overhead_finish": 98.0,
+    "peak_contraction_focus": 95.1
+   }
+  },
+  "fatigue_mean_abs_err": 0.0581,
+  "bodyweight_fraction_mean_abs_err": 0.1593,
+  "by_source_fatigue_pct": {
+   "cell": {
+    "n": 166,
+    "pct": 85.5
+   },
+   "pattern": {
+    "n": 80,
+    "pct": 45.0
+   }
+  },
+  "worst_credit": [
+   [
+    "deadlift",
+    1.05
+   ],
+   [
+    "rack-pull",
+    0.8
+   ],
+   [
+    "trx-y-t-raise",
+    0.7
+   ],
+   [
+    "turkish-get-up",
+    0.7
+   ],
+   [
+    "kettlebell-halo",
+    0.7
+   ]
+  ]
+ },
+ "cells": {
+  "horizontal_push|machine": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "machine",
+   "n_library": 5,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|bodyweight": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "bodyweight",
+   "n_library": 5,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [],
+   "bodyweight": {
+    "bodyweight_fraction": 0.64,
+    "bodyweight_basis": "modeling"
+   },
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "horizontal_push|dumbbell": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "dumbbell",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|cable": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "cable",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "cable"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|barbell": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "barbell",
+   "n_library": 5,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "primary",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 3,
+    "loading_potential": 3,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "barbell",
+    "plates",
+    "squat_rack",
+    "flat_bench"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|smith machine": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "smith machine",
+   "n_library": 4,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|kettlebell": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "kettlebell",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|plate-loaded machine": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "plate-loaded machine",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|rings": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "rings",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "rings"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "horizontal_push|suspension": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "suspension",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "horizontal_push|landmine": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "landmine",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|band": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "band",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "bands"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|medicine ball": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "medicine ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "medicine_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|stability ball": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "stability ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "stability_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_push|trap bar": {
+   "movement_pattern": "horizontal_push",
+   "equipment": "trap bar",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "trap_bar"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|machine": {
+   "movement_pattern": "vertical_push",
+   "equipment": "machine",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|bodyweight": {
+   "movement_pattern": "vertical_push",
+   "equipment": "bodyweight",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [],
+   "bodyweight": {
+    "bodyweight_fraction": 0.74,
+    "bodyweight_basis": "modeling"
+   },
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "vertical_push|dumbbell": {
+   "movement_pattern": "vertical_push",
+   "equipment": "dumbbell",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|cable": {
+   "movement_pattern": "vertical_push",
+   "equipment": "cable",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "cable"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|barbell": {
+   "movement_pattern": "vertical_push",
+   "equipment": "barbell",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|smith machine": {
+   "movement_pattern": "vertical_push",
+   "equipment": "smith machine",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "smith_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|kettlebell": {
+   "movement_pattern": "vertical_push",
+   "equipment": "kettlebell",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|plate-loaded machine": {
+   "movement_pattern": "vertical_push",
+   "equipment": "plate-loaded machine",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|rings": {
+   "movement_pattern": "vertical_push",
+   "equipment": "rings",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "rings"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "vertical_push|suspension": {
+   "movement_pattern": "vertical_push",
+   "equipment": "suspension",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "vertical_push|landmine": {
+   "movement_pattern": "vertical_push",
+   "equipment": "landmine",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|band": {
+   "movement_pattern": "vertical_push",
+   "equipment": "band",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "bands"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|medicine ball": {
+   "movement_pattern": "vertical_push",
+   "equipment": "medicine ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "medicine_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|stability ball": {
+   "movement_pattern": "vertical_push",
+   "equipment": "stability ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "stability_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_push|trap bar": {
+   "movement_pattern": "vertical_push",
+   "equipment": "trap bar",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "overhead_finish"
+    ]
+   },
+   "equipment_needs": [
+    "trap_bar"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|machine": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "machine",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|bodyweight": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "bodyweight",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [],
+   "bodyweight": {
+    "bodyweight_fraction": 0.74,
+    "bodyweight_basis": "modeling"
+   },
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "horizontal_pull|dumbbell": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "dumbbell",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|cable": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "cable",
+   "n_library": 3,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": [
+     "constant_tension"
+    ]
+   },
+   "equipment_needs": [
+    "cable_row|cable"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|barbell": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "barbell",
+   "n_library": 5,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "primary",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 3,
+    "loading_potential": 3,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|smith machine": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "smith machine",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "smith_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|kettlebell": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "kettlebell",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|plate-loaded machine": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "plate-loaded machine",
+   "n_library": 4,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|rings": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "rings",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "rings"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "horizontal_pull|suspension": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "suspension",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "horizontal_pull|landmine": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "landmine",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|band": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "band",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "bands"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|medicine ball": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "medicine ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "medicine_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|stability ball": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "stability ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "stability_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "horizontal_pull|trap bar": {
+   "movement_pattern": "horizontal_pull",
+   "equipment": "trap bar",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "trap_bar"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|machine": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "machine",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|bodyweight": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "bodyweight",
+   "n_library": 3,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "primary",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand"
+    ]
+   },
+   "equipment_needs": [
+    "pull_up_bar"
+   ],
+   "bodyweight": {
+    "bodyweight_fraction": 0.95,
+    "bodyweight_basis": "modeling"
+   },
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "vertical_pull|dumbbell": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "dumbbell",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|cable": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "cable",
+   "n_library": 5,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": [
+     "constant_tension"
+    ]
+   },
+   "equipment_needs": [
+    "lat_pulldown"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|barbell": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "barbell",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|smith machine": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "smith machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "smith_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|kettlebell": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "kettlebell",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|plate-loaded machine": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "plate-loaded machine",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|rings": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "rings",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "rings"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "vertical_pull|suspension": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "suspension",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "vertical_pull|landmine": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "landmine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|band": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "band",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "bands"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|medicine ball": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "medicine ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "medicine_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|stability ball": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "stability ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "stability_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "vertical_pull|trap bar": {
+   "movement_pattern": "vertical_pull",
+   "equipment": "trap bar",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "trap_bar"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|machine": {
+   "movement_pattern": "squat",
+   "equipment": "machine",
+   "n_library": 6,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "leg_press"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|bodyweight": {
+   "movement_pattern": "squat",
+   "equipment": "bodyweight",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [],
+   "bodyweight": {
+    "bodyweight_fraction": 0.74,
+    "bodyweight_basis": "modeling"
+   },
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "squat|dumbbell": {
+   "movement_pattern": "squat",
+   "equipment": "dumbbell",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|cable": {
+   "movement_pattern": "squat",
+   "equipment": "cable",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "cable"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|barbell": {
+   "movement_pattern": "squat",
+   "equipment": "barbell",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|smith machine": {
+   "movement_pattern": "squat",
+   "equipment": "smith machine",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "smith_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|kettlebell": {
+   "movement_pattern": "squat",
+   "equipment": "kettlebell",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|plate-loaded machine": {
+   "movement_pattern": "squat",
+   "equipment": "plate-loaded machine",
+   "n_library": 3,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|rings": {
+   "movement_pattern": "squat",
+   "equipment": "rings",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "rings"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "squat|suspension": {
+   "movement_pattern": "squat",
+   "equipment": "suspension",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "squat|landmine": {
+   "movement_pattern": "squat",
+   "equipment": "landmine",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|band": {
+   "movement_pattern": "squat",
+   "equipment": "band",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "bands"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|medicine ball": {
+   "movement_pattern": "squat",
+   "equipment": "medicine ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "medicine_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|stability ball": {
+   "movement_pattern": "squat",
+   "equipment": "stability ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "stability_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "squat|trap bar": {
+   "movement_pattern": "squat",
+   "equipment": "trap bar",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "primary",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "trap_bar"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|machine": {
+   "movement_pattern": "hinge",
+   "equipment": "machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|bodyweight": {
+   "movement_pattern": "hinge",
+   "equipment": "bodyweight",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [],
+   "bodyweight": {
+    "bodyweight_fraction": 0.74,
+    "bodyweight_basis": "modeling"
+   },
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "hinge|dumbbell": {
+   "movement_pattern": "hinge",
+   "equipment": "dumbbell",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|cable": {
+   "movement_pattern": "hinge",
+   "equipment": "cable",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "cable"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|barbell": {
+   "movement_pattern": "hinge",
+   "equipment": "barbell",
+   "n_library": 4,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "primary",
+   "fatigue": 1.5,
+   "recovery_tier": "heavy_axial_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 3,
+    "loading_potential": 3,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|smith machine": {
+   "movement_pattern": "hinge",
+   "equipment": "smith machine",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "smith_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|kettlebell": {
+   "movement_pattern": "hinge",
+   "equipment": "kettlebell",
+   "n_library": 4,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 5,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|plate-loaded machine": {
+   "movement_pattern": "hinge",
+   "equipment": "plate-loaded machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|rings": {
+   "movement_pattern": "hinge",
+   "equipment": "rings",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "rings"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "hinge|suspension": {
+   "movement_pattern": "hinge",
+   "equipment": "suspension",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "hinge|landmine": {
+   "movement_pattern": "hinge",
+   "equipment": "landmine",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|band": {
+   "movement_pattern": "hinge",
+   "equipment": "band",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "bands"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|medicine ball": {
+   "movement_pattern": "hinge",
+   "equipment": "medicine ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "medicine_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|stability ball": {
+   "movement_pattern": "hinge",
+   "equipment": "stability ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "stability_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "hinge|trap bar": {
+   "movement_pattern": "hinge",
+   "equipment": "trap bar",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2,
+    "flags": [
+     "grip_demand",
+     "spinal_load"
+    ]
+   },
+   "equipment_needs": [
+    "trap_bar"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|machine": {
+   "movement_pattern": "lunge",
+   "equipment": "machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|bodyweight": {
+   "movement_pattern": "lunge",
+   "equipment": "bodyweight",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [],
+   "bodyweight": {
+    "bodyweight_fraction": 0.74,
+    "bodyweight_basis": "modeling"
+   },
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "lunge|dumbbell": {
+   "movement_pattern": "lunge",
+   "equipment": "dumbbell",
+   "n_library": 4,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "accessory",
+   "fatigue": 1.2,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|cable": {
+   "movement_pattern": "lunge",
+   "equipment": "cable",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "cable"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|barbell": {
+   "movement_pattern": "lunge",
+   "equipment": "barbell",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|smith machine": {
+   "movement_pattern": "lunge",
+   "equipment": "smith machine",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "smith_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|kettlebell": {
+   "movement_pattern": "lunge",
+   "equipment": "kettlebell",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|plate-loaded machine": {
+   "movement_pattern": "lunge",
+   "equipment": "plate-loaded machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|rings": {
+   "movement_pattern": "lunge",
+   "equipment": "rings",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "rings"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "lunge|suspension": {
+   "movement_pattern": "lunge",
+   "equipment": "suspension",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "lunge|landmine": {
+   "movement_pattern": "lunge",
+   "equipment": "landmine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|band": {
+   "movement_pattern": "lunge",
+   "equipment": "band",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "bands"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|medicine ball": {
+   "movement_pattern": "lunge",
+   "equipment": "medicine ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "medicine_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|stability ball": {
+   "movement_pattern": "lunge",
+   "equipment": "stability ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "stability_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "lunge|trap bar": {
+   "movement_pattern": "lunge",
+   "equipment": "trap bar",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.1,
+   "recovery_tier": "other_compound",
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "trap_bar"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|machine": {
+   "movement_pattern": "isolation",
+   "equipment": "machine",
+   "n_library": 28,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|bodyweight": {
+   "movement_pattern": "isolation",
+   "equipment": "bodyweight",
+   "n_library": 11,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [],
+   "bodyweight": {
+    "bodyweight_fraction": 0.53,
+    "bodyweight_basis": "modeling"
+   },
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "isolation|dumbbell": {
+   "movement_pattern": "isolation",
+   "equipment": "dumbbell",
+   "n_library": 18,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|cable": {
+   "movement_pattern": "isolation",
+   "equipment": "cable",
+   "n_library": 20,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": [
+     "constant_tension"
+    ]
+   },
+   "equipment_needs": [
+    "cable"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|barbell": {
+   "movement_pattern": "isolation",
+   "equipment": "barbell",
+   "n_library": 8,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|smith machine": {
+   "movement_pattern": "isolation",
+   "equipment": "smith machine",
+   "n_library": 3,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "smith_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|kettlebell": {
+   "movement_pattern": "isolation",
+   "equipment": "kettlebell",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|plate-loaded machine": {
+   "movement_pattern": "isolation",
+   "equipment": "plate-loaded machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|rings": {
+   "movement_pattern": "isolation",
+   "equipment": "rings",
+   "n_library": 4,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 1,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "rings"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "isolation|suspension": {
+   "movement_pattern": "isolation",
+   "equipment": "suspension",
+   "n_library": 4,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 1,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "isolation|landmine": {
+   "movement_pattern": "isolation",
+   "equipment": "landmine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|band": {
+   "movement_pattern": "isolation",
+   "equipment": "band",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "bands"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|medicine ball": {
+   "movement_pattern": "isolation",
+   "equipment": "medicine ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "medicine_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|stability ball": {
+   "movement_pattern": "isolation",
+   "equipment": "stability ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 1,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "stability_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "isolation|trap bar": {
+   "movement_pattern": "isolation",
+   "equipment": "trap bar",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "trap_bar"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|machine": {
+   "movement_pattern": "core",
+   "equipment": "machine",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|bodyweight": {
+   "movement_pattern": "core",
+   "equipment": "bodyweight",
+   "n_library": 9,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "core|dumbbell": {
+   "movement_pattern": "core",
+   "equipment": "dumbbell",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|cable": {
+   "movement_pattern": "core",
+   "equipment": "cable",
+   "n_library": 4,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "stability": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": [
+     "constant_tension"
+    ]
+   },
+   "equipment_needs": [
+    "cable"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|barbell": {
+   "movement_pattern": "core",
+   "equipment": "barbell",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|smith machine": {
+   "movement_pattern": "core",
+   "equipment": "smith machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "smith_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|kettlebell": {
+   "movement_pattern": "core",
+   "equipment": "kettlebell",
+   "n_library": 4,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 10,
+    "low": 5,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": [
+     "unilateral"
+    ]
+   },
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|plate-loaded machine": {
+   "movement_pattern": "core",
+   "equipment": "plate-loaded machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|rings": {
+   "movement_pattern": "core",
+   "equipment": "rings",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 1,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "rings"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "core|suspension": {
+   "movement_pattern": "core",
+   "equipment": "suspension",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 1,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "core|landmine": {
+   "movement_pattern": "core",
+   "equipment": "landmine",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|band": {
+   "movement_pattern": "core",
+   "equipment": "band",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "bands"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|medicine ball": {
+   "movement_pattern": "core",
+   "equipment": "medicine ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "medicine_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|stability ball": {
+   "movement_pattern": "core",
+   "equipment": "stability ball",
+   "n_library": 1,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 1,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "stability_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "core|trap bar": {
+   "movement_pattern": "core",
+   "equipment": "trap bar",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "isolation",
+   "fatigue": 0.8,
+   "recovery_tier": "isolation",
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "stability": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "trap_bar"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|machine": {
+   "movement_pattern": "other",
+   "equipment": "machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|bodyweight": {
+   "movement_pattern": "other",
+   "equipment": "bodyweight",
+   "n_library": 6,
+   "source": {
+    "movement_fields": "cell",
+    "equipment_fields": "cell"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [],
+   "bodyweight": null,
+   "categories": [
+    "plyometric"
+   ]
+  },
+  "other|dumbbell": {
+   "movement_pattern": "other",
+   "equipment": "dumbbell",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|cable": {
+   "movement_pattern": "other",
+   "equipment": "cable",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "cable"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|barbell": {
+   "movement_pattern": "other",
+   "equipment": "barbell",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|smith machine": {
+   "movement_pattern": "other",
+   "equipment": "smith machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "smith_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|kettlebell": {
+   "movement_pattern": "other",
+   "equipment": "kettlebell",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|plate-loaded machine": {
+   "movement_pattern": "other",
+   "equipment": "plate-loaded machine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 3,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|rings": {
+   "movement_pattern": "other",
+   "equipment": "rings",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "rings"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "other|suspension": {
+   "movement_pattern": "other",
+   "equipment": "suspension",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "other|landmine": {
+   "movement_pattern": "other",
+   "equipment": "landmine",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|band": {
+   "movement_pattern": "other",
+   "equipment": "band",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "bands"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|medicine ball": {
+   "movement_pattern": "other",
+   "equipment": "medicine ball",
+   "n_library": 2,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "medicine_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|stability ball": {
+   "movement_pattern": "other",
+   "equipment": "stability ball",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "stability_ball"
+   ],
+   "bodyweight": null,
+   "categories": []
+  },
+  "other|trap bar": {
+   "movement_pattern": "other",
+   "equipment": "trap bar",
+   "n_library": 0,
+   "source": {
+    "movement_fields": "pattern",
+    "equipment_fields": "equipment_rule"
+   },
+   "type": "accessory",
+   "fatigue": 1.0,
+   "recovery_tier": "lighter_compound",
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   },
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "stability": 2,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2,
+    "flags": []
+   },
+   "equipment_needs": [
+    "trap_bar"
+   ],
+   "bodyweight": null,
+   "categories": []
+  }
+ },
+ "slots_by_pattern_muscle": {
+  "core|abs": {
+   "n_library": 16,
+   "patterns": [
+    "abs"
+   ],
+   "pattern": "core",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for abs"
+   }
+  },
+  "core|forearms": {
+   "n_library": 2,
+   "patterns": [
+    "carry_core"
+   ],
+   "pattern": "carry",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for forearms"
+   }
+  },
+  "core|front_delts": {
+   "n_library": 2,
+   "patterns": [
+    "abs"
+   ],
+   "pattern": "get_up",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for front_delts"
+   }
+  },
+  "core|obliques": {
+   "n_library": 7,
+   "patterns": [
+    "abs"
+   ],
+   "pattern": "rotation",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for obliques"
+   }
+  },
+  "hinge|glutes": {
+   "n_library": 4,
+   "patterns": [
+    "hinge"
+   ],
+   "pattern": "ballistic",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.0,
+    "reason": "0% of 4 library exercises are on the glutes stretch list"
+   }
+  },
+  "hinge|hamstrings": {
+   "n_library": 7,
+   "patterns": [
+    "hinge"
+   ],
+   "pattern": "hinge",
+   "stretch_default": {
+    "default_on": true,
+    "share": 1.0,
+    "reason": "100% of 7 library exercises are on the hamstrings stretch list"
+   }
+  },
+  "hinge|lower_back": {
+   "n_library": 1,
+   "patterns": [
+    "hinge"
+   ],
+   "pattern": "hinge",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for lower_back"
+   }
+  },
+  "hinge|traps": {
+   "n_library": 1,
+   "patterns": [
+    "hinge"
+   ],
+   "pattern": "hinge",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for traps"
+   }
+  },
+  "horizontal_pull|lats": {
+   "n_library": 7,
+   "patterns": [
+    "horizontal_pull"
+   ],
+   "pattern": "horizontal_row",
+   "stretch_default": {
+    "default_on": true,
+    "share": 0.571,
+    "reason": "57% of 7 library exercises are on the lats stretch list"
+   }
+  },
+  "horizontal_pull|upper_back": {
+   "n_library": 17,
+   "patterns": [
+    "horizontal_pull"
+   ],
+   "pattern": "horizontal_row",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for upper_back"
+   }
+  },
+  "horizontal_push|chest": {
+   "n_library": 22,
+   "patterns": [
+    "horizontal_push"
+   ],
+   "pattern": "horizontal_press",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.409,
+    "reason": "41% of 22 library exercises are on the chest stretch list"
+   }
+  },
+  "horizontal_push|front_delts": {
+   "n_library": 3,
+   "patterns": [
+    "horizontal_push",
+    "vertical_push",
+    "front_delts"
+   ],
+   "pattern": "incline_press",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for front_delts"
+   }
+  },
+  "horizontal_push|triceps": {
+   "n_library": 3,
+   "patterns": [
+    "horizontal_push",
+    "triceps"
+   ],
+   "pattern": "dip",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.0,
+    "reason": "0% of 3 library exercises are on the triceps stretch list"
+   }
+  },
+  "isolation|abductors": {
+   "n_library": 5,
+   "patterns": [
+    "hip_iso"
+   ],
+   "pattern": "hip_abduction",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for abductors"
+   }
+  },
+  "isolation|adductors": {
+   "n_library": 3,
+   "patterns": [
+    "hip_iso"
+   ],
+   "pattern": "hip_adduction",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for adductors"
+   }
+  },
+  "isolation|biceps": {
+   "n_library": 17,
+   "patterns": [
+    "biceps"
+   ],
+   "pattern": "curl",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.235,
+    "reason": "24% of 17 library exercises are on the biceps stretch list"
+   }
+  },
+  "isolation|calves": {
+   "n_library": 7,
+   "patterns": [
+    "calves"
+   ],
+   "pattern": "calf_raise",
+   "stretch_default": {
+    "default_on": true,
+    "share": 0.857,
+    "reason": "86% of 7 library exercises are on the calves stretch list"
+   }
+  },
+  "isolation|chest": {
+   "n_library": 7,
+   "patterns": [
+    "chest_fly"
+   ],
+   "pattern": "chest_fly",
+   "stretch_default": {
+    "default_on": true,
+    "share": 0.714,
+    "reason": "71% of 7 library exercises are on the chest stretch list"
+   }
+  },
+  "isolation|forearms": {
+   "n_library": 5,
+   "patterns": [
+    "forearms"
+   ],
+   "pattern": "forearm",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for forearms"
+   }
+  },
+  "isolation|front_delts": {
+   "n_library": 1,
+   "patterns": [
+    "front_delts"
+   ],
+   "pattern": "front_raise",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for front_delts"
+   }
+  },
+  "isolation|glutes": {
+   "n_library": 8,
+   "patterns": [
+    "glute_iso"
+   ],
+   "pattern": "hip_extension",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.0,
+    "reason": "0% of 8 library exercises are on the glutes stretch list"
+   }
+  },
+  "isolation|hamstrings": {
+   "n_library": 7,
+   "patterns": [
+    "hamstring_curl"
+   ],
+   "pattern": "knee_flexion",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.429,
+    "reason": "43% of 7 library exercises are on the hamstrings stretch list"
+   }
+  },
+  "isolation|lats": {
+   "n_library": 5,
+   "patterns": [
+    "lat_iso"
+   ],
+   "pattern": "pullover",
+   "stretch_default": {
+    "default_on": true,
+    "share": 0.8,
+    "reason": "80% of 5 library exercises are on the lats stretch list"
+   }
+  },
+  "isolation|lower_back": {
+   "n_library": 2,
+   "patterns": [
+    "glute_iso"
+   ],
+   "pattern": "hip_extension",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for lower_back"
+   }
+  },
+  "isolation|quads": {
+   "n_library": 2,
+   "patterns": [
+    "quads_iso"
+   ],
+   "pattern": "knee_extension",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.5,
+    "reason": "50% of 2 library exercises are on the quads stretch list"
+   }
+  },
+  "isolation|rear_delts": {
+   "n_library": 6,
+   "patterns": [
+    "rear_delts"
+   ],
+   "pattern": "rear_delt",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for rear_delts"
+   }
+  },
+  "isolation|side_delts": {
+   "n_library": 7,
+   "patterns": [
+    "side_delts"
+   ],
+   "pattern": "lateral_raise",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for side_delts"
+   }
+  },
+  "isolation|traps": {
+   "n_library": 6,
+   "patterns": [
+    "traps"
+   ],
+   "pattern": "shrug",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for traps"
+   }
+  },
+  "isolation|triceps": {
+   "n_library": 9,
+   "patterns": [
+    "triceps"
+   ],
+   "pattern": "triceps_extension",
+   "stretch_default": {
+    "default_on": true,
+    "share": 0.667,
+    "reason": "67% of 9 library exercises are on the triceps stretch list"
+   }
+  },
+  "lunge|quads": {
+   "n_library": 8,
+   "patterns": [
+    "lunge"
+   ],
+   "pattern": "lunge",
+   "stretch_default": {
+    "default_on": true,
+    "share": 0.5,
+    "reason": "50% of 8 library exercises are on the quads stretch list"
+   }
+  },
+  "other|chest": {
+   "n_library": 2,
+   "patterns": [
+    "power"
+   ],
+   "pattern": "plyometric",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.0,
+    "reason": "0% of 2 library exercises are on the chest stretch list"
+   }
+  },
+  "other|glutes": {
+   "n_library": 2,
+   "patterns": [
+    "power"
+   ],
+   "pattern": "plyometric",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.0,
+    "reason": "0% of 2 library exercises are on the glutes stretch list"
+   }
+  },
+  "other|lats": {
+   "n_library": 1,
+   "patterns": [
+    "power"
+   ],
+   "pattern": "plyometric",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.0,
+    "reason": "0% of 1 library exercises are on the lats stretch list"
+   }
+  },
+  "other|quads": {
+   "n_library": 3,
+   "patterns": [
+    "power"
+   ],
+   "pattern": "plyometric",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.0,
+    "reason": "0% of 3 library exercises are on the quads stretch list"
+   }
+  },
+  "squat|glutes": {
+   "n_library": 2,
+   "patterns": [
+    "squat"
+   ],
+   "pattern": "squat",
+   "stretch_default": {
+    "default_on": false,
+    "share": 1.0,
+    "reason": "100% of 2 library exercises are on the glutes stretch list"
+   }
+  },
+  "squat|quads": {
+   "n_library": 14,
+   "patterns": [
+    "squat"
+   ],
+   "pattern": "squat",
+   "stretch_default": {
+    "default_on": false,
+    "share": 0.429,
+    "reason": "43% of 14 library exercises are on the quads stretch list"
+   }
+  },
+  "vertical_pull|lats": {
+   "n_library": 13,
+   "patterns": [
+    "vertical_pull"
+   ],
+   "pattern": "vertical_pull",
+   "stretch_default": {
+    "default_on": true,
+    "share": 0.769,
+    "reason": "77% of 13 library exercises are on the lats stretch list"
+   }
+  },
+  "vertical_push|front_delts": {
+   "n_library": 12,
+   "patterns": [
+    "vertical_push"
+   ],
+   "pattern": "vertical_press",
+   "stretch_default": {
+    "default_on": false,
+    "share": null,
+    "reason": "no stretch list for front_delts"
+   }
+  }
+ },
+ "slots_by_pattern": {
+  "horizontal_push": {
+   "n_library": 28,
+   "patterns": [
+    "horizontal_push"
+   ],
+   "pattern": "horizontal_press"
+  },
+  "vertical_push": {
+   "n_library": 12,
+   "patterns": [
+    "vertical_push"
+   ],
+   "pattern": "vertical_press"
+  },
+  "horizontal_pull": {
+   "n_library": 24,
+   "patterns": [
+    "horizontal_pull"
+   ],
+   "pattern": "horizontal_row"
+  },
+  "vertical_pull": {
+   "n_library": 13,
+   "patterns": [
+    "vertical_pull"
+   ],
+   "pattern": "vertical_pull"
+  },
+  "squat": {
+   "n_library": 16,
+   "patterns": [
+    "squat"
+   ],
+   "pattern": "squat"
+  },
+  "hinge": {
+   "n_library": 13,
+   "patterns": [
+    "hinge"
+   ],
+   "pattern": "hinge"
+  },
+  "lunge": {
+   "n_library": 8,
+   "patterns": [
+    "lunge"
+   ],
+   "pattern": "lunge"
+  },
+  "isolation": {
+   "n_library": 98,
+   "patterns": [
+    "biceps"
+   ],
+   "pattern": "curl"
+  },
+  "core": {
+   "n_library": 27,
+   "patterns": [
+    "abs"
+   ],
+   "pattern": "core"
+  },
+  "other": {
+   "n_library": 8,
+   "patterns": [
+    "power"
+   ],
+   "pattern": "plyometric"
+  }
+ },
+ "heads_by_pattern": {
+  "horizontal_push": {
+   "chest": {
+    "chest_upper": 0.7,
+    "chest_lower": 1.0
+   },
+   "triceps": {
+    "triceps_long": 0.5,
+    "triceps_short": 1.0
+   }
+  },
+  "vertical_push": {
+   "traps": {
+    "traps_upper": 1.0,
+    "traps_mid_lower": 0.333
+   },
+   "triceps": {
+    "triceps_long": 0.5,
+    "triceps_short": 1.0
+   }
+  },
+  "horizontal_pull": {
+   "traps": {
+    "traps_upper": 0.333,
+    "traps_mid_lower": 1.0
+   }
+  },
+  "vertical_pull": {
+   "traps": {
+    "traps_upper": 0.286,
+    "traps_mid_lower": 1.0
+   }
+  },
+  "squat": {
+   "quads": {
+    "quads_rf": 0.35,
+    "quads_vasti": 1.0
+   }
+  },
+  "hinge": {
+   "traps": {
+    "traps_upper": 1.0,
+    "traps_mid_lower": 0.667
+   }
+  },
+  "lunge": {
+   "quads": {
+    "quads_rf": 0.4,
+    "quads_vasti": 1.0
+   }
+  },
+  "isolation": {
+   "chest": {
+    "chest_upper": 0.7,
+    "chest_lower": 1.0
+   },
+   "traps": {
+    "traps_upper": 0.6,
+    "traps_mid_lower": 1.0
+   },
+   "triceps": {
+    "triceps_long": 1.0,
+    "triceps_short": 0.7
+   },
+   "quads": {
+    "quads_rf": 1.0,
+    "quads_vasti": 0.9
+   },
+   "calves": {
+    "calves_gastroc": 1.0,
+    "calves_soleus": 0.6
+   }
+  },
+  "core": {
+   "quads": {
+    "quads_rf": 1.0,
+    "quads_vasti": 0.0
+   }
+  },
+  "other": {
+   "quads": {
+    "quads_rf": 0.455,
+    "quads_vasti": 1.0
+   },
+   "calves": {
+    "calves_gastroc": 1.0,
+    "calves_soleus": 0.5
+   }
+  }
+ },
+ "heads_global": {
+  "chest": {
+   "chest_upper": 0.7,
+   "chest_lower": 1.0
+  },
+  "traps": {
+   "traps_upper": 0.4,
+   "traps_mid_lower": 1.0
+  },
+  "triceps": {
+   "triceps_long": 0.5,
+   "triceps_short": 1.0
+  },
+  "quads": {
+   "quads_rf": 0.4,
+   "quads_vasti": 1.0
+  },
+  "calves": {
+   "calves_gastroc": 1.0,
+   "calves_soleus": 0.5
+  }
+ },
+ "pattern_fallback": {
+  "horizontal_push": {
+   "n": 28,
+   "type": "accessory",
+   "fatigue": 1.0,
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2
+   },
+   "flags": [],
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   }
+  },
+  "vertical_push": {
+   "n": 12,
+   "type": "accessory",
+   "fatigue": 1.2,
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2
+   },
+   "flags": [
+    "overhead_finish"
+   ],
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   }
+  },
+  "horizontal_pull": {
+   "n": 24,
+   "type": "accessory",
+   "fatigue": 1.0,
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2
+   },
+   "flags": [],
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   }
+  },
+  "vertical_pull": {
+   "n": 13,
+   "type": "accessory",
+   "fatigue": 1.2,
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 1,
+    "grip_width": 2
+   },
+   "flags": [],
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   }
+  },
+  "squat": {
+   "n": 16,
+   "type": "primary",
+   "fatigue": 1.0,
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 3,
+    "skill_demand": 1,
+    "grip_width": 2
+   },
+   "flags": [],
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   }
+  },
+  "hinge": {
+   "n": 13,
+   "type": "accessory",
+   "fatigue": 1.2,
+   "swap": {
+    "stretch_emphasis": 3,
+    "muscle_isolation": 1,
+    "systemic_fatigue": 3,
+    "loading_potential": 2,
+    "skill_demand": 3,
+    "grip_width": 2
+   },
+   "flags": [
+    "grip_demand",
+    "spinal_load"
+   ],
+   "rep_range": {
+    "high": 10,
+    "low": 6,
+    "not_to_failure": false,
+    "unit": "reps"
+   }
+  },
+  "lunge": {
+   "n": 8,
+   "type": "accessory",
+   "fatigue": 1.1,
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 2,
+    "skill_demand": 2,
+    "grip_width": 2
+   },
+   "flags": [
+    "unilateral"
+   ],
+   "rep_range": {
+    "high": 12,
+    "low": 8,
+    "not_to_failure": false,
+    "unit": "reps"
+   }
+  },
+  "isolation": {
+   "n": 98,
+   "type": "isolation",
+   "fatigue": 0.8,
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 3,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2
+   },
+   "flags": [],
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   }
+  },
+  "core": {
+   "n": 27,
+   "type": "isolation",
+   "fatigue": 0.8,
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 2,
+    "systemic_fatigue": 1,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2
+   },
+   "flags": [],
+   "rep_range": {
+    "high": 20,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   }
+  },
+  "other": {
+   "n": 8,
+   "type": "accessory",
+   "fatigue": 1.0,
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 2,
+    "grip_width": 2
+   },
+   "flags": [],
+   "rep_range": {
+    "high": 6,
+    "low": 3,
+    "not_to_failure": true,
+    "unit": "reps"
+   }
+  }
+ },
+ "equipment_fallback": {
+  "machine": {
+   "n": 46,
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "stability": 3,
+   "bodyweight": null,
+   "categories": []
+  },
+  "bodyweight": {
+   "n": 40,
+   "equipment_needs": [],
+   "stability": 2,
+   "bodyweight": {
+    "bodyweight_fraction": 0.74,
+    "bodyweight_basis": "modeling"
+   },
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "dumbbell": {
+   "n": 33,
+   "equipment_needs": [
+    "dumbbell"
+   ],
+   "stability": 2,
+   "bodyweight": null,
+   "categories": []
+  },
+  "cable": {
+   "n": 32,
+   "equipment_needs": [
+    "cable"
+   ],
+   "stability": 3,
+   "bodyweight": null,
+   "categories": []
+  },
+  "barbell": {
+   "n": 26,
+   "equipment_needs": [
+    "barbell",
+    "plates"
+   ],
+   "stability": 2,
+   "bodyweight": null,
+   "categories": []
+  },
+  "smith machine": {
+   "n": 14,
+   "equipment_needs": [
+    "smith_machine",
+    "plates"
+   ],
+   "stability": 3,
+   "bodyweight": null,
+   "categories": []
+  },
+  "kettlebell": {
+   "n": 12,
+   "equipment_needs": [
+    "kettlebell"
+   ],
+   "stability": 2,
+   "bodyweight": null,
+   "categories": []
+  },
+  "plate-loaded machine": {
+   "n": 12,
+   "equipment_needs": [
+    "gym_machine",
+    "plates"
+   ],
+   "stability": 3,
+   "bodyweight": null,
+   "categories": []
+  },
+  "rings": {
+   "n": 9,
+   "equipment_needs": [
+    "rings"
+   ],
+   "stability": 1,
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "suspension": {
+   "n": 9,
+   "equipment_needs": [
+    "suspension_trainer"
+   ],
+   "stability": 1,
+   "bodyweight": null,
+   "categories": [
+    "calisthenics"
+   ]
+  },
+  "landmine": {
+   "n": 8,
+   "equipment_needs": [
+    "landmine",
+    "barbell",
+    "plates"
+   ],
+   "stability": 2,
+   "bodyweight": null,
+   "categories": []
+  }
+ },
+ "global_fallback": {
+  "pattern_fields": {
+   "type": "accessory",
+   "fatigue": 1.0,
+   "swap": {
+    "stretch_emphasis": 2,
+    "muscle_isolation": 1,
+    "systemic_fatigue": 2,
+    "loading_potential": 1,
+    "skill_demand": 1,
+    "grip_width": 2
+   },
+   "flags": [],
+   "rep_range": {
+    "high": 15,
+    "low": 10,
+    "not_to_failure": false,
+    "unit": "reps"
+   }
+  },
+  "equipment_fields": {
+   "equipment_needs": [
+    "gym_machine"
+   ],
+   "stability": 2,
+   "bodyweight": null,
+   "categories": []
+  },
+  "n": 247
+ }
+}
