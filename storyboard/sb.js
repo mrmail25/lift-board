@@ -1584,13 +1584,17 @@ async function newExSheet(o={}){if(!CX){toast('Custom exercises need the default
   const F={name:f0?f0.name:String(o.q||'').trim().slice(0,60),short:ed&&ed.short_name_edited?ed.short_name:'',shortEdited:!!(ed&&ed.short_name_edited),equipment:f0?f0.equipment:null,pattern:f0?f0.movement_pattern:null,
     main:f0?Object.keys(f0.muscles).find(m=>f0.muscles[m]==='main'):null,extra:{},uni:f0?f0.unilateral:null,st:f0?f0.stretch_focused:null,photo:ed?cxPhoto(ed.id):null,photoTouched:false,tried:false,
     video:ed&&m0.video&&m0.trim?{blob:m0.video,type:m0.vtype,dur:m0.vdur,url:cxVidURL(ed.id),name:'Saved clip',stored:true}:null,trim:ed&&m0.trim?Object.assign({},m0.trim):null,videoTouched:false,trimTouched:false,vErr:'',
-    yt:y0?`https://youtu.be/${y0.video_id}`:'',ytStart:y0&&y0.start_s?M.fmtTime(y0.start_s):'',ytP:null,ytC:y0?{state:y0.checked===false?'unchecked':'ok',author:y0.author||''}:null,ytBusy:null};
-  if(f0)for(const [m,b] of Object.entries(f0.muscles))if(b!=='main')F.extra[m]=b;
+    yt:y0?`https://youtu.be/${y0.video_id}`:'',ytStart:y0&&y0.start_s?M.fmtTime(y0.start_s):'',ytP:null,ytC:y0?{state:y0.checked===false?'unchecked':'ok',author:y0.author||''}:null,ytBusy:null,
+    base:ed&&ed.base_id&&CX.libOf(ed.base_id)?ed.base_id:null,picking:false,declined:!!ed,touched:!!ed,bq:'',more:false,auto:false};
+  if(f0){const b0=F.base&&CX.libOf(F.base),mains=Object.keys(f0.muscles).filter(m=>f0.muscles[m]==='main');
+    F.main=b0&&mains.includes(CX.pm(b0))?CX.pm(b0):(mains[0]||null);for(const [m,b] of Object.entries(f0.muscles))if(m!==F.main)F.extra[m]=b}
   const others=cxList().filter(x=>!ed||x.id!==ed.id);
   const form=()=>({name:F.name,equipment:F.equipment,movement_pattern:F.pattern,muscles:Object.assign(F.main?{[F.main]:'main'}:{},...Object.entries(F.extra).filter(([m])=>m!==F.main).map(([m,b])=>({[m]:b}))),
     unilateral:F.uni==null?undefined:F.uni,stretch_focused:F.st==null?undefined:F.st});
   const autoShort=()=>F.name.trim()?CX.shortName(F.name,others.map(x=>x.short_name)):'';
-  const tdef=()=>F.pattern&&F.equipment?CX.toggleDefaults(F.pattern,F.equipment,F.main):{unilateral:false,stretch_focused:false};
+  const tdef=()=>{if(F.base){const b=CX.libOf(F.base),bf=CX.baseForm(F.base),mains=[F.main,...Object.keys(F.extra).filter(m=>F.extra[m]==='main')],main=mains.includes(CX.pm(b))?CX.pm(b):F.main;
+      const sl=F.pattern&&main?CX.slotsFor(F.pattern,main):null;return {unilateral:bf.unilateral,stretch_focused:main===CX.pm(b)?bf.stretch_focused:!!(sl&&sl.stretch_default&&sl.stretch_default.default_on)}}
+    return F.pattern&&F.equipment?CX.toggleDefaults(F.pattern,F.equipment,F.main):{unilateral:false,stretch_focused:false}};
   const chip=(k,v,l,on,extra='')=>`<button type="button" class="chip xs ${on?'on':''}" data-nx="${k}" data-v="${esc(v)}"${extra}>${l}</button>`;
   const ML2=CX.labels.muscle,PL=CX.labels.pattern,QL=CX.labels.equipment;
   const tg=(k,l,on)=>`<label class="row nxt"><div class="grow t1">${l}</div><input type="checkbox" class="nxsw" data-tg="${k}" role="switch" ${on?'checked':''} aria-label="${l}"></label>`;
@@ -1616,7 +1620,8 @@ async function newExSheet(o={}){if(!CX){toast('Custom exercises need the default
     return `<p class="nxerr" data-yterr="${c.state}">${M.YT_MSG[c.state]}</p>`};
   const ytRow=()=>`<div class="row nxyt"><input id="nxyt" class="dsin" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="youtube.com/watch, youtu.be or Shorts link" value="${esc(F.yt)}" aria-label="Demo video link"></div>
      <div class="row nxsr"><span class="t2">Start at</span><input id="nxyts" class="dsin" type="text" inputmode="numeric" autocomplete="off" enterkeyhint="done" placeholder="0:00, or t= in the link" value="${esc(F.ytStart)}" aria-label="Start time"></div>`;
-  const msg=()=>{const v=CX.validate(form(),others.map(x=>x.name)),E=F.tried?v.errors:[],nice=t=>t.replace(/^name: required$/,'Add a name').replace(/^name: at most 60 characters$/,'Keep the name to 60 characters').replace(/^name: already used.*$/,'You already have a custom exercise with this name')
+  const vfy=()=>F.base?CX.validateBase(F.base,form(),others.map(x=>x.name)):CX.validate(form(),others.map(x=>x.name));
+  const msg=()=>{const v=vfy(),E=F.tried?v.errors:[],nice=t=>t.replace(/^muscles: only one Main mover can be added.*$/,`Only one ${LL.main.toLowerCase()} can be added; a second one can only come from the base exercise`).replace(/^name: required$/,'Add a name').replace(/^name: at most 60 characters$/,'Keep the name to 60 characters').replace(/^name: already used.*$/,'You already have a custom exercise with this name')
       .replace(/^equipment: .*/,'Pick the equipment').replace(/^movement_pattern: .*/,'Pick a movement pattern').replace(/^muscles: exactly one Main mover$/,`Pick one ${LL.main.toLowerCase()}`).replace(/^name: same as a library exercise.*$/,'A library exercise already has this name; you can use that one instead')
       .replace(/^muscles: more than 6 muscles.*$/,'More than 6 muscles is unusual; credit may be overestimated');
     const ye=F.tried?ytBlock():'';
@@ -1624,10 +1629,62 @@ async function newExSheet(o={}){if(!CX){toast('Custom exercises need the default
   // a link that is malformed, not found or not embeddable blocks Save; "couldn't check" (offline) does not
   const ytBlock=()=>{const raw=F.yt.trim();if(!raw)return '';const p=M.parseYouTube(raw,F.ytStart);if(p.error)return 'Fix the demo video link or clear it';
     if(F.ytC&&(F.ytC.state==='not_found'||F.ytC.state==='not_embeddable'))return 'The demo video link can’t be used; pick another video or clear it';return ''};
+  // ---- "Start from a similar exercise" (piece 1). Suggestions follow Coach's rank_bases (name + pattern + equipment + hints, muscles small);
+  // an exact name match is preselected while the form is untouched; "None of these" keeps the manual path (pattern x equipment defaults).
+  let bT=0;
+  const lib=id=>CX.libOf(id),bsub=id=>{const b=lib(id);return b?`${QL[b.equipment]||b.equipment} · ${PL[b.movement_pattern]||b.movement_pattern}`:''};
+  const draft=()=>{const d={name:F.name};if(F.pattern)d.movement_pattern=F.pattern;if(F.equipment)d.equipment=F.equipment;if(!F.base&&F.main)d.muscles=form().muscles;return d};
+  const sugg=()=>F.name.trim()?CX.suggestBases(draft(),CX.BASE.max_count):[];
+  const search=q=>{const R0=CX.rankBases({name:q,movement_pattern:F.pattern||undefined,equipment:F.equipment||undefined}),pos={};R0.forEach((x,k)=>pos[x.id]=k);
+    return R0.map(x=>x.id).filter(id=>EX[id]&&qMatch(id,q)).sort((a,b)=>pos[a]-pos[b]).slice(0,8)};
+  // preview record -> derived + explainer variant (Coach's explainer_for); null while the chips are not valid yet
+  const preview=()=>{if(!F.pattern||!F.equipment||!F.main)return null;const fm=form();fm.name=F.name.trim()||'Preview';
+    try{return F.base?CX.fromBase(F.base,fm,{dt:RD,id:'custom-preview-000000',short_name:'Preview'}):{movement_pattern:F.pattern,equipment:F.equipment}}catch(x){return null}};
+  const edited=()=>{if(!F.base)return false;const pv=preview();if(pv&&pv.derived)return CX.explainerFor(pv)[0]==='based_on_base_edited';
+    const bf=CX.baseForm(F.base),mf=form();return F.pattern!==bf.movement_pattern||F.equipment!==bf.equipment||JSON.stringify(Object.entries(mf.muscles).sort())!==JSON.stringify(Object.entries(bf.muscles).sort())};
+  const estNote=()=>{if(F.base){const b=lib(F.base);return `<p class="nxest" data-est="${edited()?'based_on_base_edited':'based_on_base'}">Estimated from ${esc(b.name)}${edited()?' · with your edits':''}<button type="button" class="nxinfo" data-nb="why" aria-label="About this estimate">ⓘ</button></p>`}
+    if(F.pattern&&F.equipment)return `<p class="nxest" data-est="pattern_defaults">Estimated from typical ${esc((PL[F.pattern]||F.pattern).toLowerCase())} · ${esc((QL[F.equipment]||F.equipment).toLowerCase())} exercises<button type="button" class="nxinfo" data-nb="why" aria-label="About this estimate">ⓘ</button></p>`;return ''};
+  const brow=(id,lab)=>`<button type="button" class="row nxbrow" data-nb="pick" data-v="${id}">${gl(id)}<div class="grow"><div class="t1">${esc(lib(id).name)}</div><div class="t2">${bsub(id)}</div></div>${lab?`<span class="evl" data-ev="exact">${lab}</span>`:''}${CHEV||''}</button>`;
+  // the base's muscles as Main mover / Helper / Minor chips (tap cycles Helper > Minor > off; a removed base muscle stays, dimmed, to add back)
+  const bChips=()=>{const bf=CX.baseForm(F.base),fm=form().muscles,ms=[...new Set([...Object.keys(bf.muscles),...Object.keys(fm)])].sort((a,b)=>({main:0,helper:1,minor:2}[fm[a]||'z']??3)-({main:0,helper:1,minor:2}[fm[b]||'z']??3));
+    return `<div class="nxbchips">${ms.map(m=>{const x=fm[m],lab=x?LL[x]:'off',mv=m===F.main;
+      return mv?`<span class="chip xs on nxbc" data-m="${m}" data-band="main">${esc(ML2[m]||m)}<span class="nxb">${LL.main}</span></span>`
+        :`<button type="button" class="chip xs ${x?'on':'off'} nxbc" data-nx="extra" data-v="${m}" data-m="${m}" data-band="${x||'off'}">${esc(ML2[m]||m)}<span class="nxb">${lab}</span></button>`}).join('')}</div>`};
+  function baseHtml(){
+    if(F.base&&!F.picking){return `<div class="group"><div class="row nxbsel" data-base="${F.base}">${gl(F.base)}<div class="grow"><div class="t1">${esc(lib(F.base).name)}</div><div class="t2">${bsub(F.base)}</div></div>
+      <button type="button" class="btn plain sm" data-nb="change">Change</button><button type="button" class="btn plain sm nxbclr" data-nb="clear">Clear</button></div>${bChips()}</div>${estNote()}`}
+    if(!F.picking&&F.declined){return `<div class="group"><button type="button" class="row nxbopen" data-nb="open"><div class="grow"><div class="t1 acc">Pick a similar exercise</div><div class="t2">${F.pattern&&F.equipment?'Now using typical values for the pattern and equipment':'Or set the equipment, pattern and muscles yourself'}</div></div>${CHEV||''}</button></div>${estNote()}`}
+    const q=F.bq.trim(),list=q?search(q).map(id=>({id})):sugg(),shown=q?list:list.slice(0,F.more?CX.BASE.max_count:CX.BASE.default_count);
+    const empty=q?`<div class="row"><span class="t2">No library exercise matches “${esc(q)}”.</span></div>`
+      :!F.name.trim()?`<div class="row"><span class="t2">Type a name above to see similar library exercises, or search.</span></div>`
+      :!(F.pattern&&F.equipment)?`<div class="row nxbnone" data-fallback="ask"><span class="t2">No close match. Pick the equipment and movement pattern below, and typical values for them are used.</span></div>`
+      :`<div class="row nxbnone" data-fallback="cell"><span class="t2">No close match. Typical values for ${esc((PL[F.pattern]||F.pattern).toLowerCase())} exercises using ${esc((QL[F.equipment]||F.equipment).toLowerCase())} are used.</span></div>`;
+    return `<div class="group nxbpick"><div class="row nxbs">${I('search',1.8)}<input id="nxbq" class="dsin" type="search" autocomplete="off" enterkeyhint="search" placeholder="Search the library" value="${esc(F.bq)}" aria-label="Search library exercises"></div>
+      <div id="nxblist">${shown.length?shown.map(x=>brow(x.id,x.exact_name?'Same name':'')).join(''):empty}
+      ${!q&&!F.more&&list.length>CX.BASE.default_count?`<button type="button" class="row nxbmore" data-nb="more"><span class="t2 acc">More suggestions</span></button>`:''}
+      ${shown.length||F.base?`<button type="button" class="row nxbno" data-nb="none"><span class="t1">None of these</span></button>`:''}</div>
+      ${F.picking?`<button type="button" class="row nxbno" data-nb="cancelpick"><span class="t2">Keep ${F.base?esc(lib(F.base).name):'my own values'}</span></button>`:''}</div>${F.base?'':estNote()}`}
+  const paintBase=(keepFocus)=>{const w=$('#nxbase',s.el);if(!w)return;const a=document.activeElement,foc=keepFocus&&a&&a.id==='nxbq',pos=foc?a.selectionStart:0;w.innerHTML=baseHtml();
+    const bq=$('#nxbq',s.el);if(bq){bq.addEventListener('input',()=>{F.bq=bq.value;clearTimeout(bT);bT=setTimeout(()=>paintBase(true),200)});bq.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();bq.blur()}});if(foc){bq.focus();try{bq.setSelectionRange(pos,pos)}catch(x){}}}};
+  function applyBase(id,auto){const b=lib(id),bf=CX.baseForm(id);F.base=id;F.picking=false;F.declined=false;F.bq='';F.more=false;F.auto=!!auto;
+    F.equipment=bf.equipment;F.pattern=bf.movement_pattern;F.main=CX.pm(b);F.extra={};for(const [m,x] of Object.entries(bf.muscles))if(m!==F.main)F.extra[m]=x;F.uni=null;F.st=null;re()}
+  function preselect(){if(ed||F.base||F.declined||F.touched||F.picking)return;const t=sugg()[0];if(t&&t.exact_name)applyBase(t.id,true)}
+  function baseAct(k,v){
+    if(k==='pick')return applyBase(v,false);
+    if(k==='none'){F.base=null;F.picking=false;F.declined=true;F.bq='';return re()}
+    if(k==='clear'){F.base=null;F.declined=true;F.picking=false;for(const m in F.extra)if(F.extra[m]==='main')F.extra[m]='helper';return re()}   // keep the chips; Save now uses the pattern x equipment defaults
+    if(k==='change'||k==='open'){F.picking=true;F.bq='';return paintBase()}
+    if(k==='cancelpick'){F.picking=false;F.bq='';return paintBase()}
+    if(k==='more'){F.more=true;return paintBase()}
+    if(k==='why'){const pv=F.base?preview():{movement_pattern:F.pattern,equipment:F.equipment};let t;
+      if(pv&&(pv.base_id||!F.base))t=CX.explainerFor(pv)[1];else t=CX.EXPL.variants[edited()?'based_on_base_edited':'based_on_base'].replace('{base}',lib(F.base).name);
+      const w=sheet({title:(CX.EXPL.label||'ⓘ Estimated').replace(/^ⓘ\s*/,''),cls:'grouped nxwhy',right:'<button class="btn plain" data-x="close">Done</button>',body:`<p class="lsum nxwhyt">${esc(t)}</p>`});
+      w.el.addEventListener('click',e=>{if(e.target.closest('[data-x=close]'))w.close()});return w}}
   const body=()=>{const td=tdef(),uni=F.uni==null?td.unilateral:F.uni,st=F.st==null?td.stretch_focused:F.st;
-    return `<div class="nx"><div id="nxbase" class="nxbase" data-slot="similar-base" hidden></div>
+    return `<div class="nx">
     <div class="group"><div class="row"><input id="nxname" class="dsin" type="text" maxlength="60" autocomplete="off" enterkeyhint="done" placeholder="Name, e.g. Hammer Strength Row" value="${esc(F.name)}" aria-label="Name"></div>
      <div class="row nxsr"><span class="t2">Short name</span><input id="nxshort" class="dsin" type="text" maxlength="16" autocomplete="off" enterkeyhint="done" placeholder="${esc(autoShort()||'shown on the board')}" value="${F.shortEdited?esc(F.short):''}" aria-label="Short name on the board"></div></div>
+    <div class="ghead">Start from a similar exercise <span class="nxh">optional · copies its muscle ratings</span></div><div id="nxbase" class="nxbase" data-slot="similar-base">${baseHtml()}</div>
     <div class="ghead">Equipment</div><div class="tfr nxc noswipe" data-row="equipment">${CX.EQUIPMENT.map(q=>chip('equipment',q,QL[q],F.equipment===q)).join('')}</div>
     <div class="ghead">Movement pattern</div><div class="tfr nxc noswipe" data-row="pattern">${CX.PATTERNS.map(p=>chip('pattern',p,PL[p],F.pattern===p)).join('')}</div>
     <div class="ghead">${LL.main} <span class="nxh">one muscle</span></div><div class="tfr nxc noswipe" data-row="main">${CX.MUSCLES.map(m=>chip('main',m,ML2[m],F.main===m)).join('')}</div>
@@ -1669,31 +1726,34 @@ async function newExSheet(o={}){if(!CX){toast('Custom exercises need the default
     F.video={blob:f,type:f.type,dur,url,name:f.name||'Video'};F.trim=M.defaultTrim(dur);F.videoTouched=true;F.trimTouched=true;vidPaint();
     const tr=$('#nxtrim',s.el);if(tr)tr.scrollIntoView({block:'nearest'})}
   function wire(){const n=$('#nxname',s.el),sh=$('#nxshort',s.el),yt=$('#nxyt',s.el),yts=$('#nxyts',s.el);
-    n.addEventListener('input',()=>{F.name=n.value;upd()});sh.addEventListener('input',()=>{F.short=sh.value;F.shortEdited=!!sh.value.trim();upd()});
+    n.addEventListener('input',()=>{F.name=n.value;upd();clearTimeout(bT);bT=setTimeout(()=>{paintBase();preselect()},450)});sh.addEventListener('input',()=>{F.short=sh.value;F.shortEdited=!!sh.value.trim();upd()});
     [n,sh,yt,yts].forEach(x=>x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();x.blur()}}));
     yt.addEventListener('input',()=>{F.yt=yt.value;F.ytC=null;F.ytP=null;clearTimeout(ytT);ytT=setTimeout(ytCheck,700)});yt.addEventListener('change',()=>{F.yt=yt.value;ytCheck()});
     yts.addEventListener('input',()=>{F.ytStart=yts.value;clearTimeout(ytT);ytT=setTimeout(ytCheck,700)});yts.addEventListener('change',()=>{F.ytStart=yts.value;ytCheck()});
-    $$('[data-tg]',s.el).forEach(c=>c.addEventListener('change',()=>{F[c.dataset.tg]=c.checked}));
+    $$('[data-tg]',s.el).forEach(c=>c.addEventListener('change',()=>{F.touched=true;F[c.dataset.tg]=c.checked;paintBase()}));
+    const bq=$('#nxbq',s.el);if(bq){bq.addEventListener('input',()=>{F.bq=bq.value;clearTimeout(bT);bT=setTimeout(()=>paintBase(true),200)});bq.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();bq.blur()}})}
     ['nxcam','nxfile'].forEach(i=>{const fi=$('#'+i,s.el);if(fi)fi.addEventListener('change',()=>{const f=fi.files&&fi.files[0];if(!f)return;resizeImg(f,800).then(u=>{F.photo=u;F.photoTouched=true;$('#nxphoto',s.el).innerHTML=photoRow();wire()}).catch(()=>toast('Could not read that image'))})});
     ['nxrec','nxvid'].forEach(i=>{const fi=$('#'+i,s.el);if(fi)fi.addEventListener('change',()=>takeVideo(fi.files&&fi.files[0]))});wireVideo()}
-  wire();if(F.yt&&(!F.ytC||F.ytC.state==='unchecked'))ytCheck();else if(F.yt)F.ytP=M.parseYouTube(F.yt,F.ytStart);
+  wire();if(F.name.trim()&&!ed)setTimeout(preselect,0);if(F.yt&&(!F.ytC||F.ytC.state==='unchecked'))ytCheck();else if(F.yt)F.ytP=M.parseYouTube(F.yt,F.ytStart);
   s.el.addEventListener('click',async e=>{const c=e.target.closest('[data-nx]');
     if(c){const k=c.dataset.nx,v=c.dataset.v;
       if(k==='rmphoto'){F.photo=null;F.photoTouched=true;$('#nxphoto',s.el).innerHTML=photoRow();wire();return}
       if(k==='rmvideo'){if(F.video&&!F.video.stored&&F.video.url)URL.revokeObjectURL(F.video.url);F.video=null;F.trim=null;F.videoTouched=true;F.vErr='';vidPaint();return}
-      if(k==='equipment'||k==='pattern'){F[k]=F[k]===v?null:v;return re()}
-      if(k==='main'){F.main=F.main===v?null:v;delete F.extra[v];return re()}
-      if(k==='extra'){const b=F.extra[v];if(!b)F.extra[v]='helper';else if(b==='helper')F.extra[v]='minor';else delete F.extra[v];return re()}}
+      if(k==='equipment'||k==='pattern'){F.touched=true;F[k]=F[k]===v?null:v;return re()}
+      if(k==='main'){F.touched=true;F.main=F.main===v?null:v;delete F.extra[v];return re()}
+      if(k==='extra'){F.touched=true;const b=F.extra[v];if(!b)F.extra[v]='helper';else if(b==='main')F.extra[v]='helper';else if(b==='helper')F.extra[v]='minor';else delete F.extra[v];return re()}}
+    const nb=e.target.closest('[data-nb]');if(nb)return baseAct(nb.dataset.nb,nb.dataset.v);
     if(e.target.closest('[data-x=nxcancel]'))return s.close();
     if(e.target.closest('[data-x=nxsave]')){F.tried=true;const fm=form(),v=CX.validate(fm,others.map(x=>x.name));
       if(F.yt.trim()&&!F.ytC&&!F.ytBusy){const pp=M.parseYouTube(F.yt,F.ytStart);if(!pp.error)ytCheck()}
       if(F.ytBusy){upd();await F.ytBusy}
-      if(v.errors.length||ytBlock()){ytPaint();const m=$('#nxmsg',s.el);m.scrollIntoView({block:'center'});return}
+      if(vfy().errors.length||ytBlock()){ytPaint();const m=$('#nxmsg',s.el);m.scrollIntoView({block:'center'});return}
       // short name: a hand-edited one is kept; otherwise Coach's rule re-runs only when the name changed
       const nameSame=ed&&spaces2(F.name)===ed.name,hand=F.shortEdited&&F.short.trim();
       const keepShort=hand?F.short:(nameSame&&!ed.short_name_edited?ed.short_name:undefined);
-      let rec;try{rec=CX.build(fm,{id:ed?ed.id:undefined,short_name:keepShort,takenIds:[...cxList().map(x=>x.id),...ld(CXGONE,[])],takenShort:others.map(x=>x.short_name)})}catch(x){toast('Could not save: '+x.message);return}
-      rec.short_name_edited=!!hand;rec.based_on=(ed&&ed.based_on)||null;   // based_on: reserved for "Start from a similar exercise"
+      const bo={id:ed?ed.id:undefined,short_name:keepShort,takenIds:[...cxList().map(x=>x.id),...ld(CXGONE,[])],takenShort:others.map(x=>x.short_name),dt:RD};
+      let rec;try{rec=F.base?CX.fromBase(F.base,fm,bo):CX.build(fm,bo)}catch(x){toast('Could not save: '+x.message);return}
+      rec.short_name_edited=!!hand;rec.based_on=F.base||null;   // the library base (same as base_id); null = pattern x equipment defaults
       const p=F.yt.trim()?M.parseYouTube(F.yt,F.ytStart):null;
       if(p&&!p.error){rec.youtube=p.url;rec.youtube_meta={video_id:p.video_id,start_s:p.start_s,author:(F.ytC&&F.ytC.author)||'',checked:!!(F.ytC&&F.ytC.state==='ok')}}else{rec.youtube='';delete rec.youtube_meta}
       const media={};if(F.photoTouched)media.photo=F.photo||null;
@@ -1720,19 +1780,25 @@ function cxDetailData(e){const LL=CXLL||{main:'Main mover',helper:'Helper',minor
     stimulus_per_fatigue:{main:+(Math.max(...Object.values(mus),0)/e.fatigue).toFixed(2)},one_side:(e.swap.flags||[]).includes('unilateral'),
     rep_range:{display:rr.display,unit:rr.unit,per_side:rr.per_side},movement_pattern_label:CX?CX.labels.pattern[e.movement_pattern]:e.movement_pattern,push_pull_side:pps,
     equipment:CX?CX.labels.equipment[e.equipment]:e.equipment,equipment_needs:e.equipment_needs,show_photo:false,photos:null}}
-async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBandLabels();const ph=cxPhoto(id),src=e.defaults_source||{},cell=(RD.CXD&&RD.CXD.cells[src.cell])||{};
+// "Estimated from <base>" (Coach's explainer_for variants); the info button opens the full sentence
+function cxEst(e){if(!CX||!CX.EXPL)return '';const [v,t]=CX.explainerFor(e),b=e.base_id&&CX.libOf(e.base_id);
+  const short=b?`Estimated from ${esc(b.name)}${v==='based_on_base_edited'?' · with your edits':''}`:`Estimated from typical ${esc(e.movement_pattern)} · ${esc(e.equipment)} exercises`;
+  return `<p class="cxest" data-est="${v}">${short}<button type="button" class="nxinfo" data-cxwhy="1" aria-label="About this estimate" data-t="${esc(t)}">ⓘ</button></p>`}
+async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBandLabels();const bse=e.base_id&&CX&&CX.libOf(e.base_id);const ph=cxPhoto(id),src=e.defaults_source||{},cell=(RD.CXD&&RD.CXD.cells[src.cell])||{};
   const media=cxMediaBlock(id),watch=media?`<button class="xwatch" data-go="#learn-ex-${id}~video" aria-label="Watch the clip or demo video">${I('play')}Watch</button>`:'';
   const s=sheet({title:'',cls:'grouped tall xdet',right:'<button class="btn plain" data-x="close">Done</button>',
     body:`<div class="xd cxd" data-id="${id}" data-custom="1"><div class="exi-h">${gl(id)}<div><h3>${esc(e.name)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${esc(e.equipment)}<span class="evl cxl" data-ev="custom">Custom</span><span class="evl" data-ev="modeled">Estimated</span></p><p class="sub nxsn">On the board: ${esc(e.short_name)}</p></div>${watch}</div>
-     ${media}
+     ${cxEst(e)}${media}
      ${ph?`<div class="xphotos cxph" data-photo="custom"><figure><img src="${ph}" alt="${esc(e.name)} photo"><figcaption>Your photo</figcaption></figure></div>`:''}
      <div id="xdb">${exDetailBody(id,cxDetailData(e))}</div>
-     <p class="foot cxsrc">Your exercise. Muscle credit comes from the bands you picked; fatigue, rep range and the rest are modeled from ${cell.n_library?`${cell.n_library} library exercise${cell.n_library===1?'':'s'} with the same pattern and equipment`:'library exercises with the same pattern'}, not measured.</p>
+     <p class="foot cxsrc">${bse?`Your exercise, started from ${esc(bse.name)}. Muscle credit keeps its ratings where you kept its bands; fatigue, rep range and the rest come from it${(e.derived&&e.derived.changed&&(e.derived.changed.movement_pattern||e.derived.changed.equipment))?`, adjusted to typical ${esc(e.movement_pattern)} · ${esc(e.equipment)} values`:''}. Estimated, not measured.`:`Your exercise. Muscle credit comes from the bands you picked; fatigue, rep range and the rest are modeled from ${cell.n_library?`${cell.n_library} library exercise${cell.n_library===1?'':'s'} with the same pattern and equipment`:'library exercises with the same pattern'}, not measured.`}</p>
      <div class="pad two"><button class="btn grey" data-x="cxedit">${I('edit',1.8)} Edit</button>${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:`<button class="btn grey dl" data-x="cxdel">${I('trash',1.8)} Delete</button>`}</div>
      ${o.onAdd?`<div class="pad"><button class="btn plain block dl" data-x="cxdel">Delete exercise</button></div>`:''}</div>`});
   if(ph){const x=$('.xnop',s.el);if(x)x.remove()}
   cxWireLoops(s.el);const im=$('.xvth img[data-src]',s.el);if(im){im.src=im.dataset.src;im.removeAttribute('data-src')}
-  s.el.addEventListener('click',ev=>{if(ev.target.closest('[data-x=close]'))return s.close();if(ev.target.closest('[data-x=add]')){s.close();return o.onAdd&&o.onAdd(id)}
+  s.el.addEventListener('click',ev=>{if(ev.target.closest('[data-x=close]'))return s.close();
+    const wy=ev.target.closest('[data-cxwhy]');if(wy){const w=sheet({title:(CX.EXPL.label||'Estimated').replace(/^ⓘ\s*/,''),cls:'grouped nxwhy',right:'<button class="btn plain" data-x="close">Done</button>',body:`<p class="lsum nxwhyt">${esc(wy.dataset.t)}</p>`});
+      w.el.addEventListener('click',x=>{if(x.target.closest('[data-x=close]'))w.close()});return}if(ev.target.closest('[data-x=add]')){s.close();return o.onAdd&&o.onAdd(id)}
     const pl=ev.target.closest('[data-act=xvplay]');if(pl){ev.preventDefault();return xvPlay(pl)}
     if(ev.target.closest('[data-x=cxedit]')){s.close();return newExSheet({editId:id,onSave:nid=>{if(window.BOARD&&BOARD.repaint)BOARD.repaint();toast('Saved');setTimeout(()=>cxDetail(nid,o),80)}})}
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;

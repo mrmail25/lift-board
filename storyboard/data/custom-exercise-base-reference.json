@@ -1,0 +1,5191 @@
+{
+ "version": 2,
+ "date": "2026-10-24",
+ "description": "Parity fixture for base-exercise suggestions (base-first: name + pattern + equipment + hints, muscles optional) and derive-from-base (tools/custom_exercise.py rank_bases / suggest_bases / from_base). Modelled defaults, not evidence. suggestions: per draft, the expected suggestable list (up to 5, top 3 marked top3: true; default_count 3); no_match drafts list nothing and name the fallback cell. derive: base_id + final chip form -> expected record fields (muscles / heads list non-zero values only; ids are fixed for the fixture).",
+ "rules": {
+  "suggest": {
+   "order": "the user picks a base BEFORE choosing muscles (ratios are inherited from the base), so ranking works from the name, movement pattern and equipment, plus grip / angle hints; muscles are optional",
+   "inputs": {
+    "name": "required",
+    "movement_pattern": "optional (used once picked)",
+    "equipment": "optional (used once picked)",
+    "main_muscle": "optional: small bonus only",
+    "muscles": "optional band chips: small muscle_similarity component only"
+   },
+   "weights": {
+    "name": 0.55,
+    "hints": 0.1,
+    "movement_pattern": 0.15,
+    "equipment": 0.15,
+    "muscle_similarity": 0.05
+   },
+   "bonus": {
+    "main_muscle": 0.04
+   },
+   "components": {
+    "name": "rare-token weighted Jaccard of normalized name tokens: sum of weights of shared tokens / sum of weights of all tokens in either name. Token weight = ln((N + 1) / (df + 0.5)), df = number of library names containing the token (N = library size), so rare words (jm, nordic, copenhagen) count more than common ones (press, curl, machine). A typo (similar spelling, see typo rule) shares at 0.8 of the library token weight.",
+    "hints": "grip / angle / position hints (hint_vocab): +1 per draft hint the base shares, -0.5 per draft hint group the base contradicts (incline vs decline), -0.25 per hint group only the base has (it is more specific than the draft); divided by the number of draft hints (min 1), clamped to -1..1",
+    "movement_pattern": "1 same movement_pattern; 0.5 a near pattern (pattern_near); else 0. Used only once the draft has a pattern.",
+    "equipment": "1 same equipment; 0.5 same equipment family (swap.py FAM: machine / free / bodyweight / cable); else 0. Used only once the draft has equipment.",
+    "muscle_similarity": "cosine of the draft band ratios vs the base counted ratings (>= 0.25). Used only if the user has already entered muscles.",
+    "main_muscle": "bonus +0.04 when the user already picked a Main mover and it is the base's main mover; never a penalty"
+   },
+   "score": "sum(weight x component) over the components that are available for the draft, divided by the sum of those weights; plus the main_muscle bonus; capped at 1; rounded to 4 decimals",
+   "tie_break": [
+    "exact normalized name match first (short-circuit: always rank 1)",
+    "score desc",
+    "name component desc",
+    "fewer hint conflicts",
+    "same equipment first",
+    "same movement_pattern first",
+    "fewer name tokens",
+    "name asc",
+    "id asc"
+   ],
+   "default_count": 3,
+   "max_count": 5,
+   "fixture_count": 5,
+   "min_score": 0.35,
+   "min_name_score": 0.2,
+   "threshold": "a library exercise is suggested only if score >= 0.35 and name component >= 0.2 (or it is the exact name match). If none qualifies, nothing is suggested and the form falls back to the pattern x equipment defaults (no_base_fallback).",
+   "candidates": "library exercises with muscle credit (246 of 247; without any: tibialis-raise); never custom exercises",
+   "normalization": {
+    "steps": "remove brand words (short_name.brands), ASCII-fold, lowercase, drop apostrophes, split on hyphens / slashes / brackets / punctuation, plural rule per word, join phrases, synonyms, drop stopwords, de-duplicate",
+    "exact_match": "the normalized token SET equals a library name's token set (word order ignored: Machine Preacher Curl = Preacher Curl Machine); short-circuits to rank 1",
+    "stopwords": [
+     "a",
+     "an",
+     "and",
+     "at",
+     "custom",
+     "exercise",
+     "for",
+     "in",
+     "my",
+     "new",
+     "of",
+     "on",
+     "or",
+     "style",
+     "the",
+     "to",
+     "using",
+     "variation",
+     "version",
+     "w",
+     "with"
+    ],
+    "phrases": [
+     {
+      "from": "low to high",
+      "to": "low high lowtohigh"
+     },
+     {
+      "from": "high to low",
+      "to": "high low hightolow"
+     },
+     {
+      "from": "farmer walk",
+      "to": "farmer carry"
+     },
+     {
+      "from": "farmers carry",
+      "to": "farmer carry"
+     },
+     {
+      "from": "smith machine",
+      "to": "smith"
+     },
+     {
+      "from": "ez bar",
+      "to": "ezbar"
+     },
+     {
+      "from": "e z bar",
+      "to": "ezbar"
+     },
+     {
+      "from": "t bar",
+      "to": "tbar"
+     },
+     {
+      "from": "trap bar",
+      "to": "trapbar"
+     },
+     {
+      "from": "hex bar",
+      "to": "trapbar"
+     },
+     {
+      "from": "iso lateral",
+      "to": "isolateral"
+     },
+     {
+      "from": "one arm",
+      "to": "singlearm"
+     },
+     {
+      "from": "1 arm",
+      "to": "singlearm"
+     },
+     {
+      "from": "single arm",
+      "to": "singlearm"
+     },
+     {
+      "from": "one leg",
+      "to": "singleleg"
+     },
+     {
+      "from": "1 leg",
+      "to": "singleleg"
+     },
+     {
+      "from": "single leg",
+      "to": "singleleg"
+     },
+     {
+      "from": "two arm",
+      "to": "twoarm"
+     },
+     {
+      "from": "2 arm",
+      "to": "twoarm"
+     },
+     {
+      "from": "side lying",
+      "to": "sidelying"
+     },
+     {
+      "from": "stiff leg",
+      "to": "stiffleg"
+     },
+     {
+      "from": "stiff legged",
+      "to": "stiffleg"
+     },
+     {
+      "from": "straight arm",
+      "to": "straightarm"
+     },
+     {
+      "from": "chest supported",
+      "to": "chestsupported"
+     },
+     {
+      "from": "plate loaded",
+      "to": "plateloaded"
+     },
+     {
+      "from": "pull down",
+      "to": "pulldown"
+     },
+     {
+      "from": "push down",
+      "to": "pushdown"
+     },
+     {
+      "from": "press down",
+      "to": "pushdown"
+     },
+     {
+      "from": "pull up",
+      "to": "pullup"
+     },
+     {
+      "from": "chin up",
+      "to": "chinup"
+     },
+     {
+      "from": "push up",
+      "to": "pushup"
+     },
+     {
+      "from": "push ups",
+      "to": "pushup"
+     },
+     {
+      "from": "step up",
+      "to": "stepup"
+     },
+     {
+      "from": "sit up",
+      "to": "situp"
+     },
+     {
+      "from": "muscle up",
+      "to": "muscleup"
+     },
+     {
+      "from": "get up",
+      "to": "getup"
+     },
+     {
+      "from": "l sit",
+      "to": "lsit"
+     },
+     {
+      "from": "skull crusher",
+      "to": "skullcrusher"
+     },
+     {
+      "from": "hamstring curl",
+      "to": "leg curl"
+     },
+     {
+      "from": "ham curl",
+      "to": "leg curl"
+     },
+     {
+      "from": "narrow grip",
+      "to": "close grip"
+     },
+     {
+      "from": "kick back",
+      "to": "kickback"
+     },
+     {
+      "from": "pec dec",
+      "to": "pec deck"
+     },
+     {
+      "from": "pec fly",
+      "to": "pec deck"
+     },
+     {
+      "from": "over head",
+      "to": "overhead"
+     },
+     {
+      "from": "glute ham",
+      "to": "gluteham"
+     }
+    ],
+    "synonyms": {
+     "db": "dumbbell",
+     "dbs": "dumbbell",
+     "dumbell": "dumbbell",
+     "bb": "barbell",
+     "kb": "kettlebell",
+     "kbs": "kettlebell",
+     "ez": "ezbar",
+     "rdl": "romanian deadlift",
+     "sldl": "stiffleg deadlift",
+     "ohp": "overhead press",
+     "dl": "deadlift",
+     "bss": "bulgarian split squat",
+     "ghr": "gluteham raise",
+     "hspu": "handstand pushup",
+     "cgbp": "close grip bench press",
+     "sl": "singleleg",
+     "pullups": "pullup",
+     "chinups": "chinup",
+     "pushups": "pushup",
+     "pushdowns": "pushdown",
+     "pulldowns": "pulldown",
+     "skullcrushers": "skullcrusher",
+     "tri": "triceps",
+     "tricep": "triceps",
+     "bicep": "biceps",
+     "bi": "biceps",
+     "lats": "lat",
+     "ext": "extension",
+     "ab": "ab",
+     "flye": "fly",
+     "flie": "fly",
+     "pec": "pec",
+     "unilateral": "unilateral",
+     "overhand": "pronated",
+     "underhand": "supinated",
+     "narrow": "close",
+     "isolateral": "isolateral",
+     "iso": "isolateral",
+     "selectorised": "selectorized",
+     "hyper": "hyperextension",
+     "hypers": "hyperextension",
+     "raises": "raise",
+     "calves": "calf",
+     "abs": "ab"
+    },
+    "plural_rule": "tokens ending in \"ies\" -> \"y\" (flies -> fly); \"sses\" / \"shes\" / \"ches\" / \"xes\" drop \"es\" (presses -> press); other tokens of 3+ letters ending in \"s\" (not \"ss\", \"us\") drop the \"s\" (curls -> curl, lunges -> lunge, ups -> up); PLURAL_KEEP words are left for the synonym table",
+    "plural_keep": [
+     "biceps",
+     "triceps",
+     "press",
+     "abs",
+     "calves",
+     "yates",
+     "meadows"
+    ],
+    "typo_rule": "an unshared draft token of 4+ letters matches an unshared library token when difflib ratio >= 0.8 (e.g. bulgarain ~ bulgarian); it shares at 0.8 x the library token weight",
+    "token_weight": "ln((N + 1) / (df + 0.5)), N = library size, df = library names containing the token; unknown tokens get the highest weight"
+   },
+   "hint_vocab": {
+    "bench_angle": {
+     "incline": "incline",
+     "decline": "decline",
+     "flat": "flat"
+    },
+    "grip": {
+     "neutral": "neutral",
+     "pronated": "pronated",
+     "supinated": "supinated",
+     "hammer": "neutral",
+     "reverse": "pronated"
+    },
+    "grip_width": {
+     "wide": "wide",
+     "close": "close"
+    },
+    "body_position": {
+     "seated": "seated",
+     "standing": "standing",
+     "lying": "lying",
+     "kneeling": "kneeling",
+     "sidelying": "lying",
+     "prone": "lying"
+    },
+    "laterality": {
+     "singlearm": "one_side",
+     "singleleg": "one_side",
+     "unilateral": "one_side",
+     "twoarm": "both_sides",
+     "double": "both_sides"
+    },
+    "cable_height": {
+     "high": "high",
+     "low": "low",
+     "lowtohigh": "low_to_high",
+     "hightolow": "high_to_low"
+    },
+    "feature": {
+     "preacher": "preacher",
+     "isolateral": "isolateral",
+     "converging": "converging",
+     "chestsupported": "chestsupported",
+     "deficit": "deficit",
+     "spider": "spider",
+     "bayesian": "bayesian",
+     "concentration": "concentration",
+     "plateloaded": "plateloaded",
+     "selectorized": "selectorized",
+     "straightarm": "straightarm",
+     "stiffleg": "stiffleg",
+     "sumo": "sumo",
+     "pause": "pause",
+     "paused": "paused",
+     "tempo": "tempo",
+     "feet": "feet",
+     "elbow": "elbow",
+     "assisted": "assisted",
+     "weighted": "weighted"
+    }
+   },
+   "pattern_near": [
+    [
+     "horizontal_push",
+     "vertical_push"
+    ],
+    [
+     "horizontal_pull",
+     "vertical_pull"
+    ],
+    [
+     "squat",
+     "lunge"
+    ]
+   ],
+   "equipment_families": {
+    "machine": "machine",
+    "plate-loaded machine": "machine",
+    "smith machine": "machine",
+    "barbell": "free",
+    "dumbbell": "free",
+    "kettlebell": "free",
+    "trap bar": "free",
+    "landmine": "free",
+    "bodyweight": "bodyweight",
+    "rings": "bodyweight",
+    "suspension": "bodyweight",
+    "cable": "cable"
+   }
+  },
+  "no_base_fallback": [
+   {
+    "step": 1,
+    "when": "the typed name equals a library name after normalization",
+    "result": "that library exercise is pre-selected as the base (rank 1); the user can still pick another or none"
+   },
+   {
+    "step": 2,
+    "when": "otherwise, library exercises reaching the threshold (score >= 0.35 and name component >= 0.2)",
+    "result": "show the top 3 (up to 5 with \"more\"); picking one copies its ratings (derive rules)"
+   },
+   {
+    "step": 3,
+    "when": "nothing reaches the threshold, or the user taps \"None of these\"",
+    "result": "no base: the user picks movement pattern, equipment and muscle bands; the other fields come from the defaults below"
+   },
+   {
+    "step": "3a",
+    "when": "pattern x equipment cell has >= 3 library exercises",
+    "result": "type, fatigue, rep range, swap scores, flags, equipment needs, stability, bodyweight, categories from the cell (lower medians / modes)"
+   },
+   {
+    "step": "3b",
+    "when": "cell has < 3 library exercises",
+    "result": "movement fields (type, fatigue, rep range, swap scores except stability, flags) from all library exercises with that movement pattern"
+   },
+   {
+    "step": "3c",
+    "when": "cell has < 3 library exercises",
+    "result": "equipment fields (equipment needs, stability, bodyweight, categories) from all library exercises with that equipment if >= 3, else the structural equipment rule"
+   },
+   {
+    "step": "3d",
+    "when": "pattern unknown to the library (does not happen with the current pattern list)",
+    "result": "global lower medians"
+   },
+   {
+    "step": "3e",
+    "when": "always (no base)",
+    "result": "slot list and legacy pattern from the pattern x Main mover table, else the pattern table; heads from the pattern head shape, else the library head shape, else equal heads; stretch default from the pattern x Main mover share"
+   }
+  ],
+  "chip_thresholds": [
+   {
+    "band": "main",
+    "label": "Main mover",
+    "min": 0.75,
+    "max": 1.0,
+    "shown": true,
+    "counted": true
+   },
+   {
+    "band": "helper",
+    "label": "Helper",
+    "min": 0.4,
+    "max_exclusive": 0.75,
+    "shown": true,
+    "counted": true
+   },
+   {
+    "band": "minor",
+    "label": "Minor",
+    "min": 0.25,
+    "max_exclusive": 0.4,
+    "shown": true,
+    "counted": true
+   },
+   {
+    "band": null,
+    "label": null,
+    "min": 0.0,
+    "max_exclusive": 0.25,
+    "shown": false,
+    "counted": false
+   }
+  ],
+  "chip_note": "Chips show the band of each counted muscle (>= 0.25). The record keeps the exact ratio: a kept 0.8 stays 0.8 and shows as Main mover. A base ratio under 0.25 has no chip and is not counted, but stays in the data; the user can promote it by adding the muscle at a band (it then counts as added, at the band value).",
+  "derive": {
+   "muscles": {
+    "kept": "same band as the base -> the base's exact ratio (not snapped)",
+    "moved": "different band -> the band value (main 1.0, helper 0.5, minor 0.3)",
+    "added": "not counted in the base (0 or < 0.25) -> the band value",
+    "removed": "counted in the base, chip removed -> 0",
+    "trace_kept": "base ratio under 0.25 the user did not add -> kept as is, hidden"
+   },
+   "carry_over": {
+    "muscles": "kept band (the chip band equals the base's band) = the base's exact ratio, not snapped; moved to another band or added = the band value (1.0 / 0.5 / 0.3); removed = 0; a base ratio under 0.25 the user did not touch = kept as is (hidden chip, not counted)",
+    "heads": "kept muscle: the base's heads exactly; moved / added: the base's head shape for that muscle scaled so its strongest head equals the new rating (pattern default shape if the base had none); removed: 0",
+    "stretch_focused": "carries over (on when the base is on a stretch list for one of its muscles or has stretch_emphasis 3): stretch_biased_for = the base's lists for muscles still counted. Resets to the pattern x main-muscle default when the Main mover changes. The toggle always wins.",
+    "unilateral": "carries over from the base flag; never reset automatically; the toggle always wins",
+    "fatigue": "carries over; resets to the cell default when movement_pattern or equipment changes",
+    "type": "carries over; resets to the cell default when movement_pattern changes",
+    "rep_range": "carries over (the base's whiteboard rep range, override included); resets to the cell default when movement_pattern changes",
+    "swap_scores": "carry over; stability resets with an equipment change; muscle_isolation, systemic_fatigue, loading_potential, skill_demand and grip_width reset to the cell when movement_pattern or equipment changes; stretch_emphasis follows the stretch toggle (3 on, else min(base, 2))",
+    "flags": "generic flags (unilateral, constant_tension, grip_demand, spinal_load, static_hold, overhead_finish, peak_contraction_focus) carry over and reset to the cell with a movement_pattern or equipment change; unilateral follows its toggle; region bias flags (upper_chest_bias, ...) carry only while the Main mover and movement_pattern are unchanged",
+    "patterns, pattern (legacy)": "carry over; reset to the pattern x main-muscle table when movement_pattern or the Main mover changes",
+    "equipment_needs, categories, bodyweight_fraction": "carry over; reset to the cell's equipment side when equipment changes (bodyweight_fraction also when movement_pattern changes)",
+    "description, howTo, tip, howto, youtube": "carry over as editable text",
+    "promote_trace": "a base ratio under 0.25 is hidden (no chip) but kept in the data; the user can promote it by adding that muscle at any band, which then counts as added (band value)"
+   },
+   "validation": "as the band form, except that a second Main mover kept from the base (38 library exercises have two) is allowed; the user cannot add another one",
+   "record_extra_fields": {
+    "base_id": "the library base",
+    "derived": "{muscles: {muscle: kept | moved | added | removed | trace_kept}, changed: {movement_pattern, equipment, main_mover}}"
+   }
+  },
+  "estimated_explainer": {
+   "label": "ⓘ Estimated",
+   "choose": "based_on_base when base_id is set and nothing was changed (all muscles kept, no pattern / equipment / Main mover change); based_on_base_edited when base_id is set and something changed; pattern_defaults when there is no base",
+   "variants": {
+    "based_on_base": "These ratings are copied from {base}, a similar exercise in the library. Library ratings are modelled estimates set from mainstream training research and biomechanics. They were not measured on you or on your machine.",
+    "based_on_base_edited": "These ratings started from {base}, a similar library exercise whose ratings are modelled estimates set from mainstream training research and biomechanics. You changed some of the bands, and the model now follows your choices. None of it was measured on you.",
+    "pattern_defaults": "No library exercise matched closely, so these ratings are typical values for {pattern} exercises using {equipment} in the library. They are modelled estimates set from mainstream training research and biomechanics, not measurements of you. Change the bands if this exercise works differently, and the model will follow."
+   }
+  }
+ },
+ "self_match": {
+  "checked": 246,
+  "drafts": 492,
+  "rank1": 492,
+  "rate_pct": 100.0,
+  "misses": [],
+  "note": "each library name typed alone, and with its own movement pattern and equipment, must return itself at rank 1 as the exact match"
+ },
+ "suggestions": {
+  "Hammer Strength Iso Row": {
+   "draft": {
+    "name": "Hammer Strength Iso Row",
+    "equipment": "plate-loaded machine",
+    "movement_pattern": "horizontal_pull"
+   },
+   "normalized_tokens": [
+    "isolateral",
+    "row"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "iso-lateral-row",
+     "name": "Iso-Lateral Row",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "isolateral",
+      "row"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "iso-lateral-chest-press",
+     "name": "Iso-Lateral Chest Press",
+     "score": 0.4668,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3518,
+      "hints": 1.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "isolateral"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "iso-lateral-shoulder-press",
+     "name": "Iso-Lateral Shoulder Press",
+     "score": 0.4608,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3414,
+      "hints": 1.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "isolateral"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "smith-row",
+     "name": "Smith Machine Row",
+     "score": 0.3755,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2395,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "row"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "iso-lateral-row",
+    "iso-lateral-chest-press",
+    "iso-lateral-shoulder-press"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Cable Y-Raise": {
+   "draft": {
+    "name": "Cable Y-Raise",
+    "equipment": "cable",
+    "movement_pattern": "isolation"
+   },
+   "normalized_tokens": [
+    "cable",
+    "y",
+    "raise"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "cable-y-raise",
+     "name": "Cable Y-Raise",
+     "score": 0.8947,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "cable",
+      "raise",
+      "y"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "cable-lateral-raise",
+     "name": "Cable Lateral Raise",
+     "score": 0.536,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3803,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "cable",
+      "raise"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "cable-curl",
+     "name": "Cable Curl",
+     "score": 0.436,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2077,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "cable"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "dumbbell-incline-y-raise",
+     "name": "Incline Dumbbell Y-Raise",
+     "score": 0.3963,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4572,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "raise",
+      "y"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "trx-y-t-raise",
+     "name": "Suspension Y/T Raise",
+     "score": 0.3816,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3864,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "raise",
+      "y"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "cable-y-raise",
+    "cable-lateral-raise",
+    "cable-curl"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Belt Squat": {
+   "draft": {
+    "name": "Belt Squat",
+    "equipment": "plate-loaded machine",
+    "movement_pattern": "squat"
+   },
+   "normalized_tokens": [
+    "belt",
+    "squat"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "belt-squat",
+     "name": "Belt Squat",
+     "score": 0.8158,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "belt",
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "smith-squat",
+     "name": "Smith Machine Squat",
+     "score": 0.3751,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2388,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "hack-squat",
+     "name": "Hack Squat",
+     "score": 0.3585,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2102,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "belt-squat",
+    "smith-squat",
+    "hack-squat"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Kettlebell Swing": {
+   "draft": {
+    "name": "Kettlebell Swing",
+    "equipment": "kettlebell",
+    "movement_pattern": "hinge"
+   },
+   "normalized_tokens": [
+    "kettlebell",
+    "swing"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "kettlebell-swing",
+     "name": "Kettlebell Swing",
+     "score": 0.8947,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "kettlebell",
+      "swing"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "kettlebell-clean",
+     "name": "Kettlebell Clean",
+     "score": 0.4527,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2364,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "kettlebell"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "kettlebell-snatch",
+     "name": "Kettlebell Snatch",
+     "score": 0.4527,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2364,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "kettlebell"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "kettlebell-swing",
+    "kettlebell-clean",
+    "kettlebell-snatch"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Machine Preacher Curl": {
+   "draft": {
+    "name": "Machine Preacher Curl",
+    "equipment": "machine",
+    "movement_pattern": "isolation"
+   },
+   "normalized_tokens": [
+    "machine",
+    "preacher",
+    "curl"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "machine-preacher-curl",
+     "name": "Preacher Curl Machine",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "machine",
+      "preacher"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "preacher-curl",
+     "name": "Preacher Curl",
+     "score": 0.8499,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.7407,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "preacher"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "cable-preacher-curl",
+     "name": "Cable Preacher Curl",
+     "score": 0.6011,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5838,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "preacher"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "seated-machine-curl",
+     "name": "Seated Curl Machine",
+     "score": 0.5083,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.378,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "machine"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "machine-preacher-curl",
+    "preacher-curl",
+    "cable-preacher-curl"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Nordic Curl": {
+   "draft": {
+    "name": "Nordic Curl",
+    "equipment": "bodyweight",
+    "movement_pattern": "isolation"
+   },
+   "normalized_tokens": [
+    "nordic",
+    "curl"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "nordic-curl",
+     "name": "Nordic Curl",
+     "score": 0.8947,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "nordic"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "nordic-curl"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Ring Dip": {
+   "draft": {
+    "name": "Ring Dip",
+    "equipment": "rings",
+    "movement_pattern": "horizontal_push"
+   },
+   "normalized_tokens": [
+    "ring",
+    "dip"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "ring-dip",
+     "name": "Ring Dip",
+     "score": 0.8947,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "dip",
+      "ring"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "ring-push-up",
+     "name": "Ring Push-Up",
+     "score": 0.4951,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3097,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "ring"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "weighted-dip",
+     "name": "Weighted Dip",
+     "score": 0.4061,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3378,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "dip"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "ring-row",
+     "name": "Ring Row",
+     "score": 0.3565,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3431,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "ring"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "ring-dip",
+    "ring-push-up",
+    "weighted-dip"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Copenhagen Plank": {
+   "draft": {
+    "name": "Copenhagen Plank",
+    "equipment": "bodyweight",
+    "movement_pattern": "core"
+   },
+   "normalized_tokens": [
+    "copenhagen",
+    "plank"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "copenhagen-plank",
+     "name": "Copenhagen Plank",
+     "score": 0.7368,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "copenhagen",
+      "plank"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "side-plank",
+     "name": "Side Plank",
+     "score": 0.5019,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3214,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "plank"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "copenhagen-plank",
+    "side-plank"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "JM Press": {
+   "draft": {
+    "name": "JM Press",
+    "equipment": "barbell",
+    "movement_pattern": "isolation"
+   },
+   "normalized_tokens": [
+    "jm",
+    "press"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "jm-press",
+     "name": "JM Press",
+     "score": 0.7368,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "jm",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "jm-press"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Landmine Lateral Lunge": {
+   "draft": {
+    "name": "Landmine Lateral Lunge",
+    "equipment": "landmine",
+    "movement_pattern": "lunge"
+   },
+   "normalized_tokens": [
+    "landmine",
+    "lateral",
+    "lunge"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "walking-lunge",
+     "name": "Walking Lunge",
+     "score": 0.3935,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2706,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "lunge"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "landmine-squat",
+     "name": "Landmine Squat",
+     "score": 0.3835,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2534,
+      "hints": 0.0,
+      "movement_pattern": 0.5,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "landmine"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "dumbbell-reverse-lunge",
+     "name": "Dumbbell Reverse Lunge",
+     "score": 0.359,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2565,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "lunge"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "walking-lunge",
+    "landmine-squat",
+    "dumbbell-reverse-lunge"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Hammer Strength Iso-Lateral Row": {
+   "draft": {
+    "name": "Hammer Strength Iso-Lateral Row",
+    "equipment": "plate-loaded machine",
+    "movement_pattern": "horizontal_pull"
+   },
+   "normalized_tokens": [
+    "isolateral",
+    "row"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "iso-lateral-row",
+     "name": "Iso-Lateral Row",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "isolateral",
+      "row"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "iso-lateral-chest-press",
+     "name": "Iso-Lateral Chest Press",
+     "score": 0.4668,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3518,
+      "hints": 1.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "isolateral"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "iso-lateral-shoulder-press",
+     "name": "Iso-Lateral Shoulder Press",
+     "score": 0.4608,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3414,
+      "hints": 1.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "isolateral"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "smith-row",
+     "name": "Smith Machine Row",
+     "score": 0.3755,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2395,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "row"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "iso-lateral-row",
+    "iso-lateral-chest-press",
+    "iso-lateral-shoulder-press"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Life Fitness Leg Press": {
+   "draft": {
+    "name": "Life Fitness Leg Press",
+    "equipment": "machine",
+    "movement_pattern": "squat"
+   },
+   "normalized_tokens": [
+    "leg",
+    "press"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "leg-press",
+     "name": "Leg Press",
+     "score": 0.8947,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "leg",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "single-leg-press",
+     "name": "Single-Leg Leg Press",
+     "score": 0.612,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5571,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "leg",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "horizontal-leg-press",
+     "name": "Horizontal Leg Press",
+     "score": 0.6034,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4968,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "leg",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "high-foot-leg-press",
+     "name": "High-Foot Leg Press",
+     "score": 0.5012,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3657,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "leg",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "leg-press-calf-raise",
+     "name": "Calf Raise on Leg Press",
+     "score": 0.4225,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.457,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "leg",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "leg-press",
+    "single-leg-press",
+    "horizontal-leg-press"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Hammer Strength Iso-Lateral Chest Press": {
+   "draft": {
+    "name": "Hammer Strength Iso-Lateral Chest Press",
+    "equipment": "plate-loaded machine"
+   },
+   "normalized_tokens": [
+    "isolateral",
+    "chest",
+    "press"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "iso-lateral-chest-press",
+     "name": "Iso-Lateral Chest Press",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "chest",
+      "isolateral",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "iso-lateral-shoulder-press",
+     "name": "Iso-Lateral Shoulder Press",
+     "score": 0.6211,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4489,
+      "hints": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "isolateral",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "iso-lateral-row",
+     "name": "Iso-Lateral Row",
+     "score": 0.5544,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3518,
+      "hints": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "isolateral"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "plate-loaded-chest-press",
+     "name": "Plate-Loaded Chest Press",
+     "score": 0.4229,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3879,
+      "hints": -0.25,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "chest",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "machine-chest-press",
+     "name": "Machine Chest Press",
+     "score": 0.4114,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4621,
+      "hints": 0.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "chest",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "iso-lateral-chest-press",
+    "iso-lateral-shoulder-press",
+    "iso-lateral-row"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Hammer Strength High Row": {
+   "draft": {
+    "name": "Hammer Strength High Row"
+   },
+   "normalized_tokens": [
+    "high",
+    "row"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "high-row-machine",
+     "name": "High Row Machine",
+     "score": 0.7639,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.721,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "high",
+      "row"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "high-to-low-row-machine",
+     "name": "High-to-Low Row Machine",
+     "score": 0.4542,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.355,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "high",
+      "row"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "high-cable-curl",
+     "name": "High Cable Curl",
+     "score": 0.4481,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3478,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "high"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "high-row-machine",
+    "high-to-low-row-machine",
+    "high-cable-curl"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Cybex Lat Pulldown": {
+   "draft": {
+    "name": "Cybex Lat Pulldown",
+    "equipment": "machine",
+    "movement_pattern": "vertical_pull"
+   },
+   "normalized_tokens": [
+    "lat",
+    "pulldown"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "lat-pulldown",
+     "name": "Lat Pulldown",
+     "score": 0.7368,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "lat",
+      "pulldown"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "single-arm-lat-pulldown",
+     "name": "Single-Arm Lat Pulldown",
+     "score": 0.5031,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.6417,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "lat",
+      "pulldown"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "arc-lat-pulldown",
+     "name": "Converging Arc Lat Pulldown",
+     "score": 0.4656,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4406,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "lat",
+      "pulldown"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "selectorized-pulldown-machine",
+     "name": "Pulldown Machine (Selectorized)",
+     "score": 0.4318,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2459,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "pulldown"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "wide-grip-lat-pulldown",
+     "name": "Wide-Grip Lat Pulldown",
+     "score": 0.3983,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4607,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "lat",
+      "pulldown"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "lat-pulldown",
+    "single-arm-lat-pulldown",
+    "arc-lat-pulldown"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Nautilus Pullover": {
+   "draft": {
+    "name": "Nautilus Pullover",
+    "equipment": "machine"
+   },
+   "normalized_tokens": [
+    "pullover"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "pullover-machine",
+     "name": "Pullover Machine",
+     "score": 0.6357,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.6519,
+      "hints": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "pullover"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "dumbbell-pullover",
+     "name": "Dumbbell Pullover",
+     "score": 0.4398,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.6397,
+      "hints": 0.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "pullover"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "pullover-machine",
+    "dumbbell-pullover"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Matrix Seated Leg Curl": {
+   "draft": {
+    "name": "Matrix Seated Leg Curl",
+    "equipment": "machine",
+    "movement_pattern": "isolation"
+   },
+   "normalized_tokens": [
+    "seated",
+    "leg",
+    "curl"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "seated-leg-curl",
+     "name": "Seated Leg Curl",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "leg",
+      "seated"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "seated-machine-curl",
+     "name": "Seated Curl Machine",
+     "score": 0.7119,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5024,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "seated"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "seated-calf-raise",
+     "name": "Seated Calf Raise",
+     "score": 0.5477,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2187,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "seated"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "kneeling-leg-curl",
+     "name": "Kneeling Leg Curl",
+     "score": 0.4895,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3909,
+      "hints": -0.5,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 1,
+     "shared_tokens": [
+      "curl",
+      "leg"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "lying-leg-curl",
+     "name": "Lying Leg Curl",
+     "score": 0.4895,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3909,
+      "hints": -0.5,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 1,
+     "shared_tokens": [
+      "curl",
+      "leg"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "seated-leg-curl",
+    "seated-machine-curl",
+    "seated-calf-raise"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Panatta Hack Squat": {
+   "draft": {
+    "name": "Panatta Hack Squat",
+    "equipment": "plate-loaded machine",
+    "movement_pattern": "squat"
+   },
+   "normalized_tokens": [
+    "hack",
+    "squat"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "hack-squat",
+     "name": "Hack Squat",
+     "score": 0.8158,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "hack",
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "reverse-hack-squat",
+     "name": "Reverse Hack Squat",
+     "score": 0.6656,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.6497,
+      "hints": -0.25,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "hack",
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "pendulum-squat",
+     "name": "Pendulum Squat",
+     "score": 0.4375,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2102,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "v-squat",
+     "name": "V-Squat",
+     "score": 0.4375,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2102,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "smith-squat",
+     "name": "Smith Machine Squat",
+     "score": 0.3873,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2599,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "hack-squat",
+    "reverse-hack-squat",
+    "pendulum-squat"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Technogym Incline Chest Press": {
+   "draft": {
+    "name": "Technogym Incline Chest Press",
+    "equipment": "machine",
+    "movement_pattern": "horizontal_push"
+   },
+   "normalized_tokens": [
+    "incline",
+    "chest",
+    "press"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "incline-machine-press",
+     "name": "Incline Chest Press Machine",
+     "score": 0.8819,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.796,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "chest",
+      "incline",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "machine-chest-press",
+     "name": "Machine Chest Press",
+     "score": 0.6073,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5035,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "chest",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "smith-incline-press",
+     "name": "Smith Machine Incline Press",
+     "score": 0.6008,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4468,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "incline",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "incline-dumbbell-press",
+     "name": "Incline Dumbbell Press",
+     "score": 0.5319,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4642,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "incline",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "converging-smith-incline-press",
+     "name": "Converging Smith Incline Press",
+     "score": 0.5085,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3329,
+      "hints": 0.75,
+      "movement_pattern": 1.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "incline",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "incline-machine-press",
+    "machine-chest-press",
+    "smith-incline-press"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Prime Preacher Curl": {
+   "draft": {
+    "name": "Prime Preacher Curl",
+    "equipment": "machine"
+   },
+   "normalized_tokens": [
+    "preacher",
+    "curl"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "preacher-curl",
+     "name": "Preacher Curl",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "preacher"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "machine-preacher-curl",
+     "name": "Preacher Curl Machine",
+     "score": 0.8217,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.7407,
+      "hints": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "preacher"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "cable-preacher-curl",
+     "name": "Cable Preacher Curl",
+     "score": 0.6295,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.7338,
+      "hints": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "preacher"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "preacher-curl",
+    "machine-preacher-curl",
+    "cable-preacher-curl"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Booty Builder Hip Thrust": {
+   "draft": {
+    "name": "Booty Builder Hip Thrust",
+    "equipment": "plate-loaded machine",
+    "movement_pattern": "hinge"
+   },
+   "normalized_tokens": [
+    "hip",
+    "thrust"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "hip-thrust",
+     "name": "Hip Thrust",
+     "score": 0.5789,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "hip",
+      "thrust"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "hip-thrust-machine",
+     "name": "Hip Thrust Machine",
+     "score": 0.5235,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.7678,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "hip",
+      "thrust"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "smith-hip-thrust",
+     "name": "Smith Machine Hip Thrust",
+     "score": 0.4993,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.726,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "hip",
+      "thrust"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "hip-thrust",
+    "hip-thrust-machine",
+    "smith-hip-thrust"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "DB incline press": {
+   "draft": {
+    "name": "DB incline press"
+   },
+   "normalized_tokens": [
+    "dumbbell",
+    "incline",
+    "press"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "incline-dumbbell-press",
+     "name": "Incline Dumbbell Press",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "dumbbell",
+      "incline",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "incline-dumbbell-curl",
+     "name": "Incline Dumbbell Curl",
+     "score": 0.6392,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5736,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "dumbbell",
+      "incline"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "incline-dumbbell-fly",
+     "name": "Incline Dumbbell Fly",
+     "score": 0.5891,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5144,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "dumbbell",
+      "incline"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "smith-incline-press",
+     "name": "Smith Machine Incline Press",
+     "score": 0.5768,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4998,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "incline",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "dumbbell-incline-y-raise",
+     "name": "Incline Dumbbell Y-Raise",
+     "score": 0.4868,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3935,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "dumbbell",
+      "incline"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "incline-dumbbell-press",
+    "incline-dumbbell-curl",
+    "incline-dumbbell-fly"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "KB swing": {
+   "draft": {
+    "name": "KB swing"
+   },
+   "normalized_tokens": [
+    "kettlebell",
+    "swing"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "kettlebell-swing",
+     "name": "Kettlebell Swing",
+     "score": 0.8462,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "kettlebell",
+      "swing"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "kettlebell-swing"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "RDL": {
+   "draft": {
+    "name": "RDL",
+    "equipment": "barbell"
+   },
+   "normalized_tokens": [
+    "romanian",
+    "deadlift"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "romanian-deadlift",
+     "name": "Romanian Deadlift",
+     "score": 0.875,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "deadlift",
+      "romanian"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "dumbbell-rdl",
+     "name": "Dumbbell Romanian Deadlift",
+     "score": 0.609,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.7495,
+      "hints": 0.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "deadlift",
+      "romanian"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "landmine-rdl",
+     "name": "Landmine Romanian Deadlift",
+     "score": 0.5499,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.6635,
+      "hints": 0.0,
+      "equipment": 0.5
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "deadlift",
+      "romanian"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "deadlift",
+     "name": "Deadlift",
+     "score": 0.5104,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4697,
+      "hints": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "deadlift"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "smith-rdl",
+     "name": "Smith Machine Romanian Deadlift",
+     "score": 0.4927,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.7167,
+      "hints": 0.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "deadlift",
+      "romanian"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "romanian-deadlift",
+    "dumbbell-rdl",
+    "landmine-rdl"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "DB RDL": {
+   "draft": {
+    "name": "DB RDL"
+   },
+   "normalized_tokens": [
+    "dumbbell",
+    "romanian",
+    "deadlift"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "dumbbell-rdl",
+     "name": "Dumbbell Romanian Deadlift",
+     "score": 0.8462,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "deadlift",
+      "dumbbell",
+      "romanian"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "romanian-deadlift",
+     "name": "Romanian Deadlift",
+     "score": 0.6342,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.7495,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "deadlift",
+      "romanian"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "smith-rdl",
+     "name": "Smith Machine Romanian Deadlift",
+     "score": 0.4892,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5782,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "deadlift",
+      "romanian"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "landmine-rdl",
+     "name": "Landmine Romanian Deadlift",
+     "score": 0.4595,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5431,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "deadlift",
+      "romanian"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "dumbbell-rdl",
+    "romanian-deadlift",
+    "smith-rdl"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "OHP": {
+   "draft": {
+    "name": "OHP"
+   },
+   "normalized_tokens": [
+    "overhead",
+    "press"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "overhead-press",
+     "name": "Overhead Press",
+     "score": 0.8462,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "overhead",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "smith-overhead-press",
+     "name": "Smith Machine Overhead Press",
+     "score": 0.5674,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.6706,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "overhead",
+      "press"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "overhead-press",
+    "smith-overhead-press"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "1-arm DB row": {
+   "draft": {
+    "name": "1-arm DB row"
+   },
+   "normalized_tokens": [
+    "singlearm",
+    "dumbbell",
+    "row"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "one-arm-dumbbell-row",
+     "name": "One-Arm Dumbbell Row",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "dumbbell",
+      "row",
+      "singlearm"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "single-arm-cable-row",
+     "name": "Single-Arm Cable Row",
+     "score": 0.6342,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5677,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "row",
+      "singlearm"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "landmine-press-one-arm",
+     "name": "One-Arm Landmine Press",
+     "score": 0.3918,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2812,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "singlearm"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "single-arm-lat-pulldown",
+     "name": "Single-Arm Lat Pulldown",
+     "score": 0.3682,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2533,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "singlearm"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "one-arm-dumbbell-row",
+    "single-arm-cable-row",
+    "landmine-press-one-arm"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Tricep pushdowns": {
+   "draft": {
+    "name": "Tricep pushdowns",
+    "equipment": "cable"
+   },
+   "normalized_tokens": [
+    "triceps",
+    "pushdown"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "triceps-pushdown",
+     "name": "Triceps Pushdown",
+     "score": 0.875,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "pushdown",
+      "triceps"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "triceps-pushdown"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Lat pull-down wide grip": {
+   "draft": {
+    "name": "Lat pull-down wide grip"
+   },
+   "normalized_tokens": [
+    "lat",
+    "pulldown",
+    "wide",
+    "grip"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "wide-grip-lat-pulldown",
+     "name": "Wide-Grip Lat Pulldown",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "grip",
+      "lat",
+      "pulldown",
+      "wide"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "wide-grip-cable-row",
+     "name": "Wide-Grip Cable Row",
+     "score": 0.5063,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4165,
+      "hints": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "grip",
+      "wide"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "neutral-grip-lat-pulldown",
+     "name": "Neutral-Grip Lat Pulldown",
+     "score": 0.4109,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5311,
+      "hints": -0.25
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "grip",
+      "lat",
+      "pulldown"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "lat-pulldown",
+     "name": "Lat Pulldown",
+     "score": 0.3898,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4607,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "lat",
+      "pulldown"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "wide-grip-lat-pulldown",
+    "wide-grip-cable-row",
+    "neutral-grip-lat-pulldown"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Neutral grip pulldown": {
+   "draft": {
+    "name": "Neutral grip pulldown",
+    "movement_pattern": "vertical_pull"
+   },
+   "normalized_tokens": [
+    "neutral",
+    "grip",
+    "pulldown"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "neutral-grip-lat-pulldown",
+     "name": "Neutral-Grip Lat Pulldown",
+     "score": 0.8373,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.7634,
+      "hints": 1.0,
+      "movement_pattern": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "grip",
+      "neutral",
+      "pulldown"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "close-grip-pulldown",
+     "name": "Close-Grip Pulldown",
+     "score": 0.4486,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4253,
+      "hints": -0.25,
+      "movement_pattern": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "grip",
+      "pulldown"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "wide-grip-lat-pulldown",
+     "name": "Wide-Grip Lat Pulldown",
+     "score": 0.3948,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.347,
+      "hints": -0.25,
+      "movement_pattern": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "grip",
+      "pulldown"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "neutral-grip-lat-pulldown",
+    "close-grip-pulldown",
+    "wide-grip-lat-pulldown"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Decline bench": {
+   "draft": {
+    "name": "Decline bench",
+    "equipment": "barbell"
+   },
+   "normalized_tokens": [
+    "decline",
+    "bench"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "decline-bench-press",
+     "name": "Decline Barbell Bench Press",
+     "score": 0.7168,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5881,
+      "hints": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "bench",
+      "decline"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "barbell-bench-press",
+     "name": "Barbell Bench Press",
+     "score": 0.3662,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2599,
+      "hints": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "bench"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "decline-bench-press",
+    "barbell-bench-press"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Skullcrushers": {
+   "draft": {
+    "name": "Skullcrushers"
+   },
+   "normalized_tokens": [
+    "skullcrusher"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "skull-crusher",
+     "name": "Skull Crusher",
+     "score": 0.8462,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "skullcrusher"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "skull-crusher"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Bulgarain split squats": {
+   "draft": {
+    "name": "Bulgarain split squats"
+   },
+   "normalized_tokens": [
+    "bulgarain",
+    "split",
+    "squat"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "bulgarian-split-squat",
+     "name": "Bulgarian Split Squat",
+     "score": 0.7752,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.9162,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "split",
+      "squat"
+     ],
+     "typo_matches": [
+      [
+       "bulgarain",
+       "bulgarian"
+      ]
+     ],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "smith-split-squat",
+     "name": "Smith Machine Split Squat",
+     "score": 0.3718,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4394,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "split",
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "bulgarian-split-squat",
+    "smith-split-squat"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Chinups": {
+   "draft": {
+    "name": "Chinups",
+    "main_muscle": "lats"
+   },
+   "normalized_tokens": [
+    "chinup"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "chin-up",
+     "name": "Chin-Up",
+     "score": 0.8862,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0
+     },
+     "bonus": {
+      "main_muscle": 0.04
+     },
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "chinup"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "chin-up"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Hammer curls": {
+   "draft": {
+    "name": "Hammer curls",
+    "equipment": "dumbbell"
+   },
+   "normalized_tokens": [
+    "hammer",
+    "curl"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "hammer-curl",
+     "name": "Hammer Curl",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "hammer"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "cable-rope-hammer-curl",
+     "name": "Cable Rope Hammer Curl",
+     "score": 0.4657,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.4956,
+      "hints": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "hammer"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "dumbbell-curl",
+     "name": "Dumbbell Curl",
+     "score": 0.354,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2422,
+      "hints": 0.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "hammer-curl",
+    "cable-rope-hammer-curl",
+    "dumbbell-curl"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Smith squat": {
+   "draft": {
+    "name": "Smith squat"
+   },
+   "normalized_tokens": [
+    "smith",
+    "squat"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "smith-squat",
+     "name": "Smith Machine Squat",
+     "score": 0.8462,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "smith",
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "smith-split-squat",
+     "name": "Smith Machine Split Squat",
+     "score": 0.4544,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.537,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "smith",
+      "squat"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "smith-squat",
+    "smith-split-squat"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Single arm cable row": {
+   "draft": {
+    "name": "Single arm cable row",
+    "equipment": "cable"
+   },
+   "normalized_tokens": [
+    "singlearm",
+    "cable",
+    "row"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "single-arm-cable-row",
+     "name": "Single-Arm Cable Row",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "cable",
+      "row",
+      "singlearm"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "one-arm-dumbbell-row",
+     "name": "One-Arm Dumbbell Row",
+     "score": 0.5153,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5677,
+      "hints": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "row",
+      "singlearm"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "single-arm-lat-pulldown",
+     "name": "Single-Arm Lat Pulldown",
+     "score": 0.4871,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.254,
+      "hints": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "singlearm"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "seated-cable-row",
+     "name": "Seated Cable Row",
+     "score": 0.4247,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3904,
+      "hints": -0.25,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "cable",
+      "row"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "single-arm-cable-row",
+    "one-arm-dumbbell-row",
+    "single-arm-lat-pulldown"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Lying hamstring curl": {
+   "draft": {
+    "name": "Lying hamstring curl",
+    "equipment": "machine",
+    "movement_pattern": "isolation"
+   },
+   "normalized_tokens": [
+    "lying",
+    "leg",
+    "curl"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "lying-leg-curl",
+     "name": "Lying Leg Curl",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "leg",
+      "lying"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "seated-leg-curl",
+     "name": "Seated Leg Curl",
+     "score": 0.4895,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3909,
+      "hints": -0.5,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 1,
+     "shared_tokens": [
+      "curl",
+      "leg"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "kneeling-leg-curl",
+     "name": "Kneeling Leg Curl",
+     "score": 0.4611,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3419,
+      "hints": -0.5,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 1,
+     "shared_tokens": [
+      "curl",
+      "leg"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "leg-extension",
+     "name": "Leg Extension",
+     "score": 0.4458,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.2245,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 1.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "leg"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "trx-hamstring-curl",
+     "name": "Suspension Hamstring Curl",
+     "score": 0.3825,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.388,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "leg"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "lying-leg-curl",
+    "seated-leg-curl",
+    "kneeling-leg-curl"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Farmer's walk": {
+   "draft": {
+    "name": "Farmer's walk"
+   },
+   "normalized_tokens": [
+    "farmer",
+    "carry"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "farmer-carry",
+     "name": "Farmer Carry",
+     "score": 0.8462,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "carry",
+      "farmer"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    }
+   ],
+   "expected_top3_ids": [
+    "farmer-carry"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Incline DB curls": {
+   "draft": {
+    "name": "Incline DB curls",
+    "muscles": {
+     "biceps": "main",
+     "forearms": "minor"
+    }
+   },
+   "normalized_tokens": [
+    "incline",
+    "dumbbell",
+    "curl"
+   ],
+   "no_match": false,
+   "expected": [
+    {
+     "id": "incline-dumbbell-curl",
+     "name": "Incline Dumbbell Curl",
+     "score": 1.0,
+     "exact_name": true,
+     "suggestable": true,
+     "components": {
+      "name": 1.0,
+      "hints": 1.0,
+      "muscle_similarity": 1.0
+     },
+     "bonus": {
+      "main_muscle": 0.04
+     },
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "dumbbell",
+      "incline"
+     ],
+     "typo_matches": [],
+     "rank": 1,
+     "top3": true
+    },
+    {
+     "id": "incline-dumbbell-press",
+     "name": "Incline Dumbbell Press",
+     "score": 0.5935,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5736,
+      "hints": 1.0,
+      "muscle_similarity": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "dumbbell",
+      "incline"
+     ],
+     "typo_matches": [],
+     "rank": 2,
+     "top3": true
+    },
+    {
+     "id": "dumbbell-curl",
+     "name": "Dumbbell Curl",
+     "score": 0.5724,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.587,
+      "hints": 0.0,
+      "muscle_similarity": 0.996
+     },
+     "bonus": {
+      "main_muscle": 0.04
+     },
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "curl",
+      "dumbbell"
+     ],
+     "typo_matches": [],
+     "rank": 3,
+     "top3": true
+    },
+    {
+     "id": "incline-dumbbell-fly",
+     "name": "Incline Dumbbell Fly",
+     "score": 0.5375,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.5023,
+      "hints": 1.0,
+      "muscle_similarity": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "dumbbell",
+      "incline"
+     ],
+     "typo_matches": [],
+     "rank": 4,
+     "top3": false
+    },
+    {
+     "id": "dumbbell-incline-y-raise",
+     "name": "Incline Dumbbell Y-Raise",
+     "score": 0.4465,
+     "exact_name": false,
+     "suggestable": true,
+     "components": {
+      "name": 0.3864,
+      "hints": 1.0,
+      "muscle_similarity": 0.0
+     },
+     "bonus": {},
+     "hint_conflicts": 0,
+     "shared_tokens": [
+      "dumbbell",
+      "incline"
+     ],
+     "typo_matches": [],
+     "rank": 5,
+     "top3": false
+    }
+   ],
+   "expected_top3_ids": [
+    "incline-dumbbell-curl",
+    "incline-dumbbell-press",
+    "dumbbell-curl"
+   ],
+   "fallback_cell": null,
+   "closest_below_threshold": []
+  },
+  "Sled Push": {
+   "draft": {
+    "name": "Sled Push",
+    "equipment": "machine",
+    "movement_pattern": "other"
+   },
+   "normalized_tokens": [
+    "sled",
+    "push"
+   ],
+   "no_match": true,
+   "expected": [],
+   "expected_top3_ids": [],
+   "fallback_cell": "other|machine",
+   "closest_below_threshold": [
+    {
+     "id": "plyo-push-up",
+     "score": 0.2615,
+     "components": {
+      "name": 0.179,
+      "hints": 0.0,
+      "movement_pattern": 1.0,
+      "equipment": 0.0
+     }
+    },
+    {
+     "id": "kettlebell-push-press",
+     "score": 0.1798,
+     "components": {
+      "name": 0.3105,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 0.0
+     }
+    },
+    {
+     "id": "push-up",
+     "score": 0.1596,
+     "components": {
+      "name": 0.2756,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 0.0
+     }
+    }
+   ]
+  },
+  "Battle Ropes": {
+   "draft": {
+    "name": "Battle Ropes",
+    "movement_pattern": "other"
+   },
+   "normalized_tokens": [
+    "battle",
+    "rope"
+   ],
+   "no_match": true,
+   "expected": [],
+   "expected_top3_ids": [],
+   "fallback_cell": "ask for movement pattern and equipment, then use that cell",
+   "closest_below_threshold": [
+    {
+     "id": "bounding",
+     "score": 0.1875,
+     "components": {
+      "name": 0.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0
+     }
+    },
+    {
+     "id": "box-jump",
+     "score": 0.1875,
+     "components": {
+      "name": 0.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0
+     }
+    },
+    {
+     "id": "broad-jump",
+     "score": 0.1875,
+     "components": {
+      "name": 0.0,
+      "hints": 0.0,
+      "movement_pattern": 1.0
+     }
+    }
+   ]
+  },
+  "Tire Flip": {
+   "draft": {
+    "name": "Tire Flip",
+    "equipment": "bodyweight",
+    "movement_pattern": "hinge"
+   },
+   "normalized_tokens": [
+    "tire",
+    "flip"
+   ],
+   "no_match": true,
+   "expected": [],
+   "expected_top3_ids": [],
+   "fallback_cell": "hinge|bodyweight",
+   "closest_below_threshold": [
+    {
+     "id": "bounding",
+     "score": 0.1579,
+     "components": {
+      "name": 0.0,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     }
+    },
+    {
+     "id": "chin-up",
+     "score": 0.1579,
+     "components": {
+      "name": 0.0,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     }
+    },
+    {
+     "id": "muscle-up",
+     "score": 0.1579,
+     "components": {
+      "name": 0.0,
+      "hints": 0.0,
+      "movement_pattern": 0.0,
+      "equipment": 1.0
+     }
+    }
+   ]
+  }
+ },
+ "derive": [
+  {
+   "case": 1,
+   "base_id": "barbell-bench-press",
+   "form": {
+    "name": "My Barbell Bench Press",
+    "equipment": "barbell",
+    "movement_pattern": "horizontal_push",
+    "muscles": {
+     "chest": "main",
+     "front_delts": "helper",
+     "triceps": "helper"
+    }
+   },
+   "shows": "nothing changed: every muscle kept at its exact ratio; everything carries over",
+   "expected": {
+    "name": "My Barbell Bench Press",
+    "short_name": "BB Bench Press 2",
+    "type": "primary",
+    "equipment": "barbell",
+    "equipment_needs": [
+     "barbell",
+     "plates",
+     "squat_rack",
+     "flat_bench"
+    ],
+    "fatigue": 1.2,
+    "patterns": [
+     "horizontal_push"
+    ],
+    "movement_pattern": "horizontal_push",
+    "swap": {
+     "stretch_emphasis": 2,
+     "muscle_isolation": 1,
+     "stability": 2,
+     "systemic_fatigue": 3,
+     "loading_potential": 3,
+     "skill_demand": 2,
+     "grip_width": 2,
+     "flags": []
+    },
+    "pattern": "horizontal_press",
+    "stretch_biased_for": [],
+    "rep_range": {
+     "low": 6,
+     "high": 10,
+     "unit": "reps",
+     "not_to_failure": false
+    },
+    "base_id": "barbell-bench-press",
+    "derived": {
+     "muscles": {
+      "chest": "kept",
+      "front_delts": "kept",
+      "triceps": "kept"
+     },
+     "changed": {
+      "movement_pattern": false,
+      "equipment": false,
+      "main_mover": false
+     }
+    },
+    "muscles": {
+     "chest": 1,
+     "front_delts": 0.5,
+     "triceps": 0.5
+    },
+    "heads": {
+     "chest_upper": 0.7,
+     "chest_lower": 1,
+     "front_delts": 0.5,
+     "triceps_long": 0.25,
+     "triceps_short": 0.5
+    },
+    "chips": [
+     {
+      "muscle": "chest",
+      "band": "main",
+      "label": "Main mover",
+      "ratio": 1
+     },
+     {
+      "muscle": "front_delts",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     },
+     {
+      "muscle": "triceps",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     }
+    ],
+    "estimated_explainer": {
+     "variant": "based_on_base",
+     "text": "These ratings are copied from Barbell Bench Press, a similar exercise in the library. Library ratings are modelled estimates set from mainstream training research and biomechanics. They were not measured on you or on your machine."
+    }
+   }
+  },
+  {
+   "case": 2,
+   "base_id": "seated-cable-row",
+   "form": {
+    "name": "My Seated Cable Row",
+    "equipment": "cable",
+    "movement_pattern": "horizontal_pull",
+    "muscles": {
+     "upper_back": "main",
+     "lats": "main",
+     "traps": "helper",
+     "biceps": "helper",
+     "rear_delts": "helper"
+    }
+   },
+   "shows": "base with two Main movers (upper_back 1.0, lats 0.8): both chips show Main mover and both are kept exact",
+   "expected": {
+    "name": "My Seated Cable Row",
+    "short_name": "Cable Row 2",
+    "type": "accessory",
+    "equipment": "cable",
+    "equipment_needs": [
+     "cable_row|cable"
+    ],
+    "fatigue": 1.2,
+    "patterns": [
+     "horizontal_pull"
+    ],
+    "movement_pattern": "horizontal_pull",
+    "swap": {
+     "stretch_emphasis": 2,
+     "muscle_isolation": 1,
+     "stability": 3,
+     "systemic_fatigue": 2,
+     "loading_potential": 2,
+     "skill_demand": 1,
+     "grip_width": 1,
+     "flags": [
+      "constant_tension",
+      "upper_back_thickness_bias",
+      "neutral_grip"
+     ]
+    },
+    "pattern": "horizontal_row",
+    "stretch_biased_for": [],
+    "rep_range": {
+     "low": 8,
+     "high": 12,
+     "unit": "reps",
+     "not_to_failure": false
+    },
+    "base_id": "seated-cable-row",
+    "derived": {
+     "muscles": {
+      "rear_delts": "kept",
+      "lats": "kept",
+      "upper_back": "kept",
+      "traps": "kept",
+      "biceps": "kept"
+     },
+     "changed": {
+      "movement_pattern": false,
+      "equipment": false,
+      "main_mover": false
+     }
+    },
+    "muscles": {
+     "rear_delts": 0.4,
+     "lats": 0.8,
+     "upper_back": 1,
+     "traps": 0.5,
+     "biceps": 0.5
+    },
+    "heads": {
+     "rear_delts": 0.4,
+     "lats": 0.8,
+     "upper_back": 1,
+     "traps_upper": 0.2,
+     "traps_mid_lower": 0.5,
+     "biceps": 0.5
+    },
+    "chips": [
+     {
+      "muscle": "upper_back",
+      "band": "main",
+      "label": "Main mover",
+      "ratio": 1
+     },
+     {
+      "muscle": "lats",
+      "band": "main",
+      "label": "Main mover",
+      "ratio": 0.8
+     },
+     {
+      "muscle": "traps",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     },
+     {
+      "muscle": "biceps",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     },
+     {
+      "muscle": "rear_delts",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.4
+     }
+    ],
+    "estimated_explainer": {
+     "variant": "based_on_base",
+     "text": "These ratings are copied from Seated Cable Row, a similar exercise in the library. Library ratings are modelled estimates set from mainstream training research and biomechanics. They were not measured on you or on your machine."
+    }
+   }
+  },
+  {
+   "case": 3,
+   "base_id": "back-squat",
+   "form": {
+    "name": "My Back Squat",
+    "equipment": "barbell",
+    "movement_pattern": "squat",
+    "muscles": {
+     "quads": "main",
+     "glutes": "helper",
+     "adductors": "helper",
+     "lower_back": "helper",
+     "abductors": "minor"
+    }
+   },
+   "shows": "base trace abs 0.15: no chip, kept in the data, not counted",
+   "expected": {
+    "name": "My Back Squat",
+    "short_name": "My Back Squat",
+    "type": "primary",
+    "equipment": "barbell",
+    "equipment_needs": [
+     "barbell",
+     "plates",
+     "squat_rack"
+    ],
+    "fatigue": 1.5,
+    "patterns": [
+     "squat"
+    ],
+    "movement_pattern": "squat",
+    "swap": {
+     "stretch_emphasis": 3,
+     "muscle_isolation": 1,
+     "stability": 2,
+     "systemic_fatigue": 3,
+     "loading_potential": 3,
+     "skill_demand": 3,
+     "grip_width": 2,
+     "flags": [
+      "spinal_load"
+     ]
+    },
+    "pattern": "squat",
+    "stretch_biased_for": [
+     "quads",
+     "glutes"
+    ],
+    "rep_range": {
+     "low": 6,
+     "high": 10,
+     "unit": "reps",
+     "not_to_failure": false
+    },
+    "base_id": "back-squat",
+    "derived": {
+     "muscles": {
+      "abs": "trace_kept",
+      "quads": "kept",
+      "glutes": "kept",
+      "adductors": "kept",
+      "lower_back": "kept",
+      "abductors": "kept"
+     },
+     "changed": {
+      "movement_pattern": false,
+      "equipment": false,
+      "main_mover": false
+     }
+    },
+    "muscles": {
+     "abs": 0.15,
+     "quads": 1,
+     "glutes": 0.7,
+     "adductors": 0.6,
+     "lower_back": 0.4,
+     "abductors": 0.25
+    },
+    "heads": {
+     "abs": 0.15,
+     "quads_rf": 0.4,
+     "quads_vasti": 1,
+     "glutes": 0.7,
+     "abductors": 0.25,
+     "adductors": 0.6,
+     "lower_back": 0.4
+    },
+    "chips": [
+     {
+      "muscle": "quads",
+      "band": "main",
+      "label": "Main mover",
+      "ratio": 1
+     },
+     {
+      "muscle": "glutes",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.7
+     },
+     {
+      "muscle": "adductors",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.6
+     },
+     {
+      "muscle": "lower_back",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.4
+     },
+     {
+      "muscle": "abductors",
+      "band": "minor",
+      "label": "Minor",
+      "ratio": 0.25
+     }
+    ],
+    "estimated_explainer": {
+     "variant": "based_on_base",
+     "text": "These ratings are copied from Back Squat, a similar exercise in the library. Library ratings are modelled estimates set from mainstream training research and biomechanics. They were not measured on you or on your machine."
+    }
+   }
+  },
+  {
+   "case": 4,
+   "base_id": "hip-thrust",
+   "form": {
+    "name": "My Hip Thrust",
+    "equipment": "barbell",
+    "movement_pattern": "isolation",
+    "muscles": {
+     "glutes": "main",
+     "hamstrings": "helper",
+     "abductors": "minor",
+     "quads": "helper"
+    }
+   },
+   "shows": "promote a hidden base trace (quads 0.2) by adding it: added at the band value 0.5",
+   "expected": {
+    "name": "My Hip Thrust",
+    "short_name": "My Hip Thrust",
+    "type": "primary",
+    "equipment": "barbell",
+    "equipment_needs": [
+     "barbell",
+     "plates",
+     "flat_bench"
+    ],
+    "fatigue": 1.2,
+    "patterns": [
+     "glute_iso"
+    ],
+    "movement_pattern": "isolation",
+    "swap": {
+     "stretch_emphasis": 1,
+     "muscle_isolation": 2,
+     "stability": 2,
+     "systemic_fatigue": 3,
+     "loading_potential": 3,
+     "skill_demand": 2,
+     "grip_width": 2,
+     "flags": [
+      "peak_contraction_focus"
+     ]
+    },
+    "pattern": "hip_extension",
+    "stretch_biased_for": [],
+    "rep_range": {
+     "low": 6,
+     "high": 10,
+     "unit": "reps",
+     "not_to_failure": false
+    },
+    "base_id": "hip-thrust",
+    "derived": {
+     "muscles": {
+      "quads": "added",
+      "hamstrings": "kept",
+      "glutes": "kept",
+      "abductors": "kept"
+     },
+     "changed": {
+      "movement_pattern": false,
+      "equipment": false,
+      "main_mover": false
+     }
+    },
+    "muscles": {
+     "quads": 0.5,
+     "hamstrings": 0.4,
+     "glutes": 1,
+     "abductors": 0.3
+    },
+    "heads": {
+     "quads_rf": 0.2,
+     "quads_vasti": 0.5,
+     "hamstrings": 0.4,
+     "glutes": 1,
+     "abductors": 0.3
+    },
+    "chips": [
+     {
+      "muscle": "glutes",
+      "band": "main",
+      "label": "Main mover",
+      "ratio": 1
+     },
+     {
+      "muscle": "quads",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     },
+     {
+      "muscle": "hamstrings",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.4
+     },
+     {
+      "muscle": "abductors",
+      "band": "minor",
+      "label": "Minor",
+      "ratio": 0.3
+     }
+    ],
+    "estimated_explainer": {
+     "variant": "based_on_base_edited",
+     "text": "These ratings started from Hip Thrust, a similar library exercise whose ratings are modelled estimates set from mainstream training research and biomechanics. You changed some of the bands, and the model now follows your choices. None of it was measured on you."
+    }
+   }
+  },
+  {
+   "case": 5,
+   "base_id": "barbell-bench-press",
+   "form": {
+    "name": "My Barbell Bench Press",
+    "equipment": "smith machine",
+    "movement_pattern": "horizontal_push",
+    "muscles": {
+     "chest": "main",
+     "front_delts": "helper",
+     "triceps": "helper"
+    }
+   },
+   "shows": "equipment change: fatigue, stability and the other equipment / pattern-driven swap scores, flags and equipment_needs reset to the cell",
+   "expected": {
+    "name": "My Barbell Bench Press",
+    "short_name": "BB Bench Press 2",
+    "type": "primary",
+    "equipment": "smith machine",
+    "equipment_needs": [
+     "gym_machine",
+     "plates"
+    ],
+    "fatigue": 1.0,
+    "patterns": [
+     "horizontal_push"
+    ],
+    "movement_pattern": "horizontal_push",
+    "swap": {
+     "stretch_emphasis": 2,
+     "muscle_isolation": 1,
+     "stability": 3,
+     "systemic_fatigue": 2,
+     "loading_potential": 3,
+     "skill_demand": 1,
+     "grip_width": 2,
+     "flags": []
+    },
+    "pattern": "horizontal_press",
+    "stretch_biased_for": [],
+    "rep_range": {
+     "low": 6,
+     "high": 10,
+     "unit": "reps",
+     "not_to_failure": false
+    },
+    "base_id": "barbell-bench-press",
+    "derived": {
+     "muscles": {
+      "chest": "kept",
+      "front_delts": "kept",
+      "triceps": "kept"
+     },
+     "changed": {
+      "movement_pattern": false,
+      "equipment": true,
+      "main_mover": false
+     }
+    },
+    "muscles": {
+     "chest": 1,
+     "front_delts": 0.5,
+     "triceps": 0.5
+    },
+    "heads": {
+     "chest_upper": 0.7,
+     "chest_lower": 1,
+     "front_delts": 0.5,
+     "triceps_long": 0.25,
+     "triceps_short": 0.5
+    },
+    "chips": [
+     {
+      "muscle": "chest",
+      "band": "main",
+      "label": "Main mover",
+      "ratio": 1
+     },
+     {
+      "muscle": "front_delts",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     },
+     {
+      "muscle": "triceps",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     }
+    ],
+    "estimated_explainer": {
+     "variant": "based_on_base_edited",
+     "text": "These ratings started from Barbell Bench Press, a similar library exercise whose ratings are modelled estimates set from mainstream training research and biomechanics. You changed some of the bands, and the model now follows your choices. None of it was measured on you."
+    }
+   }
+  },
+  {
+   "case": 6,
+   "base_id": "seated-cable-row",
+   "form": {
+    "name": "My Seated Cable Row",
+    "equipment": "cable",
+    "movement_pattern": "horizontal_pull",
+    "muscles": {
+     "upper_back": "main",
+     "lats": "minor",
+     "biceps": "helper",
+     "rear_delts": "helper",
+     "traps": "helper"
+    }
+   },
+   "shows": "moved lats Main mover (0.8) -> Minor = 0.3; rear_delts 0.4, traps 0.5, biceps 0.5 kept exact",
+   "expected": {
+    "name": "My Seated Cable Row",
+    "short_name": "Cable Row 2",
+    "type": "accessory",
+    "equipment": "cable",
+    "equipment_needs": [
+     "cable_row|cable"
+    ],
+    "fatigue": 1.2,
+    "patterns": [
+     "horizontal_pull"
+    ],
+    "movement_pattern": "horizontal_pull",
+    "swap": {
+     "stretch_emphasis": 2,
+     "muscle_isolation": 1,
+     "stability": 3,
+     "systemic_fatigue": 2,
+     "loading_potential": 2,
+     "skill_demand": 1,
+     "grip_width": 1,
+     "flags": [
+      "constant_tension",
+      "upper_back_thickness_bias",
+      "neutral_grip"
+     ]
+    },
+    "pattern": "horizontal_row",
+    "stretch_biased_for": [],
+    "rep_range": {
+     "low": 8,
+     "high": 12,
+     "unit": "reps",
+     "not_to_failure": false
+    },
+    "base_id": "seated-cable-row",
+    "derived": {
+     "muscles": {
+      "rear_delts": "kept",
+      "lats": "moved",
+      "upper_back": "kept",
+      "traps": "kept",
+      "biceps": "kept"
+     },
+     "changed": {
+      "movement_pattern": false,
+      "equipment": false,
+      "main_mover": false
+     }
+    },
+    "muscles": {
+     "rear_delts": 0.4,
+     "lats": 0.3,
+     "upper_back": 1,
+     "traps": 0.5,
+     "biceps": 0.5
+    },
+    "heads": {
+     "rear_delts": 0.4,
+     "lats": 0.3,
+     "upper_back": 1,
+     "traps_upper": 0.2,
+     "traps_mid_lower": 0.5,
+     "biceps": 0.5
+    },
+    "chips": [
+     {
+      "muscle": "upper_back",
+      "band": "main",
+      "label": "Main mover",
+      "ratio": 1
+     },
+     {
+      "muscle": "traps",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     },
+     {
+      "muscle": "biceps",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     },
+     {
+      "muscle": "rear_delts",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.4
+     },
+     {
+      "muscle": "lats",
+      "band": "minor",
+      "label": "Minor",
+      "ratio": 0.3
+     }
+    ],
+    "estimated_explainer": {
+     "variant": "based_on_base_edited",
+     "text": "These ratings started from Seated Cable Row, a similar library exercise whose ratings are modelled estimates set from mainstream training research and biomechanics. You changed some of the bands, and the model now follows your choices. None of it was measured on you."
+    }
+   }
+  },
+  {
+   "case": 7,
+   "base_id": "romanian-deadlift",
+   "form": {
+    "name": "My Romanian Deadlift",
+    "equipment": "barbell",
+    "movement_pattern": "hinge",
+    "muscles": {
+     "hamstrings": "main",
+     "glutes": "helper"
+    }
+   },
+   "shows": "removed muscles (forearms, lower_back, adductors, ...) go to 0; stretch lists carry for muscles still counted",
+   "expected": {
+    "name": "My Romanian Deadlift",
+    "short_name": "My RDL",
+    "type": "primary",
+    "equipment": "barbell",
+    "equipment_needs": [
+     "barbell",
+     "plates"
+    ],
+    "fatigue": 1.5,
+    "patterns": [
+     "hinge"
+    ],
+    "movement_pattern": "hinge",
+    "swap": {
+     "stretch_emphasis": 3,
+     "muscle_isolation": 1,
+     "stability": 2,
+     "systemic_fatigue": 3,
+     "loading_potential": 3,
+     "skill_demand": 3,
+     "grip_width": 2,
+     "flags": [
+      "grip_demand",
+      "spinal_load"
+     ]
+    },
+    "pattern": "hinge",
+    "stretch_biased_for": [
+     "hamstrings",
+     "glutes"
+    ],
+    "rep_range": {
+     "low": 6,
+     "high": 10,
+     "unit": "reps",
+     "not_to_failure": false
+    },
+    "base_id": "romanian-deadlift",
+    "derived": {
+     "muscles": {
+      "lats": "removed",
+      "upper_back": "removed",
+      "traps": "removed",
+      "forearms": "removed",
+      "hamstrings": "kept",
+      "glutes": "kept",
+      "adductors": "removed",
+      "lower_back": "removed",
+      "abductors": "removed"
+     },
+     "changed": {
+      "movement_pattern": false,
+      "equipment": false,
+      "main_mover": false
+     }
+    },
+    "muscles": {
+     "hamstrings": 1,
+     "glutes": 0.7
+    },
+    "heads": {
+     "hamstrings": 1,
+     "glutes": 0.7
+    },
+    "chips": [
+     {
+      "muscle": "hamstrings",
+      "band": "main",
+      "label": "Main mover",
+      "ratio": 1
+     },
+     {
+      "muscle": "glutes",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.7
+     }
+    ],
+    "estimated_explainer": {
+     "variant": "based_on_base_edited",
+     "text": "These ratings started from Romanian Deadlift, a similar library exercise whose ratings are modelled estimates set from mainstream training research and biomechanics. You changed some of the bands, and the model now follows your choices. None of it was measured on you."
+    }
+   }
+  },
+  {
+   "case": 8,
+   "base_id": "lat-pulldown",
+   "form": {
+    "name": "My Lat Pulldown",
+    "equipment": "cable",
+    "movement_pattern": "horizontal_pull",
+    "muscles": {
+     "upper_back": "main",
+     "lats": "helper",
+     "biceps": "helper"
+    }
+   },
+   "shows": "pattern + Main mover change: type, rep range, slots and legacy pattern reset; stretch toggle resets to the new default",
+   "expected": {
+    "name": "My Lat Pulldown",
+    "short_name": "My Lat Pulldown",
+    "type": "accessory",
+    "equipment": "cable",
+    "equipment_needs": [
+     "lat_pulldown"
+    ],
+    "fatigue": 1.0,
+    "patterns": [
+     "horizontal_pull"
+    ],
+    "movement_pattern": "horizontal_pull",
+    "swap": {
+     "stretch_emphasis": 2,
+     "muscle_isolation": 1,
+     "stability": 3,
+     "systemic_fatigue": 2,
+     "loading_potential": 2,
+     "skill_demand": 1,
+     "grip_width": 2,
+     "flags": [
+      "constant_tension"
+     ]
+    },
+    "pattern": "horizontal_row",
+    "stretch_biased_for": [],
+    "rep_range": {
+     "high": 12,
+     "low": 8,
+     "not_to_failure": false,
+     "unit": "reps"
+    },
+    "base_id": "lat-pulldown",
+    "derived": {
+     "muscles": {
+      "rear_delts": "removed",
+      "lats": "moved",
+      "upper_back": "moved",
+      "biceps": "kept"
+     },
+     "changed": {
+      "movement_pattern": true,
+      "equipment": false,
+      "main_mover": true
+     }
+    },
+    "muscles": {
+     "lats": 0.5,
+     "upper_back": 1.0,
+     "biceps": 0.5
+    },
+    "heads": {
+     "lats": 0.5,
+     "upper_back": 1.0,
+     "biceps": 0.5
+    },
+    "chips": [
+     {
+      "muscle": "upper_back",
+      "band": "main",
+      "label": "Main mover",
+      "ratio": 1.0
+     },
+     {
+      "muscle": "lats",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     },
+     {
+      "muscle": "biceps",
+      "band": "helper",
+      "label": "Helper",
+      "ratio": 0.5
+     }
+    ],
+    "estimated_explainer": {
+     "variant": "based_on_base_edited",
+     "text": "These ratings started from Lat Pulldown, a similar library exercise whose ratings are modelled estimates set from mainstream training research and biomechanics. You changed some of the bands, and the model now follows your choices. None of it was measured on you."
+    }
+   }
+  },
+  {
+   "case": 9,
+   "base_id": "incline-dumbbell-curl",
+   "form": {
+    "name": "My Incline Dumbbell Curl",
+    "equipment": "dumbbell",
+    "movement_pattern": "isolation",
+    "muscles": {
+     "biceps": "main",
+     "forearms": "minor"
+    },
+    "unilateral": true,
+    "stretch_focused": false
+   },
+   "shows": "toggles win over carried values",
+   "expected": {
+    "name": "My Incline Dumbbell Curl",
+    "short_name": "DB Curl 2",
+    "type": "isolation",
+    "equipment": "dumbbell",
+    "equipment_needs": [
+     "dumbbell",
+     "adjustable_bench"
+    ],
+    "fatigue": 0.8,
+    "patterns": [
+     "biceps"
+    ],
+    "movement_pattern": "isolation",
+    "swap": {
+     "stretch_emphasis": 2,
+     "muscle_isolation": 2,
+     "stability": 2,
+     "systemic_fatigue": 1,
+     "loading_potential": 1,
+     "skill_demand": 1,
+     "grip_width": 2,
+     "flags": [
+      "unilateral",
+      "biceps_long_head_bias"
+     ]
+    },
+    "pattern": "curl",
+    "stretch_biased_for": [],
+    "rep_range": {
+     "low": 10,
+     "high": 15,
+     "unit": "reps",
+     "not_to_failure": false
+    },
+    "base_id": "incline-dumbbell-curl",
+    "derived": {
+     "muscles": {
+      "biceps": "kept",
+      "forearms": "kept"
+     },
+     "changed": {
+      "movement_pattern": false,
+      "equipment": false,
+      "main_mover": false
+     }
+    },
+    "muscles": {
+     "biceps": 1,
+     "forearms": 0.3
+    },
+    "heads": {
+     "biceps": 1,
+     "forearms": 0.3
+    },
+    "chips": [
+     {
+      "muscle": "biceps",
+      "band": "main",
+      "label": "Main mover",
+      "ratio": 1
+     },
+     {
+      "muscle": "forearms",
+      "band": "minor",
+      "label": "Minor",
+      "ratio": 0.3
+     }
+    ],
+    "estimated_explainer": {
+     "variant": "based_on_base",
+     "text": "These ratings are copied from Incline Dumbbell Curl, a similar exercise in the library. Library ratings are modelled estimates set from mainstream training research and biomechanics. They were not measured on you or on your machine."
+    }
+   }
+  }
+ ]
+}
