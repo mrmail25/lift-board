@@ -1102,4 +1102,7 @@ details.ls.flash{box-shadow:0 0 0 3px var(--accent);border-radius:var(--r-md)}
 .ansheet .hbar button.cbx{-webkit-appearance:none;appearance:none;display:inline-grid;place-items:center;padding:0;margin:0 0 0 3px;background:none;border:0;box-shadow:none;width:16px;height:16px;min-width:0;min-height:0;vertical-align:-2px}
 /* Round 3 quick fixes */
 .ssn{margin:-2px 0 6px 0;font-size:12.5px;color:var(--text-2);line-height:1.35}
-.xprop{font-size:13px;color:var(--text-2);margin:2px 0 8px}
+.xprop{font-size:13px;color:var(--text-2);margin:2px 0 8px;padding:0 var(--s4)}
+/* evidence labels (Modeled / Thin evidence / Supported): quiet inline text beside the subhead, no chip; the full note is in the (i) sheet */
+.evl{display:inline;background:none;border:0;padding:0;margin:0 0 0 6px;border-radius:0;font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0;font-variant:normal;text-transform:none;white-space:nowrap;line-height:inherit;vertical-align:baseline}
+.xpsh{display:block;align-self:stretch;width:auto;padding:6px var(--s4) 4px}.xpl .xpsh h3{display:inline;padding:0;margin:0 6px 0 0}.xpsh .evl{margin-left:0}

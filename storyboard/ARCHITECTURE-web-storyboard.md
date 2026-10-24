@@ -350,3 +350,4 @@ The suite runs all three (`r3*` checks).
   - Cut to N / Add N sets / Swap / Add / Remove / Move;
   - `fix.preview` only as a fallback.
   - No Coach display string is shown verbatim on the card.
+- Evidence labels (Modeled / Thin evidence / Supported) are `span.evl[data-ev]`: small muted text beside the subhead (`.ash` in Analysis and the deep-dive; `.xpsh` next to the explain-sheet title), with no background, border or padding. The ⓘ sheet keeps the full what / how / why. Checked by `qfEvidenceLabelsQuietInlineNoChip`.
