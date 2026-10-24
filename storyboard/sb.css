@@ -492,8 +492,7 @@ dd .tag{margin:0 3px 3px 0}
 .rate b{font-size:13px;color:var(--ink);min-width:26px;text-align:right}
 .rate.main{color:var(--ink)}.rate.minor{color:var(--text-3)}
 .evw{display:inline-flex;align-items:center;gap:3px;vertical-align:1px;white-space:nowrap}
-.evb{display:inline-flex;align-items:center;height:18px;padding:0 6px;border-radius:5px;font-size:10.5px;font-weight:700;letter-spacing:.02em;background:var(--fill);color:var(--ink);white-space:nowrap}
-.evb.ink{background:var(--ink);color:var(--on-ink)}.evb.outl{background:transparent;box-shadow:inset 0 0 0 1px var(--line-strong);color:var(--text-2)}
+/* .evb (Learn evidence labels) shares the quiet .evl rule below: small muted inline text, no chip; tap opens the Evidence sheet */
 .cite{min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--accent-tint);color:var(--accent-press);font-size:10.5px;font-weight:700;display:inline-grid;place-items:center}
 .cite:active{background:var(--accent);color:#fff}
 .refs{padding-left:20px;font-size:var(--t-foot);line-height:1.45}.refs li{margin-bottom:10px}.refs a{color:var(--accent-press);word-break:break-all}
@@ -1104,7 +1103,7 @@ details.ls.flash{box-shadow:0 0 0 3px var(--accent);border-radius:var(--r-md)}
 .ssn{margin:-2px 0 6px 0;font-size:12.5px;color:var(--text-2);line-height:1.35}
 .xprop{font-size:13px;color:var(--text-2);margin:2px 0 8px;padding:0 var(--s4)}
 /* evidence labels (Modeled / Thin evidence / Supported): quiet inline text beside the subhead, no chip; the full note is in the (i) sheet */
-.evl{display:inline;background:none;border:0;padding:0;margin:0 0 0 6px;border-radius:0;font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0;font-variant:normal;text-transform:none;white-space:nowrap;line-height:inherit;vertical-align:baseline}
+.evl,.evb{display:inline;background:none;border:0;padding:0;margin:0 0 0 6px;border-radius:0;font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0;font-variant:normal;text-transform:none;white-space:nowrap;line-height:inherit;vertical-align:baseline}
 .xpsh{display:block;align-self:stretch;width:auto;padding:6px var(--s4) 4px}.xpl .xpsh h3{display:inline;padding:0;margin:0 6px 0 0}.xpsh .evl{margin-left:0}
 /* r3fu: recovery cost per day stacked by fatigue tier; a hairline paper gap keeps neighbouring tiers apart in light and dark */
 .rtstk{position:absolute;left:0;top:0;bottom:0;width:var(--w);display:flex;border-radius:5px;overflow:hidden;gap:1.5px}
@@ -1134,4 +1133,15 @@ details.ls.flash{box-shadow:0 0 0 3px var(--accent);border-radius:var(--r-md)}
 #lx .pad.two{grid-template-columns:minmax(0,auto) minmax(0,1fr)}
 #lx .pad.two .btn{white-space:nowrap;min-width:0;padding:0 16px}
 @media (max-width:350px){#lx .pad.two .btn{padding:0 12px;font-size:16px}#lx .pad.two .btn svg{width:18px;height:18px}}
+.evw .evb{margin-left:0}button.evb{-webkit-appearance:none;appearance:none;min-height:0;height:auto;box-shadow:none}
+.evsh{padding:4px var(--s4) 16px}.evsh p{margin:0 0 12px;font-size:var(--t-sub);line-height:1.45;color:var(--text-2)}.evsh p b{color:var(--ink);font-weight:600}.evsh p.on{color:var(--ink)}.evsh p.on b{color:var(--accent-press)}
 
+/* tray search: clear button, no native WebKit cancel, quiet empty state; sort row lines up with the filter rows */
+.srch input::-webkit-search-cancel-button,.srch input::-webkit-search-decoration,.srch input::-webkit-search-results-button{-webkit-appearance:none;appearance:none;display:none}
+.srch input{min-width:0;background:none;border:0;outline:none;font-size:17px}
+.srx{flex:none;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--text-3);color:var(--fill);padding:0;margin-right:-2px}
+.srx[hidden]{display:none}.srx svg{width:11px;height:11px}
+.tnone{padding:28px 20px;text-align:center;color:var(--text-2);font-size:var(--t-sub);line-height:1.5}.tnone .btn{margin-top:6px}
+#tmode .tsort{padding:0 12px 8px}
+/* tray search stays pinned at the top of the sheet while the filters and results scroll under it (both trays; --bg is the grouped sheet's colour, light and dark) */
+.sheet.grouped .sh-body>.srch:first-child{position:sticky;top:0;z-index:3;box-shadow:0 0 0 4px var(--bg),-16px 0 0 var(--bg),16px 0 0 var(--bg),0 -8px 0 var(--bg),0 10px 0 var(--bg),-16px 10px 0 var(--bg),16px 10px 0 var(--bg),-16px -8px 0 var(--bg),16px -8px 0 var(--bg)}

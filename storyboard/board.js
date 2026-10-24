@@ -209,13 +209,14 @@ function dayAct(k){if(!DS)return;const day=DS.day,i=DAYS.indexOf(day),v=($('#dsn
 function tabsSheet(){const T4=[['build','Build'],['train','Train'],['log','Log'],['progress','Progress']];
   const s=X.sheet({title:'Go to',cls:'grouped',body:`<div class="group">${T4.map(([k,l])=>`<button class="row" data-b="tabgo" data-to="${k}"><span class="ico gr">${X.I(k,1.7)}</span><div class="grow t1">${l}</div>${X.CHEV}</button>`).join('')}</div><p class="foot">The tab bar is hidden in landscape so the board gets the full height. Turn the phone upright to see it again.</p>`});return s}
 // ------------------------------------------------------------- tray (Suggested / Library, filter chips, drag or +)
-let TRAY=null;const TFB={mode:'sug',mus:null,pat:null,eq:null,day:'mon',slot:null,only:null};const anyTF=()=>!!(TFB.mus||TFB.pat||TFB.eq);
-function trayRows(){const RDv=RD(),ids=Object.keys(RDv.EX).filter(i=>X.passF(TFB,i)&&(!TFB.only||TFB.only.includes(i)));
+let TRAY=null;const TFB={q:'',mode:'sug',mus:null,pat:null,eq:null,day:'mon',slot:null,only:null};const anyTF=()=>!!(TFB.mus||TFB.pat||TFB.eq||TFB.q);
+function trayRows(){const RDv=RD(),ids=Object.keys(RDv.EX).filter(i=>X.passF(TFB,i)&&(!TFB.only||TFB.only.includes(i))&&X.qMatch(i,TFB.q)); // search: live, case/accent-insensitive, name + short name + aliases; combines with the filters
   const md=X.sortMode(TFB.mode,TFB.mus);
   let rows=md==='sug'?RANK.rank(RDv,'tray',ids,{board:rankBoard(),day:TFB.day},X.prefs(),TFB.only?ids.length:24):X.sortIds(ids,md,TFB.mus).slice(0,TFB.only?ids.length:80).map(id=>({id}));
   if(TFB.only&&md==='sug'){const have=new Set(rows.map(r=>r.id));rows=rows.concat(ids.filter(i=>!have.has(i)).map(id=>({id})));const df=TFB.slot.def;rows.sort((a,b)=>(b.id===df)-(a.id===df))}
   const dtag=id=>TFB.slot&&id===TFB.slot.def?'<span class="tag def">default</span>':'';
-  const stim=r=>md==='stim'?`<span class="tag mv sv"><b>${+(RDv.EX[r.id].muscles[TFB.mus]||0).toFixed(2)}</b> per set</span>`:md==='fat'?`<span class="tag mv sv"><b>${RDv.EX[r.id].fatigue}</b> fatigue</span>`:'';
+  if(!ids.length)return `<div class="tnone">${TFB.q?`No exercises match “${X.esc(TFB.q.trim())}”`:'No exercises match these filters'}${anyTF()?'<br><button class="btn plain sm" data-b="treset">Clear search and filters</button>':''}</div>`;
+  const stim=r=>md==='stim'?`<span class="tag mv sv"><b>${+(TFB.mus?(RDv.EX[r.id].muscles[TFB.mus]||0):Object.values(RDv.EX[r.id].muscles).reduce((a,v)=>a+(+v||0),0)).toFixed(2)}</b> ${TFB.mus?'per set':'total per set'}</span>`:md==='fat'?`<span class="tag mv sv"><b>${RDv.EX[r.id].fatigue}</b> fatigue</span>`:'';
   return `<div class="tcount">${md==='sug'?`Ranked for ${WDL[DAYS.indexOf(TFB.day)]} · tap a row for details, hold to drag`:`${X.sortNote(md,TFB.mus)[0].toUpperCase()+X.sortNote(md,TFB.mus).slice(1)} · tap a row for details, hold to drag`}</div><div class="group">`+
    rows.map(r=>`<div class="row trow" data-id="${r.id}">${X.gl(r.id)}<div class="grow"><div class="t1">${X.exNameP(r.id)}${dtag(r.id)}</div>${r.reasons?X.whyR(r):`<div class="t2">${X.exSub(r.id)}${stim(r)}</div>`}</div><button class="addc" data-b="tadd" data-id="${r.id}" aria-label="Add to ${WD[DAYS.indexOf(TFB.day)]}">${X.I('plus',2.2)}</button></div>`).join('')+'</div>'}
 const trayTitle=()=>TFB.slot?`Fill ${WD[DAYS.indexOf(TFB.day)]} slot`:`Add to ${WD[DAYS.indexOf(TFB.day)]}`;
@@ -226,17 +227,18 @@ function slotTray(day,sid){const D=B.days.find(d=>d.day===day),s=D&&(D.slots||[]
   if(TRAY)TRAY.close();Object.assign(TFB,{mus:null,pat:null,eq:null,slot:{day,sid,def:s.def,rank:s.rank,label:s.label,min:s.min,max:s.max,n:s.n},only:slotEligible(sid)});traySheet(day);
   $$('.slotc').forEach(c=>c.classList.toggle('on',c.dataset.sid===sid));return TRAY}
 function traySheet(day){TFB.day=day||TFB.day;
-  TRAY=X.sheet({title:trayTitle(),cls:'grouped btray',modal:false,right:'<button class="btn plain" data-b="tclose">Done</button>',onClose(){TRAY=null;TFB.slot=null;TFB.only=null;$$('.slotc.on').forEach(c=>c.classList.remove('on'))},
-    body:`${TFB.slot?`<div class="tslot" id="tslot"><b>${TFB.slot.label}</b> · ${TFB.slot.min}–${TFB.slot.max} sets (default ${TFB.slot.n}) · ${TFB.only.length} eligible exercises from templates-reference.json. Default: ${X.exNameP(TFB.slot.def)}, the ranker's #${TFB.slot.rank||1} pick for your slot. Pick one to fill it.</div>`:''}<div class="tftop"><div id="tmodeb" class="grow">${X.sortHtml(TFB.mode,TFB.mus,'tm')}</div><button class="btn plain sm treset" data-b="treset" ${anyTF()?'':'disabled'}>Reset</button></div>
+  TRAY=X.sheet({title:trayTitle(),cls:'grouped btray',modal:false,right:'<button class="btn plain" data-b="tclose">Done</button>',onClose(){TRAY=null;TFB.q='';TFB.slot=null;TFB.only=null;$$('.slotc.on').forEach(c=>c.classList.remove('on'))},
+    body:`<div class="srch"><span>${X.I('search',2)}</span><input id="tqb" type="search" placeholder="Search ${Object.keys(RD().EX).length} exercises" value="${X.esc(TFB.q)}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Search exercises"><button class="srx" data-b="tclr" aria-label="Clear search" ${TFB.q?'':'hidden'}>${X.I('x',2.4)}</button></div>${TFB.slot?`<div class="tslot" id="tslot"><b>${TFB.slot.label}</b> · ${TFB.slot.min}–${TFB.slot.max} sets (default ${TFB.slot.n}) · ${TFB.only.length} eligible exercises from templates-reference.json. Default: ${X.exNameP(TFB.slot.def)}, the ranker's #${TFB.slot.rank||1} pick for your slot. Pick one to fill it.</div>`:''}<div class="tftop"><div id="tmodeb" class="grow">${X.sortHtml(TFB.mode,TFB.mus,'tm')}</div><button class="btn plain sm treset" data-b="treset" ${anyTF()?'':'disabled'}>Reset</button></div>
     <div id="tfbb"${TFB.slot?' hidden':''}>${X.filterHtml(TFB,'tf')}</div>
     <div class="tlist" id="btlist">${trayRows()}</div>`});
+  $('#tqb',TRAY.el).addEventListener('input',e=>{TFB.q=e.target.value;refreshTray()});$('#tqb',TRAY.el).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.target.blur()}});
   $('#btlist',TRAY.el).addEventListener('click',()=>{}); // WebKit only sends a tap's click to a plain div when an ancestor below body listens (the real handler is the delegated one)
   return TRAY}
 // add from the tray (+ button or the detail popup): fills the open slot, else adds to the tray's day
 function trayAdd(id){if(TFB.slot){const z=TFB.slot,D=B.days.find(d=>d.day===z.day),s=D&&(D.slots||[]).find(x=>x.sid===z.sid);if(!s)return;
     commit(()=>fillSlot(D,s,id),`Filled ${z.label} with ${X.exNameP(id)}`);return TRAY&&TRAY.close()}
   commit(()=>{const D=B.days.find(d=>d.day===TFB.day);D.tiles.push(T(id,setsFor(id)))},`Added ${X.exNameP(id)} to ${WD[DAYS.indexOf(TFB.day)]}`);refreshTray()}
-function refreshTray(){if(TRAY){$('#btlist',TRAY.el).innerHTML=trayRows();const sm=$('#tmodeb',TRAY.el);if(sm)sm.innerHTML=X.sortHtml(TFB.mode,TFB.mus,'tm');const rb=$('[data-b=treset]',TRAY.el);if(rb)rb.disabled=!anyTF();const h=$('.sh-head .t',TRAY.el);if(h)h.textContent=trayTitle()}}
+function refreshTray(){if(TRAY){$('#btlist',TRAY.el).innerHTML=trayRows();const sx=$('.srx',TRAY.el);if(sx)sx.hidden=!TFB.q;const sm=$('#tmodeb',TRAY.el);if(sm)sm.innerHTML=X.sortHtml(TFB.mode,TFB.mus,'tm');const rb=$('[data-b=treset]',TRAY.el);if(rb)rb.disabled=!anyTF();const h=$('.sh-head .t',TRAY.el);if(h)h.textContent=trayTitle()}}
 // fill one slot (tile keeps from:{sid,i}; it goes before any filled tile from a later slot, so default fills keep the template order)
 function fillSlot(D,s,id,sets){D.slots=D.slots.filter(x=>x.sid!==s.sid);const t=T(id,sets==null?s.n:sets,null,{sid:s.sid,i:s.i});
   const k=D.tiles.findIndex(x=>x.from&&x.from.i>s.i);k<0?D.tiles.push(t):D.tiles.splice(k,0,t)}
@@ -623,7 +625,8 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   const mp=e.target.closest('#bmap .mp');if(mp&&mp.dataset.mu){e.preventDefault();return X.go('#learn-'+mp.dataset.mu)}
   if(!b)return;const k=b.dataset.b;e.stopPropagation();
   if(k==='mapm')return setMap(b.dataset.mm,b.dataset.mm==='day'&&MAPV.mode!=='day'?Math.max(0,$$('#dstrip button').findIndex(x=>x.classList.contains('on'))):null);
-  if(k==='treset'){Object.assign(TFB,{mus:null,pat:null,eq:null});if(TRAY)$('#tfbb',TRAY.el).innerHTML=X.filterHtml(TFB,'tf');refreshTray();return}
+  if(k==='tclr'){TFB.q='';const q=TRAY&&$('#tqb',TRAY.el);if(q){q.value='';q.focus()}refreshTray();return}
+  if(k==='treset'){Object.assign(TFB,{q:'',mus:null,pat:null,eq:null});if(TRAY)$('#tqb',TRAY.el).value='';if(TRAY)$('#tfbb',TRAY.el).innerHTML=X.filterHtml(TFB,'tf');refreshTray();return}
   if(k==='dayh'){setMap('day',DAYS.indexOf(b.dataset.day));return daySheet(b.dataset.day)}if(k==='dsclose')return DS&&DS.close();if(k==='dsrename'||k==='dsrest'||k==='dstrain')return dayAct(k);
   if(k==='tabs')return tabsSheet();if(k==='tabgo'){X.closeAll();return X.go('#'+b.dataset.to)}
   if(k==='analysis')return analysisSheet();if(k==='sugmore'){SUGX.add(b.dataset.sec);renderAnalysis();return}if(k==='anx')return explainItem(b.dataset.id);

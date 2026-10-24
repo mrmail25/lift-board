@@ -533,28 +533,35 @@ function filterHtml(F,at){const c=(k,v,l)=>`<button class="chip xs ${F[k]===v?'o
    <div class="tfr" data-row="pat"><span class="tfl">Pattern</span>${mpDefs().map(([k,l])=>c('pat',k,l)).join('')}</div>
    <div class="tfr" data-row="eq"><span class="tfl">Equipment</span>${eqDefs().map(([k,l])=>c('eq',k,l)).join('')}</div></div>`}
 const anyF=F=>!!(F.mus||F.pat||F.eq||F.fav||F.q);
+// tray search: live, case- and accent-insensitive; every typed word must appear in the name, short name or aliases
+// (exercises.json has no alias field yet; short_name is the alias today, and aliases/alias arrays are picked up if Coach adds them)
+const fold=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const HAY={};const hayOf=id=>HAY[id]||(HAY[id]=(()=>{const r=(RD&&RD.EX[id])||{},e=EX[id]||{};return ' '+fold([e.name,r.name,r.short_name,...[].concat(r.aliases||[],r.alias||[])].filter(Boolean).join(' | '))+' '})());
+const qMatch=(id,q)=>{const w=fold(q).split(' ').filter(Boolean);if(!w.length)return true;const h=hayOf(id);return w.every(x=>h.includes(x))};
 function trayList(){
   // search + filters are hard filters in both modes; what passes them goes to rank('tray', candidates)
-  const ids=EXL.map(x=>x[0]).filter(id=>{const e=EX[id];return e&&(!TF.fav||isFav(id))&&passF(TF,id)&&(!TF.q||e.name.toLowerCase().includes(TF.q.toLowerCase()))});
+  const ids=EXL.map(x=>x[0]).filter(id=>{const e=EX[id];return e&&(!TF.fav||isFav(id))&&passF(TF,id)&&qMatch(id,TF.q)});
   const md=sortMode(TF.mode,TF.mus),sug=md==='sug'&&RD,cands=SC.cands?SC.cands.filter(i=>ids.includes(i)):ids;
   const rows=sug?rk('tray',cands,{},null):(RD?sortIds(ids,md,TF.mus):ids).map(id=>({id}));
   const row=r=>{const id=r.id,e=EX[id];return `<div class="row trow" data-id="${id}">${gl(id)}<div class="grow"><div class="t1">${exNameP(id)}${isFav(id)?' <span class="fv">★</span>':''}</div><div class="t2">${exSub(id)} · ${e.eq}</div>${r.reasons?whyR(r):''}</div>${starBtn(id)}<button class="ib-i" data-act="exinfo" data-id="${id}" aria-label="Info">${I('info',1.7)}</button><button class="addc" data-act="add" aria-label="Add">${I('plus',2.2)}</button></div>`};
   const hid=sug?cands.length-rows.length:0;
-  return `<div class="tcount">${rows.length} exercises${sug?` · ranked for ${({mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'})[SC.day]||'today'}${hid?` · ${hid} hidden (on this day or not in your gym)`:''}`:` · ${sortNote(md,TF.mus)}`}</div>${SC.note?`<div class="scnote">${SC.note}</div>`:''}<div class="group">`+rows.slice(0,80).map(row).join('')+'</div>';
+  if(!rows.length)return `<div class="tcount">0 exercises</div><div class="tnone">${TF.q?`No exercises match “${esc(TF.q.trim())}”`:'No exercises match these filters'}${anyF(TF)?'<br><button class="btn plain sm" data-x="reset">Clear search and filters</button>':''}</div>`;
+  return `<div class="tcount">${rows.length} exercise${rows.length===1?'':'s'}${sug?` · ranked for ${({mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'})[SC.day]||'today'}${hid?` · ${hid} hidden (on this day or not in your gym)`:''}`:` · ${sortNote(md,TF.mus)}`}</div>${SC.note?`<div class="scnote">${SC.note}</div>`:''}<div class="group">`+rows.slice(0,80).map(row).join('')+'</div>';
 }
 function traySheet(){
   const s=sheet({title:'Add exercise',cls:'tall grouped',right:`<button class="btn plain" data-x="close">Done</button>`,
-    body:`<div class="srch"><span>${I('search',2)}</span><input id="tq" type="search" placeholder="Search 239 exercises" autocomplete="off"></div>
+    body:`<div class="srch"><span>${I('search',2)}</span><input id="tq" type="search" placeholder="Search ${EXL.length} exercises" value="${esc(TF.q)}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Search exercises"><button class="srx" data-x="clr" aria-label="Clear search" ${TF.q?'':'hidden'}>${I('x',2.4)}</button></div>
     <div id="tmode">${sortHtml(TF.mode,TF.mus,'m')}</div>
     <div class="tftop"><button class="chip xs ${TF.fav?'on':''}" data-f="fav" data-v="true"><span class="fv">★</span> Favorites</button><button class="btn plain sm treset" data-x="reset" ${anyF(TF)?'':'disabled'}>Reset</button></div>
     <div id="tfb">${filterHtml(TF,'f')}</div>
     <div class="tlist">${trayList()}</div>`});
-  const upd=()=>{$('.tlist',s.el).innerHTML=trayList();$('[data-x=reset]',s.el).disabled=!anyF(TF);$('#tmode',s.el).innerHTML=sortHtml(TF.mode,TF.mus,'m')};
+  const upd=()=>{$('.tlist',s.el).innerHTML=trayList();$('.srx',s.el).hidden=!TF.q;$('[data-x=reset]',s.el).disabled=!anyF(TF);$('#tmode',s.el).innerHTML=sortHtml(TF.mode,TF.mus,'m')};
   s.el.addEventListener('click',e=>{const md=e.target.closest('#tmode [data-m]');if(md){if(md.disabled)return;TF.mode=md.dataset.m;upd();return}
     const inf=e.target.closest('[data-act=exinfo]');if(inf){e.preventDefault();e.stopPropagation();return exDetail(inf.dataset.id,{onAdd:()=>toast('Added to workout')})}
     const tr=e.target.closest('.trow[data-id]');if(tr&&!e.target.closest('button')){return exDetail(tr.dataset.id,{onAdd:()=>toast('Added to workout')})}
     const f=e.target.closest('[data-f]');if(f){if(f.dataset.f==='fav'){TF.fav=!TF.fav;f.classList.toggle('on',TF.fav);upd();return}TF[f.dataset.f]=TF[f.dataset.f]===f.dataset.v?null:f.dataset.v;
       $$(`[data-f=${f.dataset.f}]`,s.el).forEach(c=>c.classList.toggle('on',TF[c.dataset.f]===c.dataset.v));upd();return}
+    if(e.target.closest('[data-x=clr]')){TF.q='';const q=$('#tq',s.el);q.value='';q.focus();upd();return}
     if(e.target.closest('[data-x=reset]')){Object.assign(TF,{q:'',mus:null,pat:null,eq:null,fav:false});$('#tq',s.el).value='';$('#tfb',s.el).innerHTML=filterHtml(TF,'f');$('[data-f=fav]',s.el).classList.remove('on');upd();return}
     if(e.target.closest('[data-x=close]'))s.close()});
   $('#tq',s.el).addEventListener('input',e=>{TF.q=e.target.value;upd()});
@@ -1034,7 +1041,10 @@ async function eduPage(id){const idx=await eduLoad(),p=idx.pages.find(x=>x.id===
   if(!(p.path in EDU.cache)){try{const r=await fetch(EDU.base+p.path,{cache:'no-store'});EDU.cache[p.path]=r.ok?await r.json():null}catch(e){EDU.cache[p.path]=null}}
   return {entry:p,page:EDU.cache[p.path]};
 }
-const evb=e=>e&&EVL[e]?`<span class="evb ${EVL[e][1]}" title="Evidence: ${e}">${EVL[e][0]}</span>`:'';
+// Learn evidence labels: quiet inline text (same .evl rule as Analysis' Modeled / Thin evidence); tapping one opens the Evidence sheet
+const EVXT={supported:'a training study measured it',biomechanics:'follows from anatomy and mechanics',modeled:'coach consensus or app model'};
+const evb=e=>e&&EVL[e]?`<button class="evb ${EVL[e][1]}" data-ev="${e}" data-evx="${e}" aria-label="Evidence: ${EVL[e][0]}. What this means">${EVL[e][0]}</button>`:'';
+function evSheet(k){sheet({title:'Evidence',body:`<div class="evsh">${Object.entries(EVL).map(([e,v])=>`<p data-ev="${e}"${e===k?' class="on"':''}><b>${v[0]}</b>: ${EVXT[e]||''}</p>`).join('')}<p>Numbers next to a label open the study behind it.</p></div>`})}
 let CITES=[];const cite=keys=>(keys||[]).filter(k=>EDU.refs[k]).map(k=>{let n=CITES.indexOf(k)+1;if(!n){CITES.push(k);n=CITES.length}return `<button class="cite" data-ref="${k}" aria-label="Reference ${n}">${n}</button>`}).join('');
 const ev=(o)=>`<span class="evw">${evb(o.evidence)}${cite(o.citations)}</span>`;
 const tagL=ids=>(ids||[]).map(t=>`<span class="tag acc">${(window.SWAPTAG||{})[t]||t}</span>`).join('');
@@ -1095,7 +1105,7 @@ async function afterLearnMuscle(id){
    ${sect('Coaching cues',(j.coach_cues||[]).map(c=>`<div class="cue2"><b>“${c.cue}”</b><p>${c.why} ${ev(c)}</p></div>`).join(''),false,(j.coach_cues||[]).length)}
    ${sect('Honest limits',`<ul class="bul">${(j.notes||[]).map(n=>`<li>${n}</li>`).join('')}</ul>`)}
    ${refList()}</div>
-   <p class="evkey">${Object.entries(EVL).map(([k,v])=>`<span class="evb ${v[1]}">${v[0]}</span> ${k==='supported'?'a training study measured it':k==='biomechanics'?'follows from anatomy and mechanics':'coach consensus or app model'}`).join('<br>')}</p>
+   <p class="evkey">${Object.entries(EVL).map(([k,v])=>`<span class="evb ${v[1]}">${v[0]}</span> ${EVXT[k]||''}`).join('<br>')}</p>
    <p class="foot">${(EDU.idx||{}).disclaimer||''} Updated ${j.updated||''}.</p>`;
   afterMap();
 }
@@ -1174,13 +1184,17 @@ function exDetail(id,o={}){const e=EX[id];if(!e)return null;
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
 // tray sort (both trays): Best match = the shared ranker (default); A–Z; Most stimulus for the filtered muscle; Lowest fatigue
 const SORTS=[['sug','Best match'],['az','A–Z'],['stim','Most stimulus'],['fat','Lowest fatigue']];
-const sortMode=(m,mus)=>m==='lib'?'az':m==='stim'&&!mus?'sug':(SORTS.some(x=>x[0]===m)?m:'sug');
-const sortHtml=(mode,mus,at)=>{const m=sortMode(mode,mus);return `<div class="tfr tsort noswipe" data-row="sort"><span class="tfl">Sort</span>${SORTS.map(([k,l])=>`<button class="chip xs ${k===m?'on':''}" data-${at}="${k}" ${k==='stim'&&!mus?'disabled title="Pick a muscle filter first"':''} aria-pressed="${k===m}">${k==='stim'&&mus?`Most ${(ML[mus]||mus).toLowerCase()} stimulus`:l}</button>`).join('')}</div>`};
+// 'Most stimulus' used to be disabled (and coerced back to Best match) until a muscle filter was picked; the tray opens with
+// no muscle filter, so it was always greyed out. With no muscle filter it now sorts by total stimulus per set: the sum of the
+// exercise's muscle ratios (the set credit Analysis gives across all muscles), then stimulus per fatigue, then name.
+const sortMode=(m,mus)=>m==='lib'?'az':(SORTS.some(x=>x[0]===m)?m:'sug');
+const totRat=e=>Object.values(e.muscles||{}).reduce((a,v)=>a+(+v||0),0);
+const sortHtml=(mode,mus,at)=>{const m=sortMode(mode,mus);return `<div class="tfr tsort noswipe" data-row="sort"><span class="tfl">Sort</span>${SORTS.map(([k,l])=>`<button class="chip xs ${k===m?'on':''}" data-${at}="${k}" aria-pressed="${k===m}">${k==='stim'&&mus?`Most ${(ML[mus]||mus).toLowerCase()} stimulus`:l}</button>`).join('')}</div>`};
 function sortIds(ids,mode,mus){const E=RD.EX,nm=i=>(E[i]||{}).name||i,byN=(a,b)=>nm(a).localeCompare(nm(b));const L=ids.slice();
   if(mode==='az')return L.sort(byN);
-  if(mode==='stim')return L.sort((a,b)=>((E[b].muscles[mus]||0)-(E[a].muscles[mus]||0))||(((E[b].muscles[mus]||0)/E[b].fatigue)-((E[a].muscles[mus]||0)/E[a].fatigue))||byN(a,b));
+  if(mode==='stim'){const v=i=>mus?(E[i].muscles[mus]||0):totRat(E[i]);return L.sort((a,b)=>(v(b)-v(a))||((v(b)/E[b].fatigue)-(v(a)/E[a].fatigue))||byN(a,b))}
   if(mode==='fat')return L.sort((a,b)=>(E[a].fatigue-E[b].fatigue)||byN(a,b));return L}
-const sortNote=(mode,mus)=>({az:'A–Z',stim:`most ${(ML[mus]||mus||'').toLowerCase()} stimulus per set first`,fat:'lowest fatigue rating first'})[mode]||'';
+const sortNote=(mode,mus)=>({az:'A–Z',stim:mus?`most ${(ML[mus]||mus).toLowerCase()} stimulus per set first`:'most total stimulus per set first',fat:'lowest fatigue rating first'})[mode]||'';
 const infoFor=id=>{const e=EX[id];if(!e)return '#learn';const top=Object.entries(e.rat).sort((a,b)=>b[1]-a[1])[0];return top?'#learn-'+top[0]:utOf(id)?'#learn-'+utOf(id).filter_muscle:'#learn'};
 // untracked_target row (all-zero muscle map): label + tag in place of the muscle ratings
 const utRow=u=>`<div class="row utn" data-ut="${u.id}"><div class="grow"><div class="t1">${u.label}</div><div class="t2">${u.tag}</div></div></div>`; // (i) opens the page of the exercise's main muscle
@@ -1394,6 +1408,7 @@ function render(){
 document.addEventListener('click',e=>{
   const xp=e.target.closest('[data-xpl]');if(xp){e.preventDefault();return explainSheet(xp.dataset.xpl)}
   const ref=e.target.closest('[data-ref]');if(ref){e.preventDefault();return refSheet(ref.dataset.ref)}
+  const evx=e.target.closest('[data-evx]');if(evx){e.preventDefault();e.stopPropagation();return evSheet(evx.dataset.evx)}
   const fld=e.target.closest('.fld');if(fld&&!fld.classList.contains('demo')){focusField(fld);return}
   const g=e.target.closest('[data-go]'),a=e.target.closest('[data-act]');
   if(a&&(!g||g.contains(a))){const k=a.dataset.act,id=a.dataset.id;
@@ -1459,7 +1474,7 @@ const devSkip=n=>{const p=n.parentElement;return !p||!!p.closest('script,style,t
 function devScrub(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode())){if(devSkip(n))continue;const v=n.nodeValue,c=devClean(v);if(c!==v)n.nodeValue=c}}
 new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData'){if(!devSkip(m.target)){const c=devClean(m.target.nodeValue);if(c!==m.target.nodeValue)m.target.nodeValue=c}}else m.addedNodes.forEach(x=>x.nodeType===3?(devSkip(x)||(x.nodeValue=devClean(x.nodeValue))):x.nodeType===1&&devScrub(x))}})
   .observe(document.documentElement,{childList:true,subtree:true,characterData:true});
-window.SBX={devClean,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

@@ -2,7 +2,7 @@
  "meta": {
   "version": 2,
   "changelog": "v2 (gap-fill): +2 channels ([P]rehab, Mark Wildman), gaps filled, uncertain close variants re-checked by oEmbed title + watch-page description; backup of v1 in data/exercise-videos.pre-gapfill.json",
-  "generated": "2026-10-23",
+  "generated": "2026-10-24",
   "generated_by": "tools/build_exercise_videos.py (picks in tools/exercise_videos_picks.py)",
   "method": "Candidates came from YouTube search-results and channel-search pages for each exercise name, limited to the channel list below. Each pick was reviewed by title; one video may serve several close variants. No video IDs were typed from memory. Gaps are left as confidence 'none'.",
   "verification": "Every video_id: oEmbed GET returned 200, author_name matches an allowed channel, and the watch page reports playableInEmbed=true. title/channel come from oEmbed; duration_s from the watch page lengthSeconds. Re-check with tools/check_exercise_videos.py --online.",
@@ -341,7 +341,7 @@
    "duration_s": 11,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bent-over lateral raise (rear-delt fly pattern)",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows a bent-over raise with a lateral-raise label; same rear-delt fly path",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -1097,7 +1097,7 @@
    "duration_s": 15,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); feet-forward Smith squat",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows feet set forward; use your usual Smith squat stance",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -1187,7 +1187,7 @@
    "duration_s": 9,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); free-weight split squat",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows the free-weight version; same split-squat pattern on the Smith bar",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -1217,7 +1217,7 @@
    "duration_s": 11,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); barbell hip thrust",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows the barbell version; same hip-thrust pattern on the Smith bar",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -1436,7 +1436,7 @@
    "duration_s": 14,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); rope twist curl",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video adds a wrist twist at the top; keep palms facing in for the hammer curl",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -1490,7 +1490,7 @@
    "duration_s": 11,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bodyweight dip",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows a bodyweight dip; the machine has a fixed path and set load",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -1925,7 +1925,7 @@
    "duration_s": 13,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); underhand cable fly (low-to-high style)",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows a single-handle underhand fly; same low-to-high arm path",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -1940,7 +1940,7 @@
    "duration_s": 12,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bent-forward cable fly (high-to-low style)",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows a bent-forward fly; same high-to-low arm path, with or without the lean",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2057,7 +2057,7 @@
    "duration_s": 15,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); single-arm dumbbell preacher curl (braced one-arm curl)",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video uses a preacher pad; concentration curl braces the arm on the inner thigh",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2147,7 +2147,7 @@
    "duration_s": 10,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); slant-board sit-up",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows a full sit-up; crunch with a shorter range and hold a weight",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2192,7 +2192,7 @@
    "duration_s": 10,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); kneeling rope crunch",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video is kneeling; same rope crunch done standing",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2222,7 +2222,7 @@
    "duration_s": 11,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); single-arm cable rear-delt raise",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video is one arm at a time; same rear-delt path, can be done with both arms",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2354,7 +2354,7 @@
    "duration_s": 11,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); single-leg leg curl",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows a different single-leg curl machine; same knee-bend pattern standing",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2636,7 +2636,7 @@
    "duration_s": 11,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); single-leg leg curl",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows a different single-leg curl machine; same knee-bend pattern kneeling",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2696,7 +2696,7 @@
    "duration_s": 13,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); underhand EZ-bar row (Yates-style grip)",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video uses an EZ bar; Yates row is the same underhand row with a more upright torso",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2711,7 +2711,7 @@
    "duration_s": 11,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); full deadlift (rack pull starts from pins)",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows a full deadlift from the floor; rack pull starts from pins at knee height",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2741,7 +2741,7 @@
    "duration_s": 9,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); hanging knee raise",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video hangs from a bar; captain's chair supports the forearms with the same knee raise",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2828,7 +2828,7 @@
    "duration_s": 13,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bar inverted row",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video uses a fixed bar; rings let the hands rotate and need more control",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2843,7 +2843,7 @@
    "duration_s": 10,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bar pull-up",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video uses a fixed bar; rings let the hands rotate freely",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2930,7 +2930,7 @@
    "duration_s": 13,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); bar inverted row",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video uses a fixed bar; straps let the hands rotate and need more control",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -2945,7 +2945,7 @@
    "duration_s": 10,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); floor push-up",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video is on the floor; feet or hands in straps make it less stable",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -3620,7 +3620,7 @@
    "duration_s": 10,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); single-leg stair calf raise",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video shows bodyweight on a step; hold a dumbbell for load",
    "verified": {
     "oembed": 200,
     "embeddable": true
@@ -3635,7 +3635,7 @@
    "duration_s": 13,
    "start_s": null,
    "confidence": "close_variant",
-   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); leg press calf raise (same machine-calf cues)",
+   "note": "RP Hypertrophy-app demo clip (~10-20 s, movement only, no narration); Video uses the leg press; same calf raise on the hack-squat sled",
    "verified": {
     "oembed": 200,
     "embeddable": true
