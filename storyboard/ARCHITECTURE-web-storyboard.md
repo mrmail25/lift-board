@@ -364,3 +364,8 @@ The suite runs all three (`r3*` checks).
 - Exercise detail card: a quiet "▶ Watch" link (`.xwatch`) in the header only when a video exists; it goes to `#learn-ex-<id>~video`, which scrolls to the block.
 - Tests: `test/videos.test.js` (exact / close variant / none, no video title rendered on any of the 228 video pages (text and aria-label / alt / title attributes; the Similar-movement line is Coach's note and is excluded), [P]rehab shown as The Prehab Guys, iframe title = our name, no iframe before the tap, nocookie src, Watch link present only with a video and lands on the block, no hardcoded ids); sb.test.js calls it. Shots 42a–42e.
 - Learn page fix: `afterLearnEx` drops a stale render when a newer Learn page was opened while it loaded.
+
+**Learn page fixes (2026-10-23)**
+- Evidence badges: the Model badge used class `evb line`, and `.line` is the rest bar's progress line (`position:absolute; left:0; bottom:0`). So every Model badge was taken out of the text flow and pinned to the left edge, even inside closed sections and over the video footer. The variant is now `evb outl`, and `.evw, .evb` are `position:static`.
+- 'Add to workout' stays on one line: on Learn pages the action row is `auto | 1fr`, the buttons are `nowrap`, and at 350 px and narrower the padding and font shrink a little.
+- Test: `test/learnfix.test.js` (called by sb.test.js) runs at 390 and 320 px on bench press, rear delt fly and seated calf raise, with sections collapsed and expanded. It checks that badges are static, never painted while their section is closed, sit inside their section and never overlap the video block; that 'Add to workout' is one line, fits, and stays in view; and that the rest bar's line is still absolutely positioned. Shot 43a.

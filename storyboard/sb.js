@@ -1004,7 +1004,7 @@ V.style=()=>`<div class="nav"><div class="l"><button class="back" data-go="#sett
   <div class="card ctl"><div class="two"><button class="btn accent">Primary</button><button class="btn ink">Secondary</button></div><div class="two"><button class="btn grey">Tertiary</button><button class="btn danger">Delete</button></div>
    <div class="seg"><button>Beginner</button><button class="on">Intermediate</button><button>Advanced</button></div>
    <div class="chips" style="padding:0"><button class="chip on">★ Primary</button><button class="chip">${GLY.accessory} Accessory</button><button class="chip">● Isolation</button></div>
-   <div class="tags"><span class="tag acc">More stretch emphasis</span><span class="tag">More stable</span><span class="badge">PR</span><span class="evb ink">Studies</span><span class="evb">Mechanics</span><span class="evb line">Coach model</span></div>
+   <div class="tags"><span class="tag acc">More stretch emphasis</span><span class="tag">More stable</span><span class="badge">PR</span><span class="evb ink">Studies</span><span class="evb">Mechanics</span><span class="evb outl">Coach model</span></div>
    <div class="fields"><input class="fld demo" readonly value="" placeholder="225"><input class="fld demo active" readonly value="230"><input class="fld demo auto" readonly value="230">${tg(1)}${tg(0)}</div>
    <p class="sub">Field: empty · active · auto-filled from the set above</p></div>
   <div class="ghead">Space · radius · motion</div>
@@ -1016,7 +1016,7 @@ V.style=()=>`<div class="nav"><div class="l"><button class="back" data-go="#sett
 // LEARN: rendered only from Coach's data/education (education-spec.md, education v1). index.json drives everything:
 // a page whose status turns "final" appears automatically, no code change. References resolve from references.json.
 const EDU={base:null,idx:null,refs:{},cache:{}};
-const EVL={supported:['Supported','ink'],biomechanics:['Mechanics',''],modeled:['Model','line']};
+const EVL={supported:['Supported','ink'],biomechanics:['Mechanics',''],modeled:['Model','outl']}; // not 'line': that class is the rest bar's absolutely positioned progress line (sb.css .line)
 const BAND=r=>r>=.75?'main':r>=.4?'helper':r>=.25?'minor':null;           // Coach's display bands; < 0.25 not shown
 const BANDL={main:'Main',helper:'Helper',minor:'Minor'};
 const XBANDL={main:'Main mover',helper:'Helper',minor:'Minor',nc:'Not counted'}; // exercise-page labels (exercise-pages-spec §7)
