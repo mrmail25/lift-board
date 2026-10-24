@@ -26,7 +26,10 @@ const P={
  book:'<path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5zM12 6.5v13"/>',
  edit:'<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>',trash:'<path d="M4 6.5h16M9 6.5V4.8c0-.7.5-1.3 1.2-1.3h3.6c.7 0 1.2.6 1.2 1.3v1.7M6 6.5l.9 12.6c.1 1 .9 1.9 2 1.9h6.2c1.1 0 1.9-.9 2-1.9L18 6.5M10 10.5v6M14 10.5v6"/>',
  chevD:'<path d="M6 9.5l6 6 6-6"/>',chevL:'<path d="M15 5l-7 7 7 7"/>',chevR:'<path d="M9 5l7 7-7 7"/>',
- plus:'<path d="M12 5v14M5 12h14"/>',check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ camera:'<path d="M4 8.5h3l1.6-2.5h6.8L17 8.5h3a1 1 0 0 1 1 1V18a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18V9.5a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/>',
+ image:'<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8.5 8.5"/>',
+ film:'<rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3"/>',check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
  swap:'<path d="M7 4v16M7 4L3.5 7.5M7 4l3.5 3.5M17 20V4M17 20l-3.5-3.5M17 20l3.5-3.5"/>',
  back:'<path d="M21 5H9l-6 7 6 7h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1zM17.5 9.5l-5 5M12.5 9.5l5 5"/>',
  clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
@@ -1277,11 +1280,13 @@ const XV_CH={'[P]rehab':'The Prehab Guys'},xvCh=c=>XV_CH[c]||c||'';
 const xvDur=s=>s==null?'':s<60?`${s} s`:`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
 const xvSimilar=n=>{const t=String(n||'').split('; ').pop().trim();return t?t[0].toUpperCase()+t.slice(1):''};
 // The video's own title is never shown or used in attributes: the label is always our exercise name (no third-party health claims).
-function xvBlock(id){const v=xvOf(id);if(!v)return '';const cv=v.confidence==='close_variant',nm=esc(exNameP(id));
-  return `<section class="xvid" id="xvid" data-video="${v.video_id}" data-conf="${v.confidence}"><div class="xvh"><span>Technique video</span>${cv?'<span class="evl" data-ev="close_variant">Close variant</span>':''}</div>
+function xvBlock(id){const v=xvOf(id);if(!v)return '';return xvBlockV(v,esc(exNameP(id)),{})}
+// shared renderer (library videos + a custom exercise's demo link): thumbnail, tap to play youtube-nocookie, our exercise name as the label
+function xvBlockV(v,nm,o){const cv=v.confidence==='close_variant';
+  return `<section class="xvid"${o.custom?' data-custom="1"':' id="xvid"'} data-video="${v.video_id}" data-conf="${v.confidence}"><div class="xvh"><span>Technique video</span>${cv?'<span class="evl" data-ev="close_variant">Close variant</span>':''}</div>
    <button class="xvth" data-act="xvplay" data-v="${v.video_id}" data-name="${nm}"${v.start_s?` data-start="${v.start_s}"`:''} aria-label="Play technique video: ${nm}"><img data-src="https://i.ytimg.com/vi/${v.video_id}/hqdefault.jpg" alt="${nm} technique video" loading="lazy" referrerpolicy="no-referrer"><span class="xvpl">${I('play')}</span>${v.duration_s!=null?`<span class="xvd num">${xvDur(v.duration_s)}</span>`:''}</button>
    <div class="xvm"><div class="t1">${nm}</div><div class="t2 xvc">${esc(xvCh(v.channel))}${v.duration_s!=null?` · ${xvDur(v.duration_s)}`:''}</div>${cv&&xvSimilar(v.note)?`<div class="t2 xvs">Similar movement: ${esc(xvSimilar(v.note))}</div>`:''}</div>
-   <p class="foot xvf">Third-party technique demo on YouTube. Not an endorsement or medical advice.</p></section>`}
+   <p class="foot xvf">${o.custom?`Your demo link${o.checked?'':' (not yet checked with YouTube)'}. `:''}Third-party technique demo on YouTube. Not an endorsement or medical advice.</p></section>`}
 function xvPlay(b){const v=b.dataset.v,st=b.dataset.start;const f=document.createElement('iframe');
   f.src=`https://www.youtube-nocookie.com/embed/${v}?autoplay=1&playsinline=1&rel=0${st?'&start='+st:''}`;f.title=`${b.dataset.name||'Exercise'} technique video`;f.className='xvif';
   f.setAttribute('allow','autoplay; encrypted-media; picture-in-picture; fullscreen');f.setAttribute('allowfullscreen','');f.setAttribute('loading','lazy');b.replaceWith(f)}
@@ -1300,7 +1305,8 @@ async function afterLearnEx(id){
     <p class="foot" style="padding:6px 0 0">Live ratings from exercises.json. Bands are a model: main mover 0.75+, helper 0.4–0.75, minor 0.25–0.4, not counted under 0.25.</p>`,true,shown.length);
   const has=a=>a&&a.length,ph=j&&(j.placeholder||/PLACEHOLDER/.test(j.notice||''));
   const tw=t=>t.change?{h:t.change,tg:(t.target_muscle_ids||[]).map(m=>ML[m]||m).join(', '),k:t.kind}:{h:t.tweak,tg:ML[t.target]||t.target,k:''};
-  const body=!j?`<div class="soonbox"><span class="soon">Coming soon</span><p class="sub">Coach is writing this page.</p></div><div class="lsx">${hit}</div>`:`
+  const cx=isCx(id);
+  const body=cx?`<div class="lsx">${hit}</div><p class="foot cxsrc">Your exercise: there is no Coach page for it. Muscle credit comes from the bands you picked; the other numbers are modeled from similar library exercises.</p>`:!j?`<div class="soonbox"><span class="soon">Coming soon</span><p class="sub">Coach is writing this page.</p></div><div class="lsx">${hit}</div>`:`
    ${ph?`<div class="ph">${j.notice||'PLACEHOLDER — Coach content pending'}</div>`:''}${j.source==='auto'?`<div class="autob">${I('info',1.8)}<span>${j.source_label||'Auto-generated from the exercise library'}</span></div>`:''}<div class="lsx">${hit}
    ${has(j.setup)?sect('Setup',`<ul class="bul">${j.setup.map(m=>`<li>${m.text} ${ev(m)}</li>`).join('')}</ul>`,false,j.setup.length):''}
    ${has(j.form_cues)?sect('Form cues',j.form_cues.map(c=>`<div class="cue2"><b>“${c.cue}”</b><p>${c.why||''} ${ev(c)}</p></div>`).join(''),true,j.form_cues.length):''}
@@ -1311,10 +1317,11 @@ async function afterLearnEx(id){
    ${has(j.alternatives)?sect('Alternatives for other goals',j.alternatives.map(a=>`<div class="alt2"><div class="eyebrow">${a.goal_label||a.goal}</div>${exLink(a.exercise_id)}<p class="sub">${a.why||''} ${ev(a)}</p>${has(a.differences)?`<div class="tags">${a.differences.map(d=>`<span class="tag">${d}</span>`).join('')}</div>`:has(a.swap_tags)?`<div class="tags">${tagL(a.swap_tags)}</div>`:''}</div>`).join('')+'<p class="foot" style="padding:8px 0 0">Typical differences, not guarantees.</p>',false,j.alternatives.length):''}
    ${has(j.notes)?sect('Honest limits',`<ul class="bul">${j.notes.map(n=>`<li>${n}</li>`).join('')}</ul>`):''}${refList()}</div>
    <p class="foot">${((EDU.xidx||{}).disclaimer||(EDU.idx||{}).disclaimer||'')}</p>`;
-  $('#lx').innerHTML=`<div class="exhero">${gl(id)}<div><h1>${nm}</h1><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${e.eq||''}${isFav(id)?' · ★ Favorite':''}</p></div></div>
+  $('#lx').innerHTML=`<div class="exhero">${gl(id)}<div><h1>${nm}</h1><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${e.eq||''}${isFav(id)?' · ★ Favorite':''}${cx?cxL(id):''}</p></div></div>
    ${j&&j.summary?`<p class="lsum">${j.summary}</p>`:''}
    ${j&&j.equipment_needs&&j.equipment_needs.text?`<p class="needs">${I('build',1.8)}<span>${j.equipment_needs.text}</span></p>`:''}
-   <div class="pad two"><button class="btn grey" data-act="swap" data-id="${id}">${I('swap',1.8)} Swap</button><button class="btn accent" data-act="add">${I('plus',2)} Add to workout</button></div>${xvBlock(id)}${body}`;
+   <div class="pad two"><button class="btn grey" data-act="swap" data-id="${id}">${I('swap',1.8)} Swap</button><button class="btn accent" data-act="add">${I('plus',2)} Add to workout</button></div>${cx?cxMediaBlock(id):xvBlock(id)}${body}`;
+  if(cx)cxWireLoops($('#lx'));
   // the thumbnail is requested only after the page has painted, and only if this page is still the one on screen
   setTimeout(()=>{const im=$('#xvid .xvth img[data-src]');if(im&&S.scr==='learnEx'&&String(S.arg||'').split('~')[0]===id){im.src=im.dataset.src;im.removeAttribute('data-src')}},250);
   if(sx==='video'){const vb=$('#xvid');if(vb){const V0=$('#view');V0.scrollTop+=vb.getBoundingClientRect().top-V0.getBoundingClientRect().top-60;vb.classList.add('flash')}}
@@ -1488,36 +1495,96 @@ let CX=null;
 const cxList=()=>{const L=ld(CXK,[]);return Array.isArray(L)?L.filter(e=>e&&typeof e.id==='string'&&window.CUSTOMEX&&CUSTOMEX.ID_RE.test(e.id)):[]};
 const isCx=id=>!!(RD&&RD.EX[id]&&RD.EX[id].custom);
 const cxL=id=>isCx(id)?' <span class="evl cxl" data-ev="custom">Custom</span>':'';
-const cxPhoto=id=>{try{return localStorage.getItem(CXP+id)||null}catch(e){return null}};
+// ---- media: IndexedDB rows {id, photo, video Blob, vtype, vsize, vdur, trim} (logic/cxmedia.js), mirrored in CXM so rendering stays sync.
+// If IndexedDB is unavailable (private mode in some browsers), photos fall back to the old localStorage key and video is not offered.
+const CXM={},CXU={};let CXM_OK=false;
+const MX=()=>window.CXMEDIA;
+const cxMedia=id=>CXM[id]||null;
+const cxPhoto=id=>(CXM[id]&&CXM[id].photo)||(()=>{try{return localStorage.getItem(CXP+id)||null}catch(e){return null}})();
+const cxHasVid=id=>!!(CXM[id]&&CXM[id].video&&CXM[id].trim);
+const cxYT=id=>{const e=RD&&RD.EX[id],m=e&&e.youtube_meta;return m&&/^[\w-]{11}$/.test(m.video_id||'')?m:null};
+function cxVidURL(id){if(CXU[id])return CXU[id];const m=CXM[id];if(!m||!m.video)return null;return CXU[id]=URL.createObjectURL(m.video)}
+function cxDropURL(id){if(CXU[id]){try{URL.revokeObjectURL(CXU[id])}catch(e){}delete CXU[id]}}
+async function cxMediaLoad(L){try{const rows=await MX().idbAll();rows.forEach(r=>{if(r&&r.id)CXM[r.id]=r});CXM_OK=true}catch(e){CXM_OK=false;return}
+  // one-time migration: photos stored in localStorage (piece C) move to IndexedDB; the key is removed only after the write succeeds
+  for(const e of L){let lp=null;try{lp=localStorage.getItem(CXP+e.id)}catch(x){}if(!lp)continue;
+    const row=Object.assign({id:e.id},CXM[e.id]);if(!row.photo)row.photo=lp;try{await MX().idbPut(row);CXM[e.id]=row;localStorage.removeItem(CXP+e.id)}catch(x){}}}
+// loop only the trim window: muted + playsinline + autoplay (the iOS rules for inline autoplay); currentTime is pulled back to start at the end
+function cxLoop(v,getTrim){const T=()=>getTrim()||{start:0,end:v.duration||0};let raf=0;
+  const tick=()=>{if(!v.isConnected){cancelAnimationFrame(raf);return}const t=T();if(v.readyState>=1){if(v.currentTime>=t.end-0.04||v.currentTime<t.start-0.3||v.ended){v.currentTime=t.start;if(v.paused&&!v.dataset.hold)v.play().catch(()=>{})}}raf=requestAnimationFrame(tick)};
+  v.muted=true;v.defaultMuted=true;v.setAttribute('muted','');v.playsInline=true;
+  v.addEventListener('loadedmetadata',()=>{v.currentTime=T().start;if(!v.dataset.hold)v.play().catch(()=>{})},{once:true});raf=requestAnimationFrame(tick);return v}
+function cxWireLoops(root){$$('video[data-cxv]',root).forEach(v=>{if(v.dataset.wired)return;v.dataset.wired='1';const id=v.dataset.cxv,u=cxVidURL(id);if(!u)return;
+  cxLoop(v,()=>(CXM[id]||{}).trim);v.src=u})}
+const cxClipHtml=(id,nm)=>{const t=(CXM[id]||{}).trim;return `<section class="xvid cxclip" data-clip="${id}"><div class="xvh"><span>Your clip</span>${t?`<span class="evl num" data-ev="loop">${(t.end-t.start).toFixed(1)} s loop</span>`:''}</div>
+  <video class="cxloop" data-cxv="${id}" muted autoplay playsinline loop preload="auto" aria-label="${nm} clip, looping"></video></section>`};
+// clip first, then the YouTube demo (both shown when both exist); wrapped in #xvid so the Watch link lands on it
+function cxMediaBlock(id){const nm=esc((RD.EX[id]||{}).name||'Exercise'),y=cxYT(id),c=cxHasVid(id);if(!c&&!y)return '';
+  return `<div id="xvid" class="cxmedia">${c?cxClipHtml(id,nm):''}${y?xvBlockV({video_id:y.video_id,start_s:y.start_s,channel:y.author,confidence:'exact',duration_s:null},nm,{custom:true,checked:y.checked!==false}):''}</div>`}
 function cxMock(e){const rat={};for(const [m,r] of Object.entries(e.muscles))if(r>0)rat[m]=r;const mus=Object.keys(rat).filter(m=>rat[m]>=0.5).sort((a,b)=>rat[b]-rat[a]);
   EX[e.id]={id:e.id,name:e.name,type:e.type,eq:e.equipment,mus,rat,ut:null,custom:true,learn:false};delete HAY[e.id];
   const row=[e.id,e.name,e.type,e.equipment,mus,rat,null],k=EXL.findIndex(x=>x[0]===e.id);if(k>=0)EXL[k]=row;else EXL.push(row)}
 function cxUnmock(id){delete EX[id];delete HAY[id];const k=EXL.findIndex(x=>x[0]===id);if(k>=0)EXL.splice(k,1)}
-// load step (called from loadRank once RD exists): the single defaults loader + registration of every stored record
+// load step (called from loadRank once RD exists): the single defaults loader + registration of every stored record + media cache/migration
 async function cxLoad(R,exercises,rules,d0){const d=d0!==undefined?d0:await getJ(DATA+'custom-exercise-defaults.json');if(!d||!window.CUSTOMEX)return;
-  R.CXD=d;CX=CUSTOMEX.make(d,exercises,rules);const L=cxList();CUSTOMEX.register(R,L);L.forEach(cxMock)}
-function cxStore(rec,photo){const L=cxList(),k=L.findIndex(x=>x.id===rec.id);if(k>=0)L[k]=rec;else L.push(rec);localStorage.setItem(CXK,JSON.stringify(L));
-  let photoOk=true;if(photo===null){try{localStorage.removeItem(CXP+rec.id)}catch(e){}}
-  else if(photo){try{localStorage.setItem(CXP+rec.id,photo)}catch(e){photoOk=false}}
-  CUSTOMEX.register(RD,[rec]);cxMock(rec);return photoOk}
+  R.CXD=d;CX=CUSTOMEX.make(d,exercises,rules);const L=cxList();CUSTOMEX.register(R,L);L.forEach(cxMock);if(MX())await cxMediaLoad(L)}
+// media: undefined = leave as is; photo null = delete; video null = delete; video {blob,type,size,dur} = replace; trim {start,end} = set
+async function cxStore(rec,media={}){const L=cxList(),k=L.findIndex(x=>x.id===rec.id);if(k>=0)L[k]=rec;else L.push(rec);localStorage.setItem(CXK,JSON.stringify(L));
+  CUSTOMEX.register(RD,[rec]);cxMock(rec);const res={photoOk:true,videoOk:true};
+  const touched=media.photo!==undefined||media.video!==undefined||media.trim!==undefined;if(!touched)return res;
+  if(!CXM_OK){ // no IndexedDB: photo in localStorage as before, no video
+    if(media.photo===null){try{localStorage.removeItem(CXP+rec.id)}catch(e){}}else if(media.photo){try{localStorage.setItem(CXP+rec.id,media.photo)}catch(e){res.photoOk=false}}
+    if(media.video)res.videoOk=false;return res}
+  const row=Object.assign({id:rec.id},CXM[rec.id]);
+  if(media.photo!==undefined)row.photo=media.photo||null;
+  if(media.video===null){row.video=null;row.vtype=row.vsize=row.vdur=null;row.trim=null;cxDropURL(rec.id)}
+  else if(media.video){row.video=media.video.blob;row.vtype=media.video.type||media.video.blob.type||'';row.vsize=media.video.blob.size;row.vdur=media.video.dur;cxDropURL(rec.id)}
+  if(media.trim!==undefined&&row.video)row.trim=media.trim;
+  const put=async r=>{if(!r.photo&&!r.video){await MX().idbDel(r.id);delete CXM[r.id];return}await MX().idbPut(r);CXM[r.id]=r};
+  try{await put(row)}catch(e){ // usually QuotaExceededError: keep the old video, save the photo alone
+    res.videoOk=!media.video;const r2=Object.assign({},CXM[rec.id]||{id:rec.id});if(media.photo!==undefined)r2.photo=media.photo||null;
+    try{await put(r2)}catch(x){res.photoOk=media.photo===undefined}}
+  return res}
 function cxDelete(id){const L=cxList().filter(x=>x.id!==id);sv(CXK,L);try{localStorage.removeItem(CXP+id)}catch(e){}
+  cxDropURL(id);delete CXM[id];if(MX()&&CXM_OK)MX().idbDel(id).catch(()=>{});
   sv(CXGONE,[...new Set([...ld(CXGONE,[]),id])]);  // never reuse an id after delete (history keys on it)
   CUSTOMEX.unregister(RD,id);cxUnmock(id);if(window.BOARD&&BOARD.removeExercise)BOARD.removeExercise(id)}
-// export / import: the storyboard's Back up / Restore rows are static mocks, so this is the API they would call
-const cxExport=()=>({kind:'apechit.customExercises',version:1,exercises:cxList().map(e=>Object.assign({},e,cxPhoto(e.id)?{photo:cxPhoto(e.id)}:{}))});
-function cxImport(o){const L=(o&&o.exercises)||[];let n=0;for(const x of L){if(!x||!CUSTOMEX.ID_RE.test(x.id||'')||!x.muscles)continue;const {photo,...rec}=x;cxStore(Object.assign(rec,{custom:true,estimated:true}),photo||undefined);n++}return n}
+// export / import (the storyboard's Back up / Restore rows wait for the native app; this is the API they will call).
+// version 2: records (incl. youtube + youtube_meta) + photo (JPEG data URL) + video_trim + video as a data URL when <= 8 MB;
+// a bigger video is left out with video_omitted {bytes} and a line in notes (its trim and the link are still exported).
+async function cxExport(){const M=MX(),notes=[],exercises=[];
+  for(const e of cxList()){const m=CXM[e.id]||{},o=Object.assign({},e),ph=cxPhoto(e.id);if(ph)o.photo=ph;
+    if(m.video&&m.trim){o.video_trim=m.trim;o.video_type=m.vtype||'';o.video_duration=m.vdur||null;
+      if(m.video.size<=M.EXPORT_VIDEO_MAX){try{o.video=await M.blobToDataURL(m.video)}catch(x){o.video_omitted={bytes:m.video.size,reason:'read_failed'}}}
+      else{o.video_omitted={bytes:m.video.size,reason:'too_big'};notes.push(`${e.name}: video (${M.mb(m.video.size)} MB) not included; exports keep videos up to ${M.EXPORT_VIDEO_MAX/1048576} MB. The trim and demo link are included.`)}}
+    exercises.push(o)}
+  return {kind:'apechit.customExercises',version:2,exercises,notes}}
+async function cxImport(o){const L=(o&&o.exercises)||[];let n=0;const M=MX();
+  for(const x of L){if(!x||!CUSTOMEX.ID_RE.test(x.id||'')||!x.muscles)continue;const {photo,video,video_trim,video_type,video_duration,video_omitted,...rec}=x;
+    const media={};if(photo)media.photo=photo;
+    if(video&&video_trim){try{const b=await M.dataURLToBlob(video);media.video={blob:b,type:video_type||b.type,dur:video_duration||null};media.trim=video_trim}catch(e){}}
+    await cxStore(Object.assign(rec,{custom:true,estimated:true}),media);n++}return n}
 // band labels come from exercise-details.json body_map.level_labels (Main mover / Helper / Minor), never raw ratios
 let CXLL=null;
 async function cxBandLabels(){if(CXLL)return CXLL;const D=await exdLoad(),any=Object.values(D).find(d=>d.body_map&&d.body_map.level_labels),L=(any&&any.body_map.level_labels)||{};
   const B=(CX&&CX.BANDS)||{};CXLL={main:L.primary||(B.main||{}).label||'Main mover',helper:L.secondary||(B.helper||{}).label||'Helper',minor:L.minor||(B.minor||{}).label||'Minor'};return CXLL}
-// v29 resizeImg (a35ee0b v14.js)
+// v29 resizeImg (a35ee0b v14.js): 800 px long edge, white fill, JPEG 0.82
 function resizeImg(file,max){return new Promise((res,rej)=>{const r=new FileReader();r.onerror=rej;r.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
   const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.82))};im.src=r.result};r.readAsDataURL(file)})}
-// ---- the one-screen form: name (+ editable short name), equipment, movement pattern, one Main mover, optional helpers, two toggles, photo
-async function newExSheet(o={}){if(!CX){toast('Custom exercises need the defaults file');return null}const LL=await cxBandLabels();
-  const ed=o.editId&&RD.EX[o.editId]&&RD.EX[o.editId].custom?RD.EX[o.editId]:null,f0=ed?CX.formFromRecord(ed):null;
-  const F={name:f0?f0.name:String(o.q||'').trim().slice(0,60),short:f0?f0.short_name:'',shortEdited:!!f0,equipment:f0?f0.equipment:null,pattern:f0?f0.movement_pattern:null,
-    main:f0?Object.keys(f0.muscles).find(m=>f0.muscles[m]==='main'):null,extra:{},uni:f0?f0.unilateral:null,st:f0?f0.stretch_focused:null,photo:ed?cxPhoto(ed.id):null,photoTouched:false,tried:false};
+// a picked video's duration (WebM from some recorders reports Infinity until a far seek)
+function videoDuration(url){return new Promise((res,rej)=>{const v=document.createElement('video');v.muted=true;v.preload='metadata';let done=false;
+  const fin=d=>{if(done)return;done=true;clearTimeout(to);v.removeAttribute('src');v.load();d>0&&isFinite(d)?res(d):rej(new Error('no duration'))};
+  const to=setTimeout(()=>fin(NaN),10000);v.onerror=()=>fin(NaN);
+  v.onloadedmetadata=()=>{if(isFinite(v.duration))return fin(v.duration);v.ontimeupdate=()=>{if(isFinite(v.duration))fin(v.duration)};v.currentTime=1e7};v.src=url})}
+// ---- the one-screen form (new + edit): name (+ short name), equipment, pattern, one Main mover, helpers, two toggles, photo, video + trim, demo link.
+// A reserved, empty slot at the top (#nxbase) is where "Start from a similar exercise" goes once Coach's rules land; nothing renders there yet.
+async function newExSheet(o={}){if(!CX){toast('Custom exercises need the defaults file');return null}const LL=await cxBandLabels();const M=MX();
+  const ed=o.editId&&RD.EX[o.editId]&&RD.EX[o.editId].custom?RD.EX[o.editId]:null,f0=ed?CX.formFromRecord(ed):null,m0=ed?(CXM[ed.id]||{}):{};
+  const y0=ed&&ed.youtube_meta&&ed.youtube_meta.video_id?ed.youtube_meta:null;
+  const F={name:f0?f0.name:String(o.q||'').trim().slice(0,60),short:ed&&ed.short_name_edited?ed.short_name:'',shortEdited:!!(ed&&ed.short_name_edited),equipment:f0?f0.equipment:null,pattern:f0?f0.movement_pattern:null,
+    main:f0?Object.keys(f0.muscles).find(m=>f0.muscles[m]==='main'):null,extra:{},uni:f0?f0.unilateral:null,st:f0?f0.stretch_focused:null,photo:ed?cxPhoto(ed.id):null,photoTouched:false,tried:false,
+    video:ed&&m0.video&&m0.trim?{blob:m0.video,type:m0.vtype,dur:m0.vdur,url:cxVidURL(ed.id),name:'Saved clip',stored:true}:null,trim:ed&&m0.trim?Object.assign({},m0.trim):null,videoTouched:false,trimTouched:false,vErr:'',
+    yt:y0?`https://youtu.be/${y0.video_id}`:'',ytStart:y0&&y0.start_s?M.fmtTime(y0.start_s):'',ytP:null,ytC:y0?{state:y0.checked===false?'unchecked':'ok',author:y0.author||''}:null,ytBusy:null};
   if(f0)for(const [m,b] of Object.entries(f0.muscles))if(b!=='main')F.extra[m]=b;
   const others=cxList().filter(x=>!ed||x.id!==ed.id);
   const form=()=>({name:F.name,equipment:F.equipment,movement_pattern:F.pattern,muscles:Object.assign(F.main?{[F.main]:'main'}:{},...Object.entries(F.extra).filter(([m])=>m!==F.main).map(([m,b])=>({[m]:b}))),
@@ -1527,14 +1594,38 @@ async function newExSheet(o={}){if(!CX){toast('Custom exercises need the default
   const chip=(k,v,l,on,extra='')=>`<button type="button" class="chip xs ${on?'on':''}" data-nx="${k}" data-v="${esc(v)}"${extra}>${l}</button>`;
   const ML2=CX.labels.muscle,PL=CX.labels.pattern,QL=CX.labels.equipment;
   const tg=(k,l,on)=>`<label class="row nxt"><div class="grow t1">${l}</div><input type="checkbox" class="nxsw" data-tg="${k}" role="switch" ${on?'checked':''} aria-label="${l}"></label>`;
-  const photoRow=()=>F.photo?`<div class="row nxph"><img src="${F.photo}" alt="${esc(F.name||'Exercise')} photo"><div class="grow t2">Stored on this device only</div><button type="button" class="btn plain sm dl" data-nx="rmphoto">Remove</button></div>`
-    :`<label class="row nxph nxadd"><span class="acc">${I('plus',2)} Add photo</span><span class="t2">optional, e.g. the machine</span><input type="file" id="nxfile" accept="image/*" capture="environment" hidden></label>`;
+  const pick=(id,icon,label,sub,accept,cap)=>`<label class="row nxph nxadd" data-pick="${id}"><span class="acc">${I(icon,1.8)} ${label}</span><span class="t2">${sub}</span><input type="file" id="${id}" accept="${accept}"${cap?' capture="environment"':''} hidden></label>`;
+  const photoRow=()=>F.photo?`<div class="row nxph"><img src="${F.photo}" alt="${esc(F.name||'Exercise')} photo"><div class="grow t2">Stored on this device only</div><button type="button" class="btn plain sm dl" data-nx="rmphoto">Delete photo</button></div>`
+    :pick('nxcam','camera','Take photo','e.g. the machine','image/*',true)+pick('nxfile','image','Choose from library','','image/*',false);
+  // trim UI: preview + a track with start / end handles (drag, or arrow keys: 0.1 s, Shift 1 s); max 10 s; the band between can be dragged too
+  const trimHtml=()=>{const v=F.video,t=F.trim,d=v.dur||0,pct=x=>(d?x/d*100:0).toFixed(3)+'%',w=M.sizeWarn(v.blob.size);
+    return `<div class="nxtrim" id="nxtrim"><div class="nxpv"><video id="nxprev" muted playsinline autoplay loop preload="auto" aria-label="Clip preview"></video></div>
+     <div class="nxtrk" id="nxtrk" style="--s:${pct(t.start)};--e:${pct(t.end)}"><div class="nxtb"></div><div class="nxsel" data-h="move"></div><i class="nxph2" id="nxph"></i>
+      <button type="button" class="nxhd" data-h="start" role="slider" aria-label="Clip start" aria-valuemin="0" aria-valuemax="${d.toFixed(1)}" aria-valuenow="${t.start.toFixed(1)}"></button>
+      <button type="button" class="nxhd" data-h="end" role="slider" aria-label="Clip end" aria-valuemin="0" aria-valuemax="${d.toFixed(1)}" aria-valuenow="${t.end.toFixed(1)}"></button></div>
+     <div class="row nxtl"><span class="t1 num" id="nxtlen">${(t.end-t.start).toFixed(1)} s selected</span><span class="t2 num" id="nxtrng">${M.fmtTime(t.start)}${(t.start%1).toFixed(1).slice(1)}–${M.fmtTime(t.end)}${(t.end%1).toFixed(1).slice(1)} of ${M.fmtTime(d)} · max ${M.MAX_TRIM} s</span></div>
+     ${w?`<p class="nxwarn" data-vwarn>${w}</p>`:''}
+     <div class="row nxph"><div class="grow t2">${esc(v.name||'Video')} · ${M.mb(v.blob.size)} MB · plays muted, loops the selection</div><button type="button" class="btn plain sm dl" data-nx="rmvideo">Delete video</button></div></div>`};
+  const videoRow=()=>F.video?trimHtml():(CXM_OK?pick('nxrec','film','Record video','up to 10 s is kept','video/*',true)+pick('nxvid','image','Choose video','','video/*',false)
+    :`<div class="row"><span class="t2">Video needs browser storage (IndexedDB), which this browser has turned off.</span></div>`)+(F.vErr?`<p class="nxerr" data-verr>${F.vErr}</p>`:'');
+  const ytStatus=()=>{const raw=F.yt.trim();if(!raw)return '';const p=F.ytP||M.parseYouTube(raw,F.ytStart);
+    if(p.error)return `<p class="nxerr" data-yterr="${p.error}">${M.YT_MSG[p.error]}</p>`;
+    if(F.ytBusy)return `<p class="t2 nxyst" data-yt="checking">${M.YT_MSG.checking}</p>`;const c=F.ytC;if(!c)return '';
+    if(c.state==='ok')return `<div class="row nxytok" data-yt="ok"><img src="https://i.ytimg.com/vi/${p.video_id}/mqdefault.jpg" alt="" referrerpolicy="no-referrer" loading="lazy"><div class="grow"><div class="t1">${I('check',2.2)} Found on YouTube</div><div class="t2">${esc(c.author||'')}${p.start_s?` · starts at ${M.fmtTime(p.start_s)}`:''}</div></div></div>`;
+    if(c.state==='unchecked')return `<p class="nxwarn" data-yt="unchecked">${M.YT_MSG.unchecked}</p>`;
+    return `<p class="nxerr" data-yterr="${c.state}">${M.YT_MSG[c.state]}</p>`};
+  const ytRow=()=>`<div class="row nxyt"><input id="nxyt" class="dsin" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="youtube.com/watch, youtu.be or Shorts link" value="${esc(F.yt)}" aria-label="Demo video link"></div>
+     <div class="row nxsr"><span class="t2">Start at</span><input id="nxyts" class="dsin" type="text" inputmode="numeric" autocomplete="off" enterkeyhint="done" placeholder="0:00, or t= in the link" value="${esc(F.ytStart)}" aria-label="Start time"></div>`;
   const msg=()=>{const v=CX.validate(form(),others.map(x=>x.name)),E=F.tried?v.errors:[],nice=t=>t.replace(/^name: required$/,'Add a name').replace(/^name: at most 60 characters$/,'Keep the name to 60 characters').replace(/^name: already used.*$/,'You already have a custom exercise with this name')
       .replace(/^equipment: .*/,'Pick the equipment').replace(/^movement_pattern: .*/,'Pick a movement pattern').replace(/^muscles: exactly one Main mover$/,`Pick one ${LL.main.toLowerCase()}`).replace(/^name: same as a library exercise.*$/,'A library exercise already has this name; you can use that one instead')
       .replace(/^muscles: more than 6 muscles.*$/,'More than 6 muscles is unusual; credit may be overestimated');
-    return [...E.map(t=>`<p class="nxerr" data-err>${nice(t)}</p>`),...v.warnings.map(t=>`<p class="nxwarn" data-warn>${nice(t)}</p>`)].join('')};
+    const ye=F.tried?ytBlock():'';
+    return [...E.map(t=>`<p class="nxerr" data-err>${nice(t)}</p>`),...(ye?[`<p class="nxerr" data-err="yt">${ye}</p>`]:[]),...v.warnings.map(t=>`<p class="nxwarn" data-warn>${nice(t)}</p>`)].join('')};
+  // a link that is malformed, not found or not embeddable blocks Save; "couldn't check" (offline) does not
+  const ytBlock=()=>{const raw=F.yt.trim();if(!raw)return '';const p=M.parseYouTube(raw,F.ytStart);if(p.error)return 'Fix the demo video link or clear it';
+    if(F.ytC&&(F.ytC.state==='not_found'||F.ytC.state==='not_embeddable'))return 'The demo video link can’t be used; pick another video or clear it';return ''};
   const body=()=>{const td=tdef(),uni=F.uni==null?td.unilateral:F.uni,st=F.st==null?td.stretch_focused:F.st;
-    return `<div class="nx">
+    return `<div class="nx"><div id="nxbase" class="nxbase" data-slot="similar-base" hidden></div>
     <div class="group"><div class="row"><input id="nxname" class="dsin" type="text" maxlength="60" autocomplete="off" enterkeyhint="done" placeholder="Name, e.g. Hammer Strength Row" value="${esc(F.name)}" aria-label="Name"></div>
      <div class="row nxsr"><span class="t2">Short name</span><input id="nxshort" class="dsin" type="text" maxlength="16" autocomplete="off" enterkeyhint="done" placeholder="${esc(autoShort()||'shown on the board')}" value="${F.shortEdited?esc(F.short):''}" aria-label="Short name on the board"></div></div>
     <div class="ghead">Equipment</div><div class="tfr nxc noswipe" data-row="equipment">${CX.EQUIPMENT.map(q=>chip('equipment',q,QL[q],F.equipment===q)).join('')}</div>
@@ -1543,31 +1634,75 @@ async function newExSheet(o={}){if(!CX){toast('Custom exercises need the default
     <div class="ghead">${LL.helper} muscles <span class="nxh">optional · tap again for ${LL.minor}</span></div><div class="tfr nxc noswipe" data-row="extra">${CX.MUSCLES.filter(m=>m!==F.main).map(m=>{const b=F.extra[m];
       return chip('extra',m,`${ML2[m]}${b?` <span class="nxb" data-band="${b}">${LL[b]}</span>`:''}`,!!b,` data-band="${b||''}"`)}).join('')}</div>
     <div class="group nxtg">${tg('st','Hardest when stretched',st)}${tg('uni','One side at a time',uni)}</div>
-    <div class="ghead">Photo</div><div class="group" id="nxphoto">${photoRow()}</div>
+    <div class="ghead">Photo <span class="nxh">optional</span></div><div class="group" id="nxphoto">${photoRow()}</div>
+    <div class="ghead">Video <span class="nxh">optional · loops up to ${M.MAX_TRIM} s</span></div><div class="group" id="nxvideo">${videoRow()}</div>
+    <div class="ghead">Demo video link <span class="nxh">optional · YouTube</span></div><div class="group" id="nxytg">${ytRow()}</div><div id="nxyst">${ytStatus()}</div>
     <div id="nxmsg" class="nxmsg">${msg()}</div>
-    <p class="foot">${LL.main}, ${LL.helper} and ${LL.minor} set how much of each set counts for that muscle. Fatigue, rep range and the other numbers are modeled from library exercises with the same pattern and equipment, not measured. Shown as <span class="evl">Custom</span> and <span class="evl">Estimated</span>.</p></div>`};
+    <p class="foot">${LL.main}, ${LL.helper} and ${LL.minor} set how much of each set counts for that muscle. Fatigue, rep range and the other numbers are modeled from library exercises with the same pattern and equipment, not measured. Shown as <span class="evl">Custom</span> and <span class="evl">Estimated</span>. Photos and videos stay on this device.</p></div>`};
   const s=sheet({title:ed?'Edit exercise':'New exercise',cls:'grouped tall nxsheet',left:'<button class="btn plain" data-x="nxcancel">Cancel</button>',right:`<button class="btn plain nxsave" data-x="nxsave">${ed?'Save':'Add'}</button>`,body:body()});
   const re=()=>{const sc=s.body.scrollTop;s.body.innerHTML=body();s.body.scrollTop=sc;wire()};
   const upd=()=>{$('#nxmsg',s.el).innerHTML=msg();const sh=$('#nxshort',s.el);if(sh)sh.placeholder=autoShort()||'shown on the board'};
-  function wire(){const n=$('#nxname',s.el),sh=$('#nxshort',s.el),fi=$('#nxfile',s.el);
+  const ytPaint=()=>{$('#nxyst',s.el).innerHTML=ytStatus();upd()};
+  let ytT=0,ytSeq=0;
+  const ytCheck=()=>{clearTimeout(ytT);const raw=F.yt.trim();F.ytC=null;F.ytBusy=null;if(!raw){F.ytP=null;return ytPaint()}const p=M.parseYouTube(raw,F.ytStart);F.ytP=p;
+    if(p.error)return ytPaint();const q=++ytSeq;F.ytBusy=M.checkYouTube(p).then(c=>{if(q!==ytSeq)return;F.ytC=c;F.ytBusy=null;ytPaint()});ytPaint();return F.ytBusy};
+  const vidPaint=()=>{$('#nxvideo',s.el).innerHTML=videoRow();wireVideo()};
+  function wireVideo(){const pv=$('#nxprev',s.el);if(pv&&F.video){cxLoop(pv,()=>F.trim);pv.src=F.video.url}
+    const trk=$('#nxtrk',s.el);if(!trk)return;const d=F.video.dur;
+    const paintT=()=>{const t=F.trim,pct=x=>(x/d*100).toFixed(3)+'%';trk.style.setProperty('--s',pct(t.start));trk.style.setProperty('--e',pct(t.end));
+      $$('.nxhd',trk).forEach(h=>h.setAttribute('aria-valuenow',(h.dataset.h==='start'?t.start:t.end).toFixed(1)));
+      $('#nxtlen',s.el).textContent=`${(t.end-t.start).toFixed(1)} s selected`;$('#nxtrng',s.el).textContent=`${M.fmtTime(t.start)}${(t.start%1).toFixed(1).slice(1)}–${M.fmtTime(t.end)}${(t.end%1).toFixed(1).slice(1)} of ${M.fmtTime(d)} · max ${M.MAX_TRIM} s`};
+    const set=(which,s0,e0)=>{F.trim=M.clampTrim(d,s0,e0,which);F.trimTouched=true;paintT()};
+    let drag=null;
+    trk.addEventListener('pointerdown',e=>{const h=e.target.closest('[data-h]');if(!h)return;e.preventDefault();e.stopPropagation();const r=trk.getBoundingClientRect();
+      drag={which:h.dataset.h,x0:e.clientX,t0:Object.assign({},F.trim),r};try{trk.setPointerCapture(e.pointerId)}catch(x){}if(pv){pv.dataset.hold='1';pv.pause()}});
+    trk.addEventListener('pointermove',e=>{if(!drag)return;e.preventDefault();const dt=(e.clientX-drag.x0)/drag.r.width*d,t=drag.t0;
+      if(drag.which==='start')set('start',t.start+dt,t.end);else if(drag.which==='end')set('end',t.start,t.end+dt);else set('move',t.start+dt,t.end+dt);
+      if(pv)pv.currentTime=drag.which==='end'?F.trim.end:F.trim.start});
+    const up=()=>{if(!drag)return;drag=null;if(pv){delete pv.dataset.hold;pv.currentTime=F.trim.start;pv.play().catch(()=>{})}};
+    trk.addEventListener('pointerup',up);trk.addEventListener('pointercancel',up);
+    $$('.nxhd',trk).forEach(h=>h.addEventListener('keydown',e=>{const k={ArrowLeft:-1,ArrowDown:-1,ArrowRight:1,ArrowUp:1}[e.key];if(!k)return;e.preventDefault();const st=(e.shiftKey?1:0.1)*k,t=F.trim;
+      if(h.dataset.h==='start')set('start',t.start+st,t.end);else set('end',t.start,t.end+st);if(pv)pv.currentTime=F.trim.start}))}
+  async function takeVideo(f){if(!f)return;F.vErr='';const url=URL.createObjectURL(f);let dur;
+    try{dur=await videoDuration(url)}catch(e){URL.revokeObjectURL(url);F.vErr='This browser can’t play that video. Try another file, or record in your camera’s most compatible format.';return vidPaint()}
+    if(F.video&&!F.video.stored&&F.video.url)URL.revokeObjectURL(F.video.url);
+    F.video={blob:f,type:f.type,dur,url,name:f.name||'Video'};F.trim=M.defaultTrim(dur);F.videoTouched=true;F.trimTouched=true;vidPaint();
+    const tr=$('#nxtrim',s.el);if(tr)tr.scrollIntoView({block:'nearest'})}
+  function wire(){const n=$('#nxname',s.el),sh=$('#nxshort',s.el),yt=$('#nxyt',s.el),yts=$('#nxyts',s.el);
     n.addEventListener('input',()=>{F.name=n.value;upd()});sh.addEventListener('input',()=>{F.short=sh.value;F.shortEdited=!!sh.value.trim();upd()});
-    [n,sh].forEach(x=>x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();x.blur()}}));
+    [n,sh,yt,yts].forEach(x=>x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();x.blur()}}));
+    yt.addEventListener('input',()=>{F.yt=yt.value;F.ytC=null;F.ytP=null;clearTimeout(ytT);ytT=setTimeout(ytCheck,700)});yt.addEventListener('change',()=>{F.yt=yt.value;ytCheck()});
+    yts.addEventListener('input',()=>{F.ytStart=yts.value;clearTimeout(ytT);ytT=setTimeout(ytCheck,700)});yts.addEventListener('change',()=>{F.ytStart=yts.value;ytCheck()});
     $$('[data-tg]',s.el).forEach(c=>c.addEventListener('change',()=>{F[c.dataset.tg]=c.checked}));
-    if(fi)fi.addEventListener('change',()=>{const f=fi.files&&fi.files[0];if(!f)return;resizeImg(f,800).then(u=>{F.photo=u;F.photoTouched=true;$('#nxphoto',s.el).innerHTML=photoRow();wire()}).catch(()=>toast('Could not read that image'))})}
-  wire();
-  s.el.addEventListener('click',e=>{const c=e.target.closest('[data-nx]');
+    ['nxcam','nxfile'].forEach(i=>{const fi=$('#'+i,s.el);if(fi)fi.addEventListener('change',()=>{const f=fi.files&&fi.files[0];if(!f)return;resizeImg(f,800).then(u=>{F.photo=u;F.photoTouched=true;$('#nxphoto',s.el).innerHTML=photoRow();wire()}).catch(()=>toast('Could not read that image'))})});
+    ['nxrec','nxvid'].forEach(i=>{const fi=$('#'+i,s.el);if(fi)fi.addEventListener('change',()=>takeVideo(fi.files&&fi.files[0]))});wireVideo()}
+  wire();if(F.yt&&(!F.ytC||F.ytC.state==='unchecked'))ytCheck();else if(F.yt)F.ytP=M.parseYouTube(F.yt,F.ytStart);
+  s.el.addEventListener('click',async e=>{const c=e.target.closest('[data-nx]');
     if(c){const k=c.dataset.nx,v=c.dataset.v;
       if(k==='rmphoto'){F.photo=null;F.photoTouched=true;$('#nxphoto',s.el).innerHTML=photoRow();wire();return}
+      if(k==='rmvideo'){if(F.video&&!F.video.stored&&F.video.url)URL.revokeObjectURL(F.video.url);F.video=null;F.trim=null;F.videoTouched=true;F.vErr='';vidPaint();return}
       if(k==='equipment'||k==='pattern'){F[k]=F[k]===v?null:v;return re()}
       if(k==='main'){F.main=F.main===v?null:v;delete F.extra[v];return re()}
       if(k==='extra'){const b=F.extra[v];if(!b)F.extra[v]='helper';else if(b==='helper')F.extra[v]='minor';else delete F.extra[v];return re()}}
     if(e.target.closest('[data-x=nxcancel]'))return s.close();
     if(e.target.closest('[data-x=nxsave]')){F.tried=true;const fm=form(),v=CX.validate(fm,others.map(x=>x.name));
-      if(v.errors.length){upd();const m=$('#nxmsg',s.el);m.scrollIntoView({block:'center'});return}
-      const keepShort=F.shortEdited&&F.short.trim()?F.short:(ed&&spaces2(F.name)===ed.name?ed.short_name:undefined);
+      if(F.yt.trim()&&!F.ytC&&!F.ytBusy){const pp=M.parseYouTube(F.yt,F.ytStart);if(!pp.error)ytCheck()}
+      if(F.ytBusy){upd();await F.ytBusy}
+      if(v.errors.length||ytBlock()){ytPaint();const m=$('#nxmsg',s.el);m.scrollIntoView({block:'center'});return}
+      // short name: a hand-edited one is kept; otherwise Coach's rule re-runs only when the name changed
+      const nameSame=ed&&spaces2(F.name)===ed.name,hand=F.shortEdited&&F.short.trim();
+      const keepShort=hand?F.short:(nameSame&&!ed.short_name_edited?ed.short_name:undefined);
       let rec;try{rec=CX.build(fm,{id:ed?ed.id:undefined,short_name:keepShort,takenIds:[...cxList().map(x=>x.id),...ld(CXGONE,[])],takenShort:others.map(x=>x.short_name)})}catch(x){toast('Could not save: '+x.message);return}
-      let ok=true;try{ok=cxStore(rec,F.photoTouched?(F.photo||null):undefined)}catch(x){toast('Not enough browser storage to save this exercise');return}
-      if(!ok)toast('Saved without the photo: not enough browser storage');
+      rec.short_name_edited=!!hand;rec.based_on=(ed&&ed.based_on)||null;   // based_on: reserved for "Start from a similar exercise"
+      const p=F.yt.trim()?M.parseYouTube(F.yt,F.ytStart):null;
+      if(p&&!p.error){rec.youtube=p.url;rec.youtube_meta={video_id:p.video_id,start_s:p.start_s,author:(F.ytC&&F.ytC.author)||'',checked:!!(F.ytC&&F.ytC.state==='ok')}}else{rec.youtube='';delete rec.youtube_meta}
+      const media={};if(F.photoTouched)media.photo=F.photo||null;
+      if(F.videoTouched)media.video=F.video?{blob:F.video.blob,type:F.video.type,dur:F.video.dur}:null;
+      if(F.video&&(F.trimTouched||F.videoTouched))media.trim=M.clampTrim(F.video.dur,F.trim.start,F.trim.end,'end');
+      const sv0=$('[data-x=nxsave]',s.el);if(sv0)sv0.disabled=true;
+      let r;try{r=await cxStore(rec,media)}catch(x){if(sv0)sv0.disabled=false;toast('Not enough browser storage to save this exercise');return}
+      if(!r.videoOk)toast('Saved without the video: not enough browser storage');else if(!r.photoOk)toast('Saved without the photo: not enough browser storage');
+      if(F.video&&!F.video.stored&&F.video.url&&F.videoTouched)URL.revokeObjectURL(F.video.url);
       s.close();if(o.onSave)o.onSave(rec.id,!!ed)}});
   return s}
 const spaces2=t=>String(t||'').split(/\s+/).filter(Boolean).join(' ');
@@ -1586,20 +1721,24 @@ function cxDetailData(e){const LL=CXLL||{main:'Main mover',helper:'Helper',minor
     rep_range:{display:rr.display,unit:rr.unit,per_side:rr.per_side},movement_pattern_label:CX?CX.labels.pattern[e.movement_pattern]:e.movement_pattern,push_pull_side:pps,
     equipment:CX?CX.labels.equipment[e.equipment]:e.equipment,equipment_needs:e.equipment_needs,show_photo:false,photos:null}}
 async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBandLabels();const ph=cxPhoto(id),src=e.defaults_source||{},cell=(RD.CXD&&RD.CXD.cells[src.cell])||{};
+  const media=cxMediaBlock(id),watch=media?`<button class="xwatch" data-go="#learn-ex-${id}~video" aria-label="Watch the clip or demo video">${I('play')}Watch</button>`:'';
   const s=sheet({title:'',cls:'grouped tall xdet',right:'<button class="btn plain" data-x="close">Done</button>',
-    body:`<div class="xd cxd" data-id="${id}" data-custom="1"><div class="exi-h">${gl(id)}<div><h3>${esc(e.name)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${esc(e.equipment)}<span class="evl cxl" data-ev="custom">Custom</span><span class="evl" data-ev="modeled">Estimated</span></p><p class="sub nxsn">On the board: ${esc(e.short_name)}</p></div></div>
+    body:`<div class="xd cxd" data-id="${id}" data-custom="1"><div class="exi-h">${gl(id)}<div><h3>${esc(e.name)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${esc(e.equipment)}<span class="evl cxl" data-ev="custom">Custom</span><span class="evl" data-ev="modeled">Estimated</span></p><p class="sub nxsn">On the board: ${esc(e.short_name)}</p></div>${watch}</div>
+     ${media}
      ${ph?`<div class="xphotos cxph" data-photo="custom"><figure><img src="${ph}" alt="${esc(e.name)} photo"><figcaption>Your photo</figcaption></figure></div>`:''}
      <div id="xdb">${exDetailBody(id,cxDetailData(e))}</div>
      <p class="foot cxsrc">Your exercise. Muscle credit comes from the bands you picked; fatigue, rep range and the rest are modeled from ${cell.n_library?`${cell.n_library} library exercise${cell.n_library===1?'':'s'} with the same pattern and equipment`:'library exercises with the same pattern'}, not measured.</p>
      <div class="pad two"><button class="btn grey" data-x="cxedit">${I('edit',1.8)} Edit</button>${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:`<button class="btn grey dl" data-x="cxdel">${I('trash',1.8)} Delete</button>`}</div>
      ${o.onAdd?`<div class="pad"><button class="btn plain block dl" data-x="cxdel">Delete exercise</button></div>`:''}</div>`});
   if(ph){const x=$('.xnop',s.el);if(x)x.remove()}
+  cxWireLoops(s.el);const im=$('.xvth img[data-src]',s.el);if(im){im.src=im.dataset.src;im.removeAttribute('data-src')}
   s.el.addEventListener('click',ev=>{if(ev.target.closest('[data-x=close]'))return s.close();if(ev.target.closest('[data-x=add]')){s.close();return o.onAdd&&o.onAdd(id)}
+    const pl=ev.target.closest('[data-act=xvplay]');if(pl){ev.preventDefault();return xvPlay(pl)}
     if(ev.target.closest('[data-x=cxedit]')){s.close();return newExSheet({editId:id,onSave:nid=>{if(window.BOARD&&BOARD.repaint)BOARD.repaint();toast('Saved');setTimeout(()=>cxDetail(nid,o),80)}})}
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
-      return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
+      return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

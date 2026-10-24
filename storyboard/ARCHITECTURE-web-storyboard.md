@@ -387,3 +387,28 @@ The suite runs all three (`r3*` checks).
 - UI: the tray has a '+ New exercise' row at the top, hidden in slot mode, and the empty-search state offers it prefilled with the search text. Saving drops the exercise onto the tray's day. The detail card (built from the record) has Edit and Delete; Delete asks for confirmation and removes the exercise from the board.
 - Tests: `test/customex.test.js` has 13 logic checks and 12 browser checks. Shots: 44c and 44d (gate `newex`).
 - Short names (brandfix, 2026-10-24): `shortName` reads `short_name` from custom-exercise-defaults.json: 26 brands and their short forms, the abbreviations and `max_len`. A name that fits and is free is kept as typed. Otherwise the whole brand is dropped, matched as whole words in any case, with a space or hyphen between brand words. If the result is taken, the brand's short form goes in front ('HmS Iso Row'), then ' 2', ' 3'. Words are never cut silently: a period marks an abbreviation ('Concentrat. Curl'). Test: `cxShortNameBrandRule`.
+
+## Custom exercise media, demo link and full edit (pieces 2–4, 2026-10-24)
+
+- `logic/cxmedia.js` (UMD, global `CXMEDIA`) holds the pure parts, tested in node: `parseYouTube`, `parseTime`, `checkYouTube`, `defaultTrim`/`clampTrim` (max 10 s, min 0.5 s; the dragged handle wins and the other one is pushed) and `sizeWarn`. It also holds the IndexedDB store: database `apechit-sb-media`, store `media`, one row per exercise id `{photo, video, vtype, vsize, vdur, trim}`.
+- Blobs in IndexedDB: the code tries the Blob first. If the browser refuses it (the WebKit test build does, and so can Safari private browsing), it stores the bytes as an ArrayBuffer (`vbuf`) and rebuilds the Blob on read.
+- Migration: on load (`cxLoad` → `cxMediaLoad`), a photo still under `apechit.sb.customExPhoto.<id>` is written to IndexedDB, and the localStorage key is removed only after that write succeeds. If IndexedDB is unavailable, photos stay in localStorage and video isn't offered.
+- **Photo:** "Take photo" (`accept=image/*`, `capture=environment`) and "Choose from library" (`accept=image/*`). Both use the v29 resize: 800 px long edge, JPEG 0.82.
+- **Video:** "Record video" (`accept=video/*`, `capture=environment`) and "Choose video" (`accept=video/*`).
+  - The trim UI is a preview plus a track with start/end handles. Handles can be dragged, or moved with the arrow keys (0.1 s, or 1 s with Shift); the band between them can be dragged too.
+  - The default is the first ≤10 s, and the selected length is shown.
+  - The **original file** is stored with `trim {start, end}`, and playback loops only that window. The video is muted, autoplays, plays inline and loops; `currentTime` is pulled back to `start` on each animation frame.
+  - No re-encode: the WebKit test build has no MediaRecorder (Chromium does), and canvas capture is real-time and drops frames on phones.
+  - An inline warning shows over 20 MB.
+- **Demo video link:** youtube.com/watch, youtu.be and youtube.com/shorts (www./m./no scheme). The start time comes from the field, or from `t=` / `start=` / `#t=` in the link.
+  - The check is `fetch` to `https://www.youtube.com/oembed?url=…&format=json`. YouTube's oEmbed sends `Access-Control-Allow-Origin` echoing the page origin, so it works from the browser without a proxy.
+  - 200 + JSON = OK. 401/403 = embedding disabled. 400/404 = not found, private or removed. Each of these failures blocks Save with an inline message.
+  - A network error = "couldn't check": the link is saved with `youtube_meta.checked=false` and re-checked on the next Edit.
+  - Stored as `youtube` (canonical watch URL) + `youtube_meta {video_id, start_s, author, checked}`.
+  - Rendered by the library renderer (`xvBlockV`): thumbnail, tap to play youtube-nocookie, our exercise name as the label.
+- **Precedence:** your own looping clip first, then the YouTube demo. Both show when both exist, on the detail card and on the custom Learn page (`#learn-ex-<id>`, the target of the card's Watch link). The photo shows below them.
+- **Edit:** every field, including media, trim and link.
+  - The short name re-runs Coach's rule only when the name changed and the short name wasn't hand-edited (`short_name_edited`).
+  - `#nxbase` (hidden, empty) and `based_on` (null) are reserved for "Start from a similar exercise".
+- **Export/import:** `SBX.cxExport()` is now async, version 2. It includes `photo`, `video_trim`, the link fields, and `video` as a data URL up to 8 MB. Bigger videos get `video_omitted {bytes, reason}` plus a line in `notes`. `cxImport` restores all of it.
+- **Tests:** `test/media.test.js` has 4 logic checks (node, oEmbed mocked) and 13 browser checks (oEmbed and thumbnails routed). It passes on WebKit and on Chromium (`ENGINE=chromium`). Shots 45a–45e use gate `media`.
