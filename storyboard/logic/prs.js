@@ -53,8 +53,8 @@ function detect(dt,h,o={}){const C=ctx(dt),e1=(w,r)=>(E1[C.formula]||E1.epley)(w
           (out[sid]=out[sid]||{})[ex]=rec}}
       (prior[ex]=prior[ex]||[]).push(...xs)}}
   return out}
-/** e1RM of one set in its own unit (null when not eligible: warm-up, 0 reps, reps > e1rm_max_reps, no load). */
-function e1rmSet(dt,load,reps,kind='working'){const C=ctx(dt);if(kind!=='working'||!(reps>0)||!(+load>0)||reps>C.mx)return null;return (E1[C.formula]||E1.epley)(+load,reps)}
-const API={detect,availableLoads,e1rmSet,TYPES};
+/** e1RM of one set in its own unit (null when not eligible: warm-up, 0 reps, reps > maxReps (default logger.e1rm_max_reps), no load). */
+function e1rmSet(dt,load,reps,kind='working',maxReps){const C=ctx(dt),mx=maxReps||C.mx;if(kind!=='working'||!(reps>0)||!(+load>0)||reps>mx)return null;return (E1[C.formula]||E1.epley)(+load,reps)}
+const API={detect,availableLoads,e1rmSet,stepKg,ctx,TYPES};
 if(isNode)module.exports=API;else root.PRS=API;
 })(typeof window!=='undefined'?window:globalThis);

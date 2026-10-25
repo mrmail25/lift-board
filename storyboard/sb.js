@@ -99,7 +99,7 @@ const LOGS={ // Oct 2026, day -> workout
  6:{n:'Lower B',min:51,sets:15,vol:'25,610',pr:0},8:{n:'Upper A',min:59,sets:18,vol:'21,060',pr:1},9:{n:'Lower A',min:53,sets:16,vol:'27,900',pr:0},
  12:{n:'Upper B',min:56,sets:16,vol:'15,180',pr:0},13:{n:'Lower B',min:50,sets:15,vol:'26,050',pr:0},15:{n:'Upper A',min:58,sets:18,vol:'21,450',pr:2},
  16:{n:'Lower A',min:55,sets:16,vol:'28,120',pr:1},19:{n:'Upper B',min:57,sets:16,vol:'15,400',pr:0},20:{n:'Lower B',min:52,sets:15,vol:'26,300',pr:0}};
-const TODAY=21;
+const TODAY=24; // the storyboard's today: Sat Oct 24, 2026 (as_of of the shared sample log)
 // Coach's real swap-tag wording (data/rules.json swap_tags), hardcoded examples
 const SWAPS={
  'barbell-bench-press':[{id:'dumbbell-bench-press',tags:['More stretch emphasis','Lower loading potential']},{id:'machine-chest-press',tags:['More stable','Less systemic fatigue','Lower loading potential']}],
@@ -281,7 +281,7 @@ function routineCard(r,mode){
 V.train=()=>{
   const act=ROUTINES.find(r=>r.active),pick=S.pick&&S.pick!==act.id?S.pick:null;
   return header('Train',bookBtn)+
-  `<div class="hello sub">Wednesday, October 21</div>
+  `<div class="hello sub">Saturday, October 24</div>${trainDeloadHtml()}
    <div class="rts">${routineCard(act,pick?'closed':'open')}</div>
    <div class="sec"><h2>Library</h2><span class="more">${ROUTINES.length-1} published</span></div>
    <div class="rts lib">${ROUTINES.filter(r=>!r.active).map(r=>routineCard(r,r.id===pick?'open':'closed')).join('')}</div>
@@ -411,7 +411,7 @@ function wSwap(xi){const ex=WK.ex[xi];if(!ex)return;const old=ex.id;
 // log (LOGH): the session is appended to a copy of the log, then Coach's PR rules (PRS.detect), the e1RM overlay chart, the
 // session body map (sesMus) and the comparisons run on that copy. No canned praise: every line is a number from the logs.
 // A cold-loaded #finish shows the demo workout completed as last time's targets (the bench sets as already entered).
-const FIN_DAY='2026-10-21'; // the storyboard's "today" (Wed, Oct 21; the synthetic log runs to Tue Oct 20)
+const FIN_DAY='2026-10-24'; // the storyboard's "today" (Sat, Oct 24; the shared sample log runs to Fri Oct 23)
 let FIN=null;
 const isoLocal=t=>{const d=new Date(t),p=n=>String(n).padStart(2,'0');return `${FIN_DAY}T${p(d.getHours())}:${p(d.getMinutes())}:00-07:00`};
 function finDemoSets(){WK0.ex.forEach(x=>{const w=WK.ex.find(e=>e.id===x.id);if(!w)return;
@@ -421,7 +421,7 @@ function finBuild(cold){if(cold){Object.assign(WK,JSON.parse(JSON.stringify(WK0)
   const st=cold?`${FIN_DAY}T18:12:00-07:00`:isoLocal(CLK.start),min=cold?58:Math.max(1,Math.round(WK.elapsed/60)),en=cold?isoPlus(st,58):isoLocal(Date.now());
   const ses={id:sid,schema:2,status:'completed',date:st,startedAt:st,endedAt:en,unit:u,label:WK.title||'Workout',notes:'',snapshot:{exercises:WK.ex.map(x=>({exerciseId:x.id,sets:x.sets.length}))}},ents=[],sets=[];
   WK.ex.forEach((x,o)=>{const done=x.sets.filter(s=>s.done&&L(s.rv)>0);if(!done.length)return;const eid=`${sid}-e${o}`;ents.push({id:eid,sessionId:sid,order:o,exerciseId:x.id,skipped:false,notes:''});
-    done.forEach((s,i)=>sets.push({id:`${eid}-t${i}`,entryId:eid,sessionId:sid,idx:i,kind:s.warm?'warmup':'working',load:+nfmt(num(s,x.id)),reps:L(s.rv),rir:EFF().clampRir(s.rir),done:true}))});
+    done.forEach((s,i)=>sets.push({id:`${eid}-t${i}`,entryId:eid,idx:i,kind:s.warm?'warmup':'working',load:+nfmt(num(s,x.id)),reps:L(s.rv),rir:EFF().clampRir(s.rir),done:true}))});
   const X={...H,sessions:[...H.sessions,ses],entries:[...H.entries,...ents],sets:[...H.sets,...sets]};
   return {ses,ents,sets,X,min,cold}}
 // run fn with LOGH = the log plus this session (sesMus / e1Chart / entsOf read the global)
@@ -429,7 +429,7 @@ function withFin(fn){const keep=LOGH;LOGH=FIN.X;try{return fn()}finally{LOGH=kee
 const kgOf=(load,unit)=>unit==='kg'?+load:+load/KG_LB,inU=(v,unit)=>unit===S.unit?v:unit==='lb'?v/KG_LB:v*KG_LB;
 function finStats(){const F=FIN,H=F.X,u=S.unit,W=F.sets.filter(x=>x.kind==='working'),vol=W.reduce((a,x)=>a+x.load*x.reps,0);
   const prev=H.sessions.filter(s=>s.status==='completed'&&s.id!==F.ses.id&&s.startedAt<F.ses.startedAt).sort((a,b)=>a.startedAt<b.startedAt?-1:1);
-  const work=sid=>H.sets.filter(x=>x.sessionId===sid&&x.kind==='working'&&x.done&&x.reps>0);
+  const eS=entSid(H),work=sid=>H.sets.filter(x=>eS.get(x.entryId)===sid&&x.kind==='working'&&x.done&&x.reps>0);
   const same=prev.filter(s=>s.label===F.ses.label).pop(),volOf=s=>work(s.id).reduce((a,x)=>a+inU(x.load*x.reps,s.unit),0);
   const lastVol=same?volOf(same):null;
   // per exercise: best working set (heaviest load, then most reps) now vs the last logged session that had the exercise
@@ -471,7 +471,7 @@ V.finish=()=>{if(!FIN)FIN=finBuild(true);const F=FIN,T=finStats(),u=S.unit,nPR=O
    `<article class="fc" data-card="map"><div class="eyebrow">Muscles worked</div><h2>${T.sets} hard sets</h2><div class="mapcard finmap" data-role="${Object.entries(role).map(([m,k])=>m+':'+k).join(' ')}"><div class="maps">${map('front',rvm)}${map('back',rvm)}</div><div class="legend">${hlLegend()}</div></div>
      ${mw.slice(0,5).map(([m,n])=>`<div class="mw"><span>${ML[m]||m}</span><i style="--w:${Math.min(1,n/Math.max(1,mw[0][1]))*100}%"></i><b class="num">${+n.toFixed(1)}</b></div>`).join('')}
      <p class="foot fpad">Map: each muscle's biggest role in today's exercises. Bars: effective sets, the same model as Build's Day map (helper muscles count as partial sets).</p></article>`,
-   `<article class="fc" data-card="e1"><div class="eyebrow">Strength trend</div><h2>e1RM vs your best</h2>${withFin(()=>e1Chart(F.ses.id))}</article>`,
+   `<article class="fc" data-card="e1"><div class="eyebrow">Strength trend</div><h2>Estimated 1RM vs your best</h2>${withFin(()=>e1Chart(F.ses.id))}</article>`,
    `<article class="fc ape" data-card="ape"><div class="ape-slot"><div class="logo-tile"></div></div><div class="eyebrow">Ape says</div><h2>Ape humor goes here</h2>
      <p class="sub">Placeholder card. The lines come later. Hidden when Settings › Ape humor is off.</p></article>`];
   return `<div class="fin" data-vs="${vsCls}">
@@ -590,34 +590,25 @@ function cal(){
   return `<div class="cal card"><div class="cal-h"><button class="my" data-act="month">${MONTHS[S.month]} ${S.year}${I('chevR',2.4)}</button>
     <div class="cal-nav"><button class="ibtn flat" data-act="mprev" aria-label="Previous month">${I('chevL',2.2)}</button><button class="ibtn flat" data-act="mnext" aria-label="Next month">${I('chevR',2.2)}</button></div></div>
     <div class="cal-w">${'MTWTFSS'.split('').map(x=>`<span>${x}</span>`).join('')}</div><div class="cal-g">${c}</div>
-    <div class="cal-f"><span><i class="k1"></i>Workout</span><span><i class="k2"></i>Today</span><span class="num">12 workouts · 10 h 47 m</span></div></div>`;
+    <div class="cal-f"><span><i class="k1"></i>Workout</span><span><i class="k2"></i>Today</span><span class="num">${calFoot(oct)}</span></div></div>`;
 }
-// ---- 6b. Log data (round 2): ONE history in Coach's logger shape (sessions / entries / sets, loads in each session's unit).
-// Generated from the Oct fixture (LOGS0 + routine days) the first time, then saved to localStorage apechit.sb.log.v1 on any edit.
+// ---- 6b. Log data (piece B): ONE shared sample history, Coach's data/sample-log.json (PHUL intermediate 4-day, Aug 3 to Oct 24, lb,
+// sessions / entries / sets in the logger shape). Log (October view), Finish and Progress all read it. Sets carry no sessionId:
+// a set joins its session through entryId -> entries[].sessionId (entSid). Edits are saved to localStorage apechit.sb.log.v2;
+// the v1 key (the old generated October fixture) is dropped on first load (reset, its shape is not the shared log's).
 // PRs = logic/prs.js (port of Coach's prs.py detect_prs, diffed in test/prs.diff.js) over the whole history, recomputed after every edit.
-const LOG_K='apechit.sb.log.v1',LOGS0=JSON.parse(JSON.stringify(LOGS));
-const LOGFIX={'barbell-bench-press':[225,[8,8,7,7]],'barbell-row':[185,[10,10,9]],'seated-dumbbell-shoulder-press':[60,[9,8,8]],'lat-pulldown':[150,[12,11,10]],'ez-bar-curl':[80,[12,10]],'triceps-pushdown':[70,[12,12]],
- 'back-squat':[265,[6,6,5,5]],'romanian-deadlift':[215,[9,9,8]],'leg-press':[380,[12,11,10]],'lying-leg-curl':[95,[12,11,10]],'standing-calf-raise':[190,[14,13,12,12]],
- 'incline-dumbbell-press':[70,[10,9,8]],'chest-supported-row':[130,[10,9,9]],'pull-up':[0,[9,8,7]],'cable-lateral-raise':[20,[15,13,12]],'incline-dumbbell-curl':[30,[11,10]],'overhead-cable-triceps-extension':[55,[12,11]],
- 'deadlift':[335,[5,5,4]],'hack-squat':[250,[10,9,8]],'bulgarian-split-squat':[45,[10,9,8]],'seated-leg-curl':[105,[12,11,10]],'hanging-leg-raise':[0,[14,12,11]]};
-const LOGNOTE={8:'Short on sleep, kept every set at RIR 2.',12:'Gym busy, did the rows before the presses.',15:'Bench felt strong. Left shoulder fine after the warm-up.',16:'Squat depth looked good on video.',20:'Calves cramped on the last set.'};
-const LOGSTART={1:'18:05',2:'18:20',5:'07:10',6:'18:12',8:'18:12',9:'18:30',12:'07:05',13:'18:15',15:'18:12',16:'18:25',19:'07:00',20:'18:10'};
+const LOG_K='apechit.sb.log.v2',LOG_K1='apechit.sb.log.v1';
 const isoPlus=(st,min)=>new Date(Date.parse(st)+min*6e4-7*36e5).toISOString().slice(0,16)+':00-07:00'; // Oct 2026 is PDT (UTC-7)
-function genLog(){const H={schema:2,sessions:[],entries:[],sets:[],bodyweights:[{date:'2026-10-01',value:182.4,unit:'lb'}]},occ={};
-  for(const d of Object.keys(LOGS0).map(Number).sort((a,b)=>a-b)){const w=LOGS0[d],rd=ROUTINES[0].days.find(x=>x.n===w.n);if(!rd)continue;const k=occ[w.n]=(occ[w.n]??-1)+1,sid='s'+d;
-    const st=`2026-10-${String(d).padStart(2,'0')}T${LOGSTART[d]||'18:12'}:00-07:00`;
-    H.sessions.push({id:sid,schema:2,status:'completed',date:st,startedAt:st,endedAt:isoPlus(st,w.min),unit:'lb',label:w.n,notes:LOGNOTE[d]||'',snapshot:{exercises:rd.ex.map(e=>({exerciseId:e.id,sets:e.s}))}});
-    rd.ex.forEach((e,o)=>{const eid=`${sid}-e${o}`,[L,rr]=LOGFIX[e.id]||[50,[10,10,10]],stp=stepOf('lb',e.id),hi=+(String(e.r||'').split('–')[1])||rr[0]+2;
-      H.entries.push({id:eid,sessionId:sid,order:o,exerciseId:e.id,skipped:false,notes:''});let idx=0;
-      if(o===0&&L>0)H.sets.push({id:`${eid}-t${idx}`,entryId:eid,sessionId:sid,idx:idx++,kind:'warmup',load:Math.round(L*.6/5)*5,reps:8,rir:null,done:true});
-      for(let j=0;j<e.s;j++){const r0=rr[Math.min(j,rr.length-1)];H.sets.push({id:`${eid}-t${idx}`,entryId:eid,sessionId:sid,idx:idx++,kind:'working',load:k>=2||L===0?L:L-stp,reps:k===1?Math.min(hi,r0+1):r0,rir:d%4===0?null:d===8?2:j===e.s-1?1:2,done:true})}})}
-  return H}
-let LOGH=null,LPR={};
-function logLoad(){if(!LOGH){const s=ld(LOG_K,null);LOGH=s&&Array.isArray(s.sessions)&&Array.isArray(s.sets)?s:genLog()}logDerive();return LOGH}
+const entSid=H=>new Map((H.entries||[]).map(e=>[e.id,e.sessionId])),setSid=(H,x)=>(H.entries.find(e=>e.id===x.entryId)||{}).sessionId;
+let LOGH=null,LPR={},LOGV=0;   // LOGV: bumped on every saved edit (Progress cache key)
+function sampleLog(){const H=RD&&RD.SLOG;return H?JSON.parse(JSON.stringify(H)):{schema:2,settings:{unit:'lb'},sessions:[],entries:[],sets:[],bodyweights:[]}}
+function logLoad(){if(!LOGH){try{localStorage.removeItem(LOG_K1)}catch(e){}const s=ld(LOG_K,null);LOGH=s&&s.schema===2&&Array.isArray(s.sessions)&&Array.isArray(s.sets)&&Array.isArray(s.entries)?s:sampleLog()}
+  if(!LOGH.sessions.length&&RD&&RD.SLOG&&!ld(LOG_K,null))LOGH=sampleLog();logDerive();return LOGH}
+const logSave=()=>{sv(LOG_K,LOGH);LOGV++;logDerive()};
 const sesDay=s=>+s.startedAt.slice(8,10),sesOf=sid=>LOGH.sessions.find(s=>s.id===sid),entsOf=sid=>LOGH.entries.filter(e=>e.sessionId===sid).sort((a,b)=>a.order-b.order);
 const setsOfE=eid=>LOGH.sets.filter(x=>x.entryId===eid).sort((a,b)=>a.idx-b.idx),exOfE=eid=>(LOGH.entries.find(e=>e.id===eid)||{}).exerciseId;
-function logDerive(){LPR=(RD&&window.PRS)?PRS.detect(RD,LOGH,{aliases:{}}):{};for(const k of Object.keys(LOGS))delete LOGS[k];
-  for(const s of LOGH.sessions){if(s.status!=='completed'||!String(s.startedAt).startsWith('2026-10'))continue;const xs=LOGH.sets.filter(x=>x.sessionId===s.id&&x.kind==='working'&&x.done);
+function logDerive(){LPR=(RD&&window.PRS)?PRS.detect(RD,LOGH,{aliases:{}}):{};for(const k of Object.keys(LOGS))delete LOGS[k];const eS=entSid(LOGH);
+  for(const s of LOGH.sessions){if(s.status!=='completed'||!String(s.startedAt).startsWith('2026-10'))continue;const xs=LOGH.sets.filter(x=>eS.get(x.entryId)===s.id&&x.kind==='working'&&x.done);
     LOGS[sesDay(s)]={sid:s.id,n:s.label,min:Math.round((Date.parse(s.endedAt)-Date.parse(s.startedAt))/6e4),sets:xs.length,volU:s.unit,vol:xs.reduce((a,x)=>a+(+x.load||0)*x.reps,0),pr:Object.keys(LPR[s.id]||{}).length}}}
 const volTxt=w=>{const v=w.volU===S.unit?w.vol:w.volU==='lb'?w.vol/KG_LB:w.vol*KG_LB;return `${Math.round(v).toLocaleString('en-US')} ${S.unit}`};
 // sets per muscle in one session: the same effective-set model as Build's Day map (progcheck analytics), shaded with the same ramp
@@ -636,26 +627,29 @@ function mmSyms(){if($('#mmsyms')||!window.MM)return;const d=document.createElem
   document.body.appendChild(d.firstChild)}
 function miniMap(vol){mmSyms();const st=Object.entries(vol).map(([m,v])=>`--mm-${m}:${v}`).join(';');
   return `<span class="lmini" style="${st}" data-mus="${Object.keys(vol).join(' ')}" aria-hidden="true">${['front','back'].map(s=>`<svg viewBox="${(window.MM&&MM[s].vb)||'0 0 1024 1536'}"><use href="#mm-${s}"/></svg>`).join('')}</span>`}
+const calFoot=oct=>{if(!oct)return '0 workouts';const W=Object.values(LOGS),m=W.reduce((a,w)=>a+w.min,0);return `${W.length} workout${W.length===1?'':'s'} · ${Math.floor(m/60)} h ${String(m%60).padStart(2,'0')} m`};
 const logRow=d=>{const w=LOGS[d],dt=new Date(2026,9,d),s=sesOf(w.sid),nt=(s&&s.notes)||'';return `<div class="swipe" data-d="${d}"><button class="del">Delete</button><div class="in">
   <button class="row lrow" data-go="#log-d${d}" data-d="${d}"><div class="ld"><span>${WD[(dt.getDay()+6)%7]}</span><b>${d}</b></div>
    <div class="grow"><div class="t1">${esc(w.n)}${w.pr?` <span class="badge">${w.pr} PR</span>`:''}</div><div class="t2 num">${w.min} min · ${w.sets} sets · ${volTxt(w)}</div>${nt?`<div class="t3 lnote">${esc(nt)}</div>`:''}</div>${miniMap(rampVol(sesMus(w.sid)))}${CHEV}</button></div></div>`};
 // ---- Log detail (#log-d<day>): PR badges, body map, e1RM overlay chart, Edit
-const PRL={weight:'Weight PR',set_volume:'Volume PR',e1rm:'e1RM PR',reps_at_load:'Rep PR'};
+const PRL={weight:'Weight PR',set_volume:'Volume PR',e1rm:'Estimated 1RM PR',reps_at_load:'Rep PR'};
 const hm=iso=>{let h=+iso.slice(11,13);const m=iso.slice(14,16),ap=h>=12?'PM':'AM';h=h%12||12;return `${h}:${m} ${ap}`};
 const showLoad=(v,from,id)=>v===''||v==null?'—':cvt(+v,from,S.unit,id);
 const kgShow=kg=>S.unit==='kg'?kg:kg*KG_LB;
-// e1RM per session per exercise: best working set with reps <= logger.e1rm_max_reps (10), effective load as prs.py flatten (bodyweight share included)
+// estimated 1RM per session per exercise: best working set with reps <= progress-rules e1rm.max_reps (12; supersedes logger.e1rm_max_reps 10 for
+// Progress and Log charts), effective load as prs.py flatten (bodyweight share included)
+const E1MAX=()=>(RD&&RD.PR2&&RD.PR2.e1rm.max_reps)||12;
 function e1Table(){const fl=PROGRESS.flatten(Object.assign({},RD,{_lr:undefined,aliases:{}}),LOGH),out=[];
-  for(const q of fl){const b={};for(const x of q.sets){const v=PRS.e1rmSet(RD,x.load_kg,x.reps,x.kind);if(v!=null)b[x.ex]=Math.max(b[x.ex]||0,v)}out.push({sid:q.s.id,day:sesDay(q.s),best:b})}return out}
+  for(const q of fl){const b={};for(const x of q.sets){const v=PRS.e1rmSet(RD,x.load_kg,x.reps,x.kind,E1MAX());if(v!=null)b[x.ex]=Math.max(b[x.ex]||0,v)}out.push({sid:q.s.id,day:sesDay(q.s),oct:String(q.s.startedAt).startsWith('2026-10'),best:b})}return out}
 function e1Chart(sid){if(!RD||!window.PRS||!window.PROGRESS)return '<p class="foot">Chart needs the logger rules.</p>';
-  const T=e1Table(),vi=T.findIndex(t=>t.sid===sid);if(vi<0)return '';const exs=Object.keys(T[vi].best);if(!exs.length)return '<p class="foot">No sets of 10 reps or fewer with load in this workout.</p>';
+  const TA=e1Table(),T=TA.filter(t=>t.oct),vi=T.findIndex(t=>t.sid===sid),ai=TA.findIndex(t=>t.sid===sid);if(vi<0)return '';/* October view (the Log's month); previous best from the whole log */const exs=Object.keys(T[vi].best);if(!exs.length)return '<p class="foot">No sets of ${E1MAX()} reps or fewer with load in this workout.</p>';
   const W=340,H=176,pl=34,pr=10,pt=10,pb=22,days=T.map(t=>t.day),x0=Math.min(...days),x1=Math.max(...days),X=d=>pl+(x1>x0?(d-x0)/(x1-x0):.5)*(W-pl-pr);
-  const ser=exs.map((ex,i)=>{const prev=T.slice(0,vi).map(t=>t.best[ex]).filter(v=>v!=null),base=prev.length?Math.max(...prev):T[vi].best[ex];
+  const ser=exs.map((ex,i)=>{const prev=TA.slice(0,ai).map(t=>t.best[ex]).filter(v=>v!=null),base=prev.length?Math.max(...prev):T[vi].best[ex];
     return {ex,i,base,pts:T.map(t=>t.best[ex]!=null?{day:t.day,sid:t.sid,v:t.best[ex],p:t.best[ex]/base*100}:null).filter(Boolean)}});
   const all=ser.flatMap(s=>s.pts.map(p=>p.p)),lo=Math.floor(Math.min(90,...all)/5)*5,hi=Math.ceil(Math.max(110,...all)/5)*5,Y=p=>pt+(hi-p)/(hi-lo)*(H-pt-pb);
   const grid=[lo,100,hi].map(p=>`<line x1="${pl}" x2="${W-pr}" y1="${Y(p)}" y2="${Y(p)}" class="${p===100?'g100':'gl'}"/><text x="${pl-4}" y="${Y(p)+3.5}" text-anchor="end">${p}%</text>`).join('');
   const vx=X(T[vi].day),u=S.unit;
-  const lines=ser.map(s=>`<g class="ser" style="--c:var(--series-${s.i%6+1})"><polyline points="${s.pts.map(p=>`${X(p.day)},${Y(p.p)}`).join(' ')}"/>${s.pts.map(p=>`<circle class="ept${p.sid===sid?' cur':''}" cx="${X(p.day)}" cy="${Y(p.p)}" r="${p.sid===sid?4.5:3.2}"/><circle class="ehit" cx="${X(p.day)}" cy="${Y(p.p)}" r="12" data-e1="${esc(`${exNameP(s.ex)} · Oct ${p.day}: ${nfmt(kgShow(p.v).toFixed(1))} ${u} e1RM · ${Math.round(p.p)}% of the previous best (${nfmt(kgShow(s.base).toFixed(1))} ${u})`)}" data-ex="${s.ex}" data-day="${p.day}" data-abs="${nfmt(kgShow(p.v).toFixed(1))}" data-unit="${u}"/>`).join('')}</g>`).join('');
+  const lines=ser.map(s=>`<g class="ser" style="--c:var(--series-${s.i%6+1})"><polyline points="${s.pts.map(p=>`${X(p.day)},${Y(p.p)}`).join(' ')}"/>${s.pts.map(p=>`<circle class="ept${p.sid===sid?' cur':''}" cx="${X(p.day)}" cy="${Y(p.p)}" r="${p.sid===sid?4.5:3.2}"/><circle class="ehit" cx="${X(p.day)}" cy="${Y(p.p)}" r="12" data-e1="${esc(`${exNameP(s.ex)} · Oct ${p.day}: ${nfmt(kgShow(p.v).toFixed(1))} ${u} estimated 1RM · ${Math.round(p.p)}% of the previous best (${nfmt(kgShow(s.base).toFixed(1))} ${u})`)}" data-ex="${s.ex}" data-day="${p.day}" data-abs="${nfmt(kgShow(p.v).toFixed(1))}" data-unit="${u}"/>`).join('')}</g>`).join('');
   return `<div class="e1c"><svg viewBox="0 0 ${W} ${H}" class="e1svg" role="img" aria-label="Estimated 1RM over time, percent of each exercise's previous best">${grid}
      <line x1="${vx}" x2="${vx}" y1="${pt}" y2="${H-pb}" class="gnow"/>${[...new Set(days)].map(d=>`<text x="${X(d)}" y="${H-6}" text-anchor="middle" class="dx">${d}</text>`).join('')}${lines}</svg>
    <div class="ctip" id="ctip" hidden></div>
@@ -703,7 +697,7 @@ function editSheet(d){logLoad();
     if(k==='close')sh.close();if(k==='tray')traySheet();if(k==='save'){const nd=saveEdit(s,sh.el);if(nd){sh.close();if(S.scr==='logDay'){if(nd!==S.logDay)go('#log-d'+nd);else render()}else if(S.scr==='log')render()}}
     if(k==='addrow'){const g=a.parentNode,n=$$('.swipe',g).filter(r=>$('.er',r).dataset.kind!=='warmup').length+1;a.insertAdjacentHTML('beforebegin',srow(n,{kind:'working',load:'',reps:''}));bindSwipes(g)}
     if(k==='delw')confirmSheet('Delete this workout?',`${s.label} on ${lbl} is removed from your Log and PRs are recalculated.`,'Delete workout',()=>{sh.close();
-      LOGH.sessions=LOGH.sessions.filter(x=>x.id!==s.id);LOGH.entries=LOGH.entries.filter(x=>x.sessionId!==s.id);LOGH.sets=LOGH.sets.filter(x=>x.sessionId!==s.id);sv(LOG_K,LOGH);logDerive();toast('Workout deleted · PRs recalculated');go('#log')})});
+      const gone=new Set(LOGH.entries.filter(x=>x.sessionId===s.id).map(x=>x.id));LOGH.sessions=LOGH.sessions.filter(x=>x.id!==s.id);LOGH.entries=LOGH.entries.filter(x=>x.sessionId!==s.id);LOGH.sets=LOGH.sets.filter(x=>!gone.has(x.entryId));logSave();toast('Workout deleted · PRs recalculated');go('#log')})});
   return sh;
 }
 // Save: date (Oct 1 – today, one workout per day), start time, duration, notes, every set's weight and reps. Weights are typed in
@@ -715,8 +709,8 @@ function saveEdit(s,el){const date=$('#ed-date',el).value,tm=$('#ed-time',el).va
   const st=`${date}T${tm}:00-07:00`;s.date=s.startedAt=st;s.endedAt=isoPlus(st,min);s.notes=notes;s.unit=S.unit;
   for(const g of $$('.eset',el)){const eid=g.dataset.eid;LOGH.sets=LOGH.sets.filter(x=>x.entryId!==eid);let idx=0;
     for(const r of $$('.row.er',g)){const sw=r.closest('.swipe');if(!sw||!sw.isConnected||sw.style.height==='0px')continue;const wv=$('[data-kind=w]',r).value,rv=$('[data-kind=r]',r).value;if(wv===''&&rv==='')continue;
-      LOGH.sets.push({id:`${eid}-x${idx}`,entryId:eid,sessionId:s.id,idx:idx++,kind:r.dataset.kind||'working',load:wv===''?0:+wv,reps:Math.trunc(+rv||0),rir:EFF().clampRir(r.dataset.rir),done:true})}}
-  sv(LOG_K,LOGH);logDerive();const n=Object.values(LPR[s.id]||{}).reduce((a,t)=>a+Object.keys(t).length,0);toast(`Saved · PRs recalculated (${n} in this workout)`);return nd}
+      LOGH.sets.push({id:`${eid}-x${idx}`,entryId:eid,idx:idx++,kind:r.dataset.kind||'working',load:wv===''?0:+wv,reps:Math.trunc(+rv||0),rir:EFF().clampRir(r.dataset.rir),done:true})}}
+  logSave();const n=Object.values(LPR[s.id]||{}).reduce((a,t)=>a+Object.keys(t).length,0);toast(`Saved · PRs recalculated (${n} in this workout)`);return nd}
 V.log=()=>(logLoad(),'')+header('Log',`<button class="ibtn" data-act="day" data-d="${TODAY}" aria-label="Add workout">${I('plus',2)}</button>`)+cal()+
   `<div class="sec"><h2>${MONTHS[S.month]}</h2><span class="more num">${S.month===9&&S.year===2026?Object.keys(LOGS).length:0} workouts</span></div>
    ${S.month===9&&S.year===2026?`<div class="group">${Object.keys(LOGS).map(Number).sort((a,b)=>b-a).map(logRow).join('')}</div>`:'<div class="card emptyc sub">No workouts this month.</div>'}
@@ -922,68 +916,113 @@ function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Numbe
    ${side==='front'&&opt.ape?`<g class="ape-head"><circle cx="512" cy="148" r="92" fill="var(--paper)" stroke="var(--accent)" stroke-width="7" stroke-dasharray="18 13"/><text x="512" y="138" text-anchor="middle" font-size="46" font-weight="800" fill="var(--accent-press)" font-family="-apple-system,sans-serif">APE</text><text x="512" y="186" text-anchor="middle" font-size="32" fill="var(--text-2)" font-family="-apple-system,sans-serif">head slot</text></g>`:''}</svg>`}
 const VOL_X=[['traps',8,6,12],['forearms',6,4,12],['obliques',4,4,10],['lower_back',6,4,10],['adductors',4,4,10],['abductors',3,4,10]];
 const volMap=()=>{const o={};[...VOL,...VOL_X].forEach(([m,n,lo,hi])=>o[m]=volFill(n,lo,hi));return o}; // same vStat bands as the panel, in-range shaded from --vol-in-range
-// PROGRESS (round 1, Coach's rules.json progress + data/progress-spec.md): logged workouts only, through logic/progress.js
-// (port of tools/progress.py). The log is Coach's synthetic fixture (data/progress-reference.json, six weeks to Thu Oct 22),
-// plus your Always notes from Train (apechit.sb.exNotes) so they show first. Refinement cards that edit the routine use the
-// analysis-sheet ops (logic/analysis.js applyOps); Apply keeps the routine as it was for Undo.
-const PROG={routine:null,applied:[],sig:null,res:null,base:null};
-function progRoutine(){const P=RD&&RD.PREF;if(!P)return null;if(!PROG.routine){PROG.routine=JSON.parse(JSON.stringify(P.routine));PROG.base=JSON.stringify(P.routine)}return PROG.routine}
-function progressData(){const P=RD&&RD.PREF;if(!P||!window.PROGRESS)return null;const rt=progRoutine(),notes=Object.assign({},P.history.exNotes||{},ld(LSN,{}));
-  const sig=JSON.stringify([rt,notes]);if(PROG.sig===sig&&PROG.res)return PROG.res;
-  const h=Object.assign({},P.history,{exNotes:notes});PROG.res=PROGRESS.progress(RD,h,rt.filter(d=>d.tiles.length),P.as_of,P.level,P.goal||null);PROG.sig=sig;return PROG.res}
-const wt=v=>v==null?'–':S.unit==='kg'?`${(+v).toFixed(1)} kg`:`${(v*KG_LB).toFixed(1)} lb`,fx1=v=>v==null?'–':(+v).toFixed(1).replace(/\.0$/,'');
-const DNL=d=>RD.rules.day_names[d]||d,DSH=d=>DNL(d).slice(0,3);
-function bandOf(m){const T=RD.targets.targets[m],lv=(RD.PREF||{}).level||'intermediate';if(!T)return null;return [RANK.pyRound(T.min*RD.targets.levelMinFactor[lv]*2)/2,T.max]}
-const progMap=pr=>{const o={};for(const [m,v] of Object.entries(pr.muscles)){const b=bandOf(m);o[m]=b&&v.last_week_sets>0?volFill(v.last_week_sets,b[0],b[1]):null}return o};
-// Progress (piece A rebuild, 2026-10-24): one muted "Sample data · estimates" label, then Wins, Muscles, Needs attention, Effort and
-// one small Planned vs done footnote. Shells with no data are hidden. Under-delivered cards, the Logged progress list and the sample
-// Routine are gone; suggestions are text only (the sample log's routine is not his board, so there is no Apply). Plan line + one
-// shared sample log are piece B.
-const TRA={up:'↗',down:'↘',flat:'→',insufficient:''},TRW={up:'Up',down:'Down',flat:'Steady',insufficient:'Too early'};
-const trend=(st,pct,extra='')=>`<span class="ptr ${st}" data-tr="${st}">${TRA[st]?`<i aria-hidden="true">${TRA[st]}</i>`:''}${TRW[st]||st}${pct!=null&&st!=='insufficient'?` ${pct>0?'+':''}${Math.round(pct)}%/wk`:''}${extra}</span>`;
-function progWins(pr){const seen=new Set(),L=[];for(const v of Object.values(pr.muscles)){const ml=v.main_lift;if(ml&&ml.status==='up'&&!seen.has(ml.id)){seen.add(ml.id);L.push(ml)}}
-  return L.sort((a,b)=>(b.pct_per_week||0)-(a.pct_per_week||0)).slice(0,3)}
-function progEffort(){const P=RD&&RD.PREF;if(!P||!window.EFFORT)return null;const H=P.history,as=Date.parse(P.as_of+'T23:59:59'),from=as-28*864e5,ok=new Set(H.sessions.filter(x=>x.status!=='skipped'&&Date.parse(x.date||x.startedAt)>from&&Date.parse(x.date||x.startedAt)<=as).map(x=>x.id));
-  const W=H.sets.filter(x=>ok.has(x.sessionId)&&(x.kind||'working')==='working'&&x.done!==false),R=W.map(x=>EFFORT.clampRir(x.rir)).filter(v=>v!=null);
-  if(!R.length)return null;const avg=R.reduce((a,v)=>a+v,0)/R.length;return {avg,n:R.length,of:W.length,near:R.filter(v=>v<=1).length}}
-V.progress=()=>{const pr=RD&&progressData();if(!pr)return header('Progress',bookBtn)+`<p class="foot">No logged workouts yet.</p>`;const A=pr.adherence,W=(Object.values(pr.muscles)[0]||{}).weeks||[];
-  const wins=progWins(pr),R=(pr.guards.refinements_enabled?pr.refinements:[]).filter(r=>r.type!=='under_delivered'),E=progEffort(),m=effMode();
-  const sec=(id,t,more,body)=>`<section class="psec" data-psec="${id}"><div class="sec"><h2>${t}</h2>${more?`<span class="more">${more}</span>`:''}</div>${body}</section>`;
-  return header('Progress',bookBtn)+`<p class="plabel" data-sample="1">Sample data · estimates</p>`+
-   (wins.length?sec('wins','Wins','',`<div class="group pwins">${wins.map(ml=>`<button class="row" data-mlx="${ml.id}"><span class="pwi" aria-hidden="true">↗</span><div class="grow"><div class="t1">${exNameP(ml.id)}</div><div class="t2 num">Estimated 1RM ${wt(ml.first_e1rm_kg)} → ${wt(ml.last_e1rm_kg)} over ${ml.sessions} sessions</div></div>${CHEV}</button>`).join('')}</div>`):'')+
-   sec('muscles','Muscles','last completed week',`<div class="card mapcard"><div class="maps">${map('front',progMap(pr))}${map('back',progMap(pr))}</div>${progLegend()}<p class="maptip">Tap a muscle for its weeks and main lift</p></div>
-     <div id="pmus">${pmusHtml(S.pmus)}</div>
-     <div class="group pml">${Object.entries(pr.muscles).map(([mu,v])=>`<button class="row" data-pm="${mu}"><div class="grow"><div class="t1">${ML[mu]||mu}</div><div class="t2 num">${fx1(v.last_week_sets)} of ${fx1(v.plan_sets)} planned sets last week</div></div>${trend(v.trend.status,null)}</button>`).join('')}</div>`)+
-   (R.length?sec('attention','Needs attention','',`<div class="flags">${R.map(attnCard).join('')}</div><p class="foot pnote">Suggestions only. Nothing on your board changes.</p>`):'')+
-   (E?sec('effort','Effort','last 4 weeks',`<div class="group peff"><div class="row"><div class="grow t1">Average ${m==='rpe'?'RPE':'reps in reserve'}</div><span class="val num" id="peff-avg">${m==='rpe'?(10-E.avg).toFixed(1):E.avg.toFixed(1)}</span></div>
-     <div class="row"><div class="grow t1">Sets taken close to failure</div><span class="val num">${E.near} of ${E.n}</span></div>
-     <div class="row"><div class="grow t1">Sets with effort logged</div><span class="val num">${E.n} of ${E.of}</span></div></div>`):'')+
-   `<p class="foot pvd" data-psec="planned">Planned vs done, last ${A.weeks} weeks: <span class="num" id="padh-s">${A.completed_planned_sets} of ${A.planned_sets} sets${A.sets_ratio!=null?` (${Math.round(A.sets_ratio*100)}%)`:''}</span> · <span class="num" id="padh-n">${A.sessions_completed} sessions done, ${A.sessions_skipped} skipped</span></p>`};
-// the Progress map key: every status has its own swatch, and "Not trained" (map-empty) is separate from "Under" (vol-under); no thresholds
-const progLegend=()=>`<div class="legend vleg pleg">${[['none','var(--map-empty)','Not trained'],['under',VFILL.under,'Under'],['in',VFILL.in,'In range'],['close-over',VFILL.amber,'Close, over'],['over',VFILL.red,'Over max']].map(([k,c,l])=>`<span data-st="${k}"><i style="background:${c}"></i>${l}</span>`).join('')}</div>`;
-function attnCard(r){
-  if(r.type==='stall'){const a=r.actions,rr=a.rep_range_change,sw=a.swap_variation;
-    return `<div class="flag pref" data-rt="stall"><div class="ftl">Stalled <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>Estimated 1RM hasn't gone up over the last few sessions (${wt(r.best_recent_kg)}).</p>
-      ${rr?`<p class="sub psug">Try ${rr.suggest_range[0]}–${rr.suggest_range[1]} reps for a while.</p>`:''}${sw?`<p class="sub psug">Or swap for ${exNameP(sw.to_id)}, which works the same muscles.</p>`:''}</div>`}
-  if(r.type==='missed_sets'){const a=r.actions;return `<div class="flag pref" data-rt="missed_sets"><div class="ftl">Missed sets <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>Fewer sets than planned in ${r.missed} of the last ${r.sessions.length} sessions.</p>
-      ${a.trim_sets?`<p class="sub psug">Plan ${a.trim_sets[0].to} sets instead of ${a.trim_sets[0].from}${a.move_sets?`, or move ${a.move_sets[1].sets} to ${DNL(a.move_sets[1].day)}`:''}.</p>`:''}</div>`}
-  if(r.type==='skipped_day'){const a=r.action;return `<div class="flag pref" data-rt="skipped_day"><div class="ftl">Skipped day <span class="tag sev info">${DNL(r.day)}</span></div><p>Skipped ${r.skipped_sessions.length} times lately, so ${r.muscles.slice(0,3).map(x=>(ML[x]||x).toLowerCase()).join(', ')}${r.muscles.length>3?` and ${r.muscles.length-3} more`:''} got less work.</p>
-      ${a?`<p class="sub psug">Moving ${a.label||DNL(r.day)} to ${DNL(a.to_day)} may fit better.</p>`:''}</div>`}
-  return ''}
-function spark(v){const s=v.weekly_sets,mx=Math.max(1,v.plan_sets,...s),W=v.weeks||[];
-  return `<div class="spark" aria-label="Weekly credited sets">${s.map((x,i)=>`<div class="sp"><i style="--h:${x/mx*100}%" class="${x<v.plan_sets*0.75?'lo':''}"></i><small>${(W[i]||'').slice(5).replace('-','/')}</small></div>`).join('')}<b style="--y:${v.plan_sets/mx*100}%" title="Plan"></b></div>`}
-function pmusHtml(m){if(!m)return '';const pr=progressData(),v=pr&&pr.muscles[m];if(!v)return `<div class="card pmus" data-mu="${m}"><b>${ML[m]||m}</b><p class="sub">Nothing logged for this muscle in the last ${RD.rules.progress.trend.weeks} weeks.</p></div>`;
-  const ml=v.main_lift,top=Math.max(v.plan_sets,v.last_week_sets||0,1),b=bandOf(m);
-  return `<div class="card pmus" data-mu="${m}"><div class="pmh"><b>${ML[m]||m}</b>${trend(v.trend.status,v.trend.pct_per_week)}</div>
-   <div class="pav"><div class="pvl"><span>Credited last week</span><b class="num">${fx1(v.last_week_sets)}</b></div><div class="pvl"><span>Planned</span><b class="num">${fx1(v.plan_sets)}</b></div><div class="pvl"><span>This week so far</span><b class="num">${fx1(v.this_week_sets)}</b></div><div class="pvl"><span>Adherence</span><b class="num" data-k="adh">${v.adherence!=null?Math.round(v.adherence*100)+'%':'–'}</b></div></div>
-   ${spark(v)}<p class="sub sparkc">Weekly credited sets, last ${v.weeks.length} completed weeks · line = plan${b?` · target ${b[0]}–${b[1]}`:''}</p>
-   <div class="ghead sub2">Main lift</div>${ml?`<button class="pml1" data-mlx="${ml.id}" data-ex="${ml.id}" aria-label="Open ${esc(exNameP(ml.id))}"><div class="grow"><div class="t1">${exNameP(ml.id)}</div><div class="t2 num">Estimated 1RM ${wt(ml.first_e1rm_kg)} → ${wt(ml.last_e1rm_kg)} · ${ml.sessions} sessions</div><div class="t2">${trend(ml.status==='stalled'?'flat':ml.status==='dropping'?'down':ml.status,ml.pct_per_week)}</div></div>${CHEV}</button>`:'<p class="sub">No lift with enough sessions for a trend yet.</p>'}
-   <div class="ghead sub2">Notes</div>${v.notes.length?`<div class="pnotes">${v.notes.map(n=>`<div class="pn ${n.kind}"><span class="tag ${n.kind==='always'?'al':'ss'}">${n.kind==='always'?'Always':'This session'}</span><div class="grow"><div class="t2">${exNameP(n.exercise)}${n.date?` · ${n.date.slice(5).replace('-','/')}`:''}</div><div class="t1">${esc(n.text)}</div></div></div>`).join('')}</div>`:'<p class="sub">No notes on exercises for this muscle.</p>'}</div>`}
+// PROGRESS (piece B, 2026-10-24): logic/progress.js report() = Coach's tools/progress.py report() (data/progress-rules.json,
+// data/progress-spec.md, parity in test/progress2.diff.js) over the ONE shared sample log (data/sample-log.json, also Log and Finish)
+// with his live Build board (window.BOARD) as the routine. A cold-loaded Progress gives an empty board the plan the sample log
+// follows (PHUL intermediate 4-day); a board he already has stays as it is. Apply (only where fix.apply_edits_board) edits that
+// board, with Undo; rep-range and deload fixes are text only. Screens: #progress, #progress-m-<muscle>, #progress-l-<lift>.
 const shortEx=id=>(EX[id]&&EX[id].short_name)||(RD&&RD.EX[id]&&(RD.EX[id].short_name||RD.EX[id].name))||exNameP(id);
-function rerenderProgress(){const v=$('#view'),sc=v.scrollTop;v.innerHTML=V.progress();afterProgress();v.scrollTop=sc}
-function afterProgress(){$$('.mapcard .mmap .mp').forEach(p=>p.addEventListener('click',()=>{if(p.dataset.mu)selPM(p.dataset.mu)}));$$('[data-pm]').forEach(b=>b.addEventListener('click',()=>selPM(b.dataset.pm)));if(S.pmus)selPM(S.pmus,true)}
-function selPM(m,quiet){S.pmus=m;$('#pmus').innerHTML=pmusHtml(m);$$('.mapcard .mmap .mp').forEach(p=>p.classList.toggle('psel',p.dataset.mu===m));if(!quiet)$('#pmus').scrollIntoView({block:'nearest',behavior:'smooth'})}
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-mlx]');if(!b)return;e.preventDefault();exDetail(b.dataset.mlx)});
+const AS_OF='2026-10-24',PROG={sig:null,res:null,tsig:null,tres:null,applied:null,all:false,empty:false};
+const e1Word=t=>String(t==null?'':t).replace(/\be1RM\b/g,'estimated 1RM');   // Coach's text keys say e1RM; on screen it is always "estimated 1RM"
+const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],fmtD=d=>`${MON3[+d.slice(5,7)-1]} ${+d.slice(8,10)}`;
+const DSH3={mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'};
+function progHist(empty=PROG.empty){const H=empty?{schema:2,settings:{},sessions:[],entries:[],sets:[]}:logLoad();return Object.assign({},H,{settings:Object.assign({},H.settings||{},{unit:S.unit,effort:effMode()})})}
+function progBoard(){const B=window.BOARD;if(!B||!RD)return [];const sl=RD.SLOG&&RD.SLOG.routine;
+  if(B.ensurePlan&&sl&&sl.days){const sp=((RD.splits||{}).splits||[]).find(x=>x.id===sl.split);B.ensurePlan(sl.days,sp?`${sp.name} · ${sl.days.length} days`:'Sample plan',sl.level||'intermediate')}
+  return B.rankBoard()}
+function progressData(){if(!RD||!RD.PR2||!window.PROGRESS)return null;const rt=progBoard(),lv=(window.BOARD&&BOARD.state&&BOARD.state.level)||'intermediate',h=progHist();
+  const sig=JSON.stringify([LOGV,PROG.empty,rt,lv,S.unit,effMode()]);if(PROG.sig===sig&&PROG.res)return PROG.res;
+  PROG.res=PROGRESS.report(RD,h,AS_OF,rt,lv,null);PROG.sig=sig;return PROG.res}
+// Train reads the same one deload rule (progress-rules deload.one_rule: deload_check points + Progress lift statuses); it never touches the board
+function trainDeload(){if(!RD||!RD.PR2||!window.PROGRESS)return null;const sig=JSON.stringify([LOGV,S.unit]);if(PROG.tsig===sig&&PROG.tres)return PROG.tres.deload;
+  PROG.tres=PROGRESS.report(RD,progHist(false),AS_OF,[],'intermediate',null);PROG.tsig=sig;return PROG.tres.deload}
+function trainDeloadHtml(){const d=trainDeload();if(!d)return '';
+  return `<div id="tdeload" data-suggest="${d.suggest}" data-score="${d.score}" data-of="${d.suggest_score}" hidden></div>`+(d.suggest?`<div class="card tdl" data-deload="1"><b>A lighter week may help</b><p class="sub">Signs point to a deload: about half the sets at RIR 3 to 4, then build back up. Your board stays the same.</p></div>`:'')}
+const TRA={up:'↗',down:'↘',flat:'→',insufficient:'·'},TRW={up:'Up',down:'Down',flat:'Steady',insufficient:'Too early'};
+const LST={up:'up',flat:'flat',down:'down',stalled:'flat',dropping:'down',insufficient:'insufficient'};
+const arrow=st=>`<span class="ptr ${st}" data-tr="${st}" role="img" aria-label="${TRW[st]||st}"><i aria-hidden="true">${TRA[st]||''}</i></span>`;
+const capF=t=>t?t[0].toUpperCase()+t.slice(1):t;
+function gainLine(id,g){const nm=shortEx(id);if(!g)return esc(nm);if(g.status==='first')return `${esc(nm)}: first time logged`;if(g.status==='none')return `${esc(nm)}: nothing to compare in the last 8 weeks`;
+  if(g.status==='same')return `${esc(nm)}: same as last time`;return `${esc(nm)} ${esc(g.text)} since last time`}
+const winIcon=k=>k==='milestone'?'★':k==='vs_3_months'?'↗':'▲';
+function winRow(w){const t=e1Word(w.text),k=t.indexOf(': '),nm=k>0?t.slice(0,k):shortEx(w.exercise),rest=k>0?t.slice(k+2):t;
+  return `<button class="row pwin" data-plift="${w.exercise}" data-kind="${w.kind}"><span class="pwi" aria-hidden="true">${winIcon(w.kind)}</span><div class="grow"><div class="t1">${esc(nm)}</div><div class="t2">${esc(capF(rest))}</div></div><span class="pwd num">${w.kind==='vs_3_months'?'':fmtD(w.date)}</span>${CHEV}</button>`}
+const sec=(id,t,more,body)=>`<section class="psec" data-psec="${id}"><div class="sec"><h2>${t}</h2>${more?`<span class="more">${more}</span>`:''}</div>${body}</section>`;
+const akey=x=>x.kind+':'+(x.lifts||[]).join(',')+':'+(x.muscles||[]).join(',');
+const opsWhere=ops=>{const d=[...new Set(ops.map(o=>DSH3[o.day]||o.day))];return d.length>1?d.slice(0,-1).join(', ')+' and '+d[d.length-1]:d[0]};
+function attnCard(x,k){const A=PROG.applied,ap=A&&A.key===akey(x);if(ap)x=A.item; // keep showing the fix that was applied, not the next one the edited board yields
+  const f=x.fix||{},can=f.apply_edits_board&&f.ops&&f.ops.length;
+  const act=ap?`<div class="papl on"><span>Applied to your board</span><button class="btn xs ink" data-pundo="1">Undo</button></div>`
+    :can?`<div class="papl"><span class="sub">Changes ${opsWhere(f.ops)} on your board</span><button class="btn xs accent" data-pfix="${k}">Apply</button></div>`
+    :f.kind==='deload'?`<p class="sub ptxt">A lighter week sits on top of your plan. Your board stays the same.</p>`:'';
+  return `<div class="flag pna" data-na="${x.kind}" data-fix="${f.kind||''}" data-k="${k}"><div class="ftl">${esc(e1Word(x.text))}</div>${(x.notes||[]).map(n=>`<p class="sub pnote">${esc(n)}</p>`).join('')}
+    <p class="psug"><span class="pfx">Try</span> ${esc(e1Word(f.text))}</p>${act}</div>`}
+function progEmpty(){return header('Progress',bookBtn)+`<div class="card pempty" data-empty="1"><div class="pe-ico" aria-hidden="true">${I('log',1.6)}</div><h3>No workouts logged yet</h3>
+  <p class="sub">Finish a workout in Train and your wins, strength trends and stalls show up here.</p><div class="pad"><button class="btn accent block" data-go="#train">Go to Train</button></div></div>`}
+const progHead=()=>`<div class="plabel" data-sample="1"><span>Sample data · estimates</span><span class="phon">Strength and performance, not measured muscle growth</span></div>`;
+V.progress=()=>{const pr=RD&&progressData();if(!pr)return header('Progress',bookBtn)+`<p class="foot">Progress needs the logger rules.</p>`;if(!pr.data.completed_sessions)return progEmpty();
+  const W=pr.wins,wl=PROG.all?W.list:W.shown,mains=new Set(Object.values(pr.muscles).map(v=>v.main_lift.id).filter(Boolean)),mode=pr.effort_mode;
+  const v3=Object.entries(W.vs_3_months).filter(([i,x])=>mains.has(i)&&x.metric==='e1rm'&&x.pct>=0).sort((a,b)=>b[1].pct-a[1].pct||(a[0]<b[0]?-1:1)).slice(0,3);
+  const winsB=`<div class="group pwins">${wl.map(winRow).join('')}${W.more?`<button class="row pmore" data-pmore="1"><div class="grow t1">${PROG.all?'Show fewer':`+${W.more} more`}</div></button>`:''}</div>`+
+    (v3.length?`<p class="sub pv3" data-v3="1"><span>vs 3 months ago</span> ${v3.map(([i,x])=>`<button class="pv3b" data-plift="${i}">${esc(shortEx(i))} <b class="num">+${fmtPct(x.pct)}%</b></button>`).join('')}</p>`:'');
+  const mus=Object.entries(pr.muscles),NA=pr.needs_attention.slice();
+  if(PROG.applied&&!NA.some(x=>akey(x)===PROG.applied.key))NA.unshift(PROG.applied.item);
+  const effR=mus.filter(([,v])=>v.effort.sets_with_rir>0);
+  return header('Progress',bookBtn)+progHead()+
+   (wl.length?sec('wins','Wins','last 2 weeks',winsB):'')+
+   sec('muscles','Muscles','last 6 weeks',`<div class="group pml">${mus.map(([m,v])=>{const ml=v.main_lift,stl=v.stuck?(ml.status==='dropping'?'Dropping':'Stalled'):'';
+     return `<button class="row pmrow" data-pm="${m}"${stl?' data-stuck="1"':''}><div class="grow"><div class="t1">${ML[m]||m}${stl?` <span class="pstall">${stl}</span>`:''}</div><div class="t2">${ml.id?gainLine(ml.id,v.latest_gain):'Not enough sessions yet'}</div></div>${arrow(v.trend.status)}${CHEV}</button>`}).join('')}</div>`)+
+   (NA.length?sec('attention','Needs attention','',`<div class="flags">${NA.map((x,k)=>attnCard(x,pr.needs_attention.indexOf(x)>=0?pr.needs_attention.indexOf(x):'a')).join('')}</div>`):'')+
+   (effR.length?sec('effort','Effort','last 4 weeks',`<div class="group peff">${effR.map(([m,v])=>{const e=v.effort;
+     return `<div class="row" data-eff="${m}"><div class="grow"><div class="t1">${ML[m]||m}</div><div class="t2">${e.avg_rir!=null?`${e.sets_with_rir} sets${e.far_from_failure?' · far from failure':''}`:'Fewer than 6 sets with effort logged'}</div></div><span class="val num">${e.avg_rir!=null?esc(e.display.replace(/^Average /,'')):'–'}</span></div>`}).join('')}</div>
+     <p class="foot">${mode==='rpe'?'RPE = 10 − reps in reserve.':'RIR = reps in reserve: about how many more reps were left.'} Weighted by how much each lift works the muscle.</p>`):'')+
+   (pr.footnote.planned_vs_done.text?`<p class="foot pvd" data-psec="planned">${esc(pr.footnote.planned_vs_done.text)}</p>`:'')};
+const fmtPct=p=>{const a=Math.abs(p);return a>=10?String(Math.round(a)):String(Math.round(a*2)/2)};
+// a muscle: every lift that works it (rated >= targets counting min), its main lift first; each opens its long-range chart
+function liftsOf(pr,m){const mr=RD.targets.counting.min_rating_to_count,v=pr.muscles[m]||{},main=(v.main_lift||{}).id,w=v.weight_by_lift||{};
+  return Object.keys(pr.lifts).filter(i=>((RD.EX[i]||{}).muscles||{})[m]>=mr).sort((a,b)=>(b===main)-(a===main)||(w[b]||0)-(w[a]||0)||(pr.lifts[a].name<pr.lifts[b].name?-1:1))}
+const subNav=(back,lab,t)=>`<div class="nav"><div class="l"><button class="back" data-go="${back}">${I('chevL',2.4)}${lab}</button></div><div class="t">${t}</div><div class="r"></div></div>`;
+function liftLine(L){if(L.status==='stalled')return `No rep or load gain in the last ${L.stall.trailing_no_gain} sessions`;if(L.status==='dropping')return 'Down 2 sessions in a row';
+  return L.trend.status==='insufficient'?(L.insufficient_label||L.trend.words):e1Word(L.trend.words)}
+V.progressMuscle=()=>{const pr=progressData(),m=S.arg||S.pmArg||'side_delts',v=pr&&pr.muscles[m];S.pmFrom=m;
+  if(!v)return subNav('#progress','Progress',ML[m]||m)+`<p class="foot">Nothing logged for ${(ML[m]||m).toLowerCase()} in the last 6 weeks.</p>`;
+  const ml=v.main_lift.id,ids=liftsOf(pr,m),e=v.effort;
+  return subNav('#progress','Progress','')+`<div class="ldh pmhd"><h1>${ML[m]||m}</h1><p class="sub">${arrow(v.trend.status)} ${esc(v.trend.words)}${v.stuck?` · <span class="pstall">${v.main_lift.status==='dropping'?'Dropping':'Stalled'}</span>`:''}</p></div>
+   <div class="ghead">Lifts</div><div class="group pmlifts">${ids.map(i=>{const L=pr.lifts[i];return `<button class="row" data-plift="${i}"><div class="grow"><div class="t1">${esc(L.name)}${i===ml?' <span class="tag pmain">Main lift</span>':''}</div><div class="t2">${esc(liftLine(L))}</div></div>${arrow(LST[L.status]||'insufficient')}${CHEV}</button>`}).join('')}</div>
+   <p class="foot">${e.avg_rir!=null?esc(e.display)+' over the last 4 weeks. ':''}Main lift: the one done most in the last 6 weeks${v.main_lift.pinned?' (pinned)':''}.</p>`};
+const METRIC={e1rm:['Best estimated 1RM per week','Estimated from working sets of 12 reps or fewer. An estimate, not a tested max.'],reps:['Most reps in one set per week','Bodyweight lift: tracked by reps, so there is no estimated 1RM.'],
+  hold_s:['Longest hold per week','Timed hold: tracked by seconds, so there is no estimated 1RM.'],load_index:['Load and reps score per week','Higher means more load or more reps. A trend score, not a 1RM.']};
+const numOf=d=>d==null?null:(String(d).match(/^[\d.]+/)||[''])[0];
+// long-range chart: the lift's best per week (weekly_best, deload weeks as gaps), PR weeks marked, every point labelled. No plan line.
+function liftChart(L){const wb=L.weekly_best.slice(-12),pts=wb.map((w,k)=>({k,w,v:w.value==null?null:+numOf(w.display)})),vals=pts.filter(p=>p.v!=null).map(p=>p.v);if(!vals.length)return '';
+  const W=340,H=200,pl=12,pr=12,pt=26,pb=26,n=wb.length,X=k=>pl+(n>1?k/(n-1):.5)*(W-pl-pr),lo0=Math.min(...vals),hi0=Math.max(...vals),pad=Math.max(1,(hi0-lo0)*.15),lo=lo0-pad,hi=hi0+pad,Y=v=>pt+(hi-v)/(hi-lo)*(H-pt-pb);
+  const segs=[];let cur=[];for(const p of pts){if(p.v==null){if(cur.length)segs.push(cur);cur=[]}else cur.push(p)}if(cur.length)segs.push(cur);
+  const dl=pts.filter(p=>p.w.deload_week&&p.v==null).map(p=>`<g class="pdl"><rect x="${X(p.k)-9}" y="${pt-6}" width="18" height="${H-pt-pb+6}" rx="4"/><text x="${X(p.k)}" y="${H-pb+16}" text-anchor="middle">Deload</text></g>`).join('');
+  const xl=pts.filter((p,k)=>!(p.w.deload_week&&p.v==null)&&(k%3===0||k===n-1)).map(p=>`<text x="${X(p.k)}" y="${H-6}" text-anchor="middle" class="dx">${+p.w.week.slice(5,7)}/${+p.w.week.slice(8,10)}</text>`).join('');
+  const lines=segs.map(sg=>`<polyline points="${sg.map(p=>`${X(p.k)},${Y(p.v)}`).join(' ')}"/>`).join('');
+  const dots=pts.filter(p=>p.v!=null).map(p=>`<g class="pp${p.w.pr_week?' pr':''}" data-week="${p.w.week}" data-v="${p.v}"${p.w.pr_week?' data-pr="1"':''}><circle cx="${X(p.k)}" cy="${Y(p.v)}" r="${p.w.pr_week?5:3.4}"/><text x="${X(p.k)}" y="${Y(p.v)-(p.w.pr_week?9:7)}" text-anchor="middle" class="pv">${p.v}</text></g>`).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" class="plc" role="img" aria-label="${esc(METRIC[L.metric][0])}, last ${n} weeks">${dl}<g class="pln">${lines}</g>${dots}${xl}</svg>
+   <div class="plleg"><span><i class="lpt"></i>Weekly best</span><span><i class="lpr"></i>PR week</span>${pts.some(p=>p.w.deload_week&&p.v==null)?'<span><i class="ldl"></i>Deload week</span>':''}</div>`}
+V.progressLift=()=>{const pr=progressData(),id=S.arg,L=pr&&pr.lifts[id];const back=S.pmFrom&&pr&&pr.muscles[S.pmFrom]?['#progress-m-'+S.pmFrom,ML[S.pmFrom]||'Muscle']:['#progress','Progress'];
+  if(!L)return subNav(back[0],back[1],'')+'<p class="foot">This lift has no logged sessions yet.</p>';
+  const M=METRIC[L.metric]||METRIC.e1rm,last=L.weekly_best.filter(w=>w.value!=null).pop(),g=L.gain_vs_last,u=pr.unit,nprs=L.weekly_best.filter(w=>w.pr_week).length;
+  const big=last?(L.metric==='e1rm'?`${numOf(last.display)} <small>${u}</small>`:L.metric==='reps'?`${numOf(last.display)} <small>reps</small>`:L.metric==='hold_s'?`${numOf(last.display)} <small>s</small>`:`${numOf(last.display)}`):'–';
+  return subNav(back[0],back[1],'')+`<div class="ldh plh" data-metric="${L.metric}" data-kind="${L.kind}"><h1>${esc(L.name)}</h1><p class="sub">${esc(M[0])}</p>
+    <div class="plbig"><b class="num">${big}</b><span class="sub">${last?`week of ${fmtD(last.week)}`:''}</span></div></div>
+   <div class="card plcard">${liftChart(L)}</div>
+   <div class="group plinfo"><div class="row"><div class="grow t1">Last time</div><span class="val">${g?esc(g.text):'–'}</span></div>
+     ${g&&g.detail?`<div class="row"><div class="grow t2">${esc(g.detail)}</div></div>`:''}
+     <div class="row"><div class="grow t1">Trend, last 6 weeks</div><span class="val">${arrow(LST[L.trend.status]||'insufficient')}</span></div><div class="row"><div class="grow t2">${esc(liftLine(L))}</div></div>
+     <div class="row"><div class="grow t1">PR weeks</div><span class="val num">${nprs}</span></div></div>
+   <p class="foot">${esc(M[1])} Lighter (deload) weeks are left out.</p>`};
+function rerenderProgress(){const v=$('#view'),sc=v.scrollTop;v.innerHTML=V[S.scr]();v.scrollTop=sc}
+function afterProgress(){}
+function progApply(k){const pr=progressData(),x=pr&&pr.needs_attention[+k];if(!x||!x.fix||!x.fix.apply_edits_board||!x.fix.ops||!window.BOARD)return;
+  const before=BOARD.progApply(x.fix.ops);PROG.applied={key:akey(x),item:JSON.parse(JSON.stringify(x)),before,asig:BOARD.sig()};toast('Applied to your board');rerenderProgress()}
+function progUndo(){const a=PROG.applied;if(!a)return;PROG.applied=null;if(BOARD.sig()===a.asig){BOARD.progUndo(a.before);toast('Undone · your board is back')}else toast('Your board changed after this. Undo it in Build.');rerenderProgress()}
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-mlx],[data-pm],[data-plift],[data-pfix],[data-pundo],[data-pmore]');if(!t||!$('#view').contains(t))return;e.preventDefault();
+  if(t.dataset.mlx)return exDetail(t.dataset.mlx);if(t.dataset.pm)return go('#progress-m-'+t.dataset.pm);if(t.dataset.plift)return go('#progress-l-'+t.dataset.plift);
+  if(t.dataset.pfix!=null)return progApply(t.dataset.pfix);if(t.dataset.pundo)return progUndo();if(t.dataset.pmore){PROG.all=!PROG.all;return rerenderProgress()}});
 function afterMap(){$$('.mmap .mp').forEach(p=>p.addEventListener('click',()=>{if(p.dataset.mu)go('#learn-'+p.dataset.mu)}))}
 
 // STYLE GUIDE
@@ -1220,13 +1259,13 @@ let RD=null;
 async function loadRank(){if(RD)return RD;if(RDP)return RDP;
   // Every file comes from the storyboard's own synced data/ (sync-ranking-data.sh); the live app's ../data is never needed.
   // getJ never throws: a 404, a parse error or a fetch aborted by navigation all give null, and nothing falls through to another folder.
-  RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-reference.json','analysis-display.json','frequency-notes.json','custom-exercise-defaults.json'].map(n=>getJ(DATA+n));
+  RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-rules.json','analysis-display.json','frequency-notes.json','custom-exercise-defaults.json','sample-log.json'].map(n=>getJ(DATA+n));
     const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(n=>getJ(DATA+n)));
-    const [tj,tref,pref,disp,fnotes,cxd]=await Promise.all(opt);   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
+    const [tj,tref,pr2,disp,fnotes,cxd,slog]=await Promise.all(opt);   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
     if(!(exercises&&rules&&targets&&patterns&&splits)){if(!UNLOADING)console.warn('ranking data missing: suggestions fall back to library order');return null}
     const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
     const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
-    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PREF=pref;R.DISP=disp;R.FN=fnotes;
+    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PR2=pr2;R.SLOG=slog;R.DISP=disp;R.FN=fnotes;
     try{await cxLoad(R,exercises,rules,cxd)}catch(x){console.warn('custom exercises not loaded',x)}   // custom exercises: defaults loader + registration (before anything reads RD)
     RD=R;return RD})();
   const r=await RDP;RDP=null;return r}
@@ -1359,8 +1398,7 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  finish:['finish','',1,0],'finish-ape':['finish','',1,0,null,()=>{const c=$('#fincards');c.style.scrollBehavior='auto';c.scrollLeft=c.scrollWidth}],
  empty:['empty','',1,1,()=>{SC.day='sat';startWorkout('Empty workout',[],{empty:true})}],tray:['empty','',1,1,null,traySheet],'tray-legs':['empty','',1,1,()=>{SC.note="Coach's case: PPL intermediate legs day (Fri), no goals, bias or favorites";PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],'tray-lib':['empty','',1,1,()=>{TF.mode='lib'},traySheet],'tray-sort-fat':['empty','',1,1,()=>{TF.mode='fat'},traySheet],'tray-sort-stim':['empty','',1,1,()=>{TF.mode='stim';TF.mus='hamstrings'},traySheet],
  'tray-detail':['empty','',1,1,null,()=>{traySheet();setTimeout(()=>exDetail('barbell-bench-press',{onAdd:()=>toast('Added to workout')}),60)}],
- 'progress-effort':['progress','progress',0,0,null,()=>{const e=$('[data-psec=effort]');if(e)e.scrollIntoView({block:'start'})}],
- 'progress-explain':['progress','progress',0,0,null,()=>explainSheet('load_trend')],
+ 'progress-effort':['progress','progress',0,0,()=>{PROG.empty=false},()=>{const e=$('[data-psec=effort]');if(e)e.scrollIntoView({block:'start'})}],
  'tray-calf':['empty','',1,1,()=>{Object.assign(SC,{board:BOARDS.legsGap,day:'mon',cands:BOARDS.legsGapCands,note:"Coach's calf-gap case: legs-only week, calves at 3 of 5 sets"});PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],
  'swap-lat-home':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Home template ticked (adjustable dumbbells, bench, pull-up bar, bands).';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.home}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
  'swap-lat-com':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Commercial template ticked.';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.commercial}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
@@ -1373,7 +1411,7 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  'log-detail-tip':['logDay','log',0,0,()=>{S.logDay=15},()=>{const h=$$('#e1card .ehit').find(c=>c.dataset.day==='15');h&&h.dispatchEvent(new MouseEvent('click',{bubbles:true}))}],
  'log-swipe':['log','log',0,0,null,()=>{const r=$$('#view .swipe')[0];r&&r.classList.add('open')}],
  build:['build','build',0,0,()=>{SC.day='mon'}],'build-list':['buildList','build',0,0,()=>{SC.day='mon'}],swap:['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('barbell-bench-press')],'swap-curl':['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('ez-bar-curl')],
- settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress',0,0,()=>{S.pmus=null}],'progress-muscle':['progress','progress',0,0,()=>{S.pmus='chest'}],'progress-refine':['progress','progress',0,0,()=>{S.pmus=null},()=>{const e=$('[data-psec=attention]');if(e)e.scrollIntoView({block:'start'})}],style:['style','build'],
+ settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress',0,0,()=>{PROG.empty=false}],'progress-empty':['progress','progress',0,0,()=>{PROG.empty=true}],'progress-muscle':['progressMuscle','progress',0,0,()=>{PROG.empty=false;S.pmArg='side_delts'}],'progress-refine':['progress','progress',0,0,()=>{PROG.empty=false},()=>{const e=$('[data-psec=attention]');if(e)e.scrollIntoView({block:'start'})}],style:['style','build'],
  learn:['learn',''],'tray-fav':['empty','',1,1,()=>{TF.fav=true},traySheet],'settings-favs':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#favs').offsetTop-60}],'settings-goals':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#profile').offsetTop-40}],'learn-fundamental':['learnFund',''],
 };
 const AFTER={logDay:afterLogDay,train:afterTrain,workout:afterWorkout,finish:afterFinish,log:afterLog,buildList:afterBuildList,progress:afterProgress,learn:afterLearn};
@@ -1384,6 +1422,8 @@ function route(){
   if(!def&&/^learn-ex-/.test(r)){def=['learnEx',''];arg=r.slice(9)}
   else if(!def&&/^learn-f-/.test(r)){def=['learnFund',''];arg=r.slice(8)}
   else if(!def&&/^learn-/.test(r)){def=['learnMuscle',''];arg=r.slice(6)}
+  else if(!def&&/^progress-m-/.test(r)){def=['progressMuscle','progress',0,0,()=>{PROG.empty=false}];arg=r.slice(11)}
+  else if(!def&&/^progress-l-/.test(r)){def=['progressLift','progress',0,0,()=>{PROG.empty=false}];arg=r.slice(11)}
   else if(!def&&/^log-d\d+$/.test(r)){const n=+r.slice(5);def=['logDay','log',0,0,()=>{S.logDay=n}]}
   if(!def){r='train';def=ROUTES.train}
   const [scr,tab,full,sess,pre,post]=def;
@@ -1797,7 +1837,7 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

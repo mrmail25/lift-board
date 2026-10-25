@@ -1,0 +1,317 @@
+{
+ "version": 2,
+ "date": "2026-10-24",
+ "label": "Strength and performance, not measured muscle growth",
+ "model_note": "Trends, stalls and wins come from what was logged (loads, reps, hold times, RIR). They describe strength and performance, are modelled, and are not a measurement of muscle growth. No medical or injury advice.",
+ "focus": "Progress first (motivation), then stalls to adjust. Planned vs done is a minor footnote only.",
+ "units": {
+  "internal": "kg (prs.flatten effective load)",
+  "display": "history.settings.unit (lb default); loads are stored in each session's unit and converted for display only",
+  "display_round": {
+   "lb": 1,
+   "kg": 0.5
+  }
+ },
+ "effort": {
+  "store": "set.rir = integer 0..4 (4 means 4+) or null when not logged. Only RIR is stored.",
+  "chips_rir": [
+   "0",
+   "1",
+   "2",
+   "3",
+   "4+"
+  ],
+  "rpe_toggle": "history.settings.effort = \"rir\" (default) | \"rpe\". Display and input only: RPE = 10 - RIR. Chips 10, 9, 8, 7, <=6; <=6 stores RIR 4. No half points.",
+  "chips_rpe": [
+   {
+    "label": "10",
+    "rir": 0
+   },
+   {
+    "label": "9",
+    "rir": 1
+   },
+   {
+    "label": "8",
+    "rir": 2
+   },
+   {
+    "label": "7",
+    "rir": 3
+   },
+   {
+    "label": "≤6",
+    "rir": 4
+   }
+  ],
+  "legacy_read": "on read: values above 4 clamp to 4 (legacy 5+ -> 4); fractional values round to the nearest integer (half up: 1.5 -> 2); negatives clamp to 0; anything non-numeric -> null",
+  "summary_window_days": 28,
+  "summary_min_sets": 6,
+  "summary": "average RIR per muscle over the last 28 days, stimulus-weighted: sum(rating x rir) / sum(rating) over done working sets with RIR logged, rating = exercises.json muscle ratio >= 0.25; 4+ counts as 4; deload sessions excluded. Fewer than 6 such sets -> not shown (\"not enough RIR logged\").",
+  "far_from_failure_avg_rir": 3.0,
+  "far_from_failure_note": "Sets ended about {avg} reps from failure on average. Sets this far from failure may explain part of the stall.",
+  "hard_set_link": "Hard set = done working set with RIR <= logger.hardRIR (3) or no RIR logged (logging-spec §5). A 4+ set is never a hard set, so the far-from-failure line (average >= 3) sits at the edge of the hard-set rule: the same number, read the same way."
+ },
+ "e1rm": {
+  "formula": "epley",
+  "expr": "load x (1 + reps / 30)",
+  "max_reps": 12,
+  "sets": "done working sets with 1..12 reps; warm-ups excluded; set tags per logger.set_tags.pr_exclude (e1rm); effective load (bodyweight share included) as prs.flatten",
+  "note": "Estimated 1RM by the Epley formula, a model, not a tested max. Cap raised from 10 to 12 reps by Chief of Staff (2026-10-24); accuracy falls as reps rise.",
+  "supersedes": "logger.e1rm_max_reps (10) for Progress and Log charts; rules.json is not hand-edited, so the Chief of Staff should raise logger.e1rm_max_reps to 12 at the next rules change"
+ },
+ "metrics": {
+  "e1rm": "estimated 1RM, Epley, sets <= 12 reps",
+  "load_index": "best load x (1 + reps / 30) over all working sets, any rep count: the Epley shape used as a trend index for high-rep, core and carry lifts; never shown or named as a 1RM",
+  "reps": "most reps in one working set",
+  "hold_s": "longest hold in seconds"
+ },
+ "lift_kinds": {
+  "order": [
+   "hold",
+   "distance",
+   "bodyweight",
+   "core",
+   "e1rm"
+  ],
+  "hold": {
+   "when": "swap.flags has static_hold, or the whiteboard rep range unit is seconds",
+   "metric": "hold_s",
+   "value": "longest hold (set.reps holds seconds for these exercises)",
+   "text_unit": "s"
+  },
+  "distance": {
+   "when": "whiteboard rep range unit is meters (carries)",
+   "metric": "load_index",
+   "value": "load-reps index with meters in place of reps (set.reps holds meters)"
+  },
+  "bodyweight": {
+   "when": "exercises.json bodyweight_fraction > 0 (bodyweight, rings, suspension, assisted machines)",
+   "metric": "reps",
+   "value": "most reps in one working set; added load (or assistance) compared separately"
+  },
+  "core": {
+   "when": "primary muscle (highest rating) is abs or obliques",
+   "metric": "load_index",
+   "value": "load-reps index (no load ever logged -> metric reps)"
+  },
+  "e1rm": {
+   "when": "everything else",
+   "metric": "e1rm",
+   "value": "best e1RM per session (Epley, sets <= 12 reps)",
+   "high_rep_fallback": "if fewer than half of the lift's non-deload sessions in the trend window (all its sessions if none there) have a set of <= 12 reps (e.g. calf raises at 12-20), its metric is load_index instead"
+  },
+  "bodyweight_trend": "bodyweight lifts trend on reps only across sessions at the latest added load (within half a step); a heavier added load is a gain, not a drop in reps"
+ },
+ "comparable": {
+  "rule": "the previous completed, non-deload session that logged the same exercise id (aliases resolved) within the last 56 days",
+  "max_gap_days": 56,
+  "top_set": "heaviest logged (added) load among done working sets; hold lifts: longest hold",
+  "same_load": "within half the smallest real load step (prs.step_kg, gym profile aware)",
+  "gain": "load up by more than half a step; or same load and more reps in the best set at that load; or same best-set reps and the same number of sets at that load with more total reps; hold lifts: longer hold",
+  "texts": {
+   "load_up": "+{d} {u}",
+   "load_down": "−{d} {u}",
+   "reps_up": "+{n} rep{s} at same weight",
+   "reps_down": "−{n} rep{s} at same weight",
+   "same": "Same as last time",
+   "hold_up": "+{n} s",
+   "hold_down": "−{n} s",
+   "first": "First time logged",
+   "none": "No comparable session in the last 56 days"
+  },
+  "detail": "Top set {load} × {reps} (was {pload} × {preps})"
+ },
+ "weekly_best": {
+  "week": "Monday to Sunday, local date",
+  "value": "best metric of the week (e1RM for e1rm lifts); deload sessions excluded",
+  "pr_week": "the week best is above every earlier week best by more than review.flat_pct (1%) (reps / hold: strictly more); the first logged week is the baseline, never a PR week"
+ },
+ "trend": {
+  "window_days": 42,
+  "min_exposures": 3,
+  "min_weeks": 3,
+  "min_span_days": 14,
+  "method": "least-squares slope of the weekly best metric vs week index over weeks with data in the window, as % of the mean per week",
+  "up_pct_per_week": 0.5,
+  "down_pct_per_week": -1.0,
+  "thresholds_source": "same as logger.progress_signals (up > +0.5 %/week, dropping < -1.0 %/week)",
+  "words": {
+   "up": "Up about {p}% a week{abs}",
+   "flat": "Holding steady",
+   "down": "Down about {p}% a week{abs}",
+   "insufficient": "Not enough data yet"
+  },
+  "abs_words": {
+   "e1rm": " (about {v} {u} e1RM a week)",
+   "load_index": "",
+   "reps": " (about {v} reps a week)",
+   "hold_s": " (about {v} s a week)"
+  }
+ },
+ "lift_status": {
+  "order": [
+   "dropping",
+   "stalled",
+   "up",
+   "flat",
+   "down",
+   "insufficient"
+  ],
+  "stalled": "the last >= 3 exposures (non-deload) brought no rep/load gain over the best exposure before them (gain rule above); needs >= 4 exposures and >= 21 days of data",
+  "stall_min_exposures": 3,
+  "stall_min_total": 4,
+  "stall_min_span_days": 21,
+  "decline": "an exposure that is not a gain over the previous one and whose metric is more than review.flat_pct (1%) below it",
+  "dropping": "the last 2 exposures are both declines (2 consecutive drops, as logging-spec §9 performance drop); needs >= 4 exposures",
+  "dropping_consecutive": 2,
+  "flat_pct": 1.0
+ },
+ "muscle": {
+  "credit": "exercises with an exercises.json rating >= 0.25 for the muscle",
+  "weight": "stimulus share = credited hard sets in the window (rating x hard sets), same counting as targets.json",
+  "trend": "weighted mean of the %/week of its lifts that have a trend; same thresholds as lifts",
+  "min_data": "at least one lift with a trend and >= 3 distinct weeks with a credited set in the window",
+  "main_lift": "pinned (history.settings.mainLiftPins[muscle], must credit the muscle >= 0.25) else the lift with the most sessions in the window among lifts rated >= 0.5 (none: >= 0.25); ties: higher rating, more credited sets, primary < accessory < isolation, id",
+  "main_lift_min_rating": 0.5,
+  "latest_gain": "the main lift's change vs its last comparable session",
+  "stuck": "muscle trend is flat or down AND its main lift is stalled or dropping AND lifts that are stalled or dropping carry >= 50% of the muscle's weight",
+  "stuck_share": 0.5
+ },
+ "deload": {
+  "one_rule": "There is one deload rule: logger.deload_signals points (tools/deload.py deload_check: eligibility, weeks since deload, RIR drift, hard sets over target, readiness, suggest_score 3), with its performance signal REPLACED by the Progress lift statuses below. Progress, Train and Log all read progress.deload(). rules.json is not hand-edited; Chief of Staff should point logger.deload_signals.performance at this block at the next rules change.",
+  "several_lifts_dropping": {
+   "min_lifts": 2,
+   "within_days": 14,
+   "rule": ">= 2 lifts with status dropping whose latest exposure is in the last 14 days",
+   "points": 2
+  },
+  "mostly_stalled": {
+   "min_lifts": 3,
+   "share": 0.6,
+   "points": 1,
+   "rule": "otherwise, >= 3 lifts with a status and >= 60% of them stalled or dropping"
+  },
+  "suggest_score_key": "logger.deload_signals.suggest_score",
+  "apply_edits_board": false,
+  "apply_note": "a deload is a temporary week overlay (logging-spec §9); the board is not changed"
+ },
+ "fix": {
+  "one_per_item": true,
+  "priority": [
+   "deload",
+   "sets_up",
+   "sets_down",
+   "swap",
+   "rep_range"
+  ],
+  "rules": {
+   "deload": "the deload is suggested (see deload.one_rule): it then becomes the only needs-attention item and covers every stall and drop",
+   "sets_up": "mean credited hard sets of the muscle over the last 2 completed weeks < targets.json min x levelMinFactor (rounded to 0.5): +1 set on the lift (first routine day that has it)",
+   "sets_down": "that mean > targets.json max: -1 set on the lift (never below 2)",
+   "swap": "the stall has lasted >= 6 exposures: swap the lift for the first swap.py candidate in the same equipment family that fits its template slot and is not already in the routine (none: next rule)",
+   "rep_range": "otherwise: move to the other half of the lift's rep range for a while (top-set reps at or below the middle -> upper half, else lower half)"
+  },
+  "swap_after_exposures": 6,
+  "sets_min": 2,
+  "weeks_for_sets": 2,
+  "can_apply": {
+   "deload": false,
+   "sets_up": true,
+   "sets_down": true,
+   "swap": true,
+   "rep_range": false
+  },
+  "can_apply_note": "can_apply = Apply edits the board (analysis ops sets / swap, with Undo). Deload is a week overlay; rep-range advice is display only until the board has a rep-range op."
+ },
+ "needs_attention": {
+  "kinds": [
+   "deload",
+   "muscle_stall",
+   "lift_dropping"
+  ],
+  "order": "deload first, then muscle stalls (main lift stall length desc, muscle order), then dropping lifts not already shown as a stalled muscle's main lift (latest drop first)",
+  "grouping": "stuck muscles that share a main lift make one item (muscles listed together, one fix)",
+  "deload_absorbs": "when the deload is suggested it is the only item: it lists the stuck muscles and dropping lifts it covers (their one fix would be the deload anyway)"
+ },
+ "wins": {
+  "window_days": 14,
+  "max_shown": 5,
+  "kinds": {
+   "milestone": 1,
+   "strongest_ever": 2,
+   "e1rm_pr": 3,
+   "load_pr": 4,
+   "rep_pr": 5,
+   "hold_pr": 5,
+   "vs_3_months": 6
+  },
+  "baseline": "the first session with an exercise sets its baseline: no win from it",
+  "e1rm_pr": "best e1RM above every earlier one by more than review.flat_pct (1%) (e1rm lifts)",
+  "strongest_ever": "an e1RM PR that is still the all-time best at as_of, on a lift with >= 28 days of history: shown as \"Strongest ever\"",
+  "load_pr": "heaviest logged load above every earlier one by more than half a step (e1rm, core, distance lifts; bodyweight lifts with added load)",
+  "rep_pr": "more reps in one working set than ever at that load or heavier (earlier sets within half a step count as the same load); bodyweight lifts with no added load: more reps than ever",
+  "hold_pr": "longer hold than ever (hold lifts)",
+  "milestone": {
+   "lifts": {
+    "bench": [
+     "barbell-bench-press"
+    ],
+    "squat": [
+     "back-squat"
+    ],
+    "deadlift": [
+     "deadlift"
+    ]
+   },
+   "plates_lb": [
+    135,
+    225,
+    315,
+    405
+   ],
+   "plates_kg": [
+    60,
+    100,
+    140,
+    180
+   ],
+   "labels": {
+    "135": "1 plate",
+    "225": "2 plates",
+    "315": "3 plates",
+    "405": "4 plates"
+   },
+   "rule": "first done working set with >= 1 rep at a logged load >= the milestone (session unit; kg sessions use plates_kg), after the baseline session"
+  },
+  "vs_3_months": {
+   "now_days": 14,
+   "then_from_days": 91,
+   "then_to_days": 77,
+   "min_gain_pct": 1.0,
+   "rule": "best metric in the last 14 days vs best metric 77..91 days before as_of; shown as a win only if >= +1% and the lift has no other win in the list"
+  },
+  "dedupe": "one win per lift per session (highest kind); then one win per lift in the list (best kind, newest); vs_3_months only for lifts with no other win, at most 2",
+  "sort": "kind rank, then lifts that are some muscle's main lift first, then exercise type (primary, accessory, isolation), then date (newest first), then gain % (desc), then exercise id"
+ },
+ "min_data": {
+  "gain_vs_last": "2 exposures",
+  "lift_trend": "3 exposures in >= 3 weeks spanning >= 14 days (42-day window)",
+  "lift_stall": "4 exposures spanning >= 21 days",
+  "lift_dropping": "4 exposures",
+  "muscle_trend": "1 lift with a trend and >= 3 weeks with credited sets",
+  "muscle_stall": "muscle trend + main lift status",
+  "deload": "logger.deload_signals.eligible (>= 4 logged weeks, >= 8 sessions, >= 4 weeks since the last deload)",
+  "wins": "a baseline session per lift; vs 3 months needs data in both windows",
+  "labels": {
+   "insufficient_lift": "Not enough sessions yet ({have} of {need})",
+   "insufficient_muscle": "Not enough weeks yet"
+  }
+ },
+ "footnote": {
+  "planned_vs_done": "minor footnote only: planned working sets (session snapshots) vs done planned sets, completed and skipped sessions of the last 28 days",
+  "days": 28,
+  "text": "Planned vs done, last 4 weeks: {done} of {planned} sets"
+ },
+ "text_rules": "Plain words. Model language (\"about\", \"estimated\"). No medical, health or injury claims. No claims about muscle growth from these numbers."
+}
