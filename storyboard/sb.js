@@ -986,30 +986,77 @@ function spark(vals,tr,dlw){const W=58,H=20,v=vals.filter(x=>x!=null);if(v.lengt
   const segs=[];let c=[];vals.forEach((x,k)=>{if(x==null){if(dlw&&dlw[k])return;if(c.length)segs.push(c);c=[]}else c.push([X(k),Y(x)])});if(c.length)segs.push(c);   /* deload weeks (isDeloadWeek) are skipped: the line joins across */
   let lk=n-1;while(vals[lk]==null)lk--;
   return `<svg class="psp" viewBox="0 0 ${W} ${H}" aria-hidden="true">${segs.map(sg=>sg.length>1?`<polyline points="${sg.map(p=>p.join(',')).join(' ')}"/>`:`<circle cx="${sg[0][0]}" cy="${sg[0][1]}" r="1.2" class="ps1"/>`).join('')}<circle cx="${X(lk)}" cy="${Y(vals[lk])}" r="2.4" style="fill:${TRC[tr]||'var(--text-2)'}"/></svg>`}
-function kpiStrip(vw){const k=vw.kpi,b=k.buckets,e=effV(k.avg_rir);
-  const tile=(go,big,lab,cls='')=>`<button class="pk ${cls}" data-kgo="${go}"><b class="num">${big}</b><span>${lab}</span></button>`;
-  return `<div class="pkpi" data-src="${vw.source}">${tile('wins',k.prs_30d,'PRs<br>30 days')}${tile('muscles',k.strength_display||'–','Strength<br>vs 3 mo','pkst')}
-   ${tile('map',`<i class="d up"></i>${b.up}<i class="d flat"></i>${b.flat}<i class="d down"></i>${b.stalled}`,`Up · flat · stalled${b.insufficient?`<br>${b.insufficient} too early`:''}`,'pkmu')}
-   ${tile('muscles',e==null?'–':e.toFixed(1),e==null?'Not enough<br>RIR logged':`Avg ${effT()}<br>28 days`,k.avg_rir==null?'pkna':'')}</div>${k.avg_rir_note?`<p class="pknote">${esc(k.avg_rir_note)}</p>`:''}`}
+// ---- KPI strip (prog3, Coach's dashboard.headline, spec §15): Strength Index + trend arrow + model label · PRs this month (main lifts) ·
+// weekly streak (current, best) · up / holding / down mix (stalled marker). Avg RIR moved to the muscle table (column + foot).
+function kpiStrip(vw){const H=vw.headline;if(!H)return '';const S=H.score,P=H.prs,T=H.streak,X=H.mix;
+  const tile=(go,big,lab,cls='',tag='button')=>`<${tag} class="pk ${cls}"${go?` data-kgo="${go}"`:''}><b class="num">${big}</b><span>${lab}</span></${tag}>`;
+  const arr=S.arrow?`<i class="pkar" data-tr="${S.arrow}" role="img" aria-label="${TRW[S.arrow]||S.arrow}">${TRA[S.arrow]}</i>`:'';
+  return `<div class="pkpi" data-src="${vw.source}">${tile('ovl',S.value==null?'–':`${S.display}${arr}`,'Strength<br>Index','pkss'+(S.value==null?' pkna':''))}
+   ${tile('wins',P.count,'PRs this month<br>main lifts','pkpr')}
+   ${tile('',`${T.current}<small>wk</small>`,`Streak<br>best ${T.best}`,'pkstk','div')}
+   ${tile('map',`<i class="d up"></i>${X.up}<i class="d flat"></i>${X.holding}<i class="d down"></i>${X.down}`,`Up · holding · down${X.stalled.length?`<br><i class="stk"></i>${X.stalled.length} stalled`:''}${X.insufficient?`<br>${X.insufficient} too early`:''}`,'pkmu')}</div>
+   <p class="pknote pssub">${esc(S.status==='ok'?S.sub:S.display)}</p>`}
+// ---- % change chart (prog3, Coach's dashboard.overlay): every unique main lift on one shared % axis, % from its own baseline (best of its
+// first 2 weeks in the 3-month window). Deload sessions have no point, so a line joins across them. Highlighted lines (PVIEW: the top 3 on the
+// estimated-1RM scale + the lowest when below 0) get colours --ov1..4; the rest are muted. Reps / seconds lines start hidden and are dashed.
+// Legend chips show / hide a line; tapping a line opens that lift's full chart; 4w / 12w / All.
+const OVC=k=>k>=0?`var(--ov${k+1})`:'var(--ov-mute)';
+const ovDays=d=>Math.round((Date.parse(AS_OF+'T12:00:00Z')-Date.parse(d+'T12:00:00Z'))/864e5);
+function ovHidden(O){if(!PROG.ovh||PROG.ovhSig!==O.hidden_default.join()){PROG.ovh=new Set(O.hidden_default);PROG.ovhSig=O.hidden_default.join()}return PROG.ovh}
+function ovlChart(pr,vw){const O=vw.overlay;if(!O||!O.lines.length)return '';const rng=PROG.ovr||'all',nd=PVIEW.D.RANGE_DAYS[rng],hid=ovHidden(O);
+  const from=nd==null?O.window.from:new Date(Date.parse(AS_OF+'T12:00:00Z')-(nd-1)*864e5).toISOString().slice(0,10);
+  const ok=O.lines.filter(l=>l.status==='ok'&&l.points.length),vis=ok.filter(l=>!hid.has(l.lift)).map(l=>({...l,pts:l.points.filter(q=>nd==null||ovDays(q.date)<nd)})).filter(l=>l.pts.length);
+  const W=340,Hh=196,L=40,R=10,T=10,B=24,pw=W-L-R,ph=Hh-T-B,all=vis.flatMap(l=>l.pts.map(q=>q.pct)).concat([0]);
+  let lo=Math.min(...all),hi=Math.max(...all);const st=[2,5,10,20,25,50,100].find(x=>(Math.ceil(hi/x)-Math.floor(lo/x))<=5)||100;lo=Math.floor(lo/st)*st;hi=Math.ceil(hi/st)*st;if(hi===lo)hi=lo+st;
+  const t0=Date.parse(from+'T12:00:00Z'),t1=Date.parse(AS_OF+'T12:00:00Z'),X=d=>L+(Date.parse(d+'T12:00:00Z')-t0)/Math.max(1,t1-t0)*pw,Y=v=>T+(hi-v)/(hi-lo)*ph,f1=v=>v.toFixed(1);
+  const ticks=[];for(let v=lo;v<=hi+1e-9;v+=st)ticks.push(v);
+  const xt=[];for(let k=0;k<=3;k++){const t=new Date(t0+(t1-t0)*k/3).toISOString().slice(0,10);xt.push(t)}
+  const dash=l=>l.unit_flag==='reps'||l.unit_flag==='seconds'?' stroke-dasharray="5 3"':'';
+  const ord=vis.slice().sort((a,b)=>(a.hi>=0)-(b.hi>=0)||b.hi-a.hi);   // muted first, highlighted on top (first highlight last)
+  const line=l=>l.pts.length>1?`<polyline class="ovln${l.hi>=0?' hi':''}" points="${l.pts.map(q=>f1(X(q.date))+','+f1(Y(q.pct))).join(' ')}" style="stroke:${OVC(l.hi)}"${dash(l)}/>`:'';
+  const end=l=>{const q=l.pts[l.pts.length-1];return `<circle class="ovend${l.hi>=0?' hi':''}" cx="${f1(X(q.date))}" cy="${f1(Y(q.pct))}" r="${l.hi>=0?3:2}" style="fill:${OVC(l.hi)}"/>`};
+  const hit=l=>`<g class="ovhit" data-ovl="${l.lift}" data-ovm="${l.m}" role="button" aria-label="${esc(shortEx(l.lift))}: ${esc(l.last_pct==null?'':sgn(l.last_pct))} — open chart">${l.pts.length>1?`<polyline points="${l.pts.map(q=>f1(X(q.date))+','+f1(Y(q.pct))).join(' ')}"/>`:''}<circle cx="${f1(X(l.pts[l.pts.length-1].date))}" cy="${f1(Y(l.pts[l.pts.length-1].pct))}" r="9"/></g>`;
+  const svg=`<svg class="povc" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Percent change from each main lift's start, ${vis.length} lines">
+    ${ticks.map(v=>`<line class="ovg${v===0?' z':''}" x1="${L}" x2="${W-R}" y1="${f1(Y(v))}" y2="${f1(Y(v))}"/><text class="ovy" x="${L-5}" y="${f1(Y(v)+3.5)}" text-anchor="end">${v>0?'+':v<0?'−':''}${Math.abs(v)}%</text>`).join('')}
+    ${xt.map((d,k)=>`<text class="ovx" x="${f1(X(d))}" y="${Hh-6}" text-anchor="${k===0?'start':k===3?'end':'middle'}">${fmtD(d)}</text>`).join('')}
+    ${ord.map(line).join('')}${ord.map(end).join('')}${ord.slice().reverse().map(hit).join('')}</svg>`;
+  const leg=[...ok.filter(l=>l.hi>=0).sort((a,b)=>a.hi-b.hi),...ok.filter(l=>l.hi<0).sort((a,b)=>b.last_pct-a.last_pct)];
+  const unit=l=>l.unit_flag==='reps'?' <small>reps</small>':l.unit_flag==='seconds'?' <small>sec</small>':'';
+  const chip=l=>{const on=!hid.has(l.lift);return `<button class="povk${on?' on':''}${l.hi>=0?' hi':''}" data-ovk="${l.lift}" aria-pressed="${on}" aria-label="${esc(shortEx(l.lift))} ${on?'shown':'hidden'}"><i class="ovsw${dash(l)?' dsh':''}" style="--c:${OVC(l.hi)}"></i><span class="ovn">${esc(shortEx(l.lift))}${unit(l)}</span><b class="num" data-tr="${l.last_pct>0?'up':l.last_pct<0?'down':'flat'}">${sgn(l.last_pct)}</b></button>`};
+  const none=O.lines.filter(l=>!(l.status==='ok'&&l.points.length));
+  const K=pr.dashboard.kpis.strength_change,anyU=ok.some(l=>dash(l));
+  return `<div class="card povl" data-rng="${rng}"><div class="povh"><span class="povmed" data-ovmed="1">Median <b class="num">${esc(K.display||'–')}</b> · ${K.n_lifts} lifts</span>
+    <div class="pseg sm povr" role="tablist">${[['4w','4w'],['12w','12w'],['all','All']].map(([k,t])=>`<button data-ovr="${k}" class="${rng===k?'on':''}" aria-selected="${rng===k}">${t}</button>`).join('')}</div></div>
+    ${vis.length?svg:`<p class="foot povnone">All lines are hidden. Tap a lift below to show it.</p>`}
+    <div class="povleg">${leg.map(chip).join('')}</div>
+    ${none.length?`<p class="foot povno">No line yet: ${none.map(l=>`${esc(shortEx(l.lift))} (${esc(l.reason||'not enough data')})`).join(', ')}.</p>`:''}</div>
+   <p class="foot">% from each lift's own start (its best in the first 2 weeks of the last 3 months), so lifts in lb, kg, reps and seconds share one axis. Lighter (deload) sessions are left out and the line joins across.${anyU?' Dashed: reps or seconds, which move faster in %; off at first.':''} Tap a line for its chart, a name to show or hide it.</p>`}
 function trendMap(pr,vw){const vol={},stk=new Set();for(const [m,x] of Object.entries(vw.muscles)){vol[m]=TRC[x.band];if(x.stalled)stk.add(m)}
   const mk=h=>h.replace(/data-mu="(\w+)"([^>]*?)class="mp"/g,(a,mu,mid)=>stk.has(mu)?`data-mu="${mu}"${mid}class="mp pstk"`:a);   // stall marker: an outline on top of the band colour
   const has=b=>Object.values(vw.muscles).some(x=>x.band===b);
   return `<div class="card pmapc"><div class="maps">${mk(map('front',vol))}${mk(map('back',vol))}</div>
    <div class="legend ptleg"><span><i style="background:var(--tr-up2)"></i>Up strongly</span><span><i style="background:var(--tr-up)"></i>Up</span><span><i style="background:var(--tr-flat)"></i>Flat</span><span><i style="background:var(--tr-down)"></i>Down</span>${has('insufficient')?'<span><i style="background:var(--tr-muted)"></i>Too early</span>':''}${stk.size?'<span><i class="stk"></i>Stalled</span>':''}<span><i class="ne"></i>Not trained</span></div></div>
    <p class="foot">Each muscle's main lift over the last 3 months. Tap a muscle for its lifts.</p>`}
-function muscleTable(pr,vw){const OVR=mlGet(),S0=PROG.sort||'problems',seg=[['problems','Problems first'],['az','A–Z'],['change','Change']];
+// ---- muscle table (prog3): one row per Coach's dashboard.table_rows entry (one per unique main lift; a shared lift lists its muscles, e.g.
+// "Deadlift — traps, forearms, lower back"), so a lift never repeats. RIR column = the row's avg_rir (shared: mean of its muscles, each
+// muscle's own value listed under the row). dashboard.muscles still drives the body map.
+const MLs=ms=>ms.map((m,k)=>k?(ML[m]||m).toLowerCase():(ML[m]||m)).join(', ');
+function sortedRows(vw){const a=vw.rows.slice(),s=PROG.sort||'problems',nm=r=>MLs(r.muscles);
+  return a.sort(s==='az'?((x,y)=>nm(x).localeCompare(nm(y))):s==='change'?((x,y)=>(y.change??-1e9)-(x.change??-1e9)):((x,y)=>BKT[x.bucket]-BKT[y.bucket]||(x.change??1e9)-(y.change??1e9)||nm(x).localeCompare(nm(y))))}
+function muscleTable(pr,vw){const OVR=mlGet(),S0=PROG.sort||'problems',seg=[['problems','Problems first'],['az','A–Z'],['change','Change']],k=vw.kpi,ek=effV(k.avg_rir),f1=v=>effV(v)==null?'–':fmtPct(effV(v));
   return `<div class="pseg" role="tablist">${seg.map(([k,t])=>`<button data-psort="${k}" class="${S0===k?'on':''}" aria-selected="${S0===k}">${t}</button>`).join('')}</div>
    <div class="group ptab"><div class="pth" aria-hidden="true"><span>Muscle</span><span>12 wk</span><span>Main lift</span><span>Change</span><span>${effT()}</span></div>
-   ${sortedMuscles(pr,vw).map(m=>{const x=vw.muscles[m],v=pr.muscles[m]||{main_lift:{}},e=effV(x.avg_rir),fl=x.bucket==='stalled_or_dropping'?(v.main_lift.status==='dropping'?'Dropping':x.stalled?'Stalled':'Down'):'';
-     return `<button class="pmr" data-pm="${m}" data-bucket="${x.bucket||'insufficient'}" data-band="${x.band}"><span class="pmn">${ML[m]||m}${fl?`<em class="pstall">${fl}</em>`:''}</span><span class="pspk" data-pspk="${m}" role="button" aria-label="${esc((ML[m]||m)+': '+(x.main?exNameP(x.main):'main lift')+' chart')}">${spark(x.spark,x.band,x.spark_deload)}</span>
-      <span class="pmlf">${x.main?`${OVR[m]&&OVR[m]===x.main?'<i class="ppin" title="Your pick" aria-label="Your pick"></i>':''}${esc(shortEx(x.main))}`:'–'}${x.reason?`<small class="prsn">${esc(capF(x.reason))}</small>`:''}</span><span class="pchg num" data-tr="${TRI[x.band]||''}">${x.change_display||'–'}</span><span class="pef num">${e==null?'–':fmtPct(e)}</span></button>`}).join('')}</div>
-   <p class="foot">${Object.keys(OVR).length?'<i class="ppin"></i> Your main lift pick. ':''}Tap a sparkline for that lift's chart. Change: the main lift's best in its first 2 weeks vs the last 2 weeks, over 3 months. ${effMode()==='rpe'?'RPE = 10 − reps in reserve':'RIR = reps in reserve'}, last 4 weeks.</p>`}
+   ${sortedRows(vw).map(r=>{const m=r.m,v=pr.muscles[m]||{main_lift:{}},e=effV(r.avg_rir),pin=r.muscles.some(x=>OVR[x]&&OVR[x]===r.lift),fl=r.bucket==='stalled_or_dropping'?(v.main_lift.status==='dropping'?'Dropping':r.stalled?'Stalled':'Down'):'';
+     return `<button class="pmr${r.shared?' pshr':''}" data-pm="${m}" data-pms="${r.muscles.join(' ')}" data-lift="${r.lift}" data-bucket="${r.bucket||'insufficient'}" data-band="${r.band}" aria-label="${esc(r.label)}"><span class="pmn">${esc(MLs(r.muscles))}${fl?`<em class="pstall">${fl}</em>`:''}${r.shared?`<small class="prir" title="${esc(r.muscles.map(x=>`${ML[x]||x} ${f1(r.avg_rir_by_muscle[x])}`).join(', '))}">${effT()} each: ${r.muscles.map(x=>f1(r.avg_rir_by_muscle[x])).join(' · ')}</small>`:''}</span><span class="pspk" data-pspk="${m}" data-pspl="${r.lift}" role="button" aria-label="${esc(shortEx(r.lift)+' chart')}">${spark(r.spark,r.band,r.spark_deload)}</span>
+      <span class="pmlf">${pin?'<i class="ppin" title="Your pick" aria-label="Your pick"></i>':''}${esc(shortEx(r.lift))}${r.reason?`<small class="prsn">${esc(capF(r.reason))}</small>`:''}</span><span class="pchg num" data-tr="${TRI[r.band]||''}">${r.change_display||'–'}</span><span class="pef num">${e==null?'–':fmtPct(e)}</span></button>`}).join('')}</div>
+   <p class="foot">${Object.keys(OVR).length?'<i class="ppin"></i> Your main lift pick. ':''}One row per main lift; a lift that is the main lift of several muscles lists them together. Tap a sparkline for that lift's chart. Change: the main lift's best in its first 2 weeks vs the last 2 weeks, over 3 months. ${effT()}: ${effMode()==='rpe'?'RPE = 10 − reps in reserve':'reps in reserve'}, last 4 weeks; all sets: <b class="num pkrir">${ek==null?'not enough logged':ek.toFixed(1)}</b>.${k.avg_rir_note?' '+esc(k.avg_rir_note)+'.':''}</p>`}
 function winChip(w){const t=txtS(w.text),k=t.indexOf(': '),nm=k>0?t.slice(0,k):shortEx(w.exercise),rest=k>0?t.slice(k+2):t;
   return `<button class="pchip" data-plift="${w.exercise}" data-kind="${w.kind}"><span class="pci ${w.kind==='milestone'?'ms':''}" aria-hidden="true">${winIcon(w.kind)}</span><span class="pct"><b>${esc(shortEx(w.exercise)||nm)}</b><span>${esc(capF(rest))}</span></span></button>`}
 V.progress=()=>{const pr=RD&&progressData();if(!pr)return header('Progress',bookBtn)+`<p class="foot">Progress needs the logger rules.</p>`;if(!pr.data.completed_sessions)return progEmpty();
   const vw=pview(pr),W=pr.wins,wl=PROG.all?W.list:W.shown,NA=pr.needs_attention.slice();
   if(PROG.applied&&!NA.some(x=>akey(x)===PROG.applied.key))NA.unshift(PROG.applied.item);
   return header('Progress',bookBtn)+progHead()+kpiStrip(vw)+
+   sec('ovl','Strength change','% from start',ovlChart(pr,vw))+
    sec('map','By muscle','3 months',trendMap(pr,vw))+
    sec('muscles','Muscles','',muscleTable(pr,vw))+
    (wl.length?sec('wins','Wins','last 2 weeks',`<div class="pchips">${wl.map(winChip).join('')}${W.more?`<button class="pchip pmore" data-pmore="1">${PROG.all?'Show fewer':`+${W.more} more`}</button>`:''}</div>`):'')+
@@ -1091,15 +1138,18 @@ function showTip(g){const t=$('#ptip'),card=g.closest('.plcard');if(!t||!card)re
   t.style.left=Math.max(6,Math.min(cb.width-tw-6,c.left-cb.left+c.width/2-tw/2))+'px';t.style.top=Math.max(4,c.top-cb.top-t.offsetHeight-8)+'px'}
 function rerenderProgress(){const v=$('#view'),sc=v.scrollTop;v.innerHTML=V[S.scr]();v.scrollTop=sc;tapable(v)}
 // iOS WebKit only sends a tap's click to SVG shapes that have a handler of their own: give dots and map muscles a no-op one (the delegate does the work)
-const tapable=root=>{(root||document).querySelectorAll('.pmapc .mp,.plc .pp circle').forEach(e=>{if(!e.onclick)e.onclick=()=>{}})};
+const tapable=root=>{(root||document).querySelectorAll('.pmapc .mp,.plc .pp circle,.povc .ovhit,.povc .ovhit *').forEach(e=>{if(!e.onclick)e.onclick=()=>{}})};
 function afterProgress(){tapable($('#view'))}
 function progApply(k){const pr=progressData(),x=pr&&pr.needs_attention[+k];if(!x||!x.fix||!x.fix.apply_edits_board||!x.fix.ops||!window.BOARD)return;
   const before=BOARD.progApply(x.fix.ops);PROG.applied={key:akey(x),item:JSON.parse(JSON.stringify(x)),before,asig:BOARD.sig()};toast('Applied to your board');rerenderProgress()}
 function progUndo(){const a=PROG.applied;if(!a)return;PROG.applied=null;if(BOARD.sig()===a.asig){BOARD.progUndo(a.before);toast('Undone · your board is back')}else toast('Your board changed after this. Undo it in Build.');rerenderProgress()}
-document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-mlx],[data-pspk],[data-pml],[data-pm],[data-plift],[data-pfix],[data-pundo],[data-pmore],[data-kgo],[data-psort],[data-sl],[data-psback],[data-prng],.plc .pp,.pmapc .mp[data-mu]');
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-mlx],[data-pspk],[data-pml],[data-pm],[data-plift],[data-pfix],[data-pundo],[data-pmore],[data-kgo],[data-psort],[data-sl],[data-psback],[data-prng],[data-ovk],[data-ovl],[data-ovr],.plc .pp,.pmapc .mp[data-mu]');
   if(!t||!($('#view').contains(t)||t.closest('.psheet')))return;e.preventDefault();
   if(t.matches('.pmapc .mp'))return openPSheet(t.dataset.mu);if(t.matches('.plc .pp'))return showTip(t);
-  if(t.dataset.pspk){const vw=pview(progressData()),x=vw&&vw.muscles[t.dataset.pspk];return openPSheet(t.dataset.pspk,x&&x.main||null)}
+  if(t.dataset.pspk){const vw=pview(progressData()),x=vw&&vw.muscles[t.dataset.pspk];return openPSheet(t.dataset.pspk,t.dataset.pspl||(x&&x.main)||null)}
+  if(t.dataset.ovk){const pr=progressData(),O=pview(pr).overlay,H=ovHidden(O),k=t.dataset.ovk;if(H.has(k))H.delete(k);else H.add(k);return rerenderProgress()}
+  if(t.dataset.ovl)return openPSheet(t.dataset.ovm||null,t.dataset.ovl);
+  if(t.dataset.ovr){PROG.ovr=t.dataset.ovr;return rerenderProgress()}
   if(t.dataset.pml!=null&&PSH.m){mlSet(PSH.m,t.dataset.pml||null);rerenderProgress();PSH.lift=null;pshRender();toast(t.dataset.pml?'Main lift set':'Main lift back to automatic');return}
   if(t.dataset.mlx)return exDetail(t.dataset.mlx);if(t.dataset.pm)return openPSheet(t.dataset.pm);
   if(t.dataset.plift){const pr=progressData();return openPSheet(pr?muscleOfLift(pr,t.dataset.plift):null,t.dataset.plift)}

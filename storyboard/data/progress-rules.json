@@ -173,7 +173,7 @@
   "weight": "stimulus share = credited hard sets in the window (rating x hard sets), same counting as targets.json",
   "trend": "weighted mean of the %/week of its lifts that have a trend; same thresholds as lifts",
   "min_data": "at least one lift with a trend and >= 3 distinct weeks with a credited set in the window",
-  "main_lift": "pinned (history.settings.mainLiftPins[muscle] or report(main_lift_overrides)[muscle], see overrides) else the lift with the most sessions in the window among lifts rated >= 0.5 (none: >= 0.25); ties: higher rating, more credited sets, primary < accessory < isolation, id",
+  "main_lift": "see main_lift_choice (progress7). Before progress7: pinned (history.settings.mainLiftPins[muscle] or report(main_lift_overrides)[muscle], see overrides) else the lift with the most sessions in the window among lifts rated >= 0.5 (none: >= 0.25); ties: higher rating, more credited sets, primary < accessory < isolation, id",
   "overrides": {
    "input": "report(history, as_of, ..., main_lift_overrides={muscle_id: exercise_id}) (progress5); an alias of history.settings.mainLiftPins: stored pins are read first and the argument wins for the same muscle; exercise aliases resolved",
    "min_ratio": 0.25,
@@ -196,6 +196,17 @@
     "not_recent": "main lift not trained recently"
    },
    "payload": "report().main_lift_overrides = applied {muscle: exercise} (stored pins + argument); report().overrides_ignored (also in report().dashboard)"
+  },
+  "main_lift_choice": {
+   "specific_min_ratio": 0.75,
+   "rule": "progress7 (Chief of Staff, Oct 25, 2026; replaces \"most sessions among lifts rated >= 0.5\"). Candidates = lifts crediting the muscle >= 0.25 with a non-deload session in the 42-day window. 1) an override / pin always wins; 2) specific: for every muscle first, a lift where the muscle is the main mover (ratio >= 0.75) and the lift's primary muscle (its highest ratio, ties allowed); 3) other muscles, in muscle order: lifts rated >= 0.5 (none: >= 0.25), preferring one that is not already another muscle's main lift; a shared lift only when nothing unshared qualifies. Ties everywhere: most sessions in the window, higher ratio, more credited sets, primary < accessory < isolation, id.",
+   "selection": {
+    "override": "override or stored pin",
+    "specific": "main mover and the lift's primary muscle",
+    "unshared": "rated >= 0.5 (or >= 0.25) and not another muscle's main lift",
+    "shared": "only shared lifts qualify: the table merges its muscles into one row"
+   },
+   "why": "a compound lift that credits many muscles (deadlift) no longer becomes the main lift of four muscles when a muscle-specific lift is trained; the table stops repeating the same row and the KPI / score do not count a lift once per muscle"
   },
   "main_lift_min_rating": 0.5,
   "latest_gain": "the main lift's change vs its last comparable session",
@@ -468,7 +479,115 @@
    "best": "dot.best = true only when the dot's plotted value (dot.value, as stored) is strictly higher than every earlier dot value of that lift, over all history (not only the window shown); the lift's first-ever session and deload dots are false. The chart marker uses best",
    "deload": "deload sessions produce no dot at all (progress5, deload_sessions = exclude); the dot.deload field was removed"
   },
-  "vs_3_months": "wins vs 3 months ago uses this change for every lift with enough data, including bodyweight lifts (best reps) and hold lifts (best hold)"
+  "vs_3_months": "wins vs 3 months ago uses this change for every lift with enough data, including bodyweight lifts (best reps) and hold lifts (best hold)",
+  "table_rows": {
+   "rule": "progress7: dashboard.table_rows = one row per unique main lift of the trained muscles, in muscle order of its first muscle; a lift that is the main lift of several muscles (only when nothing unshared qualifies, muscle.main_lift_choice) is one row listing those muscles, label \"<lift> — <muscle>, <muscle>\"; single-muscle rows are labelled with the lift name",
+   "fields": [
+    "lift",
+    "name",
+    "muscles",
+    "label",
+    "shared",
+    "metric",
+    "band",
+    "colour_role",
+    "change",
+    "sparkline",
+    "stalled",
+    "avg_rir",
+    "avg_rir_by_muscle",
+    "selection"
+   ],
+   "avg_rir": "one muscle: that muscle's effort.avg_rir; shared row: plain mean of its muscles' avg_rir (nulls skipped), with avg_rir_by_muscle alongside",
+   "stalled": "true when any covered muscle has the stall flag",
+   "body_map": "dashboard.muscles stays one entry per muscle for the body map (a shared lift colours each of its muscles with the same band)"
+  }
+ },
+ "headline": {
+  "note": "progress7 headline strip (Mr Dude via Chief of Staff, Oct 25, 2026). Strength and performance only; every threshold is a modelling choice [M].",
+  "strength_score": {
+   "method": "geometric_mean",
+   "metrics": [
+    "e1rm",
+    "load_index"
+   ],
+   "min_lifts": 3,
+   "arrow_min_lifts": 2,
+   "baseline": 100,
+   "rule": "Strength Index = 100 x geometric mean over the unique main lifts (after overrides and the table dedupe) of late / early, where early and late are the dashboard change values (best of the first 14 days of the 91-day window vs best of the last 14 days); only lifts on the estimated-1RM scale (estimated 1RM or the load-reps index) with an ok change; >= 3 lifts, else \"Not enough data\"; shown as a whole number (half up)",
+   "arrow": "mean of those lifts' 42-day trend pct_per_week (lift_trend), with the same thresholds: up > +0.5 %/week, down < -1.0, else flat; needs >= 2 of the lifts with a trend, else no arrow",
+   "why": "Personal and unitless: each lift is compared only with itself, so a 140 lb curl and a 400 lb deadlift weigh the same; the geometric mean of ratios is the standard way to average relative changes (a +10% and a -10% lift give about 99, not a misleading 100 from 10 lifts' sums) and is not dominated by the heaviest lift as a summed total would be. Using the dashboard change values means the score, the table change % and the overlay share one baseline. Reps and hold ratios move on a different scale (7 -> 12 reps is +71%), so they stay out, as in the strength-change KPI. Bodyweight-relative scores and DOTS / Wilks need bodyweight and sex and only fit squat / bench / deadlift totals.",
+   "bodyweight_check": "the Train log carries history.bodyweights[] (the sample logs one a week) but settings carry no sex; DOTS is therefore an optional later variant only",
+   "variants": {
+    "dots": {
+     "status": "later",
+     "reason": "optional later variant: needs settings.sex and a logged bodyweight; applies to the squat + bench + deadlift estimated-1RM total only; never the default"
+    }
+   },
+   "reason_insufficient": "fewer than 3 main lifts with a 3-month change",
+   "reason_display": "Not enough data",
+   "label": "Strength Index",
+   "sublabel": "Model, not a measurement. 100 = your level at the start of the last 3 months."
+  },
+  "prs_this_month": {
+   "days": 30,
+   "min_gain_pct": {
+    "e1rm": 1.0,
+    "load_index": 1.0,
+    "best_reps": 0.0,
+    "hold_s": 0.0
+   },
+   "rule": "unique main lifts (after overrides and the table dedupe) whose best plotted value (dashboard dot) in the last 30 days (as_of - 29 .. as_of) beats their best plotted value from before those 30 days: by >= 1% on the estimated-1RM scale (estimated 1RM, load-reps index; the PR tie rule) or by >= 1 rep / second (Best reps, hold); one per lift, dated at the first session that reached it (that dot has best = true). A lift first logged inside the 30 days has no earlier best and does not count. Deload sessions never have dots.",
+   "why_per_lift": "one per lift per session (every dot with best = true) gives several per lift on the sample (progress-spec §15), because its double progression sets a new best almost every session; counting each main lift once a month answers \"on how many main lifts did I set a record this month\" and stays readable (at most the number of main lifts). new_best_sessions keeps the per-session count as detail.",
+   "month": "rolling last 30 days, not calendar month to date: it does not drop to 0 on the 1st, reads the same on any day and matches prs_30d and wins",
+   "prs_30d": "kept unchanged for back-compat (all PR events of every lift, feeds the wins list detail); the headline chip uses prs_this_month",
+   "label": "PRs this month",
+   "sublabel": "Main lifts with a new best in the last 30 days"
+  },
+  "streak": {
+   "no_plan_min": 2,
+   "rule": "consecutive Monday-to-Sunday weeks in which completed non-deload sessions >= the routine's planned training days (routine days with at least one tile; no routine: 2). Skipped and unfinished sessions do not count.",
+   "deload_week": "a week with a deload session (session.deload === true) or inside a history.deloads overlay: with >= 1 logged session it keeps the streak but does not add to it; with 0 sessions it breaks it (a week that still meets the target with non-deload sessions counts as met)",
+   "current_week": "the week of as_of never breaks the streak; it adds 1 once it is met",
+   "best": "the longest run over the whole log (same rule)",
+   "display": "{n}-week streak",
+   "label": "Weekly streak"
+  },
+  "muscle_mix": {
+   "buckets": [
+    "up",
+    "holding",
+    "down"
+   ],
+   "from_band": {
+    "up_strong": "up",
+    "up": "up",
+    "flat": "holding",
+    "down": "down"
+   },
+   "rule": "trained muscles by their 91-day body-map band: up = up_strong or up, holding = flat, down = down; insufficient and not_trained are separate counts; stalled is a marker (stalled_marker list), never a fourth bucket",
+   "vs_muscle_counts": "kpis.muscle_counts (progressing / flat / stalled or dropping) moves a stalled muscle into \"stalled or dropping\" whatever its band; muscle_mix only reads the band, so a stalled muscle with a flat band is \"holding\" here and \"stalled or dropping\" there. Both use the same bands and main lifts.",
+   "labels": {
+    "up": "Going up",
+    "holding": "Holding",
+    "down": "Going down",
+    "insufficient": "Not enough data",
+    "not_trained": "Not trained"
+   }
+  }
+ },
+ "overlay": {
+  "note": "Percent-change overlay: one line per unique main lift on a shared % axis. Strength and performance, not muscle growth.",
+  "rule": "for each unique main lift (after overrides and the table dedupe): every non-deload session dot in the 91-day dashboard window as pct = (session value / baseline - 1) x 100, stored to 2 decimals",
+  "baseline": "baseline = the lift's dashboard change early value: the best value of the first 14 days of the window (from its first session in the window). Best-of-14-days ignores one weak first session; it is the same number the table change %, the Strength Index and vs 3 months ago use, so the best overlay point in the last 14 days equals the table change % exactly (a median of the first 3 sessions was considered and rejected because the overlay and table would then disagree).",
+  "missing_baseline": "change status insufficient (any reason, including \"main lift not trained recently\"): baseline null, points [], reason shown, no line drawn",
+  "unit_flags": {
+   "e1rm": "estimated_1rm",
+   "load_index": "load_index",
+   "best_reps": "reps",
+   "hold_s": "seconds"
+  },
+  "unit_note": "bodyweight lifts plot best reps and holds plot seconds in the same % space; unit_flag tells the chart to mark them (reps and seconds move faster in % than estimated 1RM)"
  },
  "min_data": {
   "gain_vs_last": "2 exposures",
