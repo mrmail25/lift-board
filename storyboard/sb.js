@@ -416,7 +416,7 @@ let FIN=null;
 const isoLocal=t=>{const d=new Date(t),p=n=>String(n).padStart(2,'0');return `${FIN_DAY}T${p(d.getHours())}:${p(d.getMinutes())}:00-07:00`};
 function finDemoSets(){WK0.ex.forEach(x=>{const w=WK.ex.find(e=>e.id===x.id);if(!w)return;
   w.sets.forEach((s,i)=>{if(s.done)return;const m=/^(\d+(?:\.\d+)?)\s*×\s*(\d+)/.exec(s.p||'');if(!m)return;Object.assign(s,{done:true,wv:m[1],rv:m[2]})})})}
-function finBuild(cold){if(cold){Object.assign(WK,JSON.parse(JSON.stringify(WK0)));finDemoSets()}
+function finBuild(cold,tweak){if(cold){Object.assign(WK,JSON.parse(JSON.stringify(WK0)));finDemoSets();tweak&&tweak()}
   const u=S.unit,sid='fin',H=logLoad(),L=v=>v==null||v===''||isNaN(+v)?0:+v,num=(s,id)=>{const v=L(s.wv);return (s.wu||'lb')===u?v:(s.wu||'lb')==='lb'?v/KG_LB:v*KG_LB};
   const st=cold?`${FIN_DAY}T18:12:00-07:00`:isoLocal(CLK.start),min=cold?58:Math.max(1,Math.round(WK.elapsed/60)),en=cold?isoPlus(st,58):isoLocal(Date.now());
   const ses={id:sid,schema:2,status:'completed',date:st,startedAt:st,endedAt:en,unit:u,label:WK.title||'Workout',notes:'',snapshot:{exercises:WK.ex.map(x=>({exerciseId:x.id,sets:x.sets.length}))}},ents=[],sets=[];
@@ -462,7 +462,7 @@ V.finish=()=>{if(!FIN)FIN=finBuild(true);const F=FIN,T=finStats(),u=S.unit,nPR=O
   const prRows=Object.entries(T.P).map(([id,rec])=>`<div class="pr" data-ex="${id}"><span class="badge">PR</span><div class="grow"><b>${exNameP(id)}</b><span>${Object.keys(rec).map(k=>PRL[k]).join(' · ')}</span></div></div>`).join('');
   const cards=[`<article class="fc hero" data-card="hero"><div class="fc-logo logo-tile"></div><div class="eyebrow">Workout complete</div><h2>${esc(F.ses.label)}</h2><p class="sub">${hm(F.ses.startedAt)} – ${hm(F.ses.endedAt)}</p>
      <div class="stats"><div><b class="num">${F.min}</b><span>minutes</span></div><div><b class="num">${T.sets}</b><span>sets</span></div><div><b class="num">${fmtVol(T.vol)}</b><span>${u} volume</span></div><div><b class="num acc">${nPR}</b><span>PRs</span></div></div>
-     <ul class="facts">${facts.map(f=>`<li>${f}</li>`).join('')}</ul></article>`,
+     ${ladRankUpHtml()}<ul class="facts">${facts.map(f=>`<li>${f}</li>`).join('')}</ul></article>`,
    `<article class="fc" data-card="prs"><div class="eyebrow">Personal records</div><h2>${nPR?`${nPR} lift${nPR>1?'s':''} with a PR`:'No PRs today'}</h2>${prRows||`<p class="sub">No set beat your logged bests by more than Coach's tie margin (half a load step or 1%).</p>`}
      <p class="foot fpad">PRs use the same rules as the Log.</p></article>`,
    `<article class="fc" data-card="vs"><div class="eyebrow">vs last time</div><h2>${cmpN?`Up on ${up} of ${cmpN}`:'Nothing to compare yet'}</h2>
@@ -855,10 +855,115 @@ const tg=(on,id)=>`<button type="button" class="tg ${on?'on':''}" data-act="tg" 
 const LV={beginner:'About 10 hard sets per muscle a week, simple full-body or upper/lower weeks. For your first year of lifting, or coming back after a long break.',
   intermediate:'About 12–16 hard sets per muscle a week with more exercise variety. For steady lifters who still add weight most months.',
   advanced:'16 or more hard sets per muscle a week and specialised splits. For experienced lifters whose progress has slowed.'};
+// ---------------- Evolution ladder (logic/ladder.js = Coach's tools/evolution.py report(); data/evolution-rules.json = RD.EVO) ----------------
+// Coach's optional fields: settings.profile {sex, birthDate, height{value,unit}, bodyweight{value,unit}}, settings.bodyComp {optIn, hidden},
+// history.bodyComp [{date, waist{value,unit}, bfPct, bfMethod}], history.evolution.awarded {stage, tier} (never lowered; saved after a rank is shown).
+// settings.ladder.hidden = the storyboard's hide-all switch (Coach's spec names no key for it).
+const LADS={sig:null,res:null};
+function ladSettings(){const H=logLoad(),s=H.settings||{};return {hidden:!!((s.ladder||{}).hidden),profile:Object.assign({},s.profile||{}),bodyComp:Object.assign({},s.bodyComp||{}),readings:(H.bodyComp||[]).slice()}}
+function ladSet(p){const H=logLoad();H.settings=Object.assign({},H.settings||{});
+  if(p.profile){const o=Object.assign({},H.settings.profile||{});for(const [k,v] of Object.entries(p.profile)){if(v==null||v==='')delete o[k];else o[k]=v}H.settings.profile=o}
+  if(p.bodyComp)H.settings.bodyComp=Object.assign({},H.settings.bodyComp||{},p.bodyComp);
+  if('hidden' in p)H.settings.ladder=Object.assign({},H.settings.ladder||{},{hidden:!!p.hidden});
+  if(p.reading)H.bodyComp=[...(H.bodyComp||[]),p.reading];if(p.dropReading!=null)H.bodyComp=(H.bodyComp||[]).filter((_,i)=>i!==p.dropReading);logSave()}
+function ladderFor(H){if(!window.LADDER||!RD||!RD.EVO)return null;const h=Object.assign({},H,{settings:Object.assign({},H.settings||{},{unit:S.unit})}),r=LADDER.report(RD,h,AS_OF);
+  r.hidden_all=!!(((H.settings||{}).ladder)||{}).hidden;r.hint=LADDER.nextHint(r,RD,h);return r}
+function ladderData(){const sig=JSON.stringify([LOGV,S.unit]);if(LADS.sig===sig&&LADS.res)return LADS.res;LADS.res=ladderFor(logLoad());LADS.sig=sig;return LADS.res}
+// never demote: after a rank has been shown, store it (only ever raises history.evolution.awarded)
+function ladPersist(){const L=ladderData();if(!L||L.hidden_all)return;const H=logLoad(),a=LADDER.rankIndex(RD.EVO,(H.evolution||{}).awarded);
+  if(a==null||L.rank.index>a){H.evolution=Object.assign({},H.evolution||{},{awarded:L.awarded_out});logSave()}}
+// placeholder silhouettes (art pending): k 0..4 = posture from knuckles-down to upright; 5/6 (Kong/Apex) upright; 'tease' = dim figure with a '?' head
+function apeFig(k,cls=''){const t=k==='tease'||k>4?1:k/4,a=(1-t)*0.95,hx=20-3*(1-t),hy=35+3*(1-t),sx=hx+15*Math.sin(a),sy=hy-15*Math.cos(a),hd=a*0.7,cx=sx+6.2*Math.sin(hd)+(1-t)*1.5,cy=sy-6.2*Math.cos(hd);
+  const ex=sx+2+3*(1-t),ey=sy+8,hnx=sx+1+5*(1-t),hny=sy+17+(1-t)*(56-sy-17),f=v=>v.toFixed(1),w=(5.6-1.4*t+(k===5||k===6?1.2:0)).toFixed(1);
+  const legs=`M${f(hx)} ${f(hy)}L${f(hx-1-2*(1-t))} ${f(hy+11)}L${f(hx-3)} 57M${f(hx)} ${f(hy)}L${f(hx+3+3*(1-t))} ${f(hy+10)}L${f(hx+4)} 57`;
+  return `<svg class="afig ${cls}" viewBox="0 0 40 60" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"><path d="M${f(hx)} ${f(hy)}L${f(sx)} ${f(sy)}"/><path d="${legs}"/><path d="M${f(sx)} ${f(sy)}L${f(ex)} ${f(ey)}L${f(hnx)} ${f(hny)}"/></g>${k==='tease'?`<text x="${f(cx)}" y="${f(cy+5)}" text-anchor="middle" class="aq">?</text>`:`<circle cx="${f(cx)}" cy="${f(cy)}" r="${(4.6-0.4*t).toFixed(1)}" fill="currentColor"/>`}</svg>`}
+// march strip: every revealed stage, then ONE dim '???' teaser while any stage is still hidden
+function ladStrip(L){const cur=Math.floor(L.rank.index/3),vis=L.ladder.filter(s=>!s.hidden),tease=L.ladder.some(s=>s.hidden);
+  return `<div class="lstrip">${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next'}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':''}>${apeFig(k)}<span>${esc(s.label).replace('-','-<wbr>')}</span></div>`).join('')}${tease?`<div class="lfig tease" data-lstage="teaser" aria-label="More stages hidden">${apeFig('tease')}<span>${esc(RD.EVO.hidden.label)}</span></div>`:''}</div>`}
+const ladBar=L=>L.progress.pct==null?'':`<div class="lbar" role="progressbar" aria-label="Progress ${esc(L.labels.progress)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${L.progress.pct}"><i style="width:${L.progress.pct}%"></i></div>`;
+const ladProg=L=>L.progress.pct==null?esc(L.labels.progress):`${L.progress.pct}% ${esc(L.labels.progress)}`;
+const ladRev=L=>L.labels.revealed.map(t=>`<div class="lrev" data-lrev="1">${esc(t)}</div>`).join('');
+function ladCard(){const L=ladderData();if(!L||L.hidden_all)return '';setTimeout(ladPersist,0);
+  return `<button type="button" class="card lcard" data-go="#ladder" data-ladcard="1" aria-label="Evolution ladder: ${esc(L.rank.label)}">${ladStrip(L)}
+   <div class="ladrow"><div class="grow"><div class="eyebrow">Evolution ladder</div><b class="lrank" data-lrank="${L.rank.id}">${esc(L.rank.label)}</b></div>${CHEV}</div>${ladRev(L)}
+   ${ladBar(L)}<div class="lsub"><span class="num">${ladProg(L)}</span></div>${L.hint?`<div class="lnext">Next: ${esc(L.hint.text)}</div>`:''}${L.labels.table?`<p class="lnote">${esc(L.labels.table)}</p>`:''}</button>`}
+const PLN=n=>`${n} plate${n>1?'s':''}`;
+function ladLiftRow(L,l,o,slot){const R=RD.EVO,bw=L.bodyweight_current.kg,u=L.unit,t=slot&&slot.target;
+  const val=o.value==null?esc(o.label||''):o.kind==='multiple'?`${o.value.toFixed(2)}× bodyweight${o.bodyweight_kg?` · est. 1RM ${Math.round(inU(o.value*o.bodyweight_kg,'kg'))} ${u}`:''}`:`${o.value} strict rep${o.value===1?'':'s'}${o.converted?' (incl. weighted, estimated)':''}`;
+  const tg=t&&!t.met?(t.kind==='multiple'?(t.estimated_1rm!=null?`Next rank: est. 1RM ${t.estimated_1rm} ${t.unit}`:`Next rank: ${t.threshold}× bodyweight`):`Next rank: ${t.reps} strict reps`):t&&t.met?'Meets the next rank':'';
+  const pl=L.badges.plates.filter(b=>b.lift===l);
+  return `<div class="row ladlift" data-llift="${l}"><div class="grow"><div class="t1">${esc(R.lifts[l].label)}${slot&&slot.substituted?` <span class="lsubst">stand-in</span>`:''}</div><div class="t2">${val}</div>${tg?`<div class="t2 ltg">${esc(tg)}</div>`:''}
+    ${pl.length?`<div class="lplates">${pl.map(b=>`<span class="lplate ${b.earned?'on':''}" data-plate="${b.plates}" title="${esc(b.label)}">${PLN(b.plates)}</span>`).join('')}</div>`:''}</div>
+    ${o.rank_label?`<span class="lchip st${Math.floor(o.rank_index/3)}${o.rank_hidden?' hid':''}">${esc(o.rank_label)}</span>`:'<span class="lchip none">—</span>'}</div>`}
+function ladLeanRow(L){const ln=L.lean,b=L.badges.lean_prime;if(ln.status==='hidden'||ln.status==='unavailable')return '';
+  if(ln.status==='not_tracked')return `<div class="row lean off" data-lean="not_tracked"><div class="grow"><div class="t1">Lean Prime</div><div class="t2">${esc(ln.label)}</div></div><button class="lk" data-go="#settings-ladder">Set up</button></div>`;
+  return `<div class="row lean ${b&&b.unlocked?'on':''}${b&&b.greyed?' grey':''}" data-lean="${ln.status}"><span class="lbadge ${b&&b.unlocked?'on':''}">${apeFig(4)}</span><div class="grow"><div class="t1">Lean Prime${b&&b.unlocked?'':b&&b.greyed?' (greyed)':''}</div><div class="t2">${esc(ln.label||'')}</div></div></div>`}
+V.ladder=()=>{const L=ladderData(),nav=`<div class="nav"><div class="l"><button class="back" data-go="#progress">${I('chevL',2.4)}Progress</button></div><div class="t">Evolution ladder</div><div class="r"></div></div>`;
+  if(!L)return nav+header('Evolution ladder')+`<p class="foot">The ladder needs Coach's evolution rules.</p>`;
+  if(L.hidden_all)return nav+header('Evolution ladder')+`<div class="card lhidden"><b>The ladder is hidden</b><p class="sub">Turn it back on in Settings to see your rank.</p><button class="btn" data-go="#settings-ladder">Open Settings</button></div>`;
+  setTimeout(ladPersist,0);const R=RD.EVO,slots=Object.fromEntries(L.progress.slots.map(s=>[s.lift,s])),core=L.progress.slots.map(s=>s.lift),extra=Object.keys(L.lifts).filter(l=>!core.includes(l)&&L.lifts[l].value!=null);
+  const notes=[L.labels.substitution,L.labels.weighted,L.labels.bodyweight,L.labels.table].filter(Boolean);
+  return nav+header('Evolution ladder')+`<div class="lscr"><div class="lstripw">${ladStrip(L)}</div>
+   <div class="card lhero"><div class="eyebrow">Your rank</div><h2 class="lrank" data-lrank="${L.rank.id}">${esc(L.rank.label)}</h2>${ladRev(L)}${L.labels.held?`<p class="lnote" data-lheld="1">${esc(L.labels.held)}</p>`:''}
+   ${ladBar(L)}<div class="lsub"><span class="num">${ladProg(L)}</span></div>${L.hint?`<p class="lnext big" data-lnext="${L.hint.lift}">Next: <b>${esc(L.hint.text)}</b></p>`:''}</div>
+   ${notes.length?`<div class="lnotes">${notes.map(n=>`<p class="lnote">${esc(n)}</p>`).join('')}</div>`:''}
+   <div class="ghead">Core lifts</div><div class="group llifts">${core.map(l=>ladLiftRow(L,l,L.lifts[l],slots[l])).join('')}</div>
+   ${extra.length?`<div class="ghead">Other lifts</div><div class="group llifts">${extra.map(l=>ladLiftRow(L,l,L.lifts[l],null)).join('')}</div>`:''}
+   <p class="foot">${esc(R.labels.promotion_note)} Progress follows your 3rd-best lift. Plate badges count a real logged set, not an estimate.</p>
+   ${ladLeanRow(L)?`<div class="ghead">Badges</div><div class="group">${ladLeanRow(L)}</div>`:''}
+   ${L.ladder.some(s=>s.hidden)?`<div class="card ltease" data-lteaser="1">${apeFig('tease')}<div><b>There is more past ${esc(L.ladder.filter(s=>!s.hidden).pop().label)}</b><p class="sub">Keep climbing to find out what.</p></div></div>`:''}
+   <p class="foot lsrc">${esc(R.labels.model_note)} ${esc(R.labels.source_note)}</p>
+   <div class="group" style="margin-top:12px"><button class="row" data-go="#settings-ladder"><div class="grow t1">Ladder settings</div>${CHEV}</button></div></div>`};
+// settings: hide-all, sex, birth date, height, profile bodyweight; physique (opt-in, hide switch, readings) only when not hidden and 18+ (or age unknown)
+function ladSetHtml(){const C=ladSettings(),P=C.profile,B=C.bodyComp,hu=S.unit==='kg'?'cm':'in',age=window.LADDER?LADDER.ageOf({settings:{profile:P}},AS_OF):null;
+  const seg=(id,attr,opts,cur)=>`<div class="seg sm3" id="${id}">${opts.map(([v,l])=>`<button type="button" class="${(cur||'')===v?'on':''}" ${attr}="${v}">${l}</button>`).join('')}</div>`;
+  const sw=(k,on,l)=>`<button type="button" class="tg ${on?'on':''}" data-lad="${k}" role="switch" aria-checked="${!!on}" aria-label="${l}"></button>`;
+  const inp=(k,l,v,sfx,type='text')=>`<label class="row lin"><div class="grow t1">${l}</div><input type="${type}" ${type==='text'?'inputmode="decimal"':''} class="linp num${type==='date'?' ldate':''}" data-lpf="${k}" value="${esc(String(v??''))}" aria-label="${l}">${sfx?`<span class="val">${sfx}</span>`:''}</label>`;
+  if(C.hidden)return `<div class="ghead">Evolution ladder</div><div class="group ladset"><div class="row"><div class="grow"><div class="t1">Show the ladder</div><div class="t2">Off hides it on Progress and after workouts</div></div>${sw('show',false,'Show the ladder')}</div></div><p class="foot">The ladder is hidden everywhere.</p>`;
+  const L=ladderData(),ln=L&&L.lean,minor=age!=null&&age<18,bcHidden=B.hidden===true;
+  const rd=C.readings.map((e,i)=>[e,i]).sort((a,b)=>a[0].date<b[0].date?1:-1).slice(0,3).map(([e,i])=>`<div class="row lrd" data-lrd="${i}"><div class="grow t1">${esc(e.date)}</div><span class="val">${[e.waist?`waist ${e.waist.value} ${e.waist.unit}`:'',e.bfPct!=null?`${e.bfPct}% (${e.bfMethod||'?'})`:''].filter(Boolean).join(' · ')}</span><button type="button" class="lk" data-lrdel="${i}" aria-label="Delete reading">Delete</button></div>`).join('');
+  const phys=minor?'':`<div class="ghead">Physique (optional)</div><div class="group ladset ladphys">
+     <div class="row"><div class="grow"><div class="t1">Hide physique</div><div class="t2">Hides every physique field and badge</div></div>${sw('bchide',bcHidden,'Hide physique')}</div>
+     ${bcHidden?'':`<div class="row"><div class="grow"><div class="t1">Track physique</div><div class="t2">Only unlocks the Lean Prime badge. Never changes your rank.</div></div>${sw('optin',B.optIn===true,'Track physique')}</div>
+     ${B.optIn===true?`${ln&&ln.label?`<div class="row"><div class="grow t2" data-llean="${ln.status}">${esc(ln.label)}</div></div>`:''}
+      <div class="row lnew"><input type="date" class="linp ldate" id="lrdate" value="${AS_OF}" aria-label="Reading date"><input type="text" inputmode="decimal" class="linp num" id="lrwaist" placeholder="Waist ${hu}" aria-label="Waist ${hu}"><input type="text" inputmode="decimal" class="linp num" id="lrbf" placeholder="BF %" aria-label="Body fat %">
+       <select class="linp" id="lrmeth" aria-label="Body-fat method"><option value="dexa">DEXA</option><option value="calipers">Calipers</option><option value="bia">BIA</option></select><button type="button" class="lk" data-lradd="1">Add</button></div>${rd}`:''}`}</div>
+     ${bcHidden?'':`<p class="foot">Waist at the navel, standing relaxed, after a normal breath out. ${esc(RD&&RD.EVO?RD.EVO.lean.fallback.note:'')}</p>`}`;
+  return `<div class="ghead">Evolution ladder</div><div class="group ladset">
+   <div class="row"><div class="grow"><div class="t1">Show the ladder</div><div class="t2">Off hides it on Progress and after workouts</div></div>${sw('show',true,'Show the ladder')}</div>
+   <div class="row"><div class="grow t1">Sex</div>${seg('lsexseg','data-lsex',[['','Not set'],['female','Female'],['male','Male']],P.sex||'')}</div>
+   ${inp('birthDate','Birth date',P.birthDate||'','','date')}
+   ${inp('height','Height',P.height&&P.height.value,(P.height&&P.height.unit)||hu)}
+   ${inp('bodyweight','Bodyweight',P.bodyweight&&P.bodyweight.value,(P.bodyweight&&P.bodyweight.unit)||S.unit)}</div>
+   <p class="foot">All optional, stored on this device. ${L&&L.labels.table?esc(L.labels.table)+' ':''}Bodyweight here is used only when no weigh-in is logged.</p>${phys}`}
+function ladRefreshSettings(){const e=$('#ladset');if(e)e.innerHTML=ladSetHtml()}
+// finish screen: a small moment only when this workout raised the shown rank
+function ladRankUpHtml(){if(!FIN||!RD||!RD.EVO||!window.LADDER)return '';const b=ladderData(),a=ladderFor(FIN.X);if(!a||a.hidden_all||!LADDER.rankUp(b,a))return '';
+  return `<div class="lrup" data-rankup="${a.rank.id}">${apeFig(Math.min(6,a.rank.index/3|0))}<div class="grow"><div class="eyebrow">Rank up</div><b>${esc(a.rank.label)}</b><span>Up from ${esc(b.rank.label)}</span>${a.labels.revealed.map(t=>`<span class="lrev">${esc(t)}</span>`).join('')}</div></div>`}
+// demo for #finish-rankup: the shoulder-press slot becomes overhead press with a top set reaching the next rank (Coach's target, at 5 reps)
+function ladRankupDemo(){const L=ladderData();if(!L||!L.next)return;const s=L.progress.slots.find(x=>x.lift==='ohp'),x=WK.ex.find(e=>e.id==='seated-dumbbell-shoulder-press');if(!s||!s.target||s.target.met||!x||s.target.estimated_1rm==null)return;
+  const st=RD.EVO.targets.step[S.unit],ld2=Math.ceil(s.target.estimated_1rm/(1+5/30)/st-1e-9)*st;x.id='overhead-press';const w=x.sets.filter(q=>q.done&&!q.warm).pop();if(w)Object.assign(w,{wv:String(ld2),rv:'5',wu:S.unit})}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-lad],[data-lsex],[data-lradd],[data-lrdel]');if(!t||!t.closest('#ladset'))return;e.preventDefault();const C=ladSettings();
+  if(t.dataset.lad==='show')ladSet({hidden:!C.hidden});else if(t.dataset.lad==='optin')ladSet({bodyComp:{optIn:C.bodyComp.optIn!==true}});else if(t.dataset.lad==='bchide')ladSet({bodyComp:{hidden:C.bodyComp.hidden!==true}});
+  else if(t.hasAttribute('data-lsex'))ladSet({profile:{sex:t.dataset.lsex||null}});else if(t.hasAttribute('data-lrdel'))ladSet({dropReading:+t.dataset.lrdel});
+  else if(t.hasAttribute('data-lradd')){const d=$('#lrdate').value,w=+String($('#lrwaist').value).replace(',','.'),bf=+String($('#lrbf').value).replace(',','.'),m=$('#lrmeth').value;
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(d)||!(w>0||bf>0)){toast('Add a date and a waist or body-fat value');return}const r={date:d};if(w>0)r.waist={value:w,unit:S.unit==='kg'?'cm':'in'};if(bf>0&&bf<100){r.bfPct=bf;r.bfMethod=m}ladSet({reading:r})}
+  ladRefreshSettings()});
+// profile fields save on each valid keystroke (iOS may not blur on an outside tap); junk clears on change
+const ladPfVal=(k,t)=>{const v=t.value.trim();if(k==='birthDate')return v===''?'':(/^\d{4}-\d{2}-\d{2}$/.test(v)?v:null);const n=+v.replace(',','.');return v===''?'':(n>0?n:null)};
+const ladPfSave=(k,v)=>ladSet({profile:{[k]:v===''?null:k==='birthDate'?v:{value:v,unit:k==='height'?(S.unit==='kg'?'cm':'in'):S.unit}}});
+document.addEventListener('input',e=>{const t=e.target.closest('[data-lpf]');if(!t)return;const k=t.dataset.lpf,v=ladPfVal(k,t);if(v===null)return;ladPfSave(k,v)});
+document.addEventListener('change',e=>{const t=e.target.closest('[data-lpf]');if(!t)return;const k=t.dataset.lpf,v=ladPfVal(k,t);if(v===null){t.value='';ladPfSave(k,'')}else ladPfSave(k,v);if(k==='birthDate')ladRefreshSettings()});
+// log backup / restore (the Back up / Restore rows wait for the native app; this is the API they will call). Carries the whole log,
+// including settings.profile, settings.bodyComp, settings.ladder, history.bodyComp and history.evolution.
+function logExport(){return {kind:'apechit.log',version:1,log:JSON.parse(JSON.stringify(logLoad()))}}
+function logImport(o){const h=o&&o.kind==='apechit.log'&&o.log;if(!h||h.schema!==2||!Array.isArray(h.sessions)||!Array.isArray(h.entries)||!Array.isArray(h.sets))return false;
+  const out=JSON.parse(JSON.stringify(h));if(out.bodyComp!=null&&!Array.isArray(out.bodyComp))delete out.bodyComp;if(out.evolution!=null&&typeof out.evolution!=='object')delete out.evolution;LOGH=out;logSave();return true}
 V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#build">${I('chevL',2.4)}Build</button></div><div class="t">Settings</div><div class="r"></div></div>
   ${header('Settings')}
   <div class="group"><button class="row"><span class="ico acc">${I('flame',1.8)}</span><div class="grow"><div class="t1">Body weight</div><div class="t2">Updated from Pull-Up · Oct 19</div></div><span class="val num">182.4 lb</span>${CHEV}</button></div>
   <div id="profile">${profileHtml()}</div>
+  <div id="ladset">${ladSetHtml()}</div>
   <div class="ghead">Training level</div>
   <div class="group lvl"><div class="pad"><div class="seg">${['Beginner','Intermediate','Advanced'].map(l=>`<button class="${l==='Intermediate'?'on':''}" data-lv="${l.toLowerCase()}">${l}</button>`).join('')}</div></div>
    <p class="lvtx" id="lvtx">${LV.intermediate}</p></div>
@@ -1055,7 +1160,7 @@ function winChip(w){const t=txtS(w.text),k=t.indexOf(': '),nm=k>0?t.slice(0,k):s
 V.progress=()=>{const pr=RD&&progressData();if(!pr)return header('Progress',bookBtn)+`<p class="foot">Progress needs the logger rules.</p>`;if(!pr.data.completed_sessions)return progEmpty();
   const vw=pview(pr),W=pr.wins,wl=PROG.all?W.list:W.shown,NA=pr.needs_attention.slice();
   if(PROG.applied&&!NA.some(x=>akey(x)===PROG.applied.key))NA.unshift(PROG.applied.item);
-  return header('Progress',bookBtn)+progHead()+kpiStrip(vw)+
+  return header('Progress',bookBtn)+progHead()+kpiStrip(vw)+ladCard()+
    sec('ovl','Strength change','% from start',ovlChart(pr,vw))+
    sec('map','By muscle','3 months',trendMap(pr,vw))+
    sec('muscles','Muscles','',muscleTable(pr,vw))+
@@ -1393,13 +1498,13 @@ let RD=null;
 async function loadRank(){if(RD)return RD;if(RDP)return RDP;
   // Every file comes from the storyboard's own synced data/ (sync-ranking-data.sh); the live app's ../data is never needed.
   // getJ never throws: a 404, a parse error or a fetch aborted by navigation all give null, and nothing falls through to another folder.
-  RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-rules.json','analysis-display.json','frequency-notes.json','custom-exercise-defaults.json','sample-log.json'].map(n=>getJ(DATA+n));
+  RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-rules.json','analysis-display.json','frequency-notes.json','custom-exercise-defaults.json','sample-log.json','evolution-rules.json'].map(n=>getJ(DATA+n));
     const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(n=>getJ(DATA+n)));
-    const [tj,tref,pr2,disp,fnotes,cxd,slog]=await Promise.all(opt);   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
+    const [tj,tref,pr2,disp,fnotes,cxd,slog,evo]=await Promise.all(opt);   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
     if(!(exercises&&rules&&targets&&patterns&&splits)){if(!UNLOADING)console.warn('ranking data missing: suggestions fall back to library order');return null}
     const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
     const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
-    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PR2=pr2;R.SLOG=slog;R.DISP=disp;R.FN=fnotes;
+    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PR2=pr2;R.SLOG=slog;R.EVO=evo;R.DISP=disp;R.FN=fnotes;
     try{await cxLoad(R,exercises,rules,cxd)}catch(x){console.warn('custom exercises not loaded',x)}   // custom exercises: defaults loader + registration (before anything reads RD)
     RD=R;return RD})();
   const r=await RDP;RDP=null;return r}
@@ -1546,6 +1651,9 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  'log-swipe':['log','log',0,0,null,()=>{const r=$$('#view .swipe')[0];r&&r.classList.add('open')}],
  build:['build','build',0,0,()=>{SC.day='mon'}],'build-list':['buildList','build',0,0,()=>{SC.day='mon'}],swap:['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('barbell-bench-press')],'swap-curl':['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('ez-bar-curl')],
  settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress',0,0,()=>{PROG.empty=false}],'progress-empty':['progress','progress',0,0,()=>{PROG.empty=true}],'progress-muscle':['progress','progress',0,0,()=>{PROG.empty=false},()=>openPSheet('side_delts')],'progress-refine':['progress','progress',0,0,()=>{PROG.empty=false},()=>{const e=$('[data-psec=attention]');if(e)e.scrollIntoView({block:'start'})}],style:['style','build'],
+ ladder:['ladder','progress'],'ladder-teaser':['ladder','progress',0,0,null,()=>{const t=$('[data-lstage=teaser]');t&&t.scrollIntoView({block:'center',inline:'center'})}],
+ 'settings-ladder':['settings','build',0,0,null,()=>{const e=$('#ladset');e&&($('#view').scrollTop=e.offsetTop-60)}],
+ 'finish-rankup':['finish','',1,0,()=>{FIN=finBuild(true,ladRankupDemo)}],
  learn:['learn',''],'tray-fav':['empty','',1,1,()=>{TF.fav=true},traySheet],'settings-favs':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#favs').offsetTop-60}],'settings-goals':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#profile').offsetTop-40}],'learn-fundamental':['learnFund',''],
 };
 const AFTER={logDay:afterLogDay,train:afterTrain,workout:afterWorkout,finish:afterFinish,log:afterLog,buildList:afterBuildList,progress:afterProgress,learn:afterLearn};
@@ -1971,7 +2079,7 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

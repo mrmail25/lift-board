@@ -6,7 +6,7 @@
  "rules_file": "progress-rules.json",
  "sample": {
   "file": "sample-log.json",
-  "sha256": "7491217553d0336e77faa36ed4227476a46af87e866d546bfbfe57eef3308da1",
+  "sha256": "37a66588b55533c3fc4aa47b9ea4fe872fe911ef1f8049684ab7321aef5c103d",
   "as_of": "2026-10-24",
   "level": "intermediate",
   "preset": [
