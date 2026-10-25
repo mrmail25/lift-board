@@ -23,7 +23,7 @@
   /* Functional only (never brand): destructive actions */
   --danger:#E5242B;
   /* over-volume colours (functional, like --danger). Thresholds are NOT here: rules.json volume_bands */
-  --vol-under:#B9B9BE; --vol-amber:#F0A830; --vol-red:#D93B30;
+  --vol-under:#9FB3C8; --vol-amber:#F0A830; --vol-red:#D93B30;
   /* ONE sequential ramp (round 2): Build Day-mode map + days-per-muscle grid. Effective sets that day: 0, >0, >=1.5, >=3, >=5.
      Single hue (blue), monotonic in contrast against the surface in both themes; never a range colour (green/grey/amber/red). */
   --ramp-0:var(--fill); --ramp-1:#ACC8F0; --ramp-2:#8DB5EA; --ramp-3:#4C82D2; --ramp-4:#1D4E9E;
@@ -89,7 +89,7 @@ html[data-theme=dark]{
   --text-2:#A1A1A8; --text-3:#6C6C72; --chrome:rgba(24,24,26,.82);
   --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10;
   --danger:#FF453A;
-  --vol-under:#5E5E63; --vol-amber:#F2B23F; --vol-red:#FF5A4E; --vol-in-range:#4CC285;
+  --vol-under:#5D7189; --vol-amber:#F2B23F; --vol-red:#FF5A4E; --vol-in-range:#4CC285;
   --ramp-1:#1F3A63; --ramp-2:#2F5D9E; --ramp-3:#4F86D6; --ramp-4:#A9C9F5; --ramp-fg-hi:#000;
   --wb:#161618; --wb-frame:#2E2E31; --wb-line:rgba(255,255,255,.07); --wb-inset:rgba(255,255,255,.05);
   --chit-top:#2C2C2F; --chit-bot:#242427;
@@ -118,7 +118,7 @@ html[data-theme=dark]{
   --text-2:#A1A1A8; --text-3:#6C6C72; --chrome:rgba(24,24,26,.82);
   --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10;
   --danger:#FF453A;
-  --vol-under:#5E5E63; --vol-amber:#F2B23F; --vol-red:#FF5A4E; --vol-in-range:#4CC285;
+  --vol-under:#5D7189; --vol-amber:#F2B23F; --vol-red:#FF5A4E; --vol-in-range:#4CC285;
   --ramp-1:#1F3A63; --ramp-2:#2F5D9E; --ramp-3:#4F86D6; --ramp-4:#A9C9F5; --ramp-fg-hi:#000;
   --wb:#161618; --wb-frame:#2E2E31; --wb-line:rgba(255,255,255,.07); --wb-inset:rgba(255,255,255,.05);
   --chit-top:#2C2C2F; --chit-bot:#242427;

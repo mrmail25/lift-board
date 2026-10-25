@@ -71,7 +71,7 @@ const ROUTINES=[
 const setsOf=d=>d.ex.reduce((a,e)=>a+e.s,0);
 const WK={title:'Upper A',sub:'Upper / Lower · Day 1',ref:{rid:'ul',di:0},notes:{},rest:{left:108,total:180},ex:[
  {id:'barbell-bench-press',bar:true,cue:'Last time <b>225 × 8, 8, 7</b> · Try <b>230 × 6–8</b>',sets:[
-   {p:'135 × 8',warm:true,done:true,wv:'135',rv:'8'},{p:'225 × 8',done:true,wv:'230',rv:'8'},{p:'225 × 8',done:true,wv:'230',rv:'7'},{p:'225 × 7'}]},
+   {p:'135 × 8',warm:true,done:true,wv:'135',rv:'8'},{p:'225 × 8',done:true,wv:'230',rv:'8',rir:2},{p:'225 × 8',done:true,wv:'230',rv:'7',rir:1},{p:'225 × 7'}]},
  {id:'barbell-row',bar:true,cue:'Last time <b>185 × 10, 10, 9</b>',sets:[{p:'185 × 10'},{p:'185 × 10'},{p:'185 × 9'}]},
  {id:'seated-dumbbell-shoulder-press',cue:'Last time <b>60 × 9, 8, 8</b>',sets:[{p:'60 × 9'},{p:'60 × 8'},{p:'60 × 8'}]},
  {id:'lat-pulldown',cue:'Last time <b>150 × 12, 11, 10</b>',sets:[{p:'150 × 12'},{p:'150 × 11'},{p:'150 × 10'}]},
@@ -299,11 +299,20 @@ function afterTrain(){
 // 2. WORKOUT
 // Set rows swipe left to delete ONLY that set (Undo). The exercise is deleted from its ⋯ menu or by swiping its header.
 const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+// Effort (piece A): optional one-tap RIR per set, stored as set.rir (0-4, 4 = 4+, null when skipped); Settings can show RPE instead
+// (display/input only, RPE = 10 - RIR, logic/effort.js). The picker opens under the set just ticked; ignoring it leaves rir null.
+const EFF_K='apechit.sb.effortScale',effMode=()=>{try{return localStorage.getItem(EFF_K)==='rpe'?'rpe':'rir'}catch(e){return 'rir'}};
+const EFF=()=>window.EFFORT||{clampRir:v=>v==null?null:Math.max(0,Math.min(4,Math.round(+v))),chips:()=>[0,1,2,3,4].map(r=>({rir:r,label:r===4?'4+':String(r)})),label:r=>r==null?'':`RIR ${r===4?'4+':r}`,short:r=>r==null?'':String(r)};
+function rirPick(xi,si){const st=((WK.ex[xi]||{}).sets||[])[si]||{},m=effMode(),v=EFF().clampRir(st.rir);
+  return `<div class="rirp" data-xi="${xi}" data-si="${si}" role="group" aria-label="${m==='rpe'?'RPE':'Reps in reserve'} (optional)"><span class="rirl">${m==='rpe'?'RPE':'RIR'}</span>${EFF().chips(m).map(c=>`<button type="button" class="rirc${v===c.rir?' on':''}" data-act="rir" data-v="${c.rir}" aria-pressed="${v===c.rir}">${c.label}</button>`).join('')}<span class="rirh">optional</span></div>`}
+const rirMini=(s,xi,si)=>{const v=EFF().clampRir(s.rir);return s.done&&v!=null?`<button type="button" class="rirm" data-act="rirOpen" data-xi="${xi}" data-si="${si}">${EFF().label(v,effMode())}</button>`:''};
+function rirClose(){$$('.rirp').forEach(x=>{const xi=+x.dataset.xi,si=+x.dataset.si,o=((WK.ex[xi]||{}).sets||[])[si],sw=x.previousElementSibling,pv=sw&&$('.srow',sw);x.remove();
+  if(o&&pv&&!$('.rirm',pv))pv.insertAdjacentHTML('beforeend',rirMini(o,xi,si))});WK.rirAt=null}
 function setRow(s,i,xi,si){const id=(WK.ex[xi]||{}).id,p=uP(s.p,id),wv=s.wv?cvt(s.wv,s.wu||'lb',S.unit,id):'';
   return `<div class="swipe sws" data-del="set" data-xi="${xi}" data-si="${si}"><button class="del">Delete</button><div class="in"><div class="srow sgrid ${s.done?'done':''}" data-xi="${xi}" data-si="${si}"><div class="sn ${s.warm?'w':''}">${s.warm?'W':i}</div><div class="prev">${p||'—'}</div>
     <input class="fld ${s.wauto?'auto':''}" data-kind="w" readonly inputmode="none" value="${wv}" placeholder="${(p||'').split(' × ')[0]}" aria-label="Weight (${S.unit})">
     <input class="fld" data-kind="r" readonly inputmode="none" value="${s.rv||''}" placeholder="${(p||'').split(' × ')[1]||''}" aria-label="Reps">
-    <button class="ck" data-act="ck" aria-label="Done">${I('check',2.4)}</button></div></div></div>`;
+    <button class="ck" data-act="ck" aria-label="Done">${I('check',2.4)}</button>${WK.rirAt===`${xi}:${si}`?'':rirMini(s,xi,si)}</div></div></div>${s.done&&WK.rirAt===`${xi}:${si}`?rirPick(xi,si):''}`;
 }
 // per-exercise notes: "Always" (saved on this device, shown every time) and "This session" (this workout only)
 const LSN='apechit.sb.exNotes';
@@ -412,7 +421,7 @@ function finBuild(cold){if(cold){Object.assign(WK,JSON.parse(JSON.stringify(WK0)
   const st=cold?`${FIN_DAY}T18:12:00-07:00`:isoLocal(CLK.start),min=cold?58:Math.max(1,Math.round(WK.elapsed/60)),en=cold?isoPlus(st,58):isoLocal(Date.now());
   const ses={id:sid,schema:2,status:'completed',date:st,startedAt:st,endedAt:en,unit:u,label:WK.title||'Workout',notes:'',snapshot:{exercises:WK.ex.map(x=>({exerciseId:x.id,sets:x.sets.length}))}},ents=[],sets=[];
   WK.ex.forEach((x,o)=>{const done=x.sets.filter(s=>s.done&&L(s.rv)>0);if(!done.length)return;const eid=`${sid}-e${o}`;ents.push({id:eid,sessionId:sid,order:o,exerciseId:x.id,skipped:false,notes:''});
-    done.forEach((s,i)=>sets.push({id:`${eid}-t${i}`,entryId:eid,sessionId:sid,idx:i,kind:s.warm?'warmup':'working',load:+nfmt(num(s,x.id)),reps:L(s.rv),rir:null,done:true}))});
+    done.forEach((s,i)=>sets.push({id:`${eid}-t${i}`,entryId:eid,sessionId:sid,idx:i,kind:s.warm?'warmup':'working',load:+nfmt(num(s,x.id)),reps:L(s.rv),rir:EFF().clampRir(s.rir),done:true}))});
   const X={...H,sessions:[...H.sessions,ses],entries:[...H.entries,...ents],sets:[...H.sets,...sets]};
   return {ses,ents,sets,X,min,cold}}
 // run fn with LOGH = the log plus this session (sesMus / e1Chart / entsOf read the global)
@@ -601,7 +610,7 @@ function genLog(){const H={schema:2,sessions:[],entries:[],sets:[],bodyweights:[
     rd.ex.forEach((e,o)=>{const eid=`${sid}-e${o}`,[L,rr]=LOGFIX[e.id]||[50,[10,10,10]],stp=stepOf('lb',e.id),hi=+(String(e.r||'').split('–')[1])||rr[0]+2;
       H.entries.push({id:eid,sessionId:sid,order:o,exerciseId:e.id,skipped:false,notes:''});let idx=0;
       if(o===0&&L>0)H.sets.push({id:`${eid}-t${idx}`,entryId:eid,sessionId:sid,idx:idx++,kind:'warmup',load:Math.round(L*.6/5)*5,reps:8,rir:null,done:true});
-      for(let j=0;j<e.s;j++){const r0=rr[Math.min(j,rr.length-1)];H.sets.push({id:`${eid}-t${idx}`,entryId:eid,sessionId:sid,idx:idx++,kind:'working',load:k>=2||L===0?L:L-stp,reps:k===1?Math.min(hi,r0+1):r0,rir:null,done:true})}})}
+      for(let j=0;j<e.s;j++){const r0=rr[Math.min(j,rr.length-1)];H.sets.push({id:`${eid}-t${idx}`,entryId:eid,sessionId:sid,idx:idx++,kind:'working',load:k>=2||L===0?L:L-stp,reps:k===1?Math.min(hi,r0+1):r0,rir:d%4===0?null:d===8?2:j===e.s-1?1:2,done:true})}})}
   return H}
 let LOGH=null,LPR={};
 function logLoad(){if(!LOGH){const s=ld(LOG_K,null);LOGH=s&&Array.isArray(s.sessions)&&Array.isArray(s.sets)?s:genLog()}logDerive();return LOGH}
@@ -651,19 +660,19 @@ function e1Chart(sid){if(!RD||!window.PRS||!window.PROGRESS)return '<p class="fo
      <line x1="${vx}" x2="${vx}" y1="${pt}" y2="${H-pb}" class="gnow"/>${[...new Set(days)].map(d=>`<text x="${X(d)}" y="${H-6}" text-anchor="middle" class="dx">${d}</text>`).join('')}${lines}</svg>
    <div class="ctip" id="ctip" hidden></div>
    <div class="eleg">${ser.map(s=>`<span><i style="background:var(--series-${s.i%6+1})"></i>${exNameP(s.ex)}</span>`).join('')}</div>
-   <p class="foot">Estimated 1RM (load × (1 + reps/30), sets of ${RD.rules.logger.e1rm_max_reps} reps or fewer) as % of that exercise's best before this workout. Tap a point for the value. A model, not a tested max.</p></div>`}
+   <p class="foot">Estimated 1RM as % of that exercise's best before this workout. Tap a point for the value. An estimate, not a tested max.</p></div>`}
 V.logDay=()=>{logLoad();const d=S.logDay,w=LOGS[d],nav=t=>`<div class="nav"><div class="l"><button class="back" data-go="#log">${I('chevL',2.4)}Log</button></div><div class="t">${t}</div><div class="r">${w?`<button class="btn plain strong" data-act="ledit" data-d="${d}">Edit</button>`:''}</div></div>`;
   if(!w)return nav('')+'<p class="foot">No workout on this day.</p>';
   const s=sesOf(w.sid),dt=new Date(2026,9,d),P=LPR[s.id]||{},vm=rampVol(sesMus(s.id)),npr=Object.values(P).reduce((a,t)=>a+Object.keys(t).length,0);
   const exHtml=e=>{const id=e.exerciseId,rec=P[id]||{},badgeSet={};for(const [k,r] of Object.entries(rec))(badgeSet[r.set_id]=badgeSet[r.set_id]||[]).push(k);let n=0;
     return `<div class="ghead gx ldx" data-ex="${id}">${gl(id)}<span class="grow">${exName(id)}</span>${Object.keys(rec).map(k=>`<span class="badge prb" data-pr="${k}">${PRL[k]}</span>`).join('')}</div>
-     <div class="group lsets">${setsOfE(e.id).map(x=>`<div class="row lset${badgeSet[x.id]?' haspr':''}"><span class="sn ${x.kind==='warmup'?'w':''}">${x.kind==='warmup'?'W':++n}</span><span class="grow num">${showLoad(x.load,s.unit,id)} ${S.unit} × ${x.reps}</span>${badgeSet[x.id]?`<span class="badge">PR</span>`:''}</div>`).join('')}</div>`};
+     <div class="group lsets">${setsOfE(e.id).map(x=>`<div class="row lset${badgeSet[x.id]?' haspr':''}"><span class="sn ${x.kind==='warmup'?'w':''}">${x.kind==='warmup'?'W':++n}</span><span class="grow num">${showLoad(x.load,s.unit,id)} ${S.unit} × ${x.reps}</span>${EFF().clampRir(x.rir)!=null?`<span class="lrir num">${EFF().label(EFF().clampRir(x.rir),effMode())}</span>`:''}${badgeSet[x.id]?`<span class="badge">PR</span>`:''}</div>`).join('')}</div>`};
   return nav(`${WD[(dt.getDay()+6)%7]}, Oct ${d}`)+`<div class="ldh"><h1>${esc(s.label)}</h1><p class="sub">${hm(s.startedAt)} – ${hm(s.endedAt)} · ${w.min} min</p>
     <div class="ldstats"><div><b class="num">${w.sets}</b><span>sets</span></div><div><b class="num">${volTxt(w).split(' ')[0]}</b><span>${S.unit} volume</span></div><div><b class="num acc" title="${npr} PR badges">${w.pr}</b><span>lifts with a PR</span></div></div></div>
    <div class="ghead">Session notes</div><div class="card lnotes" data-raw>${s.notes?esc(s.notes):`<span class="sub">No notes.</span> <button class="btn plain" data-act="ledit" data-d="${d}">Add</button>`}</div>
    <div class="ghead">Muscles trained</div><div class="card mapcard ldmap"><div class="maps">${map('front',vm)}${map('back',vm)}</div><div class="legend">${rampLegend('sets this workout')}</div></div>
    <div class="ghead">Strength trend</div><div class="card" id="e1card">${e1Chart(s.id)}</div>
-   ${entsOf(s.id).map(exHtml).join('')}<p class="foot">PRs follow Coach's rules (logger.prs): the first logged session of an exercise is the baseline, ties within half a load step or 1% are not PRs. Editing a workout recalculates them.</p>`};
+   ${entsOf(s.id).map(exHtml).join('')}<p class="foot">Your first workout with a lift sets its baseline. Editing a workout recalculates PRs.</p>`};
 function afterLogDay(){}
 document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest('[data-e1]');if(!h)return;const t=$('#ctip');if(!t)return;
   $$('.ept.sel').forEach(c=>c.classList.remove('sel'));const dot=h.previousElementSibling;dot&&dot.classList.add('sel');t.textContent=h.dataset.e1;t.hidden=false;t.dataset.ex=h.dataset.ex;t.dataset.day=h.dataset.day});
@@ -674,7 +683,7 @@ function editSheet(d){logLoad();
     <div class="ghead">Or copy a routine day</div><div class="group">${ROUTINES[0].days.map(x=>`<button class="row" data-x="add"><div class="grow"><div class="t1">${x.n}</div><div class="t2">${x.ex.length} exercises · ${setsOf(x)} sets</div></div>${CHEV}</button>`).join('')}</div></div>`});
     a.el.addEventListener('click',e=>{if(e.target.closest('[data-x=add]')){a.close();setTimeout(()=>editSheet(15),380)}});return a}
   const s=sesOf(w.sid);
-  const srow=(i,x,id)=>`<div class="swipe"><button class="del">Delete</button><div class="in"><div class="row er" data-kind="${x.kind}"><span class="sn">${x.kind==='warmup'?'W':i}</span>
+  const srow=(i,x,id)=>`<div class="swipe"><button class="del">Delete</button><div class="in"><div class="row er" data-kind="${x.kind}" data-rir="${EFF().clampRir(x.rir)??''}"><span class="sn">${x.kind==='warmup'?'W':i}</span>
         <input class="fld" data-kind="w" readonly inputmode="none" value="${x.load===''?'':showLoad(x.load,s.unit,id)}" placeholder="—" aria-label="Weight (${S.unit})"><span class="x">${S.unit}</span><span class="x">×</span><input class="fld" data-kind="r" readonly inputmode="none" value="${x.reps===''?'':x.reps}" placeholder="—" aria-label="Reps"><span class="x">reps</span></div></div></div>`;
   const rows=e=>{let n=0;return setsOfE(e.id).map(x=>srow(x.kind==='warmup'?0:++n,x,e.exerciseId)).join('')};
   const sh=sheet({title:'Edit workout',cls:'tall grouped',left:`<button class="btn plain" data-x="close">Cancel</button>`,right:`<button class="btn plain strong" data-x="save">Save</button>`,
@@ -706,7 +715,7 @@ function saveEdit(s,el){const date=$('#ed-date',el).value,tm=$('#ed-time',el).va
   const st=`${date}T${tm}:00-07:00`;s.date=s.startedAt=st;s.endedAt=isoPlus(st,min);s.notes=notes;s.unit=S.unit;
   for(const g of $$('.eset',el)){const eid=g.dataset.eid;LOGH.sets=LOGH.sets.filter(x=>x.entryId!==eid);let idx=0;
     for(const r of $$('.row.er',g)){const sw=r.closest('.swipe');if(!sw||!sw.isConnected||sw.style.height==='0px')continue;const wv=$('[data-kind=w]',r).value,rv=$('[data-kind=r]',r).value;if(wv===''&&rv==='')continue;
-      LOGH.sets.push({id:`${eid}-x${idx}`,entryId:eid,sessionId:s.id,idx:idx++,kind:r.dataset.kind||'working',load:wv===''?0:+wv,reps:Math.trunc(+rv||0),rir:null,done:true})}}
+      LOGH.sets.push({id:`${eid}-x${idx}`,entryId:eid,sessionId:s.id,idx:idx++,kind:r.dataset.kind||'working',load:wv===''?0:+wv,reps:Math.trunc(+rv||0),rir:EFF().clampRir(r.dataset.rir),done:true})}}
   sv(LOG_K,LOGH);logDerive();const n=Object.values(LPR[s.id]||{}).reduce((a,t)=>a+Object.keys(t).length,0);toast(`Saved · PRs recalculated (${n} in this workout)`);return nd}
 V.log=()=>(logLoad(),'')+header('Log',`<button class="ibtn" data-act="day" data-d="${TODAY}" aria-label="Add workout">${I('plus',2)}</button>`)+cal()+
   `<div class="sec"><h2>${MONTHS[S.month]}</h2><span class="more num">${S.month===9&&S.year===2026?Object.keys(LOGS).length:0} workouts</span></div>
@@ -847,7 +856,8 @@ function restSheet(){const s=sheet({title:'Rest timer',body:`<div class="ck-big 
   s.el.addEventListener('click',e=>{if(e.target.closest('[data-x]'))s.close()});return s}
 
 // 9. SETTINGS
-const tg=(on,id)=>`<span class="tg ${on?'on':''}" data-act="tg" ${id?`id="${id}"`:''} role="switch" aria-checked="${!!on}"></span>`;
+// a real <button>: iOS WebKit sends no click for a tap on a plain span, so the old span switches never toggled on touch
+const tg=(on,id)=>`<button type="button" class="tg ${on?'on':''}" data-act="tg" ${id?`id="${id}"`:''} role="switch" aria-checked="${!!on}"></button>`;
 const LV={beginner:'About 10 hard sets per muscle a week, simple full-body or upper/lower weeks. For your first year of lifting, or coming back after a long break.',
   intermediate:'About 12–16 hard sets per muscle a week with more exercise variety. For steady lifters who still add weight most months.',
   advanced:'16 or more hard sets per muscle a week and specialised splits. For experienced lifters whose progress has slowed.'};
@@ -877,6 +887,7 @@ V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#b
    <div class="row"><div class="grow t1">Vibrate</div>${tg(1)}</div></div>
   <div class="ghead">Workout</div>
   <div class="group"><div class="row"><div class="grow"><div class="t1">Warm-up sets</div><div class="t2">One-tap ramp before primary lifts</div></div>${tg(1)}</div>
+   <div class="row" id="effrow"><div class="grow"><div class="t1">Show effort as RPE</div><div class="t2">${effMode()==='rpe'?'RPE 10 to ≤6 on each set':'Reps in reserve (RIR) 0 to 4+ on each set'}. Saved the same way either way.</div></div>${tg(effMode()==='rpe','rpe')}</div>
    <div class="row"><div class="grow"><div class="t1">Ape humor</div><div class="t2">Jokes on the finish screen</div></div>${tg(1,'humor')}</div></div>
   <div class="ghead">Data</div>
   <div class="group"><button class="row"><div class="grow t1 acc">Back up to file</div></button><button class="row"><div class="grow t1 acc">Restore from file</div></button></div>
@@ -893,7 +904,7 @@ const volFill=(n,min,max)=>{const st=vStat(n,min,max);if(st!=='in')return VFILL[
   return k?`color-mix(in oklch, var(--vol-in-range), var(--vol-mix) ${k}%)`:VFILL.in};
 // key: one entry per status. rows=true (Analysis Weekly sets) adds "Close, under" (the maps shade it grey, as Under)
 const volLegend=(rows=false)=>{const rf=VB.red_factor,pc=rf!=null?`${Math.round((rf-1)*100)}%`:'the set margin',ST=[['under','under'],['in','in'],...(rows?[['close-under','amber']]:[]),['close-over','amber'],['over','red']];
-  return `<div class="legend vleg">${ST.map(([k,f])=>`${k==='close-under'||(!rows&&k==='close-over')?'<span class="vcap">Close to target:</span>':''}<span data-st="${k}"><i style="background:${VFILL[f]}"></i>${VLAB[k]}</span>`).join('')}</div><p class="foot vfoot">${rows?`Close to target (amber): up to 2 sets under the minimum, or up to ${pc} over the maximum.`:`Close, over: up to ${pc} over the maximum. Muscles just under the minimum stay grey.`} Over max: more than ${pc} over.</p>`};
+  return `<div class="legend vleg">${ST.map(([k,f])=>`${k==='close-under'||(!rows&&k==='close-over')?'<span class="vcap">Close to target:</span>':''}<span data-st="${k}"><i style="background:${VFILL[f]}"></i>${VLAB[k]}</span>`).join('')}</div><p class="foot vfoot">${rows?`Close to target (amber): up to 2 sets under the minimum, or up to ${pc} over the maximum.`:`Close, over: up to ${pc} over the maximum. Muscles just under the minimum show as Under.`} Over max: more than ${pc} over.</p>`};
 // numeric map values = a credit rating / intensity, shaded by role with the --hl-* colour tokens (never greyscale; grey = unworked)
 const FILL=v=>typeof v==='string'?(VFILL[v]||v):v==null||!(v>0)?'var(--map-empty)':v>=.75?'var(--hl-main)':v>=.4?'var(--hl-helper)':'var(--hl-minor)';
 // map role colours. The exercise popup reads Coach's exercise-details body_map.levels (primary / secondary / minor / trace) and
@@ -921,80 +932,58 @@ function progressData(){const P=RD&&RD.PREF;if(!P||!window.PROGRESS)return null;
   const sig=JSON.stringify([rt,notes]);if(PROG.sig===sig&&PROG.res)return PROG.res;
   const h=Object.assign({},P.history,{exNotes:notes});PROG.res=PROGRESS.progress(RD,h,rt.filter(d=>d.tiles.length),P.as_of,P.level,P.goal||null);PROG.sig=sig;return PROG.res}
 const wt=v=>v==null?'–':S.unit==='kg'?`${(+v).toFixed(1)} kg`:`${(v*KG_LB).toFixed(1)} lb`,fx1=v=>v==null?'–':(+v).toFixed(1).replace(/\.0$/,'');
-const TRL={up:'Up',down:'Down',flat:'Flat',insufficient:'Not enough weeks'},LFT={up:'Up',stalled:'Stalled',dropping:'Dropping',insufficient:'Too few sessions'};
 const DNL=d=>RD.rules.day_names[d]||d,DSH=d=>DNL(d).slice(0,3);
 function bandOf(m){const T=RD.targets.targets[m],lv=(RD.PREF||{}).level||'intermediate';if(!T)return null;return [RANK.pyRound(T.min*RD.targets.levelMinFactor[lv]*2)/2,T.max]}
 const progMap=pr=>{const o={};for(const [m,v] of Object.entries(pr.muscles)){const b=bandOf(m);o[m]=b&&v.last_week_sets>0?volFill(v.last_week_sets,b[0],b[1]):null}return o};
+// Progress (piece A rebuild, 2026-10-24): one muted "Sample data · estimates" label, then Wins, Muscles, Needs attention, Effort and
+// one small Planned vs done footnote. Shells with no data are hidden. Under-delivered cards, the Logged progress list and the sample
+// Routine are gone; suggestions are text only (the sample log's routine is not his board, so there is no Apply). Plan line + one
+// shared sample log are piece B.
+const TRA={up:'↗',down:'↘',flat:'→',insufficient:''},TRW={up:'Up',down:'Down',flat:'Steady',insufficient:'Too early'};
+const trend=(st,pct,extra='')=>`<span class="ptr ${st}" data-tr="${st}">${TRA[st]?`<i aria-hidden="true">${TRA[st]}</i>`:''}${TRW[st]||st}${pct!=null&&st!=='insufficient'?` ${pct>0?'+':''}${Math.round(pct)}%/wk`:''}${extra}</span>`;
+function progWins(pr){const seen=new Set(),L=[];for(const v of Object.values(pr.muscles)){const ml=v.main_lift;if(ml&&ml.status==='up'&&!seen.has(ml.id)){seen.add(ml.id);L.push(ml)}}
+  return L.sort((a,b)=>(b.pct_per_week||0)-(a.pct_per_week||0)).slice(0,3)}
+function progEffort(){const P=RD&&RD.PREF;if(!P||!window.EFFORT)return null;const H=P.history,as=Date.parse(P.as_of+'T23:59:59'),from=as-28*864e5,ok=new Set(H.sessions.filter(x=>x.status!=='skipped'&&Date.parse(x.date||x.startedAt)>from&&Date.parse(x.date||x.startedAt)<=as).map(x=>x.id));
+  const W=H.sets.filter(x=>ok.has(x.sessionId)&&(x.kind||'working')==='working'&&x.done!==false),R=W.map(x=>EFFORT.clampRir(x.rir)).filter(v=>v!=null);
+  if(!R.length)return null;const avg=R.reduce((a,v)=>a+v,0)/R.length;return {avg,n:R.length,of:W.length,near:R.filter(v=>v<=1).length}}
 V.progress=()=>{const pr=RD&&progressData();if(!pr)return header('Progress',bookBtn)+`<p class="foot">No logged workouts yet.</p>`;const A=pr.adherence,W=(Object.values(pr.muscles)[0]||{}).weeks||[];
-  return header('Progress',bookBtn)+
-  `<p class="foot plog">${pr.label} Synthetic log: ${pr.guards.completed_sessions} completed sessions over ${pr.guards.logged_weeks} weeks, as of ${pr.as_of}. <span class="smp">sample</span></p>
-   <div class="card mapcard"><div class="maps">${map('front',progMap(pr),{ape:true})}${map('back',progMap(pr))}</div>${volLegend()}
-    <p class="maptip">Last completed week, credited sets vs target · tap a muscle</p></div>
-   <div id="pmus">${pmusHtml(S.pmus)}</div>
-   <div class="sec"><h2>Adherence</h2><span class="more">last ${A.weeks} weeks</span></div>
-   <div class="group padh"><div class="row"><div class="grow t1">Planned sets done</div><span class="val num" id="padh-s">${A.completed_planned_sets} of ${A.planned_sets} · ${A.sets_ratio!=null?Math.round(A.sets_ratio*100)+'%':'–'}</span></div>
-    <div class="row"><div class="grow t1">Sessions</div><span class="val num" id="padh-n">${A.sessions_completed} done · ${A.sessions_skipped} skipped</span></div></div>
-   <div class="sec"><h2>Per muscle</h2><span class="more">credited vs planned · ${W.length} wk trend</span></div>
-   <div class="group pml">${Object.entries(pr.muscles).map(([m,v])=>`<button class="row" data-pm="${m}"><div class="grow"><div class="t1">${ML[m]||m}</div><div class="t2 num">${fx1(v.last_week_sets)} of ${fx1(v.plan_sets)} planned last week${v.adherence!=null?` · ${Math.round(v.adherence*100)}% over ${W.length} wk`:''}</div></div><span class="ptr ${v.trend.status}">${TRL[v.trend.status]}</span></button>`).join('')}</div>
-   ${progItemsHtml(pr)}
-   ${refHtml(pr)}
-   ${routineHtml()}
-   <p class="foot">Hard sets are credited per Coach's set tags (drop sets, myo-reps, partials). e1RM uses Epley on working sets of ${RD.rules.logger.e1rm_max_reps} reps or fewer, deload weeks left out. Every threshold is modeled.</p>`};
-// round 2 batch B (item 3): the analysis_metrics items with tab = progress live here, not in Build's Analysis. Values come from
-// logic/progress.js where it computes them; the rest say where they show or that they are not computed yet.
-function progItemsHtml(pr){const am=(RD.rules.analysis_metrics||{}),its=(am.items||[]).filter(i=>i.tab==='progress');if(!its.length)return '';const A=pr.adherence,M=Object.values(pr.muscles);
-  const ml=M.map(v=>v.main_lift).filter(Boolean),cnt=k=>ml.filter(x=>x.status===k).length;
-  const VAL={logged_hard_sets:`${fx1(M.reduce((a,v)=>a+(v.last_week_sets||0),0))} credited sets last week`,adherence:A.sessions_ratio!=null?`${Math.round(A.sessions_ratio*100)}% of sessions`:'',
-    planned_vs_done:`${A.completed_planned_sets} of ${A.planned_sets} sets`,load_trend:ml.length?`${cnt('up')} up · ${cnt('stalled')} stalled · ${cnt('dropping')} dropping`:'',
-    progress_signal:`${pr.refinements.length} card${pr.refinements.length===1?'':'s'} below`,prs:'Log + Finish badges',finish_vs_last:'On the Finish screen'};
-  const sec=(am.sections||[]).find(s=>s.id==='progress')||{label:'Logged progress'};
-  return `<div class="sec"><h2>${sec.label}</h2><span class="more">${its.length} items</span></div>
-   <div class="group pitems">${its.map(it=>`<div class="row pitem" data-metric="${it.id}" data-kind="${it.kind}"><div class="grow"><div class="t1">${kchip(it.kind)}${dispL(it.id,it.label)}</div><div class="t2 num">${VAL[it.id]||'<span class="nc">Not computed in the storyboard yet</span>'}</div></div>${ibtn(it.id)}</div>`).join('')}</div>`}
+  const wins=progWins(pr),R=(pr.guards.refinements_enabled?pr.refinements:[]).filter(r=>r.type!=='under_delivered'),E=progEffort(),m=effMode();
+  const sec=(id,t,more,body)=>`<section class="psec" data-psec="${id}"><div class="sec"><h2>${t}</h2>${more?`<span class="more">${more}</span>`:''}</div>${body}</section>`;
+  return header('Progress',bookBtn)+`<p class="plabel" data-sample="1">Sample data · estimates</p>`+
+   (wins.length?sec('wins','Wins','',`<div class="group pwins">${wins.map(ml=>`<button class="row" data-mlx="${ml.id}"><span class="pwi" aria-hidden="true">↗</span><div class="grow"><div class="t1">${exNameP(ml.id)}</div><div class="t2 num">Estimated 1RM ${wt(ml.first_e1rm_kg)} → ${wt(ml.last_e1rm_kg)} over ${ml.sessions} sessions</div></div>${CHEV}</button>`).join('')}</div>`):'')+
+   sec('muscles','Muscles','last completed week',`<div class="card mapcard"><div class="maps">${map('front',progMap(pr))}${map('back',progMap(pr))}</div>${progLegend()}<p class="maptip">Tap a muscle for its weeks and main lift</p></div>
+     <div id="pmus">${pmusHtml(S.pmus)}</div>
+     <div class="group pml">${Object.entries(pr.muscles).map(([mu,v])=>`<button class="row" data-pm="${mu}"><div class="grow"><div class="t1">${ML[mu]||mu}</div><div class="t2 num">${fx1(v.last_week_sets)} of ${fx1(v.plan_sets)} planned sets last week</div></div>${trend(v.trend.status,null)}</button>`).join('')}</div>`)+
+   (R.length?sec('attention','Needs attention','',`<div class="flags">${R.map(attnCard).join('')}</div><p class="foot pnote">Suggestions only. Nothing on your board changes.</p>`):'')+
+   (E?sec('effort','Effort','last 4 weeks',`<div class="group peff"><div class="row"><div class="grow t1">Average ${m==='rpe'?'RPE':'reps in reserve'}</div><span class="val num" id="peff-avg">${m==='rpe'?(10-E.avg).toFixed(1):E.avg.toFixed(1)}</span></div>
+     <div class="row"><div class="grow t1">Sets taken close to failure</div><span class="val num">${E.near} of ${E.n}</span></div>
+     <div class="row"><div class="grow t1">Sets with effort logged</div><span class="val num">${E.n} of ${E.of}</span></div></div>`):'')+
+   `<p class="foot pvd" data-psec="planned">Planned vs done, last ${A.weeks} weeks: <span class="num" id="padh-s">${A.completed_planned_sets} of ${A.planned_sets} sets${A.sets_ratio!=null?` (${Math.round(A.sets_ratio*100)}%)`:''}</span> · <span class="num" id="padh-n">${A.sessions_completed} sessions done, ${A.sessions_skipped} skipped</span></p>`};
+// the Progress map key: every status has its own swatch, and "Not trained" (map-empty) is separate from "Under" (vol-under); no thresholds
+const progLegend=()=>`<div class="legend vleg pleg">${[['none','var(--map-empty)','Not trained'],['under',VFILL.under,'Under'],['in',VFILL.in,'In range'],['close-over',VFILL.amber,'Close, over'],['over',VFILL.red,'Over max']].map(([k,c,l])=>`<span data-st="${k}"><i style="background:${c}"></i>${l}</span>`).join('')}</div>`;
+function attnCard(r){
+  if(r.type==='stall'){const a=r.actions,rr=a.rep_range_change,sw=a.swap_variation;
+    return `<div class="flag pref" data-rt="stall"><div class="ftl">Stalled <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>Estimated 1RM hasn't gone up over the last few sessions (${wt(r.best_recent_kg)}).</p>
+      ${rr?`<p class="sub psug">Try ${rr.suggest_range[0]}–${rr.suggest_range[1]} reps for a while.</p>`:''}${sw?`<p class="sub psug">Or swap for ${exNameP(sw.to_id)}, which works the same muscles.</p>`:''}</div>`}
+  if(r.type==='missed_sets'){const a=r.actions;return `<div class="flag pref" data-rt="missed_sets"><div class="ftl">Missed sets <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>Fewer sets than planned in ${r.missed} of the last ${r.sessions.length} sessions.</p>
+      ${a.trim_sets?`<p class="sub psug">Plan ${a.trim_sets[0].to} sets instead of ${a.trim_sets[0].from}${a.move_sets?`, or move ${a.move_sets[1].sets} to ${DNL(a.move_sets[1].day)}`:''}.</p>`:''}</div>`}
+  if(r.type==='skipped_day'){const a=r.action;return `<div class="flag pref" data-rt="skipped_day"><div class="ftl">Skipped day <span class="tag sev info">${DNL(r.day)}</span></div><p>Skipped ${r.skipped_sessions.length} times lately, so ${r.muscles.slice(0,3).map(x=>(ML[x]||x).toLowerCase()).join(', ')}${r.muscles.length>3?` and ${r.muscles.length-3} more`:''} got less work.</p>
+      ${a?`<p class="sub psug">Moving ${a.label||DNL(r.day)} to ${DNL(a.to_day)} may fit better.</p>`:''}</div>`}
+  return ''}
 function spark(v){const s=v.weekly_sets,mx=Math.max(1,v.plan_sets,...s),W=v.weeks||[];
   return `<div class="spark" aria-label="Weekly credited sets">${s.map((x,i)=>`<div class="sp"><i style="--h:${x/mx*100}%" class="${x<v.plan_sets*0.75?'lo':''}"></i><small>${(W[i]||'').slice(5).replace('-','/')}</small></div>`).join('')}<b style="--y:${v.plan_sets/mx*100}%" title="Plan"></b></div>`}
 function pmusHtml(m){if(!m)return '';const pr=progressData(),v=pr&&pr.muscles[m];if(!v)return `<div class="card pmus" data-mu="${m}"><b>${ML[m]||m}</b><p class="sub">Nothing logged for this muscle in the last ${RD.rules.progress.trend.weeks} weeks.</p></div>`;
   const ml=v.main_lift,top=Math.max(v.plan_sets,v.last_week_sets||0,1),b=bandOf(m);
-  return `<div class="card pmus" data-mu="${m}"><div class="pmh"><b>${ML[m]||m}</b><span class="ptr ${v.trend.status}">${TRL[v.trend.status]}${v.trend.pct_per_week!=null?` ${v.trend.pct_per_week>0?'+':''}${Math.round(v.trend.pct_per_week)}%/wk`:''}</span></div>
+  return `<div class="card pmus" data-mu="${m}"><div class="pmh"><b>${ML[m]||m}</b>${trend(v.trend.status,v.trend.pct_per_week)}</div>
    <div class="pav"><div class="pvl"><span>Credited last week</span><b class="num">${fx1(v.last_week_sets)}</b></div><div class="pvl"><span>Planned</span><b class="num">${fx1(v.plan_sets)}</b></div><div class="pvl"><span>This week so far</span><b class="num">${fx1(v.this_week_sets)}</b></div><div class="pvl"><span>Adherence</span><b class="num" data-k="adh">${v.adherence!=null?Math.round(v.adherence*100)+'%':'–'}</b></div></div>
    ${spark(v)}<p class="sub sparkc">Weekly credited sets, last ${v.weeks.length} completed weeks · line = plan${b?` · target ${b[0]}–${b[1]}`:''}</p>
-   <div class="ghead sub2">Main lift</div>${ml?`<div class="pml1" data-ex="${ml.id}"><div class="t1">${exNameP(ml.id)}</div><div class="t2 num">e1RM ${wt(ml.first_e1rm_kg)} → ${wt(ml.last_e1rm_kg)} · ${ml.sessions} sessions · <span class="ptr ${ml.status==='stalled'?'flat':ml.status==='dropping'?'down':ml.status}">${LFT[ml.status]}${ml.pct_per_week!=null?` ${ml.pct_per_week>0?'+':''}${ml.pct_per_week.toFixed(1)}%/wk`:''}</span></div><div class="t2">From sets of ${RD.rules.logger.e1rm_max_reps} reps or fewer</div></div>`:'<p class="sub">No lift with enough sessions for a trend yet.</p>'}
+   <div class="ghead sub2">Main lift</div>${ml?`<button class="pml1" data-mlx="${ml.id}" data-ex="${ml.id}" aria-label="Open ${esc(exNameP(ml.id))}"><div class="grow"><div class="t1">${exNameP(ml.id)}</div><div class="t2 num">Estimated 1RM ${wt(ml.first_e1rm_kg)} → ${wt(ml.last_e1rm_kg)} · ${ml.sessions} sessions</div><div class="t2">${trend(ml.status==='stalled'?'flat':ml.status==='dropping'?'down':ml.status,ml.pct_per_week)}</div></div>${CHEV}</button>`:'<p class="sub">No lift with enough sessions for a trend yet.</p>'}
    <div class="ghead sub2">Notes</div>${v.notes.length?`<div class="pnotes">${v.notes.map(n=>`<div class="pn ${n.kind}"><span class="tag ${n.kind==='always'?'al':'ss'}">${n.kind==='always'?'Always':'This session'}</span><div class="grow"><div class="t2">${exNameP(n.exercise)}${n.date?` · ${n.date.slice(5).replace('-','/')}`:''}</div><div class="t1">${esc(n.text)}</div></div></div>`).join('')}</div>`:'<p class="sub">No notes on exercises for this muscle.</p>'}</div>`}
-// refinement cards
-const opsLine=ops=>{const rm=ops.filter(o=>o.op==='remove'),ad=ops.filter(o=>o.op==='add');
-  if(rm.length>2&&ad.length>=rm.length&&rm.every(r=>ad.some(a=>a.id===r.id))){const f=rm[0].day,t=ad[0].day,ex=ad.filter(a=>!rm.some(r=>r.id===a.id));return `the whole ${DSH(f)} session (${rm.length} exercises) moves to ${DSH(t)}`+(ex.length?' · '+ex.map(o=>`add ${exNameP(o.id)} ×${o.sets} on ${DSH(o.day)}`).join(' · '):'')}
-  return opsLine0(ops)};
-const opsLine0=ops=>ops.map(o=>o.op==='swap'?`${exNameP(o.from_id)} → ${exNameP(o.to_id)} on ${DSH(o.day)}`:o.op==='sets'?`${exNameP(o.id)} ${o.from}→${o.to} sets on ${DSH(o.day)}`:o.op==='add'?`add ${exNameP(o.id)} ×${o.sets} on ${DSH(o.day)}`:`remove ${exNameP(o.id)} from ${DSH(o.day)}`).join(' · ');
-let PEDIT=[];
-function refHtml(pr){PEDIT=[];const G=pr.guards,R=pr.refinements;
-  const ed=(label,ops)=>{PEDIT.push({label,ops});return `<div class="fxr"><span>${label}<small class="sub opl">${opsLine(ops)}</small></span><button class="btn sm accent" data-act="papply" data-k="${PEDIT.length-1}">Apply</button></div>`};
-  const idx={};R.forEach((r,i)=>idx[r.type+':'+(r.exercise||r.day||r.muscle)]=i);
-  const card=(r,i)=>{if(r.type==='stall'){const a=r.actions,rr=a.rep_range_change,sw=a.swap_variation;
-      return `<div class="flag pref" data-rt="stall" id="pref-${i}"><div class="ftl">Stalled lift <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>Best e1RM of the last 3 sessions is ${wt(r.best_recent_kg)}, not above the ${wt(r.best_before_kg)} before them (${r.exposures} sessions).</p>
-       ${rr?`<div class="fxr disp"><span>Try ${rr.suggest_range[0]}–${rr.suggest_range[1]} reps for a while (your top sets were ${rr.from_reps_median}; range ${rr.rep_range[0]}–${rr.rep_range[1]})</span><span class="tag">Display only</span></div>`:''}
-       ${sw?ed(`Swap for ${exNameP(sw.to_id)}, a variation for the same slot`,sw.diff):''}</div>`}
-    if(r.type==='missed_sets'){const a=r.actions;return `<div class="flag pref" data-rt="missed_sets" id="pref-${i}"><div class="ftl">Missed sets <span class="tag sev info">${exNameP(r.exercise)}</span></div><p>${r.missed} of the last ${r.sessions.length} sessions had fewer sets than planned (${r.sessions.map(s=>`${s.done}/${s.planned}`).join(', ')}).</p>
-       ${a.trim_sets?ed(`Plan ${a.trim_sets[0].to} sets instead of ${a.trim_sets[0].from}`,a.trim_sets):''}${a.move_sets?ed(`Plan fewer sets here and move ${a.move_sets[1].sets} to ${DNL(a.move_sets[1].day)}`,a.move_sets):''}</div>`}
-    if(r.type==='under_delivered'){const see=(r.action||{}).see||[];return `<div class="flag pref info" data-rt="under_delivered" data-mu="${r.muscle}" id="pref-${i}"><div class="ftl">Under-delivered <span class="tag sev info">${ML[r.muscle]||r.muscle}</span></div><p>${r.actual.map(fx1).join(' and ')} credited sets in the last ${r.weeks.length} weeks vs ${fx1(r.plan)} planned.</p>
-       ${see.length?see.map(s=>{const j=idx[s.type+':'+(s.exercise||s.day)];return `<button class="btn plain sm psee" data-act="psee" data-k="${j}">${s.type==='skipped_day'?`See: skipped ${DNL(s.day)}`:`See: missed sets on ${exNameP(s.exercise)}`} ›</button>`}).join(''):'<p class="sub">Probably swaps or logging. Nothing to change in the routine.</p>'}</div>`}
-    if(r.type==='skipped_day'){const a=r.action;return `<div class="flag pref" data-rt="skipped_day" id="pref-${i}"><div class="ftl">Skipped day <span class="tag sev info">${DNL(r.day)}</span></div><p>Skipped ${r.skipped_sessions.length} times in the last weeks. That left ${r.muscles.map(m=>(ML[m]||m).toLowerCase()).join(', ')} short.</p>
-       ${a?ed(`Move ${a.label||DNL(r.day)} to ${DNL(a.to_day)}`,a.diff):'<p class="sub">No empty day takes it without a new warning.</p>'}</div>`}
-    return ''};
-  const ap=PROG.applied.map((a,i)=>`<div class="aplc" data-k="${i}"><div class="grow"><div class="ftl">Applied</div><p>${a.label}</p><p class="sub opl">${opsLine(a.ops)}</p></div><button class="btn sm ink" data-act="pundo" data-k="${i}">Undo</button></div>`).join('');
-  return `<div class="sec" id="prefs"><h2>Refinements</h2><span class="more">from your log</span></div>
-   ${ap?`<div class="flags">${ap}</div>`:''}
-   ${G.refinements_enabled?`<p class="foot pguard" data-on="1">Refinements are on: ${G.completed_sessions} completed sessions over ${G.logged_weeks} weeks (needs ${RD.rules.progress.guards.min_completed_sessions} over ${RD.rules.progress.guards.min_logged_weeks}+).</p>`+(R.length?`<div class="flags">${R.map(card).join('')}</div>`:'<p class="foot">Nothing to refine: the log matches the plan.</p>'):`<p class="foot pguard" data-on="0">Refinements start after ${RD.rules.progress.guards.min_completed_sessions} completed sessions over ${RD.rules.progress.guards.min_logged_weeks}+ weeks. You have ${G.completed_sessions} over ${G.logged_weeks}.</p>`}`}
-function routineHtml(){const rt=progRoutine(),base=JSON.parse(PROG.base||'[]'),bs=d=>JSON.stringify((base.find(x=>x.day===d.day)||{tiles:[]}).tiles);
-  return `<div class="sec"><h2>Routine</h2><span class="smp">sample</span></div><p class="foot" style="padding-top:0">The log's ${(RD.PREF||{}).level||''} upper / lower routine; refinements edit this, not your board.</p><div class="group prt">${rt.filter(d=>d.tiles.length||base.some(x=>x.day===d.day)).sort((a,b)=>PCHECK.ORDER.indexOf(a.day)-PCHECK.ORDER.indexOf(b.day)).map(d=>`<div class="row${JSON.stringify(d.tiles)!==bs(d)?' chg':''}" data-day="${d.day}"><div class="grow"><div class="t1">${DSH(d.day)} · ${d.label||(d.tiles.length?'Training':'Rest')}</div><div class="t2">${d.tiles.length?d.tiles.map(t=>`${shortEx(t.id)} ×${t.sets}`).join(', '):'Rest'}</div></div></div>`).join('')}</div>`}
 const shortEx=id=>(EX[id]&&EX[id].short_name)||(RD&&RD.EX[id]&&(RD.EX[id].short_name||RD.EX[id].name))||exNameP(id);
-function progApply(k){const e=PEDIT[+k];if(!e)return;const rt=progRoutine(),before=JSON.parse(JSON.stringify(rt));
-  for(const o of e.ops)if(!rt.some(d=>d.day===o.day))rt.push({day:o.day,label:'',tiles:[]});
-  let nw=ANALYSIS.applyOps(rt,e.ops);const mv=e.ops.find(o=>o.op==='add'),rm=e.ops.filter(o=>o.op==='remove');
-  if(rm.length&&mv){const src=nw.find(d=>d.day===rm[0].day),dst=nw.find(d=>d.day===mv.day);if(src&&dst&&!src.tiles.length){dst.label=src.label;src.label=''}} // a moved day keeps its name
-  PROG.routine=nw;PROG.applied.unshift({label:e.label,ops:e.ops,before});rerenderProgress();toast('Routine updated · Undo is on the card')}
-function progUndo(k){const a=PROG.applied[+k];if(!a)return;PROG.routine=a.before;PROG.applied.splice(+k,1);rerenderProgress();toast('Refinement undone')}
 function rerenderProgress(){const v=$('#view'),sc=v.scrollTop;v.innerHTML=V.progress();afterProgress();v.scrollTop=sc}
 function afterProgress(){$$('.mapcard .mmap .mp').forEach(p=>p.addEventListener('click',()=>{if(p.dataset.mu)selPM(p.dataset.mu)}));$$('[data-pm]').forEach(b=>b.addEventListener('click',()=>selPM(b.dataset.pm)));if(S.pmus)selPM(S.pmus,true)}
 function selPM(m,quiet){S.pmus=m;$('#pmus').innerHTML=pmusHtml(m);$$('.mapcard .mmap .mp').forEach(p=>p.classList.toggle('psel',p.dataset.mu===m));if(!quiet)$('#pmus').scrollIntoView({block:'nearest',behavior:'smooth'})}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-mlx]');if(!b)return;e.preventDefault();exDetail(b.dataset.mlx)});
 function afterMap(){$$('.mmap .mp').forEach(p=>p.addEventListener('click',()=>{if(p.dataset.mu)go('#learn-'+p.dataset.mu)}))}
 
 // STYLE GUIDE
@@ -1370,7 +1359,7 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  finish:['finish','',1,0],'finish-ape':['finish','',1,0,null,()=>{const c=$('#fincards');c.style.scrollBehavior='auto';c.scrollLeft=c.scrollWidth}],
  empty:['empty','',1,1,()=>{SC.day='sat';startWorkout('Empty workout',[],{empty:true})}],tray:['empty','',1,1,null,traySheet],'tray-legs':['empty','',1,1,()=>{SC.note="Coach's case: PPL intermediate legs day (Fri), no goals, bias or favorites";PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],'tray-lib':['empty','',1,1,()=>{TF.mode='lib'},traySheet],'tray-sort-fat':['empty','',1,1,()=>{TF.mode='fat'},traySheet],'tray-sort-stim':['empty','',1,1,()=>{TF.mode='stim';TF.mus='hamstrings'},traySheet],
  'tray-detail':['empty','',1,1,null,()=>{traySheet();setTimeout(()=>exDetail('barbell-bench-press',{onAdd:()=>toast('Added to workout')}),60)}],
- 'progress-items':['progress','progress',0,0,null,()=>{const e=$('.pitems');if(e)e.scrollIntoView({block:'start'})}],
+ 'progress-effort':['progress','progress',0,0,null,()=>{const e=$('[data-psec=effort]');if(e)e.scrollIntoView({block:'start'})}],
  'progress-explain':['progress','progress',0,0,null,()=>explainSheet('load_trend')],
  'tray-calf':['empty','',1,1,()=>{Object.assign(SC,{board:BOARDS.legsGap,day:'mon',cands:BOARDS.legsGapCands,note:"Coach's calf-gap case: legs-only week, calves at 3 of 5 sets"});PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],
  'swap-lat-home':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Home template ticked (adjustable dumbbells, bench, pull-up bar, bands).';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.home}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
@@ -1384,7 +1373,7 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  'log-detail-tip':['logDay','log',0,0,()=>{S.logDay=15},()=>{const h=$$('#e1card .ehit').find(c=>c.dataset.day==='15');h&&h.dispatchEvent(new MouseEvent('click',{bubbles:true}))}],
  'log-swipe':['log','log',0,0,null,()=>{const r=$$('#view .swipe')[0];r&&r.classList.add('open')}],
  build:['build','build',0,0,()=>{SC.day='mon'}],'build-list':['buildList','build',0,0,()=>{SC.day='mon'}],swap:['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('barbell-bench-press')],'swap-curl':['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('ez-bar-curl')],
- settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress',0,0,()=>{S.pmus=null}],'progress-muscle':['progress','progress',0,0,()=>{S.pmus='chest'}],'progress-refine':['progress','progress',0,0,()=>{S.pmus=null},()=>{const e=$('#prefs');if(e)$('#view').scrollTop=e.offsetTop-60}],style:['style','build'],
+ settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress',0,0,()=>{S.pmus=null}],'progress-muscle':['progress','progress',0,0,()=>{S.pmus='chest'}],'progress-refine':['progress','progress',0,0,()=>{S.pmus=null},()=>{const e=$('[data-psec=attention]');if(e)e.scrollIntoView({block:'start'})}],style:['style','build'],
  learn:['learn',''],'tray-fav':['empty','',1,1,()=>{TF.fav=true},traySheet],'settings-favs':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#favs').offsetTop-60}],'settings-goals':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#profile').offsetTop-40}],'learn-fundamental':['learnFund',''],
 };
 const AFTER={logDay:afterLogDay,train:afterTrain,workout:afterWorkout,finish:afterFinish,log:afterLog,buildList:afterBuildList,progress:afterProgress,learn:afterLearn};
@@ -1431,8 +1420,6 @@ document.addEventListener('click',e=>{
     if(k==='sundo'){const f=SUF;hideSnack();if(f)f();return}
     if(k==='theme'){const t=setTheme(a.dataset.v);$$('#themeseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===t));return}
     if(k==='unit'){S.unit=a.dataset.v==='kg'?'kg':'lb';try{localStorage.setItem(UNIT_K,S.unit)}catch(x){}$$('#unitseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===S.unit));return toast(`Units: ${S.unit}`)}
-    if(k==='papply')return progApply(a.dataset.k);if(k==='pundo')return progUndo(a.dataset.k);
-    if(k==='psee'){const el=$('#pref-'+a.dataset.k);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1200)}return}
     if(k==='notes')return notesSheet(+a.dataset.xi);if(k==='exmenu')return exMenu(+a.dataset.xi);if(k==='wswap')return wSwap(+a.dataset.xi);
     if(k==='activate'){const r=ROUTINES.find(x=>x.id===id);ROUTINES.forEach(x=>x.active=false);r.active=true;r.next=0;S.pick=null;ROUTINES.sort((x,y)=>y.active-x.active);render();return toast(`${r.name} is now active`)}
     if(k==='minimize'){S.session=true;return go('#train')}
@@ -1441,7 +1428,12 @@ document.addEventListener('click',e=>{
     if(k==='restsheet'){if(!e.target.closest('button'))restSheet();return}
     if(k==='rest-'){WK.rest.left=Math.max(0,WK.rest.left-15);return paintTime()}if(k==='rest+'){WK.rest.left+=15;WK.rest.total=Math.max(WK.rest.total,WK.rest.left);return paintTime()}
     if(k==='skip'){WK.rest.left=0;return paintTime()}
+    if(k==='rir'){const p=a.closest('.rirp'),xi=+p.dataset.xi,si=+p.dataset.si,st=((WK.ex[xi]||{}).sets||[])[si];if(!st)return;const v=+a.dataset.v;st.rir=EFF().clampRir(st.rir)===v?null:v;
+      $$('.rirc',p).forEach(c=>{const on=+c.dataset.v===st.rir;c.classList.toggle('on',on);c.setAttribute('aria-pressed',on)});return}
+    if(k==='rirOpen'){const xi=+a.dataset.xi,si=+a.dataset.si,sw=a.closest('.swipe');rirClose();a.remove();WK.rirAt=`${xi}:${si}`;sw&&sw.insertAdjacentHTML('afterend',rirPick(xi,si));return}
     if(k==='ck'){const r=a.closest('.srow');r.classList.toggle('done');const st=((WK.ex[+r.dataset.xi]||{}).sets||[])[+r.dataset.si];if(st)st.done=r.classList.contains('done');
+      {const sw=r.closest('.swipe');rirClose();const om=$('.rirm',r);if(om)om.remove();
+       if(st&&st.done){WK.rirAt=`${r.dataset.xi}:${r.dataset.si}`;sw&&sw.insertAdjacentHTML('afterend',rirPick(+r.dataset.xi,+r.dataset.si))}else WK.rirAt=null}
       if(r.classList.contains('done')){$$('.fld',r).forEach(f=>{if(!f.value)f.value=f.placeholder;f.classList.remove('auto');syncField(f)});const ex=WK.ex[+r.dataset.xi];
         WK.restLab=ex?`${(RD&&RD.EX[ex.id]&&RD.EX[ex.id].short_name)||exNameP(ex.id)} set ${ex.sets.slice(0,+r.dataset.si+1).filter(x=>!x.warm).length}`:'';WK.rest.left=WK.rest.total=180;const l=$('.rlb');if(l)l.textContent='Rest · '+WK.restLab;paintTime()}renderBar();return}
     if(k==='addset'){const xi=+a.dataset.xi,ex=WK.ex[xi];if(!ex)return;const last=ex.sets[ex.sets.length-1]||{};ex.sets.push({p:'',wv:last.wv||'',wu:last.wu,wauto:!!last.wv});renderEx(xi);return}
@@ -1449,7 +1441,8 @@ document.addEventListener('click',e=>{
     if(k==='edit'||k==='ledit')return editSheet(+a.dataset.d);if(k==='month')return monthSheet();
     if(k==='mprev'||k==='mnext'){S.month+=k==='mnext'?1:-1;if(S.month<0){S.month=11;S.year--}if(S.month>11){S.month=0;S.year++}return render()}
     if(k==='add')return toast('Added to workout');if(k==='push')return toast('Pushed to Library · v4');
-    if(k==='tg'){a.classList.toggle('on');a.setAttribute('aria-checked',a.classList.contains('on'));return}
+    if(k==='tg'){a.classList.toggle('on');a.setAttribute('aria-checked',a.classList.contains('on'));
+      if(a.id==='rpe'){const on=a.classList.contains('on');try{localStorage.setItem(EFF_K,on?'rpe':'rir')}catch(e){}const t=$('#effrow .t2');if(t)t.textContent=`${on?'RPE 10 to ≤6 on each set':'Reps in reserve (RIR) 0 to 4+ on each set'}. Saved the same way either way.`}return}
     if(k==='demo-sheet')return sheet({title:'Shared sheet',body:'<p class="foot" style="padding:4px 20px 30px">Every popup is this one component: grab handle, swipe down or tap outside to close.</p>'});
   }
   if(g){e.preventDefault();return go(g.dataset.go)}
@@ -1740,7 +1733,7 @@ async function newExSheet(o={}){if(!CX){toast('Custom exercises need the default
       if(k==='rmphoto'){F.photo=null;F.photoTouched=true;$('#nxphoto',s.el).innerHTML=photoRow();wire();return}
       if(k==='rmvideo'){if(F.video&&!F.video.stored&&F.video.url)URL.revokeObjectURL(F.video.url);F.video=null;F.trim=null;F.videoTouched=true;F.vErr='';vidPaint();return}
       if(k==='equipment'||k==='pattern'){F.touched=true;F[k]=F[k]===v?null:v;return re()}
-      if(k==='main'){F.touched=true;F.main=F.main===v?null:v;delete F.extra[v];return re()}
+      if(k==='main'){F.touched=true;const old=F.main;F.main=old===v?null:v;delete F.extra[v];if(old&&old!==v)F.extra[old]='helper';return re()}   // Coach call 2: the old Main mover moves down to Helper (0.5)
       if(k==='extra'){F.touched=true;const b=F.extra[v];if(!b)F.extra[v]='helper';else if(b==='main')F.extra[v]='helper';else if(b==='helper')F.extra[v]='minor';else delete F.extra[v];return re()}}
     const nb=e.target.closest('[data-nb]');if(nb)return baseAct(nb.dataset.nb,nb.dataset.v);
     if(e.target.closest('[data-x=nxcancel]'))return s.close();
