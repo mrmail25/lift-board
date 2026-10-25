@@ -127,11 +127,11 @@ function liftKind(dt,i,EX){const e=EX[i]||{};let unit='reps';try{unit=(WB.repRan
 const metricName=(k,loaded)=>({hold:'hold_s',distance:'load_index',bodyweight:'reps',e1rm:'e1rm'})[k]||(loaded?'load_index':'reps');
 function value(e,m){if(m==='load_index')return Math.max(...e.sets.map(x=>x.load_kg*(1+x.reps/30)));return {hold_s:e.hold_s,reps:e.best_reps,e1rm:e.e1rm_kg}[m]}
 function exposures2(dt,h,asOf,flat,ctxu){const PR=PRSm(),C=PR.ctx(dt),L=rules(dt),R2=P2(dt),E1MAX=R2.e1rm.max_reps,EX=exTable(dt,h),out={};
-  for(const q of flat){const s=q.s,day=sday(s);if(day>asOf)continue;const by={},ord=[];
+  for(const q of flat){const s=q.s,day=sday(s);if(day>asOf)continue;if(isDeloadSession(s))continue;const by={},ord=[];
     for(const x of q.sets)if(x.kind==='working'&&x.reps>0){if(!by[x.ex]){by[x.ex]=[];ord.push(x.ex)}by[x.ex].push(x)}
     for(const i of ord){const xs=by[i],k=liftKind(dt,i,EX),u=s.unit||'lb',top=Math.max(...xs.map(x=>x.added_kg)),half=Math.max(...xs.map(x=>PR.stepKg(dt,x,u,C)))*C.sf;
       const at=xs.filter(x=>Math.abs(x.added_kg-top)<=half+EPS),e1=xs.filter(x=>prOk(x,'e1rm',L)&&x.load_kg>EPS&&x.reps<=E1MAX).map(x=>x.load_kg*(1+x.reps/30));
-      (out[i]=out[i]||[]).push({date:day,sid:s.id,unit:u,deload:!!s.deload,kind:k,sets:xs,top_kg:top,half_kg:half,top_eff_kg:Math.max(...at.map(x=>x.load_kg)),
+      (out[i]=out[i]||[]).push({date:day,sid:s.id,unit:u,deload:false,kind:k,sets:xs,top_kg:top,half_kg:half,top_eff_kg:Math.max(...at.map(x=>x.load_kg)),
         best_reps:Math.max(...at.map(x=>x.reps)),n_at_top:at.length,tot_at_top:at.reduce((a,x)=>a+x.reps,0),e1rm_kg:e1.length?Math.max(...e1):null,hold_s:k==='hold'?Math.max(...xs.map(x=>x.reps)):null})}}
   const ws=isoAdd(asOf,-R2.dashboard.window_days);
   for(const xs of Object.values(out)){const loaded=xs.some(e=>e.top_kg>EPS);let m=metricName(xs[0].kind,loaded);
@@ -161,9 +161,8 @@ function gainVsLast(K,xs0,u){const xs=xs0.filter(e=>!e.deload);if(!xs.length)ret
   return {status:c,text:t,gain:['load_up','reps_up','hold_up'].includes(c),date:cur.date,prev_date:prev.date,detail:det}}
 const prBetter=(K,v,b,m)=>b==null?false:(m==='e1rm'||m==='load_index')?v>b*(1+K.FLAT)+1e-12:v>b;
 function weeklyBest(K,xs,u){const W={};for(const e of xs){if(e.deload||e.value==null)continue;const w=wk(e.date);W[w]=w in W?Math.max(W[w],e.value):e.value}
-  const dl=new Set(xs.filter(e=>e.deload).map(e=>wk(e.date))),out=[],m=xs.length?xs[0].metric:null;let best=null;
-  for(const w of [...new Set([...Object.keys(W),...dl])].sort()){if(!(w in W)){out.push({week:w,value:null,display:null,pr_week:false,deload_week:true});continue}
-    const v=W[w],pr=prBetter(K,v,best,m);out.push({week:w,value:r_(v),display:K.vdisp(v,m,u),pr_week:pr,deload_week:dl.has(w)});best=best===null?v:Math.max(best,v)}return out}
+  const out=[],m=xs.length?xs[0].metric:null;let best=null;
+  for(const w of Object.keys(W).sort()){const v=W[w],pr=prBetter(K,v,best,m);out.push({week:w,value:r_(v),display:K.vdisp(v,m,u),pr_week:pr});best=best===null?v:Math.max(best,v)}return out}
 function liftTrend(K,xs,asOf,u){const T=K.R2.trend,start=isoAdd(asOf,-T.window_days);let win=xs.filter(e=>!e.deload&&start<e.date&&e.date<=asOf&&e.value!=null);
   const lx=xs[xs.length-1];if(win.length&&lx.metric==='reps'&&lx.kind==='bodyweight'){const z=win[win.length-1];win=win.filter(e=>Math.abs(e.top_kg-z.top_kg)<=Math.max(e.half_kg,z.half_kg)+EPS)}
   const W={};for(const e of win){const w=wk(e.date);W[w]=Math.max(w in W?W[w]:e.value,e.value)}
@@ -185,7 +184,11 @@ function stallState(K,xs0){const S=K.R2.lift_status,xs=sameLoadXs(xs0).filter(e=
   return {trailing_no_gain:trail,best_date:best?best.date:null,stalled,dropping,exposures:xs.length,span_days:span}}
 const liftStatus=(tr,st)=>st.dropping?'dropping':st.stalled?'stalled':tr.status;
 function tmin(dt,m,level){const T=dt.targets.targets[m];if(!T)return [null,null];return [fl(T.min*dt.targets.levelMinFactor[level]*2+0.5)/2,T.max]}
-function creditedWeeks(dt,h,flat,asOf,n){const cur=wk(asOf),out=[];for(let k=1;k<=n;k++){const w=isoAdd(cur,-7*k);out.push([w,completedAnalytics(dt,h,w,flat).hard_sets.per_muscle])}return out}
+function noDeload(h){const ds=new Set((h.sessions||[]).filter(isDeloadSession).map(s=>s.id));if(!ds.size)return h;const ent=new Set((h.entries||[]).filter(e=>ds.has(e.sessionId)).map(e=>e.id));
+  return Object.assign({},h,{sessions:h.sessions.filter(s=>!ds.has(s.id)),entries:(h.entries||[]).filter(e=>!ent.has(e.id)),sets:(h.sets||[]).filter(x=>!ent.has(x.entryId))})}
+// credited hard sets per muscle, last n full weeks before the as-of week; weeks with a deload session are skipped (next earlier week, up to 8 back) (progress5)
+function creditedWeeks(dt,h,flat,asOf,n){const cur=wk(asOf),out=[],dlw=new Set((h.sessions||[]).filter(isDeloadSession).map(s=>wk(sday(s)))),hn=noDeload(h),fn=hn===h?flat:flatten(dt,hn);
+  for(let k=1;k<n+9;k++){if(out.length===n)break;const w=isoAdd(cur,-7*k);if(dlw.has(w))continue;out.push([w,completedAnalytics(dt,hn,w,fn).hard_sets.per_muscle])}return out}
 const daysWith=(rt,i)=>(rt||[]).filter(d=>d.tiles.some(t=>t.id===i)).map(d=>d.day);
 function opsOk(dt,rt,ops,level){let nw;try{nw=AN.applyOps(rt,ops)}catch(e){return false}return valid(dt,rt,nw,level)}
 function chooseFix(dt,K,m,i,lst,st,cx){const F=K.R2.fix,EX=cx.EX,rt=cx.routine,level=cx.level;
@@ -248,7 +251,7 @@ function wins(K,xsall,asOf,u,EX,mains,chg){const W=K.R2.wins,V=W.vs_3_months,ids
   const res={shown:lst.slice(0,W.max_shown),more:Math.max(0,lst.length-W.max_shown),all_events:allev,vs_3_months:v3};
   Object.defineProperty(res,'list',{value:lst,enumerable:false});return res} // list: every win in order (the "+N more" view); not part of the parity payload
 const effortDisplay=(avg,mode)=>avg==null?'Not enough RIR logged':mode==='rpe'?`Average RPE about ${fmt(10-avg)}`:`Average RIR about ${fmt(avg)}`;
-function muscles2(dt,K,xsall,lifts,h,asOf,EX,cx){const M=K.R2.muscle,T=K.R2.trend,start=isoAdd(asOf,-T.window_days),pins=((h.settings||{}).mainLiftPins)||{},E=K.R2.effort,est=isoAdd(asOf,-E.summary_window_days),out={},L=K.L,hard=x=>x.rir===null||x.rir<=L.hardRIR;
+function muscles2(dt,K,xsall,lifts,h,asOf,EX,cx){const M=K.R2.muscle,T=K.R2.trend,start=isoAdd(asOf,-T.window_days),pins=Object.fromEntries(Object.entries(cx.overrides.applied).map(([m,v])=>[m,v.id])),E=K.R2.effort,est=isoAdd(asOf,-E.summary_window_days),out={},L=K.L,hard=x=>x.rir===null||x.rir<=L.hardRIR;
   for(const m of L.muscles){const wts={},weeks=new Set(),sess={};let rs=0,rw=0,rn=0;
     for(const [i,xs] of Object.entries(xsall)){const r=((EX[i]||{}).muscles||{})[m]||0;if(r<L.min_rating)continue;
       for(const e of xs){if(e.deload)continue;if(start<e.date&&e.date<=asOf){const hs=e.sets.filter(hard).length;if(hs){wts[i]=(wts[i]||0)+r*hs;weeks.add(wk(e.date))}sess[i]=(sess[i]||0)+1}
@@ -256,14 +259,14 @@ function muscles2(dt,K,xsall,lifts,h,asOf,EX,cx){const M=K.R2.muscle,T=K.R2.tren
     if(!Object.keys(wts).length&&!Object.keys(sess).length&&!(m in pins))continue;
     const tl={};for(const i of Object.keys(wts))if(lifts[i].trend.pct_per_week!=null)tl[i]=lifts[i].trend.pct_per_week;
     const den=Object.keys(tl).reduce((a,i)=>a+wts[i],0),ok=Object.keys(tl).length>0&&weeks.size>=T.min_weeks,p=ok&&den?Object.keys(tl).reduce((a,i)=>a+wts[i]*tl[i],0)/den:null;
-    const tst=p===null?'insufficient':p>T.up_pct_per_week?'up':p<T.down_pct_per_week?'down':'flat',pin=pins[m],pinned=!!(pin&&(((EX[pin]||{}).muscles||{})[m]||0)>=L.min_rating);let main;
+    const tst=p===null?'insufficient':p>T.up_pct_per_week?'up':p<T.down_pct_per_week?'down':'flat',pin=pins[m],pinned=!!pin;let main;
     if(pinned)main=pin;else{let cand=Object.keys(sess).filter(i=>EX[i].muscles[m]>=M.main_lift_min_rating);if(!cand.length)cand=Object.keys(sess);
       cand=sortBy(cand,i=>[-sess[i],-EX[i].muscles[m],-(wts[i]||0),TYPE_RANK[EX[i].type]??3,i]);main=cand.length?cand[0]:null}
     const Lm=main?lifts[main]:null,tw=Object.values(wts).reduce((a,b)=>a+b,0),sw=Object.keys(wts).filter(i=>['stalled','dropping'].includes(lifts[i].status)).reduce((a,i)=>a+wts[i],0),share=tw?sw/tw:0;
     const stuck=!!((tst==='flat'||tst==='down')&&Lm&&['stalled','dropping'].includes(Lm.status)&&share>=M.stuck_share-1e-9),avg=rw?rs/rw:null,effOk=rn>=E.summary_min_sets;
     const wbl={};for(const i of Object.keys(wts).sort())wbl[i]=r_(wts[i]);
     out[m]={trend:{status:tst,pct_per_week:r_(p),words:fmtS(T.words[tst],{p:p!==null?pct(p):'',abs:''}),weeks_with_sets:weeks.size,lifts:Object.keys(tl).sort()},
-      main_lift:{id:main,name:main?EX[main].name:null,pinned,sessions_in_window:main?(sess[main]||0):0,status:Lm?Lm.status:null},
+      main_lift:{id:main,name:main?EX[main].name:null,pinned,override_source:pinned?cx.overrides.applied[m].source:null,sessions_in_window:main?(sess[main]||0):0,status:Lm?Lm.status:null},
       latest_gain:Lm?Lm.gain_vs_last:null,weight_by_lift:wbl,stalled_or_dropping_share:r_(share),stuck,
       effort:{avg_rir:effOk?r_(avg,2):null,sets_with_rir:rn,display:effortDisplay(effOk?avg:null,cx.mode),far_from_failure:!!(effOk&&avg>=E.far_from_failure_avg_rir-1e-9)}}}
   return out}
@@ -273,6 +276,12 @@ function footnote(dt,K,h,asOf){const F=K.R2.footnote,st=isoAdd(asOf,-F.days),al=
       const ids=new Set(ent.filter(e=>e.sessionId===s.id&&!e.added&&!e.skipped&&resolve(e.swappedFrom||e.exerciseId,al)===resolve(p.exerciseId,al)).map(e=>e.id));
       dd+=Math.min(p.sets,sets.filter(x=>ids.has(x.entryId)&&(x.kind||'working')==='working'&&x.done).length)}}
   return {planned_sets:pl,done_sets:dd,days:F.days,text:pl?fmtS(F.text,{done:dd,planned:pl}):null}}
+// ---------------- deload sessions (progress5, progress-rules deload_sessions: rule "exclude", deload_flag) ----------------
+// isDeloadSession(session): the ONE switch (tools/progress.py _is_deload). A session is a deload only when session.deload === true
+// (missing / null / 'yes' / anything else = false; no detection from volume or intensity). Deload sessions are dropped once, at the
+// source, in exposures2(), so no series, dot, trend, stall / dropping / minimum-data count, KPI, change, vs 3 months or PR sees them.
+// Kept as they were: avg RIR, planned vs done, the deload signal (deload.py reads the history directly).
+function isDeloadSession(s){return !!s&&s.deload===true}
 // ---------------- dashboard (progress3): Coach's tools/progress.py dashboard() ----------------
 function dashMetric(xs){const k=xs[0].kind,m=xs[0].metric;if(k==='hold')return 'hold_s';if(k==='bodyweight'||m==='reps')return 'best_reps';return m}
 function dashValue(e,dm){if(dm==='hold_s')return e.hold_s;
@@ -295,10 +304,10 @@ function dashChange(K,xs,asOf,u){const DB=K.R2.dashboard,C=DB.change,dm=dashMetr
     pct:r_(p,2),pct_display:pctd(p),weeks:r_(w,4),pct_per_week:r_(rate,4),band:band(K,rate)});return out}
 function dashWeekly(K,xs,asOf,u,n){const dm=dashMetric(xs),w1=wk(asOf),out=[];
   for(let k=n-1;k>=0;k--){const w=isoAdd(w1,-7*k),es=xs.filter(e=>wk(e.date)===w&&e.date<=asOf),vals=es.filter(e=>!e.deload).map(e=>dashValue(e,dm)).filter(v=>v!=null),v=vals.length?Math.max(...vals):null;
-    out.push({week:w,value:r_(v),display:dvdisp(K,v,dm,u),deload_week:es.length>0&&es.every(e=>e.deload)})}return out}
+    out.push({week:w,value:r_(v),display:dvdisp(K,v,dm,u)})}return out}
 function dashDots(K,xs,asOf,u,prs){const dm=dashMetric(xs),out=[];for(const e of xs){if(e.date>asOf)continue;const v=dashValue(e,dm);if(v==null)continue;
-  out.push({date:e.date,session_id:e.sid,value:r_(v),display:dvdisp(K,v,dm,u),pr:!e.deload&&prs.has(e.sid),best:false,deload:e.deload,days_ago:days(asOf,e.date)})}
-  let top=null;for(const d of out){d.best=!!(top!==null&&!d.deload&&d.value>top+1e-9);top=top===null?d.value:Math.max(top,d.value)}   // dot.best (progress4): above every earlier dot (all history); first + deload dots false
+  out.push({date:e.date,session_id:e.sid,value:r_(v),display:dvdisp(K,v,dm,u),pr:prs.has(e.sid),best:false,days_ago:days(asOf,e.date)})}
+  let top=null;for(const d of out){d.best=!!(top!==null&&d.value>top+1e-9);top=top===null?d.value:Math.max(top,d.value)}   // dot.best (progress4): above every earlier dot (all history); first + deload dots false
   return out}
 // kpis.avg_rir (progress4): plain mean of logged RIR (4+ = 4) over done working sets in the last 28 days, deload sessions left out, each set once
 function kpiAvgRir(K,xsall,asOf,mode){const A=K.R2.dashboard.kpis.avg_rir,E=K.R2.effort,est=isoAdd(asOf,-E.summary_window_days),el=[];
@@ -308,18 +317,19 @@ function kpiAvgRir(K,xsall,asOf,mode){const A=K.R2.dashboard.kpis.avg_rir,E=K.R2
   const note=ok&&share!=null&&share<A.partial_share-1e-12?A.partial_note.replace('{n}',n).replace('{total}',tot):null;
   return {value:v,status:ok?'ok':'insufficient',reason:ok?null:A.reason_insufficient,logged_sets:n,eligible_sets:tot,share_logged:r_(share,4),min_sets:E.summary_min_sets,display:ok?disp:A.reason_display,note,label:A.label}}
 const median=v=>{v=v.slice().sort((a,b)=>a-b);const n=v.length;return !n?null:n%2?v[(n-1)/2]:(v[n/2-1]+v[n/2])/2};
-function dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode){const DB=K.R2.dashboard,KP=DB.kpis,prs={};
+function dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode,OV){const DB=K.R2.dashboard,KP=DB.kpis,prs={};
   for(const w of W.all_events)(prs[w.exercise]=prs[w.exercise]||new Set()).add(w.session_id);
   const L={};for(const i of Object.keys(xsall).sort())L[i]={name:lifts[i].name,metric:chg[i].metric,label:chg[i].label,change:chg[i],dots:dashDots(K,xsall[i],asOf,u,prs[i]||new Set())};
   const M={},mains=[];
   for(const m of K.L.muscles){const v=mus[m],i=v?v.main_lift.id:null;
     if(!i){M[m]={trained:false,band:'not_trained',colour_role:DB.band.colour_roles.not_trained,bucket:null,stalled:false,main_lift:null,change:null,sparkline:null,avg_rir:null};continue}
-    const c=chg[i],bd=c.band,st=!!v.stuck;let bucket=bd==='insufficient'&&!st?null:(st||bd==='down'?'stalled_or_dropping':(bd==='up'||bd==='up_strong')?'progressing':'flat');
+    const ws=isoAdd(asOf,-(DB.window_days-1)),recent=(xsall[i]||[]).some(e=>ws<=e.date&&e.date<=asOf);
+    const c=recent?chg[i]:{metric:chg[i]?chg[i].metric:null,label:chg[i]?chg[i].label:null,status:'insufficient',reason:K.R2.muscle.overrides.reasons.not_recent,sessions:0,weeks:null,pct:null,pct_display:null,pct_per_week:null,early:null,late:null,band:'insufficient'},bd=c.band,st=!!v.stuck;let bucket=bd==='insufficient'&&!st?null:(st||bd==='down'?'stalled_or_dropping':(bd==='up'||bd==='up_strong')?'progressing':'flat');
     if(bd==='insufficient'&&st)bucket='stalled_or_dropping';const ch={};for(const k of ['status','reason','pct','pct_display','pct_per_week','early','late'])ch[k]=c[k];
-    M[m]={trained:true,band:bd,colour_role:DB.band.colour_roles[bd],bucket,stalled:st,main_lift:{id:i,name:lifts[i].name,pinned:v.main_lift.pinned,metric:c.metric,label:c.label},
-      change:ch,sparkline:dashWeekly(K,xsall[i],asOf,u,DB.sparkline.weeks),avg_rir:v.effort.avg_rir,avg_rir_display:v.effort.display};
+    M[m]={trained:true,band:bd,colour_role:DB.band.colour_roles[bd],bucket,stalled:st,main_lift:{id:i,name:v.main_lift.name,pinned:v.main_lift.pinned,override_source:v.main_lift.override_source,metric:c.metric,label:c.label},
+      change:ch,sparkline:xsall[i]?dashWeekly(K,xsall[i],asOf,u,DB.sparkline.weeks):Array.from({length:DB.sparkline.weeks},(_,k)=>({week:isoAdd(wk(asOf),-7*(DB.sparkline.weeks-1-k)),value:null,display:null})),avg_rir:v.effort.avg_rir,avg_rir_display:v.effort.display};
     if(!mains.includes(i))mains.push(i)}
-  const SC=KP.strength_change,used=mains.slice().sort().filter(i=>chg[i].status==='ok'&&(chg[i].metric==='e1rm'||chg[i].metric==='load_index')),med=used.length>=SC.min_lifts?median(used.map(i=>chg[i].pct)):null;
+  const SC=KP.strength_change,used=mains.slice().sort().filter(i=>chg[i]&&chg[i].status==='ok'&&(chg[i].metric==='e1rm'||chg[i].metric==='load_index')),med=used.length>=SC.min_lifts?median(used.map(i=>chg[i].pct)):null;
   const kc={};for(const b of KP.muscle_counts.buckets)kc[b]=Object.keys(M).filter(m=>M[m].bucket===b).sort();
   const ins=Object.keys(M).filter(m=>M[m].trained&&M[m].bucket===null).sort(),d30=KP.prs_30d.days,pr30=W.all_events.filter(w=>{const d=days(asOf,w.date);return 0<=d&&d<d30}),byk={};
   for(const w of pr30)byk[w.kind]=(byk[w.kind]||0)+1;const bykS={};for(const k of Object.keys(byk).sort())bykS[k]=byk[k];
@@ -329,16 +339,27 @@ function dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode){const DB=K.R2.dashboard,
     label:K.R2.label,
     kpis:{strength_change:{method:SC.method,pct:r_(med,2),display:pctd(med),status:med!=null?'ok':'insufficient',lifts:used.map(i=>({id:i,pct:chg[i].pct})),n_lifts:used.length,min_lifts:SC.min_lifts,label:SC.label,sublabel:SC.sublabel},
       muscle_counts:mc,prs_30d:{count:pr30.length,by_kind:bykS,events:ev,label:KP.prs_30d.label},avg_rir:kpiAvgRir(K,xsall,asOf,mode)},
-    muscles:M,lifts:L}}
+    muscles:M,lifts:L,main_lift_overrides:Object.fromEntries(Object.entries((OV||{}).applied||{}).map(([m,v])=>[m,v.id])),overrides_ignored:(OV||{}).ignored||[]}}
 // report(dt, history, asOf 'YYYY-MM-DD', routine (days[] or null -> history.routine.days), level, goal)
-function report(dt,history,asOf,routine=null,level='intermediate',goal=null){asOf=String(asOf).slice(0,10);const h=normalize(history),K=mk(dt,h),u=((h.settings||{}).unit)||'lb',EX=exTable(dt,h);
+// main-lift overrides (progress5, tools/progress.py resolve_overrides): settings.mainLiftPins first, then opts.main_lift_overrides on top (the
+// argument wins for the same muscle); aliases resolved. Applied only for a known muscle and a known exercise that credits it >= min_ratio (0.25);
+// anything else goes to overrides_ignored [{muscle, exercise, source, reason, ratio}] (a valid stored pin for that muscle still applies).
+function resolveOverrides(K,h,ov,EX){const O=K.R2.muscle.overrides,al=K.L.aliases,applied={},ignored=[];
+  const src=[...Object.keys(((h.settings||{}).mainLiftPins)||{}).sort().map(m=>[m,h.settings.mainLiftPins[m],'settings.mainLiftPins']),...Object.keys(ov||{}).sort().map(m=>[m,ov[m],'main_lift_overrides'])];
+  for(const [m,i,sc] of src){const r=typeof i==='string'?resolve(i,al):i;let why;
+    if(!K.L.muscles.includes(m))why=O.reasons.unknown_muscle;else if(typeof r!=='string'||!EX[r])why=O.reasons.unknown_exercise;
+    else if(((EX[r].muscles||{})[m]||0)<O.min_ratio-1e-12)why=O.reasons.low_ratio;else{applied[m]={id:r,source:sc};continue}
+    ignored.push({muscle:m,exercise:i,source:sc,reason:why,ratio:typeof r==='string'?((EX[r]||{}).muscles||{})[m]||0:0})}
+  const ap={};for(const m of Object.keys(applied).sort())ap[m]=applied[m];return {applied:ap,ignored}}
+function report(dt,history,asOf,routine=null,level='intermediate',goal=null,opts=null){asOf=String(asOf).slice(0,10);const h=normalize(history),K=mk(dt,h),u=((h.settings||{}).unit)||'lb',EX=exTable(dt,h);
+  const OV=resolveOverrides(K,h,opts&&opts.main_lift_overrides,EX);
   if(routine==null)routine=(h.routine||{}).days||null;const mode=((h.settings||{}).effort)||'rir',flat=flatten(dt,h),xsall=exposures2(dt,h,asOf,flat);
-  const comp=(h.sessions||[]).filter(s=>s.status==='completed'&&sday(s)<=asOf).map(sday).sort(),lifts={},need=K.R2.trend.min_exposures;
+  const comp=(h.sessions||[]).filter(s=>s.status==='completed'&&sday(s)<=asOf&&!isDeloadSession(s)).map(sday).sort(),lifts={},need=K.R2.trend.min_exposures;
   for(const i of Object.keys(xsall).sort()){const xs=xsall[i],tr=liftTrend(K,xs,asOf,u),st=stallState(K,xs),nd=xs.filter(e=>!e.deload);
     lifts[i]={name:EX[i].name,kind:xs[0].kind,metric:xs[0].metric,exposures:nd.length,last_date:(nd.length?nd:xs)[(nd.length?nd:xs).length-1].date,
       gain_vs_last:gainVsLast(K,xs,u),trend:tr,stall:st,status:liftStatus(tr,st),insufficient_label:tr.status==='insufficient'?fmtS(K.R2.min_data.labels.insufficient_lift,{have:tr.exposures,need}):null,
       weekly_best:weeklyBest(K,xs,u)}}
-  const dl=deloadRule(dt,K,h,asOf,lifts),cx={EX,routine:routine||[],level,goal,unit:u,deload:dl,credited:creditedWeeks(dt,h,flat,asOf,K.R2.fix.weeks_for_sets),xs:xsall,mode};
+  const dl=deloadRule(dt,K,h,asOf,lifts),cx={EX,routine:routine||[],level,goal,unit:u,deload:dl,credited:creditedWeeks(dt,h,flat,asOf,K.R2.fix.weeks_for_sets),xs:xsall,mode,overrides:OV};
   const mus=muscles2(dt,K,xsall,lifts,h,asOf,EX,cx),na=[],MU=K.L.muscles;
   const stuck=sortBy(Object.keys(mus).filter(m=>mus[m].stuck),m=>[-lifts[mus[m].main_lift.id].stall.trailing_no_gain,MU.indexOf(m)]);
   const dropping=sortBy(Object.keys(lifts).filter(i=>lifts[i].status==='dropping'),i=>[lifts[i].last_date,i]).reverse(),nm=ms=>capz(ms.map(m=>m.replace(/_/g,' ')).join(' and '));
@@ -353,9 +374,10 @@ function report(dt,history,asOf,routine=null,level='intermediate',goal=null){asO
       na.push({kind:'lift_dropping',muscle:m,muscles:[m],lift:i,lifts:[i],text:`${L.name} is dropping: below its recent best 2 sessions in a row (${L.gain_vs_last.text} last time)`,fix:chooseFix(dt,K,m,i,'dropping',L.stall,cx),notes:[]})}}
   const chg={};for(const i of Object.keys(xsall).sort())chg[i]=dashChange(K,xsall[i],asOf,u);
   const W=wins(K,xsall,asOf,u,EX,new Set(Object.values(mus).map(v=>v.main_lift.id).filter(Boolean)),chg),eff={};for(const [m,v] of Object.entries(mus))eff[m]=v.effort;
-  return {as_of:asOf,label:K.R2.label,model_note:K.R2.model_note,unit:u,effort_mode:mode,data:{completed_sessions:comp.length,logged_weeks:new Set(comp.map(wk)).size,first_date:comp.length?comp[0]:null},
+  return {as_of:asOf,label:K.R2.label,model_note:K.R2.model_note,unit:u,effort_mode:mode,data:{completed_sessions:comp.length,logged_weeks:new Set(comp.map(wk)).size,first_date:comp.length?comp[0]:null,deload_sessions_excluded:(h.sessions||[]).filter(s=>s.status==='completed'&&sday(s)<=asOf&&isDeloadSession(s)).length},
     lifts,muscles:mus,stall_flags:{muscles:stuck,lifts_stalled:Object.keys(lifts).filter(i=>lifts[i].status==='stalled').sort(),lifts_dropping:Object.keys(lifts).filter(i=>lifts[i].status==='dropping').sort()},
-    needs_attention:na,deload:dl,wins:W,effort:eff,footnote:{planned_vs_done:footnote(dt,K,h,asOf)},dashboard:dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode)}}
-const API={report,perfSignal,deloadCheck,clampRir,normalize,flatten,completedAnalytics,exerciseTrends,localDate,weekStart:wk};
+    needs_attention:na,deload:dl,wins:W,effort:eff,footnote:{planned_vs_done:footnote(dt,K,h,asOf)},main_lift_overrides:Object.fromEntries(Object.entries(OV.applied).map(([m,v])=>[m,v.id])),overrides_ignored:OV.ignored,
+    dashboard:dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode,OV)}}
+const API={report,isDeloadSession,perfSignal,deloadCheck,clampRir,normalize,flatten,completedAnalytics,exerciseTrends,localDate,weekStart:wk};
 if(isNode)module.exports=API;else root.PROGRESS=API;
 })(typeof window!=='undefined'?window:this);

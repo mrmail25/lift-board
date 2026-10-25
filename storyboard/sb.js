@@ -925,6 +925,13 @@ const shortEx=id=>(EX[id]&&EX[id].short_name)||(RD&&RD.EX[id]&&(RD.EX[id].short_
 const AS_OF='2026-10-24',PROG={sort:'problems',view:null,vsig:null,sig:null,res:null,tsig:null,tres:null,applied:null,all:false,empty:false};
 const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],fmtD=d=>`${MON3[+d.slice(5,7)-1]} ${+d.slice(8,10)}`;
 const DSH3={mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'};
+// Main lift picker (prog2 / progress5): your pick per muscle is saved in the log itself, history.settings.mainLiftPins (stored in
+// localStorage apechit.sb.log.v2), the pins path Coach's report() reads (resolve_overrides: stored pins, then main_lift_overrides on top).
+// It drives the main lift, change %, sparkline, band, stall check and KPI median. The picker offers only lifts that credit the muscle
+// >= 0.25; an invalid pin is listed in report.overrides_ignored; a pick with no session in 91 days shows 'Main lift not trained recently'
+// (no silent fallback). Reset = remove that muscle's pin.
+const mlGet=()=>Object.assign({},((logLoad().settings||{}).mainLiftPins)||{});
+const mlSet=(m,id)=>{const H=logLoad();H.settings=H.settings||{};const o=Object.assign({},H.settings.mainLiftPins||{});if(id)o[m]=id;else delete o[m];H.settings.mainLiftPins=o;logSave();PROG.sig=null;PROG.res=null;PROG.view=null};
 function progHist(empty=PROG.empty){const H=empty?{schema:2,settings:{},sessions:[],entries:[],sets:[]}:logLoad();return Object.assign({},H,{settings:Object.assign({},H.settings||{},{unit:S.unit,effort:effMode()})})}
 function progBoard(){const B=window.BOARD;if(!B||!RD)return [];const sl=RD.SLOG&&RD.SLOG.routine;
   if(B.ensurePlan&&sl&&sl.days){const sp=((RD.splits||{}).splits||[]).find(x=>x.id===sl.split);B.ensurePlan(sl.days,sp?`${sp.name} · ${sl.days.length} days`:'Sample plan',sl.level||'intermediate')}
@@ -964,7 +971,7 @@ const progHead=()=>`<div class="plabel" data-sample="1"><span>Sample data · est
 // Values come from Coach's report().dashboard through ONE adapter, logic/progress-view.js (PVIEW.build); the only storyboard-derived
 // values (avg RIR tile, the set behind a dot) are listed there. Muscle and lift detail open in one bottom sheet (muscle → lifts → chart).
 const pview=pr=>{if(!pr)return null;if(PROG.vsig===PROG.sig&&PROG.view)return PROG.view;
-  PROG.view=PVIEW.build(pr,PROGRESS.flatten(Object.assign({},RD,{aliases:{}}),progHist()),AS_OF);PROG.vsig=PROG.sig;return PROG.view};
+  const H=progHist();PROG.view=PVIEW.build(pr,PROGRESS.flatten(Object.assign({},RD,{aliases:{}}),H),AS_OF,H);PROG.vsig=PROG.sig;return PROG.view};
 // dashboard bands → Coach's colour roles (progress-rules.json dashboard.band.colour_roles): progress-strong, progress, neutral, attention, muted
 const TRC={up_strong:'var(--tr-up2)',up:'var(--tr-up)',flat:'var(--tr-flat)',down:'var(--tr-down)',insufficient:'var(--tr-muted)'},TRL={up_strong:'Up strongly',up:'Up',flat:'Flat',down:'Down',insufficient:'Too early'};
 const TRI={up_strong:'up',up:'up',flat:'flat',down:'down',insufficient:''};
@@ -976,9 +983,9 @@ function sortedMuscles(pr,vw){const a=Object.keys(vw.muscles),s=PROG.sort||'prob
 // 12-week sparkline: weekly best, gaps for weeks with no data, the last point in its 3-month trend colour
 function spark(vals,tr,dlw){const W=58,H=20,v=vals.filter(x=>x!=null);if(v.length<2)return `<svg class="psp" viewBox="0 0 ${W} ${H}" aria-hidden="true"></svg>`;
   const lo=Math.min(...v),hi=Math.max(...v),n=vals.length,X=k=>2+k/(n-1)*(W-4),Y=x=>hi>lo?2+(hi-x)/(hi-lo)*(H-4):H/2;
-  const segs=[];let c=[];vals.forEach((x,k)=>{if(x==null){if(c.length)segs.push(c);c=[]}else c.push([X(k),Y(x)])});if(c.length)segs.push(c);
+  const segs=[];let c=[];vals.forEach((x,k)=>{if(x==null){if(dlw&&dlw[k])return;if(c.length)segs.push(c);c=[]}else c.push([X(k),Y(x)])});if(c.length)segs.push(c);   /* deload weeks (isDeloadWeek) are skipped: the line joins across */
   let lk=n-1;while(vals[lk]==null)lk--;
-  return `<svg class="psp" viewBox="0 0 ${W} ${H}" aria-hidden="true">${segs.map(sg=>sg.length>1?`<polyline points="${sg.map(p=>p.join(',')).join(' ')}"/>`:`<circle cx="${sg[0][0]}" cy="${sg[0][1]}" r="1.2" class="ps1"/>`).join('')}${(dlw||[]).map((d,k)=>d?`<line class="psdl" x1="${X(k)}" x2="${X(k)}" y1="${H-3.5}" y2="${H-0.5}"/>`:'').join('')}<circle cx="${X(lk)}" cy="${Y(vals[lk])}" r="2.4" style="fill:${TRC[tr]||'var(--text-2)'}"/></svg>`}
+  return `<svg class="psp" viewBox="0 0 ${W} ${H}" aria-hidden="true">${segs.map(sg=>sg.length>1?`<polyline points="${sg.map(p=>p.join(',')).join(' ')}"/>`:`<circle cx="${sg[0][0]}" cy="${sg[0][1]}" r="1.2" class="ps1"/>`).join('')}<circle cx="${X(lk)}" cy="${Y(vals[lk])}" r="2.4" style="fill:${TRC[tr]||'var(--text-2)'}"/></svg>`}
 function kpiStrip(vw){const k=vw.kpi,b=k.buckets,e=effV(k.avg_rir);
   const tile=(go,big,lab,cls='')=>`<button class="pk ${cls}" data-kgo="${go}"><b class="num">${big}</b><span>${lab}</span></button>`;
   return `<div class="pkpi" data-src="${vw.source}">${tile('wins',k.prs_30d,'PRs<br>30 days')}${tile('muscles',k.strength_display||'–','Strength<br>vs 3 mo','pkst')}
@@ -990,13 +997,13 @@ function trendMap(pr,vw){const vol={},stk=new Set();for(const [m,x] of Object.en
   return `<div class="card pmapc"><div class="maps">${mk(map('front',vol))}${mk(map('back',vol))}</div>
    <div class="legend ptleg"><span><i style="background:var(--tr-up2)"></i>Up strongly</span><span><i style="background:var(--tr-up)"></i>Up</span><span><i style="background:var(--tr-flat)"></i>Flat</span><span><i style="background:var(--tr-down)"></i>Down</span>${has('insufficient')?'<span><i style="background:var(--tr-muted)"></i>Too early</span>':''}${stk.size?'<span><i class="stk"></i>Stalled</span>':''}<span><i class="ne"></i>Not trained</span></div></div>
    <p class="foot">Each muscle's main lift over the last 3 months. Tap a muscle for its lifts.</p>`}
-function muscleTable(pr,vw){const S0=PROG.sort||'problems',seg=[['problems','Problems first'],['az','A–Z'],['change','Change']];
+function muscleTable(pr,vw){const OVR=mlGet(),S0=PROG.sort||'problems',seg=[['problems','Problems first'],['az','A–Z'],['change','Change']];
   return `<div class="pseg" role="tablist">${seg.map(([k,t])=>`<button data-psort="${k}" class="${S0===k?'on':''}" aria-selected="${S0===k}">${t}</button>`).join('')}</div>
    <div class="group ptab"><div class="pth" aria-hidden="true"><span>Muscle</span><span>12 wk</span><span>Main lift</span><span>Change</span><span>${effT()}</span></div>
    ${sortedMuscles(pr,vw).map(m=>{const x=vw.muscles[m],v=pr.muscles[m]||{main_lift:{}},e=effV(x.avg_rir),fl=x.bucket==='stalled_or_dropping'?(v.main_lift.status==='dropping'?'Dropping':x.stalled?'Stalled':'Down'):'';
-     return `<button class="pmr" data-pm="${m}" data-bucket="${x.bucket||'insufficient'}" data-band="${x.band}"><span class="pmn">${ML[m]||m}${fl?`<em class="pstall">${fl}</em>`:''}</span>${spark(x.spark,x.band,x.spark_deload)}
-      <span class="pmlf">${x.main?esc(shortEx(x.main)):'–'}${x.reason?`<small class="prsn">${esc(capF(x.reason))}</small>`:''}</span><span class="pchg num" data-tr="${TRI[x.band]||''}">${x.change_display||'–'}</span><span class="pef num">${e==null?'–':fmtPct(e)}</span></button>`}).join('')}</div>
-   <p class="foot">Change: the main lift's best in its first 2 weeks vs the last 2 weeks, over 3 months. ${effMode()==='rpe'?'RPE = 10 − reps in reserve':'RIR = reps in reserve'}, last 4 weeks.</p>`}
+     return `<button class="pmr" data-pm="${m}" data-bucket="${x.bucket||'insufficient'}" data-band="${x.band}"><span class="pmn">${ML[m]||m}${fl?`<em class="pstall">${fl}</em>`:''}</span><span class="pspk" data-pspk="${m}" role="button" aria-label="${esc((ML[m]||m)+': '+(x.main?exNameP(x.main):'main lift')+' chart')}">${spark(x.spark,x.band,x.spark_deload)}</span>
+      <span class="pmlf">${x.main?`${OVR[m]&&OVR[m]===x.main?'<i class="ppin" title="Your pick" aria-label="Your pick"></i>':''}${esc(shortEx(x.main))}`:'–'}${x.reason?`<small class="prsn">${esc(capF(x.reason))}</small>`:''}</span><span class="pchg num" data-tr="${TRI[x.band]||''}">${x.change_display||'–'}</span><span class="pef num">${e==null?'–':fmtPct(e)}</span></button>`}).join('')}</div>
+   <p class="foot">${Object.keys(OVR).length?'<i class="ppin"></i> Your main lift pick. ':''}Tap a sparkline for that lift's chart. Change: the main lift's best in its first 2 weeks vs the last 2 weeks, over 3 months. ${effMode()==='rpe'?'RPE = 10 − reps in reserve':'RIR = reps in reserve'}, last 4 weeks.</p>`}
 function winChip(w){const t=txtS(w.text),k=t.indexOf(': '),nm=k>0?t.slice(0,k):shortEx(w.exercise),rest=k>0?t.slice(k+2):t;
   return `<button class="pchip" data-plift="${w.exercise}" data-kind="${w.kind}"><span class="pci ${w.kind==='milestone'?'ms':''}" aria-hidden="true">${winIcon(w.kind)}</span><span class="pct"><b>${esc(shortEx(w.exercise)||nm)}</b><span>${esc(capF(rest))}</span></span></button>`}
 V.progress=()=>{const pr=RD&&progressData();if(!pr)return header('Progress',bookBtn)+`<p class="foot">Progress needs the logger rules.</p>`;if(!pr.data.completed_sessions)return progEmpty();
@@ -1034,12 +1041,26 @@ function musclePane(pr,vw,m){const v=pr.muscles[m],x=vw.muscles[m];
   return `<div class="psh" data-pshm="${m}"><h2>${ML[m]||m}${x.bucket==='stalled_or_dropping'?` <span class="pstall">${v.main_lift.status==='dropping'?'Dropping':x.stalled?'Stalled':'Down'}</span>`:''}</h2>
    <div class="pshk"><div><b class="num" style="color:${ink}">${x.change_display||'–'}</b><span>Main lift, 3 mo</span></div><div><b class="num">${TRL[x.band]||'–'}</b><span>3-month trend</span></div><div><b class="num">${e==null?'–':fmtPct(e)}</b><span>Avg ${effT()}</span></div></div>${x.reason?`<p class="foot prsn1">${esc(capF(x.reason))}</p>`:''}
    <div class="ghead">Lifts</div><div class="group pmlifts">${ids.map(i=>{const L=pr.lifts[i];return `<button class="row" data-sl="${i}"><div class="grow"><div class="t1">${esc(L.name)}${i===ml?' <span class="tag pmain">Main lift</span>':''}</div><div class="t2">${esc(liftLine(L))}</div></div>${arrow(LST[L.status]||'insufficient')}${CHEV}</button>`}).join('')}</div>
-   <p class="foot">Main lift: the one done most in the last 6 weeks${v.main_lift.pinned?' (pinned)':''}.</p></div>`}
+   ${mainPicker(pr,m,ids,ml)}</div>`}
+// Main lift picker: Automatic + every logged lift that trains the muscle at >= 0.25 (liftsOf); your pick is saved per muscle
+function mainPicker(pr,m,ids,ml){const ov=mlGet()[m]||null,ign=(pr.overrides_ignored||[]).find(o=>o.muscle===m),nm=i=>(pr.lifts[i]||{}).name||exNameP(i);
+  const row=(id,t1,t2,on)=>`<button class="row pmlp${on?' on':''}" data-pml="${id}" role="radio" aria-checked="${on}"><div class="grow"><div class="t1">${t1}</div>${t2?`<div class="t2">${t2}</div>`:''}</div><span class="pck" aria-hidden="true">${on?I('check',2.6):''}</span></button>`;
+  const stale=ov&&!ids.includes(ov)&&!ign;
+  return `<div class="ghead" data-pmlh="1">Main lift</div><div class="group pmlpick" role="radiogroup" aria-label="Main lift for ${esc(ML[m]||m)}">
+    ${row('','Automatic','The lift you did most in the last 6 weeks',!ov||!!ign)}
+    ${ids.map(i=>row(i,esc(nm(i)),i===ml&&!ov?'Current main lift':'',ov===i)).join('')}${stale?row(ov,esc(nm(ov)),'No sessions in the last 3 months',true):''}</div>
+    ${ign?`<p class="foot pmlnote">Your pick, ${esc(nm(ign.exercise))}, trains ${esc((ML[m]||m).toLowerCase())} too little to count, so the automatic main lift is used.</p>`:''}
+    ${ov?`<button class="btn grey block pmlreset" data-pml="" data-reset="1">Reset to automatic</button>`:''}
+    <p class="foot">It sets the table's change %, sparkline, chart and the strength median for ${esc((ML[m]||m).toLowerCase())}.</p>`}
+// the muscle's other lifts stay one tap away on the chart view
+function liftSwitch(pr,id){const m=PSH.m;if(!m||!pr.muscles[m])return '';const ids=liftsOf(pr,m),ml=((pr.dashboard||{}).muscles||{})[m],mid=ml&&ml.main_lift?ml.main_lift.id:null;if(mid&&!ids.includes(mid))ids.unshift(mid);if(ids.length<2&&ids[0]===id)return '';
+  return `<div class="plsw" role="tablist" aria-label="${esc(ML[m]||m)} lifts">${ids.map(i=>`<button class="pchip plsc${i===id?' on':''}" data-sl="${i}" role="tab" aria-selected="${i===id}">${esc(shortEx(i))}${i===mid?'<span class="plmain">Main</span>':''}</button>`).join('')}</div>`}
 function dotSet(id,met,sid){const fl=PROGRESS.flatten(Object.assign({},RD,{aliases:{}}),progHist());return PVIEW.dotSet(fl,id,met,sid,(kg,r)=>PRS.e1rmSet(RD,kg,r,'working',E1MAX()))}
 function liftPane(pr,vw,id){const L=pr.lifts[id],u=pr.unit,back=PSH.m&&pr.muscles[PSH.m]?`<button class="pshback" data-psback="1">${I('chevL',2.4)}${ML[PSH.m]}</button>`:'';
-  if(!L)return `<div class="psh">${back}<h2>${esc(exNameP(id))}</h2><p class="sub">This lift has no logged sessions yet.</p></div>`;
+  const sw=liftSwitch(pr,id);
+  if(!L)return `<div class="psh" data-pshl="${id}">${back}<h2>${esc(exNameP(id))}</h2>${sw}<p class="sub">No sessions logged for this lift yet.</p></div>`;
   const g=L.gain_vs_last,DL=dashLift(pr,id),met=DL?DL.metric:L.metric,nprs=DL?DL.dots.filter(d=>d.pr).length:0,c=DL&&DL.change;
-  return `<div class="psh plh" data-metric="${met}" data-kind="${L.kind}">${back}<h2>${esc(L.name)}</h2>
+  return `<div class="psh plh" data-pshl="${id}" data-metric="${met}" data-kind="${L.kind}">${back}<h2>${esc(L.name)}</h2>${sw}
    <div class="pseg prng">${[['4w','4w'],['12w','12w'],['all','All']].map(([k,t])=>`<button data-prng="${k}" class="${PSH.rng===k?'on':''}">${t}</button>`).join('')}</div>
    <div class="card plcard"><div class="plt">${CTITLE[met](u)}</div>${liftChart(pr,id)}<div class="ptip" id="ptip" hidden></div></div>
    <p class="foot pnote1">${CNOTE[met]}</p>
@@ -1075,9 +1096,11 @@ function afterProgress(){tapable($('#view'))}
 function progApply(k){const pr=progressData(),x=pr&&pr.needs_attention[+k];if(!x||!x.fix||!x.fix.apply_edits_board||!x.fix.ops||!window.BOARD)return;
   const before=BOARD.progApply(x.fix.ops);PROG.applied={key:akey(x),item:JSON.parse(JSON.stringify(x)),before,asig:BOARD.sig()};toast('Applied to your board');rerenderProgress()}
 function progUndo(){const a=PROG.applied;if(!a)return;PROG.applied=null;if(BOARD.sig()===a.asig){BOARD.progUndo(a.before);toast('Undone · your board is back')}else toast('Your board changed after this. Undo it in Build.');rerenderProgress()}
-document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-mlx],[data-pm],[data-plift],[data-pfix],[data-pundo],[data-pmore],[data-kgo],[data-psort],[data-sl],[data-psback],[data-prng],.plc .pp,.pmapc .mp[data-mu]');
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-mlx],[data-pspk],[data-pml],[data-pm],[data-plift],[data-pfix],[data-pundo],[data-pmore],[data-kgo],[data-psort],[data-sl],[data-psback],[data-prng],.plc .pp,.pmapc .mp[data-mu]');
   if(!t||!($('#view').contains(t)||t.closest('.psheet')))return;e.preventDefault();
   if(t.matches('.pmapc .mp'))return openPSheet(t.dataset.mu);if(t.matches('.plc .pp'))return showTip(t);
+  if(t.dataset.pspk){const vw=pview(progressData()),x=vw&&vw.muscles[t.dataset.pspk];return openPSheet(t.dataset.pspk,x&&x.main||null)}
+  if(t.dataset.pml!=null&&PSH.m){mlSet(PSH.m,t.dataset.pml||null);rerenderProgress();PSH.lift=null;pshRender();toast(t.dataset.pml?'Main lift set':'Main lift back to automatic');return}
   if(t.dataset.mlx)return exDetail(t.dataset.mlx);if(t.dataset.pm)return openPSheet(t.dataset.pm);
   if(t.dataset.plift){const pr=progressData();return openPSheet(pr?muscleOfLift(pr,t.dataset.plift):null,t.dataset.plift)}
   if(t.dataset.sl){PSH.lift=t.dataset.sl;return pshRender()}if(t.dataset.psback){PSH.lift=null;return pshRender()}if(t.dataset.prng){PSH.rng=t.dataset.prng;return pshRender()}
@@ -1898,7 +1921,7 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

@@ -173,11 +173,61 @@
   "weight": "stimulus share = credited hard sets in the window (rating x hard sets), same counting as targets.json",
   "trend": "weighted mean of the %/week of its lifts that have a trend; same thresholds as lifts",
   "min_data": "at least one lift with a trend and >= 3 distinct weeks with a credited set in the window",
-  "main_lift": "pinned (history.settings.mainLiftPins[muscle], must credit the muscle >= 0.25) else the lift with the most sessions in the window among lifts rated >= 0.5 (none: >= 0.25); ties: higher rating, more credited sets, primary < accessory < isolation, id",
+  "main_lift": "pinned (history.settings.mainLiftPins[muscle] or report(main_lift_overrides)[muscle], see overrides) else the lift with the most sessions in the window among lifts rated >= 0.5 (none: >= 0.25); ties: higher rating, more credited sets, primary < accessory < isolation, id",
+  "overrides": {
+   "input": "report(history, as_of, ..., main_lift_overrides={muscle_id: exercise_id}) (progress5); an alias of history.settings.mainLiftPins: stored pins are read first and the argument wins for the same muscle; exercise aliases resolved",
+   "min_ratio": 0.25,
+   "valid": "applied only when the muscle id is known, the exercise is known (library or custom) and its exercises.json ratio for that muscle is >= 0.25; otherwise ignored (a valid stored pin for that muscle still applies) and listed in overrides_ignored [{muscle, exercise, source, reason, ratio}]",
+   "drives": [
+    "muscle main lift (muscles[m].main_lift, pinned = true, override_source)",
+    "muscle stall check (muscle.stuck uses the main lift status)",
+    "latest gain",
+    "dashboard table change %",
+    "sparkline",
+    "91-day body-map band",
+    "KPI strength-change median (unique main lifts after overrides)",
+    "wins main-lift ranking"
+   ],
+   "not_recent": "an applied override whose lift has no session in the 91-day dashboard window: change.status insufficient, reason \"main lift not trained recently\", band insufficient, sparkline all null; never a silent fallback to another lift",
+   "reasons": {
+    "unknown_muscle": "unknown muscle",
+    "unknown_exercise": "unknown exercise",
+    "low_ratio": "lift credits this muscle below 0.25",
+    "not_recent": "main lift not trained recently"
+   },
+   "payload": "report().main_lift_overrides = applied {muscle: exercise} (stored pins + argument); report().overrides_ignored (also in report().dashboard)"
+  },
   "main_lift_min_rating": 0.5,
   "latest_gain": "the main lift's change vs its last comparable session",
   "stuck": "muscle trend is flat or down AND its main lift is stalled or dropping AND lifts that are stalled or dropping carry >= 50% of the muscle's weight",
   "stuck_share": 0.5
+ },
+ "deload_sessions": {
+  "rule": "exclude",
+  "note": "Chief of Staff (Oct 25, 2026, from Mr Dude): deload weeks are left out of progress charts and trends altogether (progress5). Every progress number is computed as if deload sessions were not logged.",
+  "deload_flag": {
+   "field": "session.deload",
+   "auto_detect": false,
+   "missing": "false",
+   "rule": "a session is a deload only if session.deload === true; a missing, null or non-true value is false. The app sets the flag when the session is logged during an applied deload-week overlay, or when the user marks the week as lighter. There is no automatic detection from volume or intensity."
+  },
+  "scope": [
+   "estimated 1RM, load-reps index, Best reps and hold series: weekly best and dashboard dots (no dot at all; the dot.deload field was removed)",
+   "sparkline (a deload-only week is null; the deload_week flag was removed from sparklines and weekly_best)",
+   "42-day trend slope and the 91-day dashboard change / band",
+   "stall and dropping exposure counts; last comparable session (gain vs last)",
+   "strength-change KPI, per-muscle change %, vs 3 months ago early / late values",
+   "PR detection: wins events, prs_30d, dot.pr and dot.best (a deload set cannot set a PR and is not history later sessions must beat)",
+   "minimum-data counts (sessions, exposures, weeks); report().data.completed_sessions and logged_weeks count non-deload sessions (data.deload_sessions_excluded = the rest)",
+   "credited hard sets for the sets_up / sets_down fix (weeks with a deload session are skipped; the next earlier week is used)",
+   "lift high-rep metric fallback and the muscle main-lift session counts"
+  ],
+  "kept": {
+   "avg_rir": "unchanged: kpis.avg_rir and per-muscle effort.avg_rir already left deload sessions out",
+   "planned_vs_done": "unchanged: the planned-vs-done footnote still counts sets done in deload sessions as done (the session was planned and completed)",
+   "deload_signal": "unchanged: logger.deload_signals eligibility, weeks since the last deload and points read the history directly (the performance signal already used non-deload exposures)",
+   "log_tab_prs": "Log tab PR badges (tools/prs.py, rules.json logger.prs.exclude) skip deload sessions too since progress6 (Chief of Staff, Oct 25, 2026), with the same session.deload === true rule, so Progress wins and Log badges agree"
+  }
  },
  "deload": {
   "one_rule": "There is one deload rule: logger.deload_signals points (tools/deload.py deload_check: eligibility, weeks since deload, RIR drift, hard sets over target, readiness, suggest_score 3), with its performance signal REPLACED by the Progress lift statuses below. Progress, Train and Log all use it: rules.json logger.deload_signals.performance = {\"source\": \"progress-rules.json#deload\", ...inline values} since progress3, and tools/deload.py deload_check calls tools/progress.py perf_signal.",
@@ -404,7 +454,7 @@
   },
   "sparkline": {
    "weeks": 12,
-   "rule": "the main lift's weekly best dashboard value for the 12 Monday-to-Sunday weeks ending with the week of as_of, oldest first; null for weeks with no value (deload-only weeks also null, flagged)",
+   "rule": "the main lift's weekly best dashboard value for the 12 Monday-to-Sunday weeks ending with the week of as_of, oldest first; null for weeks with no value (a week with only deload sessions is null like any empty week; the deload_week flag was removed in progress5)",
    "why": "one lift's own number (estimated 1RM, reps or hold) is easy to read and matches the change %; a combined muscle index would need weights and units nobody can check"
   },
   "dots": {
@@ -416,7 +466,7 @@
    },
    "pr": "dot.pr = true when that session has a wins event for the lift (any PR kind); used for event chips and tooltips, not for the chart marker",
    "best": "dot.best = true only when the dot's plotted value (dot.value, as stored) is strictly higher than every earlier dot value of that lift, over all history (not only the window shown); the lift's first-ever session and deload dots are false. The chart marker uses best",
-   "deload": "deload sessions are shown as hollow dots (dot.deload = true) and never counted as PRs or in trends"
+   "deload": "deload sessions produce no dot at all (progress5, deload_sessions = exclude); the dot.deload field was removed"
   },
   "vs_3_months": "wins vs 3 months ago uses this change for every lift with enough data, including bodyweight lifts (best reps) and hold lifts (best hold)"
  },

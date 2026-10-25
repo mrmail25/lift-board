@@ -1312,3 +1312,15 @@ html[data-theme=dark] .pvd{color:var(--text-2)}@media (prefers-color-scheme:dark
 /* dashfu: avg RIR KPI from kpis.avg_rir; partial-logging note small and muted under the strip */
 .pknote{margin:6px 20px 0;font-size:11.5px;line-height:1.3;color:var(--text-2)}
 .pk.pkna b{color:var(--text-2)}
+/* prog2: sparkline tap target, your-pick marker, lift switcher on the chart, Main lift picker */
+.pspk{display:block;margin:-10px -4px;padding:10px 4px;border-radius:8px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pspk:active{background:var(--fill)}.pspk svg{pointer-events:none}
+.ppin{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:5px;vertical-align:1px}
+.plsw{display:flex;gap:6px;overflow-x:auto;margin:2px -20px 12px;padding:2px 20px 4px;scrollbar-width:none}.plsw::-webkit-scrollbar{display:none}
+.plsw .plsc{align-items:center;padding:7px 12px;border-radius:999px;font-size:13.5px;font-weight:500;background:var(--fill);color:var(--ink);white-space:nowrap;max-width:none}
+.plsw .plsc.on{background:var(--ink);color:var(--paper)}
+.plmain{margin-left:6px;font-size:10.5px;font-weight:600;opacity:.6;text-transform:uppercase;letter-spacing:.03em}
+.pmlpick .pmlp{min-height:52px}.pmlp .pck{width:22px;display:flex;justify-content:flex-end;color:var(--accent-press)}
+.pmlp .pck svg{width:20px;height:20px;flex:none}
+.pmlp.on .t1{font-weight:600}
+.pmlnote{color:var(--text-2)}.pmlreset{margin:10px 16px 0;width:calc(100% - 32px)}

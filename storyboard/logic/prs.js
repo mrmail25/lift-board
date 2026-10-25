@@ -33,9 +33,13 @@ function stepKg(dt,x,unit,C,profile){const eq=((dt.EX[x.ex]||{}).equipment)||'de
     if(av&&av.length>1){const pu=profile.unit||unit,v=x.added_kg*(pu==='lb'?C.lb:1);let i=0;for(let k=1;k<av.length;k++)if(Math.abs(av[k]-v)<Math.abs(av[i]-v))i=k;const j=i>0?i:1,g=av[j]-av[j-1];if(g>0)return toKg(g,pu,C)}}
   const st=C.load_step,u=st[unit]||st.lb||{};return toKg(u[eq]??u.default??5,unit in st?unit:'lb',C)}
 /** detect(dt, history, {aliases, profile}) -> {sessionId: {exerciseId: {type: {value,set_id,load_kg,reps,set_ids}}}} */
+/** isDeload(session): session.deload === true only (missing / null / false / "yes" / anything else = a normal session; no auto-detection).
+ *  Same rule as progress-rules.json deload_flag and PROGRESS.isDeloadSession (tools/prs.py is_deload). */
+function isDeload(s){return !!s&&s.deload===true}
 function detect(dt,h,o={}){const C=ctx(dt),e1=(w,r)=>(E1[C.formula]||E1.epley)(w,r),fl=1+C.flat/100,ok=(x,k)=>prOk(x,k,C);
   const d2=Object.assign({},dt,{_lr:undefined,aliases:o.aliases||dt.aliases||{}}),prior={},out={};
-  for(const q of PG.flatten(d2,h)){const sid=q.s.id,cur={},unit=q.s.unit||'lb';
+  for(const q of PG.flatten(d2,h)){if(isDeload(q.s))continue;/* rules.json logger.prs.exclude (progress6, CoS Oct 25 2026): deload sessions get no badge and are not history to beat; a lift's first non-deload session is its baseline */
+    const sid=q.s.id,cur={},unit=q.s.unit||'lb';
     for(const x of q.sets)if(TYPES.some(k=>ok(x,k)))(cur[x.ex]=cur[x.ex]||[]).push(x);
     for(const [ex,xs] of Object.entries(cur)){const P=prior[ex];
       if(P&&P.length){const loaded=k=>P.filter(p=>p.load_kg>EPS&&ok(p,k)),mx=a=>a.length?Math.max(...a):0;
@@ -55,6 +59,6 @@ function detect(dt,h,o={}){const C=ctx(dt),e1=(w,r)=>(E1[C.formula]||E1.epley)(w
   return out}
 /** e1RM of one set in its own unit (null when not eligible: warm-up, 0 reps, reps > maxReps (default logger.e1rm_max_reps), no load). */
 function e1rmSet(dt,load,reps,kind='working',maxReps){const C=ctx(dt),mx=maxReps||C.mx;if(kind!=='working'||!(reps>0)||!(+load>0)||reps>mx)return null;return (E1[C.formula]||E1.epley)(+load,reps)}
-const API={detect,availableLoads,e1rmSet,stepKg,ctx,TYPES};
+const API={detect,isDeload,availableLoads,e1rmSet,stepKg,ctx,TYPES};
 if(isNode)module.exports=API;else root.PRS=API;
 })(typeof window!=='undefined'?window:globalThis);

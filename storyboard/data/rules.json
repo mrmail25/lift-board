@@ -1533,7 +1533,8 @@
       "exclude": [
         "warmup sets",
         "sets with 0 reps",
-        "the first ever logged session of an exercise (sets the baseline, no badge)"
+        "the first ever logged session of an exercise (sets the baseline, no badge)",
+        "sets in deload sessions (session.deload === true): no badge, and not history later sets must beat"
       ],
       "recompute_on_edit": true,
       "one_badge_per_type_per_session": true,
@@ -2055,7 +2056,7 @@
           "training days / frequency",
           "rep range"
         ],
-        "sessions": "logged with session.deload = true: excluded from progress signals and deload trends; PRs and analytics still count them",
+        "sessions": "logged with session.deload = true: excluded from progress signals, deload trends, the Progress tab (progress-rules.json deload_sessions) and PR badges (logger.prs.exclude, progress6); analytics still count them",
         "why": "Delphi coaches agreed deloads can reduce volume (fewer sets), proximity to failure and intensity, keep familiar exercises and frequency (Bell 2023); athletes report fewer sets and reps, lighter loads and more RIR, same frequency and exercises (Rogerson 2024)."
       },
       "evidence_note": "Honest status: deloading is mostly expert opinion. The Bell 2023 Delphi panel itself agreed \"there are limited scientific studies and understanding about deloading\" (100%) and that current approaches rest on coach experience. The one trial of a mid-programme deload (Coleman 2024: 1 week off training at the midpoint of a 9-week programme, 39 resistance-trained adults) found no difference in muscle growth and slightly smaller lower-body strength gains than training straight through. No study has validated these triggers or thresholds; they are our model of what coaches and athletes report. Treat the prompt as a nudge to consider a lighter week, not a measurement of fatigue.",

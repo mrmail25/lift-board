@@ -5188,6 +5188,527 @@
    }
   }
  },
+ "deload_case": {
+  "rule": "rules.json logger.prs.exclude: sets in deload sessions (session.deload === true): no badge, and not history later sets must beat",
+  "notes": [
+   "dl3 is a deload session (session.deload === true): its 155 lb x 12 set gets no badge (it would earn set_volume and reps_at_load if counted).",
+   "dl4 (160 x 11) is compared with dl1-dl2 only: set_volume 1760 > 1150 and a rep PR at 160 lb; had dl3 counted as history (1860), set_volume would not fire.",
+   "dl5 has deload: \"yes\" (not === true): a normal session."
+  ],
+  "history": {
+   "schema": 2,
+   "sessions": [
+    {
+     "id": "dl1",
+     "schema": 2,
+     "status": "completed",
+     "date": "2026-09-07T18:00:00-07:00",
+     "startedAt": "2026-09-07T18:00:00-07:00",
+     "endedAt": "2026-09-07T19:00:00-07:00",
+     "unit": "lb",
+     "dayIdx": 0,
+     "label": "Upper",
+     "notes": "",
+     "snapshot": {
+      "exercises": [
+       {
+        "exerciseId": "barbell-bench-press",
+        "sets": 3
+       }
+      ]
+     }
+    },
+    {
+     "id": "dl2",
+     "schema": 2,
+     "status": "completed",
+     "date": "2026-09-14T18:00:00-07:00",
+     "startedAt": "2026-09-14T18:00:00-07:00",
+     "endedAt": "2026-09-14T19:00:00-07:00",
+     "unit": "lb",
+     "dayIdx": 0,
+     "label": "Upper",
+     "notes": "",
+     "snapshot": {
+      "exercises": [
+       {
+        "exerciseId": "barbell-bench-press",
+        "sets": 3
+       }
+      ]
+     }
+    },
+    {
+     "id": "dl3",
+     "schema": 2,
+     "status": "completed",
+     "date": "2026-09-21T18:00:00-07:00",
+     "startedAt": "2026-09-21T18:00:00-07:00",
+     "endedAt": "2026-09-21T19:00:00-07:00",
+     "unit": "lb",
+     "dayIdx": 0,
+     "label": "Upper",
+     "notes": "",
+     "snapshot": {
+      "exercises": [
+       {
+        "exerciseId": "barbell-bench-press",
+        "sets": 2
+       }
+      ]
+     },
+     "deload": true
+    },
+    {
+     "id": "dl4",
+     "schema": 2,
+     "status": "completed",
+     "date": "2026-09-28T18:00:00-07:00",
+     "startedAt": "2026-09-28T18:00:00-07:00",
+     "endedAt": "2026-09-28T19:00:00-07:00",
+     "unit": "lb",
+     "dayIdx": 0,
+     "label": "Upper",
+     "notes": "",
+     "snapshot": {
+      "exercises": [
+       {
+        "exerciseId": "barbell-bench-press",
+        "sets": 2
+       }
+      ]
+     }
+    },
+    {
+     "id": "dl5",
+     "schema": 2,
+     "status": "completed",
+     "date": "2026-10-05T18:00:00-07:00",
+     "startedAt": "2026-10-05T18:00:00-07:00",
+     "endedAt": "2026-10-05T19:00:00-07:00",
+     "unit": "lb",
+     "dayIdx": 0,
+     "label": "Upper",
+     "notes": "",
+     "snapshot": {
+      "exercises": [
+       {
+        "exerciseId": "barbell-bench-press",
+        "sets": 2
+       }
+      ]
+     },
+     "deload": "yes"
+    }
+   ],
+   "entries": [
+    {
+     "id": "dl1-e0",
+     "sessionId": "dl1",
+     "order": 0,
+     "exerciseId": "barbell-bench-press",
+     "nameSnapshot": "Barbell Bench Press",
+     "repRange": [
+      6,
+      12
+     ],
+     "restSec": 180,
+     "notes": "",
+     "skipped": false
+    },
+    {
+     "id": "dl2-e0",
+     "sessionId": "dl2",
+     "order": 0,
+     "exerciseId": "barbell-bench-press",
+     "nameSnapshot": "Barbell Bench Press",
+     "repRange": [
+      6,
+      12
+     ],
+     "restSec": 180,
+     "notes": "",
+     "skipped": false
+    },
+    {
+     "id": "dl3-e0",
+     "sessionId": "dl3",
+     "order": 0,
+     "exerciseId": "barbell-bench-press",
+     "nameSnapshot": "Barbell Bench Press",
+     "repRange": [
+      6,
+      12
+     ],
+     "restSec": 180,
+     "notes": "",
+     "skipped": false
+    },
+    {
+     "id": "dl4-e0",
+     "sessionId": "dl4",
+     "order": 0,
+     "exerciseId": "barbell-bench-press",
+     "nameSnapshot": "Barbell Bench Press",
+     "repRange": [
+      6,
+      12
+     ],
+     "restSec": 180,
+     "notes": "",
+     "skipped": false
+    },
+    {
+     "id": "dl5-e0",
+     "sessionId": "dl5",
+     "order": 0,
+     "exerciseId": "barbell-bench-press",
+     "nameSnapshot": "Barbell Bench Press",
+     "repRange": [
+      6,
+      12
+     ],
+     "restSec": 180,
+     "notes": "",
+     "skipped": false
+    }
+   ],
+   "sets": [
+    {
+     "id": "dl1-e0-t0",
+     "entryId": "dl1-e0",
+     "sessionId": "dl1",
+     "idx": 0,
+     "kind": "working",
+     "load": 225,
+     "reps": 5,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-09-07T18:00:00-07:00"
+    },
+    {
+     "id": "dl1-e0-t1",
+     "entryId": "dl1-e0",
+     "sessionId": "dl1",
+     "idx": 1,
+     "kind": "working",
+     "load": 225,
+     "reps": 5,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-09-07T18:00:00-07:00"
+    },
+    {
+     "id": "dl1-e0-t2",
+     "entryId": "dl1-e0",
+     "sessionId": "dl1",
+     "idx": 2,
+     "kind": "working",
+     "load": 225,
+     "reps": 5,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-09-07T18:00:00-07:00"
+    },
+    {
+     "id": "dl2-e0-t0",
+     "entryId": "dl2-e0",
+     "sessionId": "dl2",
+     "idx": 0,
+     "kind": "working",
+     "load": 230,
+     "reps": 5,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-09-14T18:00:00-07:00"
+    },
+    {
+     "id": "dl2-e0-t1",
+     "entryId": "dl2-e0",
+     "sessionId": "dl2",
+     "idx": 1,
+     "kind": "working",
+     "load": 230,
+     "reps": 5,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-09-14T18:00:00-07:00"
+    },
+    {
+     "id": "dl2-e0-t2",
+     "entryId": "dl2-e0",
+     "sessionId": "dl2",
+     "idx": 2,
+     "kind": "working",
+     "load": 230,
+     "reps": 5,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-09-14T18:00:00-07:00"
+    },
+    {
+     "id": "dl3-e0-t0",
+     "entryId": "dl3-e0",
+     "sessionId": "dl3",
+     "idx": 0,
+     "kind": "working",
+     "load": 155,
+     "reps": 12,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-09-21T18:00:00-07:00"
+    },
+    {
+     "id": "dl3-e0-t1",
+     "entryId": "dl3-e0",
+     "sessionId": "dl3",
+     "idx": 1,
+     "kind": "working",
+     "load": 155,
+     "reps": 12,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-09-21T18:00:00-07:00"
+    },
+    {
+     "id": "dl4-e0-t0",
+     "entryId": "dl4-e0",
+     "sessionId": "dl4",
+     "idx": 0,
+     "kind": "working",
+     "load": 160,
+     "reps": 11,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-09-28T18:00:00-07:00"
+    },
+    {
+     "id": "dl4-e0-t1",
+     "entryId": "dl4-e0",
+     "sessionId": "dl4",
+     "idx": 1,
+     "kind": "working",
+     "load": 160,
+     "reps": 11,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-09-28T18:00:00-07:00"
+    },
+    {
+     "id": "dl5-e0-t0",
+     "entryId": "dl5-e0",
+     "sessionId": "dl5",
+     "idx": 0,
+     "kind": "working",
+     "load": 160,
+     "reps": 12,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-10-05T18:00:00-07:00"
+    },
+    {
+     "id": "dl5-e0-t1",
+     "entryId": "dl5-e0",
+     "sessionId": "dl5",
+     "idx": 1,
+     "kind": "working",
+     "load": 160,
+     "reps": 12,
+     "rir": 2,
+     "done": true,
+     "doneAt": "2026-10-05T18:00:00-07:00"
+    }
+   ]
+  },
+  "expected_prs": {
+   "dl2": {
+    "barbell-bench-press": {
+     "weight": {
+      "value": 104.326369,
+      "set_id": "dl2-e0-t0",
+      "load_kg": 104.326369,
+      "reps": 5,
+      "set_ids": [
+       "dl2-e0-t0",
+       "dl2-e0-t1",
+       "dl2-e0-t2"
+      ]
+     },
+     "set_volume": {
+      "value": 521.631846,
+      "set_id": "dl2-e0-t0",
+      "load_kg": 104.326369,
+      "reps": 5,
+      "set_ids": [
+       "dl2-e0-t0",
+       "dl2-e0-t1",
+       "dl2-e0-t2"
+      ]
+     },
+     "e1rm": {
+      "value": 121.714097,
+      "set_id": "dl2-e0-t0",
+      "load_kg": 104.326369,
+      "reps": 5,
+      "set_ids": [
+       "dl2-e0-t0",
+       "dl2-e0-t1",
+       "dl2-e0-t2"
+      ]
+     }
+    }
+   },
+   "dl4": {
+    "barbell-bench-press": {
+     "set_volume": {
+      "value": 798.323521,
+      "set_id": "dl4-e0-t0",
+      "load_kg": 72.574866,
+      "reps": 11,
+      "set_ids": [
+       "dl4-e0-t0",
+       "dl4-e0-t1"
+      ]
+     },
+     "reps_at_load": {
+      "value": 11,
+      "set_id": "dl4-e0-t0",
+      "load_kg": 72.574866,
+      "reps": 11,
+      "set_ids": [
+       "dl4-e0-t0",
+       "dl4-e0-t1"
+      ]
+     }
+    }
+   },
+   "dl5": {
+    "barbell-bench-press": {
+     "set_volume": {
+      "value": 870.898386,
+      "set_id": "dl5-e0-t0",
+      "load_kg": 72.574866,
+      "reps": 12,
+      "set_ids": [
+       "dl5-e0-t0",
+       "dl5-e0-t1"
+      ]
+     },
+     "reps_at_load": {
+      "value": 12,
+      "set_id": "dl5-e0-t0",
+      "load_kg": 72.574866,
+      "reps": 12,
+      "set_ids": [
+       "dl5-e0-t0",
+       "dl5-e0-t1"
+      ]
+     }
+    }
+   }
+  },
+  "if_deload_counted": {
+   "dl2": {
+    "barbell-bench-press": {
+     "weight": {
+      "value": 104.326369,
+      "set_id": "dl2-e0-t0",
+      "load_kg": 104.326369,
+      "reps": 5,
+      "set_ids": [
+       "dl2-e0-t0",
+       "dl2-e0-t1",
+       "dl2-e0-t2"
+      ]
+     },
+     "set_volume": {
+      "value": 521.631846,
+      "set_id": "dl2-e0-t0",
+      "load_kg": 104.326369,
+      "reps": 5,
+      "set_ids": [
+       "dl2-e0-t0",
+       "dl2-e0-t1",
+       "dl2-e0-t2"
+      ]
+     },
+     "e1rm": {
+      "value": 121.714097,
+      "set_id": "dl2-e0-t0",
+      "load_kg": 104.326369,
+      "reps": 5,
+      "set_ids": [
+       "dl2-e0-t0",
+       "dl2-e0-t1",
+       "dl2-e0-t2"
+      ]
+     }
+    }
+   },
+   "dl3": {
+    "barbell-bench-press": {
+     "set_volume": {
+      "value": 843.682812,
+      "set_id": "dl3-e0-t0",
+      "load_kg": 70.306901,
+      "reps": 12,
+      "set_ids": [
+       "dl3-e0-t0",
+       "dl3-e0-t1"
+      ]
+     },
+     "reps_at_load": {
+      "value": 12,
+      "set_id": "dl3-e0-t0",
+      "load_kg": 70.306901,
+      "reps": 12,
+      "set_ids": [
+       "dl3-e0-t0",
+       "dl3-e0-t1"
+      ]
+     }
+    }
+   },
+   "dl4": {
+    "barbell-bench-press": {
+     "reps_at_load": {
+      "value": 11,
+      "set_id": "dl4-e0-t0",
+      "load_kg": 72.574866,
+      "reps": 11,
+      "set_ids": [
+       "dl4-e0-t0",
+       "dl4-e0-t1"
+      ]
+     }
+    }
+   },
+   "dl5": {
+    "barbell-bench-press": {
+     "set_volume": {
+      "value": 870.898386,
+      "set_id": "dl5-e0-t0",
+      "load_kg": 72.574866,
+      "reps": 12,
+      "set_ids": [
+       "dl5-e0-t0",
+       "dl5-e0-t1"
+      ]
+     },
+     "reps_at_load": {
+      "value": 12,
+      "set_id": "dl5-e0-t0",
+      "load_kg": 72.574866,
+      "reps": 12,
+      "set_ids": [
+       "dl5-e0-t0",
+       "dl5-e0-t1"
+      ]
+     }
+    }
+   }
+  }
+ },
  "custom_exercise_case": {
   "history": {
    "sessions": [
