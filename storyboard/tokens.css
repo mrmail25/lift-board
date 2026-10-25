@@ -55,6 +55,7 @@
   --hl-main:#E8430C; --hl-helper:#F08A5D; --hl-minor:#F7BC9F;
   --warn-tint:#FFF3D6; --warn-ink:#7A5300; --warn-line:#D9A93A;
   --ok-tint:#E4F4EA; --ok-ink:#1E6B3A; --bad-tint:#FDECEC;
+  --tr-up2:#2E9A5B; --tr-up:#86CFA2; --tr-muted:#C9D6E6; --tr-flat:#7F9DBD; --tr-down:#E3A32B; --tr-up-ink:#1E6B3A; --tr-flat-ink:#4F6378; --tr-down-ink:#7A5300; /* Progress 3-month trend (map, table) */
   --slot-bg:rgba(255,255,255,.55);
   --series-1:#E8430C; --series-2:#2557A8; --series-3:#1E8A4C; --series-4:#8E44AD; --series-5:#B07D00; --series-6:#0E8C9C; /* e1RM overlay lines */
   /* r3fu: recovery cost stacked by fatigue tier (heaviest first). One violet scale, apart from the blue sets ramp and the green / amber / red range colours */
@@ -106,6 +107,7 @@ html[data-theme=dark]{
   --hl-main:#FF8452; --hl-helper:#C9592B; --hl-minor:#85442B;
   --warn-tint:#3A2E12; --warn-ink:#F2C46A; --warn-line:#8A6A22;
   --ok-tint:#143322; --ok-ink:#7FD8A4; --bad-tint:#3A1616;
+  --tr-up2:#43B072; --tr-up:#2C6E4A; --tr-muted:#2E3E50; --tr-flat:#6E8399; --tr-down:#D39A2E; --tr-up-ink:#7FD8A4; --tr-flat-ink:#A9BCD0; --tr-down-ink:#F2C46A;
   --slot-bg:rgba(255,255,255,.04);
   --shadow-sheet:0 -1px 0 rgba(255,255,255,.06),0 -12px 40px rgba(0,0,0,.6);
   --shadow-float:0 6px 24px rgba(0,0,0,.7);
@@ -135,6 +137,7 @@ html[data-theme=dark]{
   --hl-main:#FF8452; --hl-helper:#C9592B; --hl-minor:#85442B;
   --warn-tint:#3A2E12; --warn-ink:#F2C46A; --warn-line:#8A6A22;
   --ok-tint:#143322; --ok-ink:#7FD8A4; --bad-tint:#3A1616;
+  --tr-up2:#43B072; --tr-up:#2C6E4A; --tr-muted:#2E3E50; --tr-flat:#6E8399; --tr-down:#D39A2E; --tr-up-ink:#7FD8A4; --tr-flat-ink:#A9BCD0; --tr-down-ink:#F2C46A;
   --slot-bg:rgba(255,255,255,.04);
   --shadow-sheet:0 -1px 0 rgba(255,255,255,.06),0 -12px 40px rgba(0,0,0,.6);
   --shadow-float:0 6px 24px rgba(0,0,0,.7);

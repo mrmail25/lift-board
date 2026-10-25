@@ -922,8 +922,7 @@ const volMap=()=>{const o={};[...VOL,...VOL_X].forEach(([m,n,lo,hi])=>o[m]=volFi
 // follows (PHUL intermediate 4-day); a board he already has stays as it is. Apply (only where fix.apply_edits_board) edits that
 // board, with Undo; rep-range and deload fixes are text only. Screens: #progress, #progress-m-<muscle>, #progress-l-<lift>.
 const shortEx=id=>(EX[id]&&EX[id].short_name)||(RD&&RD.EX[id]&&(RD.EX[id].short_name||RD.EX[id].name))||exNameP(id);
-const AS_OF='2026-10-24',PROG={sig:null,res:null,tsig:null,tres:null,applied:null,all:false,empty:false};
-const e1Word=t=>String(t==null?'':t).replace(/\be1RM\b/g,'estimated 1RM');   // Coach's text keys say e1RM; on screen it is always "estimated 1RM"
+const AS_OF='2026-10-24',PROG={sort:'problems',view:null,vsig:null,sig:null,res:null,tsig:null,tres:null,applied:null,all:false,empty:false};
 const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],fmtD=d=>`${MON3[+d.slice(5,7)-1]} ${+d.slice(8,10)}`;
 const DSH3={mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'};
 function progHist(empty=PROG.empty){const H=empty?{schema:2,settings:{},sessions:[],entries:[],sets:[]}:logLoad();return Object.assign({},H,{settings:Object.assign({},H.settings||{},{unit:S.unit,effort:effMode()})})}
@@ -945,7 +944,7 @@ const capF=t=>t?t[0].toUpperCase()+t.slice(1):t;
 function gainLine(id,g){const nm=shortEx(id);if(!g)return esc(nm);if(g.status==='first')return `${esc(nm)}: first time logged`;if(g.status==='none')return `${esc(nm)}: nothing to compare in the last 8 weeks`;
   if(g.status==='same')return `${esc(nm)}: same as last time`;return `${esc(nm)} ${esc(g.text)} since last time`}
 const winIcon=k=>k==='milestone'?'★':k==='vs_3_months'?'↗':'▲';
-function winRow(w){const t=e1Word(w.text),k=t.indexOf(': '),nm=k>0?t.slice(0,k):shortEx(w.exercise),rest=k>0?t.slice(k+2):t;
+function winRow(w){const t=txtS(w.text),k=t.indexOf(': '),nm=k>0?t.slice(0,k):shortEx(w.exercise),rest=k>0?t.slice(k+2):t;
   return `<button class="row pwin" data-plift="${w.exercise}" data-kind="${w.kind}"><span class="pwi" aria-hidden="true">${winIcon(w.kind)}</span><div class="grow"><div class="t1">${esc(nm)}</div><div class="t2">${esc(capF(rest))}</div></div><span class="pwd num">${w.kind==='vs_3_months'?'':fmtD(w.date)}</span>${CHEV}</button>`}
 const sec=(id,t,more,body)=>`<section class="psec" data-psec="${id}"><div class="sec"><h2>${t}</h2>${more?`<span class="more">${more}</span>`:''}</div>${body}</section>`;
 const akey=x=>x.kind+':'+(x.lifts||[]).join(',')+':'+(x.muscles||[]).join(',');
@@ -955,73 +954,135 @@ function attnCard(x,k){const A=PROG.applied,ap=A&&A.key===akey(x);if(ap)x=A.item
   const act=ap?`<div class="papl on"><span>Applied to your board</span><button class="btn xs ink" data-pundo="1">Undo</button></div>`
     :can?`<div class="papl"><span class="sub">Changes ${opsWhere(f.ops)} on your board</span><button class="btn xs accent" data-pfix="${k}">Apply</button></div>`
     :f.kind==='deload'?`<p class="sub ptxt">A lighter week sits on top of your plan. Your board stays the same.</p>`:'';
-  return `<div class="flag pna" data-na="${x.kind}" data-fix="${f.kind||''}" data-k="${k}"><div class="ftl">${esc(e1Word(x.text))}</div>${(x.notes||[]).map(n=>`<p class="sub pnote">${esc(n)}</p>`).join('')}
-    <p class="psug"><span class="pfx">Try</span> ${esc(e1Word(f.text))}</p>${act}</div>`}
+  return `<div class="flag pna" data-na="${x.kind}" data-fix="${f.kind||''}" data-k="${k}"><div class="ftl">${esc(txtS(x.text))}</div>${(x.notes||[]).map(n=>`<p class="sub pnote">${esc(n)}</p>`).join('')}
+    <p class="psug"><span class="pfx">Try</span> ${esc(txtS(f.text))}</p>${act}</div>`}
 function progEmpty(){return header('Progress',bookBtn)+`<div class="card pempty" data-empty="1"><div class="pe-ico" aria-hidden="true">${I('log',1.6)}</div><h3>No workouts logged yet</h3>
   <p class="sub">Finish a workout in Train and your wins, strength trends and stalls show up here.</p><div class="pad"><button class="btn accent block" data-go="#train">Go to Train</button></div></div>`}
+const txtS=t=>String(t==null?'':t);
 const progHead=()=>`<div class="plabel" data-sample="1"><span>Sample data · estimates</span><span class="phon">Strength and performance, not measured muscle growth</span></div>`;
+// ---- Progress dashboard (piece C): KPI strip → body map by 3-month trend → muscle table → wins chips → needs attention → footnote.
+// Values come from Coach's report().dashboard through ONE adapter, logic/progress-view.js (PVIEW.build); the only storyboard-derived
+// values (avg RIR tile, the set behind a dot) are listed there. Muscle and lift detail open in one bottom sheet (muscle → lifts → chart).
+const pview=pr=>{if(!pr)return null;if(PROG.vsig===PROG.sig&&PROG.view)return PROG.view;
+  PROG.view=PVIEW.build(pr,PROGRESS.flatten(Object.assign({},RD,{aliases:{}}),progHist()),AS_OF);PROG.vsig=PROG.sig;return PROG.view};
+// dashboard bands → Coach's colour roles (progress-rules.json dashboard.band.colour_roles): progress-strong, progress, neutral, attention, muted
+const TRC={up_strong:'var(--tr-up2)',up:'var(--tr-up)',flat:'var(--tr-flat)',down:'var(--tr-down)',insufficient:'var(--tr-muted)'},TRL={up_strong:'Up strongly',up:'Up',flat:'Flat',down:'Down',insufficient:'Too early'};
+const TRI={up_strong:'up',up:'up',flat:'flat',down:'down',insufficient:''};
+const effV=r=>r==null?null:effMode()==='rpe'?10-r:r,effT=()=>effMode()==='rpe'?'RPE':'RIR';
+const sgn=p=>p==null?'–':`${p>0?'+':p<0?'−':''}${fmtPct(p)}%`;
+const BKT={stalled_or_dropping:0,flat:1,null:2,progressing:3};
+function sortedMuscles(pr,vw){const a=Object.keys(vw.muscles),s=PROG.sort||'problems',ch=m=>vw.muscles[m].change;
+  return a.sort(s==='az'?((x,y)=>(ML[x]||x)<(ML[y]||y)?-1:1):s==='change'?((x,y)=>(ch(y)??-1e9)-(ch(x)??-1e9)):((x,y)=>BKT[vw.muscles[x].bucket]-BKT[vw.muscles[y].bucket]||(ch(x)??1e9)-(ch(y)??1e9)||((ML[x]||x)<(ML[y]||y)?-1:1)))}
+// 12-week sparkline: weekly best, gaps for weeks with no data, the last point in its 3-month trend colour
+function spark(vals,tr,dlw){const W=58,H=20,v=vals.filter(x=>x!=null);if(v.length<2)return `<svg class="psp" viewBox="0 0 ${W} ${H}" aria-hidden="true"></svg>`;
+  const lo=Math.min(...v),hi=Math.max(...v),n=vals.length,X=k=>2+k/(n-1)*(W-4),Y=x=>hi>lo?2+(hi-x)/(hi-lo)*(H-4):H/2;
+  const segs=[];let c=[];vals.forEach((x,k)=>{if(x==null){if(c.length)segs.push(c);c=[]}else c.push([X(k),Y(x)])});if(c.length)segs.push(c);
+  let lk=n-1;while(vals[lk]==null)lk--;
+  return `<svg class="psp" viewBox="0 0 ${W} ${H}" aria-hidden="true">${segs.map(sg=>sg.length>1?`<polyline points="${sg.map(p=>p.join(',')).join(' ')}"/>`:`<circle cx="${sg[0][0]}" cy="${sg[0][1]}" r="1.2" class="ps1"/>`).join('')}${(dlw||[]).map((d,k)=>d?`<line class="psdl" x1="${X(k)}" x2="${X(k)}" y1="${H-3.5}" y2="${H-0.5}"/>`:'').join('')}<circle cx="${X(lk)}" cy="${Y(vals[lk])}" r="2.4" style="fill:${TRC[tr]||'var(--text-2)'}"/></svg>`}
+function kpiStrip(vw){const k=vw.kpi,b=k.buckets,e=effV(k.avg_rir);
+  const tile=(go,big,lab,cls='')=>`<button class="pk ${cls}" data-kgo="${go}"><b class="num">${big}</b><span>${lab}</span></button>`;
+  return `<div class="pkpi" data-src="${vw.source}">${tile('wins',k.prs_30d,'PRs<br>30 days')}${tile('muscles',k.strength_display||'–','Strength<br>vs 3 mo','pkst')}
+   ${tile('map',`<i class="d up"></i>${b.up}<i class="d flat"></i>${b.flat}<i class="d down"></i>${b.stalled}`,`Up · flat · stalled${b.insufficient?`<br>${b.insufficient} too early`:''}`,'pkmu')}
+   ${tile('muscles',e==null?'–':(Math.round(e*10)/10).toFixed(1),`Avg ${effT()}<br>4 weeks`)}</div>`}
+function trendMap(pr,vw){const vol={},stk=new Set();for(const [m,x] of Object.entries(vw.muscles)){vol[m]=TRC[x.band];if(x.stalled)stk.add(m)}
+  const mk=h=>h.replace(/data-mu="(\w+)"([^>]*?)class="mp"/g,(a,mu,mid)=>stk.has(mu)?`data-mu="${mu}"${mid}class="mp pstk"`:a);   // stall marker: an outline on top of the band colour
+  const has=b=>Object.values(vw.muscles).some(x=>x.band===b);
+  return `<div class="card pmapc"><div class="maps">${mk(map('front',vol))}${mk(map('back',vol))}</div>
+   <div class="legend ptleg"><span><i style="background:var(--tr-up2)"></i>Up strongly</span><span><i style="background:var(--tr-up)"></i>Up</span><span><i style="background:var(--tr-flat)"></i>Flat</span><span><i style="background:var(--tr-down)"></i>Down</span>${has('insufficient')?'<span><i style="background:var(--tr-muted)"></i>Too early</span>':''}${stk.size?'<span><i class="stk"></i>Stalled</span>':''}<span><i class="ne"></i>Not trained</span></div></div>
+   <p class="foot">Each muscle's main lift over the last 3 months. Tap a muscle for its lifts.</p>`}
+function muscleTable(pr,vw){const S0=PROG.sort||'problems',seg=[['problems','Problems first'],['az','A–Z'],['change','Change']];
+  return `<div class="pseg" role="tablist">${seg.map(([k,t])=>`<button data-psort="${k}" class="${S0===k?'on':''}" aria-selected="${S0===k}">${t}</button>`).join('')}</div>
+   <div class="group ptab"><div class="pth" aria-hidden="true"><span>Muscle</span><span>12 wk</span><span>Main lift</span><span>Change</span><span>${effT()}</span></div>
+   ${sortedMuscles(pr,vw).map(m=>{const x=vw.muscles[m],v=pr.muscles[m]||{main_lift:{}},e=effV(x.avg_rir),fl=x.bucket==='stalled_or_dropping'?(v.main_lift.status==='dropping'?'Dropping':x.stalled?'Stalled':'Down'):'';
+     return `<button class="pmr" data-pm="${m}" data-bucket="${x.bucket||'insufficient'}" data-band="${x.band}"><span class="pmn">${ML[m]||m}${fl?`<em class="pstall">${fl}</em>`:''}</span>${spark(x.spark,x.band,x.spark_deload)}
+      <span class="pmlf">${x.main?esc(shortEx(x.main)):'–'}${x.reason?`<small class="prsn">${esc(capF(x.reason))}</small>`:''}</span><span class="pchg num" data-tr="${TRI[x.band]||''}">${x.change_display||'–'}</span><span class="pef num">${e==null?'–':fmtPct(e)}</span></button>`}).join('')}</div>
+   <p class="foot">Change: the main lift's best in its first 2 weeks vs the last 2 weeks, over 3 months. ${effMode()==='rpe'?'RPE = 10 − reps in reserve':'RIR = reps in reserve'}, last 4 weeks.</p>`}
+function winChip(w){const t=txtS(w.text),k=t.indexOf(': '),nm=k>0?t.slice(0,k):shortEx(w.exercise),rest=k>0?t.slice(k+2):t;
+  return `<button class="pchip" data-plift="${w.exercise}" data-kind="${w.kind}"><span class="pci ${w.kind==='milestone'?'ms':''}" aria-hidden="true">${winIcon(w.kind)}</span><span class="pct"><b>${esc(shortEx(w.exercise)||nm)}</b><span>${esc(capF(rest))}</span></span></button>`}
 V.progress=()=>{const pr=RD&&progressData();if(!pr)return header('Progress',bookBtn)+`<p class="foot">Progress needs the logger rules.</p>`;if(!pr.data.completed_sessions)return progEmpty();
-  const W=pr.wins,wl=PROG.all?W.list:W.shown,mains=new Set(Object.values(pr.muscles).map(v=>v.main_lift.id).filter(Boolean)),mode=pr.effort_mode;
-  const v3=Object.entries(W.vs_3_months).filter(([i,x])=>mains.has(i)&&x.metric==='e1rm'&&x.pct>=0).sort((a,b)=>b[1].pct-a[1].pct||(a[0]<b[0]?-1:1)).slice(0,3);
-  const winsB=`<div class="group pwins">${wl.map(winRow).join('')}${W.more?`<button class="row pmore" data-pmore="1"><div class="grow t1">${PROG.all?'Show fewer':`+${W.more} more`}</div></button>`:''}</div>`+
-    (v3.length?`<p class="sub pv3" data-v3="1"><span>vs 3 months ago</span> ${v3.map(([i,x])=>`<button class="pv3b" data-plift="${i}">${esc(shortEx(i))} <b class="num">+${fmtPct(x.pct)}%</b></button>`).join('')}</p>`:'');
-  const mus=Object.entries(pr.muscles),NA=pr.needs_attention.slice();
+  const vw=pview(pr),W=pr.wins,wl=PROG.all?W.list:W.shown,NA=pr.needs_attention.slice();
   if(PROG.applied&&!NA.some(x=>akey(x)===PROG.applied.key))NA.unshift(PROG.applied.item);
-  const effR=mus.filter(([,v])=>v.effort.sets_with_rir>0);
-  return header('Progress',bookBtn)+progHead()+
-   (wl.length?sec('wins','Wins','last 2 weeks',winsB):'')+
-   sec('muscles','Muscles','last 6 weeks',`<div class="group pml">${mus.map(([m,v])=>{const ml=v.main_lift,stl=v.stuck?(ml.status==='dropping'?'Dropping':'Stalled'):'';
-     return `<button class="row pmrow" data-pm="${m}"${stl?' data-stuck="1"':''}><div class="grow"><div class="t1">${ML[m]||m}${stl?` <span class="pstall">${stl}</span>`:''}</div><div class="t2">${ml.id?gainLine(ml.id,v.latest_gain):'Not enough sessions yet'}</div></div>${arrow(v.trend.status)}${CHEV}</button>`}).join('')}</div>`)+
+  return header('Progress',bookBtn)+progHead()+kpiStrip(vw)+
+   sec('map','By muscle','3 months',trendMap(pr,vw))+
+   sec('muscles','Muscles','',muscleTable(pr,vw))+
+   (wl.length?sec('wins','Wins','last 2 weeks',`<div class="pchips">${wl.map(winChip).join('')}${W.more?`<button class="pchip pmore" data-pmore="1">${PROG.all?'Show fewer':`+${W.more} more`}</button>`:''}</div>`):'')+
    (NA.length?sec('attention','Needs attention','',`<div class="flags">${NA.map((x,k)=>attnCard(x,pr.needs_attention.indexOf(x)>=0?pr.needs_attention.indexOf(x):'a')).join('')}</div>`):'')+
-   (effR.length?sec('effort','Effort','last 4 weeks',`<div class="group peff">${effR.map(([m,v])=>{const e=v.effort;
-     return `<div class="row" data-eff="${m}"><div class="grow"><div class="t1">${ML[m]||m}</div><div class="t2">${e.avg_rir!=null?`${e.sets_with_rir} sets${e.far_from_failure?' · far from failure':''}`:'Fewer than 6 sets with effort logged'}</div></div><span class="val num">${e.avg_rir!=null?esc(e.display.replace(/^Average /,'')):'–'}</span></div>`}).join('')}</div>
-     <p class="foot">${mode==='rpe'?'RPE = 10 − reps in reserve.':'RIR = reps in reserve: about how many more reps were left.'} Weighted by how much each lift works the muscle.</p>`):'')+
    (pr.footnote.planned_vs_done.text?`<p class="foot pvd" data-psec="planned">${esc(pr.footnote.planned_vs_done.text)}</p>`:'')};
 const fmtPct=p=>{const a=Math.abs(p);return a>=10?String(Math.round(a)):String(Math.round(a*2)/2)};
-// a muscle: every lift that works it (rated >= targets counting min), its main lift first; each opens its long-range chart
+// a muscle: every lift that works it (rated >= targets counting min), its main lift first
 function liftsOf(pr,m){const mr=RD.targets.counting.min_rating_to_count,v=pr.muscles[m]||{},main=(v.main_lift||{}).id,w=v.weight_by_lift||{};
   return Object.keys(pr.lifts).filter(i=>((RD.EX[i]||{}).muscles||{})[m]>=mr).sort((a,b)=>(b===main)-(a===main)||(w[b]||0)-(w[a]||0)||(pr.lifts[a].name<pr.lifts[b].name?-1:1))}
-const subNav=(back,lab,t)=>`<div class="nav"><div class="l"><button class="back" data-go="${back}">${I('chevL',2.4)}${lab}</button></div><div class="t">${t}</div><div class="r"></div></div>`;
+const muscleOfLift=(pr,id)=>{const ms=Object.keys(pr.muscles);return ms.find(m=>pr.muscles[m].main_lift.id===id)||ms.sort((a,b)=>(((RD.EX[id]||{}).muscles||{})[b]||0)-(((RD.EX[id]||{}).muscles||{})[a]||0))[0]};
 function liftLine(L){if(L.status==='stalled')return `No rep or load gain in the last ${L.stall.trailing_no_gain} sessions`;if(L.status==='dropping')return 'Down 2 sessions in a row';
-  return L.trend.status==='insufficient'?(L.insufficient_label||L.trend.words):e1Word(L.trend.words)}
-V.progressMuscle=()=>{const pr=progressData(),m=S.arg||S.pmArg||'side_delts',v=pr&&pr.muscles[m];S.pmFrom=m;
-  if(!v)return subNav('#progress','Progress',ML[m]||m)+`<p class="foot">Nothing logged for ${(ML[m]||m).toLowerCase()} in the last 6 weeks.</p>`;
-  const ml=v.main_lift.id,ids=liftsOf(pr,m),e=v.effort;
-  return subNav('#progress','Progress','')+`<div class="ldh pmhd"><h1>${ML[m]||m}</h1><p class="sub">${arrow(v.trend.status)} ${esc(v.trend.words)}${v.stuck?` · <span class="pstall">${v.main_lift.status==='dropping'?'Dropping':'Stalled'}</span>`:''}</p></div>
-   <div class="ghead">Lifts</div><div class="group pmlifts">${ids.map(i=>{const L=pr.lifts[i];return `<button class="row" data-plift="${i}"><div class="grow"><div class="t1">${esc(L.name)}${i===ml?' <span class="tag pmain">Main lift</span>':''}</div><div class="t2">${esc(liftLine(L))}</div></div>${arrow(LST[L.status]||'insufficient')}${CHEV}</button>`}).join('')}</div>
-   <p class="foot">${e.avg_rir!=null?esc(e.display)+' over the last 4 weeks. ':''}Main lift: the one done most in the last 6 weeks${v.main_lift.pinned?' (pinned)':''}.</p>`};
-const METRIC={e1rm:['Best estimated 1RM per week','Estimated from working sets of 12 reps or fewer. An estimate, not a tested max.'],reps:['Most reps in one set per week','Bodyweight lift: tracked by reps, so there is no estimated 1RM.'],
-  hold_s:['Longest hold per week','Timed hold: tracked by seconds, so there is no estimated 1RM.'],load_index:['Load and reps score per week','Higher means more load or more reps. A trend score, not a 1RM.']};
-const numOf=d=>d==null?null:(String(d).match(/^[\d.]+/)||[''])[0];
-// long-range chart: the lift's best per week (weekly_best, deload weeks as gaps), PR weeks marked, every point labelled. No plan line.
-function liftChart(L){const wb=L.weekly_best.slice(-12),pts=wb.map((w,k)=>({k,w,v:w.value==null?null:+numOf(w.display)})),vals=pts.filter(p=>p.v!=null).map(p=>p.v);if(!vals.length)return '';
-  const W=340,H=200,pl=12,pr=12,pt=26,pb=26,n=wb.length,X=k=>pl+(n>1?k/(n-1):.5)*(W-pl-pr),lo0=Math.min(...vals),hi0=Math.max(...vals),pad=Math.max(1,(hi0-lo0)*.15),lo=lo0-pad,hi=hi0+pad,Y=v=>pt+(hi-v)/(hi-lo)*(H-pt-pb);
-  const segs=[];let cur=[];for(const p of pts){if(p.v==null){if(cur.length)segs.push(cur);cur=[]}else cur.push(p)}if(cur.length)segs.push(cur);
-  const dl=pts.filter(p=>p.w.deload_week&&p.v==null).map(p=>`<g class="pdl"><rect x="${X(p.k)-9}" y="${pt-6}" width="18" height="${H-pt-pb+6}" rx="4"/><text x="${X(p.k)}" y="${H-pb+16}" text-anchor="middle">Deload</text></g>`).join('');
-  const xl=pts.filter((p,k)=>!(p.w.deload_week&&p.v==null)&&(k%3===0||k===n-1)).map(p=>`<text x="${X(p.k)}" y="${H-6}" text-anchor="middle" class="dx">${+p.w.week.slice(5,7)}/${+p.w.week.slice(8,10)}</text>`).join('');
-  const lines=segs.map(sg=>`<polyline points="${sg.map(p=>`${X(p.k)},${Y(p.v)}`).join(' ')}"/>`).join('');
-  const dots=pts.filter(p=>p.v!=null).map(p=>`<g class="pp${p.w.pr_week?' pr':''}" data-week="${p.w.week}" data-v="${p.v}"${p.w.pr_week?' data-pr="1"':''}><circle cx="${X(p.k)}" cy="${Y(p.v)}" r="${p.w.pr_week?5:3.4}"/><text x="${X(p.k)}" y="${Y(p.v)-(p.w.pr_week?9:7)}" text-anchor="middle" class="pv">${p.v}</text></g>`).join('');
-  return `<svg viewBox="0 0 ${W} ${H}" class="plc" role="img" aria-label="${esc(METRIC[L.metric][0])}, last ${n} weeks">${dl}<g class="pln">${lines}</g>${dots}${xl}</svg>
-   <div class="plleg"><span><i class="lpt"></i>Weekly best</span><span><i class="lpr"></i>PR week</span>${pts.some(p=>p.w.deload_week&&p.v==null)?'<span><i class="ldl"></i>Deload week</span>':''}</div>`}
-V.progressLift=()=>{const pr=progressData(),id=S.arg,L=pr&&pr.lifts[id];const back=S.pmFrom&&pr&&pr.muscles[S.pmFrom]?['#progress-m-'+S.pmFrom,ML[S.pmFrom]||'Muscle']:['#progress','Progress'];
-  if(!L)return subNav(back[0],back[1],'')+'<p class="foot">This lift has no logged sessions yet.</p>';
-  const M=METRIC[L.metric]||METRIC.e1rm,last=L.weekly_best.filter(w=>w.value!=null).pop(),g=L.gain_vs_last,u=pr.unit,nprs=L.weekly_best.filter(w=>w.pr_week).length;
-  const big=last?(L.metric==='e1rm'?`${numOf(last.display)} <small>${u}</small>`:L.metric==='reps'?`${numOf(last.display)} <small>reps</small>`:L.metric==='hold_s'?`${numOf(last.display)} <small>s</small>`:`${numOf(last.display)}`):'–';
-  return subNav(back[0],back[1],'')+`<div class="ldh plh" data-metric="${L.metric}" data-kind="${L.kind}"><h1>${esc(L.name)}</h1><p class="sub">${esc(M[0])}</p>
-    <div class="plbig"><b class="num">${big}</b><span class="sub">${last?`week of ${fmtD(last.week)}`:''}</span></div></div>
-   <div class="card plcard">${liftChart(L)}</div>
-   <div class="group plinfo"><div class="row"><div class="grow t1">Last time</div><span class="val">${g?esc(g.text):'–'}</span></div>
-     ${g&&g.detail?`<div class="row"><div class="grow t2">${esc(g.detail)}</div></div>`:''}
-     <div class="row"><div class="grow t1">Trend, last 6 weeks</div><span class="val">${arrow(LST[L.trend.status]||'insufficient')}</span></div><div class="row"><div class="grow t2">${esc(liftLine(L))}</div></div>
-     <div class="row"><div class="grow t1">PR weeks</div><span class="val num">${nprs}</span></div></div>
-   <p class="foot">${esc(M[1])} Lighter (deload) weeks are left out.</p>`};
-function rerenderProgress(){const v=$('#view'),sc=v.scrollTop;v.innerHTML=V[S.scr]();v.scrollTop=sc}
-function afterProgress(){}
+  return L.trend.status==='insufficient'?(L.insufficient_label||L.trend.words):txtS(L.trend.words)}
+// chart titles: estimated 1-rep max for loaded lifts; bodyweight and timed lifts are tracked by reps or seconds, never an estimated 1RM
+const CTITLE={e1rm:u=>`Estimated 1-rep max (${u})`,best_reps:()=>'Best reps',hold_s:()=>'Best hold (s)',load_index:()=>'Load-reps index'};
+const CNOTE={e1rm:'Estimated from your best set each session.',best_reps:'Most reps in one set at bodyweight each session.',hold_s:'Longest hold each session.',load_index:'A trend index from the load and reps of your best set each session, not a 1-rep max.'};
+const CAX={e1rm:u=>u,best_reps:()=>'reps',hold_s:()=>'sec',load_index:()=>'index'};
+const dashLift=(pr,id)=>((pr.dashboard||{}).lifts||{})[id];
+const RNG={'4w':28,'12w':84,all:null};
+// the detail sheet
+const PSH={api:null,m:null,lift:null,rng:'12w'};
+function openPSheet(m,lift){const pr=progressData();if(!pr)return;if(PSH.api&&!PSH.api.closed)PSH.api.close();Object.assign(PSH,{m,lift:lift||null,rng:PSH.rng||'12w'});
+  PSH.api=sheet({cls:'psheet',title:'',body:pshBody(),onClose:()=>{PSH.api=null}});tapable(PSH.api.el);requestAnimationFrame(()=>PSH.api&&PSH.api.wrap.classList.add('open'))}
+function pshRender(){if(PSH.api&&!PSH.api.closed){PSH.api.body.innerHTML=pshBody();PSH.api.body.scrollTop=0;tapable(PSH.api.el)}}
+function pshBody(){const pr=progressData(),vw=pview(pr);return PSH.lift?liftPane(pr,vw,PSH.lift):musclePane(pr,vw,PSH.m)}
+function musclePane(pr,vw,m){const v=pr.muscles[m],x=vw.muscles[m];
+  if(!v)return `<div class="psh" data-pshm="${m}"><h2>${ML[m]||m}</h2><p class="sub">Nothing logged for ${(ML[m]||m).toLowerCase()} in the last 6 weeks.</p></div>`;
+  if(!x)return `<div class="psh" data-pshm="${m}"><h2>${ML[m]||m}</h2><p class="sub">Not enough logged for a 3-month trend yet.</p></div>`;
+  const ids=liftsOf(pr,m),ml=v.main_lift.id,e=effV(x.avg_rir),ink=TRI[x.band]?`var(--tr-${TRI[x.band]}-ink)`:'inherit';
+  return `<div class="psh" data-pshm="${m}"><h2>${ML[m]||m}${x.bucket==='stalled_or_dropping'?` <span class="pstall">${v.main_lift.status==='dropping'?'Dropping':x.stalled?'Stalled':'Down'}</span>`:''}</h2>
+   <div class="pshk"><div><b class="num" style="color:${ink}">${x.change_display||'–'}</b><span>Main lift, 3 mo</span></div><div><b class="num">${TRL[x.band]||'–'}</b><span>3-month trend</span></div><div><b class="num">${e==null?'–':fmtPct(e)}</b><span>Avg ${effT()}</span></div></div>${x.reason?`<p class="foot prsn1">${esc(capF(x.reason))}</p>`:''}
+   <div class="ghead">Lifts</div><div class="group pmlifts">${ids.map(i=>{const L=pr.lifts[i];return `<button class="row" data-sl="${i}"><div class="grow"><div class="t1">${esc(L.name)}${i===ml?' <span class="tag pmain">Main lift</span>':''}</div><div class="t2">${esc(liftLine(L))}</div></div>${arrow(LST[L.status]||'insufficient')}${CHEV}</button>`}).join('')}</div>
+   <p class="foot">Main lift: the one done most in the last 6 weeks${v.main_lift.pinned?' (pinned)':''}.</p></div>`}
+function dotSet(id,met,sid){const fl=PROGRESS.flatten(Object.assign({},RD,{aliases:{}}),progHist());return PVIEW.dotSet(fl,id,met,sid,(kg,r)=>PRS.e1rmSet(RD,kg,r,'working',E1MAX()))}
+function liftPane(pr,vw,id){const L=pr.lifts[id],u=pr.unit,back=PSH.m&&pr.muscles[PSH.m]?`<button class="pshback" data-psback="1">${I('chevL',2.4)}${ML[PSH.m]}</button>`:'';
+  if(!L)return `<div class="psh">${back}<h2>${esc(exNameP(id))}</h2><p class="sub">This lift has no logged sessions yet.</p></div>`;
+  const g=L.gain_vs_last,DL=dashLift(pr,id),met=DL?DL.metric:L.metric,nprs=DL?DL.dots.filter(d=>d.pr).length:0,c=DL&&DL.change;
+  return `<div class="psh plh" data-metric="${met}" data-kind="${L.kind}">${back}<h2>${esc(L.name)}</h2>
+   <div class="pseg prng">${[['4w','4w'],['12w','12w'],['all','All']].map(([k,t])=>`<button data-prng="${k}" class="${PSH.rng===k?'on':''}">${t}</button>`).join('')}</div>
+   <div class="card plcard"><div class="plt">${CTITLE[met](u)}</div>${liftChart(pr,id)}<div class="ptip" id="ptip" hidden></div></div>
+   <p class="foot pnote1">${CNOTE[met]}</p>
+   <div class="group plinfo"><div class="row"><div class="grow t1">Last time</div><span class="val">${g?esc(g.text):'–'}</span></div>${g&&g.detail?`<div class="row"><div class="grow t2">${esc(g.detail)}</div></div>`:''}
+    <div class="row"><div class="grow t1">Trend, last 6 weeks</div><span class="val">${arrow(LST[L.trend.status]||'insufficient')}</span></div><div class="row"><div class="grow t2">${esc(liftLine(L))}</div></div>
+    <div class="row"><div class="grow t1">vs 3 months ago</div><span class="val num">${c&&c.status==='ok'?`${c.pct_display} <span class="t2">(${esc(c.early.display)} → ${esc(c.late.display)})</span>`:esc(capF((c&&c.reason)||'–'))}</span></div>
+    <div class="row"><div class="grow t1">Sessions with a PR</div><span class="val num">${nprs}</span></div></div></div>`}
+// lift chart: one dot per session (its best set), PR sessions in accent, a labelled y-axis, date ticks; tap a dot for the set
+function liftChart(pr,id){const u=pr.unit,DL=dashLift(pr,id);if(!DL)return `<p class="foot">No sessions in this range.</p>`;const met=DL.metric,kgM=met==='e1rm'||met==='load_index';
+  const toU=kg=>u==='kg'?kg:kg*KG_LB,P=PVIEW.inRange(DL.dots,PSH.rng).map(d=>({...d,sid:d.session_id,y:kgM?toU(d.value):d.value}));
+  if(!P.length)return `<p class="foot">No sessions in this range.</p>`;
+  const W=340,H=196,pl=42,pr2=12,pt=12,pb=28,ys=P.map(p=>p.y),lo0=Math.min(...ys),hi0=Math.max(...ys),span=Math.max(hi0-lo0,met==='e1rm'||met==='load_index'?10:4);
+  const stp=[1,2,2.5,5,10,20,25,50,100].find(s=>span/s<=4)||200,lo=Math.floor((lo0-span*.08)/stp)*stp,hi=Math.ceil((hi0+span*.08)/stp)*stp;
+  const t0=Date.parse(P[0].date),t1=Date.parse(P[P.length-1].date),X=d=>pl+(t1>t0?(Date.parse(d)-t0)/(t1-t0):.5)*(W-pl-pr2),Y=v=>pt+(hi-v)/(hi-lo)*(H-pt-pb);
+  const yt=[];for(let v=lo;v<=hi+1e-9;v+=stp)yt.push(v);
+  const grid=yt.map(v=>`<line x1="${pl}" x2="${W-pr2}" y1="${Y(v)}" y2="${Y(v)}" class="gl"/><text x="${pl-6}" y="${Y(v)+3.5}" text-anchor="end" class="ya">${+v.toFixed(1)}</text>`).join('');
+  const nx=Math.min(4,P.length),xi=[...new Set(Array.from({length:nx},(_,k)=>Math.round(k*(P.length-1)/Math.max(1,nx-1))))];
+  const xt=xi.map(k=>`<text x="${X(P[k].date)}" y="${H-8}" text-anchor="${k===0?'start':k===P.length-1?'end':'middle'}" class="dx">${fmtD(P[k].date)}</text>`).join('');
+  const tip=p=>{if(met==='best_reps')return p.display;if(met==='hold_s')return `${p.value} s hold`;const x=dotSet(id,met,p.sid);if(!x)return p.display;
+    const ld=nfmt(+(u==='kg'?x.added_kg:x.added_kg*KG_LB).toFixed(1));return met==='e1rm'?`${ld} × ${x.reps} → est. ${Math.round(p.y)}`:`${ld} × ${x.reps} → index ${Math.round(p.y)}`};
+  const dots=P.map((p,k)=>{const isPr=p.pr,isDl=p.deload;return `<g class="pp${isPr?' pr':''}${isDl?' dl':''}" data-k="${k}" data-sid="${p.sid}" data-tip="${esc(tip(p))}" data-date="${fmtD(p.date)}${isDl?' · deload':''}"${isPr?' data-pr="1"':''}><circle cx="${X(p.date)}" cy="${Y(p.y)}" r="${isPr?4.6:3.4}"/><circle class="phit" cx="${X(p.date)}" cy="${Y(p.y)}" r="13"/></g>`}).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" class="plc" role="img" aria-label="${esc(CTITLE[met](u))}, ${P.length} sessions"><text class="yat" transform="translate(11 ${(pt+H-pb)/2}) rotate(-90)" text-anchor="middle">${CAX[met](u)}</text>${grid}
+   <polyline class="pln" points="${P.map(p=>`${X(p.date)},${Y(p.y)}`).join(' ')}"/>${dots}${xt}</svg>
+   <div class="plleg"><span><i class="lpt"></i>Best set, each session</span>${P.some(p=>p.pr)?'<span><i class="lpr"></i>PR</span>':''}${P.some(p=>p.deload)?'<span><i class="ldw"></i>Deload</span>':''}</div>`}
+function showTip(g){const t=$('#ptip'),card=g.closest('.plcard');if(!t||!card)return;$$('.plc .pp.sel').forEach(x=>x.classList.remove('sel'));g.classList.add('sel');
+  t.innerHTML=`<span>${esc(g.dataset.date)}${g.dataset.pr?' · PR':''}</span><b>${esc(g.dataset.tip)}</b>`;t.hidden=false;
+  const c=g.querySelector('circle').getBoundingClientRect(),cb=card.getBoundingClientRect(),tw=t.offsetWidth;
+  t.style.left=Math.max(6,Math.min(cb.width-tw-6,c.left-cb.left+c.width/2-tw/2))+'px';t.style.top=Math.max(4,c.top-cb.top-t.offsetHeight-8)+'px'}
+function rerenderProgress(){const v=$('#view'),sc=v.scrollTop;v.innerHTML=V[S.scr]();v.scrollTop=sc;tapable(v)}
+// iOS WebKit only sends a tap's click to SVG shapes that have a handler of their own: give dots and map muscles a no-op one (the delegate does the work)
+const tapable=root=>{(root||document).querySelectorAll('.pmapc .mp,.plc .pp circle').forEach(e=>{if(!e.onclick)e.onclick=()=>{}})};
+function afterProgress(){tapable($('#view'))}
 function progApply(k){const pr=progressData(),x=pr&&pr.needs_attention[+k];if(!x||!x.fix||!x.fix.apply_edits_board||!x.fix.ops||!window.BOARD)return;
   const before=BOARD.progApply(x.fix.ops);PROG.applied={key:akey(x),item:JSON.parse(JSON.stringify(x)),before,asig:BOARD.sig()};toast('Applied to your board');rerenderProgress()}
 function progUndo(){const a=PROG.applied;if(!a)return;PROG.applied=null;if(BOARD.sig()===a.asig){BOARD.progUndo(a.before);toast('Undone · your board is back')}else toast('Your board changed after this. Undo it in Build.');rerenderProgress()}
-document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-mlx],[data-pm],[data-plift],[data-pfix],[data-pundo],[data-pmore]');if(!t||!$('#view').contains(t))return;e.preventDefault();
-  if(t.dataset.mlx)return exDetail(t.dataset.mlx);if(t.dataset.pm)return go('#progress-m-'+t.dataset.pm);if(t.dataset.plift)return go('#progress-l-'+t.dataset.plift);
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-mlx],[data-pm],[data-plift],[data-pfix],[data-pundo],[data-pmore],[data-kgo],[data-psort],[data-sl],[data-psback],[data-prng],.plc .pp,.pmapc .mp[data-mu]');
+  if(!t||!($('#view').contains(t)||t.closest('.psheet')))return;e.preventDefault();
+  if(t.matches('.pmapc .mp'))return openPSheet(t.dataset.mu);if(t.matches('.plc .pp'))return showTip(t);
+  if(t.dataset.mlx)return exDetail(t.dataset.mlx);if(t.dataset.pm)return openPSheet(t.dataset.pm);
+  if(t.dataset.plift){const pr=progressData();return openPSheet(pr?muscleOfLift(pr,t.dataset.plift):null,t.dataset.plift)}
+  if(t.dataset.sl){PSH.lift=t.dataset.sl;return pshRender()}if(t.dataset.psback){PSH.lift=null;return pshRender()}if(t.dataset.prng){PSH.rng=t.dataset.prng;return pshRender()}
+  if(t.dataset.kgo){const el=$(`[data-psec=${t.dataset.kgo}]`);if(el)el.scrollIntoView({block:'start',behavior:'smooth'});return}
+  if(t.dataset.psort){PROG.sort=t.dataset.psort;return rerenderProgress()}
   if(t.dataset.pfix!=null)return progApply(t.dataset.pfix);if(t.dataset.pundo)return progUndo();if(t.dataset.pmore){PROG.all=!PROG.all;return rerenderProgress()}});
 function afterMap(){$$('.mmap .mp').forEach(p=>p.addEventListener('click',()=>{if(p.dataset.mu)go('#learn-'+p.dataset.mu)}))}
 
@@ -1398,7 +1459,7 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  finish:['finish','',1,0],'finish-ape':['finish','',1,0,null,()=>{const c=$('#fincards');c.style.scrollBehavior='auto';c.scrollLeft=c.scrollWidth}],
  empty:['empty','',1,1,()=>{SC.day='sat';startWorkout('Empty workout',[],{empty:true})}],tray:['empty','',1,1,null,traySheet],'tray-legs':['empty','',1,1,()=>{SC.note="Coach's case: PPL intermediate legs day (Fri), no goals, bias or favorites";PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],'tray-lib':['empty','',1,1,()=>{TF.mode='lib'},traySheet],'tray-sort-fat':['empty','',1,1,()=>{TF.mode='fat'},traySheet],'tray-sort-stim':['empty','',1,1,()=>{TF.mode='stim';TF.mus='hamstrings'},traySheet],
  'tray-detail':['empty','',1,1,null,()=>{traySheet();setTimeout(()=>exDetail('barbell-bench-press',{onAdd:()=>toast('Added to workout')}),60)}],
- 'progress-effort':['progress','progress',0,0,()=>{PROG.empty=false},()=>{const e=$('[data-psec=effort]');if(e)e.scrollIntoView({block:'start'})}],
+ 'progress-effort':['progress','progress',0,0,()=>{PROG.empty=false},()=>{const e=$('[data-psec=muscles]');if(e)e.scrollIntoView({block:'start'})}],
  'tray-calf':['empty','',1,1,()=>{Object.assign(SC,{board:BOARDS.legsGap,day:'mon',cands:BOARDS.legsGapCands,note:"Coach's calf-gap case: legs-only week, calves at 3 of 5 sets"});PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],
  'swap-lat-home':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Home template ticked (adjustable dumbbells, bench, pull-up bar, bands).';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.home}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
  'swap-lat-com':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Commercial template ticked.';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.commercial}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
@@ -1411,7 +1472,7 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  'log-detail-tip':['logDay','log',0,0,()=>{S.logDay=15},()=>{const h=$$('#e1card .ehit').find(c=>c.dataset.day==='15');h&&h.dispatchEvent(new MouseEvent('click',{bubbles:true}))}],
  'log-swipe':['log','log',0,0,null,()=>{const r=$$('#view .swipe')[0];r&&r.classList.add('open')}],
  build:['build','build',0,0,()=>{SC.day='mon'}],'build-list':['buildList','build',0,0,()=>{SC.day='mon'}],swap:['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('barbell-bench-press')],'swap-curl':['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('ez-bar-curl')],
- settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress',0,0,()=>{PROG.empty=false}],'progress-empty':['progress','progress',0,0,()=>{PROG.empty=true}],'progress-muscle':['progressMuscle','progress',0,0,()=>{PROG.empty=false;S.pmArg='side_delts'}],'progress-refine':['progress','progress',0,0,()=>{PROG.empty=false},()=>{const e=$('[data-psec=attention]');if(e)e.scrollIntoView({block:'start'})}],style:['style','build'],
+ settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress',0,0,()=>{PROG.empty=false}],'progress-empty':['progress','progress',0,0,()=>{PROG.empty=true}],'progress-muscle':['progress','progress',0,0,()=>{PROG.empty=false},()=>openPSheet('side_delts')],'progress-refine':['progress','progress',0,0,()=>{PROG.empty=false},()=>{const e=$('[data-psec=attention]');if(e)e.scrollIntoView({block:'start'})}],style:['style','build'],
  learn:['learn',''],'tray-fav':['empty','',1,1,()=>{TF.fav=true},traySheet],'settings-favs':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#favs').offsetTop-60}],'settings-goals':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#profile').offsetTop-40}],'learn-fundamental':['learnFund',''],
 };
 const AFTER={logDay:afterLogDay,train:afterTrain,workout:afterWorkout,finish:afterFinish,log:afterLog,buildList:afterBuildList,progress:afterProgress,learn:afterLearn};
@@ -1422,8 +1483,8 @@ function route(){
   if(!def&&/^learn-ex-/.test(r)){def=['learnEx',''];arg=r.slice(9)}
   else if(!def&&/^learn-f-/.test(r)){def=['learnFund',''];arg=r.slice(8)}
   else if(!def&&/^learn-/.test(r)){def=['learnMuscle',''];arg=r.slice(6)}
-  else if(!def&&/^progress-m-/.test(r)){def=['progressMuscle','progress',0,0,()=>{PROG.empty=false}];arg=r.slice(11)}
-  else if(!def&&/^progress-l-/.test(r)){def=['progressLift','progress',0,0,()=>{PROG.empty=false}];arg=r.slice(11)}
+  else if(!def&&/^progress-m-/.test(r)){const m=r.slice(11);def=['progress','progress',0,0,()=>{PROG.empty=false},()=>openPSheet(m)]}
+  else if(!def&&/^progress-l-/.test(r)){const id=r.slice(11);def=['progress','progress',0,0,()=>{PROG.empty=false},()=>{const pr=progressData();openPSheet(pr?muscleOfLift(pr,id):null,id)}]}
   else if(!def&&/^log-d\d+$/.test(r)){const n=+r.slice(5);def=['logDay','log',0,0,()=>{S.logDay=n}]}
   if(!def){r='train';def=ROUTES.train}
   const [scr,tab,full,sess,pre,post]=def;
@@ -1837,7 +1898,7 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

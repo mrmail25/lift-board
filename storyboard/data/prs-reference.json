@@ -1,11 +1,11 @@
 {
  "version": 1,
  "generated_by": "tools/gen_prs_reference.py (tools/prs.py)",
- "rules_version": 9,
+ "rules_version": 10,
  "rules_used": {
   "hardRIR": 3,
   "e1rm_formula": "epley",
-  "e1rm_max_reps": 10,
+  "e1rm_max_reps": 12,
   "lbPerKg": 2.20462,
   "min_rating_to_count": 0.25,
   "round_to": 0.5,
@@ -20,7 +20,7 @@
  },
  "notes": [
   "Loads stored in each session's unit; Evening sessions start 17:30 PT = 00:30Z next day. w2d6 is SUNDAY 17:30 PT = Monday 00:30Z: it belongs to week 2 (local), not week 3.",
-  "w2d0 has a 225 lb warmup (ignored). w2d2 has 165x12 (above e1rm_max_reps: no e1rm). w2d6 has a 205x0 set (ignored).",
+  "w2d0 has a 225 lb warmup (ignored). w2d2 has 165x12 (counts for e1RM: e1rm_max_reps is 12 since progress3). w2d6 has a 205x0 set (ignored).",
   "w3d0 row entry skipped after 1 done set: the set counts in PRs/hard sets/volume, not in adherence. w4d4 skipped session. w6d4 active (excluded).",
   "Row is logged as bent-over-row-old in week 1; pass `aliases` to resolve it.",
   "edit_case: delete session w5d0 and recompute; expected_prs_after_edit is the full result."
@@ -3385,6 +3385,12 @@
       "set_id": "w2d0-e0-t2"
      },
      {
+      "session_id": "w2d2",
+      "date": "2026-09-16",
+      "e1rm_kg": 104.78,
+      "set_id": "w2d2-e1-t0"
+     },
+     {
       "session_id": "w2d6",
       "date": "2026-09-20",
       "e1rm_kg": 106.1407,
@@ -3547,6 +3553,12 @@
       "set_id": "w2d0-e0-t2"
      },
      {
+      "session_id": "w2d2",
+      "date": "2026-09-16",
+      "e1rm_kg": 104.78,
+      "set_id": "w2d2-e1-t0"
+     },
+     {
       "session_id": "w2d6",
       "date": "2026-09-20",
       "e1rm_kg": 106.1407,
@@ -3561,8 +3573,8 @@
      {
       "session_id": "w3d2",
       "date": "2026-09-23",
-      "e1rm_kg": 102.8144,
-      "set_id": "w3d2-e1-t1"
+      "e1rm_kg": 105.3848,
+      "set_id": "w3d2-e1-t0"
      },
      {
       "session_id": "w3d4",
@@ -3746,6 +3758,12 @@
       "set_id": "w2d0-e0-t2"
      },
      {
+      "session_id": "w2d2",
+      "date": "2026-09-16",
+      "e1rm_kg": 104.78,
+      "set_id": "w2d2-e1-t0"
+     },
+     {
       "session_id": "w2d6",
       "date": "2026-09-20",
       "e1rm_kg": 106.1407,
@@ -3760,8 +3778,8 @@
      {
       "session_id": "w3d2",
       "date": "2026-09-23",
-      "e1rm_kg": 102.8144,
-      "set_id": "w3d2-e1-t1"
+      "e1rm_kg": 105.3848,
+      "set_id": "w3d2-e1-t0"
      },
      {
       "session_id": "w3d4",
@@ -3970,6 +3988,12 @@
       "set_id": "w2d0-e0-t2"
      },
      {
+      "session_id": "w2d2",
+      "date": "2026-09-16",
+      "e1rm_kg": 104.78,
+      "set_id": "w2d2-e1-t0"
+     },
+     {
       "session_id": "w2d6",
       "date": "2026-09-20",
       "e1rm_kg": 106.1407,
@@ -3984,8 +4008,8 @@
      {
       "session_id": "w3d2",
       "date": "2026-09-23",
-      "e1rm_kg": 102.8144,
-      "set_id": "w3d2-e1-t1"
+      "e1rm_kg": 105.3848,
+      "set_id": "w3d2-e1-t0"
      },
      {
       "session_id": "w3d4",
@@ -4014,8 +4038,8 @@
      {
       "session_id": "w5d2",
       "date": "2026-10-07",
-      "e1rm_kg": 105.8383,
-      "set_id": "w5d2-e1-t1"
+      "e1rm_kg": 108.4843,
+      "set_id": "w5d2-e1-t0"
      },
      {
       "session_id": "w5d4",
@@ -4229,6 +4253,12 @@
       "set_id": "w2d0-e0-t2"
      },
      {
+      "session_id": "w2d2",
+      "date": "2026-09-16",
+      "e1rm_kg": 104.78,
+      "set_id": "w2d2-e1-t0"
+     },
+     {
       "session_id": "w2d6",
       "date": "2026-09-20",
       "e1rm_kg": 106.1407,
@@ -4243,8 +4273,8 @@
      {
       "session_id": "w3d2",
       "date": "2026-09-23",
-      "e1rm_kg": 102.8144,
-      "set_id": "w3d2-e1-t1"
+      "e1rm_kg": 105.3848,
+      "set_id": "w3d2-e1-t0"
      },
      {
       "session_id": "w3d4",
@@ -4273,8 +4303,8 @@
      {
       "session_id": "w5d2",
       "date": "2026-10-07",
-      "e1rm_kg": 105.8383,
-      "set_id": "w5d2-e1-t1"
+      "e1rm_kg": 108.4843,
+      "set_id": "w5d2-e1-t0"
      },
      {
       "session_id": "w5d4",
@@ -5020,6 +5050,12 @@
       "set_id": "w2d0-e0-t2"
      },
      {
+      "session_id": "w2d2",
+      "date": "2026-09-16",
+      "e1rm_kg": 104.78,
+      "set_id": "w2d2-e1-t0"
+     },
+     {
       "session_id": "w2d6",
       "date": "2026-09-20",
       "e1rm_kg": 106.1407,
@@ -5034,8 +5070,8 @@
      {
       "session_id": "w3d2",
       "date": "2026-09-23",
-      "e1rm_kg": 102.8144,
-      "set_id": "w3d2-e1-t1"
+      "e1rm_kg": 105.3848,
+      "set_id": "w3d2-e1-t0"
      },
      {
       "session_id": "w3d4",
@@ -5058,8 +5094,8 @@
      {
       "session_id": "w5d2",
       "date": "2026-10-07",
-      "e1rm_kg": 105.8383,
-      "set_id": "w5d2-e1-t1"
+      "e1rm_kg": 108.4843,
+      "set_id": "w5d2-e1-t0"
      },
      {
       "session_id": "w5d4",
@@ -5326,6 +5362,14 @@
       "date": "2026-10-12",
       "e1rm_kg": 60.4791,
       "set_id": "cx1"
+     }
+    ],
+    "custom-deleted-thing": [
+     {
+      "session_id": "c1",
+      "date": "2026-10-12",
+      "e1rm_kg": 31.7515,
+      "set_id": "cx3"
      }
     ]
    },

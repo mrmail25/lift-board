@@ -1,0 +1,203 @@
+# Lift Board: Progress tab, Spec (progress2)
+
+Owner: Coach (logic). For: Chief of Staff, Builder. Date: Oct 24, 2026. Supersedes the round-1 progress spec (backup `progress-spec.pre-progress2.md`).
+Machine-readable rules: `data/progress-rules.json` (generated from `tools/progress_rules.py`). Reference: `data/progress-reference.json`. Shared sample: `data/sample-log.json`.
+Generator: `tools/build_progress.py` (deterministic; rerun gives identical files). Tests: `tools/test_progress.py`.
+
+**Label (shown on the tab, exact):** "Strength and performance, not measured muscle growth"
+
+Trends, stalls and wins come from what was logged (loads, reps, hold times, RIR). They describe strength and performance, are modelled, and are not a measurement of muscle growth. No medical or injury advice.
+
+Tags: [E] evidence-based (citation below), [C] convention, [M] modelling choice (ours, tunable). Every threshold in this spec is [M] unless tagged otherwise.
+
+## 0. Focus
+- The tab is about **progress (motivation) first, then stalls to adjust**. Order on screen: Wins, Muscles (trend + main lift + latest gain), Needs attention (each with exactly one fix), Lifts (weekly best chart), Effort (RIR).
+- **Planned vs done is a footnote only**: one grey line at the bottom, "Planned vs done, last 4 weeks: {done} of {planned} sets" over the last 28 days. No adherence percentages, bars or colours elsewhere on the tab.
+
+## 1. Fixed decisions (Chief of Staff, Oct 24, 2026)
+1. **RIR is stored per set as an integer 0 to 4**, where 4 means 4+. It is `null` when skipped. **Only RIR is stored.**
+2. **The RPE toggle is display and input only.** RPE = 10 − RIR. RPE chips: **10, 9, 8, 7, ≤6**; ≤6 stores RIR 4. **No half points.**
+3. **Legacy values clamp on read:** rir 5 (old "5+") becomes 4; fractional values round to the nearest integer (half up: 1.5 → 2, 2.4 → 2); negatives → 0; non-numeric → null. The stored file is not rewritten; clamping happens in `normalize()` on read.
+4. **e1RM uses Epley, load × (1 + reps/30), on done working sets with ≤ 12 reps.** The cap was raised from the old 10 by Chief of Staff; since progress3 `rules.json logger.e1rm_max_reps` is 12, so PR badges (`prs.py`), Train, Log and Progress agree. Always labelled "estimated 1RM". [C] (formula convention; no peer-reviewed source cited)
+- RIR chips (RIR mode): 0, 1, 2, 3, 4+. RPE chips (RPE mode): 10 → RIR 0, 9 → RIR 1, 8 → RIR 2, 7 → RIR 3, ≤6 → RIR 4.
+- `history.settings.effort` = `"rir"` (default) or `"rpe"`; switching never changes stored data. The RIR-based RPE scale itself comes from Zourdos et al. 2016 [E].
+
+## 2. Units and lift kinds
+- Loads are stored in each session's unit (lb default) and converted for display only; internal math is kg via `prs.flatten` (effective load: bodyweight share included for e1RM; *added* load used for "same weight" and plate milestones).
+- Each lift gets one kind, derived from `exercises.json` / whiteboard fields (first match, order hold, distance, bodyweight, core, e1rm). No exercise ids are hardcoded except the milestone lifts.
+
+| kind | when | trend metric |
+|---|---|---|
+| hold | swap.flags has static_hold, or the whiteboard rep range unit is seconds | longest hold, seconds (`set.reps` holds seconds) |
+| distance | whiteboard rep range unit is meters (carries) | load-reps index with meters in place of reps (set.reps holds meters) |
+| bodyweight | exercises.json bodyweight_fraction > 0 (bodyweight, rings, suspension, assisted machines) | most reps in one working set; added load (or assistance) compared separately |
+| core | primary muscle (highest rating) is abs or obliques | load-reps index (no load ever logged -> metric reps) |
+| e1rm | everything else | best estimated 1RM per session (Epley, ≤ 12 reps) |
+
+- **No estimated 1RM for bodyweight, ab/core, timed or static-hold lifts.** They use reps, load or hold time.
+- High-rep fallback: if any of the lift's non-deload sessions in the 3-month dashboard window (all its sessions if none there) has no done working set of <= 12 reps (e.g. calf raises at 12-20, curls at 10-15), its metric is load_index instead, for the lift card and the dashboard alike, so a lift never mixes estimated 1RM points and gaps.
+- `load_index` = best load x (1 + reps / 30) over all working sets, any rep count: the Epley shape used as a trend index for high-rep, core and carry lifts; never shown or named as a 1RM.
+- bodyweight lifts trend, stall and dropping on reps only across sessions at the latest session's added load (within half a step; bodyweight-only sessions have added load 0); a heavier added load is a gain, not a drop in reps.
+
+## 3. Per-lift progress
+- **Comparable session:** the previous completed, non-deload session that logged the same exercise id (aliases resolved) within the last 56 days.
+- **Top set:** heaviest logged (added) load among done working sets; hold lifts: longest hold. **Same load:** within half the smallest real load step (prs.step_kg, gym profile aware).
+- **Gain:** load up by more than half a step; or same load and more reps in the best set at that load; or same best-set reps and the same number of sets at that load with more total reps; hold lifts: longer hold.
+- **Plain text vs last time:** "+5 lb", "+1 rep at same weight", "−1 rep at same weight", "+5 s", "Same as last time", "First time logged", "No comparable session in the last 56 days". Detail line: "Top set 225 lb × 8 (was 220 lb × 9)".
+- **Weekly best:** best metric of the week (estimated 1RM for e1rm lifts); deload sessions excluded; weeks are Monday to Sunday, local date. **PR week:** the week best is above every earlier week best by more than review.flat_pct (1%) (reps / hold: strictly more); the first logged week is the baseline, never a PR week. Deload weeks are shown as gaps (marked `deload_week`).
+- **Weekly gain rate:** least-squares slope of the weekly best metric vs week index over weeks with data in the window, as % of the mean per week, window 42 days. Up if > +0.5%/week, down if < -1.0%/week, else flat (same as logger.progress_signals (up > +0.5 %/week, dropping < -1.0 %/week)). Words: "Up about 1.5% a week (about +4 lb estimated 1RM a week)", "Holding steady", "Down about 2% a week". Percent shown to the nearest 0.5 from 1% up, one decimal below 1%.
+
+## 4. Lift status: stalled and dropping
+- Status order (first that applies): dropping, stalled, up, flat, down, insufficient.
+- **Stalled:** the last >= 3 exposures (non-deload) brought no rep/load gain over the best exposure before them (gain rule above); needs >= 4 exposures and >= 21 days of data.
+- **Decline:** an exposure that is not a gain over the reference exposure and whose metric is more than review.flat_pct (1%) below it. **Dropping:** the last 2 exposures are both declines vs the recent best (the best of the 3 exposures before them): 2 sessions in a row below it, as logging-spec §9 performance drop; catches step-wise drops (down, same, down); needs >= 4 exposures.
+- Double progression is not a stall: a load jump with fewer reps is a gain (load up), and the stall test compares with the best exposure so far.
+
+## 5. Per-muscle trend
+- **Credit:** exercises with an exercises.json rating >= 0.25 for the muscle. **Weight:** stimulus share = credited hard sets in the window (rating x hard sets), same counting as targets.json.
+- **Trend:** weighted mean of the %/week of its lifts that have a trend; same thresholds as lifts (window 42 days, thresholds as §3). Minimum: at least one lift with a trend and >= 3 distinct weeks with a credited set in the window.
+- **Main lift:** pinned (history.settings.mainLiftPins[muscle], must credit the muscle >= 0.25) else the lift with the most sessions in the window among lifts rated >= 0.5 (none: >= 0.25); ties: higher rating, more credited sets, primary < accessory < isolation, id. Pins live in `history.settings.mainLiftPins` (`{muscle: exerciseId}`).
+- **Latest gain:** the main lift's change vs its last comparable session.
+- **Stuck (muscle-level stall flag):** muscle trend is flat or down AND its main lift is stalled or dropping AND lifts that are stalled or dropping carry >= 50% of the muscle's weight. One stalled accessory on a muscle that is still going up does **not** flag the muscle.
+
+## 6. Needs attention: exactly one fix each
+- Items: deload, muscle_stall, lift_dropping. Order: deload first, then muscle stalls (main lift stall length desc, muscle order), then dropping lifts not already shown as a stalled muscle's main lift (latest drop first). Stuck muscles that share a main lift make one item (muscles listed together, one fix). When the deload is suggested it is the only item: it lists the stuck muscles and dropping lifts it covers (their one fix would be the deload anyway).
+- **Fix priority (first rule that applies wins):** deload > sets_up > sets_down > swap > rep_range.
+  - **deload**: the deload is suggested (see deload.one_rule): it then becomes the only needs-attention item and covers every stall and drop. Apply edits the board: **false**.
+  - **sets_up**: mean credited hard sets of the muscle over the last 2 completed weeks < targets.json min x levelMinFactor (rounded to 0.5): +1 set on the lift (first routine day that has it). Apply edits the board: **true**.
+  - **sets_down**: that mean > targets.json max: -1 set on the lift (never below 2). Apply edits the board: **true**.
+  - **swap**: the stall has lasted >= 6 exposures: swap the lift for the first swap.py candidate in the same equipment family that fits its template slot and is not already in the routine (none: next rule). Apply edits the board: **true**.
+  - **rep_range**: otherwise: move to the other half of the lift's rep range for a while (top-set reps at or below the middle -> upper half, else lower half). Apply edits the board: **false**.
+- can_apply = Apply edits the board (analysis ops sets / swap, with Undo). Deload is a week overlay; rep-range advice is display only until the board has a rep-range op.
+- Each item carries `fix.apply_edits_board` (boolean) and, when true, `fix.ops` in the board's analysis op format (`sets` / `swap`), applied with the existing preview / Apply / Undo; every op set is checked with the board's preset check before it is offered (no new non-info warnings).
+- Far-from-failure note: when the muscle's average RIR (§7) is ≥ 3, the item adds: "Sets ended about 3 reps from failure on average. Sets this far from failure may explain part of the stall." (proximity to failure and hypertrophy: Robinson et al. 2024, Refalo et al. 2023 [E]; the ≥ 3 line is [M]).
+
+## 7. Effort (RIR) summary
+- average RIR per muscle over the last 28 days, stimulus-weighted: sum(rating x rir) / sum(rating) over done working sets with RIR logged, rating = exercises.json muscle ratio >= 0.25; 4+ counts as 4; deload sessions excluded. Fewer than 6 such sets -> not shown ("not enough RIR logged").
+- Shown as "Average RIR about 2" or, in RPE mode, "Average RPE about 8" (10 − average, nearest 0.5).
+- Hard set = done working set with RIR <= logger.hardRIR (3) or no RIR logged (logging-spec §5). A 4+ set is never a hard set, so the far-from-failure line (average >= 3) sits at the edge of the hard-set rule: the same number, read the same way.
+
+## 8. One deload rule (reconciling logging-spec §5, §9 and this tab)
+Before progress2 there were two overlapping deload ideas: logging-spec §9 ("performance drop on 2+ consecutive exposures for ≥ 2 lifts within 14 days", RIR drift, missed reps; fire on 2+ signals or 6+ weeks) as implemented in `tools/deload.py` from `rules.json logger.deload_signals` (a points model), and the Progress tab's own "several lifts dropping" signal. **There is now one rule:**
+- There is one deload rule: logger.deload_signals points (tools/deload.py deload_check: eligibility, weeks since deload, RIR drift, hard sets over target, readiness, suggest_score 3), with its performance signal REPLACED by the Progress lift statuses below. Progress, Train and Log all use it: rules.json logger.deload_signals.performance = {"source": "progress-rules.json#deload", ...inline values} since progress3, and tools/deload.py deload_check calls tools/progress.py perf_signal.
+- **Performance signal (replaces the old one):** several lifts dropping = >= 2 lifts with status dropping whose latest exposure is in the last 14 days → **2 points**; otherwise, >= 3 lifts with a status and >= 60% of them stalled or dropping → 1 point. "Dropping" is the §4 lift status, so the Log, Train and Progress tabs share one definition (it matches logging-spec §9's 2-consecutive-drops wording).
+- **Unchanged signals** from `logger.deload_signals`: eligibility (≥ 4 logged weeks, ≥ 8 sessions, ≥ 4 weeks since the last deload), weeks since the last deload (6 → 1, 8 → 2, 10 → 3 points), RIR drift, hard sets over target, readiness. Suggest at the `suggest_score` (3).
+- **Hard-set rule overlap:** the "hard sets over target" signal counts hard sets with logging-spec §5's rule (RIR ≤ `settings.hardRIR`, default 3, or no RIR). The Progress effort summary uses the same RIR values and the same stored scale (0–4); a set logged 4+ is never hard, and the far-from-failure note (average ≥ 3) is a display note, **not** a deload signal. RIR drift stays in the deload rule only.
+- The deload is never applied to the board: a deload is a temporary week overlay (logging-spec §9); the board is not changed. When it is suggested it is the single needs-attention item (§6).
+- **In rules.json since progress3** (approved by Chief of Staff, Oct 24, 2026; applied by `tools/build_progress.py apply_rules`, sources `tools/rules_v29_blocks.py` and `tools/build_rules_v29.py`): `logger.deload_signals.performance` = `{"source": "progress-rules.json#deload", several_lifts_dropping, mostly_stalled, ...}` and `logger.e1rm_max_reps` = 12. `tools/deload.py deload_check` sees the source and calls `tools/progress.py perf_signal`, so the Train tab's deload prompt and the Progress tab use the same code path.
+
+## 9. Wins
+- Kinds and rank: milestone 1, strongest_ever 2, e1rm_pr 3, load_pr 4, rep_pr 5, hold_pr 5, vs_3_months 6 (lower shows first). Window: last 14 days; at most 5 shown, the rest behind "+N more".
+- The first session with an exercise sets its baseline: no win from it.
+- **e1RM PR:** best estimated 1RM above every earlier one by more than review.flat_pct (1%) (e1rm lifts). **Strongest ever:** an estimated 1RM PR that is still the all-time best at as_of, on a lift with >= 28 days of history: shown as "Strongest ever".
+- **Load PR:** heaviest logged load above every earlier one by more than half a step (e1rm, core, distance lifts; bodyweight lifts with added load). **Rep PR at a weight:** more reps in one working set than ever at that load or heavier (earlier sets within half a step count as the same load); bodyweight lifts with no added load: more reps than ever. **Hold PR:** longer hold than ever (hold lifts).
+- **Plate milestones:** 135, 225, 315, 405 lb (60, 100, 140, 180 kg) for `barbell-bench-press`, `back-squat`, `deadlift`: first done working set with >= 1 rep at a logged load >= the milestone (session unit; kg sessions use plates_kg), after the baseline session.
+- **vs 3 months ago:** the dashboard change (best of the first 14 days of the 91-day window vs best of the last 14 days; estimated 1RM, load-reps index, best reps at bodyweight or best hold); shown as a win only if >= +1% and the lift has no other win in the list.
+- **Dedupe:** one win per lift per session (highest kind); then one win per lift in the list (best kind, newest); vs_3_months only for lifts with no other win, at most 2. **Sort:** kind rank, then lifts that are some muscle's main lift first, then exercise type (primary, accessory, isolation), then date (newest first), then gain % (desc), then exercise id.
+
+## 10. Minimum data and honest labels
+- gain vs last: 2 exposures
+- lift trend: 3 exposures in >= 3 weeks spanning >= 14 days (42-day window)
+- lift stall: 4 exposures spanning >= 21 days
+- lift dropping: 4 exposures
+- muscle trend: 1 lift with a trend and >= 3 weeks with credited sets
+- muscle stall: muscle trend + main lift status
+- deload: logger.deload_signals.eligible (>= 4 logged weeks, >= 8 sessions, >= 4 weeks since the last deload)
+- wins: a baseline session per lift; vs 3 months needs data in both windows
+- Labels: "Not enough sessions yet ({have} of {need})", "Not enough weeks yet". Never a trend, stall, rate or deload call below the minimum.
+- Always visible: "Strength and performance, not measured muscle growth". All numbers say "about" or "estimated"; no claims about muscle growth, health or injury.
+
+## 11. Sample log (`data/sample-log.json`)
+- Built by `tools/progress_fixture.py sample_log()` on the real preset **phul / intermediate / 4** (PHUL, intermediate, 4 days), 12 weeks from 2026-08-03 to 2026-10-24 (as_of), lb, with one lighter week (week 7, Sep 14–20), one skipped session, a user-added side plank on Fridays, warm-ups, one missed set, notes and weekly bodyweights. 47 completed sessions (48 sessions in the file).
+- **Shape = exactly what the Train tab writes** (logging-spec §13): `sessions[]`, `entries[]`, `sets[]` (each `{id, entryId, idx, kind, load, reps, rir|null, done, doneAt}`), `settings`, plus `bodyweights`, `exNotes`, `deloads`, `readiness`, `routine`, `meta`. Sets carry no `sessionId`: join through `entryId → entry.sessionId`.
+- What it shows at as_of 2026-10-24:
+  - Wins shown (top 5 of 26):
+    1. Deadlift: first 315 lb set (3 plates) (2026-10-13, milestone)
+    2. Barbell Bench Press: first 225 lb set (2 plates) (2026-10-12, milestone)
+    3. Back Squat: strongest ever, estimated 1RM about 347 lb (2026-10-20, strongest_ever)
+    4. Overhead Press: strongest ever, estimated 1RM about 153 lb (2026-10-12, strongest_ever)
+    5. Chest-Supported Row: strongest ever, estimated 1RM about 182 lb (2026-10-15, strongest_ever)
+  - Stalled muscle: **side delts** (main lift Dumbbell Lateral Raise, 86% of the muscle's weight stalled; average RIR 3.0, so the far-from-failure note shows).
+  - Dropping lift: **Leg Press** (two sessions in a row with fewer reps at the same load).
+  - Needs attention:
+    - **Side delts: stuck. Dumbbell Lateral Raise has had no rep or load gain in the last 17 sessions**. Fix (swap, Apply edits board: true): Swap Dumbbell Lateral Raise for Seated Dumbbell Lateral Raise for a few weeks (a similar exercise for the same slot). Note: Sets ended about 3 reps from failure on average. Sets this far from failure may explain part of the stall.
+    - **Leg Press is dropping: below its recent best 2 sessions in a row (−1 rep at same weight last time)**. Fix (rep_range, Apply edits board: false): Try 6–8 reps on Leg Press for a while (top sets were 9; range 6–10).
+  - Deload: score 0 of 3, not suggested (a lighter week was taken 5 weeks ago; only one lift dropping).
+  - Muscles going up: abductors, abs, adductors, biceps, calves, chest, forearms, front delts, glutes, hamstrings, lats, lower back, obliques, quads, rear delts, traps, triceps, upper back.
+  - Bodyweight / timed lifts (no estimated 1RM): Hanging Leg Raise: Up about 3.5% a week (about +0.5 reps a week); last time +1 rep, Pull-Up: Up about 4.5% a week (about +0.5 reps a week); last time +1 rep, Side Plank: Up about 2.5% a week (about +1.5 s a week); last time Same as last time.
+  - RIR logged from week 9 on the main barbell and dumbbell lifts and the lateral raises; footnote: "Planned vs done, last 4 weeks: 287 of 288 sets".
+- Edge cases in the reference (`edge_cases`): **below_minimum**: two sessions: gain vs last only; no trend, stall, muscle trend or deload (minimum data); **pinned_main_lift**: chest: incline dumbbell press is logged twice a week (the default main lift) but the pin makes barbell bench press the main lift; **bodyweight_lifts**: bodyweight and timed lifts: no e1RM; reps, added load and hold time instead; rep / load / hold PRs; **dashboard_3_months**: 13 weeks (the full 91-day window): bench steadily down (band down, stalled or dropping), squat up_strong, row flat with small total-rep gains (flat, not stalled), pull-up Best reps skipping weighted-only weeks, weighted dip with weighted sets only (insufficient), side plank best hold, leg extension added late (insufficient); strength-change median of 3 estimated-1RM main lifts; **rpe_mode**: settings.effort = rpe (kg log): legacy RIR values clamp on read (5 -> 4, 1.5 -> 2, 2.4 -> 2, -1 -> 0); effort shown as RPE; **deload_signal**: bench press and squat drop two sessions in a row in the last 14 days, 8 weeks without a lighter week: several lifts dropping + time -> deload suggested; one deload item covers the dropping lifts and stuck muscles.
+
+## 12. Builder handoff
+- **One sample log.** The storyboard Log tab must load `data/sample-log.json` (synced like the other data files) instead of generating `LOGH` from `LOGS0` in `sb.js genLog()`, and the Progress tab must read the same object. Sets have **no `sessionId`**: group via `entryId → entries[].sessionId`. The Log's "October only" filter (`startedAt` starting `2026-10`) can stay as a view filter; Progress always reads the whole log. If the Log persists to localStorage (`apechit.sb.log.v1`), seed from the file and bump the key so the old generated log isn't reused.
+- **Parity entry point:** `tools/progress.py report(history, as_of, routine=None, level='intermediate', goal=None)` ↔ a JS `PROGRESS.report(data, history, asOf, routine, level, goal)` in `logic/progress.js`. `test/progress.diff.js` should diff `REF.sample.report` (and each `REF.edge_cases[k].report`) against the JS output, and the compact `expected` blocks are the must-match fields. The old round-1 inputs/outputs moved to `REF.legacy_v1` (same `history`, `routine`, `as_of`, `level`, `expected` fields) so the current diff can be pointed there until the switch.
+- `sync-ranking-data.sh` must also copy `progress-rules.json` and `sample-log.json`.
+- **Report fields:** `as_of, label, model_note, unit, effort_mode, data{completed_sessions, logged_weeks, first_date}, lifts{id: name, kind, metric, exposures, last_date, gain_vs_last{status, text, gain, date, prev_date, detail}, trend{exposures, weeks, status, pct_per_week, abs_per_week, words}, stall{trailing_no_gain, best_date, stalled, dropping, exposures, span_days}, status, insufficient_label, weekly_best[{week, value, display, pr_week, deload_week}]}, muscles{m: trend{status, pct_per_week, words, weeks_with_sets, lifts}, main_lift{id, name, pinned, sessions_in_window, status}, latest_gain, weight_by_lift, stalled_or_dropping_share, stuck, effort}, stall_flags{muscles, lifts_stalled, lifts_dropping}, needs_attention[{kind, muscle, muscles, lift, lifts, text, fix{kind, text, apply_edits_board, ops}, notes}], deload{eligible, reason, several_lifts_dropping, score, suggest_score, suggest, snoozed_until, signals, apply_edits_board}, wins{shown, more, all_events, vs_3_months}, effort{m: avg_rir, sets_with_rir, display, far_from_failure}, footnote{planned_vs_done}`. Values in `lifts.*.weekly_best.value` are kg for e1rm/load_index, a count for reps, seconds for holds.
+- **UI changes vs the current shots:** planned-vs-done moves to a one-line footnote; pull-up and other bodyweight lifts no longer show an estimated 1RM (current shot shows 223 lb); RIR chips 0 1 2 3 4+ (RPE 10 9 8 7 ≤6).
+- Apply buttons only where `fix.apply_edits_board` is true; deload and rep-range fixes are text only.
+
+## 13. Dashboard (progress3)
+Progress dashboard (KPI strip, body map, muscle table, win chips, dot charts). Strength and performance, not measured muscle growth. Every threshold is a modelling choice [M]. Payload: `report()['dashboard']` (`window`, `label`, `kpis`, `muscles`, `lifts`).
+
+**Window.** 3 months = the 91 days ending at as_of (as_of - 90 .. as_of), local dates; deload sessions never count. Sparklines and the 12w dot window use the 12 Monday weeks ending with the week of as_of, which sit inside it.
+
+**One value per session (the dashboard metric).** one dashboard value per lift session, by lift kind: e1rm lifts -> estimated 1RM (Epley, sets <= 12 reps); core / carry / high-rep lifts -> load_index; bodyweight lifts -> best_reps; hold lifts -> best hold (s); core lifts with no load -> best_reps.
+- **Best reps** (bodyweight lifts): most reps in one done working set at bodyweight (added load within half a load step of 0); weighted and assisted sets are left out of Best reps (they still count for load PRs and hard sets). A session with no bodyweight set has no Best reps value.
+- **Weighted / assisted variants:** a bodyweight lift logged only with added load (e.g. weighted dips) has no Best reps in the window: change and band are insufficient ("weighted sets only"); its progress shows as load PRs. No bodyweight-included 1RM is shown.
+- Labels: e1rm = "estimated 1RM", load_index = "load-reps index", best_reps = "best reps", hold_s = "best hold".
+
+**3-month change (one definition for the KPI, the table, the body map and "vs 3 months ago").**
+- Early: best dashboard value in the first 14 days of the window that has this lift: from its first non-deload session in the window (s) to s + 13. Late: best dashboard value in the last 14 days (as_of - 13 .. as_of).
+- Change % = (late / early - 1) x 100; weeks = (as_of - 13 - s) / 7, the gap between the two 14-day periods; rate = pct / weeks.
+- Minimum data: >= 4 non-deload sessions in the window, a value in both periods, and s <= as_of - 56 (>= 8 weeks of data, so the periods are >= 30 days apart). Otherwise `change.status = "insufficient"` with a reason ("fewer than 4 sessions in 3 months", "less than 8 weeks of data", "no session in the last 2 weeks", "weighted sets only").
+- Rounding: stored to 2 decimals; shown to the nearest 0.5% from 1% up, one decimal below 1% (e.g. "+12.5%", "+0.8%").
+
+**Body map band (per muscle, from its main lift's change rate) [M].** up_strong > +1.5 %/week; up > +0.5; down < -1.0; flat = -1.0 .. +0.5 inclusive (the flat band). Up and down are the 42-day trend thresholds (logger.progress_signals), applied to the 3-month change rate.
+- Colour roles (colours are the Builder's): up_strong → progress-strong, up → progress, flat → neutral, down → attention, insufficient → muted, not_trained → none.
+- A muscle with the stall flag (muscle.stuck) keeps its band colour and gets the attention marker (outline / dot); the KPI counts it as stalled or dropping. Muscles with no lift crediting them (rating >= 0.25) in the window: not coloured, not counted.
+
+**KPI strip.**
+1. **Strength change vs 3 months ago** [M]: median of those lifts' change pct (even count: mean of the middle two); lifts = unique main lifts of the trained muscles (a lift that is main for several muscles counts once) whose dashboard metric is e1rm or load_index and whose change has enough data; at least 3 lifts, else "Not enough data". Rounding: nearest 0.5% from 1% up, one decimal below 1%. Sublabel: "Median of main lifts (estimated 1RM, or the load-reps index for high-rep lifts). Strength and performance, not measured muscle growth."
+   - Why the median: Median over unique lifts: one new or fast-moving lift (e.g. a lift added late or recovering from a break) cannot swing it, and a lift that is main for four muscles (deadlift) is not counted four times. A mean weighted by stimulus would mostly repeat the biggest compound lifts. Best reps and hold changes are left out: their percentages run on a different scale (one more rep at 10 reps is +10%, about +3% estimated 1RM), so mixing them would inflate the median. They show in the table and in vs 3 months ago instead.
+2. **Muscles progressing / flat / stalled or dropping** [M]: trained muscles only. stalled_or_dropping = muscle stall flag (muscle.stuck) OR band down (the stall flag has its own minimum data, so a stalled muscle counts here even when its 3-month band is insufficient); else progressing = band up_strong or up; else flat = band flat; else (band insufficient) not in a bucket, shown as the insufficient count.
+3. **PRs, last 30 days**: wins events (same PR definitions as wins: estimated 1RM PR on sets <= 12 reps, load PR, rep PR at a weight, hold PR, plate milestone, strongest ever) dated in the last 30 days (as_of - 29 .. as_of); one per lift per session (highest kind); vs 3 months ago is not a PR.
+
+**Muscle table.** Columns: muscle, sparkline_12w, main_lift, change_pct, avg_rir. Change % = the main lift's change pct (dashboard.change); same main lift as the muscle cards (pinned, else most sessions in the 42-day window). Avg RIR = effort.avg_rir (28 days, stimulus-weighted).
+- **Sparkline:** the main lift's weekly best dashboard value for the 12 Monday-to-Sunday weeks ending with the week of as_of, oldest first; null for weeks with no value (deload-only weeks also null, flagged). Why not a combined muscle index: one lift's own number (estimated 1RM, reps or hold) is easy to read and matches the change %; a combined muscle index would need weights and units nobody can check.
+
+**Dot charts (per lift).** A dot is one per session with the lift: the session's best set as its dashboard value (estimated 1RM, load-reps index, best reps or best hold). Windows: 4w = sessions in the last 28 days, 12w = sessions in the last 84 days, All = every logged session (`dot.days_ago` makes the filter simple). Dot.pr = true when that session has a wins event for the lift (any PR kind); PR dots are marked. Deload sessions are shown as hollow dots (dot.deload = true) and never counted as PRs or in trends.
+
+**vs 3 months ago.** Wins vs 3 months ago uses this change for every lift with enough data, including bodyweight lifts (best reps) and hold lifts (best hold). Bodyweight and hold lifts join because the logs carry them every week; their % is reps or seconds, so the KPI median leaves them out (above).
+
+**Sample at as_of 2026-10-24.**
+- Strength change: **+15%** (median of 13 main lifts: back-squat +14.7%, barbell-bench-press +15.8%, barbell-curl +18.2%, barbell-row +9.7%, cable-crunch +18.4%, chest-supported-row +13.8%, deadlift +13.5%, dumbbell-lateral-raise -6.7%, hip-abduction-machine +13.9%, lying-leg-curl +19.2%, overhead-cable-triceps-extension +15.2%, overhead-press +15.3%, seated-calf-raise +18.9%).
+- Muscles: 18 progressing, 0 flat, 1 stalled or dropping (side_delts), 0 not enough data. PRs in the last 30 days: 103 (e1rm_pr 15, hold_pr 2, load_pr 19, milestone 2, rep_pr 54, strongest_ever 11); double progression gives a rep PR almost every session, so the chip shows the count, with the ranked wins list for detail.
+- Best reps / hold examples: Hanging Leg Raise 10 reps → 15 reps (+50%); Pull-Up 7 reps → 12 reps (+71.5%); Side Plank 40 s → 60 s (+50%).
+
+| muscle | band | bucket | main lift | change | avg RIR |
+|---|---|---|---|---|---|
+| chest | up_strong | progressing | Barbell Bench Press (estimated 1RM) | +16% | 1.33 |
+| front delts | up_strong | progressing | Overhead Press (estimated 1RM) | +15.5% | 1.33 |
+| side delts | flat | stalled_or_dropping | Dumbbell Lateral Raise (load-reps index) | −6.5% | 3.0 |
+| rear delts | up | progressing | Chest-Supported Row (estimated 1RM) | +13.5% | 1.33 |
+| lats | up_strong | progressing | Pull-Up (best reps) | +71.5% | 1.37 |
+| upper back | up | progressing | Barbell Row (estimated 1RM) | +9.5% | 1.37 |
+| traps | up | progressing | Deadlift (estimated 1RM) | +13.5% | 2.04 |
+| biceps | up_strong | progressing | Barbell Curl (load-reps index) | +18% | 1.33 |
+| triceps | up_strong | progressing | Overhead Cable Triceps Extension (load-reps index) | +15% | 1.33 |
+| forearms | up | progressing | Deadlift (estimated 1RM) | +13.5% | 1.5 |
+| abs | up_strong | progressing | Cable Crunch (load-reps index) | +18.5% | - |
+| quads | up_strong | progressing | Back Squat (estimated 1RM) | +14.5% | 1.25 |
+| hamstrings | up_strong | progressing | Lying Leg Curl (load-reps index) | +19% | 1.5 |
+| glutes | up | progressing | Deadlift (estimated 1RM) | +13.5% | 1.27 |
+| calves | up_strong | progressing | Seated Calf Raise (load-reps index) | +19% | - |
+| adductors | up_strong | progressing | Back Squat (estimated 1RM) | +14.5% | 1.25 |
+| lower back | up | progressing | Deadlift (estimated 1RM) | +13.5% | 1.29 |
+| obliques | up_strong | progressing | Side Plank (best hold) | +50% | - |
+| abductors | up_strong | progressing | Hip Abduction Machine (load-reps index) | +14% | 1.17 |
+
+## References
+- Zourdos MC, et al. Novel resistance training-specific rating of perceived exertion scale measuring repetitions in reserve. *J Strength Cond Res.* 2016. doi:10.1519/JSC.0000000000001049. PMID 26049792. (Crossref-checked Oct 24, 2026)
+- Robinson ZP, et al. Exploring the dose-response relationship between estimated resistance training proximity to failure, strength gain, and muscle hypertrophy: a series of meta-regressions. *Sports Med.* 2024. doi:10.1007/s40279-024-02069-2. PMID 38970765. (Crossref-checked)
+- Refalo MC, et al. Influence of resistance training proximity-to-failure on skeletal muscle hypertrophy: a systematic review with meta-analysis. *Sports Med.* 2023 (online 2022). doi:10.1007/s40279-022-01784-y. PMID 36334240. (Crossref-checked)
+- Bell L, et al. Integrating deloading into strength and physique sports training programmes: an international Delphi consensus approach. *Sports Med Open.* 2023. doi:10.1186/s40798-023-00633-0. PMID 37730925. (Crossref-checked)

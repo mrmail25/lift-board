@@ -1516,7 +1516,7 @@
       }
     },
     "jump_prefer_reps_above": 0.05,
-    "e1rm_max_reps": 10,
+    "e1rm_max_reps": 12,
     "e1rm_formula": "epley",
     "prs": {
       "types": [
@@ -1990,12 +1990,20 @@
         "why": "surveyed strength/physique athletes deload about every 5.6 +/- 2.3 weeks (Rogerson 2024); Delphi coaches describe pre-planned deloads every 4-8 weeks (Bell 2023). Time alone reaches the threshold only at 10 weeks."
       },
       "performance": {
-        "min_lifts": 3,
-        "stalled_or_dropping_share": 0.6,
-        "dropping_share": 0.34,
-        "points_stalled": 1,
-        "points_dropping": 2,
-        "rule": "over progress_signals.window_weeks: >= min_lifts exercises with a trend; 2 points if >= dropping_share of them are dropping, else 1 point if >= stalled_or_dropping_share are stalled or dropping",
+        "source": "progress-rules.json#deload",
+        "note": "One deload rule (progress2, Chief of Staff Oct 24, 2026): the performance signal is the Progress tab lift statuses (progress-spec.md section 8); tools/deload.py deload_check calls tools/progress.py perf_signal. Values inline for the Train tab; progress-rules.json deload is the source.",
+        "several_lifts_dropping": {
+          "min_lifts": 2,
+          "within_days": 14,
+          "points": 2
+        },
+        "mostly_stalled": {
+          "min_lifts": 3,
+          "share": 0.6,
+          "points": 1
+        },
+        "dropping": "the last 2 exposures are both declines (not a gain and > 1% below) vs the best of the 3 exposures before them",
+        "stalled": "the last >= 3 exposures brought no rep/load gain over the best before them (>= 4 exposures over >= 21 days)",
         "why": "athletes report deloading when performance stalls (Rogerson 2024). Plateaus have many causes, so this alone does not trigger a prompt."
       },
       "rir_drift": {
@@ -6157,7 +6165,7 @@
         "id": "load_trend",
         "label": "Best e1RM per session",
         "description": "Per exercise, the best estimated 1RM each session.",
-        "formula": "rules.json logger.e1rm_formula (epley) on working sets with reps <= e1rm_max_reps (10)",
+        "formula": "rules.json logger.e1rm_formula (epley) on working sets with reps <= e1rm_max_reps (12)",
         "evidence": "modeled",
         "status": "defined",
         "shown_in": [
@@ -6174,7 +6182,7 @@
         "tab": "progress",
         "explain": {
           "what": "Best estimated 1RM per session for each exercise.",
-          "how": "Epley on working sets with reps <= 10 (rules.json logger.e1rm_formula).",
+          "how": "Epley on working sets with reps <= 12 (rules.json logger.e1rm_formula).",
           "why": "A load trend you can compare across rep ranges; an estimate, not a tested max.",
           "learn_page": "hypertrophy-stimulus#tension"
         },
@@ -6499,7 +6507,7 @@
     "note": "Progress stats from logged (completed) workouts only. A model for spotting trends, not a measurement of growth or strength. Every threshold here is modeled. Spec: data/progress-spec.md; reference: tools/progress.py.",
     "reuses": {
       "hard_sets": "logger.completed_analytics.hard_sets (credited, set_tags credit fractions, ratings >= 0.25)",
-      "e1rm": "logger.e1rm_formula (epley) on working sets with reps <= logger.e1rm_max_reps (10); set_tags pr_exclude; deload sessions left out",
+      "e1rm": "logger.e1rm_formula (epley) on working sets with reps <= logger.e1rm_max_reps (12); set_tags pr_exclude; deload sessions left out",
       "lift_trend": "logger.progress_signals (4-week window, >= 3 sessions over >= 14 days, up > +0.5 %/wk, dropping < -1.0 %/wk)",
       "adherence": "logger.completed_analytics.adherence",
       "flat_band": "review.flat_pct (1%)"
