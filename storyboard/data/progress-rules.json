@@ -373,7 +373,22 @@
    "prs_30d": {
     "days": 30,
     "rule": "wins events (same PR definitions as wins: estimated 1RM PR on sets <= 12 reps, load PR, rep PR at a weight, hold PR, plate milestone, strongest ever) dated in the last 30 days (as_of - 29 .. as_of); one per lift per session (highest kind); vs 3 months ago is not a PR",
-    "label": "PRs, last 30 days"
+    "label": "PRs, last 30 days",
+    "audit": "progress4 check (2026-10-24): no inflation from rep PRs at many weights. Events are already one per lift per session (highest kind), and a rep PR is reported once per session at the heaviest weight that beat the earlier best reps at that weight or heavier. On the sample all 54 rep PRs in the last 30 days are top-weight sets and also new plotted bests; the count is high because double progression gives a rep PR almost every session. Count kept unchanged."
+   },
+   "avg_rir": {
+    "days": 28,
+    "min_sets": 6,
+    "round": 1,
+    "rule": "plain mean of logged RIR over done working sets in the last 28 days (as_of - 27 .. as_of), deload sessions left out; 4+ counts as 4; sets with no RIR are skipped; each set counts once. Same pool, window and minimum as the per-muscle effort.avg_rir (which weights each set by muscle rating); rounded to 1 decimal",
+    "share_logged": "logged_sets / eligible_sets, where eligible = every done working set in the same pool, RIR logged or not",
+    "reason_insufficient": "not enough RIR logged",
+    "reason_display": "Not enough RIR logged",
+    "display_rir": "Average RIR {v}",
+    "display_rpe": "Average RPE {v}",
+    "partial_share": 0.5,
+    "partial_note": "Based on the {n} of {total} sets with RIR logged",
+    "label": "Average RIR, last 28 days"
    }
   },
   "table": {
@@ -399,7 +414,8 @@
     "12w": "sessions in the last 84 days",
     "all": "every logged session"
    },
-   "pr": "dot.pr = true when that session has a wins event for the lift (any PR kind); PR dots are marked",
+   "pr": "dot.pr = true when that session has a wins event for the lift (any PR kind); used for event chips and tooltips, not for the chart marker",
+   "best": "dot.best = true only when the dot's plotted value (dot.value, as stored) is strictly higher than every earlier dot value of that lift, over all history (not only the window shown); the lift's first-ever session and deload dots are false. The chart marker uses best",
    "deload": "deload sessions are shown as hollow dots (dot.deload = true) and never counted as PRs or in trends"
   },
   "vs_3_months": "wins vs 3 months ago uses this change for every lift with enough data, including bodyweight lifts (best reps) and hold lifts (best hold)"

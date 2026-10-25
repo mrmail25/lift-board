@@ -3115,6 +3115,16 @@
        "rep_pr": 54,
        "strongest_ever": 11
       }
+     },
+     "avg_rir": {
+      "value": 1.7,
+      "status": "ok",
+      "reason": null,
+      "logged_sets": 104,
+      "eligible_sets": 295,
+      "share_logged": 0.3525,
+      "display": "Average RIR 1.7",
+      "note": "Based on the 104 of 295 sets with RIR logged"
      }
     },
     "muscles": {
@@ -3657,73 +3667,85 @@
         "2026-08-04",
         133.3563,
         false,
+        false,
         false
        ],
        [
         "2026-08-11",
         137.0607,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-18",
         140.765,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-25",
         144.4693,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-01",
         148.1737,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-08",
         147.4177,
         true,
+        false,
         false
        ],
        [
         "2026-09-15",
         122.4701,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-22",
         151.1976,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-29",
         150.366,
         true,
+        false,
         false
        ],
        [
         "2026-10-06",
         154.2216,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-13",
         153.3144,
         true,
+        false,
         false
        ],
        [
         "2026-10-20",
         157.2455,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -3751,73 +3773,85 @@
         "2026-08-03",
         114.3054,
         false,
+        false,
         false
        ],
        [
         "2026-08-10",
         117.4806,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-17",
         120.6557,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-24",
         123.8309,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-31",
         127.006,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-07",
         126.7792,
         true,
+        false,
         false
        ],
        [
         "2026-09-14",
         103.4192,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-21",
         130.03,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-28",
         129.7276,
         true,
+        false,
         false
        ],
        [
         "2026-10-05",
         133.0539,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-12",
         132.6759,
         true,
+        false,
         false
        ],
        [
         "2026-10-19",
         136.0779,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -3845,73 +3879,85 @@
         "2026-08-03",
         39.3114,
         false,
+        false,
         false
        ],
        [
         "2026-08-10",
         40.2942,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-17",
         41.277,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-24",
         42.2597,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-31",
         43.2425,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-07",
         44.2253,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-14",
         36.2874,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-21",
         43.3937,
         true,
+        false,
         false
        ],
        [
         "2026-09-28",
         44.4521,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-05",
         45.5105,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-12",
         46.5689,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-19",
         47.6273,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -3939,73 +3985,85 @@
         "2026-08-03",
         89.0554,
         false,
+        false,
         false
        ],
        [
         "2026-08-10",
         91.399,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-17",
         93.7425,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-24",
         91.9282,
         true,
+        false,
         false
        ],
        [
         "2026-08-31",
         94.3473,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-07",
         96.7665,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-14",
         78.9252,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-21",
         94.8009,
         true,
+        false,
         false
        ],
        [
         "2026-09-28",
         97.2957,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-05",
         99.7904,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-12",
         97.6737,
         true,
+        false,
         false
        ],
        [
         "2026-10-19",
         100.244,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -4033,73 +4091,85 @@
         "2026-08-07",
         20.6385,
         false,
+        false,
         false
        ],
        [
         "2026-08-14",
         21.1677,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-21",
         21.6969,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-28",
         22.2261,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-04",
         22.982,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-11",
         23.5868,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-18",
         20.1093,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-25",
         24.1916,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-02",
         24.7964,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-09",
         25.4012,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-16",
         25.8548,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-23",
         26.5352,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -4127,73 +4197,85 @@
         "2026-08-07",
         38.1018,
         false,
+        false,
         false
        ],
        [
         "2026-08-14",
         39.009,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-21",
         39.9162,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-28",
         40.8234,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-04",
         41.7305,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-11",
         42.6377,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-18",
         30.2395,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-25",
         43.5449,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-02",
         44.4521,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-09",
         45.3593,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-16",
         45.2081,
         true,
+        false,
         false
        ],
        [
         "2026-10-23",
         46.1909,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -4221,67 +4303,78 @@
         "2026-08-06",
         18.5973,
         false,
+        false,
         false
        ],
        [
         "2026-08-13",
         19.0509,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-20",
         19.5045,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-03",
         19.9581,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-10",
         20.4117,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-17",
         18.1437,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-24",
         21.1677,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-01",
         21.6969,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-08",
         22.2261,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-15",
         22.7552,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-22",
         23.2844,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -4309,66 +4402,77 @@
         "2026-08-06",
         70.7605,
         false,
+        false,
         false
        ],
        [
         "2026-08-13",
         72.5749,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-20",
         74.3892,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-03",
         76.2036,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-10",
         74.6916,
         true,
+        false,
         false
        ],
        [
         "2026-09-17",
         63.2006,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-24",
         76.6572,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-01",
         78.6228,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-08",
         80.5883,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-15",
         82.5539,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-22",
         82.5539,
         true,
+        false,
         false
        ]
       ]
@@ -4397,72 +4501,84 @@
         "2026-08-03",
         92.3062,
         false,
+        false,
         false
        ],
        [
         "2026-08-10",
         94.8009,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-17",
         97.2957,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-24",
         99.7904,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-31",
         97.6737,
         true,
+        false,
         false
        ],
        [
         "2026-09-07",
         100.244,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-14",
         81.6467,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-21",
         102.8144,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-28",
         100.5464,
         true,
+        false,
         false
        ],
        [
         "2026-10-05",
         103.1924,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-12",
         105.8383,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-19",
         103.4192,
         true,
+        false,
         false
        ]
       ]
@@ -4491,73 +4607,85 @@
         "2026-08-04",
         163.2934,
         false,
+        false,
         false
        ],
        [
         "2026-08-11",
         167.8294,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-18",
         172.3653,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-25",
         176.9012,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-01",
         181.4372,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-08",
         179.8496,
         true,
+        false,
         false
        ],
        [
         "2026-09-15",
         146.9641,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-22",
         184.4611,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-29",
         182.7979,
         true,
+        false,
         false
        ],
        [
         "2026-10-06",
         187.4851,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-13",
         185.7463,
         true,
+        false,
         false
        ],
        [
         "2026-10-20",
         190.509,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -4585,29 +4713,34 @@
         "2026-08-03",
         12.7006,
         false,
+        false,
         false
        ],
        [
         "2026-08-06",
         13.003,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-10",
         13.3054,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-13",
         13.6078,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-17",
         12.7006,
+        false,
         false,
         false
        ],
@@ -4615,11 +4748,13 @@
         "2026-08-20",
         12.7006,
         false,
+        false,
         false
        ],
        [
         "2026-08-24",
         12.7006,
+        false,
         false,
         false
        ],
@@ -4627,11 +4762,13 @@
         "2026-08-31",
         12.7006,
         false,
+        false,
         false
        ],
        [
         "2026-09-03",
         12.7006,
+        false,
         false,
         false
        ],
@@ -4639,11 +4776,13 @@
         "2026-09-07",
         12.7006,
         false,
+        false,
         false
        ],
        [
         "2026-09-10",
         12.7006,
+        false,
         false,
         false
        ],
@@ -4651,17 +4790,20 @@
         "2026-09-14",
         9.0719,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-17",
         9.0719,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-21",
         12.7006,
+        false,
         false,
         false
        ],
@@ -4669,11 +4811,13 @@
         "2026-09-24",
         12.7006,
         false,
+        false,
         false
        ],
        [
         "2026-09-28",
         12.7006,
+        false,
         false,
         false
        ],
@@ -4681,11 +4825,13 @@
         "2026-10-01",
         12.7006,
         false,
+        false,
         false
        ],
        [
         "2026-10-05",
         12.7006,
+        false,
         false,
         false
        ],
@@ -4693,11 +4839,13 @@
         "2026-10-08",
         12.7006,
         false,
+        false,
         false
        ],
        [
         "2026-10-12",
         12.7006,
+        false,
         false,
         false
        ],
@@ -4705,17 +4853,20 @@
         "2026-10-15",
         12.7006,
         false,
+        false,
         false
        ],
        [
         "2026-10-19",
         12.7006,
         false,
+        false,
         false
        ],
        [
         "2026-10-22",
         12.7006,
+        false,
         false,
         false
        ]
@@ -4745,72 +4896,84 @@
         "2026-08-07",
         86.7118,
         false,
+        false,
         false
        ],
        [
         "2026-08-14",
         89.0554,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-21",
         91.399,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-28",
         93.7425,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-04",
         91.9282,
         true,
+        false,
         false
        ],
        [
         "2026-09-11",
         94.3473,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-18",
         76.2036,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-25",
         96.7665,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-02",
         94.8009,
         true,
+        false,
         false
        ],
        [
         "2026-10-09",
         97.2957,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-16",
         99.7904,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-23",
         97.6737,
         true,
+        false,
         false
        ]
       ]
@@ -4839,11 +5002,13 @@
         "2026-08-04",
         10,
         false,
+        false,
         false
        ],
        [
         "2026-08-11",
         10,
+        false,
         false,
         false
        ],
@@ -4851,11 +5016,13 @@
         "2026-08-18",
         11,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-25",
         11,
+        false,
         false,
         false
        ],
@@ -4863,11 +5030,13 @@
         "2026-09-01",
         12,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-08",
         12,
+        false,
         false,
         false
        ],
@@ -4875,17 +5044,20 @@
         "2026-09-15",
         10,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-22",
         13,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-29",
         13,
+        false,
         false,
         false
        ],
@@ -4893,11 +5065,13 @@
         "2026-10-06",
         14,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-13",
         14,
+        false,
         false,
         false
        ],
@@ -4905,7 +5079,8 @@
         "2026-10-20",
         15,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -4933,73 +5108,85 @@
         "2026-08-07",
         76.2036,
         false,
+        false,
         false
        ],
        [
         "2026-08-14",
         78.018,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-21",
         79.8324,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-28",
         81.6467,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-04",
         80.5883,
         true,
+        false,
         false
        ],
        [
         "2026-09-11",
         82.5539,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-18",
         66.527,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-25",
         84.5195,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-02",
         86.485,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-09",
         88.4506,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-16",
         86.7874,
         true,
+        false,
         false
        ],
        [
         "2026-10-23",
         88.9042,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -5027,67 +5214,78 @@
         "2026-08-06",
         15.1198,
         false,
+        false,
         false
        ],
        [
         "2026-08-13",
         15.4978,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-20",
         15.8758,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-03",
         16.2537,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-10",
         16.6317,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-17",
         12.0958,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-24",
         17.0097,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-01",
         18.1437,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-08",
         18.5973,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-15",
         19.0509,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-22",
         19.5045,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -5115,67 +5313,78 @@
         "2026-08-06",
         34.4731,
         false,
+        false,
         false
        ],
        [
         "2026-08-13",
         35.3802,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-20",
         36.2874,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-03",
         37.1946,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-10",
         38.1018,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-17",
         31.6003,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-24",
         37.3458,
         true,
+        false,
         false
        ],
        [
         "2026-10-01",
         38.3286,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-08",
         39.3114,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-15",
         40.2942,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-22",
         41.277,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -5203,67 +5412,78 @@
         "2026-08-06",
         82.5539,
         false,
+        false,
         false
        ],
        [
         "2026-08-13",
         84.6707,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-20",
         86.7874,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-03",
         88.9042,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-10",
         87.6946,
         true,
+        false,
         false
        ],
        [
         "2026-09-17",
         74.6916,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-24",
         89.887,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-01",
         92.0794,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-08",
         90.7186,
         true,
+        false,
         false
        ],
        [
         "2026-10-15",
         92.9865,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-22",
         95.2545,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -5291,72 +5511,84 @@
         "2026-08-07",
         68.1901,
         false,
+        false,
         false
        ],
        [
         "2026-08-14",
         69.8533,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-21",
         71.5165,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-28",
         73.1797,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-04",
         74.8428,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-11",
         74.3892,
         true,
+        false,
         false
        ],
        [
         "2026-09-18",
         60.4791,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-25",
         76.2036,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-02",
         78.018,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-09",
         79.8324,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-16",
         81.6467,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-23",
         80.5883,
         true,
+        false,
         false
        ]
       ]
@@ -5385,71 +5617,83 @@
         "2026-08-04",
         206.8384,
         false,
+        false,
         false
        ],
        [
         "2026-08-11",
         212.2815,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-18",
         217.7246,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-25",
         212.5839,
         true,
+        false,
         false
        ],
        [
         "2026-09-01",
         218.1782,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-08",
         223.7725,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-15",
         185.0659,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-22",
         218.3294,
         true,
+        false,
         false
        ],
        [
         "2026-09-29",
         224.0749,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-06",
         229.8204,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-13",
         224.0749,
+        false,
         false,
         false
        ],
        [
         "2026-10-20",
         218.3294,
+        false,
         false,
         false
        ]
@@ -5479,73 +5723,85 @@
         "2026-08-04",
         54.4311,
         false,
+        false,
         false
        ],
        [
         "2026-08-11",
         55.7919,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-18",
         57.1527,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-25",
         58.5135,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-01",
         59.8743,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-08",
         61.235,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-15",
         54.4311,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-22",
         60.4791,
         true,
+        false,
         false
        ],
        [
         "2026-09-29",
         61.991,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-06",
         63.503,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-13",
         65.015,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-20",
         66.527,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -5573,67 +5829,78 @@
         "2026-08-06",
         30.9955,
         false,
+        false,
         false
        ],
        [
         "2026-08-13",
         31.7515,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-20",
         32.5075,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-03",
         33.2635,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-10",
         34.0195,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-17",
         27.2156,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-24",
         33.2635,
         true,
+        false,
         false
        ],
        [
         "2026-10-01",
         34.0951,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-08",
         34.9267,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-15",
         35.7582,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-22",
         36.5898,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -5661,72 +5928,84 @@
         "2026-08-03",
         58.7403,
         false,
+        false,
         false
        ],
        [
         "2026-08-10",
         60.3279,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-17",
         61.9154,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-24",
         63.503,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-31",
         63.2006,
         true,
+        false,
         false
        ],
        [
         "2026-09-07",
         64.8638,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-14",
         51.7096,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-21",
         66.527,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-28",
         66.0734,
         true,
+        false,
         false
        ],
        [
         "2026-10-05",
         67.8121,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-12",
         69.5509,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-19",
         68.9461,
         true,
+        false,
         false
        ]
       ]
@@ -5755,11 +6034,13 @@
         "2026-08-03",
         7,
         false,
+        false,
         false
        ],
        [
         "2026-08-10",
         7,
+        false,
         false,
         false
        ],
@@ -5767,11 +6048,13 @@
         "2026-08-17",
         8,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-24",
         8,
+        false,
         false,
         false
        ],
@@ -5779,11 +6062,13 @@
         "2026-08-31",
         9,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-07",
         9,
+        false,
         false,
         false
        ],
@@ -5791,17 +6076,20 @@
         "2026-09-14",
         6,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-21",
         10,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-28",
         10,
+        false,
         false,
         false
        ],
@@ -5809,11 +6097,13 @@
         "2026-10-05",
         11,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-12",
         11,
+        false,
         false,
         false
        ],
@@ -5821,7 +6111,8 @@
         "2026-10-19",
         12,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -5849,73 +6140,85 @@
         "2026-08-07",
         57.1527,
         false,
+        false,
         false
        ],
        [
         "2026-08-14",
         58.5135,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-21",
         59.8743,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-28",
         61.235,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-04",
         62.5958,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-11",
         63.9566,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-18",
         48.3832,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-25",
         65.3174,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-02",
         66.6782,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-09",
         68.0389,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-16",
         68.0389,
         true,
+        false,
         false
        ],
        [
         "2026-10-23",
         69.5509,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -5943,73 +6246,85 @@
         "2026-08-07",
         61.991,
         false,
+        false,
         false
        ],
        [
         "2026-08-14",
         63.503,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-21",
         65.015,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-28",
         66.527,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-04",
         68.0389,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-11",
         66.527,
         true,
+        false,
         false
        ],
        [
         "2026-09-18",
         54.4311,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-25",
         68.1901,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-02",
         69.8533,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-09",
         71.5165,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-16",
         73.1797,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-23",
         74.8428,
         true,
-        false
+        false,
+        true
        ]
       ]
      },
@@ -6037,11 +6352,13 @@
         "2026-08-07",
         40,
         false,
+        false,
         false
        ],
        [
         "2026-08-14",
         40,
+        false,
         false,
         false
        ],
@@ -6049,11 +6366,13 @@
         "2026-08-21",
         45,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-28",
         45,
+        false,
         false,
         false
        ],
@@ -6061,11 +6380,13 @@
         "2026-09-04",
         50,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-11",
         50,
+        false,
         false,
         false
        ],
@@ -6073,17 +6394,20 @@
         "2026-09-18",
         30,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-25",
         55,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-02",
         55,
+        false,
         false,
         false
        ],
@@ -6091,17 +6415,20 @@
         "2026-10-09",
         60,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-16",
         60,
+        false,
         false,
         false
        ],
        [
         "2026-10-23",
         60,
+        false,
         false,
         false
        ]
@@ -6131,73 +6458,85 @@
         "2026-08-04",
         114.3054,
         false,
+        false,
         false
        ],
        [
         "2026-08-11",
         117.027,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-18",
         119.7485,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-08-25",
         122.4701,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-01",
         125.1916,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-08",
         127.9132,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-15",
         96.7665,
         false,
-        true
+        true,
+        false
        ],
        [
         "2026-09-22",
         130.6348,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-09-29",
         133.3563,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-06",
         136.0779,
         true,
-        false
+        false,
+        true
        ],
        [
         "2026-10-13",
         135.0195,
         true,
+        false,
         false
        ],
        [
         "2026-10-20",
         137.8922,
         true,
-        false
+        false,
+        true
        ]
       ]
      }
@@ -13816,6 +14155,18 @@
        }
       ],
       "label": "PRs, last 30 days"
+     },
+     "avg_rir": {
+      "value": 1.7,
+      "status": "ok",
+      "reason": null,
+      "logged_sets": 104,
+      "eligible_sets": 295,
+      "share_logged": 0.3525,
+      "min_sets": 6,
+      "display": "Average RIR 1.7",
+      "note": "Based on the 104 of 295 sets with RIR logged",
+      "label": "Average RIR, last 28 days"
      }
     },
     "muscles": {
@@ -15967,6 +16318,7 @@
         "value": 133.3563,
         "display": "294 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 81
        },
@@ -15976,6 +16328,7 @@
         "value": 137.0607,
         "display": "302 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 74
        },
@@ -15985,6 +16338,7 @@
         "value": 140.765,
         "display": "310 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 67
        },
@@ -15994,6 +16348,7 @@
         "value": 144.4693,
         "display": "319 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 60
        },
@@ -16003,6 +16358,7 @@
         "value": 148.1737,
         "display": "327 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 53
        },
@@ -16012,6 +16368,7 @@
         "value": 147.4177,
         "display": "325 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 46
        },
@@ -16021,6 +16378,7 @@
         "value": 122.4701,
         "display": "270 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 39
        },
@@ -16030,6 +16388,7 @@
         "value": 151.1976,
         "display": "333 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 32
        },
@@ -16039,6 +16398,7 @@
         "value": 150.366,
         "display": "332 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 25
        },
@@ -16048,6 +16408,7 @@
         "value": 154.2216,
         "display": "340 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 18
        },
@@ -16057,6 +16418,7 @@
         "value": 153.3144,
         "display": "338 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 11
        },
@@ -16066,6 +16428,7 @@
         "value": 157.2455,
         "display": "347 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 4
        }
@@ -16108,6 +16471,7 @@
         "value": 114.3054,
         "display": "252 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 82
        },
@@ -16117,6 +16481,7 @@
         "value": 117.4806,
         "display": "259 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 75
        },
@@ -16126,6 +16491,7 @@
         "value": 120.6557,
         "display": "266 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 68
        },
@@ -16135,6 +16501,7 @@
         "value": 123.8309,
         "display": "273 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 61
        },
@@ -16144,6 +16511,7 @@
         "value": 127.006,
         "display": "280 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 54
        },
@@ -16153,6 +16521,7 @@
         "value": 126.7792,
         "display": "280 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 47
        },
@@ -16162,6 +16531,7 @@
         "value": 103.4192,
         "display": "228 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 40
        },
@@ -16171,6 +16541,7 @@
         "value": 130.03,
         "display": "287 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 33
        },
@@ -16180,6 +16551,7 @@
         "value": 129.7276,
         "display": "286 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 26
        },
@@ -16189,6 +16561,7 @@
         "value": 133.0539,
         "display": "293 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 19
        },
@@ -16198,6 +16571,7 @@
         "value": 132.6759,
         "display": "293 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 12
        },
@@ -16207,6 +16581,7 @@
         "value": 136.0779,
         "display": "300 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 5
        }
@@ -16249,6 +16624,7 @@
         "value": 39.3114,
         "display": "87 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 82
        },
@@ -16258,6 +16634,7 @@
         "value": 40.2942,
         "display": "89 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 75
        },
@@ -16267,6 +16644,7 @@
         "value": 41.277,
         "display": "91 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 68
        },
@@ -16276,6 +16654,7 @@
         "value": 42.2597,
         "display": "93 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 61
        },
@@ -16285,6 +16664,7 @@
         "value": 43.2425,
         "display": "95 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 54
        },
@@ -16294,6 +16674,7 @@
         "value": 44.2253,
         "display": "98 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 47
        },
@@ -16303,6 +16684,7 @@
         "value": 36.2874,
         "display": "80 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 40
        },
@@ -16312,6 +16694,7 @@
         "value": 43.3937,
         "display": "96 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 33
        },
@@ -16321,6 +16704,7 @@
         "value": 44.4521,
         "display": "98 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 26
        },
@@ -16330,6 +16714,7 @@
         "value": 45.5105,
         "display": "100 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 19
        },
@@ -16339,6 +16724,7 @@
         "value": 46.5689,
         "display": "103 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 12
        },
@@ -16348,6 +16734,7 @@
         "value": 47.6273,
         "display": "105 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 5
        }
@@ -16390,6 +16777,7 @@
         "value": 89.0554,
         "display": "196 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 82
        },
@@ -16399,6 +16787,7 @@
         "value": 91.399,
         "display": "202 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 75
        },
@@ -16408,6 +16797,7 @@
         "value": 93.7425,
         "display": "207 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 68
        },
@@ -16417,6 +16807,7 @@
         "value": 91.9282,
         "display": "203 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 61
        },
@@ -16426,6 +16817,7 @@
         "value": 94.3473,
         "display": "208 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 54
        },
@@ -16435,6 +16827,7 @@
         "value": 96.7665,
         "display": "213 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 47
        },
@@ -16444,6 +16837,7 @@
         "value": 78.9252,
         "display": "174 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 40
        },
@@ -16453,6 +16847,7 @@
         "value": 94.8009,
         "display": "209 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 33
        },
@@ -16462,6 +16857,7 @@
         "value": 97.2957,
         "display": "215 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 26
        },
@@ -16471,6 +16867,7 @@
         "value": 99.7904,
         "display": "220 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 19
        },
@@ -16480,6 +16877,7 @@
         "value": 97.6737,
         "display": "215 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 12
        },
@@ -16489,6 +16887,7 @@
         "value": 100.244,
         "display": "221 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 5
        }
@@ -16531,6 +16930,7 @@
         "value": 20.6385,
         "display": "46 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 78
        },
@@ -16540,6 +16940,7 @@
         "value": 21.1677,
         "display": "47 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 71
        },
@@ -16549,6 +16950,7 @@
         "value": 21.6969,
         "display": "48 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 64
        },
@@ -16558,6 +16960,7 @@
         "value": 22.2261,
         "display": "49 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 57
        },
@@ -16567,6 +16970,7 @@
         "value": 22.982,
         "display": "51 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 50
        },
@@ -16576,6 +16980,7 @@
         "value": 23.5868,
         "display": "52 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 43
        },
@@ -16585,6 +16990,7 @@
         "value": 20.1093,
         "display": "44 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 36
        },
@@ -16594,6 +17000,7 @@
         "value": 24.1916,
         "display": "53 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 29
        },
@@ -16603,6 +17010,7 @@
         "value": 24.7964,
         "display": "55 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 22
        },
@@ -16612,6 +17020,7 @@
         "value": 25.4012,
         "display": "56 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 15
        },
@@ -16621,6 +17030,7 @@
         "value": 25.8548,
         "display": "57 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 8
        },
@@ -16630,6 +17040,7 @@
         "value": 26.5352,
         "display": "59 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 1
        }
@@ -16672,6 +17083,7 @@
         "value": 38.1018,
         "display": "84 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 78
        },
@@ -16681,6 +17093,7 @@
         "value": 39.009,
         "display": "86 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 71
        },
@@ -16690,6 +17103,7 @@
         "value": 39.9162,
         "display": "88 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 64
        },
@@ -16699,6 +17113,7 @@
         "value": 40.8234,
         "display": "90 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 57
        },
@@ -16708,6 +17123,7 @@
         "value": 41.7305,
         "display": "92 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 50
        },
@@ -16717,6 +17133,7 @@
         "value": 42.6377,
         "display": "94 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 43
        },
@@ -16726,6 +17143,7 @@
         "value": 30.2395,
         "display": "67 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 36
        },
@@ -16735,6 +17153,7 @@
         "value": 43.5449,
         "display": "96 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 29
        },
@@ -16744,6 +17163,7 @@
         "value": 44.4521,
         "display": "98 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 22
        },
@@ -16753,6 +17173,7 @@
         "value": 45.3593,
         "display": "100 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 15
        },
@@ -16762,6 +17183,7 @@
         "value": 45.2081,
         "display": "100 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 8
        },
@@ -16771,6 +17193,7 @@
         "value": 46.1909,
         "display": "102 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 1
        }
@@ -16813,6 +17236,7 @@
         "value": 18.5973,
         "display": "41 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 79
        },
@@ -16822,6 +17246,7 @@
         "value": 19.0509,
         "display": "42 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 72
        },
@@ -16831,6 +17256,7 @@
         "value": 19.5045,
         "display": "43 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 65
        },
@@ -16840,6 +17266,7 @@
         "value": 19.9581,
         "display": "44 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 51
        },
@@ -16849,6 +17276,7 @@
         "value": 20.4117,
         "display": "45 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 44
        },
@@ -16858,6 +17286,7 @@
         "value": 18.1437,
         "display": "40 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 37
        },
@@ -16867,6 +17296,7 @@
         "value": 21.1677,
         "display": "47 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 30
        },
@@ -16876,6 +17306,7 @@
         "value": 21.6969,
         "display": "48 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 23
        },
@@ -16885,6 +17316,7 @@
         "value": 22.2261,
         "display": "49 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 16
        },
@@ -16894,6 +17326,7 @@
         "value": 22.7552,
         "display": "50 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 9
        },
@@ -16903,6 +17336,7 @@
         "value": 23.2844,
         "display": "51 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 2
        }
@@ -16945,6 +17379,7 @@
         "value": 70.7605,
         "display": "156 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 79
        },
@@ -16954,6 +17389,7 @@
         "value": 72.5749,
         "display": "160 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 72
        },
@@ -16963,6 +17399,7 @@
         "value": 74.3892,
         "display": "164 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 65
        },
@@ -16972,6 +17409,7 @@
         "value": 76.2036,
         "display": "168 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 51
        },
@@ -16981,6 +17419,7 @@
         "value": 74.6916,
         "display": "165 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 44
        },
@@ -16990,6 +17429,7 @@
         "value": 63.2006,
         "display": "139 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 37
        },
@@ -16999,6 +17439,7 @@
         "value": 76.6572,
         "display": "169 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 30
        },
@@ -17008,6 +17449,7 @@
         "value": 78.6228,
         "display": "173 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 23
        },
@@ -17017,6 +17459,7 @@
         "value": 80.5883,
         "display": "178 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 16
        },
@@ -17026,6 +17469,7 @@
         "value": 82.5539,
         "display": "182 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 9
        },
@@ -17035,6 +17479,7 @@
         "value": 82.5539,
         "display": "182 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 2
        }
@@ -17077,6 +17522,7 @@
         "value": 92.3062,
         "display": "204 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 82
        },
@@ -17086,6 +17532,7 @@
         "value": 94.8009,
         "display": "209 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 75
        },
@@ -17095,6 +17542,7 @@
         "value": 97.2957,
         "display": "215 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 68
        },
@@ -17104,6 +17552,7 @@
         "value": 99.7904,
         "display": "220 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 61
        },
@@ -17113,6 +17562,7 @@
         "value": 97.6737,
         "display": "215 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 54
        },
@@ -17122,6 +17572,7 @@
         "value": 100.244,
         "display": "221 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 47
        },
@@ -17131,6 +17582,7 @@
         "value": 81.6467,
         "display": "180 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 40
        },
@@ -17140,6 +17592,7 @@
         "value": 102.8144,
         "display": "227 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 33
        },
@@ -17149,6 +17602,7 @@
         "value": 100.5464,
         "display": "222 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 26
        },
@@ -17158,6 +17612,7 @@
         "value": 103.1924,
         "display": "228 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 19
        },
@@ -17167,6 +17622,7 @@
         "value": 105.8383,
         "display": "233 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 12
        },
@@ -17176,6 +17632,7 @@
         "value": 103.4192,
         "display": "228 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 5
        }
@@ -17218,6 +17675,7 @@
         "value": 163.2934,
         "display": "360 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 81
        },
@@ -17227,6 +17685,7 @@
         "value": 167.8294,
         "display": "370 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 74
        },
@@ -17236,6 +17695,7 @@
         "value": 172.3653,
         "display": "380 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 67
        },
@@ -17245,6 +17705,7 @@
         "value": 176.9012,
         "display": "390 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 60
        },
@@ -17254,6 +17715,7 @@
         "value": 181.4372,
         "display": "400 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 53
        },
@@ -17263,6 +17725,7 @@
         "value": 179.8496,
         "display": "396 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 46
        },
@@ -17272,6 +17735,7 @@
         "value": 146.9641,
         "display": "324 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 39
        },
@@ -17281,6 +17745,7 @@
         "value": 184.4611,
         "display": "407 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 32
        },
@@ -17290,6 +17755,7 @@
         "value": 182.7979,
         "display": "403 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 25
        },
@@ -17299,6 +17765,7 @@
         "value": 187.4851,
         "display": "413 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 18
        },
@@ -17308,6 +17775,7 @@
         "value": 185.7463,
         "display": "410 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 11
        },
@@ -17317,6 +17785,7 @@
         "value": 190.509,
         "display": "420 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 4
        }
@@ -17359,6 +17828,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 82
        },
@@ -17368,6 +17838,7 @@
         "value": 13.003,
         "display": "29 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 79
        },
@@ -17377,6 +17848,7 @@
         "value": 13.3054,
         "display": "29 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 75
        },
@@ -17386,6 +17858,7 @@
         "value": 13.6078,
         "display": "30 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 72
        },
@@ -17395,6 +17868,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 68
        },
@@ -17404,6 +17878,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 65
        },
@@ -17413,6 +17888,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 61
        },
@@ -17422,6 +17898,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 54
        },
@@ -17431,6 +17908,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 51
        },
@@ -17440,6 +17918,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 47
        },
@@ -17449,6 +17928,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 44
        },
@@ -17458,6 +17938,7 @@
         "value": 9.0719,
         "display": "20 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 40
        },
@@ -17467,6 +17948,7 @@
         "value": 9.0719,
         "display": "20 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 37
        },
@@ -17476,6 +17958,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 33
        },
@@ -17485,6 +17968,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 30
        },
@@ -17494,6 +17978,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 26
        },
@@ -17503,6 +17988,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 23
        },
@@ -17512,6 +17998,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 19
        },
@@ -17521,6 +18008,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 16
        },
@@ -17530,6 +18018,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 12
        },
@@ -17539,6 +18028,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 9
        },
@@ -17548,6 +18038,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 5
        },
@@ -17557,6 +18048,7 @@
         "value": 12.7006,
         "display": "28 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 2
        }
@@ -17599,6 +18091,7 @@
         "value": 86.7118,
         "display": "191 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 78
        },
@@ -17608,6 +18101,7 @@
         "value": 89.0554,
         "display": "196 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 71
        },
@@ -17617,6 +18111,7 @@
         "value": 91.399,
         "display": "202 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 64
        },
@@ -17626,6 +18121,7 @@
         "value": 93.7425,
         "display": "207 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 57
        },
@@ -17635,6 +18131,7 @@
         "value": 91.9282,
         "display": "203 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 50
        },
@@ -17644,6 +18141,7 @@
         "value": 94.3473,
         "display": "208 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 43
        },
@@ -17653,6 +18151,7 @@
         "value": 76.2036,
         "display": "168 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 36
        },
@@ -17662,6 +18161,7 @@
         "value": 96.7665,
         "display": "213 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 29
        },
@@ -17671,6 +18171,7 @@
         "value": 94.8009,
         "display": "209 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 22
        },
@@ -17680,6 +18181,7 @@
         "value": 97.2957,
         "display": "215 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 15
        },
@@ -17689,6 +18191,7 @@
         "value": 99.7904,
         "display": "220 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 8
        },
@@ -17698,6 +18201,7 @@
         "value": 97.6737,
         "display": "215 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 1
        }
@@ -17740,6 +18244,7 @@
         "value": 10,
         "display": "10 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 81
        },
@@ -17749,6 +18254,7 @@
         "value": 10,
         "display": "10 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 74
        },
@@ -17758,6 +18264,7 @@
         "value": 11,
         "display": "11 reps",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 67
        },
@@ -17767,6 +18274,7 @@
         "value": 11,
         "display": "11 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 60
        },
@@ -17776,6 +18284,7 @@
         "value": 12,
         "display": "12 reps",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 53
        },
@@ -17785,6 +18294,7 @@
         "value": 12,
         "display": "12 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 46
        },
@@ -17794,6 +18304,7 @@
         "value": 10,
         "display": "10 reps",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 39
        },
@@ -17803,6 +18314,7 @@
         "value": 13,
         "display": "13 reps",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 32
        },
@@ -17812,6 +18324,7 @@
         "value": 13,
         "display": "13 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 25
        },
@@ -17821,6 +18334,7 @@
         "value": 14,
         "display": "14 reps",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 18
        },
@@ -17830,6 +18344,7 @@
         "value": 14,
         "display": "14 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 11
        },
@@ -17839,6 +18354,7 @@
         "value": 15,
         "display": "15 reps",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 4
        }
@@ -17881,6 +18397,7 @@
         "value": 76.2036,
         "display": "168 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 78
        },
@@ -17890,6 +18407,7 @@
         "value": 78.018,
         "display": "172 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 71
        },
@@ -17899,6 +18417,7 @@
         "value": 79.8324,
         "display": "176 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 64
        },
@@ -17908,6 +18427,7 @@
         "value": 81.6467,
         "display": "180 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 57
        },
@@ -17917,6 +18437,7 @@
         "value": 80.5883,
         "display": "178 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 50
        },
@@ -17926,6 +18447,7 @@
         "value": 82.5539,
         "display": "182 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 43
        },
@@ -17935,6 +18457,7 @@
         "value": 66.527,
         "display": "147 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 36
        },
@@ -17944,6 +18467,7 @@
         "value": 84.5195,
         "display": "186 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 29
        },
@@ -17953,6 +18477,7 @@
         "value": 86.485,
         "display": "191 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 22
        },
@@ -17962,6 +18487,7 @@
         "value": 88.4506,
         "display": "195 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 15
        },
@@ -17971,6 +18497,7 @@
         "value": 86.7874,
         "display": "191 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 8
        },
@@ -17980,6 +18507,7 @@
         "value": 88.9042,
         "display": "196 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 1
        }
@@ -18022,6 +18550,7 @@
         "value": 15.1198,
         "display": "33 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 79
        },
@@ -18031,6 +18560,7 @@
         "value": 15.4978,
         "display": "34 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 72
        },
@@ -18040,6 +18570,7 @@
         "value": 15.8758,
         "display": "35 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 65
        },
@@ -18049,6 +18580,7 @@
         "value": 16.2537,
         "display": "36 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 51
        },
@@ -18058,6 +18590,7 @@
         "value": 16.6317,
         "display": "37 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 44
        },
@@ -18067,6 +18600,7 @@
         "value": 12.0958,
         "display": "27 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 37
        },
@@ -18076,6 +18610,7 @@
         "value": 17.0097,
         "display": "38 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 30
        },
@@ -18085,6 +18620,7 @@
         "value": 18.1437,
         "display": "40 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 23
        },
@@ -18094,6 +18630,7 @@
         "value": 18.5973,
         "display": "41 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 16
        },
@@ -18103,6 +18640,7 @@
         "value": 19.0509,
         "display": "42 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 9
        },
@@ -18112,6 +18650,7 @@
         "value": 19.5045,
         "display": "43 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 2
        }
@@ -18154,6 +18693,7 @@
         "value": 34.4731,
         "display": "76 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 79
        },
@@ -18163,6 +18703,7 @@
         "value": 35.3802,
         "display": "78 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 72
        },
@@ -18172,6 +18713,7 @@
         "value": 36.2874,
         "display": "80 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 65
        },
@@ -18181,6 +18723,7 @@
         "value": 37.1946,
         "display": "82 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 51
        },
@@ -18190,6 +18733,7 @@
         "value": 38.1018,
         "display": "84 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 44
        },
@@ -18199,6 +18743,7 @@
         "value": 31.6003,
         "display": "70 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 37
        },
@@ -18208,6 +18753,7 @@
         "value": 37.3458,
         "display": "82 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 30
        },
@@ -18217,6 +18763,7 @@
         "value": 38.3286,
         "display": "85 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 23
        },
@@ -18226,6 +18773,7 @@
         "value": 39.3114,
         "display": "87 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 16
        },
@@ -18235,6 +18783,7 @@
         "value": 40.2942,
         "display": "89 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 9
        },
@@ -18244,6 +18793,7 @@
         "value": 41.277,
         "display": "91 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 2
        }
@@ -18286,6 +18836,7 @@
         "value": 82.5539,
         "display": "182 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 79
        },
@@ -18295,6 +18846,7 @@
         "value": 84.6707,
         "display": "187 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 72
        },
@@ -18304,6 +18856,7 @@
         "value": 86.7874,
         "display": "191 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 65
        },
@@ -18313,6 +18866,7 @@
         "value": 88.9042,
         "display": "196 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 51
        },
@@ -18322,6 +18876,7 @@
         "value": 87.6946,
         "display": "193 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 44
        },
@@ -18331,6 +18886,7 @@
         "value": 74.6916,
         "display": "165 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 37
        },
@@ -18340,6 +18896,7 @@
         "value": 89.887,
         "display": "198 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 30
        },
@@ -18349,6 +18906,7 @@
         "value": 92.0794,
         "display": "203 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 23
        },
@@ -18358,6 +18916,7 @@
         "value": 90.7186,
         "display": "200 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 16
        },
@@ -18367,6 +18926,7 @@
         "value": 92.9865,
         "display": "205 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 9
        },
@@ -18376,6 +18936,7 @@
         "value": 95.2545,
         "display": "210 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 2
        }
@@ -18418,6 +18979,7 @@
         "value": 68.1901,
         "display": "150 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 78
        },
@@ -18427,6 +18989,7 @@
         "value": 69.8533,
         "display": "154 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 71
        },
@@ -18436,6 +18999,7 @@
         "value": 71.5165,
         "display": "158 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 64
        },
@@ -18445,6 +19009,7 @@
         "value": 73.1797,
         "display": "161 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 57
        },
@@ -18454,6 +19019,7 @@
         "value": 74.8428,
         "display": "165 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 50
        },
@@ -18463,6 +19029,7 @@
         "value": 74.3892,
         "display": "164 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 43
        },
@@ -18472,6 +19039,7 @@
         "value": 60.4791,
         "display": "133 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 36
        },
@@ -18481,6 +19049,7 @@
         "value": 76.2036,
         "display": "168 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 29
        },
@@ -18490,6 +19059,7 @@
         "value": 78.018,
         "display": "172 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 22
        },
@@ -18499,6 +19069,7 @@
         "value": 79.8324,
         "display": "176 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 15
        },
@@ -18508,6 +19079,7 @@
         "value": 81.6467,
         "display": "180 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 8
        },
@@ -18517,6 +19089,7 @@
         "value": 80.5883,
         "display": "178 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 1
        }
@@ -18559,6 +19132,7 @@
         "value": 206.8384,
         "display": "456 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 81
        },
@@ -18568,6 +19142,7 @@
         "value": 212.2815,
         "display": "468 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 74
        },
@@ -18577,6 +19152,7 @@
         "value": 217.7246,
         "display": "480 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 67
        },
@@ -18586,6 +19162,7 @@
         "value": 212.5839,
         "display": "469 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 60
        },
@@ -18595,6 +19172,7 @@
         "value": 218.1782,
         "display": "481 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 53
        },
@@ -18604,6 +19182,7 @@
         "value": 223.7725,
         "display": "493 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 46
        },
@@ -18613,6 +19192,7 @@
         "value": 185.0659,
         "display": "408 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 39
        },
@@ -18622,6 +19202,7 @@
         "value": 218.3294,
         "display": "481 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 32
        },
@@ -18631,6 +19212,7 @@
         "value": 224.0749,
         "display": "494 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 25
        },
@@ -18640,6 +19222,7 @@
         "value": 229.8204,
         "display": "507 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 18
        },
@@ -18649,6 +19232,7 @@
         "value": 224.0749,
         "display": "494 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 11
        },
@@ -18658,6 +19242,7 @@
         "value": 218.3294,
         "display": "481 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 4
        }
@@ -18700,6 +19285,7 @@
         "value": 54.4311,
         "display": "120 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 81
        },
@@ -18709,6 +19295,7 @@
         "value": 55.7919,
         "display": "123 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 74
        },
@@ -18718,6 +19305,7 @@
         "value": 57.1527,
         "display": "126 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 67
        },
@@ -18727,6 +19315,7 @@
         "value": 58.5135,
         "display": "129 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 60
        },
@@ -18736,6 +19325,7 @@
         "value": 59.8743,
         "display": "132 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 53
        },
@@ -18745,6 +19335,7 @@
         "value": 61.235,
         "display": "135 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 46
        },
@@ -18754,6 +19345,7 @@
         "value": 54.4311,
         "display": "120 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 39
        },
@@ -18763,6 +19355,7 @@
         "value": 60.4791,
         "display": "133 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 32
        },
@@ -18772,6 +19365,7 @@
         "value": 61.991,
         "display": "137 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 25
        },
@@ -18781,6 +19375,7 @@
         "value": 63.503,
         "display": "140 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 18
        },
@@ -18790,6 +19385,7 @@
         "value": 65.015,
         "display": "143 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 11
        },
@@ -18799,6 +19395,7 @@
         "value": 66.527,
         "display": "147 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 4
        }
@@ -18841,6 +19438,7 @@
         "value": 30.9955,
         "display": "68 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 79
        },
@@ -18850,6 +19448,7 @@
         "value": 31.7515,
         "display": "70 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 72
        },
@@ -18859,6 +19458,7 @@
         "value": 32.5075,
         "display": "72 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 65
        },
@@ -18868,6 +19468,7 @@
         "value": 33.2635,
         "display": "73 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 51
        },
@@ -18877,6 +19478,7 @@
         "value": 34.0195,
         "display": "75 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 44
        },
@@ -18886,6 +19488,7 @@
         "value": 27.2156,
         "display": "60 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 37
        },
@@ -18895,6 +19498,7 @@
         "value": 33.2635,
         "display": "73 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 30
        },
@@ -18904,6 +19508,7 @@
         "value": 34.0951,
         "display": "75 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 23
        },
@@ -18913,6 +19518,7 @@
         "value": 34.9267,
         "display": "77 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 16
        },
@@ -18922,6 +19528,7 @@
         "value": 35.7582,
         "display": "79 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 9
        },
@@ -18931,6 +19538,7 @@
         "value": 36.5898,
         "display": "81 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 2
        }
@@ -18973,6 +19581,7 @@
         "value": 58.7403,
         "display": "130 lb",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 82
        },
@@ -18982,6 +19591,7 @@
         "value": 60.3279,
         "display": "133 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 75
        },
@@ -18991,6 +19601,7 @@
         "value": 61.9154,
         "display": "137 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 68
        },
@@ -19000,6 +19611,7 @@
         "value": 63.503,
         "display": "140 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 61
        },
@@ -19009,6 +19621,7 @@
         "value": 63.2006,
         "display": "139 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 54
        },
@@ -19018,6 +19631,7 @@
         "value": 64.8638,
         "display": "143 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 47
        },
@@ -19027,6 +19641,7 @@
         "value": 51.7096,
         "display": "114 lb",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 40
        },
@@ -19036,6 +19651,7 @@
         "value": 66.527,
         "display": "147 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 33
        },
@@ -19045,6 +19661,7 @@
         "value": 66.0734,
         "display": "146 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 26
        },
@@ -19054,6 +19671,7 @@
         "value": 67.8121,
         "display": "150 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 19
        },
@@ -19063,6 +19681,7 @@
         "value": 69.5509,
         "display": "153 lb",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 12
        },
@@ -19072,6 +19691,7 @@
         "value": 68.9461,
         "display": "152 lb",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 5
        }
@@ -19114,6 +19734,7 @@
         "value": 7,
         "display": "7 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 82
        },
@@ -19123,6 +19744,7 @@
         "value": 7,
         "display": "7 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 75
        },
@@ -19132,6 +19754,7 @@
         "value": 8,
         "display": "8 reps",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 68
        },
@@ -19141,6 +19764,7 @@
         "value": 8,
         "display": "8 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 61
        },
@@ -19150,6 +19774,7 @@
         "value": 9,
         "display": "9 reps",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 54
        },
@@ -19159,6 +19784,7 @@
         "value": 9,
         "display": "9 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 47
        },
@@ -19168,6 +19794,7 @@
         "value": 6,
         "display": "6 reps",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 40
        },
@@ -19177,6 +19804,7 @@
         "value": 10,
         "display": "10 reps",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 33
        },
@@ -19186,6 +19814,7 @@
         "value": 10,
         "display": "10 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 26
        },
@@ -19195,6 +19824,7 @@
         "value": 11,
         "display": "11 reps",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 19
        },
@@ -19204,6 +19834,7 @@
         "value": 11,
         "display": "11 reps",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 12
        },
@@ -19213,6 +19844,7 @@
         "value": 12,
         "display": "12 reps",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 5
        }
@@ -19255,6 +19887,7 @@
         "value": 57.1527,
         "display": "126 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 78
        },
@@ -19264,6 +19897,7 @@
         "value": 58.5135,
         "display": "129 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 71
        },
@@ -19273,6 +19907,7 @@
         "value": 59.8743,
         "display": "132 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 64
        },
@@ -19282,6 +19917,7 @@
         "value": 61.235,
         "display": "135 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 57
        },
@@ -19291,6 +19927,7 @@
         "value": 62.5958,
         "display": "138 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 50
        },
@@ -19300,6 +19937,7 @@
         "value": 63.9566,
         "display": "141 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 43
        },
@@ -19309,6 +19947,7 @@
         "value": 48.3832,
         "display": "107 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 36
        },
@@ -19318,6 +19957,7 @@
         "value": 65.3174,
         "display": "144 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 29
        },
@@ -19327,6 +19967,7 @@
         "value": 66.6782,
         "display": "147 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 22
        },
@@ -19336,6 +19977,7 @@
         "value": 68.0389,
         "display": "150 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 15
        },
@@ -19345,6 +19987,7 @@
         "value": 68.0389,
         "display": "150 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 8
        },
@@ -19354,6 +19997,7 @@
         "value": 69.5509,
         "display": "153 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 1
        }
@@ -19396,6 +20040,7 @@
         "value": 61.991,
         "display": "137 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 78
        },
@@ -19405,6 +20050,7 @@
         "value": 63.503,
         "display": "140 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 71
        },
@@ -19414,6 +20060,7 @@
         "value": 65.015,
         "display": "143 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 64
        },
@@ -19423,6 +20070,7 @@
         "value": 66.527,
         "display": "147 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 57
        },
@@ -19432,6 +20080,7 @@
         "value": 68.0389,
         "display": "150 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 50
        },
@@ -19441,6 +20090,7 @@
         "value": 66.527,
         "display": "147 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 43
        },
@@ -19450,6 +20100,7 @@
         "value": 54.4311,
         "display": "120 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 36
        },
@@ -19459,6 +20110,7 @@
         "value": 68.1901,
         "display": "150 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 29
        },
@@ -19468,6 +20120,7 @@
         "value": 69.8533,
         "display": "154 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 22
        },
@@ -19477,6 +20130,7 @@
         "value": 71.5165,
         "display": "158 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 15
        },
@@ -19486,6 +20140,7 @@
         "value": 73.1797,
         "display": "161 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 8
        },
@@ -19495,6 +20150,7 @@
         "value": 74.8428,
         "display": "165 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 1
        }
@@ -19537,6 +20193,7 @@
         "value": 40,
         "display": "40 s",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 78
        },
@@ -19546,6 +20203,7 @@
         "value": 40,
         "display": "40 s",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 71
        },
@@ -19555,6 +20213,7 @@
         "value": 45,
         "display": "45 s",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 64
        },
@@ -19564,6 +20223,7 @@
         "value": 45,
         "display": "45 s",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 57
        },
@@ -19573,6 +20233,7 @@
         "value": 50,
         "display": "50 s",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 50
        },
@@ -19582,6 +20243,7 @@
         "value": 50,
         "display": "50 s",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 43
        },
@@ -19591,6 +20253,7 @@
         "value": 30,
         "display": "30 s",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 36
        },
@@ -19600,6 +20263,7 @@
         "value": 55,
         "display": "55 s",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 29
        },
@@ -19609,6 +20273,7 @@
         "value": 55,
         "display": "55 s",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 22
        },
@@ -19618,6 +20283,7 @@
         "value": 60,
         "display": "60 s",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 15
        },
@@ -19627,6 +20293,7 @@
         "value": 60,
         "display": "60 s",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 8
        },
@@ -19636,6 +20303,7 @@
         "value": 60,
         "display": "60 s",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 1
        }
@@ -19678,6 +20346,7 @@
         "value": 114.3054,
         "display": "252 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": false,
         "days_ago": 81
        },
@@ -19687,6 +20356,7 @@
         "value": 117.027,
         "display": "258 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 74
        },
@@ -19696,6 +20366,7 @@
         "value": 119.7485,
         "display": "264 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 67
        },
@@ -19705,6 +20376,7 @@
         "value": 122.4701,
         "display": "270 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 60
        },
@@ -19714,6 +20386,7 @@
         "value": 125.1916,
         "display": "276 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 53
        },
@@ -19723,6 +20396,7 @@
         "value": 127.9132,
         "display": "282 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 46
        },
@@ -19732,6 +20406,7 @@
         "value": 96.7665,
         "display": "213 (load-reps index)",
         "pr": false,
+        "best": false,
         "deload": true,
         "days_ago": 39
        },
@@ -19741,6 +20416,7 @@
         "value": 130.6348,
         "display": "288 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 32
        },
@@ -19750,6 +20426,7 @@
         "value": 133.3563,
         "display": "294 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 25
        },
@@ -19759,6 +20436,7 @@
         "value": 136.0779,
         "display": "300 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 18
        },
@@ -19768,6 +20446,7 @@
         "value": 135.0195,
         "display": "298 (load-reps index)",
         "pr": true,
+        "best": false,
         "deload": false,
         "days_ago": 11
        },
@@ -19777,6 +20456,7 @@
         "value": 137.8922,
         "display": "304 (load-reps index)",
         "pr": true,
+        "best": true,
         "deload": false,
         "days_ago": 4
        }
@@ -20108,6 +20788,16 @@
        "by_kind": {
         "e1rm_pr": 1
        }
+      },
+      "avg_rir": {
+       "value": null,
+       "status": "insufficient",
+       "reason": "not enough RIR logged",
+       "logged_sets": 0,
+       "eligible_sets": 6,
+       "share_logged": 0.0,
+       "display": "Not enough RIR logged",
+       "note": null
       }
      },
      "muscles": {
@@ -20430,13 +21120,15 @@
          "2026-09-07",
          106.2919,
          false,
+         false,
          false
         ],
         [
          "2026-09-10",
          109.0891,
          true,
-         false
+         false,
+         true
         ]
        ]
       }
@@ -20746,6 +21438,18 @@
         }
        ],
        "label": "PRs, last 30 days"
+      },
+      "avg_rir": {
+       "value": null,
+       "status": "insufficient",
+       "reason": "not enough RIR logged",
+       "logged_sets": 0,
+       "eligible_sets": 6,
+       "share_logged": 0.0,
+       "min_sets": 6,
+       "display": "Not enough RIR logged",
+       "note": null,
+       "label": "Average RIR, last 28 days"
       }
      },
      "muscles": {
@@ -21249,6 +21953,7 @@
          "value": 106.2919,
          "display": "234 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 5
         },
@@ -21258,6 +21963,7 @@
          "value": 109.0891,
          "display": "241 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 2
         }
@@ -22464,6 +23170,16 @@
         "e1rm_pr": 4,
         "strongest_ever": 2
        }
+      },
+      "avg_rir": {
+       "value": null,
+       "status": "insufficient",
+       "reason": "not enough RIR logged",
+       "logged_sets": 0,
+       "eligible_sets": 36,
+       "share_logged": 0.0,
+       "display": "Not enough RIR logged",
+       "note": null
       }
      },
      "muscles": {
@@ -22786,31 +23502,36 @@
          "2026-09-10",
          100.6976,
          false,
+         false,
          false
         ],
         [
          "2026-09-17",
          103.4192,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-24",
          106.1407,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-01",
          108.8623,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-08",
          111.5839,
          true,
-         false
+         false,
+         true
         ]
        ]
       },
@@ -22826,11 +23547,13 @@
          "2026-09-07",
          30.2395,
          false,
+         false,
          false
         ],
         [
          "2026-09-10",
          29.4835,
+         false,
          false,
          false
         ],
@@ -22838,11 +23561,13 @@
          "2026-09-14",
          30.2395,
          false,
+         false,
          false
         ],
         [
          "2026-09-17",
          30.2395,
+         false,
          false,
          false
         ],
@@ -22850,11 +23575,13 @@
          "2026-09-21",
          33.2635,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-24",
          32.4319,
+         false,
          false,
          false
         ],
@@ -22862,11 +23589,13 @@
          "2026-09-28",
          33.2635,
          false,
+         false,
          false
         ],
         [
          "2026-10-01",
          33.2635,
+         false,
          false,
          false
         ],
@@ -22874,11 +23603,13 @@
          "2026-10-05",
          36.2874,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-08",
          35.3802,
+         false,
          false,
          false
         ]
@@ -23434,6 +24165,18 @@
         }
        ],
        "label": "PRs, last 30 days"
+      },
+      "avg_rir": {
+       "value": null,
+       "status": "insufficient",
+       "reason": "not enough RIR logged",
+       "logged_sets": 0,
+       "eligible_sets": 36,
+       "share_logged": 0.0,
+       "min_sets": 6,
+       "display": "Not enough RIR logged",
+       "note": null,
+       "label": "Average RIR, last 28 days"
       }
      },
      "muscles": {
@@ -23937,6 +24680,7 @@
          "value": 100.6976,
          "display": "222 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 30
         },
@@ -23946,6 +24690,7 @@
          "value": 103.4192,
          "display": "228 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 23
         },
@@ -23955,6 +24700,7 @@
          "value": 106.1407,
          "display": "234 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 16
         },
@@ -23964,6 +24710,7 @@
          "value": 108.8623,
          "display": "240 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 9
         },
@@ -23973,6 +24720,7 @@
          "value": 111.5839,
          "display": "246 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 2
         }
@@ -24003,6 +24751,7 @@
          "value": 30.2395,
          "display": "67 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 33
         },
@@ -24012,6 +24761,7 @@
          "value": 29.4835,
          "display": "65 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 30
         },
@@ -24021,6 +24771,7 @@
          "value": 30.2395,
          "display": "67 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 26
         },
@@ -24030,6 +24781,7 @@
          "value": 30.2395,
          "display": "67 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 23
         },
@@ -24039,6 +24791,7 @@
          "value": 33.2635,
          "display": "73 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 19
         },
@@ -24048,6 +24801,7 @@
          "value": 32.4319,
          "display": "72 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 16
         },
@@ -24057,6 +24811,7 @@
          "value": 33.2635,
          "display": "73 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 12
         },
@@ -24066,6 +24821,7 @@
          "value": 33.2635,
          "display": "73 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 9
         },
@@ -24075,6 +24831,7 @@
          "value": 36.2874,
          "display": "80 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 5
         },
@@ -24084,6 +24841,7 @@
          "value": 35.3802,
          "display": "78 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 2
         }
@@ -25568,6 +26326,16 @@
         "load_pr": 2,
         "rep_pr": 8
        }
+      },
+      "avg_rir": {
+       "value": null,
+       "status": "insufficient",
+       "reason": "not enough RIR logged",
+       "logged_sets": 0,
+       "eligible_sets": 32,
+       "share_logged": 0.0,
+       "display": "Not enough RIR logged",
+       "note": null
       }
      },
      "muscles": {
@@ -25994,31 +26762,36 @@
          "2026-09-10",
          10,
          false,
+         false,
          false
         ],
         [
          "2026-09-17",
          11,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-24",
          12,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-01",
          13,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-08",
          14,
          true,
-         false
+         false,
+         true
         ]
        ]
       },
@@ -26034,31 +26807,36 @@
          "2026-09-07",
          6,
          false,
+         false,
          false
         ],
         [
          "2026-09-14",
          7,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-21",
          8,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-28",
          9,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-05",
          10,
          true,
-         false
+         false,
+         true
         ]
        ]
       },
@@ -26074,31 +26852,36 @@
          "2026-09-07",
          30,
          false,
+         false,
          false
         ],
         [
          "2026-09-14",
          35,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-21",
          40,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-28",
          45,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-05",
          50,
          true,
-         false
+         false,
+         true
         ]
        ]
       },
@@ -26114,11 +26897,13 @@
          "2026-09-10",
          8,
          false,
+         false,
          false
         ],
         [
          "2026-09-17",
          8,
+         false,
          false,
          false
         ]
@@ -27308,6 +28093,18 @@
         }
        ],
        "label": "PRs, last 30 days"
+      },
+      "avg_rir": {
+       "value": null,
+       "status": "insufficient",
+       "reason": "not enough RIR logged",
+       "logged_sets": 0,
+       "eligible_sets": 32,
+       "share_logged": 0.0,
+       "min_sets": 6,
+       "display": "Not enough RIR logged",
+       "note": null,
+       "label": "Average RIR, last 28 days"
       }
      },
      "muscles": {
@@ -28515,6 +29312,7 @@
          "value": 10,
          "display": "10 reps",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 30
         },
@@ -28524,6 +29322,7 @@
          "value": 11,
          "display": "11 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 23
         },
@@ -28533,6 +29332,7 @@
          "value": 12,
          "display": "12 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 16
         },
@@ -28542,6 +29342,7 @@
          "value": 13,
          "display": "13 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 9
         },
@@ -28551,6 +29352,7 @@
          "value": 14,
          "display": "14 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 2
         }
@@ -28581,6 +29383,7 @@
          "value": 6,
          "display": "6 reps",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 33
         },
@@ -28590,6 +29393,7 @@
          "value": 7,
          "display": "7 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 26
         },
@@ -28599,6 +29403,7 @@
          "value": 8,
          "display": "8 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 19
         },
@@ -28608,6 +29413,7 @@
          "value": 9,
          "display": "9 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 12
         },
@@ -28617,6 +29423,7 @@
          "value": 10,
          "display": "10 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 5
         }
@@ -28647,6 +29454,7 @@
          "value": 30,
          "display": "30 s",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 33
         },
@@ -28656,6 +29464,7 @@
          "value": 35,
          "display": "35 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 26
         },
@@ -28665,6 +29474,7 @@
          "value": 40,
          "display": "40 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 19
         },
@@ -28674,6 +29484,7 @@
          "value": 45,
          "display": "45 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 12
         },
@@ -28683,6 +29494,7 @@
          "value": 50,
          "display": "50 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 5
         }
@@ -28713,6 +29525,7 @@
          "value": 8,
          "display": "8 reps",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 30
         },
@@ -28722,6 +29535,7 @@
          "value": 8,
          "display": "8 reps",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 23
         }
@@ -34518,6 +35332,16 @@
         "rep_pr": 2,
         "strongest_ever": 2
        }
+      },
+      "avg_rir": {
+       "value": null,
+       "status": "insufficient",
+       "reason": "not enough RIR logged",
+       "logged_sets": 0,
+       "eligible_sets": 76,
+       "share_logged": 0.0,
+       "display": "Not enough RIR logged",
+       "note": null
       }
      },
      "muscles": {
@@ -35021,79 +35845,92 @@
          "2026-07-20",
          119.0681,
          false,
+         false,
          false
         ],
         [
          "2026-07-27",
          121.7141,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-03",
          124.3601,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-10",
          127.006,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-17",
          129.652,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-24",
          132.2979,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-31",
          134.9439,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-07",
          137.5898,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-14",
          140.2358,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-21",
          142.8818,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-28",
          145.5277,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-05",
          148.1737,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-12",
          150.8196,
          true,
-         false
+         false,
+         true
         ]
        ]
       },
@@ -35121,11 +35958,13 @@
          "2026-07-20",
          105.8383,
          false,
+         false,
          false
         ],
         [
          "2026-07-27",
          104.5154,
+         false,
          false,
          false
         ],
@@ -35133,11 +35972,13 @@
          "2026-08-03",
          103.1924,
          false,
+         false,
          false
         ],
         [
          "2026-08-10",
          101.8694,
+         false,
          false,
          false
         ],
@@ -35145,11 +35986,13 @@
          "2026-08-17",
          100.5464,
          false,
+         false,
          false
         ],
         [
          "2026-08-24",
          99.2234,
+         false,
          false,
          false
         ],
@@ -35157,11 +36000,13 @@
          "2026-08-31",
          97.9005,
          false,
+         false,
          false
         ],
         [
          "2026-09-07",
          96.5775,
+         false,
          false,
          false
         ],
@@ -35169,11 +36014,13 @@
          "2026-09-14",
          95.2545,
          false,
+         false,
          false
         ],
         [
          "2026-09-21",
          93.9315,
+         false,
          false,
          false
         ],
@@ -35181,17 +36028,20 @@
          "2026-09-28",
          92.6086,
          false,
+         false,
          false
         ],
         [
          "2026-10-05",
          91.2856,
          false,
+         false,
          false
         ],
         [
          "2026-10-12",
          89.9626,
+         false,
          false,
          false
         ]
@@ -35221,11 +36071,13 @@
          "2026-07-22",
          89.0554,
          false,
+         false,
          false
         ],
         [
          "2026-07-29",
          89.0554,
+         false,
          false,
          false
         ],
@@ -35233,11 +36085,13 @@
          "2026-08-05",
          89.0554,
          false,
+         false,
          false
         ],
         [
          "2026-08-12",
          89.0554,
+         false,
          false,
          false
         ],
@@ -35245,11 +36099,13 @@
          "2026-08-19",
          89.0554,
          false,
+         false,
          false
         ],
         [
          "2026-08-26",
          89.0554,
+         false,
          false,
          false
         ],
@@ -35257,11 +36113,13 @@
          "2026-09-02",
          89.0554,
          false,
+         false,
          false
         ],
         [
          "2026-09-09",
          89.0554,
+         false,
          false,
          false
         ],
@@ -35269,11 +36127,13 @@
          "2026-09-16",
          89.0554,
          false,
+         false,
          false
         ],
         [
          "2026-09-23",
          89.0554,
+         false,
          false,
          false
         ],
@@ -35281,17 +36141,20 @@
          "2026-09-30",
          91.399,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-07",
          91.399,
+         false,
          false,
          false
         ],
         [
          "2026-10-14",
          91.399,
+         false,
          false,
          false
         ]
@@ -35309,11 +36172,13 @@
          "2026-09-18",
          63.503,
          false,
+         false,
          false
         ],
         [
          "2026-09-25",
          63.503,
+         false,
          false,
          false
         ],
@@ -35321,17 +36186,20 @@
          "2026-10-02",
          63.503,
          false,
+         false,
          false
         ],
         [
          "2026-10-09",
          63.503,
          false,
+         false,
          false
         ],
         [
          "2026-10-16",
          63.503,
+         false,
          false,
          false
         ]
@@ -35361,11 +36229,13 @@
          "2026-07-22",
          6,
          false,
+         false,
          false
         ],
         [
          "2026-07-29",
          6,
+         false,
          false,
          false
         ],
@@ -35373,17 +36243,20 @@
          "2026-08-05",
          7,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-19",
          8,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-26",
          8,
+         false,
          false,
          false
         ],
@@ -35391,17 +36264,20 @@
          "2026-09-02",
          9,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-16",
          10,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-23",
          10,
+         false,
          false,
          false
         ],
@@ -35409,13 +36285,15 @@
          "2026-09-30",
          11,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-14",
          12,
          true,
-         false
+         false,
+         true
         ]
        ]
       },
@@ -35443,79 +36321,92 @@
          "2026-07-24",
          30,
          false,
+         false,
          false
         ],
         [
          "2026-07-31",
          32,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-07",
          34,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-14",
          36,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-21",
          38,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-08-28",
          40,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-04",
          42,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-11",
          44,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-18",
          46,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-25",
          48,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-02",
          50,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-09",
          52,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-16",
          54,
          true,
-         false
+         false,
+         true
         ]
        ]
       },
@@ -37796,6 +38687,18 @@
         }
        ],
        "label": "PRs, last 30 days"
+      },
+      "avg_rir": {
+       "value": null,
+       "status": "insufficient",
+       "reason": "not enough RIR logged",
+       "logged_sets": 0,
+       "eligible_sets": 76,
+       "share_logged": 0.0,
+       "min_sets": 6,
+       "display": "Not enough RIR logged",
+       "note": null,
+       "label": "Average RIR, last 28 days"
       }
      },
      "muscles": {
@@ -39635,6 +40538,7 @@
          "value": 119.0681,
          "display": "263 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 90
         },
@@ -39644,6 +40548,7 @@
          "value": 121.7141,
          "display": "268 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 83
         },
@@ -39653,6 +40558,7 @@
          "value": 124.3601,
          "display": "274 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 76
         },
@@ -39662,6 +40568,7 @@
          "value": 127.006,
          "display": "280 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 69
         },
@@ -39671,6 +40578,7 @@
          "value": 129.652,
          "display": "286 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 62
         },
@@ -39680,6 +40588,7 @@
          "value": 132.2979,
          "display": "292 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 55
         },
@@ -39689,6 +40598,7 @@
          "value": 134.9439,
          "display": "298 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 48
         },
@@ -39698,6 +40608,7 @@
          "value": 137.5898,
          "display": "303 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 41
         },
@@ -39707,6 +40618,7 @@
          "value": 140.2358,
          "display": "309 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 34
         },
@@ -39716,6 +40628,7 @@
          "value": 142.8818,
          "display": "315 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 27
         },
@@ -39725,6 +40638,7 @@
          "value": 145.5277,
          "display": "321 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 20
         },
@@ -39734,6 +40648,7 @@
          "value": 148.1737,
          "display": "327 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 13
         },
@@ -39743,6 +40658,7 @@
          "value": 150.8196,
          "display": "333 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 6
         }
@@ -39785,6 +40701,7 @@
          "value": 105.8383,
          "display": "233 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 90
         },
@@ -39794,6 +40711,7 @@
          "value": 104.5154,
          "display": "230 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 83
         },
@@ -39803,6 +40721,7 @@
          "value": 103.1924,
          "display": "228 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 76
         },
@@ -39812,6 +40731,7 @@
          "value": 101.8694,
          "display": "225 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 69
         },
@@ -39821,6 +40741,7 @@
          "value": 100.5464,
          "display": "222 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 62
         },
@@ -39830,6 +40751,7 @@
          "value": 99.2234,
          "display": "219 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 55
         },
@@ -39839,6 +40761,7 @@
          "value": 97.9005,
          "display": "216 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 48
         },
@@ -39848,6 +40771,7 @@
          "value": 96.5775,
          "display": "213 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 41
         },
@@ -39857,6 +40781,7 @@
          "value": 95.2545,
          "display": "210 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 34
         },
@@ -39866,6 +40791,7 @@
          "value": 93.9315,
          "display": "207 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 27
         },
@@ -39875,6 +40801,7 @@
          "value": 92.6086,
          "display": "204 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 20
         },
@@ -39884,6 +40811,7 @@
          "value": 91.2856,
          "display": "201 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 13
         },
@@ -39893,6 +40821,7 @@
          "value": 89.9626,
          "display": "198 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 6
         }
@@ -39935,6 +40864,7 @@
          "value": 89.0554,
          "display": "196 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 88
         },
@@ -39944,6 +40874,7 @@
          "value": 89.0554,
          "display": "196 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 81
         },
@@ -39953,6 +40884,7 @@
          "value": 89.0554,
          "display": "196 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 74
         },
@@ -39962,6 +40894,7 @@
          "value": 89.0554,
          "display": "196 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 67
         },
@@ -39971,6 +40904,7 @@
          "value": 89.0554,
          "display": "196 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 60
         },
@@ -39980,6 +40914,7 @@
          "value": 89.0554,
          "display": "196 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 53
         },
@@ -39989,6 +40924,7 @@
          "value": 89.0554,
          "display": "196 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 46
         },
@@ -39998,6 +40934,7 @@
          "value": 89.0554,
          "display": "196 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 39
         },
@@ -40007,6 +40944,7 @@
          "value": 89.0554,
          "display": "196 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 32
         },
@@ -40016,6 +40954,7 @@
          "value": 89.0554,
          "display": "196 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 25
         },
@@ -40025,6 +40964,7 @@
          "value": 91.399,
          "display": "202 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 18
         },
@@ -40034,6 +40974,7 @@
          "value": 91.399,
          "display": "202 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 11
         },
@@ -40043,6 +40984,7 @@
          "value": 91.399,
          "display": "202 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 4
         }
@@ -40073,6 +41015,7 @@
          "value": 63.503,
          "display": "140 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 30
         },
@@ -40082,6 +41025,7 @@
          "value": 63.503,
          "display": "140 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 23
         },
@@ -40091,6 +41035,7 @@
          "value": 63.503,
          "display": "140 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 16
         },
@@ -40100,6 +41045,7 @@
          "value": 63.503,
          "display": "140 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 9
         },
@@ -40109,6 +41055,7 @@
          "value": 63.503,
          "display": "140 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 2
         }
@@ -40151,6 +41098,7 @@
          "value": 6,
          "display": "6 reps",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 88
         },
@@ -40160,6 +41108,7 @@
          "value": 6,
          "display": "6 reps",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 81
         },
@@ -40169,6 +41118,7 @@
          "value": 7,
          "display": "7 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 74
         },
@@ -40178,6 +41128,7 @@
          "value": 8,
          "display": "8 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 60
         },
@@ -40187,6 +41138,7 @@
          "value": 8,
          "display": "8 reps",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 53
         },
@@ -40196,6 +41148,7 @@
          "value": 9,
          "display": "9 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 46
         },
@@ -40205,6 +41158,7 @@
          "value": 10,
          "display": "10 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 32
         },
@@ -40214,6 +41168,7 @@
          "value": 10,
          "display": "10 reps",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 25
         },
@@ -40223,6 +41178,7 @@
          "value": 11,
          "display": "11 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 18
         },
@@ -40232,6 +41188,7 @@
          "value": 12,
          "display": "12 reps",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 4
         }
@@ -40274,6 +41231,7 @@
          "value": 30,
          "display": "30 s",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 86
         },
@@ -40283,6 +41241,7 @@
          "value": 32,
          "display": "32 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 79
         },
@@ -40292,6 +41251,7 @@
          "value": 34,
          "display": "34 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 72
         },
@@ -40301,6 +41261,7 @@
          "value": 36,
          "display": "36 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 65
         },
@@ -40310,6 +41271,7 @@
          "value": 38,
          "display": "38 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 58
         },
@@ -40319,6 +41281,7 @@
          "value": 40,
          "display": "40 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 51
         },
@@ -40328,6 +41291,7 @@
          "value": 42,
          "display": "42 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 44
         },
@@ -40337,6 +41301,7 @@
          "value": 44,
          "display": "44 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 37
         },
@@ -40346,6 +41311,7 @@
          "value": 46,
          "display": "46 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 30
         },
@@ -40355,6 +41321,7 @@
          "value": 48,
          "display": "48 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 23
         },
@@ -40364,6 +41331,7 @@
          "value": 50,
          "display": "50 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 16
         },
@@ -40373,6 +41341,7 @@
          "value": 52,
          "display": "52 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 9
         },
@@ -40382,6 +41351,7 @@
          "value": 54,
          "display": "54 s",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 2
         }
@@ -41419,6 +42389,16 @@
        "by_kind": {
         "e1rm_pr": 3
        }
+      },
+      "avg_rir": {
+       "value": 2.5,
+       "status": "ok",
+       "reason": null,
+       "logged_sets": 24,
+       "eligible_sets": 24,
+       "share_logged": 1.0,
+       "display": "Average RPE 7.5",
+       "note": null
       }
      },
      "muscles": {
@@ -41793,25 +42773,29 @@
          "2026-09-07",
          120.0,
          false,
+         false,
          false
         ],
         [
          "2026-09-14",
          123.0,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-21",
          126.0,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-28",
          129.0,
          true,
-         false
+         false,
+         true
         ]
        ]
       },
@@ -41827,11 +42811,13 @@
          "2026-09-09",
          15.0,
          false,
+         false,
          false
         ],
         [
          "2026-09-16",
          15.0,
+         false,
          false,
          false
         ],
@@ -41839,11 +42825,13 @@
          "2026-09-23",
          15.0,
          false,
+         false,
          false
         ],
         [
          "2026-09-30",
          15.0,
+         false,
          false,
          false
         ]
@@ -41861,11 +42849,13 @@
          "2026-09-07",
          56.0,
          false,
+         false,
          false
         ],
         [
          "2026-09-14",
          56.0,
+         false,
          false,
          false
         ],
@@ -41873,11 +42863,13 @@
          "2026-09-21",
          56.0,
          false,
+         false,
          false
         ],
         [
          "2026-09-28",
          56.0,
+         false,
          false,
          false
         ]
@@ -42618,6 +43610,18 @@
         }
        ],
        "label": "PRs, last 30 days"
+      },
+      "avg_rir": {
+       "value": 2.5,
+       "status": "ok",
+       "reason": null,
+       "logged_sets": 24,
+       "eligible_sets": 24,
+       "share_logged": 1.0,
+       "min_sets": 6,
+       "display": "Average RPE 7.5",
+       "note": null,
+       "label": "Average RIR, last 28 days"
       }
      },
      "muscles": {
@@ -43473,6 +44477,7 @@
          "value": 120.0,
          "display": "120 kg",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 26
         },
@@ -43482,6 +44487,7 @@
          "value": 123.0,
          "display": "123 kg",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 19
         },
@@ -43491,6 +44497,7 @@
          "value": 126.0,
          "display": "126 kg",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 12
         },
@@ -43500,6 +44507,7 @@
          "value": 129.0,
          "display": "129 kg",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 5
         }
@@ -43530,6 +44538,7 @@
          "value": 15.0,
          "display": "15 (load-reps index)",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 24
         },
@@ -43539,6 +44548,7 @@
          "value": 15.0,
          "display": "15 (load-reps index)",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 17
         },
@@ -43548,6 +44558,7 @@
          "value": 15.0,
          "display": "15 (load-reps index)",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 10
         },
@@ -43557,6 +44568,7 @@
          "value": 15.0,
          "display": "15 (load-reps index)",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 3
         }
@@ -43587,6 +44599,7 @@
          "value": 56.0,
          "display": "56 kg",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 26
         },
@@ -43596,6 +44609,7 @@
          "value": 56.0,
          "display": "56 kg",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 19
         },
@@ -43605,6 +44619,7 @@
          "value": 56.0,
          "display": "56 kg",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 12
         },
@@ -43614,6 +44629,7 @@
          "value": 56.0,
          "display": "56 kg",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 5
         }
@@ -45762,6 +46778,16 @@
         "e1rm_pr": 1,
         "strongest_ever": 3
        }
+      },
+      "avg_rir": {
+       "value": null,
+       "status": "insufficient",
+       "reason": "not enough RIR logged",
+       "logged_sets": 0,
+       "eligible_sets": 36,
+       "share_logged": 0.0,
+       "display": "Not enough RIR logged",
+       "note": null
       }
      },
      "muscles": {
@@ -46175,35 +47201,41 @@
          "2026-09-08",
          122.4701,
          false,
+         false,
          false
         ],
         [
          "2026-09-15",
          127.9132,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-22",
          133.3563,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-29",
          138.7994,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-06",
          144.2425,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-13",
          144.2425,
+         false,
          false,
          false
         ],
@@ -46211,11 +47243,13 @@
          "2026-10-20",
          138.7994,
          false,
+         false,
          false
         ],
         [
          "2026-10-27",
          133.3563,
+         false,
          false,
          false
         ]
@@ -46233,35 +47267,41 @@
          "2026-09-07",
          100.6976,
          false,
+         false,
          false
         ],
         [
          "2026-09-14",
          103.4192,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-21",
          106.1407,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-28",
          108.8623,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-05",
          111.5839,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-12",
          111.5839,
+         false,
          false,
          false
         ],
@@ -46269,11 +47309,13 @@
          "2026-10-19",
          108.8623,
          false,
+         false,
          false
         ],
         [
          "2026-10-26",
          106.1407,
+         false,
          false,
          false
         ]
@@ -46291,17 +47333,20 @@
          "2026-09-09",
          36.2874,
          false,
+         false,
          false
         ],
         [
          "2026-09-16",
          39.3114,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-09-23",
          39.3114,
+         false,
          false,
          false
         ],
@@ -46309,11 +47354,13 @@
          "2026-09-30",
          42.3353,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-07",
          42.3353,
+         false,
          false,
          false
         ],
@@ -46321,11 +47368,13 @@
          "2026-10-14",
          45.3593,
          true,
-         false
+         false,
+         true
         ],
         [
          "2026-10-21",
          45.3593,
+         false,
          false,
          false
         ],
@@ -46333,7 +47382,8 @@
          "2026-10-28",
          48.3832,
          true,
-         false
+         false,
+         true
         ]
        ]
       }
@@ -47401,6 +48451,18 @@
         }
        ],
        "label": "PRs, last 30 days"
+      },
+      "avg_rir": {
+       "value": null,
+       "status": "insufficient",
+       "reason": "not enough RIR logged",
+       "logged_sets": 0,
+       "eligible_sets": 36,
+       "share_logged": 0.0,
+       "min_sets": 6,
+       "display": "Not enough RIR logged",
+       "note": null,
+       "label": "Average RIR, last 28 days"
       }
      },
      "muscles": {
@@ -48520,6 +49582,7 @@
          "value": 122.4701,
          "display": "270 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 54
         },
@@ -48529,6 +49592,7 @@
          "value": 127.9132,
          "display": "282 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 47
         },
@@ -48538,6 +49602,7 @@
          "value": 133.3563,
          "display": "294 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 40
         },
@@ -48547,6 +49612,7 @@
          "value": 138.7994,
          "display": "306 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 33
         },
@@ -48556,6 +49622,7 @@
          "value": 144.2425,
          "display": "318 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 26
         },
@@ -48565,6 +49632,7 @@
          "value": 144.2425,
          "display": "318 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 19
         },
@@ -48574,6 +49642,7 @@
          "value": 138.7994,
          "display": "306 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 12
         },
@@ -48583,6 +49652,7 @@
          "value": 133.3563,
          "display": "294 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 5
         }
@@ -48613,6 +49683,7 @@
          "value": 100.6976,
          "display": "222 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 55
         },
@@ -48622,6 +49693,7 @@
          "value": 103.4192,
          "display": "228 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 48
         },
@@ -48631,6 +49703,7 @@
          "value": 106.1407,
          "display": "234 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 41
         },
@@ -48640,6 +49713,7 @@
          "value": 108.8623,
          "display": "240 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 34
         },
@@ -48649,6 +49723,7 @@
          "value": 111.5839,
          "display": "246 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 27
         },
@@ -48658,6 +49733,7 @@
          "value": 111.5839,
          "display": "246 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 20
         },
@@ -48667,6 +49743,7 @@
          "value": 108.8623,
          "display": "240 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 13
         },
@@ -48676,6 +49753,7 @@
          "value": 106.1407,
          "display": "234 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 6
         }
@@ -48706,6 +49784,7 @@
          "value": 36.2874,
          "display": "80 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 53
         },
@@ -48715,6 +49794,7 @@
          "value": 39.3114,
          "display": "87 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 46
         },
@@ -48724,6 +49804,7 @@
          "value": 39.3114,
          "display": "87 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 39
         },
@@ -48733,6 +49814,7 @@
          "value": 42.3353,
          "display": "93 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 32
         },
@@ -48742,6 +49824,7 @@
          "value": 42.3353,
          "display": "93 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 25
         },
@@ -48751,6 +49834,7 @@
          "value": 45.3593,
          "display": "100 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 18
         },
@@ -48760,6 +49844,7 @@
          "value": 45.3593,
          "display": "100 lb",
          "pr": false,
+         "best": false,
          "deload": false,
          "days_ago": 11
         },
@@ -48769,6 +49854,7 @@
          "value": 48.3832,
          "display": "107 lb",
          "pr": true,
+         "best": true,
          "deload": false,
          "days_ago": 4
         }

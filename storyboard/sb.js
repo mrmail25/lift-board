@@ -983,7 +983,7 @@ function kpiStrip(vw){const k=vw.kpi,b=k.buckets,e=effV(k.avg_rir);
   const tile=(go,big,lab,cls='')=>`<button class="pk ${cls}" data-kgo="${go}"><b class="num">${big}</b><span>${lab}</span></button>`;
   return `<div class="pkpi" data-src="${vw.source}">${tile('wins',k.prs_30d,'PRs<br>30 days')}${tile('muscles',k.strength_display||'–','Strength<br>vs 3 mo','pkst')}
    ${tile('map',`<i class="d up"></i>${b.up}<i class="d flat"></i>${b.flat}<i class="d down"></i>${b.stalled}`,`Up · flat · stalled${b.insufficient?`<br>${b.insufficient} too early`:''}`,'pkmu')}
-   ${tile('muscles',e==null?'–':(Math.round(e*10)/10).toFixed(1),`Avg ${effT()}<br>4 weeks`)}</div>`}
+   ${tile('muscles',e==null?'–':e.toFixed(1),e==null?'Not enough<br>RIR logged':`Avg ${effT()}<br>28 days`,k.avg_rir==null?'pkna':'')}</div>${k.avg_rir_note?`<p class="pknote">${esc(k.avg_rir_note)}</p>`:''}`}
 function trendMap(pr,vw){const vol={},stk=new Set();for(const [m,x] of Object.entries(vw.muscles)){vol[m]=TRC[x.band];if(x.stalled)stk.add(m)}
   const mk=h=>h.replace(/data-mu="(\w+)"([^>]*?)class="mp"/g,(a,mu,mid)=>stk.has(mu)?`data-mu="${mu}"${mid}class="mp pstk"`:a);   // stall marker: an outline on top of the band colour
   const has=b=>Object.values(vw.muscles).some(x=>x.band===b);
@@ -1060,10 +1060,10 @@ function liftChart(pr,id){const u=pr.unit,DL=dashLift(pr,id);if(!DL)return `<p c
   const xt=xi.map(k=>`<text x="${X(P[k].date)}" y="${H-8}" text-anchor="${k===0?'start':k===P.length-1?'end':'middle'}" class="dx">${fmtD(P[k].date)}</text>`).join('');
   const tip=p=>{if(met==='best_reps')return p.display;if(met==='hold_s')return `${p.value} s hold`;const x=dotSet(id,met,p.sid);if(!x)return p.display;
     const ld=nfmt(+(u==='kg'?x.added_kg:x.added_kg*KG_LB).toFixed(1));return met==='e1rm'?`${ld} × ${x.reps} → est. ${Math.round(p.y)}`:`${ld} × ${x.reps} → index ${Math.round(p.y)}`};
-  const dots=P.map((p,k)=>{const isPr=p.pr,isDl=p.deload;return `<g class="pp${isPr?' pr':''}${isDl?' dl':''}" data-k="${k}" data-sid="${p.sid}" data-tip="${esc(tip(p))}" data-date="${fmtD(p.date)}${isDl?' · deload':''}"${isPr?' data-pr="1"':''}><circle cx="${X(p.date)}" cy="${Y(p.y)}" r="${isPr?4.6:3.4}"/><circle class="phit" cx="${X(p.date)}" cy="${Y(p.y)}" r="13"/></g>`}).join('');
+  const dots=P.map((p,k)=>{const isPr=p.pr,isB=p.best,isDl=p.deload;/* chart marker = dot.best (new all-time best); dot.pr stays for the tooltip */return `<g class="pp${isB?' pr':''}${isDl?' dl':''}" data-k="${k}" data-sid="${p.sid}" data-tip="${esc(tip(p))}" data-date="${fmtD(p.date)}${isDl?' · deload':''}"${isPr?' data-pr="1"':''}${isB?' data-best="1"':''}><circle cx="${X(p.date)}" cy="${Y(p.y)}" r="${isB?4.6:3.4}"/><circle class="phit" cx="${X(p.date)}" cy="${Y(p.y)}" r="13"/></g>`}).join('');
   return `<svg viewBox="0 0 ${W} ${H}" class="plc" role="img" aria-label="${esc(CTITLE[met](u))}, ${P.length} sessions"><text class="yat" transform="translate(11 ${(pt+H-pb)/2}) rotate(-90)" text-anchor="middle">${CAX[met](u)}</text>${grid}
    <polyline class="pln" points="${P.map(p=>`${X(p.date)},${Y(p.y)}`).join(' ')}"/>${dots}${xt}</svg>
-   <div class="plleg"><span><i class="lpt"></i>Best set, each session</span>${P.some(p=>p.pr)?'<span><i class="lpr"></i>PR</span>':''}${P.some(p=>p.deload)?'<span><i class="ldw"></i>Deload</span>':''}</div>`}
+   <div class="plleg"><span><i class="lpt"></i>Best set, each session</span>${P.some(p=>p.best)?'<span><i class="lpr"></i>New best</span>':''}${P.some(p=>p.deload)?'<span><i class="ldw"></i>Deload</span>':''}</div>`}
 function showTip(g){const t=$('#ptip'),card=g.closest('.plcard');if(!t||!card)return;$$('.plc .pp.sel').forEach(x=>x.classList.remove('sel'));g.classList.add('sel');
   t.innerHTML=`<span>${esc(g.dataset.date)}${g.dataset.pr?' · PR':''}</span><b>${esc(g.dataset.tip)}</b>`;t.hidden=false;
   const c=g.querySelector('circle').getBoundingClientRect(),cb=card.getBoundingClientRect(),tw=t.offsetWidth;

@@ -1309,3 +1309,6 @@ html[data-theme=dark] .pvd{color:var(--text-2)}@media (prefers-color-scheme:dark
 .psp .psdl{stroke:var(--text-3);stroke-width:1;opacity:.7}
 .pmlf .prsn{display:block;font-size:11px;line-height:1.25;color:var(--text-2);white-space:normal}
 .prsn1{margin-top:6px}
+/* dashfu: avg RIR KPI from kpis.avg_rir; partial-logging note small and muted under the strip */
+.pknote{margin:6px 20px 0;font-size:11.5px;line-height:1.3;color:var(--text-2)}
+.pk.pkna b{color:var(--text-2)}

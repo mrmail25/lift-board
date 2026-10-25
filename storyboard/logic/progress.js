@@ -297,9 +297,18 @@ function dashWeekly(K,xs,asOf,u,n){const dm=dashMetric(xs),w1=wk(asOf),out=[];
   for(let k=n-1;k>=0;k--){const w=isoAdd(w1,-7*k),es=xs.filter(e=>wk(e.date)===w&&e.date<=asOf),vals=es.filter(e=>!e.deload).map(e=>dashValue(e,dm)).filter(v=>v!=null),v=vals.length?Math.max(...vals):null;
     out.push({week:w,value:r_(v),display:dvdisp(K,v,dm,u),deload_week:es.length>0&&es.every(e=>e.deload)})}return out}
 function dashDots(K,xs,asOf,u,prs){const dm=dashMetric(xs),out=[];for(const e of xs){if(e.date>asOf)continue;const v=dashValue(e,dm);if(v==null)continue;
-  out.push({date:e.date,session_id:e.sid,value:r_(v),display:dvdisp(K,v,dm,u),pr:!e.deload&&prs.has(e.sid),deload:e.deload,days_ago:days(asOf,e.date)})}return out}
+  out.push({date:e.date,session_id:e.sid,value:r_(v),display:dvdisp(K,v,dm,u),pr:!e.deload&&prs.has(e.sid),best:false,deload:e.deload,days_ago:days(asOf,e.date)})}
+  let top=null;for(const d of out){d.best=!!(top!==null&&!d.deload&&d.value>top+1e-9);top=top===null?d.value:Math.max(top,d.value)}   // dot.best (progress4): above every earlier dot (all history); first + deload dots false
+  return out}
+// kpis.avg_rir (progress4): plain mean of logged RIR (4+ = 4) over done working sets in the last 28 days, deload sessions left out, each set once
+function kpiAvgRir(K,xsall,asOf,mode){const A=K.R2.dashboard.kpis.avg_rir,E=K.R2.effort,est=isoAdd(asOf,-E.summary_window_days),el=[];
+  for(const xs of Object.values(xsall))for(const e of xs)if(!e.deload&&e.date>est&&e.date<=asOf)for(const x of e.sets)el.push(x);
+  const lg=el.filter(x=>x.rir!=null).map(x=>Math.min(x.rir,4)),n=lg.length,tot=el.length,share=tot?n/tot:null,ok=n>=E.summary_min_sets,v=ok?Math.round((lg.reduce((a,x)=>a+x,0)/n+1e-9)*10)/10:null;
+  const disp=v==null?null:mode==='rpe'?A.display_rpe.replace('{v}',(10-v).toFixed(1)):A.display_rir.replace('{v}',v.toFixed(1));
+  const note=ok&&share!=null&&share<A.partial_share-1e-12?A.partial_note.replace('{n}',n).replace('{total}',tot):null;
+  return {value:v,status:ok?'ok':'insufficient',reason:ok?null:A.reason_insufficient,logged_sets:n,eligible_sets:tot,share_logged:r_(share,4),min_sets:E.summary_min_sets,display:ok?disp:A.reason_display,note,label:A.label}}
 const median=v=>{v=v.slice().sort((a,b)=>a-b);const n=v.length;return !n?null:n%2?v[(n-1)/2]:(v[n/2-1]+v[n/2])/2};
-function dashboard(K,xsall,lifts,mus,W,chg,asOf,u){const DB=K.R2.dashboard,KP=DB.kpis,prs={};
+function dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode){const DB=K.R2.dashboard,KP=DB.kpis,prs={};
   for(const w of W.all_events)(prs[w.exercise]=prs[w.exercise]||new Set()).add(w.session_id);
   const L={};for(const i of Object.keys(xsall).sort())L[i]={name:lifts[i].name,metric:chg[i].metric,label:chg[i].label,change:chg[i],dots:dashDots(K,xsall[i],asOf,u,prs[i]||new Set())};
   const M={},mains=[];
@@ -319,7 +328,7 @@ function dashboard(K,xsall,lifts,mus,W,chg,asOf,u){const DB=K.R2.dashboard,KP=DB
   return {window:{days:DB.window_days,from:isoAdd(asOf,-(DB.window_days-1)),to:asOf,sparkline_weeks:Array.from({length:DB.sparkline.weeks},(_,k)=>isoAdd(wk(asOf),-7*(DB.sparkline.weeks-1-k)))},
     label:K.R2.label,
     kpis:{strength_change:{method:SC.method,pct:r_(med,2),display:pctd(med),status:med!=null?'ok':'insufficient',lifts:used.map(i=>({id:i,pct:chg[i].pct})),n_lifts:used.length,min_lifts:SC.min_lifts,label:SC.label,sublabel:SC.sublabel},
-      muscle_counts:mc,prs_30d:{count:pr30.length,by_kind:bykS,events:ev,label:KP.prs_30d.label}},
+      muscle_counts:mc,prs_30d:{count:pr30.length,by_kind:bykS,events:ev,label:KP.prs_30d.label},avg_rir:kpiAvgRir(K,xsall,asOf,mode)},
     muscles:M,lifts:L}}
 // report(dt, history, asOf 'YYYY-MM-DD', routine (days[] or null -> history.routine.days), level, goal)
 function report(dt,history,asOf,routine=null,level='intermediate',goal=null){asOf=String(asOf).slice(0,10);const h=normalize(history),K=mk(dt,h),u=((h.settings||{}).unit)||'lb',EX=exTable(dt,h);
@@ -346,7 +355,7 @@ function report(dt,history,asOf,routine=null,level='intermediate',goal=null){asO
   const W=wins(K,xsall,asOf,u,EX,new Set(Object.values(mus).map(v=>v.main_lift.id).filter(Boolean)),chg),eff={};for(const [m,v] of Object.entries(mus))eff[m]=v.effort;
   return {as_of:asOf,label:K.R2.label,model_note:K.R2.model_note,unit:u,effort_mode:mode,data:{completed_sessions:comp.length,logged_weeks:new Set(comp.map(wk)).size,first_date:comp.length?comp[0]:null},
     lifts,muscles:mus,stall_flags:{muscles:stuck,lifts_stalled:Object.keys(lifts).filter(i=>lifts[i].status==='stalled').sort(),lifts_dropping:Object.keys(lifts).filter(i=>lifts[i].status==='dropping').sort()},
-    needs_attention:na,deload:dl,wins:W,effort:eff,footnote:{planned_vs_done:footnote(dt,K,h,asOf)},dashboard:dashboard(K,xsall,lifts,mus,W,chg,asOf,u)}}
+    needs_attention:na,deload:dl,wins:W,effort:eff,footnote:{planned_vs_done:footnote(dt,K,h,asOf)},dashboard:dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode)}}
 const API={report,perfSignal,deloadCheck,clampRir,normalize,flatten,completedAnalytics,exerciseTrends,localDate,weekStart:wk};
 if(isNode)module.exports=API;else root.PROGRESS=API;
 })(typeof window!=='undefined'?window:this);
