@@ -1319,6 +1319,7 @@ html[data-theme=dark] .pvd{color:var(--text-2)}@media (prefers-color-scheme:dark
 .plsw{display:flex;gap:6px;overflow-x:auto;margin:2px -20px 12px;padding:2px 20px 4px;scrollbar-width:none}.plsw::-webkit-scrollbar{display:none}
 .plsw .plsc{align-items:center;padding:7px 12px;border-radius:999px;font-size:13.5px;font-weight:500;background:var(--fill);color:var(--ink);white-space:nowrap;max-width:none}
 .plsw .plsc.on{background:var(--ink);color:var(--paper)}
+.plsw .plsc .ptr{min-width:0;margin-left:5px;font-size:13px;color:inherit;opacity:.7}   /* fb1: chip keeps the lift's calm status arrow (was on the old list rows) */
 .plmain{margin-left:6px;font-size:10.5px;font-weight:600;opacity:.6;text-transform:uppercase;letter-spacing:.03em}
 .pmlpick .pmlp{min-height:52px}.pmlp .pck{width:22px;display:flex;justify-content:flex-end;color:var(--accent-press)}
 .pmlp .pck svg{width:20px;height:20px;flex:none}
@@ -1326,9 +1327,10 @@ html[data-theme=dark] .pvd{color:var(--text-2)}@media (prefers-color-scheme:dark
 .pmlnote{color:var(--text-2)}.pmlreset{margin:10px 16px 0;width:calc(100% - 32px)}
 
 /* ---- prog3: headline KPI strip, % change chart (dashboard.overlay), table rows (dashboard.table_rows) ---- */
-:root{--ov1:#1D5FC4;--ov2:#B8420C;--ov3:#0E7A62;--ov4:#8A3BA8;--ov-mute:#BAC4D0}
-html[data-theme=dark]{--ov1:#74ABFF;--ov2:#FF9257;--ov3:#3DCBA7;--ov4:#D493F2;--ov-mute:#4D5A69}
-@media (prefers-color-scheme:dark){html:not([data-theme=light]){--ov1:#74ABFF;--ov2:#FF9257;--ov3:#3DCBA7;--ov4:#D493F2;--ov-mute:#4D5A69}}
+/* fb1: one colour per plotted line, Okabe-Ito based (colour-blind safe), each paired with its own end-marker shape for grayscale */
+:root{--ov1:#0072B2;--ov2:#D55E00;--ov3:#007A5E;--ov4:#B8509A;--ov5:#A87200;--ov6:#3A93C9}
+html[data-theme=dark]{--ov1:#6CB8F0;--ov2:#FF8A4C;--ov3:#3DD6A8;--ov4:#E89AC9;--ov5:#F2C14E;--ov6:#A9DCFA}
+@media (prefers-color-scheme:dark){html:not([data-theme=light]){--ov1:#6CB8F0;--ov2:#FF8A4C;--ov3:#3DD6A8;--ov4:#E89AC9;--ov5:#F2C14E;--ov6:#A9DCFA}}
 .pkpi{grid-template-columns:1.05fr 1.05fr 1fr 1.3fr}
 .pk b small{font-size:11px;font-weight:600;margin-left:2px;color:var(--text-2)}
 .pk .pkar{font-style:normal;font-size:15px;margin-left:2px}.pkar[data-tr=up]{color:var(--tr-up-ink)}.pkar[data-tr=down]{color:var(--tr-down-ink)}.pkar[data-tr=flat]{color:var(--tr-flat-ink)}
@@ -1341,17 +1343,19 @@ html[data-theme=dark]{--ov1:#74ABFF;--ov2:#FF9257;--ov3:#3DCBA7;--ov4:#D493F2;--
 .povc{display:block;width:100%;height:auto;overflow:visible}
 .povc .ovg{stroke:var(--line);stroke-width:.6}.povc .ovg.z{stroke:var(--text-2);stroke-width:1;stroke-dasharray:3 3}
 .povc .ovy,.povc .ovx{font-size:10px;fill:var(--text-2);font-variant-numeric:tabular-nums}
-.povc .ovln{fill:none;stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round;pointer-events:none}.povc .ovln.hi{stroke-width:2.6}
-.povc .ovend{pointer-events:none}
+.povc .ovln{fill:none;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;pointer-events:none}
+.povc .ovend{pointer-events:none;stroke:var(--paper);stroke-width:1}.povc .ovend.ovx2{stroke-width:2.2;stroke-linecap:round}
 .povc .ovhit{cursor:pointer}.povc .ovhit polyline{fill:none;stroke:transparent;stroke-width:14;pointer-events:stroke}.povc .ovhit circle{fill:transparent;pointer-events:all}
 .povleg{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
 .povk{display:inline-flex;align-items:center;gap:5px;min-height:30px;padding:3px 9px 3px 7px;border:0;border-radius:15px;background:var(--fill);color:var(--ink);font:inherit;font-size:12px;cursor:pointer}
 .povk:not(.on){opacity:.55}.povk:not(.on) .ovn{text-decoration:line-through}
 .povk .ovn small{font-size:10px;color:var(--text-2)}
 .povk b{font-weight:600;font-size:11.5px}.povk b[data-tr=up]{color:var(--tr-up-ink)}.povk b[data-tr=down]{color:var(--tr-down-ink)}
-.povk.hi{font-weight:600}
-.ovsw{display:inline-block;width:14px;height:0;border-top:3px solid var(--c);border-radius:2px}.ovsw.dsh{border-top-style:dashed}
-.povk:not(.hi) .ovsw{border-top-width:2px}
+.povk.on{font-weight:600}
+.ovsw{display:inline-block;width:22px;height:10px;flex:none;overflow:visible}.ovsw line{stroke-width:2.4;stroke-linecap:round}.ovsw .ovsw0{stroke:var(--text-3,#999);stroke-width:1.4;stroke-dasharray:2 2}
+.ovsw .ovend{stroke:var(--fill);stroke-width:.8}.ovsw .ovend.ovx2{stroke-width:1.8}
+.povcap{margin:2px 2px 6px;font-size:var(--t-foot);font-weight:600;color:var(--text-2)}
+.povmore{font-weight:600;color:var(--accent-press);opacity:1!important}.povmore small{color:var(--text-2);font-weight:400}.povmorel{margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
 .povno,.povnone{margin:8px 2px 0}
 .pmn .prir{display:block;font-size:10.5px;font-weight:400;color:var(--text-2);line-height:1.3;margin-top:1px}
 .pmr.pshr{min-height:58px;padding-top:6px;padding-bottom:6px}
@@ -1360,15 +1364,18 @@ html[data-theme=dark]{--ov1:#74ABFF;--ov2:#FF9257;--ov3:#3DCBA7;--ov4:#D493F2;--
 :root{--lad-slate:#9AA5B3;--lad-tease:#C9D0D9}
 html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450}
 .lcard{display:block;width:calc(100% - 2*var(--s4));text-align:left;padding:12px 14px 12px;margin-top:12px;margin-bottom:4px}
-.lstrip{display:flex;align-items:flex-end;gap:5px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
+.lstrip{display:flex;align-items:flex-end;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
 .lstrip::-webkit-scrollbar{display:none}
-.lfig{flex:1 0 46px;display:flex;flex-direction:column;align-items:center;color:var(--lad-slate);min-width:46px}
+/* strip columns size to their label (min-content, never below it) so long names like Neanderthal never run into a neighbour at 375/390 px; Knuckle-Dragger wraps at its hyphen */
+.lfig{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;color:var(--lad-slate);min-width:min-content}
 .lfig .afig{width:30px;height:44px;display:block}
-.lfig span{font-size:10px;font-weight:600;line-height:1.15;margin-top:3px;text-align:center;color:var(--text-2);min-height:23px}
+.lfig span{font-size:10px;font-weight:600;line-height:1.15;margin-top:3px;text-align:center;color:var(--text-2);min-height:23px;letter-spacing:-.1px}
 .lfig.lf-done,.lfig.lf-cur{color:var(--accent)}.lfig.lf-cur .afig{width:36px;height:52px}
 .lfig.lf-cur span{color:var(--ink)}.lfig::after{content:'';display:block;width:18px;height:3px;border-radius:2px;margin-top:2px}.lfig.lf-cur::after{background:var(--accent)}
 .lfig.lf-next{opacity:.85}.lfig.tease{color:var(--lad-tease)}.lfig.tease span{color:var(--lad-slate);font-size:13px}
-.afig .aq{font:800 15px/1 var(--font,system-ui);fill:currentColor}
+.afig{display:block;position:relative;flex:none}.afig .afm{position:absolute;inset:0;background:currentColor;-webkit-mask:var(--afsrc) center bottom/contain no-repeat;mask:var(--afsrc) center bottom/contain no-repeat}
+.afig.afq .afm{opacity:.75}.afig .aq{position:absolute;left:calc(50% + 4px);top:-3px;font:800 14px/1 var(--font,system-ui);font-style:normal;color:var(--text-2)}
+.afig.afx .afm{filter:drop-shadow(0 0 1.5px currentColor)}
 .ladrow{display:flex;align-items:center;gap:8px;margin-top:8px}
 .lrank{font-size:20px;font-weight:700;color:var(--ink);display:block;margin-top:2px}
 .lbar{height:8px;border-radius:4px;background:var(--fill);overflow:hidden;margin-top:10px}
@@ -1406,3 +1413,6 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450}
 .lsrc{font-size:11px}
 .fc.hero .lrup{background:rgba(255,255,255,.1);color:var(--accent)}.fc.hero .lrup b{color:inherit;color:#fff}.fc.hero .lrup span{color:rgba(255,255,255,.7)}.fc.hero .lrup .eyebrow{color:rgba(255,255,255,.65)}
 .fc.hero .lrup .lrev{color:#fff;background:var(--accent)}
+.pprio{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:5px;vertical-align:1px;flex:none}
+.ptab .pmr .pmn{position:relative}.ptab .pmr .pmn>.pprio{position:absolute;left:-10px;top:.62em;margin:0}
+.pshmh{padding-bottom:4px;margin-bottom:8px;border-bottom:1px solid var(--line)}.plname{font-size:var(--t-head);margin:10px 16px 6px}.pshmh~.plsw{margin:2px 0 12px;padding:2px 16px 4px}

@@ -3,7 +3,7 @@
  "version": 1,
  "entry_point": "tools/evolution.py report(history, as_of)",
  "rules_file": "evolution-rules.json",
- "rules_sha256": "26d3b04bbfcec634d2346dd0d6edbb344e82710a9cf158576e8ae6b9fc92ee84",
+ "rules_sha256": "28444fbc9033360cdc30dacddec4ad5755046ce8745bf7dfa853476070f030f0",
  "sample": {
   "file": "sample-log.json",
   "sha256": "37a66588b55533c3fc4aa47b9ea4fe872fe911ef1f8049684ab7321aef5c103d",

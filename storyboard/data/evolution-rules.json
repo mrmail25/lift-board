@@ -930,8 +930,26 @@
    "unavailable": null
   }
  },
+ "display": {
+  "ladder_hidden": {
+   "setting": "settings.ladder.hidden",
+   "type": "boolean, optional (missing = false)",
+   "rule": "settings.ladder.hidden === true hides the whole ladder UI (rank chip, ladder, progress bar, next-rank targets, plate badges, Lean Prime). Display flag only: report() output is identical either way, ranks keep being computed, history.evolution.awarded keeps updating, and nothing is ever demoted or reset. Turning it off shows the current rank.",
+   "separate_from": "settings.bodyComp.hidden (hides only body-composition fields, status and the Lean Prime badge). The two flags are independent; either can be on.",
+   "chosen_by": "Builder (788fb43)"
+  }
+ },
+ "data_schema": {
+  "settings.profile": "{sex?: \"male\" | \"female\", birthDate?: \"YYYY-MM-DD\", height?: {value, unit: \"cm\" | \"in\"}, bodyweight?: {value, unit: \"lb\" | \"kg\"}}",
+  "settings.bodyComp": "{optIn?: boolean, hidden?: boolean}",
+  "settings.ladder": "{hidden?: boolean} - display only (display.ladder_hidden)",
+  "history.bodyComp": "[{date: \"YYYY-MM-DD\", waist?: {value, unit: \"cm\" | \"in\"}, bfPct?: number, bfMethod?: \"dexa\" | \"calipers\" | \"bia\" | \"eye\"}]",
+  "history.evolution": "{awarded?: {stage, tier}} - written by the app after showing a rank (report().awarded_out); never lowered",
+  "note": "all optional; include in backup / restore"
+ },
  "labels": {
   "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max.",
+  "ladder_hidden_note": "Ladder hidden. Your rank is still tracked and is never lowered.",
   "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
   "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away.",
   "progress_label": "to {next}",

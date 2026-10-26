@@ -174,7 +174,7 @@ Unit: settings.unit ("lb" default | "kg") picks the set; both lists exist. lb [1
 | Overhead press | 0.6336 | Silverback | 0.7333 | 0% |
 | Pull-ups | 12.0 | Prime | 9 | 100% |
 
-## 10. Edge cases (data/evolution-reference.json)
+## 10. Edge cases (data/evolution-reference.json: 22 cases)
 | Case | Result | Shows |
 |---|---|---|
 | `no_sex_set` | Prime (12%) | no settings.profile.sex: the men's table is used and labelled |
@@ -205,5 +205,12 @@ Unit: settings.unit ("lb" default | "kg") picks the set; both lists exist. lb [1
 - Reuse the PR pipeline's flatten (aliases, completed sessions, done sets, kg conversion) and `session.deload === true` exclusion. Local date = startedAt || date in America/Los_Angeles.
 - Bodyweight lookup here has NO backfill (differs from prs.js bodyweight_on): earlier entry -> settings.profile.bodyweight -> unrated.
 - Compare with EPS 1e-9; weighted conversion floors after adding 1e-9; targets ceil to step after subtracting 1e-9; pct = floor(100 x overall + 1e-9).
-- Persist `history.evolution.awarded = report.awarded_out` after showing a rank (never lower it). New settings: `settings.profile {sex, birthDate, height, bodyweight}`, `settings.bodyComp {optIn, hidden}`; new log field `history.bodyComp[]`. All optional; include in backup/restore.
+- Persist `history.evolution.awarded = report.awarded_out` after showing a rank (never lower it).
+- Data schema (all optional; include in backup/restore):
+  - `settings.profile`: {sex?: "male" | "female", birthDate?: "YYYY-MM-DD", height?: {value, unit: "cm" | "in"}, bodyweight?: {value, unit: "lb" | "kg"}}
+  - `settings.bodyComp`: {optIn?: boolean, hidden?: boolean}
+  - `settings.ladder`: {hidden?: boolean} - display only (display.ladder_hidden)
+  - `history.bodyComp`: [{date: "YYYY-MM-DD", waist?: {value, unit: "cm" | "in"}, bfPct?: number, bfMethod?: "dexa" | "calipers" | "bia" | "eye"}]
+  - `history.evolution`: {awarded?: {stage, tier}} - written by the app after showing a rank (report().awarded_out); never lowered
+- **Ladder hide-all switch:** `settings.ladder.hidden` (boolean, optional (missing = false)). settings.ladder.hidden === true hides the whole ladder UI (rank chip, ladder, progress bar, next-rank targets, plate badges, Lean Prime). Display flag only: report() output is identical either way, ranks keep being computed, history.evolution.awarded keeps updating, and nothing is ever demoted or reset. Turning it off shows the current rank. Separate from bodyComp: settings.bodyComp.hidden (hides only body-composition fields, status and the Lean Prime badge). The two flags are independent; either can be on. Label when hidden (settings only): "Ladder hidden. Your rank is still tracked and is never lowered.". Chosen by Builder (788fb43).
 - Under 18 or hidden: render no body-composition UI at all. Never prompt opt-in during onboarding.

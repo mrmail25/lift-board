@@ -415,7 +415,41 @@ function tableRows(K,D){const rows=[];
 function progress7(K,D,lifts,h,routine,asOf){D.table_rows=tableRows(K,D);
   D.headline={strength_score:strengthScore(K,D,lifts),prs_this_month:prsMonth(K,D,asOf),streak:weeklyStreak(K,h,routine,asOf),muscle_mix:muscleMix(K,D)};D.overlay=overlay(K,D,asOf);return D}
 
-function report(dt,history,asOf,routine=null,level='intermediate',goal=null,opts=null){asOf=String(asOf).slice(0,10);const h=normalize(history),K=mk(dt,h),u=((h.settings||{}).unit)||'lb',EX=exTable(dt,h);
+// ---------------- muscle order + chart default (order1, progress-spec §16; tools/progress.py priority_muscles / muscle_order / chart_default / order1) ----------------
+// prefs.bias_muscles -> priority muscles in stated order; cleaning = rank _bias (valid muscle / region ids, dedupe, first ranking.bias.max); a region counts as its parent
+function priorityMuscles(dt,K,prefs){const raw=Array.from(((prefs||{}).bias_muscles)||[]),mus=K.L.muscles,RG=(dt.exl&&dt.exl.regionGroup)||{},ok=new Set([...mus,...Object.keys(RG)]);
+  const cap=(((dt.rules||{}).ranking||{}).bias||{}).max??3,valid=[...new Set(raw.filter(x=>typeof x==='string'&&ok.has(x)))],kept=valid.slice(0,cap);
+  const ignored=[...new Set(raw.filter(x=>!(typeof x==='string'&&kept.includes(x))))],pr=[],src={};
+  for(const b of kept){const m=mus.includes(b)?b:RG[b];if(!mus.includes(m))continue;if(!pr.includes(m))pr.push(m);(src[m]=src[m]||[]).push(b)}
+  return {pr,src,ignored,cap}}
+function muscleOrder(dt,K,D,prefs){const {pr,src,ignored,cap}=priorityMuscles(dt,K,prefs),mus=K.L.muscles,rest=mus.filter(m=>!pr.includes(m));
+  const order=[...pr,...rest.filter(m=>D.muscles[m].trained),...rest.filter(m=>!D.muscles[m].trained)];
+  return [order.map(m=>({muscle:m,priority:pr.includes(m),priority_rank:pr.includes(m)?pr.indexOf(m)+1:null,trained:D.muscles[m].trained,bias_ids:src[m]||[]})),{priority:pr,ignored,cap}]}
+function overlayRow(K,D,i,muscles,c,ws){const OVL=K.R2.overlay,L=D.lifts[i]||null;c=c||{};
+  const row={lift:i,name:L?L.name:null,muscles,metric:L?L.metric:null,unit_flag:L?(OVL.unit_flags[L.metric]??null):null,status:c.status||'insufficient',reason:c.reason??null,baseline:null,points:[],last_pct:null};
+  if(L&&c.status==='ok'){const b=c.early.value;row.baseline={value:b,date:c.early.date,display:c.early.display,from:c.early.from,to:c.early.to};
+    row.points=L.dots.filter(d=>d.date>=ws).map(d=>({date:d.date,pct:r_((d.value/b-1)*100,2),value:d.value,best:d.best}));row.last_pct=c.pct}
+  return row}
+function chartDefault(K,D,mo,asOf){const CD=K.R2.dashboard.chart_default,ws=isoAdd(asOf,-(K.R2.dashboard.window_days-1)),ov={};for(const r of D.overlay.lifts)ov[r.lift]=r;
+  const has=i=>Object.prototype.hasOwnProperty.call(D.lifts,i),eligible=i=>ov[i]?ov[i].status==='ok':(has(i)&&!!D.lifts[i]&&D.lifts[i].change.status==='ok');
+  const cand=[],skipped=[];
+  for(const r of mo){if(!r.priority)continue;const m=r.muscle,ml=D.muscles[m].main_lift;if(!ml){skipped.push({lift:null,muscle:m,slot:null,reason:'no_main_lift'});continue}cand.push([ml.id,'priority',m,null,false])}
+  for(const [slot,core,alt] of CD.ladder_core){if(has(core))cand.push([core,'ladder',null,slot,false]);else if(alt&&has(alt))cand.push([alt,'ladder',null,slot,true])}
+  const pick=[],seen={};
+  for(const [i,sx,m,slot,sti] of cand){if(seen[i]){if(m&&!seen[i].muscles.includes(m))seen[i].muscles.push(m);if(slot&&seen[i].slot==null){seen[i].slot=slot;seen[i].stand_in=sti}continue}
+    if(!eligible(i)){if(!skipped.some(x=>x.lift===i))skipped.push({lift:i,muscle:m,slot,reason:'insufficient'});continue}
+    seen[i]={lift:i,source:sx,muscles:m?[m]:[],slot,stand_in:sti};pick.push(seen[i])}
+  const lifts=pick.slice(0,CD.cap),chosen=new Set(lifts.map(x=>x.lift)),more=pick.slice(CD.cap).map(x=>x.lift);
+  for(const r of D.table_rows)if(!chosen.has(r.lift)&&!more.includes(r.lift)&&eligible(r.lift))more.push(r.lift);
+  const extra=[...lifts.map(x=>x.lift),...more].filter(i=>!ov[i]).map(i=>overlayRow(K,D,i,[],D.lifts[i].change,ws));
+  return {lifts,more,skipped,cap:CD.cap,extra_series:extra}}
+function order1(dt,K,D,prefs,asOf){const [mo,meta]=muscleOrder(dt,K,D,prefs),pos={},pr=new Set(meta.priority);mo.forEach((r,k)=>pos[r.muscle]=k);
+  for(const r of D.table_rows){const ms=r.muscles.slice().sort((a,b)=>pos[a]-pos[b]);
+    if(ms.some((m,k)=>m!==r.muscles[k])){r.muscles=ms;if(r.shared)r.label=`${r.name} \u2014 ${ms.map(m=>m.replace(/_/g,' ')).join(', ')}`}
+    r.priority=ms.some(m=>pr.has(m))}
+  D.table_rows.sort((a,b)=>pos[a.muscles[0]]-pos[b.muscles[0]]);D.muscle_order=mo;D.muscle_order_meta=meta;D.chart_default=chartDefault(K,D,mo,asOf);return D}
+
+function report(dt,history,asOf,routine=null,level='intermediate',goal=null,opts=null,prefs=undefined){if(prefs===undefined)prefs=(opts&&opts.prefs)||null;asOf=String(asOf).slice(0,10);const h=normalize(history),K=mk(dt,h),u=((h.settings||{}).unit)||'lb',EX=exTable(dt,h);
   const OV=resolveOverrides(K,h,opts&&opts.main_lift_overrides,EX);
   if(routine==null)routine=(h.routine||{}).days||null;const mode=((h.settings||{}).effort)||'rir',flat=flatten(dt,h),xsall=exposures2(dt,h,asOf,flat);
   const comp=(h.sessions||[]).filter(s=>s.status==='completed'&&sday(s)<=asOf&&!isDeloadSession(s)).map(sday).sort(),lifts={},need=K.R2.trend.min_exposures;
@@ -441,7 +475,7 @@ function report(dt,history,asOf,routine=null,level='intermediate',goal=null,opts
   return {as_of:asOf,label:K.R2.label,model_note:K.R2.model_note,unit:u,effort_mode:mode,data:{completed_sessions:comp.length,logged_weeks:new Set(comp.map(wk)).size,first_date:comp.length?comp[0]:null,deload_sessions_excluded:(h.sessions||[]).filter(s=>s.status==='completed'&&sday(s)<=asOf&&isDeloadSession(s)).length},
     lifts,muscles:mus,stall_flags:{muscles:stuck,lifts_stalled:Object.keys(lifts).filter(i=>lifts[i].status==='stalled').sort(),lifts_dropping:Object.keys(lifts).filter(i=>lifts[i].status==='dropping').sort()},
     needs_attention:na,deload:dl,wins:W,effort:eff,footnote:{planned_vs_done:footnote(dt,K,h,asOf)},main_lift_overrides:Object.fromEntries(Object.entries(OV.applied).map(([m,v])=>[m,v.id])),overrides_ignored:OV.ignored,
-    dashboard:progress7(K,dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode,OV),lifts,h,routine,asOf)}}
+    dashboard:order1(dt,K,progress7(K,dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode,OV),lifts,h,routine,asOf),prefs,asOf)}}
 const API={report,isDeloadSession,perfSignal,deloadCheck,clampRir,normalize,flatten,completedAnalytics,exerciseTrends,localDate,weekStart:wk};
 if(isNode)module.exports=API;else root.PROGRESS=API;
 })(typeof window!=='undefined'?window:this);

@@ -501,6 +501,52 @@
    "avg_rir": "one muscle: that muscle's effort.avg_rir; shared row: plain mean of its muscles' avg_rir (nulls skipped), with avg_rir_by_muscle alongside",
    "stalled": "true when any covered muscle has the stall flag",
    "body_map": "dashboard.muscles stays one entry per muscle for the body map (a shared lift colours each of its muscles with the same band)"
+  },
+  "muscle_order": {
+   "note": "order1 (Mr Dude via Builder, Oct 25, 2026): default order of the Progress muscle table and table_rows. Display only; never changes any number.",
+   "input": "report(..., prefs={bias_muscles: [...]}) - the existing ranking prefs field (tools/rank.py prefs.bias_muscles; storyboard localStorage apechit.sb.bias), in the order the user picked them. Ids = exercises.json muscles or regions ids (a region counts as its parent muscle, exercises.json regionGroup). Same cleaning as rank.py _bias: unknown ids dropped, duplicates dropped, first ranking.bias.max (3) kept; ids past the cap are listed in muscle_order_meta.ignored. Goals (prefs.goals) do not reorder the table: their muscle_priority weights are whole-goal multipliers, not a user-stated order.",
+   "rule": "priority muscles first, in the user's stated order (after region -> parent mapping and dedupe); then the other trained muscles, then the not-trained muscles, each in the fixed exercises.json muscles order (chest, front delts, side delts, rear delts, lats, upper back, traps, biceps, triceps, forearms, abs, quads, hamstrings, glutes, calves, adductors, lower back, obliques, abductors). A priority muscle stays first even when not trained.",
+   "why_fixed_order": "a fixed anatomical order keeps every row in the same place week to week (sorting by weekly sets would reshuffle the table after every session and make the sparkline column hard to scan); it is the same order the body map, kpis and the rest of the app already use, and it is a total order, so there are no ties to break.",
+   "ties": "none: priority order is the user's list; the rest follow a fixed list",
+   "output": "dashboard.muscle_order = [{muscle, priority: bool, priority_rank: 1..3 | null, trained: bool, bias_ids: [ids that mapped to it]}] covering every muscle once; dashboard.muscle_order_meta = {priority: [muscles], ignored: [ids], cap}",
+   "table_rows": "table_rows are sorted by the muscle_order position of their highest-placed muscle (for a shared-lift row: its highest-priority muscle); a row's muscles list (and its label) follows muscle_order too; row.priority = any of its muscles is a priority muscle. With no priorities this is exactly the progress7 order."
+  },
+  "chart_default": {
+   "note": "order1: which lines the % change chart (overlay) shows by default; the rest go under \"+ more\". Display only.",
+   "cap": 6,
+   "eligible": "a lift is eligible when its 91-day change has status ok (it has a baseline and points, the same rule that draws an overlay line); a main lift uses its overlay row status (so \"main lift not trained recently\" is not eligible)",
+   "ladder_core": [
+    [
+     "bench",
+     "barbell-bench-press",
+     "weighted-dip"
+    ],
+    [
+     "squat",
+     "back-squat",
+     null
+    ],
+    [
+     "deadlift",
+     "deadlift",
+     null
+    ],
+    [
+     "ohp",
+     "overhead-press",
+     null
+    ],
+    [
+     "pullups",
+     "pull-up",
+     "barbell-row"
+    ]
+   ],
+   "ladder_core_note": "[slot, exercise id, stand-in id] - mirrors data/evolution-rules.json lifts / substitution (dips stand in for bench, barbell row for pull-ups). The stand-in is used only when the core exercise has never been logged (no exposure at all), as on the ladder.",
+   "rule": "1) main lifts of the priority muscles, in priority order (muscle_order), deduped; 2) the ladder core lifts in slot order (bench, squat, deadlift, overhead press, pull-ups), each the core exercise if logged, else its stand-in if logged, deduped; keep eligible lifts only, in that order, up to cap. \"+ more\" = every other eligible lift from those two groups plus the remaining overlay main lifts in table_rows order, deduped.",
+   "skipped": "chart_default.skipped lists why a candidate is not drawn: no_main_lift (priority muscle with no main lift), insufficient (not eligible), over_cap is not a reason (those lifts are in more)",
+   "series": "chart_default.extra_series = overlay-format rows (same baseline and points rule) for chart lifts that are not main lifts and so are not in overlay.lifts; together they give every line the chart can draw",
+   "output": "dashboard.chart_default = {lifts: [{lift, source: priority | ladder, muscles: [priority muscles it covers], slot: ladder slot | null, stand_in: bool}], more: [lift ids], skipped: [{lift | null, muscle | null, slot | null, reason}], cap, extra_series: [...]}"
   }
  },
  "headline": {

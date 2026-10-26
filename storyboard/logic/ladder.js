@@ -4,7 +4,7 @@
 // Thresholds come from tables.<men|women>.<lift>.ranks (never recomputed). Reuses the prs flatten (PROGRESS.flatten: aliases,
 // completed sessions, done sets, kg) and session.deload === true. Local dates America/Los_Angeles. EPS 1e-9.
 // Storyboard extras (not Coach's): rankName(i, R, hidden, labels) is the ONE name formatter (Coach's tier label_template, optional
-// label overrides); settings.ladder.hidden (hide the whole ladder) is a storyboard key, Coach's spec names none.
+// label overrides); settings.ladder.hidden (hide the whole ladder) is display only (Coach's display.ladder_hidden); report() ignores it.
 (function(root){'use strict';
 const isNode=typeof module!=='undefined'&&module.exports;
 const PG=()=>isNode?require('./progress.js'):root.PROGRESS;
