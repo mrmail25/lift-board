@@ -1361,8 +1361,9 @@ html[data-theme=dark]{--ov1:#6CB8F0;--ov2:#FF8A4C;--ov3:#3DD6A8;--ov4:#E89AC9;--
 .pmr.pshr{min-height:58px;padding-top:6px;padding-bottom:6px}
 
 /* ---- Evolution ladder (Coach's evolution1 rules; placeholder silhouettes; Ember on reached, slate ahead; dark-safe) ---- */
-:root{--lad-slate:#9AA5B3;--lad-tease:#C9D0D9}
-html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450}
+:root{--lad-slate:#9AA5B3;--lad-tease:#C9D0D9;--lock-a:#BCC4CE;--lock-b:#6E7885}
+html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;--lock-b:#2A3038}
+@media (prefers-color-scheme:dark){html:not([data-theme=light]){--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;--lock-b:#2A3038}}   /* art2: system dark too (the ladder tokens only followed data-theme before) */
 .lcard{display:block;width:calc(100% - 2*var(--s4));text-align:left;padding:12px 14px 12px;margin-top:12px;margin-bottom:4px}
 .lstrip{display:flex;align-items:flex-end;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
 .lstrip::-webkit-scrollbar{display:none}
@@ -1372,9 +1373,17 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450}
 .lfig span{font-size:10px;font-weight:600;line-height:1.15;margin-top:3px;text-align:center;color:var(--text-2);min-height:23px;letter-spacing:-.1px}
 .lfig.lf-done,.lfig.lf-cur{color:var(--accent)}.lfig.lf-cur .afig{width:36px;height:52px}
 .lfig.lf-cur span{color:var(--ink)}.lfig::after{content:'';display:block;width:18px;height:3px;border-radius:2px;margin-top:2px}.lfig.lf-cur::after{background:var(--accent)}
-.lfig.lf-next{opacity:.85}.lfig.tease{color:var(--lad-tease)}.lfig.tease span{color:var(--lad-slate);font-size:13px}
+.lfig.lf-next{opacity:.85}
 .afig{display:block;position:relative;flex:none}.afig .afm{position:absolute;inset:0;background:currentColor;-webkit-mask:var(--afsrc) center bottom/contain no-repeat;mask:var(--afsrc) center bottom/contain no-repeat}
-.afig.afq .afm{opacity:.75}.afig .aq{position:absolute;left:calc(50% + 4px);top:-3px;font:800 14px/1 var(--font,system-ui);font-style:normal;color:var(--text-2)}
+/* art2 hidden tier: a grey lock cut in half by the screen's right edge. Hosts are centred, so right:(100% - 100vw)/2 puts the box's right edge
+   ON the screen edge; the box is only the left half of the lock (overflow hidden), so nothing overflows the
+   page. Drawn inline (no mask load to race). Gradient runs lighter -> darker toward the edge (light + dark tokens above). --lw/--lh = full lock size. */
+.lstripbox{position:relative}
+.llock{--lw:40px;--lh:52px;position:absolute;right:calc((100% - 100vw) / 2);width:calc(var(--lw) / 2);height:var(--lh);pointer-events:none;overflow:hidden;display:block}
+.llock svg{display:block;width:var(--lw);height:var(--lh)}.llock .lk-a{stop-color:var(--lock-a)}.llock .lk-b{stop-color:var(--lock-b)}
+.lstripbox .llock{bottom:34px}.lstripw .lstripbox .llock{--lw:46px;--lh:60px;bottom:36px}
+.lstripw .lstripbox.lhl .lstrip{padding-right:14px}
+.ltease{position:relative}.ltease .llock{--lw:46px;--lh:60px;top:calc(50% - 30px)}.ltease>div{padding-right:18px}
 .afig.afx .afm{filter:drop-shadow(0 0 1.5px currentColor)}
 .ladrow{display:flex;align-items:center;gap:8px;margin-top:8px}
 .lrank{font-size:20px;font-weight:700;color:var(--ink);display:block;margin-top:2px}
@@ -1393,7 +1402,7 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450}
 .lean .lbadge .afig{width:20px;height:30px}.lean .lbadge.on{background:var(--accent);color:#fff}
 .lean.off .t1{color:var(--text-2)}.lean.off .t2{font-style:italic}
 .lk{color:var(--accent-press);font-size:var(--t-sub);padding:4px 2px}
-.ltease{display:flex;align-items:center;gap:12px;padding:12px 14px;margin-top:20px;color:var(--lad-tease)}.ltease .afig{width:34px;height:50px;flex:none}.ltease b{color:var(--ink)}
+.ltease{display:flex;align-items:center;gap:12px;padding:14px 16px;margin-top:20px;color:var(--lad-tease)}.ltease b{color:var(--ink)}
 .lhidden{padding:16px}.lhidden .btn{margin-top:10px}
 .linp{width:80px;text-align:right;font-size:var(--t-body);background:var(--fill);border:0;border-radius:8px;padding:6px 8px;color:var(--ink);margin-right:6px}
 .lrup{display:flex;align-items:center;gap:10px;background:var(--fill);border-radius:12px;padding:8px 12px;margin:12px 0 4px;color:var(--accent)}

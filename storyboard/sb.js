@@ -874,13 +874,19 @@ function ladPersist(){const L=ladderData();if(!L||L.hidden_all)return;const H=lo
   if(a==null||L.rank.index>a){H.evolution=Object.assign({},H.evolution||{},{awarded:L.awarded_out});logSave()}}
 // ladder art: assets/ladder/stage-1..5.svg (CC0, Openclipart #348815 by j4p4n, see assets/ladder/LICENSES.md), drawn as a CSS mask over currentColor so
 // Ember/slate/tease colours and dark mode come from the existing .lfig/.lean/.lrup rules. k 0..4 = the five stages; 5/6 (Kong/Apex) reuse Prime with a glow;
-// 'tease' = the dim Prime figure with a '?' over it (the hidden stage is never drawn).
+// art2: stage-1 knuckle-dragger, 2 primate (was set figure 3), 3 neanderthal (was set figure 4), 4 silverback (hand-drawn upright gorilla),
+// 5 prime (bodybuilder, front double biceps, gorilla head). The hidden tier is never drawn as a figure: lockFig() is a grey lock cut in half by
+// the screen's right edge (see .llock), no '???' text.
 const APE_ART=['knuckle-dragger','primate','neanderthal','silverback','prime'];
-function apeFig(k,cls=''){const t=k==='tease',x=!t&&k>4,n=t||x?5:Math.max(0,Math.min(4,k|0))+1;
-  return `<i class="afig${t?' afq':''}${x?' afx':''} ${cls}" data-afig="${t?'tease':k}" aria-hidden="true"><i class="afm" style="--afsrc:url(assets/ladder/stage-${n}.svg)"></i>${t?'<i class="aq">?</i>':''}</i>`}
-// march strip: every revealed stage, then ONE dim '???' teaser while any stage is still hidden
+function apeFig(k,cls=''){const x=k>4,n=x?5:Math.max(0,Math.min(4,k|0))+1;
+  return `<i class="afig${x?' afx':''} ${cls}" data-afig="${k}" data-afsrc="stage-${n}" aria-hidden="true"><i class="afm" style="--afsrc:url(assets/ladder/stage-${n}.svg)"></i></i>`}
+// inline SVG (same path as assets/ladder/lock.svg) so it never waits on a mask load; the box is the lock's left half, the gradient runs
+// lighter -> darker across that half (x2=.5), i.e. darkest at the screen edge
+const LOCK_D='M8 23V15.5a12 12 0 0 1 24 0V23h-5.5v-7.5a6.5 6.5 0 0 0-13 0V23z M7 23h26a5 5 0 0 1 5 5v19a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V28a5 5 0 0 1 5-5z M20 31.5a4 4 0 0 0-2 7.46V44h4v-5.04a4 4 0 0 0-2-7.46z';let lockN=0;
+const lockFig=(cls='')=>{const id='lkg'+(++lockN);return `<i class="llock ${cls}" data-llock="1" role="img" aria-label="More stages hidden"><svg viewBox="0 0 40 52" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" x2=".5" y1="0" y2="0"><stop offset="0" class="lk-a"/><stop offset="1" class="lk-b"/></linearGradient></defs><path fill="url(#${id})" fill-rule="evenodd" d="${LOCK_D}"/></svg></i>`};
+// march strip: every revealed stage; while any stage is still hidden, the lock sits half off the right edge of the screen
 function ladStrip(L){const cur=Math.floor(L.rank.index/3),vis=L.ladder.filter(s=>!s.hidden),tease=L.ladder.some(s=>s.hidden);
-  return `<div class="lstrip">${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next'}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':''}>${apeFig(k)}<span>${esc(s.label).replace('-','-<wbr>')}</span></div>`).join('')}${tease?`<div class="lfig tease" data-lstage="teaser" aria-label="More stages hidden">${apeFig('tease')}<span>${esc(RD.EVO.hidden.label)}</span></div>`:''}</div>`}
+  return `<div class="lstripbox${tease?' lhl':''}"><div class="lstrip">${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next'}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':''}>${apeFig(k)}<span>${esc(s.label).replace('-','-<wbr>')}</span></div>`).join('')}</div>${tease?lockFig():''}</div>`}
 const ladBar=L=>L.progress.pct==null?'':`<div class="lbar" role="progressbar" aria-label="Progress ${esc(L.labels.progress)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${L.progress.pct}"><i style="width:${L.progress.pct}%"></i></div>`;
 const ladProg=L=>L.progress.pct==null?esc(L.labels.progress):`${L.progress.pct}% ${esc(L.labels.progress)}`;
 const ladRev=L=>L.labels.revealed.map(t=>`<div class="lrev" data-lrev="1">${esc(t)}</div>`).join('');
@@ -912,7 +918,7 @@ V.ladder=()=>{const L=ladderData(),nav=`<div class="nav"><div class="l"><button 
    ${extra.length?`<div class="ghead">Other lifts</div><div class="group llifts">${extra.map(l=>ladLiftRow(L,l,L.lifts[l],null)).join('')}</div>`:''}
    <p class="foot">${esc(R.labels.promotion_note)} Progress follows your 3rd-best lift. Plate badges count a real logged set, not an estimate.</p>
    ${ladLeanRow(L)?`<div class="ghead">Badges</div><div class="group">${ladLeanRow(L)}</div>`:''}
-   ${L.ladder.some(s=>s.hidden)?`<div class="card ltease" data-lteaser="1">${apeFig('tease')}<div><b>There is more past ${esc(L.ladder.filter(s=>!s.hidden).pop().label)}</b><p class="sub">Keep climbing to find out what.</p></div></div>`:''}
+   ${L.ladder.some(s=>s.hidden)?`<div class="card ltease" data-lteaser="1"><div><b>There is more past ${esc(L.ladder.filter(s=>!s.hidden).pop().label)}</b><p class="sub">Keep climbing to find out what.</p></div>${lockFig()}</div>`:''}
    <p class="foot lsrc">${esc(R.labels.model_note)} ${esc(R.labels.source_note)}</p>
    <div class="group" style="margin-top:12px"><button class="row" data-go="#settings-ladder"><div class="grow t1">Ladder settings</div>${CHEV}</button></div></div>`};
 // settings: hide-all, sex, birth date, height, profile bodyweight; physique (opt-in, hide switch, readings) only when not hidden and 18+ (or age unknown)
@@ -1681,7 +1687,7 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  'log-swipe':['log','log',0,0,null,()=>{const r=$$('#view .swipe')[0];r&&r.classList.add('open')}],
  build:['build','build',0,0,()=>{SC.day='mon'}],'build-list':['buildList','build',0,0,()=>{SC.day='mon'}],swap:['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('barbell-bench-press')],'swap-curl':['build','build',0,0,()=>{SC.day='mon'},()=>swapSheet('ez-bar-curl')],
  settings:['settings','build'],'settings-equip':['settings','build',0,0,null,equipSheet],progress:['progress','progress',0,0,()=>{PROG.empty=false}],'progress-empty':['progress','progress',0,0,()=>{PROG.empty=true}],'progress-muscle':['progress','progress',0,0,()=>{PROG.empty=false},()=>openPSheet('side_delts')],'progress-refine':['progress','progress',0,0,()=>{PROG.empty=false},()=>{const e=$('[data-psec=attention]');if(e)e.scrollIntoView({block:'start'})}],style:['style','build'],
- ladder:['ladder','progress'],'ladder-teaser':['ladder','progress',0,0,null,()=>{const t=$('[data-lstage=teaser]');t&&t.scrollIntoView({block:'center',inline:'center'})}],
+ ladder:['ladder','progress'],'ladder-teaser':['ladder','progress',0,0,null,()=>{const t=$('[data-llock]');t&&t.scrollIntoView({block:'center',inline:'center'})}],
  'settings-ladder':['settings','build',0,0,null,()=>{const e=$('#ladset');e&&($('#view').scrollTop=e.offsetTop-60)}],
  'finish-rankup':['finish','',1,0,()=>{FIN=finBuild(true,ladRankupDemo)}],
  learn:['learn',''],'tray-fav':['empty','',1,1,()=>{TF.fav=true},traySheet],'settings-favs':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#favs').offsetTop-60}],'settings-goals':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#profile').offsetTop-40}],'learn-fundamental':['learnFund',''],
@@ -2109,7 +2115,7 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={apeFig,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in
