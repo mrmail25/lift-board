@@ -232,6 +232,7 @@ let tt;function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on
 
 // ---------------------------------------------------------------- tab bar + floating workout bar
 // Recommended 4 tabs: Train · Log · Build · Progress. Settings = gear on Build; Learn = book icon in headers.
+// Visible / aria name of the Learn page is "Nerd Sh*t" (Mr Dude); routes (#learn…), ids, data-x=learn and storage keys keep 'learn'.
 const TABS=[['build','Build'],['train','Train'],['log','Log'],['progress','Progress']]; // Build leftmost (markup round 1)
 function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-go="#${k}" class="${S.tab===k?'on':''}" aria-label="${l}">${I(k,1.7)}<span>${l}</span></button>`).join('')}
 function renderBar(){
@@ -256,7 +257,7 @@ function confirmSheet(t,p,btn,fn){const c=sheet({body:`<div class="act-sheet"><h
 // ---------------------------------------------------------------- screens
 const V={};
 const header=(t,acts='')=>`<div class="lt"><h1>${t}</h1><div class="acts">${acts}</div></div>`;
-const bookBtn=`<button class="ibtn" data-go="#learn" aria-label="Learn">${I('book',1.7)}</button>`;
+const bookBtn=`<button class="ibtn" data-go="#learn" aria-label="Nerd Sh*t">${I('book',1.7)}</button>`;
 const gearBtn=`<button class="ibtn" data-go="#settings" aria-label="Settings">${I('gear',1.6)}</button>`;
 
 // 1. TRAIN
@@ -742,7 +743,7 @@ V.buildList=()=>{const r=ROUTINES[0],d=r.days[S.buildDay];
   <div class="sec"><h2>${d.n}</h2><span class="more num">${setsOf(d)} sets · ≈ ${d.min} min</span></div>
   <div class="group">${d.ex.map(e=>`<div class="swipe"><button class="del">Delete</button><div class="in"><div class="row brow"><span class="drag">${I('grip',2)}</span>${gl(e.id)}
     <div class="grow"><div class="t1">${exName(e.id)}</div><div class="t2 num">${e.s} × ${e.r} · ${exSub(e.id)}</div></div>
-    <button class="ib-i" data-act="info" data-id="${e.id}" aria-label="Learn">${I('info',1.7)}</button><button class="ib-i" data-act="swap" data-id="${e.id}" aria-label="Swap">${I('swap',1.7)}</button></div></div></div>`).join('')}
+    <button class="ib-i" data-act="info" data-id="${e.id}" aria-label="Nerd Sh*t">${I('info',1.7)}</button><button class="ib-i" data-act="swap" data-id="${e.id}" aria-label="Swap">${I('swap',1.7)}</button></div></div></div>`).join('')}
     <button class="row addrow" data-act="tray">${I('plus',2)} Add exercise</button></div>
   ${RD?(()=>{const sl='side_delts',rs=rk('preset',null,{slot:sl,day:'mon'},3);return `<div class="sec"><h2>Fill a slot</h2><span class="more">${RD.patterns.slots[sl].name}</span></div>
   <div class="group">${rs.map(r=>`<div class="row sugr" data-id="${r.id}">${gl(r.id)}<div class="grow"><div class="t1">${exName(r.id)}</div>${whyR(r)}</div><button class="addc" data-act="add" aria-label="Add">${I('plus',2.2)}</button></div>`).join('')}</div>`})():''}
@@ -772,7 +773,7 @@ function swapSheet(id,opt={}){
     ${opt.workout?`<div class="ghead">Apply to</div><div class="group scope noswipe"><div class="row"><div class="grow"><div class="t1" id="scl">This workout only</div><div class="t2" id="sct">${WK.ref?`${(ROUTINES.find(x=>x.id===WK.ref.rid)||{}).name} stays as it is`:'Your routine stays as it is'}</div></div><span class="scok">${I('check',2.6)}</span></div>
       <div class="row"><div class="grow"><div class="t1">Also update routine</div><div class="t2">Use the new exercise in this routine day from now on</div></div><span class="tg" data-sw="routine" role="switch" aria-checked="false"></span></div></div>`:''}
     <div class="pad"><div class="seg"><button class="on">Similar</button><button>Browse all</button><button>Create new</button></div></div>
-    <div class="group">${alts.map(a=>`<div class="row alt" data-x="pick" data-id="${a.id}" data-score="${a.score!=null?a.score:''}" role="button" tabindex="0">${gl(a.id)}<div class="grow"><div class="t1">${exName(a.id)}</div>${exSub(a.id)?`<div class="t2">${exSub(a.id)}</div>`:''}</div><span class="altb">${starBtn(a.id)}<button class="ib-i" data-act="exinfo" data-id="${a.id}" aria-label="Learn">${I('info',1.7)}</button></span>
+    <div class="group">${alts.map(a=>`<div class="row alt" data-x="pick" data-id="${a.id}" data-score="${a.score!=null?a.score:''}" role="button" tabindex="0">${gl(a.id)}<div class="grow"><div class="t1">${exName(a.id)}</div>${exSub(a.id)?`<div class="t2">${exSub(a.id)}</div>`:''}</div><span class="altb">${starBtn(a.id)}<button class="ib-i" data-act="exinfo" data-id="${a.id}" aria-label="Nerd Sh*t">${I('info',1.7)}</button></span>
       <div class="altx">${diffRow(a)}${a.reasons&&a.reasons.length?whyR(a):''}${opt.debug&&a.score!=null?`<div class="dbg num">score ${a.score} · fit ${a.fit}</div>`:''}</div></div>`).join('')}</div>
     <p class="foot">Typical differences, not guarantees.</p>`});
   let also=false;
@@ -877,16 +878,22 @@ function ladPersist(){const L=ladderData();if(!L||L.hidden_all)return;const H=lo
 // art2: stage-1 knuckle-dragger, 2 primate (was set figure 3), 3 neanderthal (was set figure 4), 4 silverback (hand-drawn upright gorilla),
 // 5 prime (bodybuilder, front double biceps, gorilla head). The hidden tier is never drawn as a figure: lockFig() is a grey lock cut in half by
 // the screen's right edge (see .llock), no '???' text.
-const APE_ART=['knuckle-dragger','primate','neanderthal','silverback','prime'];
-function apeFig(k,cls=''){const x=k>4,n=x?5:Math.max(0,Math.min(4,k|0))+1;
-  return `<i class="afig${x?' afx':''} ${cls}" data-afig="${k}" data-afsrc="stage-${n}" aria-hidden="true"><i class="afm" style="--afsrc:url(assets/ladder/stage-${n}.svg)"></i></i>`}
+// Silverback redo: figures are keyed by STAGE ID (evolution-rules stages[].id), not by position, so reordering the ladder (e.g. Prime <-> Silverback)
+// moves each figure with its stage and needs no art change. The file name is just the art's slot (stage-4.svg = the massive side-profile
+// Silverback); x = drawn with the hidden-tier glow (Kong / Apex reuse the Prime art). A number is still accepted (legacy: position in the
+// stock order below) for callers / tests that pass an index.
+const APE_FIG={knuckle_dragger:{src:'stage-1'},primate:{src:'stage-2'},neanderthal:{src:'stage-3'},silverback:{src:'stage-4'},prime:{src:'stage-5'},kong:{src:'stage-5',x:1},apex:{src:'stage-5',x:1}};
+const APE_ORDER=['knuckle_dragger','primate','neanderthal','silverback','prime','kong','apex'];
+const APE_ART=APE_ORDER.slice(0,5).map(k=>k.replace('_','-'));
+function apeFig(k,cls=''){const id=typeof k==='string'?k:APE_ORDER[Math.max(0,Math.min(6,k|0))],f=APE_FIG[id]||APE_FIG.prime,x=!!f.x;
+  return `<i class="afig${x?' afx':''} ${cls}" data-afig="${id}" data-afsrc="${f.src}" aria-hidden="true"><i class="afm" style="--afsrc:url(assets/ladder/${f.src}.svg)"></i></i>`}
 // inline SVG (same path as assets/ladder/lock.svg) so it never waits on a mask load; the box is the lock's left half, the gradient runs
 // lighter -> darker across that half (x2=.5), i.e. darkest at the screen edge
 const LOCK_D='M8 23V15.5a12 12 0 0 1 24 0V23h-5.5v-7.5a6.5 6.5 0 0 0-13 0V23z M7 23h26a5 5 0 0 1 5 5v19a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V28a5 5 0 0 1 5-5z M20 31.5a4 4 0 0 0-2 7.46V44h4v-5.04a4 4 0 0 0-2-7.46z';let lockN=0;
 const lockFig=(cls='')=>{const id='lkg'+(++lockN);return `<i class="llock ${cls}" data-llock="1" role="img" aria-label="More stages hidden"><svg viewBox="0 0 40 52" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" x2=".5" y1="0" y2="0"><stop offset="0" class="lk-a"/><stop offset="1" class="lk-b"/></linearGradient></defs><path fill="url(#${id})" fill-rule="evenodd" d="${LOCK_D}"/></svg></i>`};
 // march strip: every revealed stage; while any stage is still hidden, the lock sits half off the right edge of the screen
 function ladStrip(L){const cur=Math.floor(L.rank.index/3),vis=L.ladder.filter(s=>!s.hidden),tease=L.ladder.some(s=>s.hidden);
-  return `<div class="lstripbox${tease?' lhl':''}"><div class="lstrip">${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next'}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':''}>${apeFig(k)}<span>${esc(s.label).replace('-','-<wbr>')}</span></div>`).join('')}</div>${tease?lockFig():''}</div>`}
+  return `<div class="lstripbox${tease?' lhl':''}"><div class="lstrip">${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next'}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':''}>${apeFig(s.stage)}<span>${esc(s.label).replace('-','-<wbr>')}</span></div>`).join('')}</div>${tease?lockFig():''}</div>`}
 const ladBar=L=>L.progress.pct==null?'':`<div class="lbar" role="progressbar" aria-label="Progress ${esc(L.labels.progress)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${L.progress.pct}"><i style="width:${L.progress.pct}%"></i></div>`;
 const ladProg=L=>L.progress.pct==null?esc(L.labels.progress):`${L.progress.pct}% ${esc(L.labels.progress)}`;
 const ladRev=L=>L.labels.revealed.map(t=>`<div class="lrev" data-lrev="1">${esc(t)}</div>`).join('');
@@ -904,7 +911,7 @@ function ladLiftRow(L,l,o,slot){const R=RD.EVO,bw=L.bodyweight_current.kg,u=L.un
     ${o.rank_label?`<span class="lchip st${Math.floor(o.rank_index/3)}${o.rank_hidden?' hid':''}">${esc(o.rank_label)}</span>`:'<span class="lchip none">—</span>'}</div>`}
 function ladLeanRow(L){const ln=L.lean,b=L.badges.lean_prime;if(ln.status==='hidden'||ln.status==='unavailable')return '';
   if(ln.status==='not_tracked')return `<div class="row lean off" data-lean="not_tracked"><div class="grow"><div class="t1">Lean Prime</div><div class="t2">${esc(ln.label)}</div></div><button class="lk" data-go="#settings-ladder">Set up</button></div>`;
-  return `<div class="row lean ${b&&b.unlocked?'on':''}${b&&b.greyed?' grey':''}" data-lean="${ln.status}"><span class="lbadge ${b&&b.unlocked?'on':''}">${apeFig(4)}</span><div class="grow"><div class="t1">Lean Prime${b&&b.unlocked?'':b&&b.greyed?' (greyed)':''}</div><div class="t2">${esc(ln.label||'')}</div></div></div>`}
+  return `<div class="row lean ${b&&b.unlocked?'on':''}${b&&b.greyed?' grey':''}" data-lean="${ln.status}"><span class="lbadge ${b&&b.unlocked?'on':''}">${apeFig('prime')}</span><div class="grow"><div class="t1">Lean Prime${b&&b.unlocked?'':b&&b.greyed?' (greyed)':''}</div><div class="t2">${esc(ln.label||'')}</div></div></div>`}
 V.ladder=()=>{const L=ladderData(),nav=`<div class="nav"><div class="l"><button class="back" data-go="#progress">${I('chevL',2.4)}Progress</button></div><div class="t">Evolution ladder</div><div class="r"></div></div>`;
   if(!L)return nav+header('Evolution ladder')+`<p class="foot">The ladder needs Coach's evolution rules.</p>`;
   if(L.hidden_all)return nav+header('Evolution ladder')+`<div class="card lhidden"><b>The ladder is hidden</b><p class="sub">Turn it back on in Settings to see your rank.</p><button class="btn" data-go="#settings-ladder">Open Settings</button></div>`;
@@ -946,7 +953,7 @@ function ladSetHtml(){const C=ladSettings(),P=C.profile,B=C.bodyComp,hu=S.unit==
 function ladRefreshSettings(){const e=$('#ladset');if(e)e.innerHTML=ladSetHtml()}
 // finish screen: a small moment only when this workout raised the shown rank
 function ladRankUpHtml(){if(!FIN||!RD||!RD.EVO||!window.LADDER)return '';const b=ladderData(),a=ladderFor(FIN.X);if(!a||a.hidden_all||!LADDER.rankUp(b,a))return '';
-  return `<div class="lrup" data-rankup="${a.rank.id}">${apeFig(Math.min(6,a.rank.index/3|0))}<div class="grow"><div class="eyebrow">Rank up</div><b>${esc(a.rank.label)}</b><span>Up from ${esc(b.rank.label)}</span>${a.labels.revealed.map(t=>`<span class="lrev">${esc(t)}</span>`).join('')}</div></div>`}
+  return `<div class="lrup" data-rankup="${a.rank.id}">${apeFig(a.rank.stage||Math.min(6,a.rank.index/3|0))}<div class="grow"><div class="eyebrow">Rank up</div><b>${esc(a.rank.label)}</b><span>Up from ${esc(b.rank.label)}</span>${a.labels.revealed.map(t=>`<span class="lrev">${esc(t)}</span>`).join('')}</div></div>`}
 // demo for #finish-rankup: the shoulder-press slot becomes overhead press with a top set reaching the next rank (Coach's target, at 5 reps)
 function ladRankupDemo(){const L=ladderData();if(!L||!L.next)return;const s=L.progress.slots.find(x=>x.lift==='ohp'),x=WK.ex.find(e=>e.id==='seated-dumbbell-shoulder-press');if(!s||!s.target||s.target.met||!x||s.target.estimated_1rm==null)return;
   const st=RD.EVO.targets.step[S.unit],ld2=Math.ceil(s.target.estimated_1rm/(1+5/30)/st-1e-9)*st;x.id='overhead-press';const w=x.sets.filter(q=>q.done&&!q.warm).pop();if(w)Object.assign(w,{wv:String(ld2),rv:'5',wu:S.unit})}
@@ -1366,7 +1373,7 @@ function creditList(mu){const L=Object.values(EX).map(e=>[e,e.rat[mu]||0]).filte
   const g={main:[],helper:[],minor:[]};L.forEach(([e,r])=>g[BAND(r)].push([e,r]));return g}
 const rate=r=>`<span class="rate ${BAND(r)}"><b class="num">${+r.toFixed(2)}</b>${BANDL[BAND(r)]||''}</span>`;
 
-V.learn=()=>`<div class="nav"><div class="l">${backBtn()}</div><div class="t">Learn</div><div class="r"></div></div>${header('Learn')}<div id="learnbody"><p class="foot">Loading…</p></div>`;
+V.learn=()=>`<div class="nav"><div class="l">${backBtn()}</div><div class="t">Nerd Sh*t</div><div class="r"></div></div>${header('Nerd Sh*t')}<div id="learnbody"><p class="foot">Loading…</p></div>`;
 async function afterLearn(){
   const idx=await eduLoad(),mus=idx.pages.filter(p=>p.kind==='muscle'),fun=idx.pages.filter(p=>p.kind==='fundamental');
   const vm={};mus.forEach(p=>vm[p.id]=p.status==='final'?1:.3);const nf=mus.filter(p=>p.status==='final').length;
@@ -1415,7 +1422,7 @@ async function afterLearnMuscle(id){
    <p class="foot">${(EDU.idx||{}).disclaimer||''} Updated ${j.updated||''}.</p>`;
   afterMap();
 }
-V.learnFund=()=>`<div class="nav"><div class="l">${backBtn('Learn')}</div><div class="t"></div><div class="r"></div></div><div id="lf"><p class="foot">Loading…</p></div>`;
+V.learnFund=()=>`<div class="nav"><div class="l">${backBtn('Nerd Sh*t')}</div><div class="t"></div><div class="r"></div></div><div id="lf"><p class="foot">Loading…</p></div>`;
 async function afterLearnFund(id){
   const sx=String(id||'').split('~')[1]||null;id=id&&String(id).split('~')[0];
   CITES=[];const idx=await eduLoad();if(!id){const f=idx.pages.find(p=>p.kind==='fundamental'&&p.status==='final');id=f&&f.id}
@@ -1449,8 +1456,8 @@ function explainSheet(id,extra=''){const it=itemDef(id);if(!it)return null;const
       <div class="row"><div class="grow"><div class="xk">How it's calculated</div><p>${x.how||it.formula||''}</p></div></div>
       <div class="row"><div class="grow"><div class="xk">Why it matters</div><p>${x.why||''}</p></div></div></div>
      ${extra}
-     ${lp?`<div class="pad"><button class="btn grey block xlearn" data-x="learn" data-go="${learnGo(lp)}">${I('book',1.8)} <span>Learn: ${lp.split('#')[0].replace(/-/g,' ')}</span></button></div>`:'<p class="foot">No Learn page for this one yet.</p>'}</div>`});
-  if(lp)eduLoad().then(idx=>{const p=(idx.pages||[]).find(q=>q.id===lp.split('#')[0]),b=$('.xlearn span',s.el);if(p&&b)b.textContent='Learn: '+p.title}).catch(()=>{});
+     ${lp?`<div class="pad"><button class="btn grey block xlearn" data-x="learn" data-go="${learnGo(lp)}">${I('book',1.8)} <span>Nerd Sh*t: ${lp.split('#')[0].replace(/-/g,' ')}</span></button></div>`:'<p class="foot">No Nerd Sh*t page for this one yet.</p>'}</div>`});
+  if(lp)eduLoad().then(idx=>{const p=(idx.pages||[]).find(q=>q.id===lp.split('#')[0]),b=$('.xlearn span',s.el);if(p&&b)b.textContent='Nerd Sh*t: '+p.title}).catch(()=>{});
   s.el.addEventListener('click',e=>{if(e.target.closest('[data-x=close]'))return s.close();const g=e.target.closest('[data-go]');if(g){e.preventDefault();e.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
 // exercise detail popup: data/exercise-details.json (loaded on first open, 590 KB). Photos only when show_photo (exact match);
 // approximate photos are never shown. The files are copied into assets/ex-photos by build-photos.py (free-exercise-db, The Unlicense).
@@ -1482,9 +1489,9 @@ function exDetailBody(id,d){const e=EX[id]||{},f=d.fatigue||{},st=d.stretch||{},
 function exDetail(id,o={}){if(isCx(id))return cxDetail(id,o);const e=EX[id];if(!e)return null;
   const s=sheet({title:'',cls:'grouped tall xdet',right:'<button class="btn plain" data-x="close">Done</button>',
     body:`<div class="xd" data-id="${id}"><div class="exi-h">${gl(id)}<div><h3>${exName(id)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${e.eq||''}</p></div></div><div id="xdb"><p class="foot">Loading…</p></div>
-     <div class="pad two">${e.learn!==false?`<button class="btn grey" data-x="learn" data-go="#learn-ex-${id}">${I('book',1.8)} Learn</button>`:''}${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:''}</div></div>`});
+     <div class="pad two">${e.learn!==false?`<button class="btn grey" data-x="learn" data-go="#learn-ex-${id}">${I('book',1.8)} Nerd Sh*t</button>`:''}${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:''}</div></div>`});
   exdLoad().then(D=>{const d=D[id],b=$('#xdb',s.el);if(!b)return;b.innerHTML=d?exDetailBody(id,d):'<p class="foot">No detail data for this exercise.</p>';
-    const lb=$('[data-x=learn]',s.el);if(lb&&d&&!(d.learn||{}).authored)lb.innerHTML=`${I('book',1.8)} Learn (draft)`});
+    const lb=$('[data-x=learn]',s.el);if(lb&&d&&!(d.learn||{}).authored)lb.innerHTML=`${I('book',1.8)} Nerd Sh*t (draft)`});
   xvLoad().then(()=>{const h=$('.exi-h',s.el);if(h&&xvOf(id)&&e.learn!==false&&!$('.xwatch',s.el))h.insertAdjacentHTML('beforeend',`<button class="xwatch" data-go="#learn-ex-${id}~video" aria-label="Watch the technique video">${I('play')}Watch</button>`)});
   s.el.addEventListener('click',ev=>{if(ev.target.closest('[data-x=close]'))return s.close();if(ev.target.closest('[data-x=add]')){s.close();return o.onAdd&&o.onAdd(id)}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
@@ -1642,7 +1649,7 @@ function profileHtml(){const bm={};BIAS.forEach(m=>bm[m]=1);
    <div class="chiprow center" id="biaschips">${BIAS.map(m=>`<button class="chip on" data-bias="${m}">${ML[m]} ${I('x',2.4)}</button>`).join('')||'<span class="sub">Tap muscles on the map</span>'}</div></div>
   <p class="foot">Tap muscles to bring up. Ranking favours exercises that train them hard.</p>`}
 function favsHtml(){return `<div class="ghead" id="favs">Favorites</div><div class="group favl">${FAV.map(id=>`<div class="swipe" data-fav="${id}"><button class="del">Remove</button><div class="in"><div class="row frow"><span class="drag fdrag">${I('grip',2)}</span>${gl(id)}<div class="grow"><div class="t1">${exNameP(id)}</div><div class="t2">${exSub(id)}</div></div><span class="fstar">${starSvg(1)}</span></div></div></div>`).join('')||'<div class="row sub">No favorites yet</div>'}</div>
-  <p class="foot">Star exercises on their Learn page, in the tray or in swaps. Swipe to remove, drag to reorder; order breaks ties in suggestions.</p>`}
+  <p class="foot">Star exercises on their Nerd Sh*t page, in the tray or in swaps. Swipe to remove, drag to reorder; order breaks ties in suggestions.</p>`}
 function afterSettings(){bindSwipes($('#view'));
   $$('.favl .swipe').forEach(r=>{$(':scope > .del',r).addEventListener('click',()=>{FAV=FAV.filter(x=>x!==r.dataset.fav);sv(LSK.fav,FAV)})});
   $$('.bmap .mp').forEach(p=>p.addEventListener('click',()=>{const m=p.dataset.mu;if(!m)return;BIAS=BIAS.includes(m)?BIAS.filter(x=>x!==m):[...BIAS,m];sv(LSK.bias,BIAS);refreshProfile()}));
@@ -2115,7 +2122,7 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={apeFig,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={apeFig,APE_FIG,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in
