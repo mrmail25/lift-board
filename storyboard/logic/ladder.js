@@ -28,18 +28,21 @@ function bwTable(h,C){const out=[];for(const b of h.bodyweights||[]){if(!b||b.da
 function bodyweightFor(t,day,pkg){const prev=t.filter(([d])=>d<=day);if(prev.length)return [prev[prev.length-1][1],'logged'];if(pkg)return [pkg,'profile'];return [null,'missing']}
 const excluded=(C,x,k)=>!!(x.tag&&((C.tags[x.tag]||{}).pr_exclude||[]).includes(k));
 function exTable(dt,h){const EX=Object.assign({},dt.EX);for(const c of h.customExercises||[])if(c.id&&c.muscles)EX[c.id]=c;return EX}
-function liftValues(dt,h,R){const C=lg(dt),P=PG(),bwt=bwTable(h,C),pkg=profileBwKg(h,C),EX=exTable(dt,h),ex2={};
+// swap2 (ladder v2): allometric S(BW) from rules.scaling (anchor_bw / clamp per table, in kg; exponent). No scaling block -> BW (flat multiples).
+function scaleKg(R,table,bw){const Sc=R.scaling;if(!Sc||bw==null)return bw;const a=Sc.anchor_bw[table].kg,[lo,hi]=Sc.clamp[table].kg,b=Sc.exponent;
+  if(bw<lo)return bw*Math.pow(lo/a,b-1);if(bw>hi)return a*Math.pow(hi/a,b);return a*Math.pow(bw/a,b)}
+function liftValues(dt,h,R,table){table=table||'men';const SC=!!R.scaling,C=lg(dt),P=PG(),bwt=bwTable(h,C),pkg=profileBwKg(h,C),EX=exTable(dt,h),ex2={};
   for(const [l,m] of Object.entries(R.lifts))for(const i of m.exercise_ids)ex2[i]=l;
   const out={};for(const l of Object.keys(R.lifts))out[l]={status:'not_trained',value:null,trained:false,unrated_sets:0};
   for(const q of P.flatten(dt,h)){const s=q.s;if(s.deload===true)continue;const day=P.localDate(s.startedAt||s.date);
     for(const x of q.sets){const l=ex2[x.ex];if(!l||x.kind!=='working'||x.reps<1)continue;const kind=R.lifts[l].kind,o=out[l],r=x.reps,added=x.added_kg;
       let v=null,conv=false;const [bw,bws]=bodyweightFor(bwt,day,pkg);
-      if(kind==='multiple'){if(r>C.mx||excluded(C,x,'e1rm')||added<=EPS)continue;o.trained=true;if(bw==null){o.unrated_sets++;continue}v=e1(C,added,r)/bw}
+      if(kind==='multiple'){if(r>C.mx||excluded(C,x,'e1rm')||added<=EPS)continue;o.trained=true;if(bw==null){o.unrated_sets++;continue}v=e1(C,added,r)/(SC?scaleKg(R,table,bw):bw)}
       else{if(added<-EPS)continue;
-        if(added<=EPS){if(excluded(C,x,'reps_at_load'))continue;o.trained=true;v=r}
+        if(added<=EPS){if(excluded(C,x,'reps_at_load'))continue;o.trained=true;v=r;if(SC&&bw!=null)v=r4(v*bw/scaleKg(R,table,bw))}
         else{if(r>C.mx||excluded(C,x,'e1rm'))continue;o.trained=true;if(bw==null){o.unrated_sets++;continue}
-          const f=(EX[x.ex]||{}).bodyweight_fraction||0.95;v=Math.floor(30*((f*bw+added)*(1+r/30)/(f*bw)-1)+1e-9);conv=true}}
-      if(o.value==null||v>o.value+EPS)Object.assign(o,{status:'rated',value:v,set_id:x.id,date:day,converted:conv,bodyweight_kg:bw!=null?r4(bw):null,bodyweight_source:bw!=null?bws:null})}}
+          const f=(EX[x.ex]||{}).bodyweight_fraction||0.95;v=Math.floor(30*((f*bw+added)*(1+r/30)/(f*bw)-1)+1e-9);conv=true;if(SC)v=r4(v*bw/scaleKg(R,table,bw))}}
+      if(o.value==null||v>o.value+EPS){if(SC)o.unscaled=kind==='multiple'?r4(e1(C,added,r)/bw):(bw!=null?r4(v*scaleKg(R,table,bw)/bw):v);Object.assign(o,{status:'rated',value:v,set_id:x.id,date:day,converted:conv,bodyweight_kg:bw!=null?r4(bw):null,bodyweight_source:bw!=null?bws:null})}}}
   for(const o of Object.values(out)){if(o.trained&&o.value==null)o.status='needs_bodyweight';if(o.value!=null)o.value=r4(o.value)}return out}
 function liftRank(v,th){if(v==null)return null;let k=0;th.forEach((t,i)=>{if(v>=t-EPS)k=i});return k}
 function liftProgress(v,th,cur){if(v==null||cur+1>=th.length)return v==null?0:1;const a=th[cur],b=th[cur+1];if(b-a<=EPS)return v>=b-EPS?1:0;return Math.max(0,Math.min(1,(v-a)/(b-a)))}
@@ -85,16 +88,16 @@ function newPlates(before,after){const had=new Set(((before&&before.badges&&befo
   return ((after&&after.badges&&after.badges.plates)||[]).filter(b=>b.earned&&!had.has(b.id)).sort((a,b)=>b.plates-a.plates||a.lift.localeCompare(b.lift))}
 function report(dt,h,asOf,opts){opts=opts||{};const R=rulesOf(dt),C=lg(dt),sex=prof(h).sex,table=sex==='male'||sex==='female'?R.table_choice[sex]:R.table_choice.unset,T=R.tables[table];
   let unit=((h.settings||{}).unit)||'lb';unit=unit==='lb'||unit==='kg'?unit:'lb';
-  const V=liftValues(dt,h,R),core=R.core_lifts,base=core.map(l=>[l,V[l].value]),cands=[null];
+  const V=liftValues(dt,h,R,table),core=R.core_lifts,base=core.map(l=>[l,V[l].value]),cands=[null];
   for(const s of R.substitution.stand_ins)if(s.sexes.includes(table)&&!V[s.for].trained&&V[s.stand_in].value!=null)cands.push(s);
   const evaluate=sub=>{const sv=base.map(([l,v])=>sub&&l===sub.for?[sub.stand_in,V[sub.stand_in].value]:[l,v]);return [sv,overallRank(R,sv,T)]};
   let best=null;for(const c of cands){const [sv,rk]=evaluate(c),ps=sv.map(([l,v])=>rk<20?liftProgress(v,T[l].ranks,rk):1),key=[rk,rk<20?third(R,ps):1];
     if(!best||key[0]>best[0][0]||(key[0]===best[0][0]&&key[1]>best[0][1]))best=[key,c,sv,rk]}
-  const [,sub,slots,computed]=best,awarded=rankIndex(R,(h.evolution||{}).awarded),shown=Math.max(computed,awarded!=null?awarded:0),reach=Math.floor(shown/3);
+  const [,sub,slots,computed]=best,[awarded,migrated]=awardedOf(dt,R,h,table,asOf),shown=Math.max(computed,awarded!=null?awarded:0),reach=Math.floor(shown/3);
   const hiddenStage=si=>!!R.stages[si].hidden_until_reached&&si>reach,nxt=shown<20?shown+1:null,[cbw,cbws]=currentBw(dt,h,asOf),step=R.targets.step[unit];
   const slotOut=[],ps=[];core.forEach((lc,i)=>{const [lu,v]=slots[i],th=T[lu].ranks;let p=nxt!=null?liftProgress(v,th,shown):1;if(V[lu].value==null)p=0;ps.push(p);let tgt=null;
     if(nxt!=null){const t=th[nxt],met=v!=null&&v>=t-EPS;tgt={threshold:t,met,kind:R.lifts[lu].kind};
-      if(R.lifts[lu].kind==='multiple'){tgt.estimated_1rm=cbw?Math.ceil(fromKg(t*cbw,unit,C)/step-1e-9)*step:null;tgt.unit=cbw?unit:null}else tgt.reps=Math.ceil(t-1e-9)}
+      if(R.lifts[lu].kind==='multiple'){tgt.estimated_1rm=cbw?Math.ceil(fromKg(t*scaleKg(R,table,cbw),unit,C)/step-1e-9)*step:null;tgt.unit=cbw?unit:null}else tgt.reps=Math.ceil((R.scaling&&cbw?t*scaleKg(R,table,cbw)/cbw:t)-1e-9)}
     slotOut.push({slot:lc,lift:lu,substituted:lu!==lc,value:V[lu].value,progress:r4(p),target:tgt})});
   const overall=nxt!=null?r4(third(R,ps)):null,lifts={};
   for(const [l,o] of Object.entries(V)){const th=T[l].ranks,k=liftRank(o.value,th),hid=k!=null&&hiddenStage(Math.floor(k/3));
@@ -108,27 +111,47 @@ function report(dt,h,asOf,opts){opts=opts||{};const R=rulesOf(dt),C=lg(dt),sex=p
     substitution:sub?R.substitution.label.replace('{stand_in}',R.lifts[sub.stand_in].label).replace('{lift}',R.lifts[sub.for].label.toLowerCase()):null,
     held:shown>computed?R.labels.held_note:null,weighted:Object.keys(V).some(l=>V[l].value!=null&&V[l].converted)?R.labels.weighted_note:null,
     bodyweight:needBw.length?R.bodyweight.missing_label.replace('{lifts}',needBw.map(l=>R.lifts[l].label.toLowerCase()).join(', ')):null,
-    revealed:revealed.map(s=>R.hidden.reveal_label.replace('{stage}',R.stages[stageIdx(R,s)].label)),lean:lean.label??null,
+    revealed:revealed.map(s=>R.hidden.reveal_label.replace('{stage}',R.stages[stageIdx(R,s)].label)),...(R.scaling?{scaled:R.labels.scaled_note}:{}),lean:lean.label??null,
     source_note:R.labels.source_note,model_note:R.labels.model_note,promotion_note:R.labels.promotion_note};
   const {badge,...leanOut}=lean;
   return {as_of:asOf,table,sex_set:sex==='male'||sex==='female',unit,
     rank:{index:shown,id:R.ranks[shown].id,stage:R.ranks[shown].stage,tier:R.ranks[shown].tier,label:rankName(shown,R,false,opts.labels),computed_index:computed,held:shown>computed},
-    awarded_out:{stage:R.ranks[shown].stage,tier:R.ranks[shown].tier},
+    awarded_out:Object.assign({stage:R.ranks[shown].stage,tier:R.ranks[shown].tier},R.ladder_version?{ladder_version:R.ladder_version}:{}),...(R.migration?{awarded_migration:migrated}:{}),
     next:nxt!=null?{index:nxt,id:R.ranks[nxt].id,label:nl,hidden:hiddenStage(Math.floor(nxt/3))}:null,
     progress:{overall,pct:overall!=null?Math.floor(overall*100+1e-9):null,basis:'3rd-highest of 5 slots',slots:slotOut},
     substitution:sub?{stand_in:sub.stand_in,for:sub.for}:null,lifts,ladder,newly_revealed:revealed,
     bodyweight_current:{kg:cbw?r4(cbw):null,source:cbws},badges:{plates:plateBadges(dt,h,R),lean_prime:badge},lean:leanOut,labels}}
+// Python int() for a saved tier/index (str of digits, float truncates, bool 0/1); throws like ValueError/TypeError
+function pyInt(x){if(typeof x==='boolean')return +x;if(typeof x==='number'){if(!Number.isFinite(x))throw 0;return Math.trunc(x)}
+  if(typeof x==='string'&&/^\s*[+-]?\d+\s*$/.test(x))return parseInt(x,10);throw 0}
+// saved award -> [floor index|null, migration|null]. No rules.migration (ladder v1): plain {stage, tier}. With it (ladder v2), an award without
+// ladder_version >= migration.to_ladder_version is a v1 award ({stage,tier}, {index} or a bare int) and maps by threshold: the highest v2 rank
+// whose core thresholds are all <= the v1 rank's x k x (1 + migration.tolerance), k = BW / S(BW) at as_of when scaled. Tolerance: migration only.
+function awardedOf(dt,R,h,table,asOf){const a=(h.evolution||{}).awarded,M=R.migration;if(!M)return [rankIndex(R,a),null];
+  const isObj=a&&typeof a==='object'&&!Array.isArray(a);
+  if(isObj&&((a.ladder_version||1)>=M.to_ladder_version))return [rankIndex(R,a),null];
+  if(typeof a==='boolean'||a==null)return [null,null];let old=null;
+  if(typeof a==='number'&&Number.isInteger(a))old=a;
+  else if(isObj&&typeof a.index==='number'&&Number.isInteger(a.index)&&!('stage' in a))old=a.index;
+  else if(isObj){try{const si=M.old_stage_order.indexOf(a.stage);if(si<0)throw 0;old=3*si+pyInt(a.tier)-1}catch(e){old=null}}
+  if(old==null||old<0||old>20)return [null,null];
+  if(isObj&&'tier' in a){const t=pyInt(a.tier);if(t<1||t>3)return [null,null]}
+  const T=R.tables[table],OT=M.old_tables[table];let floor=0,k=1;
+  if(R.scaling){const cbw=asOf?currentBw(dt,h,asOf)[0]:null;if(cbw)k=cbw/scaleKg(R,table,cbw)}
+  const tol=1+(M.tolerance||0);
+  for(let i=0;i<21;i++)if(R.core_lifts.every(l=>T[l].ranks[i]<=OT[l][old]*k*tol+EPS))floor=i;
+  return [floor,{from:`${M.old_stage_order[Math.floor(old/3)]}.${old%3+1}`,from_index:old,to:R.ranks[floor].id,to_index:floor}]}
 // finish screen: the moment shows only when the shown rank went up
 const rankUp=(b,a)=>!!(b&&a&&a.rank.index>b.rank.index);
 // storyboard hint (one line on what to lift next): the slot below the next rank needing the smallest step from its current best, as a target
 // estimated 1RM (Coach's target) or strict reps; null at the top rank
-function nextHint(rep,dt,h){if(!rep.next)return null;const R=rulesOf(dt),C=lg(dt),u=rep.unit,cbw=rep.bodyweight_current.kg;let best=null;
+function nextHint(rep,dt,h){if(!rep.next)return null;const R=rulesOf(dt),C=lg(dt),u=rep.unit,cbw=rep.bodyweight_current.kg,sbw=cbw?scaleKg(R,rep.table,cbw):cbw;let best=null;
   for(const s of rep.progress.slots){const t=s.target;if(!t||t.met)continue;const name=R.lifts[s.lift].label.toLowerCase();let gap,text;
-    if(t.kind==='multiple'){if(t.estimated_1rm==null)continue;const cur=s.value!=null&&cbw?fromKg(s.value*cbw,u,C):0;const add=Math.max(R.targets.step[u],Math.ceil((t.estimated_1rm-cur)/R.targets.step[u]-1e-9)*R.targets.step[u]);
+    if(t.kind==='multiple'){if(t.estimated_1rm==null)continue;const cur=s.value!=null&&cbw?fromKg(s.value*sbw,u,C):0;const add=Math.max(R.targets.step[u],Math.ceil((t.estimated_1rm-cur)/R.targets.step[u]-1e-9)*R.targets.step[u]);
       gap=s.value!=null?(t.threshold-s.value)/t.threshold:1;text=s.value!=null?`+${add} ${u} ${name} (estimated 1RM ${t.estimated_1rm} ${u})`:`${name}: estimated 1RM ${t.estimated_1rm} ${u}`}
     else{const cur=s.value||0,add=Math.max(1,t.reps-cur);gap=t.reps?add/t.reps:1;text=`+${add} strict ${name} rep${add>1?'s':''} (${t.reps} total)`}
     if(!best||gap<best.gap-EPS)best={lift:s.lift,slot:s.slot,gap,text}}
   return best}
-const API={EPS,rulesOf,rankName,rankIndex,report,rankUp,nextHint,liftValues,plateBadges,plateEntries,newPlates,leanStatus,ageOf};
+const API={EPS,scaleKg,awardedOf,rulesOf,rankName,rankIndex,report,rankUp,nextHint,liftValues,plateBadges,plateEntries,newPlates,leanStatus,ageOf};
 if(isNode)module.exports=API;else root.LADDER=API;
 })(typeof window!=='undefined'?window:globalThis);

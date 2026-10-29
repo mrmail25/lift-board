@@ -417,14 +417,15 @@ let FIN=null;
 const isoLocal=t=>{const d=new Date(t),p=n=>String(n).padStart(2,'0');return `${FIN_DAY}T${p(d.getHours())}:${p(d.getMinutes())}:00-07:00`};
 function finDemoSets(){WK0.ex.forEach(x=>{const w=WK.ex.find(e=>e.id===x.id);if(!w)return;
   w.sets.forEach((s,i)=>{if(s.done)return;const m=/^(\d+(?:\.\d+)?)\s*×\s*(\d+)/.exec(s.p||'');if(!m)return;Object.assign(s,{done:true,wv:m[1],rv:m[2]})})})}
-function finBuild(cold,tweak){if(cold){Object.assign(WK,JSON.parse(JSON.stringify(WK0)));delete WK.deload;finDemoSets();tweak&&tweak()}
-  const u=S.unit,sid='fin',H=logLoad(),L=v=>v==null||v===''||isNaN(+v)?0:+v,num=(s,id)=>{const v=L(s.wv);return (s.wu||'lb')===u?v:(s.wu||'lb')==='lb'?v/KG_LB:v*KG_LB};
+// base (demo only): a function of the saved log giving the history this session lands on (e.g. #finish-plates2: a log before the first 225 bench)
+function finBuild(cold,tweak,base){if(cold){Object.assign(WK,JSON.parse(JSON.stringify(WK0)));delete WK.deload;finDemoSets();tweak&&tweak()}
+  const u=S.unit,sid='fin',H=base?base(logLoad()):logLoad(),L=v=>v==null||v===''||isNaN(+v)?0:+v,num=(s,id)=>{const v=L(s.wv);return (s.wu||'lb')===u?v:(s.wu||'lb')==='lb'?v/KG_LB:v*KG_LB};
   const st=cold?`${FIN_DAY}T18:12:00-07:00`:isoLocal(CLK.start),min=cold?58:Math.max(1,Math.round(WK.elapsed/60)),en=cold?isoPlus(st,58):isoLocal(Date.now());
   const ses={id:sid,schema:2,status:'completed',date:st,startedAt:st,endedAt:en,unit:u,label:WK.title||'Workout',notes:'',...(WK.deload===true?{deload:true}:{}),snapshot:{exercises:WK.ex.map(x=>({exerciseId:x.id,sets:x.sets.length}))}},ents=[],sets=[];
   WK.ex.forEach((x,o)=>{const done=x.sets.filter(s=>s.done&&L(s.rv)>0);if(!done.length)return;const eid=`${sid}-e${o}`;ents.push({id:eid,sessionId:sid,order:o,exerciseId:x.id,skipped:false,notes:''});
     done.forEach((s,i)=>sets.push({id:`${eid}-t${i}`,entryId:eid,idx:i,kind:s.warm?'warmup':'working',load:+nfmt(num(s,x.id)),reps:L(s.rv),rir:EFF().clampRir(s.rir),done:true}))});
   const X={...H,sessions:[...H.sessions,ses],entries:[...H.entries,...ents],sets:[...H.sets,...sets]};
-  return {ses,ents,sets,X,min,cold}}
+  return {ses,ents,sets,X,min,cold,H0:base?H:null}}
 // run fn with LOGH = the log plus this session (sesMus / e1Chart / entsOf read the global)
 function withFin(fn){const keep=LOGH;LOGH=FIN.X;try{return fn()}finally{LOGH=keep}}
 const kgOf=(load,unit)=>unit==='kg'?+load:+load/KG_LB,inU=(v,unit)=>unit===S.unit?v:unit==='lb'?v/KG_LB:v*KG_LB;
@@ -883,7 +884,9 @@ function ladPersist(){const L=ladderData();if(!L||L.hidden_all)return;const H=lo
 // Silverback); x = drawn with the hidden-tier glow (Kong / Apex reuse the Prime art). A number is still accepted (legacy: position in the
 // stock order below) for callers / tests that pass an index.
 const APE_FIG={knuckle_dragger:{src:'stage-1'},primate:{src:'stage-2'},neanderthal:{src:'stage-3'},silverback:{src:'stage-4'},prime:{src:'stage-5'},kong:{src:'stage-5',x:1},apex:{src:'stage-5',x:1}};
-const APE_ORDER=['knuckle_dragger','primate','neanderthal','silverback','prime','kong','apex'];
+// swap2 (ladder v2): the stock march is Knuckle-Dragger, Primate, Neanderthal, Prime, Silverback (then Kong / Apex, hidden). The strip itself
+// follows evolution-rules stages[] order; this list only serves legacy numeric callers. stage-4.svg (Silverback) is drawn 414 tall, the tallest.
+const APE_ORDER=['knuckle_dragger','primate','neanderthal','prime','silverback','kong','apex'];
 const APE_ART=APE_ORDER.slice(0,5).map(k=>k.replace('_','-'));
 function apeFig(k,cls=''){const id=typeof k==='string'?k:APE_ORDER[Math.max(0,Math.min(6,k|0))],f=APE_FIG[id]||APE_FIG.prime,x=!!f.x;
   return `<i class="afig${x?' afx':''} ${cls}" data-afig="${id}" data-afsrc="${f.src}" aria-hidden="true"><i class="afm" style="--afsrc:url(assets/ladder/${f.src}.svg)"></i></i>`}
@@ -911,7 +914,7 @@ function ladLiftRow(L,l,o,slot){const R=RD.EVO,bw=L.bodyweight_current.kg,u=L.un
 function ladLeanRow(L){const ln=L.lean,b=L.badges.lean_prime;if(ln.status==='hidden'||ln.status==='unavailable')return '';
   if(ln.status==='not_tracked')return `<div class="row lean off" data-lean="not_tracked"><div class="grow"><div class="t1">Lean Prime</div><div class="t2">${esc(ln.label)}</div></div><button class="lk" data-go="#settings-ladder">Set up</button></div>`;
   return `<div class="row lean ${b&&b.unlocked?'on':''}${b&&b.greyed?' grey':''}" data-lean="${ln.status}"><span class="lbadge ${b&&b.unlocked?'on':''}">${apeFig('prime')}</span><div class="grow"><div class="t1">Lean Prime${b&&b.unlocked?'':b&&b.greyed?' (greyed)':''}</div><div class="t2">${esc(ln.label||'')}</div></div></div>`}
-V.ladder=()=>{const L=ladderData(),nav=`<div class="nav"><div class="l"><button class="back" data-go="#progress">${I('chevL',2.4)}Progress</button></div><div class="t">Evolution ladder</div><div class="r"></div></div>`;
+V.ladder=()=>{const L=ladderData(),nav=`<div class="nav lnavs"><div class="l"><button class="back" data-go="#progress">${I('chevL',2.4)}Progress</button></div><div class="t">Evolution ladder</div><div class="r"></div></div>`;
   if(!L)return nav+header('Evolution ladder')+`<p class="foot">The ladder needs Coach's evolution rules.</p>`;
   if(L.hidden_all)return nav+header('Evolution ladder')+`<div class="card lhidden"><b>The ladder is hidden</b><p class="sub">Turn it back on in Settings to see your rank.</p><button class="btn" data-go="#settings-ladder">Open Settings</button></div>`;
   setTimeout(ladPersist,0);const R=RD.EVO,slots=Object.fromEntries(L.progress.slots.map(s=>[s.lift,s])),core=L.progress.slots.map(s=>s.lift),extra=Object.keys(L.lifts).filter(l=>!core.includes(l)&&L.lifts[l].value!=null);
@@ -926,7 +929,7 @@ V.ladder=()=>{const L=ladderData(),nav=`<div class="nav"><div class="l"><button 
    <p class="foot">${esc(R.labels.promotion_note)} Progress follows your 3rd-best lift.</p>
    ${ladLeanRow(L)?`<div class="ghead">Badges</div><div class="group">${ladLeanRow(L)}</div>`:''}
    ${L.ladder.some(s=>s.hidden)?`<div class="card ltease" data-lteaser="1"><div><b>There is more past ${esc(L.ladder.filter(s=>!s.hidden).pop().label)}</b><p class="sub">Keep climbing to find out what.</p></div>${lockFig()}</div>`:''}
-   <p class="foot lsrc">${esc(R.labels.model_note)} ${esc(R.labels.source_note)}</p>
+   <p class="foot lsrc">${L.labels.scaled?`<span data-lscaled="1">${esc(L.labels.scaled)}</span> `:''}${esc(R.labels.model_note)} ${esc(R.labels.source_note)}</p>
    <div class="group" style="margin-top:12px"><button class="row" data-go="#settings-ladder"><div class="grow t1">Ladder settings</div>${CHEV}</button></div></div>`};
 // settings: hide-all, sex, birth date, height, profile bodyweight; physique (opt-in, hide switch, readings) only when not hidden and 18+ (or age unknown)
 function ladSetHtml(){const C=ladSettings(),P=C.profile,B=C.bodyComp,hu=S.unit==='kg'?'cm':'in',age=window.LADDER?LADDER.ageOf({settings:{profile:P}},AS_OF):null;
@@ -952,7 +955,9 @@ function ladSetHtml(){const C=ladSettings(),P=C.profile,B=C.bodyComp,hu=S.unit==
    <p class="foot">All optional, stored on this device. ${L&&L.labels.table?esc(L.labels.table)+' ':''}Bodyweight here is used only when no weigh-in is logged.</p>${phys}`}
 function ladRefreshSettings(){const e=$('#ladset');if(e)e.innerHTML=ladSetHtml()}
 // finish screen: a small moment only when this workout raised the shown rank
-function ladRankUpHtml(){if(!FIN||!RD||!RD.EVO||!window.LADDER)return '';const b=ladderData(),a=ladderFor(FIN.X);if(!a||a.hidden_all||!LADDER.rankUp(b,a))return '';
+// the ladder before this session: the saved log, or a demo route's base history
+const ladBefore=()=>FIN&&FIN.H0?ladderFor(FIN.H0):ladderData();
+function ladRankUpHtml(){if(!FIN||!RD||!RD.EVO||!window.LADDER)return '';const b=ladBefore(),a=ladderFor(FIN.X);if(!a||a.hidden_all||!LADDER.rankUp(b,a))return '';
   return `<div class="lrup" data-rankup="${a.rank.id}">${apeFig(a.rank.stage||Math.min(6,a.rank.index/3|0))}<div class="grow"><div class="eyebrow">Rank up</div><b>${esc(a.rank.label)}</b><span>Up from ${esc(b.rank.label)}</span>${a.labels.revealed.map(t=>`<span class="lrev">${esc(t)}</span>`).join('')}</div></div>`}
 // PLATE MILESTONES (Mr Dude via CoS): plate badges are the rites of passage, independent of rank. Loads and which lifts have which plates
 // come from Coach's evolution-rules plate_badges (read per lift by LADDER.plateEntries). The 5-plate badges (hidden_from_plates) carry a hidden
@@ -964,7 +969,7 @@ function plateArt(n,cls=''){const N=Math.max(1,Math.min(6,n|0)),w=7,g=2,span=N*(
 const plateLabel=b=>{const PB=RD.EVO.plate_badges;return `${(PB.labels||{})[String(b.plates)]||PLN(b.plates)}`};
 // newly earned plates in this workout: the saved log vs the log plus this session (deload sessions never count, as with PRs). Once the
 // workout is saved, the plates are in the log, so the moment never repeats. Hidden by the ladder hide-all switch like every ladder UI.
-function ladPlateUps(){if(!FIN||!RD||!RD.EVO||!window.LADDER)return [];const b=ladderData(),a=ladderFor(FIN.X);if(!a||!b||a.hidden_all)return [];return LADDER.newPlates(b,a)}
+function ladPlateUps(){if(!FIN||!RD||!RD.EVO||!window.LADDER)return [];const b=ladBefore(),a=ladderFor(FIN.X);if(!a||!b||a.hidden_all)return [];return LADDER.newPlates(b,a)}
 function ladPlateUpHtml(){const ups=ladPlateUps();if(!ups.length)return '';const top=new Set();const seen=new Set();
   for(const u of ups)if(!seen.has(u.lift)){seen.add(u.lift);top.add(u.id)}   // ups are highest-first: the first per lift is its hero
   const lab=l=>esc(RD.EVO.lifts[l].label);
@@ -981,7 +986,18 @@ function ladPlatesSec(L){if(!RD.EVO.plate_badges)return '';const PB=RD.EVO.plate
       <div class="lpld">${bs.map(b=>`<span class="lpd${b.earned?' on':''}${'hidden' in b?' rev':''}" data-plate="${b.plates}" title="${esc(b.label)}"><i>${b.load}</i></span>`).join('')}</div></div>`}).join('');
   return `<div class="ghead">Plates</div><div class="card lplsec" data-lplsec="1">${rows}<p class="foot lplf">Earned by a real logged set, not an estimate. Deload sessions don't count.</p></div>`}
 // demos for the plate moment (#finish-plates2 / 3 / 4 / 5, #finish-plates-deload): one heavy working set on the lift that earns the plate
-function ladPlateDemo(lift,lb,reps,deload){const L=ladderData();if(!L)return;const PB=RD.EVO.plate_badges,id=RD.EVO.lifts[lift].exercise_ids[0],kg=S.unit==='kg';
+// The demo runs on the Upper / Lower day that programs the lift (bench: Upper A as WK0; squat: Lower A; deadlift: Lower B), so the finish title
+// matches the lift; that day's other exercises repeat their last logged sets.
+function lastSetsOf(id,n){const H=logLoad(),es=H.entries.filter(e=>e.exerciseId===id&&!e.skipped);if(!es.length)return [];
+  const sd=Object.fromEntries(H.sessions.map(x=>[x.id,x])),e=es.reduce((m,x)=>!m||String((sd[x.sessionId]||{}).date)>String((sd[m.sessionId]||{}).date)?x:m,null),su=(sd[e.sessionId]||{}).unit||'lb';
+  return H.sets.filter(t=>t.entryId===e.id&&t.kind==='working'&&t.reps>0).slice(0,n).map(t=>({p:'',done:true,wv:String(t.load),rv:String(t.reps),wu:su}))}
+function ladDemoDay(id){const r=ROUTINES.find(x=>x.id==='ul'),di=r.days.findIndex(d=>d.ex.some(e=>e.id===id));if(di<=0)return;const d=r.days[di];
+  Object.assign(WK,{title:d.n,sub:`${r.name} · Day ${di+1}`,ref:{rid:r.id,di}});
+  WK.ex=d.ex.map(e=>({id:e.id,bar:/barbell|trap bar|smith/.test(((EX[e.id]||{}).eq)||'')||/ez-bar/.test(e.id),cue:'',sets:lastSetsOf(e.id,e.s)}))}
+// a copy of the log without the lift's working sets at or above lb (the demo's "before": the lifter had not reached that plate yet)
+function logBelow(H,lift,lb){const ids=RD.EVO.lifts[lift].exercise_ids,ent=new Set(H.entries.filter(e=>ids.includes(e.exerciseId)).map(e=>e.id)),es=Object.fromEntries(H.entries.map(e=>[e.id,e.sessionId])),
+  su=Object.fromEntries(H.sessions.map(x=>[x.id,x.unit||'lb']));return Object.assign({},H,{sets:H.sets.filter(t=>!(ent.has(t.entryId)&&t.kind==='working'&&(su[es[t.entryId]]==='kg'?t.load*KG_LB:t.load)>=lb-0.01))})}
+function ladPlateDemo(lift,lb,reps,deload){const L=ladderData();if(!L)return;const PB=RD.EVO.plate_badges,id=RD.EVO.lifts[lift].exercise_ids[0],kg=S.unit==='kg';ladDemoDay(id);
   const ent=LADDER.plateEntries(PB,S.unit,lift),k=ent.findIndex(e=>Math.abs(e.load-(kg?{135:60,225:100,315:140,405:180,495:220}[lb]:lb))<0.01),ld=k>=0?ent[k].load:lb;
   let x=WK.ex.find(e=>e.id===id);if(!x){x={id,bar:true,cue:'',sets:[]};WK.ex.unshift(x)}x.sets=[{p:'',warm:true,done:true,wv:String(Math.round(ld*0.6)),rv:'5'},{p:'',done:true,wv:String(ld),rv:String(reps),wu:S.unit}];
   if(deload)WK.deload=true}
@@ -1728,7 +1744,7 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  ladder:['ladder','progress'],'ladder-teaser':['ladder','progress',0,0,null,()=>{const t=$('[data-llock]');t&&t.scrollIntoView({block:'center',inline:'center'})}],
  'settings-ladder':['settings','build',0,0,null,()=>{const e=$('#ladset');e&&($('#view').scrollTop=e.offsetTop-60)}],
  'finish-rankup':['finish','',1,0,()=>{FIN=finBuild(true,ladRankupDemo)}],
- 'finish-plates2':['finish','',1,0,()=>{FIN=finBuild(true,()=>ladPlateDemo('ohp',225,2))}],'finish-plates3':['finish','',1,0,()=>{FIN=finBuild(true,()=>ladPlateDemo('bench',315,1))}],
+ 'finish-plates2':['finish','',1,0,()=>{FIN=finBuild(true,()=>ladPlateDemo('bench',225,5),H=>logBelow(H,'bench',S.unit==='kg'?100*KG_LB:225))}],'finish-plates3':['finish','',1,0,()=>{FIN=finBuild(true,()=>ladPlateDemo('bench',315,1))}],
  'finish-plates4':['finish','',1,0,()=>{FIN=finBuild(true,()=>ladPlateDemo('deadlift',405,2))}],'finish-plates5':['finish','',1,0,()=>{FIN=finBuild(true,()=>ladPlateDemo('deadlift',495,1))}],
  'finish-plates-deload':['finish','',1,0,()=>{FIN=finBuild(true,()=>ladPlateDemo('deadlift',405,2,true))}],'finish-plates-again':['finish','',1,0,()=>{FIN=finBuild(true,()=>ladPlateDemo('bench',225,5))}],
  learn:['learn',''],'tray-fav':['empty','',1,1,()=>{TF.fav=true},traySheet],'settings-favs':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#favs').offsetTop-60}],'settings-goals':['settings','build',0,0,null,()=>{$('#view').scrollTop=$('#profile').offsetTop-40}],'learn-fundamental':['learnFund',''],

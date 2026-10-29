@@ -1450,3 +1450,6 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .lpd.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .lpd.rev{border-color:#e0a63a;box-shadow:0 0 0 2px rgba(224,166,58,.35)}.lpd.rev.on{background:linear-gradient(160deg,#ffc45c,#e0a63a);color:#3a2500}
 .lplf{padding:6px 0 2px}
+
+/* plates fix (CoS): the ladder screen's nav is opaque, so the march strip never shows through it when scrolled (other screens keep the translucent bar) */
+.nav.lnavs{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}

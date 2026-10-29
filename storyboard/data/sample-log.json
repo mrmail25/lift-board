@@ -16793,62 +16793,62 @@
  "bodyweights": [
   {
    "date": "2026-08-03",
-   "value": 240.0,
+   "value": 210.0,
    "unit": "lb"
   },
   {
    "date": "2026-08-10",
-   "value": 240.2,
+   "value": 210.2,
    "unit": "lb"
   },
   {
    "date": "2026-08-17",
-   "value": 240.4,
+   "value": 210.4,
    "unit": "lb"
   },
   {
    "date": "2026-08-24",
-   "value": 240.6,
+   "value": 210.6,
    "unit": "lb"
   },
   {
    "date": "2026-08-31",
-   "value": 240.8,
+   "value": 210.8,
    "unit": "lb"
   },
   {
    "date": "2026-09-07",
-   "value": 241.0,
+   "value": 211.0,
    "unit": "lb"
   },
   {
    "date": "2026-09-14",
-   "value": 241.2,
+   "value": 211.2,
    "unit": "lb"
   },
   {
    "date": "2026-09-21",
-   "value": 241.4,
+   "value": 211.4,
    "unit": "lb"
   },
   {
    "date": "2026-09-28",
-   "value": 241.6,
+   "value": 211.6,
    "unit": "lb"
   },
   {
    "date": "2026-10-05",
-   "value": 241.8,
+   "value": 211.8,
    "unit": "lb"
   },
   {
    "date": "2026-10-12",
-   "value": 242.0,
+   "value": 212.0,
    "unit": "lb"
   },
   {
    "date": "2026-10-19",
-   "value": 242.2,
+   "value": 212.2,
    "unit": "lb"
   }
  ],
