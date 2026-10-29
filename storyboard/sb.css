@@ -1395,9 +1395,7 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .lnext{color:var(--accent-press);font-weight:600}.lnext.big{font-size:var(--t-sub);color:var(--ink);font-weight:400;margin:10px 0 0}.lnext.big b{color:var(--accent-press)}
 .lstripw{margin:0 var(--s4) 12px}.lstripw .lfig .afig{width:50px;height:72px}.lstripw .lfig.lf-cur .afig{width:58px;height:84px}.lstripw .lfig span{font-size:10.5px}
 .lhero{padding:14px 16px}.lhero h2{font-size:26px;margin:2px 0 0}
-.ladlift .t2{margin-top:2px}.lplates{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
-.lplate{font-size:10px;font-weight:600;padding:2px 6px;border-radius:999px;border:1px solid var(--lad-slate);color:var(--text-2)}
-.lplate.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.ladlift .t2{margin-top:2px}
 .lchip{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;background:var(--fill);color:var(--ink);white-space:nowrap;margin-left:8px}
 .lchip.st3,.lchip.st4,.lchip.st5,.lchip.st6{background:var(--accent);color:#fff}.lchip.none{color:var(--text-2)}
 .lean .lbadge{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--fill);color:var(--lad-slate);margin-right:10px;flex:none}
@@ -1427,3 +1425,28 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .pprio{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:5px;vertical-align:1px;flex:none}
 .ptab .pmr .pmn{position:relative}.ptab .pmr .pmn>.pprio{position:absolute;left:-10px;top:.62em;margin:0}
 .pshmh{padding-bottom:4px;margin-bottom:8px;border-bottom:1px solid var(--line)}.plname{font-size:var(--t-head);margin:10px 16px 6px}.pshmh~.plsw{margin:2px 0 12px;padding:2px 16px 4px}
+
+/* PLATE MILESTONES: finish-screen celebration (on the dark hero card) and the ladder screen's plates section.
+   .pup.big = 2 / 3 / 4 plates (the biggest moments); .pup.rev = the hidden plate's reveal; .pup.sm = a lower plate earned in the same set. */
+.pups{display:flex;flex-direction:column;gap:8px;margin:14px 0 4px}
+.pup{border-radius:16px;background:rgba(255,255,255,.08);padding:12px 14px;color:var(--accent);text-align:center}
+.pup .eyebrow{color:rgba(255,255,255,.7)}.pup b{display:block;color:#fff;font-size:22px;font-weight:800;letter-spacing:-.01em;margin-top:2px}
+.pup .pupl{display:block;color:rgba(255,255,255,.85);font-size:var(--t-sub);font-weight:600;margin-top:2px}.pup .pupx{display:block;color:rgba(255,255,255,.62);font-size:var(--t-foot);margin-top:6px}
+.plart{display:block;fill:currentColor;margin:8px auto 2px;height:40px;width:auto}.plart .pbar{fill:rgba(255,255,255,.55)}
+.pup.big{background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.04));box-shadow:inset 0 0 0 1.5px var(--accent);padding:16px 14px 18px}
+.pup.big b{font-size:32px}.pup.big .plart{height:64px;margin:10px auto 4px}.pup.big.p4 .plart{height:72px}
+.pup.rev{background:radial-gradient(120% 90% at 50% 0%,rgba(255,196,92,.30),rgba(255,255,255,.04) 70%);box-shadow:inset 0 0 0 2px #ffc45c,0 0 24px rgba(255,196,92,.35);color:#ffc45c}
+.pup.rev .eyebrow{color:#ffd88f;letter-spacing:.08em}.pup.rev b{font-size:34px}.pup.rev .plart{height:76px}
+.pup.sm{display:flex;align-items:center;gap:10px;text-align:left;padding:8px 12px}.pup.sm .plart{height:22px;margin:0}.pup.sm span{color:rgba(255,255,255,.8);font-size:var(--t-foot)}
+@media (prefers-reduced-motion:no-preference){.pup.big,.pup.rev{animation:pupIn .55s cubic-bezier(.2,1.4,.4,1) both}.pup.rev{animation-duration:.8s}}
+@keyframes pupIn{from{transform:scale(.86);opacity:0}to{transform:none;opacity:1}}
+.lplsec{padding:6px 16px 10px}
+.lplrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.lplrow:last-of-type{border-bottom:0}
+.lpln{flex:1;min-width:0}.lpln b{display:block;font-size:var(--t-body,16px);color:var(--ink)}.lpln span{font-size:var(--t-foot);color:var(--text-2)}
+.lpld{display:flex;gap:5px;flex:none}
+.lpd{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--lad-slate);color:var(--text-2);position:relative}
+.lpd::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:var(--bg);top:calc(50% - 4px);left:calc(50% - 4px);opacity:.0}
+.lpd i{font-style:normal;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums}
+.lpd.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.lpd.rev{border-color:#e0a63a;box-shadow:0 0 0 2px rgba(224,166,58,.35)}.lpd.rev.on{background:linear-gradient(160deg,#ffc45c,#e0a63a);color:#3a2500}
+.lplf{padding:6px 0 2px}

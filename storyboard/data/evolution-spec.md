@@ -133,11 +133,11 @@ Sources and anchors: Prime entry = Strength Level "Intermediate" ratios (for a 1
 
 ## 5. Promotion, progress, never demote
 - overall rank = the highest rank index met by at least 3 of the 5 core lifts (after at most one stand-in substitution). A lift meets a rank when value >= that rank's threshold. Unlogged or unrated lifts meet nothing. Everyone starts at knuckle_dragger.1.
-- **Per-lift stage:** each lift (core and stand-ins) shows its own rank: the highest rank whose threshold it meets (hidden stages beyond the revealed ladder show as "???"). A rated lift below its Knuckle-Dragger value still shows Knuckle-Dragger.
+- **Per-lift stage:** each lift (core and stand-ins) shows its own rank: the highest rank whose threshold it meets (hidden stages beyond the revealed ladder show as "Locked stage"). A rated lift below its Knuckle-Dragger value still shows Knuckle-Dragger.
 - **Never demote:** shown rank = max(computed rank, history.evolution.awarded). The app stores the highest rank shown in history.evolution.awarded {stage, tier}; a drop, a bodyweight gain, a sex change or a deleted set never lowers it (held: true while computed < awarded).
 - **Progress:** p = clamp((value - T_rank) / (T_next - T_rank), 0, 1) with T_rank / T_next = that lift's thresholds at the shown overall rank and the next rank; T_next == T_rank -> 1 if value >= T_next else 0; unlogged / unrated -> 0. 3rd-highest of the 5 slot progresses (core lifts after substitution). It reaches 1.0 exactly when a 3rd lift meets the next rank, which is the promotion rule. At the top rank (apex.3) progress is null. Display: pct = floor(100 x overall).
 - **Targets:** for each slot below the next rank: multiple target = T_next x current bodyweight as an estimated 1RM, rounded UP to the unit step; reps target = T_next reps. Step: lb 5, kg 2.5.
-- **Hidden stages:** kong and apex stages show as "???" in the ladder, the next-rank name and per-lift stages until the overall rank (with the awarded floor) reaches them. When the shown rank first enters Kong (or Apex), `newly_revealed` lists it and the label "New stage unlocked: Kong" is returned once (the app stores `awarded` after showing it).
+- **Hidden stages:** kong and apex stages show as "Locked stage" in the ladder, the next-rank name and per-lift stages until the overall rank (with the awarded floor) reaches them. When the shown rank first enters Kong (or Apex), `newly_revealed` lists it and the label "New stage unlocked: Kong" is returned once (the app stores `awarded` after showing it).
 
 ## 6. Substitution (max 1)
 | Stand-in | For | Scale | Tables | Source |
@@ -148,7 +148,8 @@ Sources and anchors: Prime entry = Strength Level "Intermediate" ratios (for a 1
 Rule: only when a core lift is not trained (no qualifying working set ever, deload excluded) and its stand-in has a rated value. At most one substitution; if two are possible, take the one giving the higher overall rank, then higher overall progress, then the order above. A trained-but-unrated core lift (e.g. no bodyweight) is not substituted. Label: "{stand_in} stands in for {lift}".
 
 ## 7. Plate badges (separate from rank)
-Unit: settings.unit ("lb" default | "kg") picks the set; both lists exist. lb [135, 225, 315, 405], kg [60, 100, 140, 180]. Bench, squat, deadlift: 4 badges; overhead press: 2. earned by the first done working set (non-deload, reps >= 1, not tagged with weight in pr_exclude) whose logged load, converted to the setting unit, is >= the plate load - 0.01. A real set, not an estimate. Independent of rank.
+Unit: settings.unit ("lb" default | "kg") picks the set; both lists exist. lb [135, 225, 315, 405, 495], kg [60, 100, 140, 180, 220]. Bench, squat, deadlift: 5 badges; overhead press: 2. earned by the first done working set (non-deload, reps >= 1, not tagged with weight in pr_exclude) whose logged load, converted to the setting unit, is >= the plate load - 0.01. A real set, not an estimate. Independent of rank.
+- **Hidden five plates:** The five-plate badges (495 lb / 220 kg: five 45 lb or 20 kg plates a side on a 45 lb / 20 kg bar) on bench, squat and deadlift are hidden until earned. Only these entries carry a hidden key: hidden: true and label "Hidden badge" until a qualifying set exists, then hidden: false and the normal label, shown like the other plate badges. Plates 1-4 have no hidden key. Overhead press stays at two plates. Not a tier; independent of rank. Unearned entry: `{"id": "bench.plates5", "lift": "bench", "plates": 5, "load": 495, "unit": "lb", "label": "Hidden badge", "earned": false, "date": null, "set_id": null, "hidden": true}`; once earned: the normal label, earned true, date and set_id set, hidden false.
 
 ## 8. Lean Prime (opt-in, art and badge only)
 - Opt-in physique condition that unlocks ONLY the "Lean Prime" art and badge. It never affects rank. A leanness game condition, not a health measure.
@@ -174,7 +175,7 @@ Unit: settings.unit ("lb" default | "kg") picks the set; both lists exist. lb [1
 | Overhead press | 0.6336 | Silverback | 0.7333 | 0% |
 | Pull-ups | 12.0 | Prime | 9 | 100% |
 
-## 10. Edge cases (data/evolution-reference.json: 22 cases)
+## 10. Edge cases (data/evolution-reference.json: 25 cases)
 | Case | Result | Shows |
 |---|---|---|
 | `no_sex_set` | Prime (12%) | no settings.profile.sex: the men's table is used and labelled |
@@ -188,7 +189,7 @@ Unit: settings.unit ("lb" default | "kg") picks the set; both lists exist. lb [1
 | `bodyweight_change_mid_log` | Alpha Silverback (38%) | same loads all along; bodyweight 200 lb until Aug 30, 180 lb from Aug 31: later sets give higher multiples (bodyweight of the set's day) |
 | `missing_bodyweight` | Knuckle-Dragger (0%) | no bodyweight entries and no profile bodyweight: multiple lifts need a bodyweight (unrated), strict pull-ups still rate; rank stays Knuckle-Dragger |
 | `profile_bodyweight_fallback` | Alpha Silverback (86%) | sets before the first weigh-in (Aug 20) use the profile bodyweight (180 lb); later sets use 190 lb; no backfill |
-| `kong_unlock` | Kong (20%) | awarded Alpha Prime, now 3 lifts meet Kong: Kong is revealed (newly_revealed), Apex stays hidden ("???") |
+| `kong_unlock` | Kong (20%) | awarded Alpha Prime, now 3 lifts meet Kong: Kong is revealed (newly_revealed), Apex stays hidden ("Locked stage") |
 | `lean_opted_in_pass` | Chief Prime (16%) | opted in, age 32, waist 80 cm / height 178 cm = 0.449 <= 0.46, rank Prime+: Lean Prime badge unlocked (rank unchanged) |
 | `lean_opted_in_fail` | Chief Prime (16%) | opted in, waist 90 cm / 178 cm = 0.506 > 0.46: status not_yet, badge locked, rank unchanged |
 | `lean_skipped` | Chief Prime (16%) | not opted in: Prime from strength alone, muted "Physique not tracked", no badge |
@@ -199,6 +200,9 @@ Unit: settings.unit ("lb" default | "kg") picks the set; both lists exist. lb [1
 | `kg_units` | Chief Prime (45%) | kg log and unit setting: kg plate badges (60/100/140 kg), targets rounded up to 2.5 kg |
 | `knuckle_dragger_day_one` | Knuckle-Dragger (28%) | first session with an empty bar: everyone starts at Knuckle-Dragger; the bench already meets Chief Knuckle-Dragger but only 1 lift does, so the rank is Knuckle-Dragger; progress = 3rd-highest lift progress (squat) |
 | `deload_excluded` | Prime (0%) | deload sessions (session.deload === true) log 405 bench / 600 squat: ignored for rank, values and plate badges |
+| `plate5_earned_lb` | Chief Prime (51%) | lb: bench 495 x 1 earns the hidden five-plate bench badge (hidden: false, label "Five plates (495 lb) bench press"); squat 455 and deadlift 485 keep their five-plate badges hidden ("Hidden badge"); OHP has two plate badges only |
+| `plate5_earned_kg` | Chief Prime (50%) | kg: deadlift 220 kg x 1 earns the hidden five-plate deadlift badge (220 kg = five 20 kg plates a side on a 20 kg bar); bench 180 kg earns four plates, its five-plate badge stays hidden |
+| `plate5_490_not_earned` | Chief Prime (65%) | lb: 490 on bench, squat and deadlift is 5 lb short of 495: four plates earned, every five-plate badge stays hidden (hidden: true, label "Hidden badge", date and set_id null) |
 
 ## 11. Builder port notes
 - Port `report(history, as_of)` to JS reading `evolution-rules.json`; diff `REF.sample.expected` and each `REF.edge_cases[k].expected` (must-match), full `report` for debugging. Thresholds come from `tables.<sex>.<lift>.ranks` (do not recompute).

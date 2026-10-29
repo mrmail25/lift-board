@@ -3,7 +3,7 @@
  "version": 1,
  "entry_point": "tools/evolution.py report(history, as_of)",
  "rules_file": "evolution-rules.json",
- "rules_sha256": "28444fbc9033360cdc30dacddec4ad5755046ce8745bf7dfa853476070f030f0",
+ "rules_sha256": "e64da9e27becbcaa427371723079cec7847291efd887b4f0d677476da1ef5314",
  "sample": {
   "file": "sample-log.json",
   "sha256": "37a66588b55533c3fc4aa47b9ea4fe872fe911ef1f8049684ab7321aef5c103d",
@@ -101,8 +101,8 @@
     "Neanderthal",
     "Silverback",
     "Prime",
-    "???",
-    "???"
+    "Locked stage",
+    "Locked stage"
    ],
    "newly_revealed": [],
    "plates": [
@@ -389,13 +389,13 @@
     },
     {
      "stage": "kong",
-     "label": "???",
+     "label": "Locked stage",
      "hidden": true,
      "reached": false
     },
     {
      "stage": "apex",
-     "label": "???",
+     "label": "Locked stage",
      "hidden": true,
      "reached": false
     }
@@ -452,6 +452,18 @@
       "set_id": null
      },
      {
+      "id": "bench.plates5",
+      "lift": "bench",
+      "plates": 5,
+      "load": 495,
+      "unit": "lb",
+      "label": "Hidden badge",
+      "earned": false,
+      "date": null,
+      "set_id": null,
+      "hidden": true
+     },
+     {
       "id": "squat.plates1",
       "lift": "squat",
       "plates": 1,
@@ -496,6 +508,18 @@
       "set_id": null
      },
      {
+      "id": "squat.plates5",
+      "lift": "squat",
+      "plates": 5,
+      "load": 495,
+      "unit": "lb",
+      "label": "Hidden badge",
+      "earned": false,
+      "date": null,
+      "set_id": null,
+      "hidden": true
+     },
+     {
       "id": "deadlift.plates1",
       "lift": "deadlift",
       "plates": 1,
@@ -538,6 +562,18 @@
       "earned": false,
       "date": null,
       "set_id": null
+     },
+     {
+      "id": "deadlift.plates5",
+      "lift": "deadlift",
+      "plates": 5,
+      "load": 495,
+      "unit": "lb",
+      "label": "Hidden badge",
+      "earned": false,
+      "date": null,
+      "set_id": null,
+      "hidden": true
      },
      {
       "id": "ohp.plates1",
@@ -2410,8 +2446,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -2692,13 +2728,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -2755,6 +2791,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -2799,6 +2847,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -2841,6 +2901,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -4715,8 +4787,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -4993,13 +5065,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -5056,6 +5128,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -5100,6 +5184,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -5142,6 +5238,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -7016,8 +7124,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -7302,13 +7410,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -7365,6 +7473,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -7409,6 +7529,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -7451,6 +7583,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -9325,8 +9469,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -9608,13 +9752,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -9671,6 +9815,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -9715,6 +9871,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -9757,6 +9925,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -11967,8 +12147,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -12258,13 +12438,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -12321,6 +12501,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -12365,6 +12557,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -12407,6 +12611,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -14278,8 +14494,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -14560,13 +14776,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -14623,6 +14839,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -14667,6 +14895,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -14709,6 +14949,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -17608,8 +17860,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -17890,13 +18142,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -17953,6 +18205,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -17997,6 +18261,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -18039,6 +18315,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -19916,8 +20204,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -20198,13 +20486,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -20261,6 +20549,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -20305,6 +20605,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -20347,6 +20659,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -22785,8 +23109,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -23066,13 +23390,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -23129,6 +23453,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -23173,6 +23509,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -23215,6 +23563,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -24518,8 +24878,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -24779,13 +25139,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -24842,6 +25202,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -24886,6 +25258,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -24928,6 +25312,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -26243,8 +26639,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -26524,13 +26920,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -26587,6 +26983,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -26631,6 +27039,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -26673,6 +27093,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -26732,7 +27164,7 @@
    }
   },
   "kong_unlock": {
-   "shows": "awarded Alpha Prime, now 3 lifts meet Kong: Kong is revealed (newly_revealed), Apex stays hidden (\"???\")",
+   "shows": "awarded Alpha Prime, now 3 lifts meet Kong: Kong is revealed (newly_revealed), Apex stays hidden (\"Locked stage\")",
    "as_of": "2026-08-31",
    "history": {
     "schema": 2,
@@ -27989,7 +28421,7 @@
      "Silverback",
      "Prime",
      "Kong",
-     "???"
+     "Locked stage"
     ],
     "newly_revealed": [
      "kong"
@@ -28283,7 +28715,7 @@
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -28342,6 +28774,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -28386,6 +28830,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -28428,6 +28884,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -29759,8 +30227,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -30041,13 +30509,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -30104,6 +30572,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -30148,6 +30628,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -30190,6 +30682,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -31519,8 +32023,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -31801,13 +32305,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -31864,6 +32368,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -31908,6 +32424,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -31950,6 +32478,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -33267,8 +33807,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -33549,13 +34089,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -33612,6 +34152,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -33656,6 +34208,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -33698,6 +34262,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -35030,8 +35606,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -35312,13 +35888,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -35375,6 +35951,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -35419,6 +36007,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -35461,6 +36061,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -36790,8 +37402,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -37072,13 +37684,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -37135,6 +37747,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -37179,6 +37803,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -37221,6 +37857,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -38551,8 +39199,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -38829,13 +39477,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -38892,6 +39540,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -38936,6 +39596,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -38978,6 +39650,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -40301,8 +40985,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -40579,13 +41263,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -40642,6 +41326,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -40686,6 +41382,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -40728,6 +41436,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -42312,8 +43032,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -42596,13 +43316,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -42659,6 +43379,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 220,
+       "unit": "kg",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -42703,6 +43435,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 220,
+       "unit": "kg",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -42745,6 +43489,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 220,
+       "unit": "kg",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -43066,8 +43822,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [],
@@ -43331,13 +44087,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -43394,6 +44150,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -43438,6 +44206,18 @@
        "set_id": null
       },
       {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "deadlift.plates1",
        "lift": "deadlift",
        "plates": 1,
@@ -43480,6 +44260,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "ohp.plates1",
@@ -44881,8 +45673,8 @@
      "Neanderthal",
      "Silverback",
      "Prime",
-     "???",
-     "???"
+     "Locked stage",
+     "Locked stage"
     ],
     "newly_revealed": [],
     "plates": [
@@ -45162,13 +45954,13 @@
      },
      {
       "stage": "kong",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      },
      {
       "stage": "apex",
-      "label": "???",
+      "label": "Locked stage",
       "hidden": true,
       "reached": false
      }
@@ -45225,6 +46017,18 @@
        "set_id": null
       },
       {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "squat.plates1",
        "lift": "squat",
        "plates": 1,
@@ -45267,6 +46071,18 @@
        "earned": false,
        "date": null,
        "set_id": null
+      },
+      {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
       },
       {
        "id": "deadlift.plates1",
@@ -45313,6 +46129,18 @@
        "set_id": null
       },
       {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
        "id": "ohp.plates1",
        "lift": "ohp",
        "plates": 1,
@@ -45356,6 +46184,3725 @@
      "rank": "Prime",
      "next": "Chief Prime",
      "progress": "to Chief Prime",
+     "table": "Using the men's table. Set sex in Settings to use the women's table.",
+     "substitution": null,
+     "held": null,
+     "weighted": null,
+     "bodyweight": null,
+     "revealed": [],
+     "lean": "Physique not tracked",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max.",
+     "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
+     "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
+    }
+   }
+  },
+  "plate5_earned_lb": {
+   "shows": "lb: bench 495 x 1 earns the hidden five-plate bench badge (hidden: false, label \"Five plates (495 lb) bench press\"); squat 455 and deadlift 485 keep their five-plate badges hidden (\"Hidden badge\"); OHP has two plate badges only",
+   "as_of": "2026-08-24",
+   "history": {
+    "schema": 2,
+    "settings": {
+     "unit": "lb",
+     "hardRIR": 3,
+     "restByType": {
+      "primary": 180,
+      "accessory": 120,
+      "isolation": 90,
+      "warmup": 60
+     },
+     "effort": "rir",
+     "mainLiftPins": {}
+    },
+    "sessions": [
+     {
+      "id": "f2026-08-03",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-03T18:00:00-07:00",
+      "startedAt": "2026-08-03T18:00:00-07:00",
+      "endedAt": "2026-08-03T19:00:00-07:00",
+      "dayIdx": 0,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        },
+        {
+         "exerciseId": "overhead-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-05",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-05T18:00:00-07:00",
+      "startedAt": "2026-08-05T18:00:00-07:00",
+      "endedAt": "2026-08-05T19:00:00-07:00",
+      "dayIdx": 2,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "back-squat",
+         "sets": 1
+        },
+        {
+         "exerciseId": "deadlift",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-07",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-07T18:00:00-07:00",
+      "startedAt": "2026-08-07T18:00:00-07:00",
+      "endedAt": "2026-08-07T19:00:00-07:00",
+      "dayIdx": 4,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "pull-up",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-10",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-10T18:00:00-07:00",
+      "startedAt": "2026-08-10T18:00:00-07:00",
+      "endedAt": "2026-08-10T19:00:00-07:00",
+      "dayIdx": 0,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        },
+        {
+         "exerciseId": "overhead-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-12",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-12T18:00:00-07:00",
+      "startedAt": "2026-08-12T18:00:00-07:00",
+      "endedAt": "2026-08-12T19:00:00-07:00",
+      "dayIdx": 2,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "back-squat",
+         "sets": 1
+        },
+        {
+         "exerciseId": "deadlift",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-14",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-14T18:00:00-07:00",
+      "startedAt": "2026-08-14T18:00:00-07:00",
+      "endedAt": "2026-08-14T19:00:00-07:00",
+      "dayIdx": 4,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "pull-up",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-17",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-17T18:00:00-07:00",
+      "startedAt": "2026-08-17T18:00:00-07:00",
+      "endedAt": "2026-08-17T19:00:00-07:00",
+      "dayIdx": 0,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        },
+        {
+         "exerciseId": "overhead-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-19",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-19T18:00:00-07:00",
+      "startedAt": "2026-08-19T18:00:00-07:00",
+      "endedAt": "2026-08-19T19:00:00-07:00",
+      "dayIdx": 2,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "back-squat",
+         "sets": 1
+        },
+        {
+         "exerciseId": "deadlift",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-21",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-21T18:00:00-07:00",
+      "startedAt": "2026-08-21T18:00:00-07:00",
+      "endedAt": "2026-08-21T19:00:00-07:00",
+      "dayIdx": 4,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "pull-up",
+         "sets": 1
+        }
+       ]
+      }
+     }
+    ],
+    "entries": [
+     {
+      "id": "f2026-08-03-e0",
+      "sessionId": "f2026-08-03",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "Barbell Bench Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-03-e1",
+      "sessionId": "f2026-08-03",
+      "order": 1,
+      "exerciseId": "overhead-press",
+      "nameSnapshot": "Overhead Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-05-e0",
+      "sessionId": "f2026-08-05",
+      "order": 0,
+      "exerciseId": "back-squat",
+      "nameSnapshot": "Back Squat",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-05-e1",
+      "sessionId": "f2026-08-05",
+      "order": 1,
+      "exerciseId": "deadlift",
+      "nameSnapshot": "Deadlift",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-07-e0",
+      "sessionId": "f2026-08-07",
+      "order": 0,
+      "exerciseId": "pull-up",
+      "nameSnapshot": "Pull-Up",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-10-e0",
+      "sessionId": "f2026-08-10",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "Barbell Bench Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-10-e1",
+      "sessionId": "f2026-08-10",
+      "order": 1,
+      "exerciseId": "overhead-press",
+      "nameSnapshot": "Overhead Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-12-e0",
+      "sessionId": "f2026-08-12",
+      "order": 0,
+      "exerciseId": "back-squat",
+      "nameSnapshot": "Back Squat",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-12-e1",
+      "sessionId": "f2026-08-12",
+      "order": 1,
+      "exerciseId": "deadlift",
+      "nameSnapshot": "Deadlift",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-14-e0",
+      "sessionId": "f2026-08-14",
+      "order": 0,
+      "exerciseId": "pull-up",
+      "nameSnapshot": "Pull-Up",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-17-e0",
+      "sessionId": "f2026-08-17",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "Barbell Bench Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-17-e1",
+      "sessionId": "f2026-08-17",
+      "order": 1,
+      "exerciseId": "overhead-press",
+      "nameSnapshot": "Overhead Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-19-e0",
+      "sessionId": "f2026-08-19",
+      "order": 0,
+      "exerciseId": "back-squat",
+      "nameSnapshot": "Back Squat",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-19-e1",
+      "sessionId": "f2026-08-19",
+      "order": 1,
+      "exerciseId": "deadlift",
+      "nameSnapshot": "Deadlift",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-21-e0",
+      "sessionId": "f2026-08-21",
+      "order": 0,
+      "exerciseId": "pull-up",
+      "nameSnapshot": "Pull-Up",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     }
+    ],
+    "sets": [
+     {
+      "id": "f2026-08-03-e0-t0",
+      "entryId": "f2026-08-03-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 455,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-03T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-03-e1-t0",
+      "entryId": "f2026-08-03-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 225,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-03T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-05-e0-t0",
+      "entryId": "f2026-08-05-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 455,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-05T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-05-e1-t0",
+      "entryId": "f2026-08-05-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 485,
+      "reps": 2,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-05T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-07-e0-t0",
+      "entryId": "f2026-08-07-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 0,
+      "reps": 12,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-07T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-10-e0-t0",
+      "entryId": "f2026-08-10-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 455,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-10T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-10-e1-t0",
+      "entryId": "f2026-08-10-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 225,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-10T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-12-e0-t0",
+      "entryId": "f2026-08-12-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 455,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-12T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-12-e1-t0",
+      "entryId": "f2026-08-12-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 485,
+      "reps": 2,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-12T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-14-e0-t0",
+      "entryId": "f2026-08-14-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 0,
+      "reps": 12,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-14T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-17-e0-t0",
+      "entryId": "f2026-08-17-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 495,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-17T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-17-e1-t0",
+      "entryId": "f2026-08-17-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 225,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-17T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-19-e0-t0",
+      "entryId": "f2026-08-19-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 455,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-19T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-19-e1-t0",
+      "entryId": "f2026-08-19-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 485,
+      "reps": 2,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-19T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-21-e0-t0",
+      "entryId": "f2026-08-21-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 0,
+      "reps": 12,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-21T18:05:00-07:00"
+     }
+    ],
+    "bodyweights": [
+     {
+      "date": "2026-08-03",
+      "value": 250.0,
+      "unit": "lb"
+     }
+    ],
+    "exNotes": {},
+    "deloads": [],
+    "readiness": []
+   },
+   "expected": {
+    "table": "men",
+    "rank": "prime.2",
+    "rank_label": "Chief Prime",
+    "computed": 13,
+    "held": false,
+    "next": "prime.3",
+    "next_label": "Alpha Prime",
+    "progress": 0.512,
+    "pct": 51,
+    "substitution": null,
+    "slots": [
+     [
+      "bench",
+      "bench",
+      2.046,
+      1.0
+     ],
+     [
+      "squat",
+      "squat",
+      2.002,
+      0.512
+     ],
+     [
+      "deadlift",
+      "deadlift",
+      2.0693,
+      0.0
+     ],
+     [
+      "ohp",
+      "ohp",
+      0.99,
+      1.0
+     ],
+     [
+      "pullups",
+      "pullups",
+      12.0,
+      0.0
+     ]
+    ],
+    "lifts": {
+     "bench": [
+      "rated",
+      2.046,
+      "apex.3",
+      "Locked stage"
+     ],
+     "squat": [
+      "rated",
+      2.002,
+      "prime.2",
+      "Chief Prime"
+     ],
+     "deadlift": [
+      "rated",
+      2.0693,
+      "prime.1",
+      "Prime"
+     ],
+     "ohp": [
+      "rated",
+      0.99,
+      "prime.3",
+      "Alpha Prime"
+     ],
+     "pullups": [
+      "rated",
+      12.0,
+      "prime.1",
+      "Prime"
+     ],
+     "row": [
+      "not_trained",
+      null,
+      null,
+      null
+     ],
+     "dips": [
+      "not_trained",
+      null,
+      null,
+      null
+     ]
+    },
+    "ladder": [
+     "Knuckle-Dragger",
+     "Primate",
+     "Neanderthal",
+     "Silverback",
+     "Prime",
+     "Locked stage",
+     "Locked stage"
+    ],
+    "newly_revealed": [],
+    "plates": [
+     "bench.plates1",
+     "bench.plates2",
+     "bench.plates3",
+     "bench.plates4",
+     "bench.plates5",
+     "squat.plates1",
+     "squat.plates2",
+     "squat.plates3",
+     "squat.plates4",
+     "deadlift.plates1",
+     "deadlift.plates2",
+     "deadlift.plates3",
+     "deadlift.plates4",
+     "ohp.plates1",
+     "ohp.plates2"
+    ],
+    "lean": "not_tracked",
+    "lean_badge": [
+     false,
+     false,
+     false
+    ],
+    "labels": {
+     "rank": "Chief Prime",
+     "next": "Alpha Prime",
+     "table": "Using the men's table. Set sex in Settings to use the women's table.",
+     "substitution": null,
+     "held": null,
+     "weighted": null,
+     "bodyweight": null,
+     "revealed": [],
+     "lean": "Physique not tracked"
+    }
+   },
+   "report": {
+    "as_of": "2026-08-24",
+    "table": "men",
+    "sex_set": false,
+    "unit": "lb",
+    "rank": {
+     "index": 13,
+     "id": "prime.2",
+     "stage": "prime",
+     "tier": 2,
+     "label": "Chief Prime",
+     "computed_index": 13,
+     "held": false
+    },
+    "awarded_out": {
+     "stage": "prime",
+     "tier": 2
+    },
+    "next": {
+     "index": 14,
+     "id": "prime.3",
+     "label": "Alpha Prime",
+     "hidden": false
+    },
+    "progress": {
+     "overall": 0.512,
+     "pct": 51,
+     "basis": "3rd-highest of 5 slots",
+     "slots": [
+      {
+       "slot": "bench",
+       "lift": "bench",
+       "substituted": false,
+       "value": 2.046,
+       "progress": 1.0,
+       "target": {
+        "threshold": 1.4167,
+        "met": true,
+        "kind": "multiple",
+        "estimated_1rm": 355,
+        "unit": "lb"
+       }
+      },
+      {
+       "slot": "squat",
+       "lift": "squat",
+       "substituted": false,
+       "value": 2.002,
+       "progress": 0.512,
+       "target": {
+        "threshold": 2.0833,
+        "met": false,
+        "kind": "multiple",
+        "estimated_1rm": 525,
+        "unit": "lb"
+       }
+      },
+      {
+       "slot": "deadlift",
+       "lift": "deadlift",
+       "substituted": false,
+       "value": 2.0693,
+       "progress": 0.0,
+       "target": {
+        "threshold": 2.3333,
+        "met": false,
+        "kind": "multiple",
+        "estimated_1rm": 585,
+        "unit": "lb"
+       }
+      },
+      {
+       "slot": "ohp",
+       "lift": "ohp",
+       "substituted": false,
+       "value": 0.99,
+       "progress": 1.0,
+       "target": {
+        "threshold": 0.9667,
+        "met": true,
+        "kind": "multiple",
+        "estimated_1rm": 245,
+        "unit": "lb"
+       }
+      },
+      {
+       "slot": "pullups",
+       "lift": "pullups",
+       "substituted": false,
+       "value": 12.0,
+       "progress": 0.0,
+       "target": {
+        "threshold": 15,
+        "met": false,
+        "kind": "reps",
+        "reps": 15
+       }
+      }
+     ]
+    },
+    "substitution": null,
+    "lifts": {
+     "bench": {
+      "status": "rated",
+      "value": 2.046,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-17-e0-t0",
+      "date": "2026-08-17",
+      "converted": false,
+      "bodyweight_kg": 113.3982,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 20,
+      "rank_id": "apex.3",
+      "rank_label": "Locked stage",
+      "rank_hidden": true,
+      "label": null
+     },
+     "squat": {
+      "status": "rated",
+      "value": 2.002,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-05-e0-t0",
+      "date": "2026-08-05",
+      "converted": false,
+      "bodyweight_kg": 113.3982,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 13,
+      "rank_id": "prime.2",
+      "rank_label": "Chief Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "deadlift": {
+      "status": "rated",
+      "value": 2.0693,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-05-e1-t0",
+      "date": "2026-08-05",
+      "converted": false,
+      "bodyweight_kg": 113.3982,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 12,
+      "rank_id": "prime.1",
+      "rank_label": "Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "ohp": {
+      "status": "rated",
+      "value": 0.99,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-03-e1-t0",
+      "date": "2026-08-03",
+      "converted": false,
+      "bodyweight_kg": 113.3982,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 14,
+      "rank_id": "prime.3",
+      "rank_label": "Alpha Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "pullups": {
+      "status": "rated",
+      "value": 12.0,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-07-e0-t0",
+      "date": "2026-08-07",
+      "converted": false,
+      "bodyweight_kg": 113.3982,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "reps",
+      "rank_index": 12,
+      "rank_id": "prime.1",
+      "rank_label": "Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "row": {
+      "status": "not_trained",
+      "value": null,
+      "trained": false,
+      "unrated_sets": 0,
+      "core": false,
+      "kind": "multiple",
+      "rank_index": null,
+      "rank_id": null,
+      "rank_label": null,
+      "rank_hidden": false,
+      "label": "Not trained yet"
+     },
+     "dips": {
+      "status": "not_trained",
+      "value": null,
+      "trained": false,
+      "unrated_sets": 0,
+      "core": false,
+      "kind": "reps",
+      "rank_index": null,
+      "rank_id": null,
+      "rank_label": null,
+      "rank_hidden": false,
+      "label": "Not trained yet"
+     }
+    },
+    "ladder": [
+     {
+      "stage": "knuckle_dragger",
+      "label": "Knuckle-Dragger",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "primate",
+      "label": "Primate",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "neanderthal",
+      "label": "Neanderthal",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "silverback",
+      "label": "Silverback",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "prime",
+      "label": "Prime",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "kong",
+      "label": "Locked stage",
+      "hidden": true,
+      "reached": false
+     },
+     {
+      "stage": "apex",
+      "label": "Locked stage",
+      "hidden": true,
+      "reached": false
+     }
+    ],
+    "newly_revealed": [],
+    "bodyweight_current": {
+     "kg": 113.3982,
+     "source": "logged"
+    },
+    "badges": {
+     "plates": [
+      {
+       "id": "bench.plates1",
+       "lift": "bench",
+       "plates": 1,
+       "load": 135,
+       "unit": "lb",
+       "label": "One plate (135 lb) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates2",
+       "lift": "bench",
+       "plates": 2,
+       "load": 225,
+       "unit": "lb",
+       "label": "Two plates (225 lb) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates3",
+       "lift": "bench",
+       "plates": 3,
+       "load": 315,
+       "unit": "lb",
+       "label": "Three plates (315 lb) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates4",
+       "lift": "bench",
+       "plates": 4,
+       "load": 405,
+       "unit": "lb",
+       "label": "Four plates (405 lb) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Five plates (495 lb) bench press",
+       "earned": true,
+       "date": "2026-08-17",
+       "set_id": "f2026-08-17-e0-t0",
+       "hidden": false
+      },
+      {
+       "id": "squat.plates1",
+       "lift": "squat",
+       "plates": 1,
+       "load": 135,
+       "unit": "lb",
+       "label": "One plate (135 lb) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates2",
+       "lift": "squat",
+       "plates": 2,
+       "load": 225,
+       "unit": "lb",
+       "label": "Two plates (225 lb) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates3",
+       "lift": "squat",
+       "plates": 3,
+       "load": 315,
+       "unit": "lb",
+       "label": "Three plates (315 lb) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates4",
+       "lift": "squat",
+       "plates": 4,
+       "load": 405,
+       "unit": "lb",
+       "label": "Four plates (405 lb) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
+       "id": "deadlift.plates1",
+       "lift": "deadlift",
+       "plates": 1,
+       "load": 135,
+       "unit": "lb",
+       "label": "One plate (135 lb) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates2",
+       "lift": "deadlift",
+       "plates": 2,
+       "load": 225,
+       "unit": "lb",
+       "label": "Two plates (225 lb) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates3",
+       "lift": "deadlift",
+       "plates": 3,
+       "load": 315,
+       "unit": "lb",
+       "label": "Three plates (315 lb) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates4",
+       "lift": "deadlift",
+       "plates": 4,
+       "load": 405,
+       "unit": "lb",
+       "label": "Four plates (405 lb) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
+       "id": "ohp.plates1",
+       "lift": "ohp",
+       "plates": 1,
+       "load": 135,
+       "unit": "lb",
+       "label": "One plate (135 lb) overhead press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e1-t0"
+      },
+      {
+       "id": "ohp.plates2",
+       "lift": "ohp",
+       "plates": 2,
+       "load": 225,
+       "unit": "lb",
+       "label": "Two plates (225 lb) overhead press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e1-t0"
+      }
+     ],
+     "lean_prime": {
+      "id": "lean_prime",
+      "label": "Lean Prime",
+      "unlocked": false,
+      "greyed": false,
+      "visible": false
+     }
+    },
+    "lean": {
+     "status": "not_tracked",
+     "method": null,
+     "value": null,
+     "threshold": null,
+     "age_allowance": 0,
+     "reading_date": null,
+     "label": "Physique not tracked"
+    },
+    "labels": {
+     "rank": "Chief Prime",
+     "next": "Alpha Prime",
+     "progress": "to Alpha Prime",
+     "table": "Using the men's table. Set sex in Settings to use the women's table.",
+     "substitution": null,
+     "held": null,
+     "weighted": null,
+     "bodyweight": null,
+     "revealed": [],
+     "lean": "Physique not tracked",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max.",
+     "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
+     "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
+    }
+   }
+  },
+  "plate5_earned_kg": {
+   "shows": "kg: deadlift 220 kg x 1 earns the hidden five-plate deadlift badge (220 kg = five 20 kg plates a side on a 20 kg bar); bench 180 kg earns four plates, its five-plate badge stays hidden",
+   "as_of": "2026-08-24",
+   "history": {
+    "schema": 2,
+    "settings": {
+     "unit": "kg",
+     "hardRIR": 3,
+     "restByType": {
+      "primary": 180,
+      "accessory": 120,
+      "isolation": 90,
+      "warmup": 60
+     },
+     "effort": "rir",
+     "mainLiftPins": {}
+    },
+    "sessions": [
+     {
+      "id": "f2026-08-03",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-03T18:00:00-07:00",
+      "startedAt": "2026-08-03T18:00:00-07:00",
+      "endedAt": "2026-08-03T19:00:00-07:00",
+      "dayIdx": 0,
+      "label": "Day",
+      "unit": "kg",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        },
+        {
+         "exerciseId": "overhead-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-05",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-05T18:00:00-07:00",
+      "startedAt": "2026-08-05T18:00:00-07:00",
+      "endedAt": "2026-08-05T19:00:00-07:00",
+      "dayIdx": 2,
+      "label": "Day",
+      "unit": "kg",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "back-squat",
+         "sets": 1
+        },
+        {
+         "exerciseId": "deadlift",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-07",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-07T18:00:00-07:00",
+      "startedAt": "2026-08-07T18:00:00-07:00",
+      "endedAt": "2026-08-07T19:00:00-07:00",
+      "dayIdx": 4,
+      "label": "Day",
+      "unit": "kg",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "pull-up",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-10",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-10T18:00:00-07:00",
+      "startedAt": "2026-08-10T18:00:00-07:00",
+      "endedAt": "2026-08-10T19:00:00-07:00",
+      "dayIdx": 0,
+      "label": "Day",
+      "unit": "kg",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        },
+        {
+         "exerciseId": "overhead-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-12",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-12T18:00:00-07:00",
+      "startedAt": "2026-08-12T18:00:00-07:00",
+      "endedAt": "2026-08-12T19:00:00-07:00",
+      "dayIdx": 2,
+      "label": "Day",
+      "unit": "kg",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "back-squat",
+         "sets": 1
+        },
+        {
+         "exerciseId": "deadlift",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-14",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-14T18:00:00-07:00",
+      "startedAt": "2026-08-14T18:00:00-07:00",
+      "endedAt": "2026-08-14T19:00:00-07:00",
+      "dayIdx": 4,
+      "label": "Day",
+      "unit": "kg",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "pull-up",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-17",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-17T18:00:00-07:00",
+      "startedAt": "2026-08-17T18:00:00-07:00",
+      "endedAt": "2026-08-17T19:00:00-07:00",
+      "dayIdx": 0,
+      "label": "Day",
+      "unit": "kg",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        },
+        {
+         "exerciseId": "overhead-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-19",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-19T18:00:00-07:00",
+      "startedAt": "2026-08-19T18:00:00-07:00",
+      "endedAt": "2026-08-19T19:00:00-07:00",
+      "dayIdx": 2,
+      "label": "Day",
+      "unit": "kg",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "back-squat",
+         "sets": 1
+        },
+        {
+         "exerciseId": "deadlift",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-21",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-21T18:00:00-07:00",
+      "startedAt": "2026-08-21T18:00:00-07:00",
+      "endedAt": "2026-08-21T19:00:00-07:00",
+      "dayIdx": 4,
+      "label": "Day",
+      "unit": "kg",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "pull-up",
+         "sets": 1
+        }
+       ]
+      }
+     }
+    ],
+    "entries": [
+     {
+      "id": "f2026-08-03-e0",
+      "sessionId": "f2026-08-03",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "Barbell Bench Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-03-e1",
+      "sessionId": "f2026-08-03",
+      "order": 1,
+      "exerciseId": "overhead-press",
+      "nameSnapshot": "Overhead Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-05-e0",
+      "sessionId": "f2026-08-05",
+      "order": 0,
+      "exerciseId": "back-squat",
+      "nameSnapshot": "Back Squat",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-05-e1",
+      "sessionId": "f2026-08-05",
+      "order": 1,
+      "exerciseId": "deadlift",
+      "nameSnapshot": "Deadlift",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-07-e0",
+      "sessionId": "f2026-08-07",
+      "order": 0,
+      "exerciseId": "pull-up",
+      "nameSnapshot": "Pull-Up",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-10-e0",
+      "sessionId": "f2026-08-10",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "Barbell Bench Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-10-e1",
+      "sessionId": "f2026-08-10",
+      "order": 1,
+      "exerciseId": "overhead-press",
+      "nameSnapshot": "Overhead Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-12-e0",
+      "sessionId": "f2026-08-12",
+      "order": 0,
+      "exerciseId": "back-squat",
+      "nameSnapshot": "Back Squat",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-12-e1",
+      "sessionId": "f2026-08-12",
+      "order": 1,
+      "exerciseId": "deadlift",
+      "nameSnapshot": "Deadlift",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-14-e0",
+      "sessionId": "f2026-08-14",
+      "order": 0,
+      "exerciseId": "pull-up",
+      "nameSnapshot": "Pull-Up",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-17-e0",
+      "sessionId": "f2026-08-17",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "Barbell Bench Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-17-e1",
+      "sessionId": "f2026-08-17",
+      "order": 1,
+      "exerciseId": "overhead-press",
+      "nameSnapshot": "Overhead Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-19-e0",
+      "sessionId": "f2026-08-19",
+      "order": 0,
+      "exerciseId": "back-squat",
+      "nameSnapshot": "Back Squat",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-19-e1",
+      "sessionId": "f2026-08-19",
+      "order": 1,
+      "exerciseId": "deadlift",
+      "nameSnapshot": "Deadlift",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-21-e0",
+      "sessionId": "f2026-08-21",
+      "order": 0,
+      "exerciseId": "pull-up",
+      "nameSnapshot": "Pull-Up",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     }
+    ],
+    "sets": [
+     {
+      "id": "f2026-08-03-e0-t0",
+      "entryId": "f2026-08-03-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 180,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-03T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-03-e1-t0",
+      "entryId": "f2026-08-03-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 100,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-03T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-05-e0-t0",
+      "entryId": "f2026-08-05-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 200,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-05T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-05-e1-t0",
+      "entryId": "f2026-08-05-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 210,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-05T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-07-e0-t0",
+      "entryId": "f2026-08-07-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 0,
+      "reps": 12,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-07T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-10-e0-t0",
+      "entryId": "f2026-08-10-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 180,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-10T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-10-e1-t0",
+      "entryId": "f2026-08-10-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 100,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-10T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-12-e0-t0",
+      "entryId": "f2026-08-12-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 200,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-12T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-12-e1-t0",
+      "entryId": "f2026-08-12-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 210,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-12T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-14-e0-t0",
+      "entryId": "f2026-08-14-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 0,
+      "reps": 12,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-14T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-17-e0-t0",
+      "entryId": "f2026-08-17-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 180,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-17T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-17-e1-t0",
+      "entryId": "f2026-08-17-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 100,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-17T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-19-e0-t0",
+      "entryId": "f2026-08-19-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 200,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-19T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-19-e1-t0",
+      "entryId": "f2026-08-19-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 220,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-19T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-21-e0-t0",
+      "entryId": "f2026-08-21-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 0,
+      "reps": 12,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-21T18:05:00-07:00"
+     }
+    ],
+    "bodyweights": [
+     {
+      "date": "2026-08-03",
+      "value": 110.0,
+      "unit": "kg"
+     }
+    ],
+    "exNotes": {},
+    "deloads": [],
+    "readiness": []
+   },
+   "expected": {
+    "table": "men",
+    "rank": "prime.2",
+    "rank_label": "Chief Prime",
+    "computed": 13,
+    "held": false,
+    "next": "prime.3",
+    "next_label": "Alpha Prime",
+    "progress": 0.5,
+    "pct": 50,
+    "substitution": null,
+    "slots": [
+     [
+      "bench",
+      "bench",
+      1.6909,
+      1.0
+     ],
+     [
+      "squat",
+      "squat",
+      2.0,
+      0.5
+     ],
+     [
+      "deadlift",
+      "deadlift",
+      2.0667,
+      0.0
+     ],
+     [
+      "ohp",
+      "ohp",
+      1.0,
+      1.0
+     ],
+     [
+      "pullups",
+      "pullups",
+      12.0,
+      0.0
+     ]
+    ],
+    "lifts": {
+     "bench": [
+      "rated",
+      1.6909,
+      "kong.3",
+      "Locked stage"
+     ],
+     "squat": [
+      "rated",
+      2.0,
+      "prime.2",
+      "Chief Prime"
+     ],
+     "deadlift": [
+      "rated",
+      2.0667,
+      "prime.1",
+      "Prime"
+     ],
+     "ohp": [
+      "rated",
+      1.0,
+      "prime.3",
+      "Alpha Prime"
+     ],
+     "pullups": [
+      "rated",
+      12.0,
+      "prime.1",
+      "Prime"
+     ],
+     "row": [
+      "not_trained",
+      null,
+      null,
+      null
+     ],
+     "dips": [
+      "not_trained",
+      null,
+      null,
+      null
+     ]
+    },
+    "ladder": [
+     "Knuckle-Dragger",
+     "Primate",
+     "Neanderthal",
+     "Silverback",
+     "Prime",
+     "Locked stage",
+     "Locked stage"
+    ],
+    "newly_revealed": [],
+    "plates": [
+     "bench.plates1",
+     "bench.plates2",
+     "bench.plates3",
+     "bench.plates4",
+     "squat.plates1",
+     "squat.plates2",
+     "squat.plates3",
+     "squat.plates4",
+     "deadlift.plates1",
+     "deadlift.plates2",
+     "deadlift.plates3",
+     "deadlift.plates4",
+     "deadlift.plates5",
+     "ohp.plates1",
+     "ohp.plates2"
+    ],
+    "lean": "not_tracked",
+    "lean_badge": [
+     false,
+     false,
+     false
+    ],
+    "labels": {
+     "rank": "Chief Prime",
+     "next": "Alpha Prime",
+     "table": "Using the men's table. Set sex in Settings to use the women's table.",
+     "substitution": null,
+     "held": null,
+     "weighted": null,
+     "bodyweight": null,
+     "revealed": [],
+     "lean": "Physique not tracked"
+    }
+   },
+   "report": {
+    "as_of": "2026-08-24",
+    "table": "men",
+    "sex_set": false,
+    "unit": "kg",
+    "rank": {
+     "index": 13,
+     "id": "prime.2",
+     "stage": "prime",
+     "tier": 2,
+     "label": "Chief Prime",
+     "computed_index": 13,
+     "held": false
+    },
+    "awarded_out": {
+     "stage": "prime",
+     "tier": 2
+    },
+    "next": {
+     "index": 14,
+     "id": "prime.3",
+     "label": "Alpha Prime",
+     "hidden": false
+    },
+    "progress": {
+     "overall": 0.5,
+     "pct": 50,
+     "basis": "3rd-highest of 5 slots",
+     "slots": [
+      {
+       "slot": "bench",
+       "lift": "bench",
+       "substituted": false,
+       "value": 1.6909,
+       "progress": 1.0,
+       "target": {
+        "threshold": 1.4167,
+        "met": true,
+        "kind": "multiple",
+        "estimated_1rm": 157.5,
+        "unit": "kg"
+       }
+      },
+      {
+       "slot": "squat",
+       "lift": "squat",
+       "substituted": false,
+       "value": 2.0,
+       "progress": 0.5,
+       "target": {
+        "threshold": 2.0833,
+        "met": false,
+        "kind": "multiple",
+        "estimated_1rm": 230.0,
+        "unit": "kg"
+       }
+      },
+      {
+       "slot": "deadlift",
+       "lift": "deadlift",
+       "substituted": false,
+       "value": 2.0667,
+       "progress": 0.0,
+       "target": {
+        "threshold": 2.3333,
+        "met": false,
+        "kind": "multiple",
+        "estimated_1rm": 257.5,
+        "unit": "kg"
+       }
+      },
+      {
+       "slot": "ohp",
+       "lift": "ohp",
+       "substituted": false,
+       "value": 1.0,
+       "progress": 1.0,
+       "target": {
+        "threshold": 0.9667,
+        "met": true,
+        "kind": "multiple",
+        "estimated_1rm": 107.5,
+        "unit": "kg"
+       }
+      },
+      {
+       "slot": "pullups",
+       "lift": "pullups",
+       "substituted": false,
+       "value": 12.0,
+       "progress": 0.0,
+       "target": {
+        "threshold": 15,
+        "met": false,
+        "kind": "reps",
+        "reps": 15
+       }
+      }
+     ]
+    },
+    "substitution": null,
+    "lifts": {
+     "bench": {
+      "status": "rated",
+      "value": 1.6909,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-03-e0-t0",
+      "date": "2026-08-03",
+      "converted": false,
+      "bodyweight_kg": 110.0,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 17,
+      "rank_id": "kong.3",
+      "rank_label": "Locked stage",
+      "rank_hidden": true,
+      "label": null
+     },
+     "squat": {
+      "status": "rated",
+      "value": 2.0,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-05-e0-t0",
+      "date": "2026-08-05",
+      "converted": false,
+      "bodyweight_kg": 110.0,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 13,
+      "rank_id": "prime.2",
+      "rank_label": "Chief Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "deadlift": {
+      "status": "rated",
+      "value": 2.0667,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-19-e1-t0",
+      "date": "2026-08-19",
+      "converted": false,
+      "bodyweight_kg": 110.0,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 12,
+      "rank_id": "prime.1",
+      "rank_label": "Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "ohp": {
+      "status": "rated",
+      "value": 1.0,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-03-e1-t0",
+      "date": "2026-08-03",
+      "converted": false,
+      "bodyweight_kg": 110.0,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 14,
+      "rank_id": "prime.3",
+      "rank_label": "Alpha Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "pullups": {
+      "status": "rated",
+      "value": 12.0,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-07-e0-t0",
+      "date": "2026-08-07",
+      "converted": false,
+      "bodyweight_kg": 110.0,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "reps",
+      "rank_index": 12,
+      "rank_id": "prime.1",
+      "rank_label": "Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "row": {
+      "status": "not_trained",
+      "value": null,
+      "trained": false,
+      "unrated_sets": 0,
+      "core": false,
+      "kind": "multiple",
+      "rank_index": null,
+      "rank_id": null,
+      "rank_label": null,
+      "rank_hidden": false,
+      "label": "Not trained yet"
+     },
+     "dips": {
+      "status": "not_trained",
+      "value": null,
+      "trained": false,
+      "unrated_sets": 0,
+      "core": false,
+      "kind": "reps",
+      "rank_index": null,
+      "rank_id": null,
+      "rank_label": null,
+      "rank_hidden": false,
+      "label": "Not trained yet"
+     }
+    },
+    "ladder": [
+     {
+      "stage": "knuckle_dragger",
+      "label": "Knuckle-Dragger",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "primate",
+      "label": "Primate",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "neanderthal",
+      "label": "Neanderthal",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "silverback",
+      "label": "Silverback",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "prime",
+      "label": "Prime",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "kong",
+      "label": "Locked stage",
+      "hidden": true,
+      "reached": false
+     },
+     {
+      "stage": "apex",
+      "label": "Locked stage",
+      "hidden": true,
+      "reached": false
+     }
+    ],
+    "newly_revealed": [],
+    "bodyweight_current": {
+     "kg": 110.0,
+     "source": "logged"
+    },
+    "badges": {
+     "plates": [
+      {
+       "id": "bench.plates1",
+       "lift": "bench",
+       "plates": 1,
+       "load": 60,
+       "unit": "kg",
+       "label": "One plate (60 kg) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates2",
+       "lift": "bench",
+       "plates": 2,
+       "load": 100,
+       "unit": "kg",
+       "label": "Two plates (100 kg) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates3",
+       "lift": "bench",
+       "plates": 3,
+       "load": 140,
+       "unit": "kg",
+       "label": "Three plates (140 kg) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates4",
+       "lift": "bench",
+       "plates": 4,
+       "load": 180,
+       "unit": "kg",
+       "label": "Four plates (180 kg) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 220,
+       "unit": "kg",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
+       "id": "squat.plates1",
+       "lift": "squat",
+       "plates": 1,
+       "load": 60,
+       "unit": "kg",
+       "label": "One plate (60 kg) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates2",
+       "lift": "squat",
+       "plates": 2,
+       "load": 100,
+       "unit": "kg",
+       "label": "Two plates (100 kg) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates3",
+       "lift": "squat",
+       "plates": 3,
+       "load": 140,
+       "unit": "kg",
+       "label": "Three plates (140 kg) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates4",
+       "lift": "squat",
+       "plates": 4,
+       "load": 180,
+       "unit": "kg",
+       "label": "Four plates (180 kg) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 220,
+       "unit": "kg",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
+       "id": "deadlift.plates1",
+       "lift": "deadlift",
+       "plates": 1,
+       "load": 60,
+       "unit": "kg",
+       "label": "One plate (60 kg) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates2",
+       "lift": "deadlift",
+       "plates": 2,
+       "load": 100,
+       "unit": "kg",
+       "label": "Two plates (100 kg) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates3",
+       "lift": "deadlift",
+       "plates": 3,
+       "load": 140,
+       "unit": "kg",
+       "label": "Three plates (140 kg) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates4",
+       "lift": "deadlift",
+       "plates": 4,
+       "load": 180,
+       "unit": "kg",
+       "label": "Four plates (180 kg) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 220,
+       "unit": "kg",
+       "label": "Five plates (220 kg) deadlift",
+       "earned": true,
+       "date": "2026-08-19",
+       "set_id": "f2026-08-19-e1-t0",
+       "hidden": false
+      },
+      {
+       "id": "ohp.plates1",
+       "lift": "ohp",
+       "plates": 1,
+       "load": 60,
+       "unit": "kg",
+       "label": "One plate (60 kg) overhead press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e1-t0"
+      },
+      {
+       "id": "ohp.plates2",
+       "lift": "ohp",
+       "plates": 2,
+       "load": 100,
+       "unit": "kg",
+       "label": "Two plates (100 kg) overhead press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e1-t0"
+      }
+     ],
+     "lean_prime": {
+      "id": "lean_prime",
+      "label": "Lean Prime",
+      "unlocked": false,
+      "greyed": false,
+      "visible": false
+     }
+    },
+    "lean": {
+     "status": "not_tracked",
+     "method": null,
+     "value": null,
+     "threshold": null,
+     "age_allowance": 0,
+     "reading_date": null,
+     "label": "Physique not tracked"
+    },
+    "labels": {
+     "rank": "Chief Prime",
+     "next": "Alpha Prime",
+     "progress": "to Alpha Prime",
+     "table": "Using the men's table. Set sex in Settings to use the women's table.",
+     "substitution": null,
+     "held": null,
+     "weighted": null,
+     "bodyweight": null,
+     "revealed": [],
+     "lean": "Physique not tracked",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max.",
+     "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
+     "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
+    }
+   }
+  },
+  "plate5_490_not_earned": {
+   "shows": "lb: 490 on bench, squat and deadlift is 5 lb short of 495: four plates earned, every five-plate badge stays hidden (hidden: true, label \"Hidden badge\", date and set_id null)",
+   "as_of": "2026-08-24",
+   "history": {
+    "schema": 2,
+    "settings": {
+     "unit": "lb",
+     "hardRIR": 3,
+     "restByType": {
+      "primary": 180,
+      "accessory": 120,
+      "isolation": 90,
+      "warmup": 60
+     },
+     "effort": "rir",
+     "mainLiftPins": {}
+    },
+    "sessions": [
+     {
+      "id": "f2026-08-03",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-03T18:00:00-07:00",
+      "startedAt": "2026-08-03T18:00:00-07:00",
+      "endedAt": "2026-08-03T19:00:00-07:00",
+      "dayIdx": 0,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        },
+        {
+         "exerciseId": "overhead-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-05",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-05T18:00:00-07:00",
+      "startedAt": "2026-08-05T18:00:00-07:00",
+      "endedAt": "2026-08-05T19:00:00-07:00",
+      "dayIdx": 2,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "back-squat",
+         "sets": 1
+        },
+        {
+         "exerciseId": "deadlift",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-07",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-07T18:00:00-07:00",
+      "startedAt": "2026-08-07T18:00:00-07:00",
+      "endedAt": "2026-08-07T19:00:00-07:00",
+      "dayIdx": 4,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "pull-up",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-10",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-10T18:00:00-07:00",
+      "startedAt": "2026-08-10T18:00:00-07:00",
+      "endedAt": "2026-08-10T19:00:00-07:00",
+      "dayIdx": 0,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        },
+        {
+         "exerciseId": "overhead-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-12",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-12T18:00:00-07:00",
+      "startedAt": "2026-08-12T18:00:00-07:00",
+      "endedAt": "2026-08-12T19:00:00-07:00",
+      "dayIdx": 2,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "back-squat",
+         "sets": 1
+        },
+        {
+         "exerciseId": "deadlift",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-14",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-14T18:00:00-07:00",
+      "startedAt": "2026-08-14T18:00:00-07:00",
+      "endedAt": "2026-08-14T19:00:00-07:00",
+      "dayIdx": 4,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "pull-up",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-17",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-17T18:00:00-07:00",
+      "startedAt": "2026-08-17T18:00:00-07:00",
+      "endedAt": "2026-08-17T19:00:00-07:00",
+      "dayIdx": 0,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "barbell-bench-press",
+         "sets": 1
+        },
+        {
+         "exerciseId": "overhead-press",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-19",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-19T18:00:00-07:00",
+      "startedAt": "2026-08-19T18:00:00-07:00",
+      "endedAt": "2026-08-19T19:00:00-07:00",
+      "dayIdx": 2,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "back-squat",
+         "sets": 1
+        },
+        {
+         "exerciseId": "deadlift",
+         "sets": 1
+        }
+       ]
+      }
+     },
+     {
+      "id": "f2026-08-21",
+      "schema": 2,
+      "status": "completed",
+      "date": "2026-08-21T18:00:00-07:00",
+      "startedAt": "2026-08-21T18:00:00-07:00",
+      "endedAt": "2026-08-21T19:00:00-07:00",
+      "dayIdx": 4,
+      "label": "Day",
+      "unit": "lb",
+      "notes": "",
+      "snapshot": {
+       "exercises": [
+        {
+         "exerciseId": "pull-up",
+         "sets": 1
+        }
+       ]
+      }
+     }
+    ],
+    "entries": [
+     {
+      "id": "f2026-08-03-e0",
+      "sessionId": "f2026-08-03",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "Barbell Bench Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-03-e1",
+      "sessionId": "f2026-08-03",
+      "order": 1,
+      "exerciseId": "overhead-press",
+      "nameSnapshot": "Overhead Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-05-e0",
+      "sessionId": "f2026-08-05",
+      "order": 0,
+      "exerciseId": "back-squat",
+      "nameSnapshot": "Back Squat",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-05-e1",
+      "sessionId": "f2026-08-05",
+      "order": 1,
+      "exerciseId": "deadlift",
+      "nameSnapshot": "Deadlift",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-07-e0",
+      "sessionId": "f2026-08-07",
+      "order": 0,
+      "exerciseId": "pull-up",
+      "nameSnapshot": "Pull-Up",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-10-e0",
+      "sessionId": "f2026-08-10",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "Barbell Bench Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-10-e1",
+      "sessionId": "f2026-08-10",
+      "order": 1,
+      "exerciseId": "overhead-press",
+      "nameSnapshot": "Overhead Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-12-e0",
+      "sessionId": "f2026-08-12",
+      "order": 0,
+      "exerciseId": "back-squat",
+      "nameSnapshot": "Back Squat",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-12-e1",
+      "sessionId": "f2026-08-12",
+      "order": 1,
+      "exerciseId": "deadlift",
+      "nameSnapshot": "Deadlift",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-14-e0",
+      "sessionId": "f2026-08-14",
+      "order": 0,
+      "exerciseId": "pull-up",
+      "nameSnapshot": "Pull-Up",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-17-e0",
+      "sessionId": "f2026-08-17",
+      "order": 0,
+      "exerciseId": "barbell-bench-press",
+      "nameSnapshot": "Barbell Bench Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-17-e1",
+      "sessionId": "f2026-08-17",
+      "order": 1,
+      "exerciseId": "overhead-press",
+      "nameSnapshot": "Overhead Press",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-19-e0",
+      "sessionId": "f2026-08-19",
+      "order": 0,
+      "exerciseId": "back-squat",
+      "nameSnapshot": "Back Squat",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-19-e1",
+      "sessionId": "f2026-08-19",
+      "order": 1,
+      "exerciseId": "deadlift",
+      "nameSnapshot": "Deadlift",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     },
+     {
+      "id": "f2026-08-21-e0",
+      "sessionId": "f2026-08-21",
+      "order": 0,
+      "exerciseId": "pull-up",
+      "nameSnapshot": "Pull-Up",
+      "repRange": [
+       6,
+       10
+      ],
+      "restSec": 120,
+      "notes": "",
+      "skipped": false
+     }
+    ],
+    "sets": [
+     {
+      "id": "f2026-08-03-e0-t0",
+      "entryId": "f2026-08-03-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 455,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-03T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-03-e1-t0",
+      "entryId": "f2026-08-03-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 225,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-03T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-05-e0-t0",
+      "entryId": "f2026-08-05-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 490,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-05T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-05-e1-t0",
+      "entryId": "f2026-08-05-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 490,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-05T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-07-e0-t0",
+      "entryId": "f2026-08-07-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 0,
+      "reps": 12,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-07T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-10-e0-t0",
+      "entryId": "f2026-08-10-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 455,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-10T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-10-e1-t0",
+      "entryId": "f2026-08-10-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 225,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-10T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-12-e0-t0",
+      "entryId": "f2026-08-12-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 490,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-12T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-12-e1-t0",
+      "entryId": "f2026-08-12-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 490,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-12T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-14-e0-t0",
+      "entryId": "f2026-08-14-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 0,
+      "reps": 12,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-14T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-17-e0-t0",
+      "entryId": "f2026-08-17-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 490,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-17T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-17-e1-t0",
+      "entryId": "f2026-08-17-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 225,
+      "reps": 3,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-17T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-19-e0-t0",
+      "entryId": "f2026-08-19-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 490,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-19T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-19-e1-t0",
+      "entryId": "f2026-08-19-e1",
+      "idx": 0,
+      "kind": "working",
+      "load": 490,
+      "reps": 1,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-19T18:05:00-07:00"
+     },
+     {
+      "id": "f2026-08-21-e0-t0",
+      "entryId": "f2026-08-21-e0",
+      "idx": 0,
+      "kind": "working",
+      "load": 0,
+      "reps": 12,
+      "rir": 1,
+      "done": true,
+      "doneAt": "2026-08-21T18:05:00-07:00"
+     }
+    ],
+    "bodyweights": [
+     {
+      "date": "2026-08-03",
+      "value": 250.0,
+      "unit": "lb"
+     }
+    ],
+    "exNotes": {},
+    "deloads": [],
+    "readiness": []
+   },
+   "expected": {
+    "table": "men",
+    "rank": "prime.2",
+    "rank_label": "Chief Prime",
+    "computed": 13,
+    "held": false,
+    "next": "prime.3",
+    "next_label": "Alpha Prime",
+    "progress": 0.6519,
+    "pct": 65,
+    "substitution": null,
+    "slots": [
+     [
+      "bench",
+      "bench",
+      2.0253,
+      1.0
+     ],
+     [
+      "squat",
+      "squat",
+      2.0253,
+      0.6519
+     ],
+     [
+      "deadlift",
+      "deadlift",
+      2.0253,
+      0.0
+     ],
+     [
+      "ohp",
+      "ohp",
+      0.99,
+      1.0
+     ],
+     [
+      "pullups",
+      "pullups",
+      12.0,
+      0.0
+     ]
+    ],
+    "lifts": {
+     "bench": [
+      "rated",
+      2.0253,
+      "apex.3",
+      "Locked stage"
+     ],
+     "squat": [
+      "rated",
+      2.0253,
+      "prime.2",
+      "Chief Prime"
+     ],
+     "deadlift": [
+      "rated",
+      2.0253,
+      "prime.1",
+      "Prime"
+     ],
+     "ohp": [
+      "rated",
+      0.99,
+      "prime.3",
+      "Alpha Prime"
+     ],
+     "pullups": [
+      "rated",
+      12.0,
+      "prime.1",
+      "Prime"
+     ],
+     "row": [
+      "not_trained",
+      null,
+      null,
+      null
+     ],
+     "dips": [
+      "not_trained",
+      null,
+      null,
+      null
+     ]
+    },
+    "ladder": [
+     "Knuckle-Dragger",
+     "Primate",
+     "Neanderthal",
+     "Silverback",
+     "Prime",
+     "Locked stage",
+     "Locked stage"
+    ],
+    "newly_revealed": [],
+    "plates": [
+     "bench.plates1",
+     "bench.plates2",
+     "bench.plates3",
+     "bench.plates4",
+     "squat.plates1",
+     "squat.plates2",
+     "squat.plates3",
+     "squat.plates4",
+     "deadlift.plates1",
+     "deadlift.plates2",
+     "deadlift.plates3",
+     "deadlift.plates4",
+     "ohp.plates1",
+     "ohp.plates2"
+    ],
+    "lean": "not_tracked",
+    "lean_badge": [
+     false,
+     false,
+     false
+    ],
+    "labels": {
+     "rank": "Chief Prime",
+     "next": "Alpha Prime",
+     "table": "Using the men's table. Set sex in Settings to use the women's table.",
+     "substitution": null,
+     "held": null,
+     "weighted": null,
+     "bodyweight": null,
+     "revealed": [],
+     "lean": "Physique not tracked"
+    }
+   },
+   "report": {
+    "as_of": "2026-08-24",
+    "table": "men",
+    "sex_set": false,
+    "unit": "lb",
+    "rank": {
+     "index": 13,
+     "id": "prime.2",
+     "stage": "prime",
+     "tier": 2,
+     "label": "Chief Prime",
+     "computed_index": 13,
+     "held": false
+    },
+    "awarded_out": {
+     "stage": "prime",
+     "tier": 2
+    },
+    "next": {
+     "index": 14,
+     "id": "prime.3",
+     "label": "Alpha Prime",
+     "hidden": false
+    },
+    "progress": {
+     "overall": 0.6519,
+     "pct": 65,
+     "basis": "3rd-highest of 5 slots",
+     "slots": [
+      {
+       "slot": "bench",
+       "lift": "bench",
+       "substituted": false,
+       "value": 2.0253,
+       "progress": 1.0,
+       "target": {
+        "threshold": 1.4167,
+        "met": true,
+        "kind": "multiple",
+        "estimated_1rm": 355,
+        "unit": "lb"
+       }
+      },
+      {
+       "slot": "squat",
+       "lift": "squat",
+       "substituted": false,
+       "value": 2.0253,
+       "progress": 0.6519,
+       "target": {
+        "threshold": 2.0833,
+        "met": false,
+        "kind": "multiple",
+        "estimated_1rm": 525,
+        "unit": "lb"
+       }
+      },
+      {
+       "slot": "deadlift",
+       "lift": "deadlift",
+       "substituted": false,
+       "value": 2.0253,
+       "progress": 0.0,
+       "target": {
+        "threshold": 2.3333,
+        "met": false,
+        "kind": "multiple",
+        "estimated_1rm": 585,
+        "unit": "lb"
+       }
+      },
+      {
+       "slot": "ohp",
+       "lift": "ohp",
+       "substituted": false,
+       "value": 0.99,
+       "progress": 1.0,
+       "target": {
+        "threshold": 0.9667,
+        "met": true,
+        "kind": "multiple",
+        "estimated_1rm": 245,
+        "unit": "lb"
+       }
+      },
+      {
+       "slot": "pullups",
+       "lift": "pullups",
+       "substituted": false,
+       "value": 12.0,
+       "progress": 0.0,
+       "target": {
+        "threshold": 15,
+        "met": false,
+        "kind": "reps",
+        "reps": 15
+       }
+      }
+     ]
+    },
+    "substitution": null,
+    "lifts": {
+     "bench": {
+      "status": "rated",
+      "value": 2.0253,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-17-e0-t0",
+      "date": "2026-08-17",
+      "converted": false,
+      "bodyweight_kg": 113.3982,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 20,
+      "rank_id": "apex.3",
+      "rank_label": "Locked stage",
+      "rank_hidden": true,
+      "label": null
+     },
+     "squat": {
+      "status": "rated",
+      "value": 2.0253,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-05-e0-t0",
+      "date": "2026-08-05",
+      "converted": false,
+      "bodyweight_kg": 113.3982,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 13,
+      "rank_id": "prime.2",
+      "rank_label": "Chief Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "deadlift": {
+      "status": "rated",
+      "value": 2.0253,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-05-e1-t0",
+      "date": "2026-08-05",
+      "converted": false,
+      "bodyweight_kg": 113.3982,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 12,
+      "rank_id": "prime.1",
+      "rank_label": "Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "ohp": {
+      "status": "rated",
+      "value": 0.99,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-03-e1-t0",
+      "date": "2026-08-03",
+      "converted": false,
+      "bodyweight_kg": 113.3982,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "multiple",
+      "rank_index": 14,
+      "rank_id": "prime.3",
+      "rank_label": "Alpha Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "pullups": {
+      "status": "rated",
+      "value": 12.0,
+      "trained": true,
+      "unrated_sets": 0,
+      "set_id": "f2026-08-07-e0-t0",
+      "date": "2026-08-07",
+      "converted": false,
+      "bodyweight_kg": 113.3982,
+      "bodyweight_source": "logged",
+      "core": true,
+      "kind": "reps",
+      "rank_index": 12,
+      "rank_id": "prime.1",
+      "rank_label": "Prime",
+      "rank_hidden": false,
+      "label": null
+     },
+     "row": {
+      "status": "not_trained",
+      "value": null,
+      "trained": false,
+      "unrated_sets": 0,
+      "core": false,
+      "kind": "multiple",
+      "rank_index": null,
+      "rank_id": null,
+      "rank_label": null,
+      "rank_hidden": false,
+      "label": "Not trained yet"
+     },
+     "dips": {
+      "status": "not_trained",
+      "value": null,
+      "trained": false,
+      "unrated_sets": 0,
+      "core": false,
+      "kind": "reps",
+      "rank_index": null,
+      "rank_id": null,
+      "rank_label": null,
+      "rank_hidden": false,
+      "label": "Not trained yet"
+     }
+    },
+    "ladder": [
+     {
+      "stage": "knuckle_dragger",
+      "label": "Knuckle-Dragger",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "primate",
+      "label": "Primate",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "neanderthal",
+      "label": "Neanderthal",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "silverback",
+      "label": "Silverback",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "prime",
+      "label": "Prime",
+      "hidden": false,
+      "reached": true
+     },
+     {
+      "stage": "kong",
+      "label": "Locked stage",
+      "hidden": true,
+      "reached": false
+     },
+     {
+      "stage": "apex",
+      "label": "Locked stage",
+      "hidden": true,
+      "reached": false
+     }
+    ],
+    "newly_revealed": [],
+    "bodyweight_current": {
+     "kg": 113.3982,
+     "source": "logged"
+    },
+    "badges": {
+     "plates": [
+      {
+       "id": "bench.plates1",
+       "lift": "bench",
+       "plates": 1,
+       "load": 135,
+       "unit": "lb",
+       "label": "One plate (135 lb) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates2",
+       "lift": "bench",
+       "plates": 2,
+       "load": 225,
+       "unit": "lb",
+       "label": "Two plates (225 lb) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates3",
+       "lift": "bench",
+       "plates": 3,
+       "load": 315,
+       "unit": "lb",
+       "label": "Three plates (315 lb) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates4",
+       "lift": "bench",
+       "plates": 4,
+       "load": 405,
+       "unit": "lb",
+       "label": "Four plates (405 lb) bench press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e0-t0"
+      },
+      {
+       "id": "bench.plates5",
+       "lift": "bench",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
+       "id": "squat.plates1",
+       "lift": "squat",
+       "plates": 1,
+       "load": 135,
+       "unit": "lb",
+       "label": "One plate (135 lb) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates2",
+       "lift": "squat",
+       "plates": 2,
+       "load": 225,
+       "unit": "lb",
+       "label": "Two plates (225 lb) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates3",
+       "lift": "squat",
+       "plates": 3,
+       "load": 315,
+       "unit": "lb",
+       "label": "Three plates (315 lb) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates4",
+       "lift": "squat",
+       "plates": 4,
+       "load": 405,
+       "unit": "lb",
+       "label": "Four plates (405 lb) squat",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e0-t0"
+      },
+      {
+       "id": "squat.plates5",
+       "lift": "squat",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
+       "id": "deadlift.plates1",
+       "lift": "deadlift",
+       "plates": 1,
+       "load": 135,
+       "unit": "lb",
+       "label": "One plate (135 lb) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates2",
+       "lift": "deadlift",
+       "plates": 2,
+       "load": 225,
+       "unit": "lb",
+       "label": "Two plates (225 lb) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates3",
+       "lift": "deadlift",
+       "plates": 3,
+       "load": 315,
+       "unit": "lb",
+       "label": "Three plates (315 lb) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates4",
+       "lift": "deadlift",
+       "plates": 4,
+       "load": 405,
+       "unit": "lb",
+       "label": "Four plates (405 lb) deadlift",
+       "earned": true,
+       "date": "2026-08-05",
+       "set_id": "f2026-08-05-e1-t0"
+      },
+      {
+       "id": "deadlift.plates5",
+       "lift": "deadlift",
+       "plates": 5,
+       "load": 495,
+       "unit": "lb",
+       "label": "Hidden badge",
+       "earned": false,
+       "date": null,
+       "set_id": null,
+       "hidden": true
+      },
+      {
+       "id": "ohp.plates1",
+       "lift": "ohp",
+       "plates": 1,
+       "load": 135,
+       "unit": "lb",
+       "label": "One plate (135 lb) overhead press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e1-t0"
+      },
+      {
+       "id": "ohp.plates2",
+       "lift": "ohp",
+       "plates": 2,
+       "load": 225,
+       "unit": "lb",
+       "label": "Two plates (225 lb) overhead press",
+       "earned": true,
+       "date": "2026-08-03",
+       "set_id": "f2026-08-03-e1-t0"
+      }
+     ],
+     "lean_prime": {
+      "id": "lean_prime",
+      "label": "Lean Prime",
+      "unlocked": false,
+      "greyed": false,
+      "visible": false
+     }
+    },
+    "lean": {
+     "status": "not_tracked",
+     "method": null,
+     "value": null,
+     "threshold": null,
+     "age_allowance": 0,
+     "reading_date": null,
+     "label": "Physique not tracked"
+    },
+    "labels": {
+     "rank": "Chief Prime",
+     "next": "Alpha Prime",
+     "progress": "to Alpha Prime",
      "table": "Using the men's table. Set sex in Settings to use the women's table.",
      "substitution": null,
      "held": null,

@@ -65,14 +65,24 @@ function leanStatus(h,asOf,table,shown,R){const L=R.lean,st=((h.settings||{}).bo
     if(rec.length){const [d,v]=best(rec);Object.assign(res,{value:r4(v),reading_date:d});return done(v<=thr+EPS?'pass':'not_yet')}
     const [d,v]=best(xs);Object.assign(res,{value:r4(v),reading_date:d});if(mid==='whtr'||!W.length)return done(v<=thr+EPS?'stale':'needs_entry')}
   return done('needs_entry')}
-function plateBadges(dt,h,R){const C=lg(dt),P=PG(),PB=R.plate_badges;let unit=((h.settings||{}).unit)||'lb';unit=unit==='lb'||unit==='kg'?unit:'lb';const plates=PB[unit],ex2={},got={};
+// Plate badges, read per lift from Coach's rules (plate_badges): settings.unit picks the lb or kg list (a lb user is judged on the lb list, so
+// 220 kg logged ~ 485 lb does not earn 495), lifts[lift] = how many entries that lift has. Entries from hidden_from_plates on (the 5-plate
+// badges) carry a hidden key: hidden:true + hidden_label until a qualifying set exists, then hidden:false + the normal label. Others have none.
+function plateEntries(PB,unit,lift){const list=PB[unit]||[],n=Math.min(PB.lifts[lift]|0,list.length),hf=PB.hidden_from_plates;
+  return Array.from({length:n},(_,i)=>({plates:i+1,load:+list[i],label:(PB.labels||{})[String(i+1)]||`${i+1} plates`,hiddenType:hf!=null&&i+1>=hf}))}
+function plateBadges(dt,h,R){const C=lg(dt),P=PG(),PB=R.plate_badges;let unit=((h.settings||{}).unit)||'lb';unit=unit==='lb'||unit==='kg'?unit:'lb';const ex2={},got={},E={};
+  for(const l of Object.keys(PB.lifts))E[l]=plateEntries(PB,unit,l);
   for(const [l,m] of Object.entries(R.lifts))for(const i of m.exercise_ids)ex2[i]=l;
   for(const q of P.flatten(dt,h)){const s=q.s;if(s.deload===true)continue;const day=P.localDate(s.startedAt||s.date);
     for(const x of q.sets){const l=ex2[x.ex];if(!(l in PB.lifts)||x.kind!=='working'||x.reps<1||excluded(C,x,'weight'))continue;const ld=fromKg(x.added_kg,unit,C);
-      plates.slice(0,PB.lifts[l]).forEach((p,k)=>{if(ld>=p-0.01&&!got[l+'|'+k])got[l+'|'+k]=[day,x.id]})}}
-  const out=[];for(const [l,n] of Object.entries(PB.lifts))for(let k=0;k<n;k++){const g=got[l+'|'+k];
-    out.push({id:`${l}.plates${k+1}`,lift:l,plates:k+1,load:plates[k],unit,label:`${PB.labels[String(k+1)]} (${plates[k]} ${unit}) ${R.lifts[l].label.toLowerCase()}`,earned:!!g,date:g?g[0]:null,set_id:g?g[1]:null})}
+      E[l].forEach(p=>{if(ld>=p.load-0.01&&!got[l+'|'+p.plates])got[l+'|'+p.plates]=[day,x.id]})}}
+  const out=[];for(const l of Object.keys(PB.lifts))for(const p of E[l]){const g=got[l+'|'+p.plates],hid=p.hiddenType&&!g;
+    const b={id:`${l}.plates${p.plates}`,lift:l,plates:p.plates,load:p.load,unit,label:hid?(PB.hidden_label||'Hidden badge'):`${p.label} (${p.load} ${unit}) ${R.lifts[l].label.toLowerCase()}`,earned:!!g,date:g?g[0]:null,set_id:g?g[1]:null};
+    if(p.hiddenType)b.hidden=hid;out.push(b)}
   return out}
+// plates earned by `after` that `before` did not have (ids, highest plate first per lift); used by the finish-screen celebration
+function newPlates(before,after){const had=new Set(((before&&before.badges&&before.badges.plates)||[]).filter(b=>b.earned).map(b=>b.id));
+  return ((after&&after.badges&&after.badges.plates)||[]).filter(b=>b.earned&&!had.has(b.id)).sort((a,b)=>b.plates-a.plates||a.lift.localeCompare(b.lift))}
 function report(dt,h,asOf,opts){opts=opts||{};const R=rulesOf(dt),C=lg(dt),sex=prof(h).sex,table=sex==='male'||sex==='female'?R.table_choice[sex]:R.table_choice.unset,T=R.tables[table];
   let unit=((h.settings||{}).unit)||'lb';unit=unit==='lb'||unit==='kg'?unit:'lb';
   const V=liftValues(dt,h,R),core=R.core_lifts,base=core.map(l=>[l,V[l].value]),cands=[null];
@@ -119,6 +129,6 @@ function nextHint(rep,dt,h){if(!rep.next)return null;const R=rulesOf(dt),C=lg(dt
     else{const cur=s.value||0,add=Math.max(1,t.reps-cur);gap=t.reps?add/t.reps:1;text=`+${add} strict ${name} rep${add>1?'s':''} (${t.reps} total)`}
     if(!best||gap<best.gap-EPS)best={lift:s.lift,slot:s.slot,gap,text}}
   return best}
-const API={EPS,rulesOf,rankName,rankIndex,report,rankUp,nextHint,liftValues,plateBadges,leanStatus,ageOf};
+const API={EPS,rulesOf,rankName,rankIndex,report,rankUp,nextHint,liftValues,plateBadges,plateEntries,newPlates,leanStatus,ageOf};
 if(isNode)module.exports=API;else root.LADDER=API;
 })(typeof window!=='undefined'?window:globalThis);

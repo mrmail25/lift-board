@@ -775,7 +775,7 @@
   "rule": "overall rank = the highest rank index met by at least 3 of the 5 core lifts (after at most one stand-in substitution). A lift meets a rank when value >= that rank's threshold. Unlogged or unrated lifts meet nothing. Everyone starts at knuckle_dragger.1.",
   "min_lifts": 3,
   "never_demote": "shown rank = max(computed rank, history.evolution.awarded). The app stores the highest rank shown in history.evolution.awarded {stage, tier}; a drop, a bodyweight gain, a sex change or a deleted set never lowers it (held: true while computed < awarded).",
-  "per_lift_stage": "each lift (core and stand-ins) shows its own rank: the highest rank whose threshold it meets (hidden stages beyond the revealed ladder show as \"???\")."
+  "per_lift_stage": "each lift (core and stand-ins) shows its own rank: the highest rank whose threshold it meets (hidden stages beyond the revealed ladder show as \"Locked stage\")."
  },
  "substitution": {
   "max": 1,
@@ -817,8 +817,8 @@
   }
  },
  "hidden": {
-  "rule": "kong and apex stages show as \"???\" in the ladder, the next-rank name and per-lift stages until the overall rank (with the awarded floor) reaches them.",
-  "label": "???",
+  "rule": "kong and apex stages show as \"Locked stage\" in the ladder, the next-rank name and per-lift stages until the overall rank (with the awarded floor) reaches them.",
+  "label": "Locked stage",
   "reveal_label": "New stage unlocked: {stage}"
  },
  "plate_badges": {
@@ -827,27 +827,33 @@
    135,
    225,
    315,
-   405
+   405,
+   495
   ],
   "kg": [
    60,
    100,
    140,
-   180
+   180,
+   220
   ],
   "labels": {
    "1": "One plate",
    "2": "Two plates",
    "3": "Three plates",
-   "4": "Four plates"
+   "4": "Four plates",
+   "5": "Five plates"
   },
   "lifts": {
-   "bench": 4,
-   "squat": 4,
-   "deadlift": 4,
+   "bench": 5,
+   "squat": 5,
+   "deadlift": 5,
    "ohp": 2
   },
-  "rule": "earned by the first done working set (non-deload, reps >= 1, not tagged with weight in pr_exclude) whose logged load, converted to the setting unit, is >= the plate load - 0.01. A real set, not an estimate. Independent of rank."
+  "rule": "earned by the first done working set (non-deload, reps >= 1, not tagged with weight in pr_exclude) whose logged load, converted to the setting unit, is >= the plate load - 0.01. A real set, not an estimate. Independent of rank.",
+  "hidden_from_plates": 5,
+  "hidden_label": "Hidden badge",
+  "hidden_rule": "The five-plate badges (495 lb / 220 kg: five 45 lb or 20 kg plates a side on a 45 lb / 20 kg bar) on bench, squat and deadlift are hidden until earned. Only these entries carry a hidden key: hidden: true and label \"Hidden badge\" until a qualifying set exists, then hidden: false and the normal label, shown like the other plate badges. Plates 1-4 have no hidden key. Overhead press stays at two plates. Not a tier; independent of rank."
  },
  "lean": {
   "purpose": "Opt-in physique condition that unlocks ONLY the \"Lean Prime\" art and badge. It never affects rank. A leanness game condition, not a health measure.",
