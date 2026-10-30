@@ -1426,30 +1426,55 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .ptab .pmr .pmn{position:relative}.ptab .pmr .pmn>.pprio{position:absolute;left:-10px;top:.62em;margin:0}
 .pshmh{padding-bottom:4px;margin-bottom:8px;border-bottom:1px solid var(--line)}.plname{font-size:var(--t-head);margin:10px 16px 6px}.pshmh~.plsw{margin:2px 0 12px;padding:2px 16px 4px}
 
-/* PLATE MILESTONES: finish-screen celebration (on the dark hero card) and the ladder screen's plates section.
-   .pup.big = 2 / 3 / 4 plates (the biggest moments); .pup.rev = the hidden plate's reveal; .pup.sm = a lower plate earned in the same set. */
-.pups{display:flex;flex-direction:column;gap:8px;margin:14px 0 4px}
-.pup{border-radius:16px;background:rgba(255,255,255,.08);padding:12px 14px;color:var(--accent);text-align:center}
-.pup .eyebrow{color:rgba(255,255,255,.7)}.pup b{display:block;color:#fff;font-size:22px;font-weight:800;letter-spacing:-.01em;margin-top:2px}
-.pup .pupl{display:block;color:rgba(255,255,255,.85);font-size:var(--t-sub);font-weight:600;margin-top:2px}.pup .pupx{display:block;color:rgba(255,255,255,.62);font-size:var(--t-foot);margin-top:6px}
-.plart{display:block;fill:currentColor;margin:8px auto 2px;height:40px;width:auto}.plart .pbar{fill:rgba(255,255,255,.55)}
-.pup.big{background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.04));box-shadow:inset 0 0 0 1.5px var(--accent);padding:16px 14px 18px}
-.pup.big b{font-size:32px}.pup.big .plart{height:64px;margin:10px auto 4px}.pup.big.p4 .plart{height:72px}
-.pup.rev{background:radial-gradient(120% 90% at 50% 0%,rgba(255,196,92,.30),rgba(255,255,255,.04) 70%);box-shadow:inset 0 0 0 2px #ffc45c,0 0 24px rgba(255,196,92,.35);color:#ffc45c}
-.pup.rev .eyebrow{color:#ffd88f;letter-spacing:.08em}.pup.rev b{font-size:34px}.pup.rev .plart{height:76px}
-.pup.sm{display:flex;align-items:center;gap:10px;text-align:left;padding:8px 12px}.pup.sm .plart{height:22px;margin:0}.pup.sm span{color:rgba(255,255,255,.8);font-size:var(--t-foot)}
-@media (prefers-reduced-motion:no-preference){.pup.big,.pup.rev{animation:pupIn .55s cubic-bezier(.2,1.4,.4,1) both}.pup.rev{animation-duration:.8s}}
-@keyframes pupIn{from{transform:scale(.86);opacity:0}to{transform:none;opacity:1}}
-.lplsec{padding:6px 16px 10px}
-.lplrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.lplrow:last-of-type{border-bottom:0}
-.lpln{flex:1;min-width:0}.lpln b{display:block;font-size:var(--t-body,16px);color:var(--ink)}.lpln span{font-size:var(--t-foot);color:var(--text-2)}
-.lpld{display:flex;gap:5px;flex:none}
-.lpd{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--lad-slate);color:var(--text-2);position:relative}
-.lpd::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:var(--bg);top:calc(50% - 4px);left:calc(50% - 4px);opacity:.0}
-.lpd i{font-style:normal;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums}
-.lpd.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.lpd.rev{border-color:#e0a63a;box-shadow:0 0 0 2px rgba(224,166,58,.35)}.lpd.rev.on{background:linear-gradient(160deg,#ffc45c,#e0a63a);color:#3a2500}
-.lplf{padding:6px 0 2px}
+/* PLATE MEDALS (Mr Dude, plates redo): awards only once earned. The medal rack along the top of Progress (one medal per lift, stars on the
+   ribbon = plates earned, gold = the hidden fifth), the medal sheet, and the full-screen earn moment over the finish screen. */
+.mrack{display:flex;gap:14px;padding:0 var(--s4) 10px;align-items:flex-start}
+.medal{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:0;padding:0;color:var(--text-2);font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.medal .msvg{width:34px;height:51px;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.22))}
+.medal span{font-size:11px;font-weight:600;letter-spacing:.01em}.medal.gold span{color:#B9791B}
+.medal:active .msvg{transform:scale(.94)}
+.mstar{fill:#fff}.mstars.gold .mstar{fill:#FFE49A;stroke:#8a5a10;stroke-width:.5}.mring{fill:#9aa0a8}
+.medal.gold .mring,.mshero.gold .mring,.pmom.gold .mring{fill:#C98F2C}
+html[data-theme=dark] .medal.gold span{color:#F4B73E}
+@media (prefers-color-scheme:dark){html:not([data-theme=light]) .medal.gold span{color:#F4B73E}}
+.mshero{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 16px 16px;text-align:center}
+.mshero .msvg{width:64px;height:96px;margin-bottom:8px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))}
+.mshero b{font-size:20px;font-weight:700;color:var(--ink)}.mshero span{font-size:var(--t-foot);color:var(--text-2)}
+.mrow{align-items:center;gap:12px}.mpip{flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent-tint);color:var(--accent-press);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.mrow.gold .mpip{background:linear-gradient(160deg,#FFE49A,#E0A63A);color:#5a3a00}
+.mval{display:flex;flex-direction:column;align-items:flex-end;gap:1px}.mval b{font-size:15px;color:var(--ink)}.mval span{font-size:12px;color:var(--text-2)}
+/* earn moment */
+.pmom{position:absolute;inset:0;z-index:70;display:flex;background:var(--bg);color:var(--ink);animation:pmFade .25s ease-out both}
+.pmom.gold{background:radial-gradient(110% 70% at 50% 30%,rgba(255,196,92,.32),rgba(255,196,92,0) 72%),var(--bg)}
+.pmom.out{opacity:0;transition:opacity .2s}
+.pm-in{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top) + 40px) 28px calc(env(safe-area-inset-bottom) + 24px);text-align:center}
+.pm-stage{position:relative;width:240px;height:240px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.pm-halo{position:absolute;inset:30px;border-radius:50%;background:radial-gradient(circle,var(--accent-tint) 0,transparent 68%)}
+.pmom.gold .pm-halo{background:radial-gradient(circle,rgba(255,196,92,.45) 0,transparent 68%)}
+.pm-burst{position:absolute;inset:0;opacity:0}
+.pm-burst i{position:absolute;left:50%;top:50%;width:4px;height:30px;margin:-15px 0 0 -2px;border-radius:2px;background:var(--accent);transform:rotate(var(--a)) translateY(-96px)}
+.pm-burst i:nth-child(odd){height:18px;margin-top:-9px;background:#F4B73E}
+.pmom.gold .pm-burst i{background:#F4B73E}.pmom.gold .pm-burst i:nth-child(odd){background:#FFE49A}
+.pm-medal{position:relative;transform-origin:50% 0}
+.pm-medal .msvg{width:120px;height:180px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.28))}
+.pm-txt .eyebrow{color:var(--accent);letter-spacing:.08em}.pmom.gold .pm-txt .eyebrow{color:#C98F2C}
+.pm-h span{white-space:nowrap}.pm-h{font-size:27px;font-weight:800;letter-spacing:-.01em;line-height:1.15;margin:6px 0 8px}
+.pm-x{color:var(--text-2);font-size:var(--t-sub);margin:0}.pm-also{color:var(--text-2);font-size:var(--t-foot);margin:8px 0 0}
+.pm-act{width:100%;margin-top:auto;display:flex;flex-direction:column;gap:10px;align-items:center}.pm-n{font-size:12px;color:var(--text-2)}
+.btn.gold{background:linear-gradient(160deg,#FFD573,#E0A63A);color:#3a2500}
+html[data-theme=dark] .pmom.gold .pm-txt .eyebrow{color:#FFD88F}
+@media (prefers-color-scheme:dark){html:not([data-theme=light]) .pmom.gold .pm-txt .eyebrow{color:#FFD88F}}
+@media (prefers-reduced-motion:no-preference){
+ .pm-medal{animation:pmDrop .9s cubic-bezier(.3,1.3,.5,1) .15s both}
+ .pm-burst{animation:pmBurst .8s ease-out .7s both}.pm-halo{animation:pmHalo .6s ease-out .7s both}
+ .pm-txt{animation:pmUp .45s ease-out .85s both}.pm-act{animation:pmUp .4s ease-out 1.05s both}
+ .pmom.gold .pm-medal{animation-duration:1.1s}.pmom.gold .pm-burst{animation-duration:1.1s}}
+@media (prefers-reduced-motion:reduce){.pmom{animation:pmFade .4s ease-out both}}
+@keyframes pmFade{from{opacity:0}to{opacity:1}}
+@keyframes pmDrop{0%{transform:translateY(-130%) rotate(-10deg);opacity:0}35%{opacity:1}62%{transform:translateY(5%) rotate(4deg)}80%{transform:translateY(-2%) rotate(-1.5deg)}100%{transform:none;opacity:1}}
+@keyframes pmBurst{0%{opacity:0;transform:scale(.45)}25%{opacity:1}100%{opacity:0;transform:scale(1.25)}}
+@keyframes pmHalo{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes pmUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
 /* plates fix (CoS): the ladder screen's nav is opaque, so the march strip never shows through it when scrolled (other screens keep the translucent bar) */
 .nav.lnavs{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
