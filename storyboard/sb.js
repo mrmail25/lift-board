@@ -876,7 +876,7 @@ function ladPersist(){const L=ladderData();if(!L||L.hidden_all)return;const H=lo
   if(a==null||L.rank.index>a){H.evolution=Object.assign({},H.evolution||{},{awarded:L.awarded_out});logSave()}}
 // ladder art: assets/ladder/stage-1..5.svg (CC0, Openclipart #348815 by j4p4n, see assets/ladder/LICENSES.md), drawn as a CSS mask over currentColor so
 // Ember/slate/tease colours and dark mode come from the existing .lfig/.lean/.lrup rules. k 0..4 = the five stages; 5/6 (Kong/Apex) reuse Prime with a glow;
-// art2: stage-1 knuckle-dragger, 2 primate (was set figure 3), 3 neanderthal (was set figure 4), 4 silverback (hand-drawn upright gorilla),
+// art2: stage-1 knuckle-dragger, 2 primate (was set figure 3), 3 neanderthal (was set figure 4), 4 silverback (traced from ref/silverback-ref.jpg, sbref),
 // 5 prime (bodybuilder, front double biceps, gorilla head). The hidden tier is never drawn as a figure: lockFig() is a grey lock cut in half by
 // the screen's right edge (see .llock), no '???' text.
 // Silverback redo: figures are keyed by STAGE ID (evolution-rules stages[].id), not by position, so reordering the ladder (e.g. Prime <-> Silverback)
