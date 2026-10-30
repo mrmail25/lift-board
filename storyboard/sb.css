@@ -1411,6 +1411,8 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .lrup .lrev{display:block;width:max-content;margin-top:4px;color:#fff}
 .lnote{font-size:var(--t-foot);color:var(--text-2);margin:8px 0 0}.lnotes{margin:4px var(--s4) 0}.lnotes .lnote{margin:4px 0}
 .lcard .lnext{margin-top:6px;font-size:var(--t-foot)}
+/* swap3: the percentile line under the rank (Coach labels.percentile_line / percentile_line_top) */
+.lpct{margin:4px 0 10px;font-size:var(--t-sub);font-weight:600;color:var(--ink)}.lcard .lpct{font-size:var(--t-foot);margin:2px 0 8px;color:var(--text-2)}
 .lsubst{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-2);background:var(--fill);border-radius:6px;padding:1px 5px;vertical-align:2px}
 .ltg{color:var(--accent-press)}
 .lchip.hid{background:var(--fill);color:var(--text-2)}

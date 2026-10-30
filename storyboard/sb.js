@@ -906,16 +906,18 @@ function ladStrip(L){const cur=Math.floor(L.rank.index/3),vis=L.ladder.filter(s=
   return `<div class="lstripbox${tease?' lhl':''}"><div class="lstrip">${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next'}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':''}>${apeFig(s.stage)}<span>${esc(s.label).replace('-','-<wbr>')}</span></div>`).join('')}</div>${tease?lockFig():''}</div>`}
 const ladBar=L=>L.progress.pct==null?'':`<div class="lbar" role="progressbar" aria-label="Progress ${esc(L.labels.progress)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${L.progress.pct}"><i style="width:${L.progress.pct}%"></i></div>`;
 const ladProg=L=>L.progress.pct==null?esc(L.labels.progress):`${L.progress.pct}% ${esc(L.labels.progress)}`;
+// swap3: Coach's percentile line under the rank ('Stronger than about 50% of lifters your size'; 'Top 3% …' at Apex); none when report gives none
+const ladPct=L=>L.labels.percentile?`<p class="lpct" data-lpct="${L.percentile&&L.percentile.overall?L.percentile.overall.band:''}">${esc(L.labels.percentile)}</p>`:'';
 const ladRev=L=>L.labels.revealed.map(t=>`<div class="lrev" data-lrev="1">${esc(t)}</div>`).join('');
 function ladCard(){const L=ladderData();if(!L||L.hidden_all)return '';setTimeout(ladPersist,0);
   return `<button type="button" class="card lcard" data-go="#ladder" data-ladcard="1" aria-label="Evolution ladder: ${esc(L.rank.label)}">${ladStrip(L)}
    <div class="ladrow"><div class="grow"><div class="eyebrow">Evolution ladder</div><b class="lrank" data-lrank="${L.rank.id}">${esc(L.rank.label)}</b></div>${CHEV}</div>${ladRev(L)}
-   ${ladBar(L)}<div class="lsub"><span class="num">${ladProg(L)}</span></div>${L.hint?`<div class="lnext">Next: ${esc(L.hint.text)}</div>`:''}${L.labels.table?`<p class="lnote">${esc(L.labels.table)}</p>`:''}</button>`}
+   ${ladPct(L)}${ladBar(L)}<div class="lsub"><span class="num">${ladProg(L)}</span></div>${L.hint?`<div class="lnext">Next: ${esc(L.hint.text)}</div>`:''}${L.labels.table?`<p class="lnote">${esc(L.labels.table)}</p>`:''}</button>`}
 const PLN=n=>`${n} plate${n>1?'s':''}`;
 // metric1: rep lifts show Coach's bodyweight-scaled value (4 dp in the rules) to 1 decimal on screen; whole numbers stay whole
 function ladLiftRow(L,l,o,slot){const R=RD.EVO,bw=L.bodyweight_current.kg,u=L.unit,t=slot&&slot.target;
-  const val=o.value==null?esc(o.label||''):o.kind==='multiple'?`${o.value.toFixed(2)}× bodyweight${o.bodyweight_kg?` · est. 1RM ${Math.round(inU(o.value*o.bodyweight_kg,'kg'))} ${u}`:''}`:`${Number.isInteger(o.value)?o.value:o.value.toFixed(1)} strict rep${o.value===1?'':'s'}${o.converted?' (incl. weighted, estimated)':''}`;
-  const tg=t&&!t.met?(t.kind==='multiple'?(t.estimated_1rm!=null?`Next rank: est. 1RM ${t.estimated_1rm} ${t.unit}`:`Next rank: ${t.threshold}× bodyweight`):`Next rank: ${t.reps} strict reps`):t&&t.met?'Meets the next rank':'';
+  const val=o.value==null?esc(o.label||''):o.kind==='load'?`est. 1RM ${Math.round(o.value)} ${u}${o.multiple!=null?` · ${o.multiple.toFixed(2)}× bodyweight`:''}`:o.kind==='multiple'?`${o.value.toFixed(2)}× bodyweight${o.bodyweight_kg?` · est. 1RM ${Math.round(inU(o.value*o.bodyweight_kg,'kg'))} ${u}`:''}`:`${Number.isInteger(o.value)?o.value:o.value.toFixed(1)} strict rep${o.value===1?'':'s'}${o.converted?' (incl. weighted, estimated)':''}`;
+  const tg=t&&!t.met?(t.kind==='load'?(t.estimated_1rm!=null?`Next rank: est. 1RM ${t.estimated_1rm} ${t.unit}`:''):t.kind==='multiple'?(t.estimated_1rm!=null?`Next rank: est. 1RM ${t.estimated_1rm} ${t.unit}`:`Next rank: ${t.threshold}× bodyweight`):`Next rank: ${t.reps} strict reps`):t&&t.met?'Meets the next rank':'';
   return `<div class="row ladlift" data-llift="${l}"><div class="grow"><div class="t1">${esc(R.lifts[l].label)}${slot&&slot.substituted?` <span class="lsubst">stand-in</span>`:''}</div><div class="t2">${val}</div>${tg?`<div class="t2 ltg">${esc(tg)}</div>`:''}
 </div>
     ${o.rank_label?`<span class="lchip st${Math.floor(o.rank_index/3)}${o.rank_hidden?' hid':''}">${esc(o.rank_label)}</span>`:'<span class="lchip none">—</span>'}</div>`}
@@ -929,14 +931,14 @@ V.ladder=()=>{const L=ladderData(),nav=`<div class="nav lnavs"><div class="l"><b
   const notes=[L.labels.substitution,L.labels.weighted,L.labels.bodyweight,L.labels.table].filter(Boolean);
   return nav+header('Evolution ladder')+`<div class="lscr"><div class="lstripw">${ladStrip(L)}</div>
    <div class="card lhero"><div class="eyebrow">Your rank</div><h2 class="lrank" data-lrank="${L.rank.id}">${esc(L.rank.label)}</h2>${ladRev(L)}${L.labels.held?`<p class="lnote" data-lheld="1">${esc(L.labels.held)}</p>`:''}
-   ${ladBar(L)}<div class="lsub"><span class="num">${ladProg(L)}</span></div>${L.hint?`<p class="lnext big" data-lnext="${L.hint.lift}">Next: <b>${esc(L.hint.text)}</b></p>`:''}</div>
+   ${ladPct(L)}${ladBar(L)}<div class="lsub"><span class="num">${ladProg(L)}</span></div>${L.hint?`<p class="lnext big" data-lnext="${L.hint.lift}">Next: <b>${esc(L.hint.text)}</b></p>`:''}</div>
    ${notes.length?`<div class="lnotes">${notes.map(n=>`<p class="lnote">${esc(n)}</p>`).join('')}</div>`:''}
    <div class="ghead">Core lifts</div><div class="group llifts">${core.map(l=>ladLiftRow(L,l,L.lifts[l],slots[l])).join('')}</div>
    ${extra.length?`<div class="ghead">Other lifts</div><div class="group llifts">${extra.map(l=>ladLiftRow(L,l,L.lifts[l],null)).join('')}</div>`:''}
    <p class="foot">${esc(R.labels.promotion_note)} Progress follows your 3rd-best lift.</p>
    ${ladLeanRow(L)?`<div class="ghead">Badges</div><div class="group">${ladLeanRow(L)}</div>`:''}
    ${L.ladder.some(s=>s.hidden)?`<div class="card ltease" data-lteaser="1"><div><b>There is more past ${esc(L.ladder.filter(s=>!s.hidden).pop().label)}</b><p class="sub">Keep climbing to find out what.</p></div>${lockFig()}</div>`:''}
-   <p class="foot lsrc">${L.labels.scaled?`<span data-lscaled="1">${esc(L.labels.scaled)}</span> `:''}${esc(R.labels.model_note)} ${esc(R.labels.source_note)}</p>
+   <p class="foot lsrc">${L.labels.bars?`<span data-lbars="1">${esc(L.labels.bars)}</span> `:''}${L.labels.scaled?`<span data-lscaled="1">${esc(L.labels.scaled)}</span> `:''}${esc(R.labels.model_note)} ${esc(R.labels.source_note)}</p>
    <div class="group" style="margin-top:12px"><button class="row" data-go="#settings-ladder"><div class="grow t1">Ladder settings</div>${CHEV}</button></div></div>`};
 // settings: hide-all, sex, birth date, height, profile bodyweight; physique (opt-in, hide switch, readings) only when not hidden and 18+ (or age unknown)
 function ladSetHtml(){const C=ladSettings(),P=C.profile,B=C.bodyComp,hu=S.unit==='kg'?'cm':'in',age=window.LADDER?LADDER.ageOf({settings:{profile:P}},AS_OF):null;
@@ -1028,9 +1030,14 @@ function ladPlateDemo(lift,lb,reps,deload){const L=ladderData();if(!L)return;con
   const ent=LADDER.plateEntries(PB,S.unit,lift),k=ent.findIndex(e=>Math.abs(e.load-(kg?{135:60,225:100,315:140,405:180,495:220}[lb]:lb))<0.01),ld=k>=0?ent[k].load:lb;
   let x=WK.ex.find(e=>e.id===id);if(!x){x={id,bar:true,cue:'',sets:[]};WK.ex.unshift(x)}x.sets=[{p:'',warm:true,done:true,wv:String(Math.round(ld*0.6)),rv:'5'},{p:'',done:true,wv:String(ld),rv:String(reps),wu:S.unit}];
   if(deload)WK.deload=true}
-// demo for #finish-rankup: the shoulder-press slot becomes overhead press with a top set reaching the next rank (Coach's target, at 5 reps)
-function ladRankupDemo(){const L=ladderData();if(!L||!L.next)return;const s=L.progress.slots.find(x=>x.lift==='ohp'),x=WK.ex.find(e=>e.id==='seated-dumbbell-shoulder-press');if(!s||!s.target||s.target.met||!x||s.target.estimated_1rm==null)return;
-  const st=RD.EVO.targets.step[S.unit],ld2=Math.ceil(s.target.estimated_1rm/(1+5/30)/st-1e-9)*st;x.id='overhead-press';const w=x.sets.filter(q=>q.done&&!q.warm).pop();if(w)Object.assign(w,{wv:String(ld2),rv:'5',wu:S.unit})}
+// demo for #finish-rankup: enough of the unmet slots reach the next rank's target (Coach's) for 3 of 5: the shoulder-press slot becomes
+// overhead press with a top set at the target (5 reps); if one more is needed (swap3: the sample is 2 short), the lat-pulldown slot becomes
+// bodyweight pull-ups at the target reps
+function ladRankupDemo(){const L=ladderData();if(!L||!L.next)return;const sl=l=>L.progress.slots.find(x=>x.lift===l),need=()=>RD.EVO.promotion.min_lifts-L.progress.slots.filter(x=>x.target&&x.target.met).length;let n=need();
+  const top=x=>x&&x.sets.filter(q=>q.done&&!q.warm).pop();
+  {const s=sl('ohp'),x=WK.ex.find(e=>e.id==='seated-dumbbell-shoulder-press');if(n>0&&s&&s.target&&!s.target.met&&x&&s.target.estimated_1rm!=null){
+    const st=RD.EVO.targets.step[S.unit],ld2=Math.ceil(s.target.estimated_1rm/(1+5/30)/st-1e-9)*st;x.id='overhead-press';const w=top(x);if(w){Object.assign(w,{wv:String(ld2),rv:'5',wu:S.unit});n--}}}
+  {const s=sl('pullups'),x=WK.ex.find(e=>e.id==='lat-pulldown');if(n>0&&s&&s.target&&!s.target.met&&x&&s.target.reps!=null){x.id=RD.EVO.lifts.pullups.exercise_ids[0];x.bar=false;const w=top(x);if(w){Object.assign(w,{wv:'0',rv:String(s.target.reps),wu:S.unit});n--}}}}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-lad],[data-lsex],[data-lradd],[data-lrdel]');if(!t||!t.closest('#ladset'))return;e.preventDefault();const C=ladSettings();
   if(t.dataset.lad==='show')ladSet({hidden:!C.hidden});else if(t.dataset.lad==='optin')ladSet({bodyComp:{optIn:C.bodyComp.optIn!==true}});else if(t.dataset.lad==='bchide')ladSet({bodyComp:{hidden:C.bodyComp.hidden!==true}});
   else if(t.hasAttribute('data-lsex'))ladSet({profile:{sex:t.dataset.lsex||null}});else if(t.hasAttribute('data-lrdel'))ladSet({dropReading:+t.dataset.lrdel});
