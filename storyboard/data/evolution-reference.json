@@ -3,7 +3,7 @@
  "version": 2,
  "entry_point": "tools/evolution.py report(history, as_of)",
  "rules_file": "evolution-rules.json",
- "rules_sha256": "a970183d47a3f35d9b792d616b6406732cc915c05865f4ce36b15580ae0959a9",
+ "rules_sha256": "d01a789f7d457dac44620d82b71ec13851fa4c7ea8f3b302cae20206b5799147",
  "sample": {
   "file": "sample-log.json",
   "sha256": "60304cb7f8a702427db197540f8ce0407874d8f62bf532e0b10585e16d63d39b",
@@ -641,7 +641,7 @@
     "revealed": [],
     "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
     "lean": "Physique not tracked",
-    "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+    "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
     "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
     "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
    }
@@ -2994,7 +2994,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -5345,7 +5345,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -7704,7 +7704,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -10060,7 +10060,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -12761,7 +12761,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -15113,7 +15113,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -18493,7 +18493,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -20852,7 +20852,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -23770,7 +23770,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -25529,7 +25529,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -27324,7 +27324,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -29136,7 +29136,7 @@
      ],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -30946,7 +30946,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Lean physique tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -32756,7 +32756,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -34554,7 +34554,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -36367,7 +36367,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Lean physique tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -38177,7 +38177,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Update your waist to keep the Lean mark",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -39978,7 +39978,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": null,
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -41778,7 +41778,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": null,
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -43851,7 +43851,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -44634,7 +44634,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -46515,7 +46515,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -48318,7 +48318,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -50119,7 +50119,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -51913,7 +51913,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -53701,7 +53701,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -55494,7 +55494,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -57288,7 +57288,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -59074,7 +59074,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -60329,7 +60329,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -63247,7 +63247,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -64501,7 +64501,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -65755,7 +65755,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -67008,7 +67008,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -68462,7 +68462,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -69915,7 +69915,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }
@@ -71369,7 +71369,7 @@
      "revealed": [],
      "scaled": "Bars adjust for bodyweight (allometric scaling), so heavier lifters need a lower multiple of bodyweight.",
      "lean": "Physique not tracked",
-     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+     "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
      "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
      "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away."
     }

@@ -887,7 +887,14 @@ const APE_FIG={knuckle_dragger:{src:'stage-1'},primate:{src:'stage-2'},neanderth
 // swap2 (ladder v2): the stock march is Knuckle-Dragger, Primate, Neanderthal, Prime, Silverback (then Kong / Apex, hidden). The strip itself
 // follows evolution-rules stages[] order; this list only serves legacy numeric callers. stage-4.svg (Silverback) is drawn 414 tall, the tallest.
 const APE_ORDER=['knuckle_dragger','primate','neanderthal','prime','silverback','kong','apex'];
-const APE_ART=APE_ORDER.slice(0,5).map(k=>k.replace('_','-'));
+// preload every stage-art file once at start: the figures are CSS masks, and WebKit can leave a mask unpainted when its first use is on a
+// screen that never showed the strip (the finish screen's rank-up tile came out empty); a warm cache paints it on first render
+const APE_SRCS=[...new Set(Object.values(APE_FIG).map(f=>f.src))];
+// WebKit can leave a .afm unpainted when its CSS mask art arrives after first paint, and a plain repaint does not help (seen intermittently
+// on the finish screen's rank-up tile, 58e/f). Re-spelling the same URL (assets/... <-> ./assets/...) makes WebKit resolve the mask again
+// from its cache and paint it, with no flash. Run when each art file loads and shortly after every render.
+const afmKick=()=>$$('.afm').forEach(m=>{const v=m.style.getPropertyValue('--afsrc');if(v)m.style.setProperty('--afsrc',v.includes('url(./')?v.replace('url(./','url('):v.replace('url(','url(./'))});
+if(typeof Image!=='undefined')APE_SRCS.forEach(s=>{const im=new Image();im.decoding='async';im.onload=()=>requestAnimationFrame(afmKick);im.src=`assets/ladder/${s}.svg`});
 function apeFig(k,cls=''){const id=typeof k==='string'?k:APE_ORDER[Math.max(0,Math.min(6,k|0))],f=APE_FIG[id]||APE_FIG.prime,x=!!f.x;
   return `<i class="afig${x?' afx':''} ${cls}" data-afig="${id}" data-afsrc="${f.src}" aria-hidden="true"><i class="afm" style="--afsrc:url(assets/ladder/${f.src}.svg)"></i></i>`}
 // inline SVG (same path as assets/ladder/lock.svg) so it never waits on a mask load; the box is the lock's left half, the gradient runs
@@ -905,8 +912,9 @@ function ladCard(){const L=ladderData();if(!L||L.hidden_all)return '';setTimeout
    <div class="ladrow"><div class="grow"><div class="eyebrow">Evolution ladder</div><b class="lrank" data-lrank="${L.rank.id}">${esc(L.rank.label)}</b></div>${CHEV}</div>${ladRev(L)}
    ${ladBar(L)}<div class="lsub"><span class="num">${ladProg(L)}</span></div>${L.hint?`<div class="lnext">Next: ${esc(L.hint.text)}</div>`:''}${L.labels.table?`<p class="lnote">${esc(L.labels.table)}</p>`:''}</button>`}
 const PLN=n=>`${n} plate${n>1?'s':''}`;
+// metric1: rep lifts show Coach's bodyweight-scaled value (4 dp in the rules) to 1 decimal on screen; whole numbers stay whole
 function ladLiftRow(L,l,o,slot){const R=RD.EVO,bw=L.bodyweight_current.kg,u=L.unit,t=slot&&slot.target;
-  const val=o.value==null?esc(o.label||''):o.kind==='multiple'?`${o.value.toFixed(2)}× bodyweight${o.bodyweight_kg?` · est. 1RM ${Math.round(inU(o.value*o.bodyweight_kg,'kg'))} ${u}`:''}`:`${o.value} strict rep${o.value===1?'':'s'}${o.converted?' (incl. weighted, estimated)':''}`;
+  const val=o.value==null?esc(o.label||''):o.kind==='multiple'?`${o.value.toFixed(2)}× bodyweight${o.bodyweight_kg?` · est. 1RM ${Math.round(inU(o.value*o.bodyweight_kg,'kg'))} ${u}`:''}`:`${Number.isInteger(o.value)?o.value:o.value.toFixed(1)} strict rep${o.value===1?'':'s'}${o.converted?' (incl. weighted, estimated)':''}`;
   const tg=t&&!t.met?(t.kind==='multiple'?(t.estimated_1rm!=null?`Next rank: est. 1RM ${t.estimated_1rm} ${t.unit}`:`Next rank: ${t.threshold}× bodyweight`):`Next rank: ${t.reps} strict reps`):t&&t.met?'Meets the next rank':'';
   return `<div class="row ladlift" data-llift="${l}"><div class="grow"><div class="t1">${esc(R.lifts[l].label)}${slot&&slot.substituted?` <span class="lsubst">stand-in</span>`:''}</div><div class="t2">${val}</div>${tg?`<div class="t2 ltg">${esc(tg)}</div>`:''}
 </div>
@@ -1098,6 +1106,13 @@ const DSH3={mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun
 // (no silent fallback). Reset = remove that muscle's pin.
 const mlGet=()=>Object.assign({},((logLoad().settings||{}).mainLiftPins)||{});
 const mlSet=(m,id)=>{const H=logLoad();H.settings=H.settings||{};const o=Object.assign({},H.settings.mainLiftPins||{});if(id)o[m]=id;else delete o[m];H.settings.mainLiftPins=o;logSave();PROG.sig=null;PROG.res=null;PROG.view=null};
+// Chart metric toggle (metric1, Coach progress-spec §17): ONE global choice in the log, history.settings.progress.chartMetric (Coach's
+// chart_metrics.persist.key); unknown / missing -> the default (est_1rm). Display only: change %, bands, KPIs and headline stay est_1rm.
+const CM_OPTS=()=>((RD&&RD.PR2&&RD.PR2.chart_metrics)||{options:['est_1rm'],default:'est_1rm'});
+const cmGet=()=>{const v=(((logLoad().settings||{}).progress)||{}).chartMetric,C=CM_OPTS();return C.options.includes(v)?v:C.default};
+const cmSet=o=>{const H=logLoad();H.settings=H.settings||{};H.settings.progress=Object.assign({},H.settings.progress||{},{chartMetric:o});sv(LOG_K,LOGH)};   // display only: no report rebuild
+// the option a lift's chart shows: the saved one when available, else metric_series[lift].fallback (the saved value is kept)
+function cmShown(pr,id){const MS=pr.metric_series&&pr.metric_series[id],o=cmGet();if(!MS)return 'est_1rm';return MS.options[o]&&MS.options[o].available?o:(MS.fallback||null)}
 function progHist(empty=PROG.empty){const H=empty?{schema:2,settings:{},sessions:[],entries:[],sets:[]}:logLoad();return Object.assign({},H,{settings:Object.assign({},H.settings||{},{unit:S.unit,effort:effMode()})})}
 function progBoard(){const B=window.BOARD;if(!B||!RD)return [];const sl=RD.SLOG&&RD.SLOG.routine;
   if(B.ensurePlan&&sl&&sl.days){const sp=((RD.splits||{}).splits||[]).find(x=>x.id===sl.split);B.ensurePlan(sl.days,sp?`${sp.name} · ${sl.days.length} days`:'Sample plan',sl.level||'intermediate')}
@@ -1303,12 +1318,44 @@ function liftPane(pr,vw,id){const L=pr.lifts[id],u=pr.unit,M=PSH.m&&pr.muscles[P
   const g=L.gain_vs_last,DL=dashLift(pr,id),met=DL?DL.metric:L.metric,nprs=DL?DL.dots.filter(d=>d.pr).length:0,c=DL&&DL.change;
   return `<div class="psh plh" data-pshl="${id}"${mattr} data-metric="${met}" data-kind="${L.kind}">${mh}${M?`<h3 class="plname">${esc(L.name)}</h3>`:`<h2>${esc(L.name)}</h2>`}${sw}
    <div class="pseg prng">${[['4w','4w'],['12w','12w'],['all','All']].map(([k,t])=>`<button data-prng="${k}" class="${PSH.rng===k?'on':''}">${t}</button>`).join('')}</div>
-   <div class="card plcard"><div class="plt">${CTITLE[met](u)}</div>${liftChart(pr,id)}<div class="ptip" id="ptip" hidden></div></div>
-   <p class="foot pnote1">${CNOTE[met]}</p>
+   ${cmRow(pr,id)}
+   ${(()=>{const sh=cmShown(pr,id);if(sh&&sh!=='est_1rm'){const O=pr.metric_series[id].options[sh];return `<div class="card plcard" data-cmchart="${sh}"><div class="plt">${esc(O.axis.replace(/ x /g,' × '))}</div>${metricChart(pr,id,sh)}<div class="ptip" id="ptip" hidden></div></div>
+   <p class="foot pnote1">${CMNOTE[sh]}${pr.metric_series[id].bodyweight_lift?' Includes your bodyweight.':''} Trend and 3-month change use ${esc(pr.metric_series[id].options.est_1rm.label)}.</p>`}
+     if(!sh)return `<div class="card plcard" data-cmchart="none"><p class="foot">${esc(((RD.PR2.chart_metrics||{}).empty||{}).no_points||'No sessions with this measure yet')}</p></div>`;
+     return `<div class="card plcard" data-cmchart="est_1rm"><div class="plt">${CTITLE[met](u)}</div>${liftChart(pr,id)}<div class="ptip" id="ptip" hidden></div></div>
+   <p class="foot pnote1">${CNOTE[met]}</p>`})()}
    <div class="group plinfo"><div class="row"><div class="grow t1">Last time</div><span class="val">${g?esc(g.text):'–'}</span></div>${g&&g.detail?`<div class="row"><div class="grow t2">${esc(g.detail)}</div></div>`:''}
-    <div class="row"><div class="grow t1">Trend, last 6 weeks</div><span class="val">${arrow(LST[L.trend.status]||'insufficient')}</span></div><div class="row"><div class="grow t2">${esc(liftLine(L))}</div></div>
-    <div class="row"><div class="grow t1">vs 3 months ago</div><span class="val num">${c&&c.status==='ok'?`${c.pct_display} <span class="t2">(${esc(c.early.display)} → ${esc(c.late.display)})</span>`:esc(capF((c&&c.reason)||'–'))}</span></div>
-    <div class="row"><div class="grow t1">Sessions with a PR</div><span class="val num">${nprs}</span></div></div>${mp}</div>`}
+    ${cmShown(pr,id)&&cmShown(pr,id)!=='est_1rm'?'':`<div class="row"><div class="grow t1">Trend, last 6 weeks</div><span class="val">${arrow(LST[L.trend.status]||'insufficient')}</span></div><div class="row"><div class="grow t2">${esc(liftLine(L))}</div></div>
+    <div class="row"><div class="grow t1">vs 3 months ago</div><span class="val num">${c&&c.status==='ok'?`${c.pct_display} <span class="t2">(${esc(c.early.display)} → ${esc(c.late.display)})</span>`:esc(capF((c&&c.reason)||'–'))}</span></div>`}
+    <div class="row"><div class="grow t1">${cmShown(pr,id)&&cmShown(pr,id)!=='est_1rm'?'Sessions with a new best':'Sessions with a PR'}</div><span class="val num">${cmShown(pr,id)&&cmShown(pr,id)!=='est_1rm'?pr.metric_series[id].options[cmShown(pr,id)].points.filter(q=>q.pr).length:nprs}</span></div></div>${mp}</div>`}
+const CMNOTE={heaviest:'Your heaviest working set each session. A real logged load, not an estimate.',best_set_volume:'Your best single set each session: load × reps.',
+  session_tonnage:'Every working set of this lift each session, load × reps added up. It grows with the number of sets, so it reads as work done, not strength.'};
+// the toggle: Coach's options in order (est_1rm takes the lift's own label: Best reps / Best hold (s) / Load-reps index); unavailable ones are
+// disabled and say why (tap: the reason as a toast; the reasons also sit under the row)
+function cmRow(pr,id){const MS=pr.metric_series&&pr.metric_series[id];if(!MS)return '';const C=CM_OPTS(),sh=cmShown(pr,id),saved=cmGet(),why=[];
+  const b=C.options.map(o=>{const O=MS.options[o],on=o===sh,dis=!O.available;if(dis&&O.reason_text&&!why.includes(O.reason_text))why.push(O.reason_text);
+    return `<button type="button" class="pchip pmc${on?' on':''}${dis?' off':''}" data-pmet="${o}" role="radio" aria-checked="${on}"${dis?` aria-disabled="true" data-why="${esc(O.reason_text||'')}"`:''}>${esc(O.label)}</button>`}).join('');
+  const fb=sh&&saved!==sh&&MS.options[saved]&&!MS.options[saved].available?`<p class="foot pmetfb" data-pmetfb="1">${esc(MS.options[saved].label)} isn't available for this lift, so it shows ${esc(MS.options[sh].label)}.</p>`:'';
+  return `<div class="pmet" role="radiogroup" aria-label="Chart measure" data-pmetsaved="${saved}">${b}</div>${why.length?`<p class="foot pmetwhy">${why.map(esc).join(' ')}</p>`:''}${fb}`}
+// chart for heaviest / best_set_volume / session_tonnage from report().metric_series (values in kg -> the display unit); new-best dots in accent;
+// 1 point = a single dot, no line (Coach's empty strings); no trend line, no %
+function metricChart(pr,id,o){const u=pr.unit,O=pr.metric_series[id].options[o],toU=kg=>u==='kg'?kg:kg*KG_LB;
+  const P=PVIEW.inRange(O.points.map(q=>({...q,days_ago:Math.round((Date.parse(AS_OF)-Date.parse(q.date))/864e5)})),PSH.rng).map(q=>({...q,y:toU(q.value)}));
+  if(!P.length)return `<p class="foot">No sessions in this range.</p>`;
+  const W=340,H=196,ys=P.map(p=>p.y),lo0=Math.min(...ys),hi0=Math.max(...ys),span=Math.max(hi0-lo0,Math.max(10,hi0*0.05));
+  const stp=[1,2,2.5,5,10,20,25,50,100,200,250,500,1000,2000,2500,5000,10000,20000].find(s=>span/s<=4)||50000,lo=Math.max(0,Math.floor((lo0-span*.08)/stp)*stp),hi=Math.ceil((hi0+span*.08)/stp)*stp;
+  const nf=v=>Math.round(v).toLocaleString('en-US'),pl=hi>=10000?52:hi>=1000?48:42,pr2=12,pt=12,pb=28;
+  const t0=Date.parse(P[0].date),t1=Date.parse(P[P.length-1].date),X=d=>pl+(t1>t0?(Date.parse(d)-t0)/(t1-t0):.5)*(W-pl-pr2),Y=v=>pt+(hi-v)/(hi-lo)*(H-pt-pb);
+  const yt=[];for(let v=lo;v<=hi+1e-9;v+=stp)yt.push(v);
+  const grid=yt.map(v=>`<line x1="${pl}" x2="${W-pr2}" y1="${Y(v)}" y2="${Y(v)}" class="gl"/><text x="${pl-6}" y="${Y(v)+3.5}" text-anchor="end" class="ya">${nf(v)}</text>`).join('');
+  const nx=Math.min(4,P.length),xi=[...new Set(Array.from({length:nx},(_,k)=>Math.round(k*(P.length-1)/Math.max(1,nx-1))))];
+  const xt=xi.map(k=>`<text x="${X(P[k].date)}" y="${H-8}" text-anchor="${P.length===1?'middle':k===0?'start':k===P.length-1?'end':'middle'}" class="dx">${fmtD(P[k].date)}</text>`).join('');
+  const sfx=(RD.PR2.chart_metrics.tooltip||{}).pr_suffix||'',tip=q=>q.tooltip.replace(/^\d{4}-\d{2}-\d{2}: /,'').replace(sfx,'').replace(/ x /g,' × ');
+  const dots=P.map((p,k)=>`<g class="pp${p.pr?' pr':''}" data-k="${k}" data-sid="${p.session_id}" data-tip="${esc(tip(p))}" data-date="${fmtD(p.date)}"${p.pr?' data-pr="1" data-best="1"':''}><circle cx="${X(p.date)}" cy="${Y(p.y)}" r="${p.pr?4.6:3.4}"/><circle class="phit" cx="${X(p.date)}" cy="${Y(p.y)}" r="13"/></g>`).join('');
+  const ax={heaviest:u,best_set_volume:`${u} × reps`,session_tonnage:u}[o],one=O.points.length===1?`<p class="foot pmetone">${esc(O.empty||'')}</p>`:'';
+  return `<svg viewBox="0 0 ${W} ${H}" class="plc" data-cmpts="${P.length}" role="img" aria-label="${esc(O.axis)}, ${P.length} sessions"><text class="yat" transform="translate(11 ${(pt+H-pb)/2}) rotate(-90)" text-anchor="middle">${esc(ax)}</text>${grid}
+   ${P.length>1?`<polyline class="pln" points="${P.map(p=>`${X(p.date)},${Y(p.y)}`).join(' ')}"/>`:''}${dots}${xt}</svg>${one}
+   <div class="plleg"><span><i class="lpt"></i>Each session</span>${P.some(p=>p.pr)?'<span><i class="lpr"></i>New best</span>':''}</div>`}
 // lift chart: one dot per session (its best set), PR sessions in accent, a labelled y-axis, date ticks; tap a dot for the set
 function liftChart(pr,id){const u=pr.unit,DL=dashLift(pr,id);if(!DL)return `<p class="foot">No sessions in this range.</p>`;const met=DL.metric,kgM=met==='e1rm'||met==='load_index';
   const toU=kg=>u==='kg'?kg:kg*KG_LB,P=PVIEW.inRange(DL.dots,PSH.rng).map(d=>({...d,sid:d.session_id,y:kgM?toU(d.value):d.value}));
@@ -1337,7 +1384,7 @@ function afterProgress(){tapable($('#view'))}
 function progApply(k){const pr=progressData(),x=pr&&pr.needs_attention[+k];if(!x||!x.fix||!x.fix.apply_edits_board||!x.fix.ops||!window.BOARD)return;
   const before=BOARD.progApply(x.fix.ops);PROG.applied={key:akey(x),item:JSON.parse(JSON.stringify(x)),before,asig:BOARD.sig()};toast('Applied to your board');rerenderProgress()}
 function progUndo(){const a=PROG.applied;if(!a)return;PROG.applied=null;if(BOARD.sig()===a.asig){BOARD.progUndo(a.before);toast('Undone · your board is back')}else toast('Your board changed after this. Undo it in Build.');rerenderProgress()}
-document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-mlx],[data-pspk],[data-pml],[data-pm],[data-plift],[data-pfix],[data-pundo],[data-pmore],[data-kgo],[data-psort],[data-sl],[data-psback],[data-prng],[data-ovk],[data-ovmore],[data-ovl],[data-ovr],.plc .pp,.pmapc .mp[data-mu]');
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-pmet],[data-mlx],[data-pspk],[data-pml],[data-pm],[data-plift],[data-pfix],[data-pundo],[data-pmore],[data-kgo],[data-psort],[data-sl],[data-psback],[data-prng],[data-ovk],[data-ovmore],[data-ovl],[data-ovr],.plc .pp,.pmapc .mp[data-mu]');
   if(!t||!($('#view').contains(t)||t.closest('.psheet')))return;e.preventDefault();
   if(t.matches('.pmapc .mp'))return openPSheet(t.dataset.mu);if(t.matches('.plc .pp'))return showTip(t);
   if(t.dataset.pspk){const vw=pview(progressData()),x=vw&&vw.muscles[t.dataset.pspk];return openPSheet(t.dataset.pspk,t.dataset.pspl||(x&&x.main)||null)}
@@ -1348,6 +1395,7 @@ document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest
   if(t.dataset.pml!=null&&PSH.m){mlSet(PSH.m,t.dataset.pml||null);rerenderProgress();{const x=pview(progressData()).muscles[PSH.m];PSH.lift=(x&&x.main)||null}pshRender();toast(t.dataset.pml?'Main lift set':'Main lift back to automatic');return}
   if(t.dataset.mlx)return exDetail(t.dataset.mlx);if(t.dataset.pm)return openPSheet(t.dataset.pm);
   if(t.dataset.plift){const pr=progressData();return openPSheet(pr?muscleOfLift(pr,t.dataset.plift):null,t.dataset.plift)}
+  if(t.dataset.pmet){if(t.getAttribute('aria-disabled')==='true'){toast(t.dataset.why||'Not available for this lift');return}cmSet(t.dataset.pmet);return pshRender()}
   if(t.dataset.sl){PSH.lift=t.dataset.sl;return pshRender()}if(t.dataset.psback){PSH.lift=null;return pshRender()}if(t.dataset.prng){PSH.rng=t.dataset.prng;return pshRender()}
   if(t.dataset.kgo){const el=$(`[data-psec=${t.dataset.kgo}]`);if(el)el.scrollIntoView({block:'start',behavior:'smooth'});return}
   if(t.dataset.psort){PROG.sort=t.dataset.psort;return rerenderProgress()}
@@ -1774,7 +1822,7 @@ function route(){
 }
 function render(){
   const v=$('#view');v.innerHTML=V[S.scr]();v.scrollTop=0;renderTabs();renderBar();
-  AFTER[S.scr]&&AFTER[S.scr]();
+  AFTER[S.scr]&&AFTER[S.scr]();setTimeout(afmKick,300);setTimeout(afmKick,900);
   if(S.scr==='learnEx')afterLearnEx(S.arg);if(S.scr==='settings')afterSettings();if(S.scr==='learnMuscle')afterLearnMuscle(S.arg);if(S.scr==='learnFund')afterLearnFund(S.arg);
 }
 // one delegated click handler for the whole app
@@ -2172,7 +2220,7 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={apeFig,APE_FIG,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={openPSheet,cmGet,cmSet,cmShown,progressData,apeFig,APE_FIG,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

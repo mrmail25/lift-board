@@ -449,6 +449,51 @@ function order1(dt,K,D,prefs,asOf){const [mo,meta]=muscleOrder(dt,K,D,prefs),pos
     r.priority=ms.some(m=>pr.has(m))}
   D.table_rows.sort((a,b)=>pos[a.muscles[0]]-pos[b.muscles[0]]);D.muscle_order=mo;D.muscle_order_meta=meta;D.chart_default=chartDefault(K,D,mo,asOf);return D}
 
+// ---------- chart metric toggle (metric1, progress-spec §17): port of progress.py metric_series ----------
+// Per logged lift, the chart series for each chart_metrics option (est_1rm = the dashboard dots; heaviest / best_set_volume / session_tonnage
+// from the exposure's working sets, bodyweight lifts at f x BW + added, assisted max(0, f x BW - assistance), BW by the evolution ladder rule).
+const fmtHalf=v=>{v=fl(v*2+0.5)/2;return v===Math.trunc(v)?String(Math.trunc(v)):v.toFixed(1)};
+const fmtInt=v=>String(Math.trunc(fl(v+0.5))).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+function profileBwKg(h,L){const b=((h.settings||{}).profile||{}).bodyweight;if(b&&typeof b==='object'&&b.value){const v=+b.value;return Number.isFinite(v)?toKg(v,b.unit||'lb',L):null}return null}
+function bodyweightFor(t,day,pkg){const prev=t.filter(([d])=>d<=day);if(prev.length)return [prev[prev.length-1][1],'logged'];if(pkg)return [pkg,'profile'];return [null,'missing']}
+function metricKind(xs){const k=xs[0].kind;if(k==='hold')return 'hold';if(k==='distance')return 'distance';if(k==='bodyweight')return 'bodyweight';
+  if(k==='core'&&!xs.some(e=>e.top_kg>EPS))return 'core_unloaded';return xs[0].metric==='load_index'?'load_index':'e1rm'}
+function metricSeries(dt,K,h,xsall,D,asOf,u,EX){const L=rules(dt),PR=PRSm(),C=PR.ctx(dt),CM=K.R2.chart_metrics,DB=K.R2.dashboard,bwt=bwTable(h,L),pkg=profileBwKg(h,L),out={};
+  for(const i of Object.keys(xsall).sort()){const xs=xsall[i].filter(e=>e.date<=asOf&&!e.deload);if(!xs.length)continue;
+    const mk=metricKind(xs),meta=EX[i]||{},f=meta.bodyweight_fraction||0,assisted=!!meta.bodyweight_assisted,bwl=f>0&&mk!=='hold',opts={};
+    const LD=D.lifts[i]||{},dm=(LD.change||{}).metric||dashMetric(xs);
+    let pts=(LD.dots||[]).map(d=>({date:d.date,session_id:d.session_id,value:d.value,display:d.display,pr:d.best,
+      tooltip:fmtS(dm==='e1rm'||dm==='load_index'?CM.tooltip.est_1rm:CM.tooltip.est_1rm_reps,{date:d.date,display:d.display})+(d.best?CM.tooltip.pr_suffix:'')}));
+    const lab=dm==='e1rm'?CM.definitions.est_1rm.label:DB.metric.labels[dm].slice(0,1).toUpperCase()+DB.metric.labels[dm].slice(1);
+    opts.est_1rm={available:!!pts.length,reason:pts.length?null:'no_data',reason_text:pts.length?null:CM.reasons.no_data,label:lab,metric:dm,axis:fmtS(CM.axis.est_1rm[dm],{unit:u}),
+      unit:{e1rm:u,load_index:u,best_reps:'reps',hold_s:'s'}[dm],points:pts,skipped_no_bodyweight:0,trend:true};
+    for(const o of ['heaviest','best_set_volume','session_tonnage']){let reason=mk==='hold'?'hold':(mk==='distance'&&o!=='heaviest')?'distance':mk==='core_unloaded'?'no_load':null;pts=[];let skipped=0;
+      if(reason===null){for(const e of xs){let bw=null;if(f>0){bw=bodyweightFor(bwt,e.date,pkg)[0];if(bw==null){skipped++;continue}}
+          const eff=x=>f<=0?x.added_kg:((assisted||x.added_kg<-EPS)?Math.max(0,f*bw-Math.abs(x.added_kg)):f*bw+x.added_kg);let v,det;
+          if(o==='heaviest'){const ss=e.sets.filter(x=>prOk(x,'weight',L));if(!ss.length)continue;const x=pyMax(ss,x=>[eff(x),x.reps,-e.sets.indexOf(x)]);v=eff(x);
+            det={load_kg:r4(v),reps:x.reps,set_id:x.id,step_kg:r4(PR.stepKg(dt,x,e.unit,C))}}
+          else if(o==='best_set_volume'){const ss=e.sets.filter(x=>prOk(x,'set_volume',L));if(!ss.length)continue;const x=pyMax(ss,x=>[eff(x)*x.reps,-e.sets.indexOf(x)]);v=eff(x)*x.reps;
+            det={load_kg:r4(v/x.reps),reps:x.reps,set_id:x.id}}
+          else{v=e.sets.reduce((a,x)=>a+eff(x)*x.reps,0);det={sets:e.sets.length}}
+          if(f<=0&&v<=EPS)continue;
+          pts.push(Object.assign({date:e.date,session_id:e.sid,value:r4(v)},det,{bodyweight_kg:bw!=null?r4(bw):null}))}
+        if(!pts.length)reason=(f>0&&skipped)?'no_bodyweight':(f<=0?'no_load':'no_data')}
+      let best=null;for(const q of pts){const v=q.value;
+        if(best===null)q.pr=false;else if(o==='heaviest')q.pr=v>best+C.sf*q.step_kg+EPS;else q.pr=v>best*(1+K.FLAT)+1e-12;
+        best=best===null?v:Math.max(best,v);const vu=K.toU(v,u);
+        q.display=(o==='heaviest'?fmtHalf(vu):fmtInt(vu))+` ${u}`+(o==='best_set_volume'?' x reps':'');
+        const bwt_=q.bodyweight_kg!=null?fmtS(CM.tooltip.bw,{bw:fmtHalf(K.toU(q.bodyweight_kg,u)),unit:u}):'';let tt;
+        if(o==='heaviest')tt=fmtS(CM.tooltip.heaviest,{date:q.date,load:fmtHalf(vu),unit:u,reps:q.reps,bw:bwt_});
+        else if(o==='best_set_volume')tt=fmtS(CM.tooltip.best_set_volume,{date:q.date,load:fmtHalf(K.toU(q.load_kg,u)),unit:u,reps:q.reps,value:fmtInt(vu),bw:bwt_});
+        else tt=fmtS(CM.tooltip.session_tonnage,{date:q.date,value:fmtInt(vu),unit:u,sets:q.sets,bw:bwt_});
+        q.tooltip=tt+(q.pr?CM.tooltip.pr_suffix:'')}
+      const ok=!!pts.length&&reason===null;
+      opts[o]={available:ok,reason:ok?null:reason,reason_text:ok?null:CM.reasons[reason],label:CM.definitions[o].label,metric:o,axis:fmtS(CM.axis[o],{unit:u})+(bwl?CM.axis.bodyweight_suffix:''),
+        unit:u,points:pts,skipped_no_bodyweight:skipped,trend:false}}
+    for(const v of Object.values(opts)){const n=v.points.length;v.empty=n===0?CM.empty.no_points:n===1?CM.empty.one_point:null}
+    const fb=[CM.default].concat(CM.options).find(o=>opts[o].available)||null;
+    out[i]={kind:mk,bodyweight_lift:f>0,options:opts,fallback:fb}}
+  return out}
 function report(dt,history,asOf,routine=null,level='intermediate',goal=null,opts=null,prefs=undefined){if(prefs===undefined)prefs=(opts&&opts.prefs)||null;asOf=String(asOf).slice(0,10);const h=normalize(history),K=mk(dt,h),u=((h.settings||{}).unit)||'lb',EX=exTable(dt,h);
   const OV=resolveOverrides(K,h,opts&&opts.main_lift_overrides,EX);
   if(routine==null)routine=(h.routine||{}).days||null;const mode=((h.settings||{}).effort)||'rir',flat=flatten(dt,h),xsall=exposures2(dt,h,asOf,flat);
@@ -472,10 +517,11 @@ function report(dt,history,asOf,routine=null,level='intermediate',goal=null,opts
       na.push({kind:'lift_dropping',muscle:m,muscles:[m],lift:i,lifts:[i],text:`${L.name} is dropping: below its recent best 2 sessions in a row (${L.gain_vs_last.text} last time)`,fix:chooseFix(dt,K,m,i,'dropping',L.stall,cx),notes:[]})}}
   const chg={};for(const i of Object.keys(xsall).sort())chg[i]=dashChange(K,xsall[i],asOf,u);
   const W=wins(K,xsall,asOf,u,EX,new Set(Object.values(mus).map(v=>v.main_lift.id).filter(Boolean)),chg),eff={};for(const [m,v] of Object.entries(mus))eff[m]=v.effort;
+  const D_=order1(dt,K,progress7(K,dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode,OV),lifts,h,routine,asOf),prefs,asOf);
   return {as_of:asOf,label:K.R2.label,model_note:K.R2.model_note,unit:u,effort_mode:mode,data:{completed_sessions:comp.length,logged_weeks:new Set(comp.map(wk)).size,first_date:comp.length?comp[0]:null,deload_sessions_excluded:(h.sessions||[]).filter(s=>s.status==='completed'&&sday(s)<=asOf&&isDeloadSession(s)).length},
     lifts,muscles:mus,stall_flags:{muscles:stuck,lifts_stalled:Object.keys(lifts).filter(i=>lifts[i].status==='stalled').sort(),lifts_dropping:Object.keys(lifts).filter(i=>lifts[i].status==='dropping').sort()},
     needs_attention:na,deload:dl,wins:W,effort:eff,footnote:{planned_vs_done:footnote(dt,K,h,asOf)},main_lift_overrides:Object.fromEntries(Object.entries(OV.applied).map(([m,v])=>[m,v.id])),overrides_ignored:OV.ignored,
-    dashboard:order1(dt,K,progress7(K,dashboard(K,xsall,lifts,mus,W,chg,asOf,u,mode,OV),lifts,h,routine,asOf),prefs,asOf)}}
+    dashboard:D_,metric_series:metricSeries(dt,K,h,xsall,D_,asOf,u,EX),chart_metrics_meta:{options:K.R2.chart_metrics.options,default:K.R2.chart_metrics.default,persist_key:K.R2.chart_metrics.persist.key}}}
 const API={report,isDeloadSession,perfSignal,deloadCheck,clampRir,normalize,flatten,completedAnalytics,exerciseTrends,localDate,weekStart:wk};
 if(isNode)module.exports=API;else root.PROGRESS=API;
 })(typeof window!=='undefined'?window:this);

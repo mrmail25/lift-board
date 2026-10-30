@@ -1406,7 +1406,7 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .lhidden{padding:16px}.lhidden .btn{margin-top:10px}
 .linp{width:80px;text-align:right;font-size:var(--t-body);background:var(--fill);border:0;border-radius:8px;padding:6px 8px;color:var(--ink);margin-right:6px}
 .lrup{display:flex;align-items:center;gap:10px;background:var(--fill);border-radius:12px;padding:8px 12px;margin:12px 0 4px;color:var(--accent)}
-.lrup .afig{width:28px;height:42px;flex:none}.lrup b{display:block;color:var(--ink);font-size:17px}.lrup span{font-size:var(--t-foot);color:var(--text-2)}
+.lrup .afig{width:34px;height:50px;flex:none} /* the new stage's figure (keyed by stage id), sized to the tile */.lrup b{display:block;color:var(--ink);font-size:17px}.lrup span{font-size:var(--t-foot);color:var(--text-2)}
 .lrev{display:inline-block;margin-top:8px;font-size:var(--t-foot);font-weight:700;color:#fff;background:var(--accent);border-radius:999px;padding:3px 10px}
 .lrup .lrev{display:block;width:max-content;margin-top:4px;color:#fff}
 .lnote{font-size:var(--t-foot);color:var(--text-2);margin:8px 0 0}.lnotes{margin:4px var(--s4) 0}.lnotes .lnote{margin:4px 0}
@@ -1453,3 +1453,11 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 
 /* plates fix (CoS): the ladder screen's nav is opaque, so the march strip never shows through it when scrolled (other screens keep the translucent bar) */
 .nav.lnavs{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
+
+/* chart metric toggle (metric1): four chips above the lift chart, wrapping; unavailable ones dimmed with their reason under the row */
+.pmet{display:flex;flex-wrap:wrap;gap:6px;margin:10px 16px 2px}
+/* metric1: outlined pills (the lift tabs above are filled), so the metric reads as a secondary choice; .pchip's paper background vanishes on the sheet */
+.pmet .pmc{align-items:center;font-size:13px;font-weight:500;padding:6px 12px;min-height:32px;max-width:none;white-space:nowrap;border-radius:999px;background:transparent;border:1px solid var(--line);color:var(--ink)}
+.pmet .pmc.on{background:var(--accent-tint);border-color:var(--accent);color:var(--accent-press);font-weight:600}
+.pmet .pmc.off{opacity:.42;text-decoration:none}.pmet .pmc.off.on{opacity:1}
+.pmetwhy,.pmetfb{margin:4px 18px 0;font-size:12px}.pmetone{margin:2px 0 0;font-size:12px;text-align:center}

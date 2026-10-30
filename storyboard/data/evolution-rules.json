@@ -955,7 +955,7 @@
   "note": "all optional; include in backup / restore"
  },
  "labels": {
-  "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate; Silverback, Kong and Apex = USPA Classic Raw / FPR classic bench / community bars checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
+  "source_note": "Benchmarks are game thresholds anchored on crowd and coach strength standards (Strength Level, Symmetric Strength). Those sources are not peer-reviewed: Strength Level ranks self-reported lifts from its own app users; Symmetric Strength publishes model bands. Estimated 1RM is a model, not a measured max. Bodyweight scaling: allometric, exponent 0.67 (the standard size normalisation for strength). Prime = Strength Level Intermediate. Upper stages follow published powerlifting standards, checked against OpenPowerlifting raw results (public-domain dataset, data date 2026-10-24); the first three stages follow a beginner progression model.",
   "ladder_hidden_note": "Ladder hidden. Your rank is still tracked and is never lowered.",
   "model_note": "Ranks are a strength game based on a model, not a measurement of health or fitness.",
   "promotion_note": "Promotion needs 3 of 5 core lifts. Ranks are never taken away.",
@@ -4019,6 +4019,10 @@
   {
    "date": "2026-10-29",
    "change": "v1 -> v2 award migration gets a 3% tolerance (migration.tolerance = 0.03): the floor is the highest v2 rank whose five core bars are each <= the v1 bars x k x 1.03. Migration only; computed ranks are unchanged. A woman's v1 Prime at 145 lb now stays Prime."
+  },
+  {
+   "date": "2026-10-29",
+   "change": "labels.source_note (shown in the ladder footer) no longer names any stage that is hidden until reached: upper stages are described as following published powerlifting standards. Label only; no threshold or logic change."
   }
  ]
 }
