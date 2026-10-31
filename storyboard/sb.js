@@ -876,7 +876,7 @@ function ladPersist(){const L=ladderData();if(!L||L.hidden_all)return;const H=lo
   if(a==null||L.rank.index>a){H.evolution=Object.assign({},H.evolution||{},{awarded:L.awarded_out});logSave()}}
 // ladder art: assets/ladder/stage-1..5.svg (CC0, Openclipart #348815 by j4p4n, see assets/ladder/LICENSES.md), drawn as a CSS mask over currentColor so
 // Ember/slate/tease colours and dark mode come from the existing .lfig/.lean/.lrup rules. k 0..4 = the five stages; 5/6 (Kong/Apex) reuse Prime with a glow;
-// kongapex (Oct 30, 2026): Kong and Apex have their own art now (stage-6 kong-A, stage-7 apex-C, chosen by Mr Dude), drawn without the
+// kongapex (Oct 30, 2026): Kong and Apex have their own art now (stage-6 kong-H, stage-7 apex-C, chosen by Mr Dude), drawn without the
 // old hidden-tier glow (a drop-shadow would fill Kong's thin fist cuts); they stay hidden until reached exactly as before.
 // art2: stage-1 knuckle-dragger, 2 primate (was set figure 3), 3 neanderthal (was set figure 4), 4 silverback (vectorized from ref/silverback-A.jpg, chosen by Mr Dude),
 // 5 prime (bodybuilder, front double biceps, gorilla head). The hidden tier is never drawn as a figure or a lock in the strip; only the
@@ -885,7 +885,7 @@ function ladPersist(){const L=ladderData();if(!L||L.hidden_all)return;const H=lo
 // moves each figure with its stage and needs no art change. The file name is just the art's slot (stage-4.svg = the massive side-profile
 // Silverback); x = drawn with the hidden-tier glow (Kong / Apex reuse the Prime art). A number is still accepted (legacy: position in the
 // stock order below) for callers / tests that pass an index.
-const APE_FIG={knuckle_dragger:{src:'stage-1'},primate:{src:'stage-2'},neanderthal:{src:'stage-3'},silverback:{src:'stage-4'},prime:{src:'stage-5'},kong:{src:'stage-6'},apex:{src:'stage-7'}};
+const APE_FIG={knuckle_dragger:{src:'stage-1',a:.887},primate:{src:'stage-2',a:.553},neanderthal:{src:'stage-3',a:.457},silverback:{src:'stage-4',a:.607},prime:{src:'stage-5',a:.655},kong:{src:'stage-6',a:.711},apex:{src:'stage-7',a:.715}};   // a = width / height of the (tight) viewBox
 // swap2 (ladder v2): the stock march is Knuckle-Dragger, Primate, Neanderthal, Prime, Silverback (then Kong / Apex, hidden). The strip itself
 // follows evolution-rules stages[] order; this list only serves legacy numeric callers. stage-4.svg (Silverback) is drawn 414 tall, the tallest.
 const APE_ORDER=['knuckle_dragger','primate','neanderthal','prime','silverback','kong','apex'];
@@ -908,9 +908,15 @@ const lockFig=(cls='')=>{const id='lkg'+(++lockN);return `<i class="llock ${cls}
 // kongapex: once Kong / Apex are revealed the strip has 6-7 columns; then the current stage's column is 1.4x wide (so the wide Apex art
 // still reads as the big one) and the labels drop to 9px with soft hyphens in the long names (no overlap down to 360 px). 5 columns: unchanged.
 const LAD_SHY={Neanderthal:'Nean&shy;der&shy;thal',Silverback:'Silver&shy;back'};
-function ladStrip(L){const cur=Math.floor(L.rank.index/3),vis=L.ladder.filter(s=>!s.hidden),many=vis.length>5;
-  const cols=many?` style="grid-template-columns:${vis.map((s,k)=>k===cur?'minmax(0,1.4fr)':'minmax(0,1fr)').join(' ')}"`:'';
-  return `<div class="lstripbox"><div class="lstrip${many?' lsmany':''}"${cols}>${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next'}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':''}>${apeFig(s.stage)}<span>${(LAD_SHY[s.label]||esc(s.label)).replace('-','-<wbr>')}</span></div>`).join('')}</div></div>`}
+// kongH ramp (Mr Dude): non-current figures get a strictly rising height, linear from 70% (first stage) to 100% (last) of the strip's max
+// figure height (--hmax: 70px card, 84px screen). All art has tight viewBoxes, so the box height IS the drawn height. One shared factor
+// (min(--hmax, column width / --q), --q = the widest r*a) keeps every figure inside its column without breaking the ramp. The current stage
+// keeps its own enlarged box (exception).
+function ladStrip(L){const cur=Math.floor(L.rank.index/3),vis=L.ladder.filter(s=>!s.hidden),many=vis.length>5,N=vis.length;
+  const r=k=>+(0.7+0.3*(N>1?k/(N-1):1)).toFixed(4),A=s=>(APE_FIG[s.stage]||APE_FIG.prime).a||.65;
+  const q=Math.max(...vis.map((s,k)=>k===cur?0:r(k)*A(s))).toFixed(4),fr=many?N-1+1.4:N;
+  const sty=`--q:${q};--fr:${fr};--gn:${N-1}`+(many?`;grid-template-columns:${vis.map((s,k)=>k===cur?'minmax(0,1.4fr)':'minmax(0,1fr)').join(' ')}`:'');
+  return `<div class="lstripbox"><div class="lstrip${many?' lsmany':''}" style="${sty}">${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next lf-ramp'}${k<cur?' lf-ramp':''}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':` style="--r:${r(k)};--a:${A(s)}"`}>${apeFig(s.stage)}<span>${(LAD_SHY[s.label]||esc(s.label)).replace('-','-<wbr>')}</span></div>`).join('')}</div></div>`}
 const ladBar=L=>L.progress.pct==null?'':`<div class="lbar" role="progressbar" aria-label="Progress ${esc(L.labels.progress)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${L.progress.pct}"><i style="width:${L.progress.pct}%"></i></div>`;
 const ladProg=L=>L.progress.pct==null?esc(L.labels.progress):`${L.progress.pct}% ${esc(L.labels.progress)}`;
 // swap3: Coach's percentile line under the rank ('Stronger than about 50% of lifters your size'; 'Top 3% …' at Apex); none when report gives none

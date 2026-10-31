@@ -1391,7 +1391,7 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .lbar i{display:block;height:100%;background:var(--accent);border-radius:4px}
 .lsub{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:6px;font-size:var(--t-foot);color:var(--text-2)}
 .lnext{color:var(--accent-press);font-weight:600}.lnext.big{font-size:var(--t-sub);color:var(--ink);font-weight:400;margin:10px 0 0}.lnext.big b{color:var(--accent-press)}
-.lstripw{margin:0 var(--s4) 12px}.lstripw .lfig .afig{width:min(58px,100%);height:84px}.lstripw .lfig.lf-cur .afig{width:min(68px,100%);height:100px}.lstripw .lfig span{font-size:10.5px}
+.lstripw{margin:0 var(--s4) 12px}.lstripw .lfig .afig{width:min(58px,100%);height:84px}.lstripw .lfig.lf-cur .afig{width:min(68px,100%);height:100px}.lstripw .lfig span{font-size:10.5px;min-height:25px}   /* two 10.5px lines (Knuckle-/Dragger) fit, so every figure sits on one baseline */
 .lhero{padding:14px 16px}.lhero h2{font-size:26px;margin:2px 0 0}
 .ladlift .t2{margin-top:2px}
 .lchip{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;background:var(--fill);color:var(--ink);white-space:nowrap;margin-left:8px}
@@ -1415,6 +1415,8 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .ltg{color:var(--accent-press)}
 .lchip.hid{background:var(--fill);color:var(--text-2)}
 /* kongapex: Kong / Apex have their own art now, so no extra 1.08 scale (it pushed them into the next column) */
+.lstrip{container-type:inline-size;--hmax:70px;--colw:calc((100cqw - var(--gn,4) * 3px) / var(--fr,5))}.lstripw .lstrip{--hmax:84px}
+.lstrip .lfig.lf-ramp .afig,.lstripw .lstrip .lfig.lf-ramp .afig{--fh:calc(var(--r) * min(var(--hmax), var(--colw) / var(--q)));height:var(--fh);width:calc(var(--fh) * var(--a))}   /* kongH ramp */
 .lstrip.lsmany .lfig span{font-size:9px;letter-spacing:-.2px;-webkit-hyphens:manual;hyphens:manual}
 .lean.grey .lbadge{opacity:.45}
 .lnew{gap:6px;flex-wrap:wrap}.lnew .linp{width:auto;flex:1 1 70px;margin:0;text-align:left}.lnew select.linp{flex:0 0 auto}
