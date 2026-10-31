@@ -231,9 +231,9 @@ function hideSnack(){const u=$('#sundo');if(u)u.classList.remove('on');SUF=null}
 let tt;function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),1800)}
 
 // ---------------------------------------------------------------- tab bar + floating workout bar
-// Recommended 4 tabs: Train · Log · Build · Progress. Settings = gear on Build; Learn = 'Nerd Sh*t' text pill in headers (nerdpill; was a book icon).
+// Recommended 4 tabs: Train · Log · Plan · Progress (plan: the Build tab is shown as 'Plan'; ids/routes keep 'build'). Settings = gear on Plan; Learn = 'Nerd Sh*t' text pill in headers (nerdpill; was a book icon).
 // Visible / aria name of the Learn page is "Nerd Sh*t" (Mr Dude); routes (#learn…), ids, data-x=learn and storage keys keep 'learn'.
-const TABS=[['build','Build'],['train','Train'],['log','Log'],['progress','Progress']]; // Build leftmost (markup round 1)
+const TABS=[['build','Plan'],['train','Train'],['log','Log'],['progress','Progress']]; // Build leftmost (markup round 1)
 function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-go="#${k}" class="${S.tab===k?'on':''}" aria-label="${l}">${I(k,1.7)}<span>${l}</span></button>`).join('')}
 function renderBar(){
   const show=S.session&&!document.body.classList.contains('full');document.body.classList.toggle('has-bar',show);
@@ -735,7 +735,7 @@ const SPLITS=['Full Body','Upper/Lower','PPL','Custom'];
 let WEEK=['Upper A','Lower A',null,'Upper B','Lower B',null,null];
 // Legacy list Build (kept at #build-list for reference; the whiteboard Build lives in board.js)
 V.buildList=()=>{const r=ROUTINES[0],d=r.days[S.buildDay];
- return header('Build',bookBtn+gearBtn)+
+ return header('Plan',bookBtn+gearBtn)+
  `<div class="pad"><div class="seg" id="splitseg">${SPLITS.map((s,i)=>`<button class="${i===S.split?'on':''}" data-split="${i}">${s}</button>`).join('')}</div></div>
   <div class="bhead"><div class="grow"><div class="eyebrow">Draft · edited 2 min ago</div><div class="bn">Upper / Lower</div><div class="sub num">4 days · 64 sets · ≈ 3 h 41 m a week</div></div></div>
   <div class="bact"><button class="btn ink" data-act="push">${I('up',2.2)} Push to Library</button><button class="btn accent" data-act="start" data-id="ul">${I('play')} Start training</button></div>
@@ -1071,7 +1071,7 @@ document.addEventListener('change',e=>{const t=e.target.closest('[data-lpf]');if
 function logExport(){return {kind:'apechit.log',version:1,log:JSON.parse(JSON.stringify(logLoad()))}}
 function logImport(o){const h=o&&o.kind==='apechit.log'&&o.log;if(!h||h.schema!==2||!Array.isArray(h.sessions)||!Array.isArray(h.entries)||!Array.isArray(h.sets))return false;
   const out=JSON.parse(JSON.stringify(h));if(out.bodyComp!=null&&!Array.isArray(out.bodyComp))delete out.bodyComp;if(out.evolution!=null&&typeof out.evolution!=='object')delete out.evolution;LOGH=out;logSave();return true}
-V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#build">${I('chevL',2.4)}Build</button></div><div class="t">Settings</div><div class="r"></div></div>
+V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#build">${I('chevL',2.4)}Plan</button></div><div class="t">Settings</div><div class="r"></div></div>
   ${header('Settings')}
   <div class="group"><button class="row"><span class="ico acc">${I('flame',1.8)}</span><div class="grow"><div class="t1">Body weight</div><div class="t2">Updated from Pull-Up · Oct 19</div></div><span class="val num">182.4 lb</span>${CHEV}</button></div>
   <div id="profile">${profileHtml()}</div>
@@ -1079,7 +1079,7 @@ V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#b
   <div class="ghead">Training level</div>
   <div class="group lvl"><div class="pad"><div class="seg">${['Beginner','Intermediate','Advanced'].map(l=>`<button class="${l==='Intermediate'?'on':''}" data-lv="${l.toLowerCase()}">${l}</button>`).join('')}</div></div>
    <p class="lvtx" id="lvtx">${LV.intermediate}</p></div>
-  <p class="foot">Sets your weekly volume targets and which routines Build suggests.</p>
+  <p class="foot">Sets your weekly volume targets and which routines Plan suggests.</p>
   ${favsHtml()}
   <div class="ghead">Gyms</div>
   <div class="group"><button class="row" data-act="equip"><span class="ico">${I('build',1.8)}</span><div class="grow"><div class="t1">Home gym</div><div class="t2">${Object.keys(EQUIP).length?`${Object.values(EQUIP).filter(Boolean).length} items ticked`:'Equipment not set · tap to tick what you have'}</div></div><span class="chk">${I('check',2.6)}</span></button>
@@ -1320,7 +1320,7 @@ function muscleTable(pr,vw){const OVR=mlGet(),S0=PROG.sort||'default',PO=vw.prio
    ${sortedRows(vw).map(r=>{const m=r.m,v=pr.muscles[m]||{main_lift:{}},e=effV(r.avg_rir),pin=r.muscles.some(x=>OVR[x]&&OVR[x]===r.lift),fl=r.bucket==='stalled_or_dropping'?(v.main_lift.status==='dropping'?'Dropping':r.stalled?'Stalled':'Down'):'';
      return `<button class="pmr${r.shared?' pshr':''}" data-pm="${m}" data-pms="${r.muscles.join(' ')}" data-lift="${r.lift}" data-bucket="${r.bucket||'insufficient'}" data-band="${r.band}"${r.priority?' data-prio="1"':''} aria-label="${esc(r.label)}"><span class="pmn">${r.priority?'<i class="pprio" title="Priority muscle" aria-label="Priority muscle"></i>':''}${esc(MLs(r.muscles))}${fl?`<em class="pstall">${fl}</em>`:''}${r.shared?`<small class="prir" title="${esc(r.muscles.map(x=>`${ML[x]||x} ${f1(r.avg_rir_by_muscle[x])}`).join(', '))}">${effT()} each: ${r.muscles.map(x=>f1(r.avg_rir_by_muscle[x])).join(' · ')}</small>`:''}</span><span class="pspk" data-pspk="${m}" data-pspl="${r.lift}" role="button" aria-label="${esc(shortEx(r.lift)+' chart')}">${spark(r.spark,r.band,r.spark_deload)}</span>
       <span class="pmlf">${pin?'<i class="ppin" title="Your pick" aria-label="Your pick"></i>':''}${esc(shortEx(r.lift))}${r.reason?`<small class="prsn">${esc(capF(r.reason))}</small>`:''}</span><span class="pchg num" data-tr="${TRI[r.band]||''}">${r.change_display||'–'}</span><span class="pef num">${e==null?'–':fmtPct(e)}</span></button>`}).join('')}</div>
-   <p class="foot">${Object.keys(OVR).length?'<i class="ppin"></i> Your main lift pick. ':''}${PO.length?'<i class="pprio"></i> Your priority muscles (the focus muscles you picked in Build) come first. ':''}One row per main lift; a lift that is the main lift of several muscles lists them together. Tap a row for its main lift's chart. Change: the main lift's best in its first 2 weeks vs the last 2 weeks, over 3 months. ${effT()}: ${effMode()==='rpe'?'RPE = 10 − reps in reserve':'reps in reserve'}, last 4 weeks; all sets: <b class="num pkrir">${ek==null?'not enough logged':ek.toFixed(1)}</b>.${k.avg_rir_note?' '+esc(k.avg_rir_note)+'.':''}</p>`}
+   <p class="foot">${Object.keys(OVR).length?'<i class="ppin"></i> Your main lift pick. ':''}${PO.length?'<i class="pprio"></i> Your priority muscles (the focus muscles you picked in Plan) come first. ':''}One row per main lift; a lift that is the main lift of several muscles lists them together. Tap a row for its main lift's chart. Change: the main lift's best in its first 2 weeks vs the last 2 weeks, over 3 months. ${effT()}: ${effMode()==='rpe'?'RPE = 10 − reps in reserve':'reps in reserve'}, last 4 weeks; all sets: <b class="num pkrir">${ek==null?'not enough logged':ek.toFixed(1)}</b>.${k.avg_rir_note?' '+esc(k.avg_rir_note)+'.':''}</p>`}
 function winChip(w){const t=txtS(w.text),k=t.indexOf(': '),nm=k>0?t.slice(0,k):shortEx(w.exercise),rest=k>0?t.slice(k+2):t;
   return `<button class="pchip" data-plift="${w.exercise}" data-kind="${w.kind}"><span class="pci ${w.kind==='milestone'?'ms':''}" aria-hidden="true">${winIcon(w.kind)}</span><span class="pct"><b>${esc(shortEx(w.exercise)||nm)}</b><span>${esc(capF(rest))}</span></span></button>`}
 V.progress=()=>{const pr=RD&&progressData();if(!pr)return header('Progress',bookBtn)+`<p class="foot">Progress needs the logger rules.</p>`;if(!pr.data.completed_sessions)return progEmpty();
@@ -1450,7 +1450,7 @@ const tapable=root=>{(root||document).querySelectorAll('.pmapc .mp,.plc .pp circ
 function afterProgress(){tapable($('#view'))}
 function progApply(k){const pr=progressData(),x=pr&&pr.needs_attention[+k];if(!x||!x.fix||!x.fix.apply_edits_board||!x.fix.ops||!window.BOARD)return;
   const before=BOARD.progApply(x.fix.ops);PROG.applied={key:akey(x),item:JSON.parse(JSON.stringify(x)),before,asig:BOARD.sig()};toast('Applied to your board');rerenderProgress()}
-function progUndo(){const a=PROG.applied;if(!a)return;PROG.applied=null;if(BOARD.sig()===a.asig){BOARD.progUndo(a.before);toast('Undone · your board is back')}else toast('Your board changed after this. Undo it in Build.');rerenderProgress()}
+function progUndo(){const a=PROG.applied;if(!a)return;PROG.applied=null;if(BOARD.sig()===a.asig){BOARD.progUndo(a.before);toast('Undone · your board is back')}else toast('Your board changed after this. Undo it in Plan.');rerenderProgress()}
 document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-pmet],[data-mlx],[data-pspk],[data-pml],[data-pm],[data-plift],[data-pfix],[data-pundo],[data-pmore],[data-kgo],[data-psort],[data-sl],[data-psback],[data-prng],[data-ovk],[data-ovmore],[data-ovl],[data-ovr],.plc .pp,.pmapc .mp[data-mu]');
   if(!t||!($('#view').contains(t)||t.closest('.psheet')))return;e.preventDefault();
   if(t.matches('.pmapc .mp'))return openPSheet(t.dataset.mu);if(t.matches('.plc .pp'))return showTip(t);
@@ -1541,7 +1541,7 @@ async function afterLearn(){
   const vm={};mus.forEach(p=>vm[p.id]=p.status==='final'?1:.3);const nf=mus.filter(p=>p.status==='final').length;
   const fpages=await Promise.all(fun.map(p=>p.status==='final'?eduPage(p.id):Promise.resolve({entry:p})));
   const xi=await exIndex(),xp=(xi.pages||[]).slice().sort((x,y)=>x.rank-y.rank),xf=xp.filter(p=>p.status==='final'),xtop=[...xf,...xp.filter(p=>p.status!=='final')].slice(0,8);
-  $('#learnbody').innerHTML=`<div class="card mapcard"><div class="maps">${map('front',vm)}${map('back',vm)}</div>
+  $('#learnbody').innerHTML=`<div class="card mapcard"><div class="maps">${map('front',vm,{crop:1})}${map('back',vm,{crop:1})}</div>
     <div class="legend"><span><i style="background:var(--hl-main)"></i>Guide ready</span>${nf<mus.length?'<span><i style="background:var(--hl-minor)"></i>Coming soon</span>':''}</div><p class="maptip">Tap any muscle</p></div>
    <div class="sec"><h2>Muscles</h2><span class="more num">${nf} of ${mus.length} ready</span></div>
    <div class="group">${mus.map(p=>`<button class="row ${p.status==='final'?'':'planned'}" data-go="#learn-${p.id}"><div class="grow t1">${p.title}</div>${p.status==='final'?'':'<span class="soon">Coming soon</span>'}${CHEV}</button>`).join('')}</div>
@@ -1557,7 +1557,7 @@ async function afterLearn(){
 V.learnMuscle=()=>`<div class="nav"><div class="l">${backBtn()}</div><div class="t" id="lmt"></div><div class="r"></div></div><div id="lm"><p class="foot">Loading…</p></div>`;
 async function afterLearnMuscle(id){
   CITES=[];const {entry,page:j}=await eduPage(id),nm=(j||entry||{}).title||ML[id]||id;$('#lmt').textContent=nm;
-  const vm={},cr=creditList(id);const mapc=`<div class="card mapcard small"><div class="maps">${map('front',vm,{hl:id})}${map('back',vm,{hl:id})}</div>
+  const vm={},cr=creditList(id);const mapc=`<div class="card mapcard small"><div class="maps">${map('front',vm,{hl:id,crop:1})}${map('back',vm,{hl:id,crop:1})}</div>
     ${entry&&entry.region_names?`<div class="chiprow center">${Object.values(entry.region_names).map(n=>`<span class="tag">${n}</span>`).join('')}</div>`:''}</div>`;
   const credits=(note,evd)=>sect('Exercises that train it',`${['main','helper','minor'].map(b=>cr[b].length?`<div class="band"><div class="eyebrow">${BANDL[b]} · ${b==='main'?'0.75 and up':b==='helper'?'0.4 to under 0.75':'0.25 to under 0.4'}</div>
       ${cr[b].slice(0,b==='main'?8:6).map(([e,r])=>`<button class="exl" data-act="exinfo" data-id="${e.id}">${gl(e.id)}<span class="grow">${e.name}</span>${rate(r)}</button>`).join('')}${cr[b].length>(b==='main'?8:6)?`<p class="more2">+ ${cr[b].length-(b==='main'?8:6)} more</p>`:''}</div>`:'').join('')}

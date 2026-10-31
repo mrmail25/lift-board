@@ -1492,3 +1492,9 @@ html[data-theme=dark] .pmom.gold .pm-txt .eyebrow{color:#FFD88F}
 .pmet .pmc.on{background:var(--accent-tint);border-color:var(--accent);color:var(--accent-press);font-weight:600}
 .pmet .pmc.off{opacity:.42;text-decoration:none}.pmet .pmc.off.on{opacity:1}
 .pmetwhy,.pmetfb{margin:4px 18px 0;font-size:12px}.pmetone{margin:2px 0 0;font-size:12px;text-align:center}
+
+/* plan (Mr Dude): the Analysis sheet's body map and every Nerd Sh*t (Learn) body map fill the full content width (page margins kept);
+   front + back sit side by side in two equal columns and the height scales with the width */
+.anh .anmap{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}.anh .anmap .mmap{width:100%;height:auto}
+#learnbody .mapcard .maps,#lm .mapcard .maps,#lx .mapcard .maps{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:none;width:100%;margin:0}
+#learnbody .mapcard .mmap,#lm .mapcard .mmap,#lx .mapcard .mmap{width:100%;height:auto}

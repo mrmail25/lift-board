@@ -88,7 +88,7 @@ function colHtml(d,i){return `<section class="col${isRest(d)?' restday':''}" dat
   <div class="chits" data-day="${d.day}">${d.tiles.map(chit).join('')}${(d.slots||[]).map(s=>slotHtml(d,s)).join('')}</div><button class="cadd" data-b="add" data-day="${d.day}" aria-label="Add exercise to ${WDL[i]}">${X.I('plus',2.2)}</button></section>`}
 function boardHtml(){return `<div class="cols">${B.days.map(colHtml).join('')}</div>`}
 X.V.build=()=>{if(!B.days.length){initBoard();cxRestorePlaced()}
-  return `<div class="bw">${X.header('Build',`<button class="ibtn tabsbtn" data-b="tabs" aria-label="Other tabs">${X.I('tabs',1.8)}</button><button class="ibtn" data-b="new" aria-label="New routine">${X.I('plus',2.2)}</button>`+X.bookBtn+X.gearBtn)}
+  return `<div class="bw">${X.header('Plan',`<button class="ibtn tabsbtn" data-b="tabs" aria-label="Other tabs">${X.I('tabs',1.8)}</button><button class="ibtn" data-b="new" aria-label="New routine">${X.I('plus',2.2)}</button>`+X.bookBtn+X.gearBtn)}
   <div class="bname"><div class="bn">${B.name||'New routine'}</div>
    <div class="bacts"><button class="btn ink" data-b="push" aria-label="Push to Library">${X.I('up',2.2)}<span class="bl-l">Push to Library</span><span class="bl-s">Push</span></button><button class="btn accent" data-b="start" aria-label="Start training">${X.I('play')}<span class="bl-l">Start training</span><span class="bl-s">Start</span></button></div>
    <div class="bstate" id="bstate">${stateLine()}</div></div>
@@ -209,7 +209,7 @@ function dayAct(k){if(!DS)return;const day=DS.day,i=DAYS.indexOf(day),v=($('#dsn
   if(k==='dsrest'){const d=B.days[i],n=d.tiles.length;commit(()=>{const D=B.days[i];D.tiles=[];D.rest=true;D.label='';B.sel.clear()},n?`${WD[i]} is a Rest day · ${n} removed`:`${WD[i]} is a Rest day`);return}
   if(k==='dstrain'){commit(()=>{const D=B.days[i];D.rest=false;D.label=v||'Training day'},`${WD[i]} is a training day`);return}}
 // other tabs while the tab bar is hidden (landscape phone)
-function tabsSheet(){const T4=[['build','Build'],['train','Train'],['log','Log'],['progress','Progress']];
+function tabsSheet(){const T4=[['build','Plan'],['train','Train'],['log','Log'],['progress','Progress']];
   const s=X.sheet({title:'Go to',cls:'grouped',body:`<div class="group">${T4.map(([k,l])=>`<button class="row" data-b="tabgo" data-to="${k}"><span class="ico gr">${X.I(k,1.7)}</span><div class="grow t1">${l}</div>${X.CHEV}</button>`).join('')}</div><p class="foot">The tab bar is hidden in landscape so the board gets the full height. Turn the phone upright to see it again.</p>`});return s}
 // ------------------------------------------------------------- tray (Suggested / Library, filter chips, drag or +)
 let TRAY=null;const TFB={q:'',mode:'sug',mus:null,pat:null,eq:null,day:'mon',slot:null,only:null};const anyTF=()=>!!(TFB.mus||TFB.pat||TFB.eq||TFB.q);
@@ -602,7 +602,7 @@ function newBody(view){const SP=RD().splits.splits,PT=RD().patterns.templates;if
     <button class="row" data-b="nwslotsv"><span class="ico acc">${X.I('build',1.8)}</span><div class="grow"><div class="t1">Template (slots)</div><div class="t2">Empty slots by movement; you pick each exercise</div></div>${X.CHEV}</button>
     <button class="row" data-b="nwprev"><span class="ico gr">${X.I('build',1.8)}</span><div class="grow"><div class="t1">Prebuilt routine</div><div class="t2">A full routine for the split, level and days</div></div>${X.CHEV}</button>
     <button class="row" data-b="nwlibv"><span class="ico gr">${X.I('book',1.8)}</span><div class="grow"><div class="t1">From your library</div><div class="t2">Duplicate a routine and edit the copy</div></div>${X.CHEV}</button></div>
-    <p class="foot">Your current draft is kept in Undo until you leave Build.</p></div>`}
+    <p class="foot">Your current draft is kept in Undo until you leave Plan.</p></div>`}
 function newSheet(view){NW=X.sheet({title:'New routine',cls:'grouped',right:'<button class="btn plain" data-b="nwclose">Cancel</button>',body:newBody(view),onClose(){NW=null}});NW.v=view;return NW}
 const nwView=v=>{if(NW){NW.v=v;NW.body.innerHTML=newBody(v)}};
 function startFrom(kind,arg){if(NW)NW.close();
