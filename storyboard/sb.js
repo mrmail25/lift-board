@@ -913,7 +913,7 @@ const LAD_SHY={Neanderthal:'Nean&shy;der&shy;thal',Silverback:'Silver&shy;back'}
 // tight viewBoxes, so the box height IS the drawn height. Height comes first: one shared size S = min(--hmax, column width / --q), where --q
 // is the worst ratio over neighbouring pairs ((r*a + r'*a') / (fr + fr')) and the two edge figures, so wide figures (Silverback, Kong, Apex)
 // may use their narrow neighbours' spare width (overflowing into the gap) instead of shrinking the whole row; nothing leaves the strip.
-const LAD_RAMP={knuckle_dragger:.45,primate:.60,neanderthal:.75,prime:.88,silverback:.93,kong:.97,apex:1},LAD_CUR=1.15;
+const LAD_RAMP={knuckle_dragger:.45,primate:.60,neanderthal:.75,prime:.86,silverback:.89,kong:.96,apex:1},LAD_CUR=1.15;
 function ladStrip(L){const cur=Math.floor(L.rank.index/3),vis=L.ladder.filter(s=>!s.hidden),many=vis.length>5,N=vis.length;
   const A=s=>(APE_FIG[s.stage]||APE_FIG.prime).a||.65,r=(s,k)=>+((LAD_RAMP[s.stage]||1)*(k===cur?LAD_CUR:1)).toFixed(4),F=k=>many&&k===cur?1.4:1;
   const ra=vis.map((s,k)=>r(s,k)*A(s)),fr=vis.reduce((t,s,k)=>t+F(k),0);
