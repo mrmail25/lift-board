@@ -1416,7 +1416,7 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .lchip.hid{background:var(--fill);color:var(--text-2)}
 /* kongapex: Kong / Apex have their own art now, so no extra 1.08 scale (it pushed them into the next column) */
 .lstrip{container-type:inline-size;--hmax:70px;--colw:calc((100cqw - var(--gn,4) * 3px) / var(--fr,5))}.lstripw .lstrip{--hmax:84px}
-.lstrip .lfig.lf-ramp .afig,.lstripw .lstrip .lfig.lf-ramp .afig{--fh:calc(var(--r) * min(var(--hmax), var(--colw) / var(--q)));height:var(--fh);width:calc(var(--fh) * var(--a))}   /* kongH ramp */
+.lstrip .lfig.lf-ramp .afig,.lstripw .lstrip .lfig.lf-ramp .afig,.lstrip .lfig.lf-ramp.lf-cur .afig,.lstripw .lstrip .lfig.lf-ramp.lf-cur .afig{--fh:calc(var(--r) * min(var(--hmax), var(--colw) / var(--q)));height:var(--fh);width:calc(var(--fh) * var(--a));max-width:none}   /* ramp2: height first; wide art may overflow its column into the gap */
 .lstrip.lsmany .lfig span{font-size:9px;letter-spacing:-.2px;-webkit-hyphens:manual;hyphens:manual}
 .lean.grey .lbadge{opacity:.45}
 .lnew{gap:6px;flex-wrap:wrap}.lnew .linp{width:auto;flex:1 1 70px;margin:0;text-align:left}.lnew select.linp{flex:0 0 auto}

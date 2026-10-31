@@ -908,15 +908,18 @@ const lockFig=(cls='')=>{const id='lkg'+(++lockN);return `<i class="llock ${cls}
 // kongapex: once Kong / Apex are revealed the strip has 6-7 columns; then the current stage's column is 1.4x wide (so the wide Apex art
 // still reads as the big one) and the labels drop to 9px with soft hyphens in the long names (no overlap down to 360 px). 5 columns: unchanged.
 const LAD_SHY={Neanderthal:'Nean&shy;der&shy;thal',Silverback:'Silver&shy;back'};
-// kongH ramp (Mr Dude): non-current figures get a strictly rising height, linear from 70% (first stage) to 100% (last) of the strip's max
-// figure height (--hmax: 70px card, 84px screen). All art has tight viewBoxes, so the box height IS the drawn height. One shared factor
-// (min(--hmax, column width / --q), --q = the widest r*a) keeps every figure inside its column without breaking the ramp. The current stage
-// keeps its own enlarged box (exception).
+// ramp2 (Mr Dude, 'March of Progress'): every figure's height is a fixed fraction of the strip's max height, keyed by STAGE (not by visible
+// position): a steep climb Knuckle-Dragger -> Prime, then shallower Prime -> Apex; the current stage is 1.15x its ramp height. All art has
+// tight viewBoxes, so the box height IS the drawn height. Height comes first: one shared size S = min(--hmax, column width / --q), where --q
+// is the worst ratio over neighbouring pairs ((r*a + r'*a') / (fr + fr')) and the two edge figures, so wide figures (Silverback, Kong, Apex)
+// may use their narrow neighbours' spare width (overflowing into the gap) instead of shrinking the whole row; nothing leaves the strip.
+const LAD_RAMP={knuckle_dragger:.45,primate:.60,neanderthal:.75,prime:.88,silverback:.93,kong:.97,apex:1},LAD_CUR=1.15;
 function ladStrip(L){const cur=Math.floor(L.rank.index/3),vis=L.ladder.filter(s=>!s.hidden),many=vis.length>5,N=vis.length;
-  const r=k=>+(0.7+0.3*(N>1?k/(N-1):1)).toFixed(4),A=s=>(APE_FIG[s.stage]||APE_FIG.prime).a||.65;
-  const q=Math.max(...vis.map((s,k)=>k===cur?0:r(k)*A(s))).toFixed(4),fr=many?N-1+1.4:N;
+  const A=s=>(APE_FIG[s.stage]||APE_FIG.prime).a||.65,r=(s,k)=>+((LAD_RAMP[s.stage]||1)*(k===cur?LAD_CUR:1)).toFixed(4),F=k=>many&&k===cur?1.4:1;
+  const ra=vis.map((s,k)=>r(s,k)*A(s)),fr=vis.reduce((t,s,k)=>t+F(k),0);
+  let q=Math.max(ra[0]/F(0),ra[N-1]/F(N-1));for(let k=1;k<N;k++)q=Math.max(q,(ra[k-1]+ra[k])/(F(k-1)+F(k)));q=q.toFixed(4);
   const sty=`--q:${q};--fr:${fr};--gn:${N-1}`+(many?`;grid-template-columns:${vis.map((s,k)=>k===cur?'minmax(0,1.4fr)':'minmax(0,1fr)').join(' ')}`:'');
-  return `<div class="lstripbox"><div class="lstrip${many?' lsmany':''}" style="${sty}">${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next lf-ramp'}${k<cur?' lf-ramp':''}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':` style="--r:${r(k)};--a:${A(s)}"`}>${apeFig(s.stage)}<span>${(LAD_SHY[s.label]||esc(s.label)).replace('-','-<wbr>')}</span></div>`).join('')}</div></div>`}
+  return `<div class="lstripbox"><div class="lstrip${many?' lsmany':''}" style="${sty}">${vis.map((s,k)=>`<div class="lfig lf-ramp ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next'}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':''} style="--r:${r(s,k)};--a:${A(s)}">${apeFig(s.stage)}<span>${(LAD_SHY[s.label]||esc(s.label)).replace('-','-<wbr>')}</span></div>`).join('')}</div></div>`}
 const ladBar=L=>L.progress.pct==null?'':`<div class="lbar" role="progressbar" aria-label="Progress ${esc(L.labels.progress)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${L.progress.pct}"><i style="width:${L.progress.pct}%"></i></div>`;
 const ladProg=L=>L.progress.pct==null?esc(L.labels.progress):`${L.progress.pct}% ${esc(L.labels.progress)}`;
 // swap3: Coach's percentile line under the rank ('Stronger than about 50% of lifters your size'; 'Top 3% …' at Apex); none when report gives none
