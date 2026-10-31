@@ -1127,19 +1127,19 @@ const hlLegend=(L={main:'main',helper:'helper',minor:'minor'})=>`<span class="ml
 // Round 3: crop = the figures' own extent (both sides' outlines sit inside x 200-820, y 64-1444 of the 1024x1536 art), so
 // the same box height draws the body about 30% larger: the Build card and the Analysis sheet use it
 const MAPCROP='190 50 644 1410';
-// apehead (Mr Dude): the body map wears a gorilla head (sagittal crest, heavy brow, muzzle; the back view shows the crest and the rounded
-// back of the skull, no face). Hand-drawn, same --map-base fill and --map-line strokes as the outline, drawn over the human head right after
-// the outline and BEFORE the muscle paths, so it is decorative only: no data-mu, pointer-events none, never shaded, never covers a region.
-const MH_SK='M512 53C520 57 534 64 546 72C564 82 578 97 584 118C590 136 592 156 588 174';
-const MHEAD={front:`<g class="mhead" pointer-events="none" aria-hidden="true" stroke="var(--map-line)" stroke-linecap="round" stroke-linejoin="round"><path d="${MH_SK}C584 195 570 212 552 222C538 231 486 231 472 222C454 212 440 195 436 174C432 155 434 135 440 117C446 95 461 80 479 70C489 62 500 57 512 57Z" fill="var(--map-base)" stroke-width="3"/>
-<path d="M444 138C450 116 492 108 512 121C532 108 574 116 580 138C562 131 540 129 512 137C484 129 462 131 444 138Z" fill="var(--map-line)" stroke-width="3"/><path d="M512 64V92" fill="none" stroke-width="4"/>
-<ellipse cx="490" cy="148" rx="5" ry="4" fill="var(--map-line)" stroke="none"/><ellipse cx="534" cy="148" rx="5" ry="4" fill="var(--map-line)" stroke="none"/>
-<path d="M474 178C472 160 492 154 512 156C532 154 552 160 550 178C552 202 534 218 512 218C490 218 472 202 474 178Z" fill="none" stroke-width="4"/>
-<ellipse cx="500" cy="172" rx="7" ry="4.5" transform="rotate(-18 500 172)" fill="var(--map-line)" stroke="none"/><ellipse cx="524" cy="172" rx="7" ry="4.5" transform="rotate(18 524 172)" fill="var(--map-line)" stroke="none"/>
-<path d="M492 200C504 195 520 195 532 200" fill="none" stroke-width="4"/></g>`,
- back:`<g class="mhead" pointer-events="none" aria-hidden="true" stroke="var(--map-line)" stroke-linecap="round" stroke-linejoin="round"><path d="${MH_SK}C584 196 562 216 512 218C462 216 440 196 436 174C432 155 434 135 440 117C446 95 461 80 479 70C489 62 500 57 512 57Z" fill="var(--map-base)" stroke-width="3"/>
-<path d="M512 64C510 84 510 104 512 124" fill="none" stroke-width="6"/><path d="M462 186C486 202 538 202 562 186" fill="none" stroke-width="4"/>
-<path d="M440 150C444 160 446 166 446 174M584 150C580 160 578 166 578 174" fill="none" stroke-width="3.5"/></g>`};
+// apechit head (Mr Dude, replaces the 9daaaf1 apehead): the body map wears a gorilla head drawn like the Ape-Chit logo
+// (assets/logo/icon-black-v3.svg / lockup-v3.svg): a flat, faceted, straight-edged solid silhouette whose planes are split by
+// constant-width negative-space gaps (here in --map-base, the body colour, as the logo's white). The heavy brow shadows the eyes (none
+// drawn); a rascally half-smile, closed on one side and open with teeth on the other. Back view: the same head's crest and skull facets.
+// Decorative only: drawn after the outline and BEFORE the muscle paths, pointer-events none, no data-mu, never shaded (fixed grey).
+const MH_F='color-mix(in oklch, var(--map-line), var(--ink) 26%)',MH_G='fill="none" stroke="var(--map-base)" stroke-width="6" stroke-linejoin="miter" stroke-linecap="butt"';
+const MH_O=bot=>`M512 52L540 63L566 84L582 112L590 140L588 170L580 196${bot}L444 196L436 170L434 140L442 112L458 84L484 63Z`;
+const MHEAD={front:`<g class="mhead" pointer-events="none" aria-hidden="true"><path d="${MH_O('L562 216L540 230L512 235L484 230L462 216')}" fill="${MH_F}" stroke="var(--map-line)" stroke-width="3" stroke-linejoin="round"/>
+<path d="M512 56L512 84M446 112L468 92M578 112L556 92M436 136L476 110L512 124L548 110L588 136M500 138L488 176L468 200M524 138L536 176L556 200M478 222L512 229L546 222" ${MH_G}/>
+<path d="M494 178L504 186M530 178L520 186" ${MH_G} stroke-width="5"/>
+<path d="M486 205L508 208" ${MH_G} stroke-width="4"/><path d="M506 207L530 200L556 184L552 210L532 219L512 213Z" fill="var(--map-base)"/><path d="M522 204L523 216M535 199L536 218M546 192L545 214" fill="none" stroke="${MH_F}" stroke-width="3"/><path d="M510 210L553 199" fill="none" stroke="${MH_F}" stroke-width="2.5"/></g>`,
+ back:`<g class="mhead" pointer-events="none" aria-hidden="true"><path d="${MH_O('L566 214L540 225L512 228L484 225L458 214')}" fill="${MH_F}" stroke="var(--map-line)" stroke-width="3" stroke-linejoin="round"/>
+<path d="M512 56L512 118M446 112L468 92M578 112L556 92M444 162L512 136L580 162M466 200L512 214L558 200" ${MH_G}/></g>`};
 function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
   return `<svg viewBox="${opt.crop?MAPCROP:`0 0 ${w} ${h}`}" class="mmap${opt.crop?' crop':''}" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>${MHEAD[side]}
    ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="var(--map-base)" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */return `<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'var(--map-off)'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"/>`}).join('')}
