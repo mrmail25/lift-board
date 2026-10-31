@@ -1144,7 +1144,10 @@ const MHD_D='#000',MHD_W='#fff',MHD_T='translate(384.07,78.95) scale(0.24473)';
 // load: same muscle paths and ids, so hit areas and heat fills still work). Neck + head sit after the outline and before the muscles.
 const MHD_NECK=`<path d="M345 314L436 228L588 228L679 314L679 348L345 348Z" fill="var(--map-base)" pointer-events="none"/><path d="M345 314L436 228M588 228L679 314" fill="none" stroke="var(--map-line)" stroke-width="3" pointer-events="none"/>`;
 const mhWarp=(d,yb,A,lo)=>d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g,(m,X,Y)=>{const x=+X,y=+Y;if(y>=yb)return m;const k=Math.min(1,Math.max(0,x<512?(x-lo)/(462-lo):((1024-lo)-x)/(462-lo)));return `${x} ${(yb-(yb-y)*(1+A*k)).toFixed(1)}`});
-if(window.MM&&!MM._g1b){MM._g1b=1;MM.front.m.forEach(e=>{if(e[1]==='traps_upper')e[2]=mhWarp(e[2],309,.9,400)});MM.back.m.forEach(e=>{if(e[1]==='traps_upper')e[2]=mhWarp(e[2],330,.15,395)})}
+if(window.MM&&!MM._g1b){MM._g1b=1;MM.front.m.forEach(e=>{if(e[1]==='traps_upper')e[2]=e[0]==='TRAPEZIUS_LEFT'?'M368 300L428 242L432 250L437 260L442 270L452 280L463 290L474 300L476 306L440 307L400 304L386 302Z':'M656 300L596 242L590.7 250L586.1 260L581.2 270L570.9 280L560.4 290L549.6 300L548 306L584 307L624 304L638 302Z'});MM.back.m.forEach(e=>{if(e[1]==='traps_upper')e[2]=mhWarp(e[2],330,.15,395)})}
+// yoke (Mr Dude): the FRONT upper traps are redrawn as a gorilla yoke filling each sloped-neck area from the shoulder up to the jaw (inset
+// from the slope edge and a few units off the head and the delts/pecs; same ids/regions TRAPEZIUS_LEFT/RIGHT -> traps_upper, so hit areas,
+// volume fills and trend colours work as before). Back traps keep the light mhWarp lift.
 const MHEAD={front:`${MHD_NECK}<g class="mhead" pointer-events="none" aria-hidden="true" transform="${MHD_T}"><path d="${MHD_SIL}" fill="${MHD_D}"/><path d="${MHD_F}" fill="${MHD_W}"/></g>`,
  back:`${MHD_NECK}<g class="mhead" pointer-events="none" aria-hidden="true" transform="${MHD_T}"><path d="${MHD_SIL}" fill="${MHD_D}"/><path d="${MHD_B}" fill="${MHD_W}"/></g>`};
 function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
