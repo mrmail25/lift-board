@@ -1414,7 +1414,8 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .lsubst{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-2);background:var(--fill);border-radius:6px;padding:1px 5px;vertical-align:2px}
 .ltg{color:var(--accent-press)}
 .lchip.hid{background:var(--fill);color:var(--text-2)}
-.lfig.lf-hid .afig{transform:scale(1.08)}
+/* kongapex: Kong / Apex have their own art now, so no extra 1.08 scale (it pushed them into the next column) */
+.lstrip.lsmany .lfig span{font-size:9px;letter-spacing:-.2px;-webkit-hyphens:manual;hyphens:manual}
 .lean.grey .lbadge{opacity:.45}
 .lnew{gap:6px;flex-wrap:wrap}.lnew .linp{width:auto;flex:1 1 70px;margin:0;text-align:left}.lnew select.linp{flex:0 0 auto}
 .ldate{width:auto;min-width:130px;text-align:left}
