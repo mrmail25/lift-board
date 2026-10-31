@@ -877,8 +877,8 @@ function ladPersist(){const L=ladderData();if(!L||L.hidden_all)return;const H=lo
 // ladder art: assets/ladder/stage-1..5.svg (CC0, Openclipart #348815 by j4p4n, see assets/ladder/LICENSES.md), drawn as a CSS mask over currentColor so
 // Ember/slate/tease colours and dark mode come from the existing .lfig/.lean/.lrup rules. k 0..4 = the five stages; 5/6 (Kong/Apex) reuse Prime with a glow;
 // art2: stage-1 knuckle-dragger, 2 primate (was set figure 3), 3 neanderthal (was set figure 4), 4 silverback (traced from ref/silverback-ref.jpg, sbref),
-// 5 prime (bodybuilder, front double biceps, gorilla head). The hidden tier is never drawn as a figure: lockFig() is a grey lock cut in half by
-// the screen's right edge (see .llock), no '???' text.
+// 5 prime (bodybuilder, front double biceps, gorilla head). The hidden tier is never drawn as a figure or a lock in the strip; only the
+// teaser card's lockFig() (a grey lock cut in half by the screen's right edge, see .llock) hints at it, no '???' text.
 // Silverback redo: figures are keyed by STAGE ID (evolution-rules stages[].id), not by position, so reordering the ladder (e.g. Prime <-> Silverback)
 // moves each figure with its stage and needs no art change. The file name is just the art's slot (stage-4.svg = the massive side-profile
 // Silverback); x = drawn with the hidden-tier glow (Kong / Apex reuse the Prime art). A number is still accepted (legacy: position in the
@@ -901,9 +901,10 @@ function apeFig(k,cls=''){const id=typeof k==='string'?k:APE_ORDER[Math.max(0,Ma
 // lighter -> darker across that half (x2=.5), i.e. darkest at the screen edge
 const LOCK_D='M8 23V15.5a12 12 0 0 1 24 0V23h-5.5v-7.5a6.5 6.5 0 0 0-13 0V23z M7 23h26a5 5 0 0 1 5 5v19a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V28a5 5 0 0 1 5-5z M20 31.5a4 4 0 0 0-2 7.46V44h4v-5.04a4 4 0 0 0-2-7.46z';let lockN=0;
 const lockFig=(cls='')=>{const id='lkg'+(++lockN);return `<i class="llock ${cls}" data-llock="1" role="img" aria-label="More stages hidden"><svg viewBox="0 0 40 52" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" x2=".5" y1="0" y2="0"><stop offset="0" class="lk-a"/><stop offset="1" class="lk-b"/></linearGradient></defs><path fill="url(#${id})" fill-rule="evenodd" d="${LOCK_D}"/></svg></i>`};
-// march strip: every revealed stage; while any stage is still hidden, the lock sits half off the right edge of the screen
-function ladStrip(L){const cur=Math.floor(L.rank.index/3),vis=L.ladder.filter(s=>!s.hidden),tease=L.ladder.some(s=>s.hidden);
-  return `<div class="lstripbox${tease?' lhl':''}"><div class="lstrip">${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next'}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':''}>${apeFig(s.stage)}<span>${esc(s.label).replace('-','-<wbr>')}</span></div>`).join('')}</div>${tease?lockFig():''}</div>`}
+// march strip: every revealed stage only (strip round, Mr Dude: no lock in the strip; hidden stages are simply not drawn, and the
+// 'There is more past ...' teaser card below keeps its own lock)
+function ladStrip(L){const cur=Math.floor(L.rank.index/3),vis=L.ladder.filter(s=>!s.hidden);
+  return `<div class="lstripbox"><div class="lstrip">${vis.map((s,k)=>`<div class="lfig ${k<cur?'lf-done':k===cur?'lf-cur':'lf-next'}${k>4?' lf-hid':''}" data-lstage="${s.stage}"${k===cur?' aria-current="step"':''}>${apeFig(s.stage)}<span>${esc(s.label).replace('-','-<wbr>')}</span></div>`).join('')}</div></div>`}
 const ladBar=L=>L.progress.pct==null?'':`<div class="lbar" role="progressbar" aria-label="Progress ${esc(L.labels.progress)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${L.progress.pct}"><i style="width:${L.progress.pct}%"></i></div>`;
 const ladProg=L=>L.progress.pct==null?esc(L.labels.progress):`${L.progress.pct}% ${esc(L.labels.progress)}`;
 // swap3: Coach's percentile line under the rank ('Stronger than about 50% of lifters your size'; 'Top 3% …' at Apex); none when report gives none

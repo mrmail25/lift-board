@@ -1367,13 +1367,13 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .lcard{display:block;width:calc(100% - 2*var(--s4));text-align:left;padding:12px 14px 12px;margin-top:12px;margin-bottom:4px}
 /* Silverback redo: equal columns (replaces the label-sized flex columns of 3c94156). Every stage gets the same column width, so centres are evenly
    spaced; figures and labels are centred in their column; the 8px column gap keeps labels >= 8px apart; Knuckle-Dragger wraps at its hyphen (<wbr>). */
-.lstrip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);align-items:end;column-gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
+.lstrip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);align-items:end;column-gap:3px;overflow-x:auto;scrollbar-width:none;padding:2px 8px 2px 0}   /* strip round: gap 8 -> 3, 8px breathing room after the last figure */
 .lstrip::-webkit-scrollbar{display:none}
 /* strip columns size to their label (min-content, never below it) so long names like Neanderthal never run into a neighbour at 375/390 px; Knuckle-Dragger wraps at its hyphen */
 .lfig{display:flex;flex-direction:column;align-items:center;color:var(--lad-slate);min-width:0}
-.lfig .afig{width:40px;height:58px;display:block}
+.lfig .afig{width:min(48px,100%);height:70px;display:block}
 .lfig span{font-size:10px;font-weight:600;line-height:1.15;margin-top:3px;text-align:center;color:var(--text-2);min-height:23px;letter-spacing:-.1px;max-width:100%;overflow-wrap:normal}
-.lfig.lf-done,.lfig.lf-cur{color:var(--accent)}.lfig.lf-cur .afig{width:46px;height:66px}
+.lfig.lf-done,.lfig.lf-cur{color:var(--accent)}.lfig.lf-cur .afig{width:min(58px,100%);height:84px}
 .lfig.lf-cur span{color:var(--ink)}.lfig::after{content:'';display:block;width:18px;height:3px;border-radius:2px;margin-top:2px}.lfig.lf-cur::after{background:var(--accent)}
 .lfig.lf-next{opacity:.85}
 .afig{display:block;position:relative;flex:none}.afig .afm{position:absolute;inset:0;background:currentColor;-webkit-mask:var(--afsrc) center bottom/contain no-repeat;mask:var(--afsrc) center bottom/contain no-repeat}
@@ -1383,8 +1383,6 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .lstripbox{position:relative}
 .llock{--lw:40px;--lh:52px;position:absolute;right:calc((100% - 100vw) / 2);width:calc(var(--lw) / 2);height:var(--lh);pointer-events:none;overflow:hidden;display:block}
 .llock svg{display:block;width:var(--lw);height:var(--lh)}.llock .lk-a{stop-color:var(--lock-a)}.llock .lk-b{stop-color:var(--lock-b)}
-.lstripbox .llock{bottom:34px}.lstripw .lstripbox .llock{--lw:46px;--lh:60px;bottom:36px}
-.lstripw .lstripbox.lhl .lstrip{padding-right:14px}
 .ltease{position:relative}.ltease .llock{--lw:46px;--lh:60px;top:calc(50% - 30px)}.ltease>div{padding-right:18px}
 .afig.afx .afm{filter:drop-shadow(0 0 1.5px currentColor)}
 .ladrow{display:flex;align-items:center;gap:8px;margin-top:8px}
@@ -1393,7 +1391,7 @@ html[data-theme=dark]{--lad-slate:#5E6A79;--lad-tease:#3A4450;--lock-a:#6A7684;-
 .lbar i{display:block;height:100%;background:var(--accent);border-radius:4px}
 .lsub{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:6px;font-size:var(--t-foot);color:var(--text-2)}
 .lnext{color:var(--accent-press);font-weight:600}.lnext.big{font-size:var(--t-sub);color:var(--ink);font-weight:400;margin:10px 0 0}.lnext.big b{color:var(--accent-press)}
-.lstripw{margin:0 var(--s4) 12px}.lstripw .lfig .afig{width:50px;height:72px}.lstripw .lfig.lf-cur .afig{width:58px;height:84px}.lstripw .lfig span{font-size:10.5px}
+.lstripw{margin:0 var(--s4) 12px}.lstripw .lfig .afig{width:min(58px,100%);height:84px}.lstripw .lfig.lf-cur .afig{width:min(68px,100%);height:100px}.lstripw .lfig span{font-size:10.5px}
 .lhero{padding:14px 16px}.lhero h2{font-size:26px;margin:2px 0 0}
 .ladlift .t2{margin-top:2px}
 .lchip{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;background:var(--fill);color:var(--ink);white-space:nowrap;margin-left:8px}
