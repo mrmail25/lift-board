@@ -1127,21 +1127,20 @@ const hlLegend=(L={main:'main',helper:'helper',minor:'minor'})=>`<span class="ml
 // Round 3: crop = the figures' own extent (both sides' outlines sit inside x 200-820, y 64-1444 of the 1024x1536 art), so
 // the same box height draws the body about 30% larger: the Build card and the Analysis sheet use it
 const MAPCROP='190 50 644 1410';
-// apechit head (Mr Dude, replaces the 9daaaf1 apehead): the body map wears a gorilla head drawn like the Ape-Chit logo
-// (assets/logo/icon-black-v3.svg / lockup-v3.svg): a flat, faceted, straight-edged solid silhouette whose planes are split by
-// constant-width negative-space gaps (here in --map-base, the body colour, as the logo's white). The heavy brow shadows the eyes (none
-// drawn); a rascally half-smile, closed on one side and open with teeth on the other. Back view: the same head's crest and skull facets.
-// Decorative only: drawn after the outline and BEFORE the muscle paths, pointer-events none, no data-mu, never shaded (fixed grey).
-const MH_F='color-mix(in oklch, var(--map-line), var(--ink) 26%)',MH_G='fill="none" stroke="var(--map-base)" stroke-width="6" stroke-linejoin="miter" stroke-linecap="butt"';
-const MH_O=bot=>`M512 52L540 63L566 84L582 112L590 140L588 170L580 196${bot}L444 196L436 170L434 140L442 112L458 84L484 63Z`;
-const MHEAD={front:`<g class="mhead" pointer-events="none" aria-hidden="true"><path d="${MH_O('L562 216L540 230L512 235L484 230L462 216')}" fill="${MH_F}" stroke="var(--map-line)" stroke-width="3" stroke-linejoin="round"/>
-<path d="M512 56L512 84M446 112L468 92M578 112L556 92M436 136L476 110L512 124L548 110L588 136M500 138L488 176L468 200M524 138L536 176L556 200M478 222L512 229L546 222" ${MH_G}/>
-<path d="M494 178L504 186M530 178L520 186" ${MH_G} stroke-width="5"/>
-<path d="M486 205L508 208" ${MH_G} stroke-width="4"/><path d="M506 207L530 200L556 184L552 210L532 219L512 213Z" fill="var(--map-base)"/><path d="M522 204L523 216M535 199L536 218M546 192L545 214" fill="none" stroke="${MH_F}" stroke-width="3"/><path d="M510 210L553 199" fill="none" stroke="${MH_F}" stroke-width="2.5"/></g>`,
- back:`<g class="mhead" pointer-events="none" aria-hidden="true"><path d="${MH_O('L566 214L540 225L512 228L484 225L458 214')}" fill="${MH_F}" stroke="var(--map-line)" stroke-width="3" stroke-linejoin="round"/>
-<path d="M512 56L512 118M446 112L468 92M578 112L556 92M444 162L512 136L580 162M466 200L512 214L558 200" ${MH_G}/></g>`};
+// apechit2 head (Mr Dude, replaces 8721478): the body-map gorilla head is cut straight from the Ape-Chit logo vector
+// (assets/logo/icon-white-v3.svg; v3 = the v2 trace with plate/forearm/back fixes only, the head is v2's; no v2 svg is on disk). MHD_S is
+// the logo's main silhouette subpath clipped to the head (the logo's head runs into the hunched back, so the back of the skull is a
+// faceted closing cut plus a small sagittal-crest bump); MHD_H are the logo's own face/ear highlight subpaths (ear, brow ledge, muzzle,
+// mouth and teeth) clipped to it, plus one solid shadow facet under the brow ledge where the eye sits (no eye drawn). Drawn in map greys (silhouette --map-line, highlights --map-base, darker edges), widened 1.3x so the
+// skull reads low and wide. Back view: the same silhouette mirrored, without the face. The human head is hidden by clipping the body
+// outline above the neck. Decorative only: after the outline, BEFORE the muscle paths, pointer-events none, no data-mu, never shaded.
+const MHD_S='M590 99L500 80L442 138L439 139L415 148L420 165L380 240L372 330L372 333L398 345L419 375L447 422L472 473L447 568L490 615L529 627L526 613L512 578L512 575L534 590L581 643L619 649L638 648L681 619L689 611L630 588L621 583L625 582L655 589L680 596L698 603L709 598L712 591L722 555L720 531L730 513L727 499L719 482L716 472L718 458L721 455L730 454L748 449L760 443L766 437L768 400L760 384L769 349L770 338L756 294L739 255L742 229L701 141L699 139L658 122L593 98L590 99Z';
+const MHD_H='M558 280L571 284L582 307L582 276L580 273L553 264L520 290L516 328L526 338L532 296L555 281ZM664 444L674 439L659 421L643 395L675 386L724 432L743 425L737 439L738 440L748 438L760 433L758 406L745 399L679 348L654 368L621 398L633 448L635 450L650 446L655 458L644 480L646 481L682 461L664 446ZM484 415L476 456L477 459L478 459L484 428L486 410ZM710 524L724 509L718 493L710 494L697 471L695 470L678 479L663 491L664 506L671 532L644 506L595 542L616 538L619 539L615 552L607 568L608 571L642 576L705 593L716 552L714 540L711 532Z';
+const MHD_E='color-mix(in oklch, var(--map-line), var(--ink) 26%)',MHD_T=s=>s==='front'?'translate(249.85,44.84) scale(0.4810,0.37)':'translate(774.14,44.84) scale(-0.4810,0.37)';
+const MHEAD={front:`<g class="mhead" pointer-events="none" aria-hidden="true" transform="${MHD_T('front')}"><path d="${MHD_S}" fill="var(--map-line)" stroke="${MHD_E}" stroke-width="7" stroke-linejoin="miter"/><path d="${MHD_H}" fill="var(--map-base)" stroke="${MHD_E}" stroke-width="3.5"/><path d="M620 402L668 416L694 444L652 472L626 452Z" fill="${MHD_E}"/></g>`,
+ back:`<g class="mhead" pointer-events="none" aria-hidden="true" transform="${MHD_T('back')}"><path d="${MHD_S}" fill="var(--map-line)" stroke="${MHD_E}" stroke-width="7" stroke-linejoin="miter"/></g>`};
 function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
-  return `<svg viewBox="${opt.crop?MAPCROP:`0 0 ${w} ${h}`}" class="mmap${opt.crop?' crop':''}" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>${MHEAD[side]}
+  return `<svg viewBox="${opt.crop?MAPCROP:`0 0 ${w} ${h}`}" class="mmap${opt.crop?' crop':''}" aria-label="${side} muscle map"><clipPath id="mhclip-${side}"><rect x="0" y="250" width="${w}" height="${h}"/></clipPath><path clip-path="url(#mhclip-${side})" d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>${MHEAD[side]}
    ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="var(--map-base)" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */return `<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'var(--map-off)'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"/>`}).join('')}
 </svg>`}
 const VOL_X=[['traps',8,6,12],['forearms',6,4,12],['obliques',4,4,10],['lower_back',6,4,10],['adductors',4,4,10],['abductors',3,4,10]];
