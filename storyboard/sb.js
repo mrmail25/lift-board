@@ -231,7 +231,7 @@ function hideSnack(){const u=$('#sundo');if(u)u.classList.remove('on');SUF=null}
 let tt;function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),1800)}
 
 // ---------------------------------------------------------------- tab bar + floating workout bar
-// Recommended 4 tabs: Train · Log · Build · Progress. Settings = gear on Build; Learn = book icon in headers.
+// Recommended 4 tabs: Train · Log · Build · Progress. Settings = gear on Build; Learn = 'Nerd Sh*t' text pill in headers (nerdpill; was a book icon).
 // Visible / aria name of the Learn page is "Nerd Sh*t" (Mr Dude); routes (#learn…), ids, data-x=learn and storage keys keep 'learn'.
 const TABS=[['build','Build'],['train','Train'],['log','Log'],['progress','Progress']]; // Build leftmost (markup round 1)
 function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-go="#${k}" class="${S.tab===k?'on':''}" aria-label="${l}">${I(k,1.7)}<span>${l}</span></button>`).join('')}
@@ -257,7 +257,8 @@ function confirmSheet(t,p,btn,fn){const c=sheet({body:`<div class="act-sheet"><h
 // ---------------------------------------------------------------- screens
 const V={};
 const header=(t,acts='')=>`<div class="lt"><h1>${t}</h1><div class="acts">${acts}</div></div>`;
-const bookBtn=`<button class="ibtn" data-go="#learn" aria-label="Nerd Sh*t">${I('book',1.7)}</button>`;
+// nerdpill (Mr Dude): the header Learn button is a compact text pill "Nerd Sh*t" (was a book icon); same spot, 44px tap target.
+const bookBtn=`<button class="ibtn npill" data-go="#learn" aria-label="Learn: Nerd Sh*t">Nerd Sh*t</button>`;
 const gearBtn=`<button class="ibtn" data-go="#settings" aria-label="Settings">${I('gear',1.6)}</button>`;
 
 // 1. TRAIN
@@ -1126,10 +1127,23 @@ const hlLegend=(L={main:'main',helper:'helper',minor:'minor'})=>`<span class="ml
 // Round 3: crop = the figures' own extent (both sides' outlines sit inside x 200-820, y 64-1444 of the 1024x1536 art), so
 // the same box height draws the body about 30% larger: the Build card and the Analysis sheet use it
 const MAPCROP='190 50 644 1410';
+// apehead (Mr Dude): the body map wears a gorilla head (sagittal crest, heavy brow, muzzle; the back view shows the crest and the rounded
+// back of the skull, no face). Hand-drawn, same --map-base fill and --map-line strokes as the outline, drawn over the human head right after
+// the outline and BEFORE the muscle paths, so it is decorative only: no data-mu, pointer-events none, never shaded, never covers a region.
+const MH_SK='M512 53C520 57 534 64 546 72C564 82 578 97 584 118C590 136 592 156 588 174';
+const MHEAD={front:`<g class="mhead" pointer-events="none" aria-hidden="true" stroke="var(--map-line)" stroke-linecap="round" stroke-linejoin="round"><path d="${MH_SK}C584 195 570 212 552 222C538 231 486 231 472 222C454 212 440 195 436 174C432 155 434 135 440 117C446 95 461 80 479 70C489 62 500 57 512 57Z" fill="var(--map-base)" stroke-width="3"/>
+<path d="M444 138C450 116 492 108 512 121C532 108 574 116 580 138C562 131 540 129 512 137C484 129 462 131 444 138Z" fill="var(--map-line)" stroke-width="3"/><path d="M512 64V92" fill="none" stroke-width="4"/>
+<ellipse cx="490" cy="148" rx="5" ry="4" fill="var(--map-line)" stroke="none"/><ellipse cx="534" cy="148" rx="5" ry="4" fill="var(--map-line)" stroke="none"/>
+<path d="M474 178C472 160 492 154 512 156C532 154 552 160 550 178C552 202 534 218 512 218C490 218 472 202 474 178Z" fill="none" stroke-width="4"/>
+<ellipse cx="500" cy="172" rx="7" ry="4.5" transform="rotate(-18 500 172)" fill="var(--map-line)" stroke="none"/><ellipse cx="524" cy="172" rx="7" ry="4.5" transform="rotate(18 524 172)" fill="var(--map-line)" stroke="none"/>
+<path d="M492 200C504 195 520 195 532 200" fill="none" stroke-width="4"/></g>`,
+ back:`<g class="mhead" pointer-events="none" aria-hidden="true" stroke="var(--map-line)" stroke-linecap="round" stroke-linejoin="round"><path d="${MH_SK}C584 196 562 216 512 218C462 216 440 196 436 174C432 155 434 135 440 117C446 95 461 80 479 70C489 62 500 57 512 57Z" fill="var(--map-base)" stroke-width="3"/>
+<path d="M512 64C510 84 510 104 512 124" fill="none" stroke-width="6"/><path d="M462 186C486 202 538 202 562 186" fill="none" stroke-width="4"/>
+<path d="M440 150C444 160 446 166 446 174M584 150C580 160 578 166 578 174" fill="none" stroke-width="3.5"/></g>`};
 function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
-  return `<svg viewBox="${opt.crop?MAPCROP:`0 0 ${w} ${h}`}" class="mmap${opt.crop?' crop':''}" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>
+  return `<svg viewBox="${opt.crop?MAPCROP:`0 0 ${w} ${h}`}" class="mmap${opt.crop?' crop':''}" aria-label="${side} muscle map"><path d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>${MHEAD[side]}
    ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="var(--map-base)" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */return `<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'var(--map-off)'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"/>`}).join('')}
-   ${side==='front'&&opt.ape?`<g class="ape-head"><circle cx="512" cy="148" r="92" fill="var(--paper)" stroke="var(--accent)" stroke-width="7" stroke-dasharray="18 13"/><text x="512" y="138" text-anchor="middle" font-size="46" font-weight="800" fill="var(--accent-press)" font-family="-apple-system,sans-serif">APE</text><text x="512" y="186" text-anchor="middle" font-size="32" fill="var(--text-2)" font-family="-apple-system,sans-serif">head slot</text></g>`:''}</svg>`}
+</svg>`}
 const VOL_X=[['traps',8,6,12],['forearms',6,4,12],['obliques',4,4,10],['lower_back',6,4,10],['adductors',4,4,10],['abductors',3,4,10]];
 const volMap=()=>{const o={};[...VOL,...VOL_X].forEach(([m,n,lo,hi])=>o[m]=volFill(n,lo,hi));return o}; // same vStat bands as the panel, in-range shaded from --vol-in-range
 // PROGRESS (piece B, 2026-10-24): logic/progress.js report() = Coach's tools/progress.py report() (data/progress-rules.json,
