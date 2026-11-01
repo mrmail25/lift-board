@@ -1702,3 +1702,6 @@ svg.pwbars .pwbl{font-size:10px;fill:var(--text-2)}
 .impt .ib{background:color-mix(in srgb,var(--vol-in-range) 70%,var(--paper))}.impt .io{background:var(--vol-red);z-index:2}.impt .id{width:4px;top:1px;height:10px;background:var(--ink,#111);border-radius:2px;z-index:3}
 .impr.ov .impn{color:var(--vol-red);font-weight:600}
 .dmx.d3 .dmcu{white-space:normal;font-size:9.5px;line-height:1.05;overflow:visible;text-overflow:clip}
+.impk1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;letter-spacing:-.1px}.impk1 .kh{margin-left:0}.impcap{font-size:12px;color:var(--text-2);margin:2px 0 0}.impcap:empty{display:none}
+.impk1{font-size:10.5px;letter-spacing:-.15px}.impk1 i{width:9px;height:9px;margin-right:2px}.impk1 .k3{background:linear-gradient(90deg,var(--vol-in-range) 0 33%,var(--vol-amber) 33% 66%,var(--vol-red) 66%)}
+.impk1{white-space:normal;overflow:visible;text-overflow:clip;font-size:11.5px;letter-spacing:0}

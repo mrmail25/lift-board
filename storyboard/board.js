@@ -141,13 +141,13 @@ function impStrip(C){const V=impViews(),bars={},ov={};for(const g of ['max_growt
       return `<i class="ib" data-k="${m}:${i}" style="left:${pc(i)};width:${pc(Math.min(r,7-i))}"></i><i class="ib w" data-k="${m}:${i}:w" style="left:0;width:${pc(i+r-7)}"></i><i class="io" data-k="${m}:${i}:o" style="left:${pc(jj>=7?jj-7:jj)};width:${pc(o&&o.variant==='streak'?Math.max(ow,1):ow)}"></i><i class="id" data-k="${m}:${i}:d" style="left:${pc(i)};opacity:${b?1:0}"></i>`}).join('')}</span></div>`}).join('')}</div>`}
 function impHtml(){const C0=impCur();if(!C0)return '';const {V,g,W}=C0,i=impDay(),dd=B.days[i],X1=dd&&W.days[dd.day],t=X1&&X1.day_summary;
   const vm={},ov={};for(const m of Object.keys(X.ML)){const o=X1&&X1.muscles[m];vm[m]=impFill(o);ov[m]=o?GLOW[o.fatigue_band]||0:0}
-  const cap=g==='efficient'&&V.trim?`Efficient view: this board trimmed (−${V.trim.removed} sets), not applied.`:g==='efficient'?'Efficient view: nothing to trim on this board.':'Max growth view: the board as it is.';
+  const cap=g==='efficient'&&V.trim?`Efficient view: this board trimmed (−${V.trim.removed} sets), not applied.`:g==='efficient'?'Efficient view: nothing to trim on this board.':'';
   return `<div class="imph"><b>Impact</b><span class="evl" data-ev="modeled">Modeled</span>${goalSeg()}</div>
    <div class="impd" role="group" aria-label="Day">${B.days.map((d,k)=>`<button class="${k===i?'on':''}" data-b="impday" data-i="${k}"${d.tiles.length?'':' disabled'}>${WD[k]}</button>`).join('')}</div>
    <div class="impm"><div class="impmaps">${X.map('front',vm,{crop:1,over:ov,oid:'if'})}${X.map('back',vm,{crop:1,over:ov,oid:'ib'})}</div>
     <div class="impside"><dl class="impn3"><div><dt>Stimulus</dt><dd class="num" data-v="stim">${t?nfmt(t.stimulus_hard_set_eq):'–'}</dd><small>hard sets</small></div><div><dt>Fatigue</dt><dd class="num" data-v="fat">${t?nfmt(t.fatigue_fresh_set_eq):'–'}</dd><small>fresh-set eq</small></div><div><dt>Ready in</dt><dd class="num" data-v="rec">${t?`~${nfmt(t.recovery_days)} d`:'–'}</dd><small>slowest muscle</small></div></dl>
      <button class="btn xs grey" data-b="dmx" data-day="${dd?dd.day:''}">Per muscle ›</button></div></div>
-   <p class="impk"><i class="kg"></i><i class="ka"></i><i class="kr2"></i>growth per fatigue, darker = more stimulus <i class="kh"></i>fatigue near or past the session limit. <span data-v="cap">${cap}</span></p>
+   <p class="impk impk1"><i class="k3"></i>Colour = growth per fatigue · darker = more stimulus · <i class="kh"></i>glow = past session limit</p>${cap?`<p class="impcap" data-v="cap">${cap}</p>`:'<p class="impcap" data-v="cap"></p>'}
    <p class="impnote">A glowing muscle is paying in fatigue for this day's work. ${nurdChip('impact')}</p>
    <div class="imph2"><b>Recovery this week</b><span class="evl" data-ev="modeled">Modeled</span></div>
    <div class="impax"><span></span><span class="impt0">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>
@@ -162,7 +162,9 @@ function paintImpact(){const el=$('#impc');if(!el)return;const h=impHtml();const
   for(const sel of ['[data-v]','.impd','.gseg','.impr','.impside [data-b=dmx]']){const os=[...el.querySelectorAll(sel)],ns=[...tmp.querySelectorAll(sel)];ns.forEach((n,k)=>{const o=os[k];if(!o)return;if(sel==='.impr'){o.className=n.className;return}if(sel==='[data-v]')o.className=n.className;if(n.dataset.day!=null)o.dataset.day=n.dataset.day;o.innerHTML=n.innerHTML})}}
 // ---- day card row + per-muscle sheet (vol11c units; late-set marks still from DAYMX.day / the session limits)
 const dmxOf=d=>window.DAYMX&&d&&d.tiles.length?DAYMX.day(RD(),d.tiles.map(t=>({id:t.id,sets:t.sets})),B.level,checkDays()):null;
-const impOf=d=>{const C=impCur();return C&&d?C.W.days[d.day]||null:null};
+// day card + sheet describe the board as it is (never the Efficient trim preview), under the current goal's limits/bands
+const impOf=d=>{if(!window.IMPACT||!d)return null;const V=impViews(),g=G()&&G().mode==='efficient'?'efficient':'max_growth';
+  if(!V.board)V.board={};if(!V.board[g]){const dt=RD(),cd=checkDays();V.board[g]=g==='max_growth'?V.g.max_growth:IMPACT.week(dt,cd,B.level,g,presetOf(cd,dt.SPLITS_EFF))}return V.board[g].days[d.day]||null};
 const dd=x=>x==null?'–':`~${+(+x).toFixed(1)} d`;
 const lateTxt=o=>{const n=o.late.reduce((a,z)=>a+z[1],0);return `${n} late set${n===1?'':'s'} · ${nfmt(o.over_limit)} over ${nfmt(o.session_limit)}`};
 // collapsed row on the day column; tapping it opens the per-muscle bottom sheet (dmxSheet). No ratio on the day row (vol11c).
@@ -396,7 +398,7 @@ const goalW=m=>{const p=X.prefs(),G=(RD().targets||{}).goal_muscle_weights||{};l
 // Recovery reference: targets.json recovery.reference {label, text, benchmarks:[{name, week_cost}]}; the week vs those routines
 const BMK='apechit.sb.benchMode',benchMode=()=>{try{return localStorage.getItem(BMK)}catch(e){return null}};
 const recRef=()=>((RD().targets||{}).recovery||{}).reference||null;
-// Logged-progress values for the Analysis sheet and the Progress tab: the synthetic log (data/progress-reference.json), not real data.
+// Logged-progress values for the Analysis sheet and the Progress tab: the local log (logLoad) through PROGRESS with progress-rules.json (RD.PR2).
 function progressNow(){try{return X.progressData?X.progressData():null}catch(e){console.warn(e);return null}}
 const DATA_ASKS=['Recovery shows a modeled range in days per muscle (never exact hours) and the week next to common routines; % of your normal week needs a saved baseline week, so Bring recovery cost back to normal cannot fire yet.','The starting board and the library routines are mock routines.','Logged-progress values come from a synthetic six-week log.'];
 function curve(m,A){const v=A.muscles[m],x=v.x,z=v.zones&&v.zones.sweet?v.zones:null,Sx=z?q=>PC.stim(RD(),m,B.level,q):q=>1-Math.exp(-q/v.k),D=z?z.diminishing:v.max,Xm=Math.max(30,Math.ceil((Math.max(x,D*1.25)+4)/5)*5),W=320,H=168,px=q=>30+Math.min(q,Xm)/Xm*(W-40),py=q=>H-30-q*(H-44);
@@ -575,17 +577,17 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
         return Q?`<details class="pwover pwq" data-n="${flagged.length}"><summary><span>${nd} session${nd===1?'':'s'} past the efficient limit</span><span class="pwqn num">${flagged.length} muscle${flagged.length===1?'':'s'} ›</span></summary>${rows}${trimCard('inl')}</details>`
           :`<div class="pwover" data-n="${flagged.length}"><div class="ash"><span>${SE.short_label||'Session efficiency'}</span><span class="ashv num">${flagged.length}</span></div>${rows}</div>`})():''}
       ${wCards()}<p class="foot">Weekly volume counts every effective set at face value. Tap a muscle in the table to chart it here.</p></div>`};
-  // vol8 §10.7 per-workout cards: fatigue index bar (0-180, tick at 100 = typical upper day, tier bands) + up to 6 muscle bars
+  // vol8 §10.7 per-workout cards: whole-body fatigue in fresh-set eq (vol12: the 100-index and its tiers are retired; bar = share of the
+  // week's heaviest day, from IMPACT.liveDay day_summary.fatigue_fresh_set_eq) + up to 6 muscle bars
   // (length = effective sets that day, colour = workout zone, "+N% of weekly plateau", ready-in range). Numbers one decimal; never exact hours.
   const WK=dt.VM&&PC.perSet(dt)?dt.VM.workout:null;
-  const wCards=()=>{if(!WK)return '';const AM=A.muscles,REF=WK.fatigue.reference.points,TI8=WK.fatigue.tiers,ZC={below_dose:'var(--line-strong)',useful:'var(--vol-in-range)',diminishing:'var(--vol-amber)',low_return:'var(--vol-red,#d4483b)'};
-    const cards=d.filter(D=>D.tiles.length).map(D=>{const lp=PC.loadPoints(dt,D.tiles),li=Math.round(100*lp/REF),tier=TI8.find(t=>li>=t.from&&(t.to==null||li<t.to))||TI8[TI8.length-1],E=PC.eff(dt,D.tiles),H=ANL.sessionHours(dt,D.tiles,lv),hs=D.tiles.reduce((a,t)=>a+t.sets,0),mn=Math.round(PC.sessionMinutes(dt,D.tiles,lv));
-      const ms=Object.entries(E).filter(([,v])=>v>=0.5).sort((a,b)=>b[1]-a[1]),top=ms.slice(0,6),mx=Math.max(6,...top.map(x=>x[1])),P180=v=>Math.min(100,v/180*100).toFixed(1);
+  const wCards=()=>{if(!WK)return '';const AM=A.muscles,FSE=d.map(D=>D.tiles.length&&window.IMPACT?IMPACT.liveDay(dt,D.tiles,lv,GM||'max_growth').day_summary.fatigue_fresh_set_eq:0),FMX=Math.max(1,...FSE),ZC={below_dose:'var(--line-strong)',useful:'var(--vol-in-range)',diminishing:'var(--vol-amber)',low_return:'var(--vol-red,#d4483b)'};
+    const cards=d.filter(D=>D.tiles.length).map(D=>{const fse=FSE[d.indexOf(D)],E=PC.eff(dt,D.tiles),H=ANL.sessionHours(dt,D.tiles,lv),hs=D.tiles.reduce((a,t)=>a+t.sets,0),mn=Math.round(PC.sessionMinutes(dt,D.tiles,lv));
+      const ms=Object.entries(E).filter(([,v])=>v>=0.5).sort((a,b)=>b[1]-a[1]),top=ms.slice(0,6),mx=Math.max(6,...top.map(x=>x[1]));
       const pay=m=>{const v=AM[m];if(PC.face(dt))return v&&v.raw_sets?100*PC.stim(dt,m,lv,v.x)*E[m]/v.raw_sets:0;return v&&v.x_dec?100*PC.stim(dt,m,lv,v.x)*PC.sessCredit(dt,m,E[m])/v.x_dec:0};   // vol9: face-value share
-      return `<div class="wcard" data-day="${D.day}" data-li="${li}"><div class="wch"><b>${WDL[DAYS.indexOf(D.day)]}</b><span class="num">${hs} hard sets · about ${mn} min</span></div>
-        <div class="wfat"><span class="wfl">Fatigue</span><span class="wfv num"><b>${li}</b> · ${tier.id.replace('_',' ')}</span></div>
-        <div class="wfbar" aria-label="Fatigue ${li}, 100 = a typical upper-body day">${TI8.map(t=>`<i class="wft ${t.id}" style="left:${P180(t.from)}%;width:${(P180(t.to==null?180:t.to)-P180(t.from)).toFixed(1)}%"></i>`).join('')}<b style="width:${P180(li)}%"></b><em style="left:${P180(100)}%"></em></div>
-        <div class="wfnote">100 = a typical upper-body day</div>
+      return `<div class="wcard" data-day="${D.day}" data-fse="${fse}"><div class="wch"><b>${WDL[DAYS.indexOf(D.day)]}</b><span class="num">${hs} hard sets · about ${mn} min</span></div>
+        <div class="wfat"><span class="wfl">Fatigue</span><span class="wfv num"><b>${nfmt(fse)}</b> fresh-set eq</span></div>
+        <div class="wfbar" aria-label="Fatigue ${nfmt(fse)} fresh-set equivalents"><b style="width:${(fse/FMX*100).toFixed(1)}%"></b></div>
         ${top.map(([m,v])=>{const SL=PC.seLim(dt,m,lv),z0=PC.sessZone8(dt,m,v)||'useful',z=SL!=null&&Math.round(v*100)/100>SL?'low_return':z0==='below_dose'?'below_dose':'useful';/* vol9b: red only when session_efficiency fires */return `<div class="wmr" data-m="${m}" data-z="${z}"><span class="wmn">${MLB(m)}</span><span class="wmb"><i style="width:${(v/mx*100).toFixed(1)}%;background:${ZC[z]}"></i></span><span class="wmv num">${nfmt(v)} sets · +${Math.round(pay(m))}%</span><span class="wmh">${H[m]?ANL.hoursRange(dt,H[m]).text:''}</span></div>`}).join('')}
         ${ms.length>6?`<div class="wmore">+${ms.length-6} more muscles</div>`:''}</div>`}).join('');
     return cards?`<div class="ash wcards-h"><span>This week's workouts</span><span class="evl" data-ev="modeled">Modeled</span></div><div class="wleg"><span><i style="background:var(--line-strong)"></i>small dose</span><span><i style="background:var(--vol-in-range)"></i>within session limit</span><span><i style="background:var(--vol-red,#d4483b)"></i>past session limit</span></div>${cards}<p class="foot">+N% = this workout's share of the muscle's weekly plateau. ${nurdChip('recovery')}</p>`:''};

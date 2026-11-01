@@ -32,7 +32,7 @@ function stim(dt,m,level,x){const z=zones(dt,m,level),D=z.diminishing,CV=dt.VM.c
   // vol8g (spec §11): per-muscle anchored curve from curve.per_muscle[m].params (same for every level). 0..min log segment,
   // min..D quadratic pieces [xa,xb,za,sa,curv], past D exponential approach to the plateau. Muscles without an entry fall back below.
   const PMc=CV.active==='anchored_per_muscle'&&(CV.per_muscle||{})[m];
-  // vol8i: params_by_level[level] + anchors_by_level[level] (a_min = anchors_pct[0], may exceed 0.575 where a concave fallback applied)
+  // vol8i: params_by_level[level] + anchors_by_level[level] (a_min = anchors_pct[0], may exceed the 0.60 rule-of-thumb min (vol12) where a concave fallback applied)
   const PQ=PMc&&((PMc.params_by_level&&PMc.params_by_level[level])||PMc.params),PA=PMc&&((PMc.anchors_by_level&&PMc.anchors_by_level[level])||PMc.anchors);
   if(PQ&&PA){const q=PQ,A=PA,a1=q.anchors_pct?q.anchors_pct[0]:A.min.pct/100,mn=A.min.sets,Dm=A.dim.sets,a4=q.anchors_pct?q.anchors_pct[3]:A.dim.pct/100;
     if(x<=mn)return a1*Math.log(1+x/q.log_k)/Math.log(1+mn/q.log_k);
