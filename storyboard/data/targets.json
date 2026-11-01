@@ -849,8 +849,9 @@
    }
   },
   "anchors": {
-   "min": 0.6,
-   "method": "k = level-scaled min / ln(2.5), so every muscle sits at exactly 60% of modeled max at its minimum. The max then lands between 84% and 99.9% depending on how wide that muscle's range is."
+   "superseded": "vol8g",
+   "source_of_truth": "volume-model.json curve.per_muscle[m].anchors",
+   "note": "The 60%-at-minimum exponential anchor (k = min/ln 2.5) is retired. Per-muscle anchors (57.5/76/86/89% at min/sweet low/sweet high/diminishing, intermediate edges) live only in volume-model.json."
   },
   "note_k_level": "k (by level) is kept as fallback for custom muscles only",
   "modeling_choices": [
@@ -860,9 +861,9 @@
     "rationale": "Chosen for simplicity; loosely informed by meta-analyses showing diminishing returns with volume, but no study fitted this exact curve per muscle."
    },
    {
-    "item": "60% anchor at the level-scaled minimum (k = min/ln 2.5)",
+    "item": "vol8g: anchors 57.5/76/86/89% at each muscle's intermediate min/sweet low/sweet high/diminishing (volume-model.json curve.per_muscle)",
     "type": "modeling",
-    "rationale": "A convention so every muscle's minimum reads the same on its curve; the 60% figure is not measured."
+    "rationale": "Calibrated to Schoenfeld 2017 (low vs 10+ weekly sets ~55% of the gain) and Pelland 2024 preprint / 2025 (diminishing returns); not measured per muscle."
    },
    {
     "item": "Sets past 10 per muscle in one session count at 50%",

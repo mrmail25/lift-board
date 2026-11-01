@@ -1616,3 +1616,7 @@ html[data-theme=dark] .pmom.gold .pm-txt .eyebrow{color:#FFD88F}
 .ancl{display:flex;flex-wrap:wrap;gap:3px 12px;font-size:11.5px;color:var(--text-2);padding:2px 8px 6px;align-items:center}
 .ancl>span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}.ancl i{font-style:normal;font-size:9px;font-weight:600;width:13px;height:13px;border-radius:50%;border:1.2px solid var(--text-2);display:inline-flex;align-items:center;justify-content:center}
 .ancl b{color:var(--ink);font-weight:600}.ancl .evl{margin-left:auto}
+/* vol8g anchors: sweet-spot high tick, evidence note, source line */
+.ancurve .anc line.anhi{stroke:var(--text-2);stroke-width:1.4}
+.ancl .anev{font-style:normal;font-size:10.5px;color:var(--text-3,#8a8a8a);margin-left:2px}
+.ancl .ansrc{flex-basis:100%;font-size:10.5px;color:var(--text-3,#8a8a8a);gap:6px}.ancl .ansrc .evl{margin-left:0}

@@ -29,6 +29,15 @@ function credit(dt,e,m,r,rir){if(!(r>=0.25))return 0;if(!dt.VM)return r;const q=
 function zones(dt,m,level){const Z=dt.targets.volume_zones,z=Z&&Z[level]&&Z[level][m];if(z)return z;const T=dt.targets.targets[m],LF=dt.targets.levelMinFactor;return {min:pyR(T.min*LF[level]*2)/2,sweet:null,diminishing:T.max}}
 // curve: x <= D: sqrt(x/D)/1.1; x > D: (1 + 0.1(1 - exp(-(x-D)/(0.2D))))/1.1 (volume-model.json curve.params); no k_by_muscle
 function stim(dt,m,level,x){const z=zones(dt,m,level),D=z.diminishing,CV=dt.VM.curve||{},p=CV.params||{};x=Math.max(0,x);
+  // vol8g (spec §11): per-muscle anchored curve from curve.per_muscle[m].params (same for every level). 0..min log segment,
+  // min..D quadratic pieces [xa,xb,za,sa,curv], past D exponential approach to the plateau. Muscles without an entry fall back below.
+  const PMc=CV.active==='anchored_per_muscle'&&(CV.per_muscle||{})[m];
+  // vol8i: params_by_level[level] + anchors_by_level[level] (a_min = anchors_pct[0], may exceed 0.575 where a concave fallback applied)
+  const PQ=PMc&&((PMc.params_by_level&&PMc.params_by_level[level])||PMc.params),PA=PMc&&((PMc.anchors_by_level&&PMc.anchors_by_level[level])||PMc.anchors);
+  if(PQ&&PA){const q=PQ,A=PA,a1=q.anchors_pct?q.anchors_pct[0]:A.min.pct/100,mn=A.min.sets,Dm=A.dim.sets,a4=q.anchors_pct?q.anchors_pct[3]:A.dim.pct/100;
+    if(x<=mn)return a1*Math.log(1+x/q.log_k)/Math.log(1+mn/q.log_k);
+    if(x<=Dm){const pc=q.pieces.find(r=>x<=r[1]+1e-12)||q.pieces[q.pieces.length-1],d=x-pc[0];return pc[2]+pc[3]*d+pc[4]*d*d}
+    return a4+(q.plateau-a4)*(1-Math.exp(-(x-Dm)/q.tau))}
   if(CV.active==='log'){const c=D*(p.c_frac_of_D!=null?p.c_frac_of_D:1/45),n=p.normaliser||1.1,g=p.plateau_gain!=null?p.plateau_gain:.1,L=Math.log(1+D/c);   // vol5 log: c = D/45
     if(x<=D)return Math.log(1+x/c)/L/n;const tau=0.1*(c+D)*L;return (1+g*(1-Math.exp(-(x-D)/tau)))/n}
   return x<=D?Math.sqrt(x/D)/(p.normaliser||1.1):(1+(p.plateau_gain||.1)*(1-Math.exp(-(x-D)/((p.plateau_tau_frac_of_D||.2)*D))))/(p.normaliser||1.1)}
@@ -36,12 +45,21 @@ function stim(dt,m,level,x){const z=zones(dt,m,level),D=z.diminishing,CV=dt.VM.c
 // vol8b per-set model (spec §10): set n in one workout is worth 1/(1+(n-1)/c) (fractional last set pro rata), reset each day (>= 20 h);
 // weekly input x_equiv = raw sets that give the same decayed total split evenly over 2 workouts (2 g(x/2) = x_dec, bisection)
 const perSet=dt=>!!(dt.VM&&dt.VM.curve.session_discount&&dt.VM.curve.session_discount.active==='per_set');
-const psC=(dt,m)=>(((dt.VM.session||{}).per_muscle||{})[m]||{}).c;
+// vol8i: decay c per level (rules session_dose.c_by_level, falling back to session.c_by_level, then per_muscle.c = intermediate).
+// CUR = the level of the last check/analytics call, used when a caller passes no level.
+let CUR='intermediate';const setLevel=l=>{if(l)CUR=l};
+const sdRule=dt=>((dt.rules&&dt.rules.rules)||[]).find(r=>r.id==='session_dose')||{};
+const psC=(dt,m,lv)=>{const L=lv||CUR,cb=sdRule(dt).c_by_level||(dt.VM.session||{}).c_by_level;return (cb&&cb[L]&&cb[L][m])||(((dt.VM.session||{}).per_muscle||{})[m]||{}).c};
+// 'too heavy' for one workout = max(1 + c, heavy_floor_sets) (vol8i); 1 + c alone is the half-value point
+const heavyLim=(dt,m,lv)=>{const c=psC(dt,m,lv);return c?Math.max(1+c,sdRule(dt).heavy_floor_sets||0):null};
+// per-level session zones: intermediate reads the data as given; other levels derive from that level's c (useful = 1 + c/3, i.e. set credit 0.75; half = 1 + c)
+function sessZ(dt,m,lv){const L=lv||CUR,z=(((dt.VM.workout||{}).stimulus||{}).per_muscle_zones||{})[m],P=((dt.VM.session||{}).per_muscle||{})[m];if(!z&&!P)return null;
+  if(L==='intermediate')return {dose_floor:(z||{}).dose_floor,useful_to:P?P.useful_up_to:z.useful_to,half:P?P.low_return_from:z.low_return_from};const c=psC(dt,m,L);return {dose_floor:(z||{}).dose_floor,useful_to:Math.round((1+c/3)*10)/10,half:1+c}}
 function gPS(c,s){if(!(s>0))return 0;const n=Math.floor(s+1e-12);let t=0;for(let i=1;i<=n;i++)t+=1/(1+(i-1)/c);return t+Math.max(0,s-n)/(1+n/c)}
 function xEquiv(dt,m,xd){const c=psC(dt,m);if(!c)return xd;if(!(xd>0))return 0;let lo=0,hi=400;for(let k=0;k<90;k++){const md=(lo+hi)/2;if(2*gPS(c,md/2)<xd)lo=md;else hi=md}return (lo+hi)/2}
 // vol8c: weekly value = min(x_equiv, raw weekly effective sets), rounded to 0.01 before any zone/colour/warning comparison (check_program.py capped_week)
 const capW=(dt,m,xd,raw)=>Math.min(xEquiv(dt,m,xd),raw);   // % uses this exact value; zones/colours/warnings compare it rounded to 0.01
-function sessZone8(dt,m,s){const Z=((dt.VM.workout||{}).stimulus||{}).per_muscle_zones||{},z=Z[m];if(!z)return null;return s<z.dose_floor?'below_dose':s<=z.useful_to+1e-9?'useful':s<=z.low_return_from+1e-9?'diminishing':'low_return'}
+function sessZone8(dt,m,s,lv){const z=sessZ(dt,m,lv);if(!z||z.dose_floor==null)return null;const lim=heavyLim(dt,m,lv);return s<z.dose_floor?'below_dose':s<=z.useful_to+1e-9?'useful':s<=lim+1e-9?'diminishing':'low_return'}
 // per-set fatigue (load points) and vol8 recovery hours (recovery.params type_base / axial_by_exercise / effort; hours_formula)
 const effortOf=(dt,rir)=>{const E=dt.VM.recovery.params.effort;return E[String(Math.max(0,Math.min(4,Math.round(rir))))]};
 const axialOf=(dt,id)=>{const A=dt.VM.recovery.params.axial_by_exercise||{};return A[id]!=null?A[id]:1};
@@ -52,10 +70,10 @@ function recHours(dt,tiles,level){const RC=dt.VM.recovery,P=RC.params,E=eff(dt,t
     let h=(P.base_h+P.h_per_set*Math.max(0,F-P.free_sets))*(1+P.stretch_add*(SB&&tt?ss/tt:0))*(P.size[m]||1)*(P.level[level]||1);h=Math.max(P.clamp[0],Math.min(P.clamp[1],h));
     out[m]=P.round_to_h*Math.floor(h/P.round_to_h+0.5)}return out}
 // vol8 flags (rules.json, all info): session_dose, recovery_gap_long, recovery_overlap
-function flags8(dt,days,level){const RU={};dt.rules.rules.forEach(r=>RU[r.id]=r);const out=[],{T}=ctx(dt),SM=(dt.targets.session||{}).muscles||{},PM=(dt.VM.session||{}).per_muscle||{};
+function flags8(dt,days,level){setLevel(level);const RU={};dt.rules.rules.forEach(r=>RU[r.id]=r);const out=[],{T}=ctx(dt),SM=(dt.targets.session||{}).muscles||{},PM=(dt.VM.session||{}).per_muscle||{};
   const per=days.map(d=>({d,E:eff(dt,d.tiles),i:ORDER.indexOf(d.day)}));
   if(RU.session_dose)for(const {d,E} of per)for(const m in T){const s=E[m],z=PM[m];if(!z||!(s>0))continue;
-    if(s>z.low_return_from+1e-9)out.push(['info','session_dose',d.day,m,'heavy',pyR(s,1),pyR(s-z.low_return_from,1)]);
+    const HL=heavyLim(dt,m,level);if(s>HL+1e-9)out.push(['info','session_dose',d.day,m,'heavy',pyR(s,1),pyR(s-HL,1)]);
     else if(s<RU.session_dose.light_below-1e-9&&d.tiles.some(t=>{const M=dt.EX[t.id].muscles,r=M[m]||0;return r>0&&(r>=0.75||r>=Math.max(...Object.values(M)))}))out.push(['info','session_dose',d.day,m,'light',pyR(s,1),pyR(RU.session_dose.light_below-s,1)])}
   if(days.length<2)return out;
   for(const m in T){const lt=(SM[m]||{}).light;if(lt==null)continue;const M=per.filter(p=>p.E[m]>=lt-1e-9).sort((a,b)=>a.i-b.i);if(!M.length)continue;
@@ -69,7 +87,7 @@ function sessCredit(dt,m,s){if(perSet(dt)){const c=psC(dt,m);if(c)return gPS(c,s
   return Math.min(s,SD.cap)+Math.max(0,s-SD.cap)*SD.factor}
 // shown value: one decimal, nudged (floor/ceil at 1 dp) when plain rounding would cross a zone or colour boundary, so number, zone and colour agree
 function shown(dt,m,level,z,x){const r=r1(x),k=v=>zoneOf(z,v)+'|'+col(dt,m,v,level);if(k(r)===k(x))return r;const f=r>x?Math.floor(x*10)/10:Math.ceil(x*10)/10;return k(f)===k(x)?f:r}
-function sessZones(dt,m){if(perSet(dt)){const z=((dt.VM.session||{}).per_muscle||{})[m];return z?{useful:z.useful_up_to,half:z.low_return_from,heavy:z.heavy_anchor,c:z.c,perSet:true}:null}
+function sessZones(dt,m,lv){if(perSet(dt)){const z=((dt.VM.session||{}).per_muscle||{})[m],Q=sessZ(dt,m,lv);return z?{useful:Q.useful_to,half:Q.half,lim:heavyLim(dt,m,lv),heavy:z.heavy_anchor,c:psC(dt,m,lv),perSet:true}:null}
   return sessZones5(dt,m)}
 function sessZones5(dt,m){const SD=(dt.VM&&dt.VM.curve.session_discount)||{},H=((dt.targets.session||{}).muscles||{})[m];if(!(SD.smooth&&H&&H.heavy))return null;const a=SD.smooth.a_frac_of_heavy*H.heavy,b=SD.smooth.b_frac_of_heavy*H.heavy;return {useful:a,half:a+b,heavy:H.heavy}}
 function zoneOf(z,x){if(!(x>0))return 'none';if(x<z.min-1e-9)return 'below_min';if(z.sweet&&x<z.sweet[0]-1e-9)return 'growth';if(z.sweet&&x<=z.sweet[1]+1e-9)return 'sweet_spot';if(x<=z.diminishing+1e-9)return z.sweet?'upper':'growth';return 'diminishing'}
@@ -83,7 +101,7 @@ function patternFlags(dt,days,level){const {PJ}=ctx(dt);if(!days.some(d=>d.tiles
   for(const [s,mn] of Object.entries(PJ.weekly_min_by_level[level])){if(mn<=0||c[s]>=mn)continue;out.push([c[s]===0&&PJ.required.includes(s)?'warn':'info','pattern_gap',s,c[s],mn])}return out}
 function col(dt,m,x,level){const {T,LF}=ctx(dt),a=pyR(T[m].min*LF[level]*2)/2,b=T[m].max;if(dt.VM&&!exactWarn(dt))x=r1(x);if(a<=x&&x<=b)return 'G';if((a-2<=x&&x<a)||(b<x&&x<=b*1.25))return 'A';return 'R'}
 // days: [{day:'mon', tiles:[{id,sets}]}] (training days only, any order). Returns [flags, week]
-function check(dt,days,level){const {R,RU,T,S,HEAVY}=ctx(dt),PAT=dt.PAT,f=[],week={},freq={},rawW={};for(const m in T){week[m]=0;freq[m]=0}
+function check(dt,days,level){setLevel(level);const {R,RU,T,S,HEAVY}=ctx(dt),PAT=dt.PAT,f=[],week={},freq={},rawW={};for(const m in T){week[m]=0;freq[m]=0}
   let push=0,pull=0,spw=0;const byday={};days.forEach(d=>byday[d.day]=d);const HS=new Set(R.heavy_squats),HH=new Set(R.heavy_hinges);
   for(const d of days){const n=d.tiles.length,tot=total(d);
     if(n>RU.many_small_entries.min_tiles&&tot/n<RU.many_small_entries.max_avg_sets)f.push(['info','many_small_entries',d.day,n,pyR(tot/n,2)]);
@@ -240,7 +258,7 @@ function message(dt,f,days,level){const {R,RU,PJ}=ctx(dt),DN=R.day_names,id=f[1]
   if(id==='session_length'){const sp=sessP(dt,level);P.warn_min=sp.warn_min;P.info_min=sp.info_min;P.level=level} // vol3: messages carry {warn_min}/{info_min} from by_level[level]
   // vol8 flags: variants, {gap} in days, {ready} as a range, {limit} from the per-set curve (never exact hours)
   const dys=h=>{const v=h/24;return `${+v.toFixed(1)} day${v===1?'':'s'}`};
-  if(id==='session_dose'){P.limit=+(((dt.VM.session||{}).per_muscle||{})[f[3]]||{}).low_return_from.toFixed(1);P.sets=+(+P.sets).toFixed(1);return fmtPy(f[4]==='heavy'?r.message_heavy:r.message_light,P)}
+  if(id==='session_dose'){P.limit=+(+heavyLim(dt,f[3])).toFixed(1);P.sets=+(+P.sets).toFixed(1);return fmtPy(f[4]==='heavy'?r.message_heavy:r.message_light,P)}
   if(id==='recovery_gap_long'){P.gap=dys(f[5]);return fmtPy(f[3]===f[4]&&r.message_once?r.message_once:r.message,P)}
   if(id==='recovery_overlap'){const R8=r;if(f[3]==='streak'){P.n=f[6];return fmtPy(r.message_streak,P)}P.gap=dys(f[6]);P.ready=f[7]?(h=>{h=h/(R8.early_frac_of_lower*0.8);if(h<20)return 'about a day';const lo=Math.floor(h*0.8/12)/2,hi=Math.ceil(h*1.2/12)/2;return (dt.VM.recovery.display.format||'about {lo}–{hi} days').replace('{lo}',String(lo)).replace('{hi}',String(hi))})(f[7]):'';return fmtPy(r.message_early,P)}
   let msg=r.message;if(id==='low_frequency'&&f[3]===0&&r.message_indirect_only)msg=r.message_indirect_only;else if(id==='spinal_load_week')msg=r.message_week||msg;else if(f[0]==='info'&&r.message_info)msg=r.message_info;
@@ -261,7 +279,7 @@ function checks(dt,days,level){const [fl,week]=check(dt,days,level),rules=dt.rul
   const byRule={};rules.forEach(r=>byRule[r.id]={id:r.id,warn:[],info:[]});fl.forEach(f=>{const b=byRule[RULE_OF(f[1])];if(b)b[f[0]].push(f)});
   const list=rules.map(r=>byRule[r.id]),pass=list.filter(c=>!c.warn.length).length;return {list,pass,total:list.length,flags:fl,week}}
 // ---------------- analytics (old app analytics.js; targets.json curve / recovery / analytics) ----------------
-function analytics(dt,days,level){const TT=dt.targets,C=TT.curve,A=TT.analytics,{T,LF,RU,HEAVY}=ctx(dt),MUS=Object.keys(T),VM=!!dt.VM;
+function analytics(dt,days,level){setLevel(level);const TT=dt.targets,C=TT.curve,A=TT.analytics,{T,LF,RU,HEAVY}=ctx(dt),MUS=Object.keys(T),VM=!!dt.VM;
   const kOf=m=>(C.k_by_muscle&&C.k_by_muscle[m]&&C.k_by_muscle[m][level])||C.k[level],Sx=(x,k)=>1-Math.exp(-x/k),SD=C.session_discount,disc=(v,m)=>VM?sessCredit(dt,m,v):Math.min(v,SD.cap)+Math.max(0,v-SD.cap)*SD.factor;
   const perDay=days.map(d=>eff(dt,d.tiles)),muscles={};
   for(const m of MUS){const rawx=perDay.reduce((a,v)=>a+v[m],0),xd=perDay.reduce((a,v)=>a+disc(v[m],m),0),x=VM&&perSet(dt)?capW(dt,m,xd,rawx):xd,freq=perDay.filter(v=>v[m]>=A.frequency_min_effective).length;
@@ -272,7 +290,8 @@ function analytics(dt,days,level){const TT=dt.targets,C=TT.curve,A=TT.analytics,
   const day=days.map(d=>({day:d.day,minutes:sessionMinutes(dt,d.tiles,level),sets:total(d),cost:d.tiles.reduce((a,t)=>a+t.sets*fat(dt.EX[t.id]),0),spinal:d.tiles.reduce((a,t)=>a+(HEAVY.has(t.id)?t.sets:0),0)}));
   return {muscles,day,weekSets:days.reduce((a,d)=>a+total(d),0),weekMinutes:day.reduce((a,d)=>a+d.minutes,0),weekCost:day.reduce((a,d)=>a+d.cost,0),
     spinal:{week:day.reduce((a,d)=>a+d.spinal,0),week_max:RU.spinal_load.week_warn_above[level],session_max:RU.spinal_load.session_warn_above[level]},disclaimer:VM?dt.VM.disclaimer:A.disclaimer,curveModel:VM?dt.VM.curve.reads_as:C.model}}
-const API={check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,perSet,gPS,xEquiv,sessZone8,capW,loadPoints,recHours,flags8,effortOf,axialOf,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
+function anchors(dt,m,level){const CV=dt.VM.curve||{},P=(CV.per_muscle||{})[m];if(!P)return null;const A=(P.anchors_by_level&&P.anchors_by_level[level])||P.anchors;if(!A)return null;const lm=P.anchors_by_level?A.min:((P.level_min_pct||{})[level]||A.min);return {min:lm,sweet_low:A.sweet_low,sweet_high:A.sweet_high,dim:A.dim,basis:P.basis,ev:(P.min_evidence||{}).tag||null,fallback:(P.concave_fallback||{})[level]||null}}
+const API={anchors,heavyLim,setLevel,check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,perSet,gPS,xEquiv,sessZone8,capW,loadPoints,recHours,flags8,effortOf,axialOf,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
   // internals reused by logic/analysis.js and logic/progress.js (same functions, so the ports cannot drift)
   _x:{gAddSets,gAddExercise,gReduceSets,prev,nonin,_day,load,col,RULE_OF,total,ctx,clone,cmpT,sortBy,fmtPy}};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else root.PCHECK=API;

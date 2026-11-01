@@ -1,5 +1,5 @@
 {
- "version": "vol1",
+ "version": "vol8g",
  "date": "2026-10-31",
  "status": "proposed for port (Builder); replaces targets.json curve for the Modeled stimulus item",
  "disclaimer": "A model for comparing plans, not a measurement of growth or recovery.",
@@ -13,13 +13,13 @@
    "cite": "Schoenfeld, Ogborn & Krieger (2017). Dose-response relationship between weekly resistance training volume and increases in muscle mass: a systematic review and meta-analysis. Journal of Sports Sciences 35(11):1073-1082.",
    "url": "https://doi.org/10.1080/02640414.2016.1210197",
    "peer_reviewed": true,
-   "used_for": "Graded dose-response: <5, 5-9 and 10+ weekly sets all grew, 10+ most. Supports a curve that rises from zero with no hard floor and that the minimum is where useful growth starts, not where growth begins at all."
+   "used_for": "15 studies / 34 groups. Mean gains 5.4% (<5 weekly sets, ES 0.307), 6.6% (5-9, ES 0.378), 9.8% (10+, ES 0.520); 3-level trend P = 0.074; continuous model +0.37% per weekly set (P = 0.002). vol8g: 5.4/9.8 ~ 55% supports the 57.5% minimum anchor. Published online 2016, issue 2017."
   },
   "pelland2025": {
    "cite": "Pelland et al. The Resistance Training Dose Response: Meta-Regressions Exploring the Effects of Weekly Volume and Frequency on Muscle Hypertrophy and Strength Gains. Sports Medicine (online Dec 2025). Earlier version: SportRxiv preprint 2024 (not peer-reviewed), doi 10.51224/srxiv.460.",
    "url": "https://doi.org/10.1007/s40279-025-02344-w",
    "peer_reviewed": true,
-   "used_for": "67 studies. Counting indirect sets as 0.5 (\"fractional\") fit best. Hypertrophy keeps rising with weekly volume with diminishing returns; best-fit hypertrophy model was a square-root curve. Basis for the square-root curve shape and for keeping ~0.5 credit on indirect sets."
+   "used_for": "67 studies. Counting indirect sets as 0.5 (\"fractional\") fit best. Hypertrophy keeps rising with weekly volume with diminishing returns; best-fit hypertrophy model was a square-root curve. Basis for the square-root curve shape and for keeping ~0.5 credit on indirect sets. vol8g: diminishing returns basis for the sweet-spot and D anchors and a plateau below 100% (preprint 2024 and Sports Med 2025 cited separately, preprint labelled)."
   },
   "bazvalle2022": {
    "cite": "Baz-Valle, Balsalobre-Fernandez, Alix-Fages & Santos-Concejero (2022). A Systematic Review of the Effects of Different Resistance Training Volumes on Muscle Hypertrophy. Journal of Human Kinetics 81:199-210.",
@@ -679,28 +679,54 @@
  },
  "curve": {
   "replaces": "targets.json curve (S = 1 - exp(-x/k), k = level min / ln 2.5)",
-  "active": "log",
-  "version": "vol5",
-  "formula": "c = D/45; x <= D: S = ln(1 + x/c) / ln(1 + D/c) / 1.1  (= 0.909 at D);  x > D: S = (1 + 0.1*(1 - exp(-(x-D)/tau))) / 1.1, tau = 0.1 * (c + D) * ln(1 + D/c) (slope-continuous);  D = zones diminishing point (targets.max)",
+  "active": "anchored_per_muscle",
+  "version": "vol8i",
+  "formula": "Per muscle m with intermediate edges (min, sweet_lo, sweet_hi, D) and anchors (57.5%, 76%, 86%, 89%): (vol8i: per level, params_by_level[user level]; anchors_pct[0] can exceed 0.575 where a concave fallback applied) 0 < x <= min: S = a_min ln(1 + x/k) / ln(1 + min/k) (k = log_k); min < x <= D: quadratic pieces S = za + sa (x - xa) + curv (x - xa)^2 from pieces [xa, xb, za, sa, curv]; x > D: S = 0.89 + (plateau - 0.89)(1 - exp(-(x - D)/tau)), plateau = 0.979. Input x = the capped weekly value min(x_equiv, raw).",
   "params": {
-   "c_frac_of_D": 0.022222222222222223,
-   "plateau_gain": 0.1,
-   "normaliser": 1.1
+   "anchor_pct": [
+    0.575,
+    0.76,
+    0.86,
+    0.89
+   ],
+   "plateau_factor": 1.1,
+   "interpolation": "(smooth C1, monotone, concave; a model, not a measurement):\n- 0..min: log segment S = a1 * ln(1 + x/k) / ln(1 + min/k), k solved so its end slope equals the knot slope at min (steep start, like vol5).\n- min..D: Schumaker shape-preserving quadratic spline (Schumaker 1983) through the anchors; knot slopes = harmonic mean of the adjacent\n  secants (min, sweet_lo, sweet_hi); slope at D = 2*secant_last - slope(sweet_hi), so the last interval is one quadratic.\n- past D: S = a4 + (P - a4)(1 - exp(-(x - D)/tau)), plateau P = 1.1 * a4 (97.9%, below 100%), tau = (P - a4)/S'(D) (slope-continuous)."
   },
-  "reads_as": "share of this muscle's modeled plateau (100% = plateau). Same shape for every muscle relative to its own diminishing-returns point D (c = D/45): 91% at D, ~70% at 0.4 x D, ~79% at 0.6 x D, ~89% at 0.9 x D. Percentages compare within one muscle only.",
+  "reads_as": "share of this muscle's modeled plateau. Every muscle reads 57.5% at its intermediate minimum, 76% at sweet-spot low, 86% at sweet-spot high, 89% at its diminishing point, approaching 97.9% beyond. Compare % within one muscle; the zone label carries the cross-muscle meaning.",
   "next_set": "S(x+1) - S(x)",
   "monotonic": true,
   "concave": true,
   "tags": {
-   "shape": "modeled (vol5: log shape picked by Mr Dude and tuned to his anchors 70% at 8 / ~91% at 20 for chest; concave diminishing returns are evidence-based (Pelland 2025), but Pelland's best-fit weekly model was square root, not log; see fit_vs_evidence)",
+   "shape": "modeled (anchored per muscle; concave diminishing returns per Pelland 2024 PREPRINT / 2025)",
+   "min_anchor": "modeled (Schoenfeld 2017 low/high-volume gain ratio ~55%)",
    "plateau_beyond_D": "modeled (Baz-Valle 2022: no clear extra gain >20 sets for quads/biceps)",
    "normalisation": "modeled"
   },
   "session_discount": {
    "active": "per_set",
    "per_set": {
-    "formula": "per set n: 1/(1 + (n-1)/c); workout stimulus = sum over its effective sets (fractional last set pro rata); c = 1 x targets.json session.muscles[m].heavy (vol8d; vol8 0.4)",
-    "c_frac_of_heavy": 1.0,
+    "formula": "per set n: 1/(1 + (n-1)/c); workout stimulus = sum over its effective sets (fractional last set pro rata); c per anchor group (vol8h, session.per_muscle[m].c; vol8d was 1.0 x heavy anchor, vol8 0.4 x)",
+    "c_by_muscle": {
+     "chest": 20.0,
+     "front_delts": 4.5,
+     "side_delts": 11.0,
+     "rear_delts": 10.0,
+     "lats": 20.0,
+     "upper_back": 20.0,
+     "traps": 4.5,
+     "biceps": 15.0,
+     "triceps": 15.0,
+     "forearms": 1.5,
+     "abs": 4.5,
+     "quads": 20.0,
+     "hamstrings": 15.0,
+     "glutes": 15.0,
+     "calves": 10.0,
+     "adductors": 5.0,
+     "lower_back": 5.0,
+     "obliques": 1.5,
+     "abductors": 5.0
+    },
     "reset_after_gap_h": 20
    },
    "smooth_vol5": {
@@ -711,7 +737,7 @@
    "cap": 10,
    "factor": 0.5,
    "legacy": "cap/factor = the pre-vol5 hard cut (10 sets, then 50%); kept only so an unported client still runs.",
-   "tag": "modeled (smooth log shape; vol8d c calibrated so one workout is ~5-7% below 2 days on the weekly %, per Schoenfeld 2019 / Pelland 2025)"
+   "tag": "modeled (smooth log shape; vol8h c per anchor group calibrated so one workout is 4-10% below 2 days on the vol8g weekly %, per Schoenfeld 2019 / Pelland 2025)"
   },
   "fit_vs_evidence": "Pelland et al. (Sports Medicine 2025) compared 7 functional forms for fractional weekly sets vs hypertrophy (linear, spline, linear-log, polynomial, square root, quadratic, reciprocal) with a BIC-approximated Bayes factor and picked square root as the best fit; the paper does not print the margin over linear-log in the main text, so we cannot say how close the log fit was, and the authors state the data remain compatible with multiple functional forms, with few studies above ~25 weekly sets. Their efficiency tiers (minimum effective dose 4 sets; 5-10 higher, 11-18 intermediate, 19-29 lower efficiency) describe per-set efficiency, not a share of a ceiling. Scaled so both read 91% at 20 sets, Pelland's square-root point estimate puts 8 sets at ~58% and 12-18 at ~70-86%; the active log curve puts 8 at 70% and 12-18 at ~79-89%, i.e. it front-loads low volumes more than Pelland's point estimate. That is a coaching choice (Mr Dude's anchors), not a better fit. The per-session preprint (Remmert 2025) did find linear-log best for per-session volume. No study measures \"% of plateau\", so the percentages are a display convention.",
   "input": {
@@ -719,12 +745,4409 @@
    "x_dec": "sum over the week's workouts of the per-set-decayed workout stimulus (session.credit)",
    "x_equiv": "the raw weekly sets x such that 2 x g(x/2) = x_dec (g = session.credit for that muscle); solve by bisection (monotone)",
    "weekly_pct": "curve.formula(x_equiv, D) with D = zones diminishing",
-   "why": "The log weekly curve was tuned by Mr Dude in raw weekly sets (chest 8 -> 70%, 12-18 -> 80-89%, 20 -> 91%). Feeding it decayed sets directly discounted twice. Mapping the decayed total back to its 2-sessions-a-week raw equivalent keeps his anchors exactly for an even 2x split; other layouts move relative to that (one heavy session lower, 3 light sessions slightly higher).",
+   "why": "Mapping the decayed total back to its 2-sessions-a-week raw equivalent means an even 2x split reads exactly its raw sets on the curve (so the anchors hold at the zone edges for that layout); one heavy session reads lower, 3 light sessions are capped at raw. vol8g: the curve is the per-muscle anchored curve (Mr Dude withdrew the earlier chest 70%-at-8 pick as speculation).",
    "zones_and_colours": "vol8c: the weekly value = min(x_equiv, raw weekly effective sets) drives the %, the colours and the warnings against the existing zones (x_equiv is already in 2x/week raw-set units, so the zones need no recalibration). The cap stops 3+ light days inflating the total. Compare at the boundaries after rounding to 0.01 (checker does; the app must do the same).",
    "cap": "x_week = min(x_equiv(x_dec), raw)",
    "boundary": "round to 0.01 before colouring",
    "tag": "modeled (calibration choice)"
-  }
+  },
+  "vol5_log": {
+   "formula": "c = D/45; x <= D: S = ln(1 + x/c) / ln(1 + D/c) / 1.1  (= 0.909 at D);  x > D: S = (1 + 0.1*(1 - exp(-(x-D)/tau))) / 1.1, tau = 0.1 * (c + D) * ln(1 + D/c) (slope-continuous);  D = zones diminishing point (targets.max)",
+   "params": {
+    "c_frac_of_D": 0.022222222222222223,
+    "plateau_gain": 0.1,
+    "normaliser": 1.1
+   },
+   "status": "inactive since vol8g (history)"
+  },
+  "anchors_rule": {
+   "requested": {
+    "min": 57.5,
+    "sweet_low": 76,
+    "sweet_high": 85,
+    "dim": 90
+   },
+   "used": {
+    "min": 57.5,
+    "sweet_low": 76,
+    "sweet_high": 86,
+    "dim": 89
+   },
+   "why_86_89": "Requested ~85% at sweet_hi and ~90% at D. For the 10 muscles whose D is only 2 sets past sweet_hi (chest, lats, upper back, quads, biceps, triceps, calves, hamstrings, glutes, lower back) 85 -> 90 over 2 sets is steeper per set than 76 -> 85 over the 4-6 sets before, which breaks diminishing returns (concavity). 86% / 89% is the closest uniform pair (1 point each) that stays concave for every muscle.",
+   "levels": "vol8i: anchors per level. Each level's curve passes through that level's own zone edges with the same percentages (57.5/76/86/89), and the % uses the user's level (e.g. beginner chest 6/9/15.5/20 sets, advanced chest 10/12/18/20). Where a level's minimum sits only 2 sets below sweet-low (advanced chest/lats/upper back/quads 10 vs 12, advanced biceps/triceps/hamstrings/glutes 8 vs 10), 57.5% at the minimum is not concave, so the minimum anchor is raised just enough (nearest concave fit; see concave_fallback). The per-set decay c is also per level (rules.json session_dose.c_by_level). Colours and warnings use each level's own zones as before.",
+   "source_of_truth": "volume-model.json curve.per_muscle[m].anchors_by_level[level] (targets.json curve.anchors now only points here)"
+  },
+  "basis": "Anchors are modeled, calibrated to the evidence below, not measured per muscle. Minimum 57.5%: Schoenfeld, Ogborn & Krieger 2017 (J Sports Sci 35(11):1073-82; 15 studies, 34 groups) found mean gains of 5.4% (<5 weekly sets, ES 0.307), 6.6% (5-9, ES 0.378) and 9.8% (10+, ES 0.520); 5.4/9.8 = 55%, so the low-volume end delivers a bit over half of a solid dose (the 3-level comparison was a trend, P = 0.074; the continuous model was significant, +0.37% per weekly set). Sweet spot 76-86% and D 89% with a plateau below 100%: Pelland et al. (SportRxiv PREPRINT 2024, doi 10.51224/srxiv.460; peer-reviewed Sports Med 2025, doi 10.1007/s40279-025-02344-w) found hypertrophy keeps rising with weekly volume with diminishing returns (no clear plateau inside the studied range). The exact percentages are planning choices.",
+  "per_muscle": {
+   "chest": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 6.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 9.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 15.5,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 8.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 12.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 18.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 10.0,
+       "pct": 64.0
+      },
+      "sweet_low": {
+       "sets": 12.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 18.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {
+     "advanced": "min anchor raised 57.5% -> 64% (min 10 is only 2 sets below sweet_lo 12; 57.5% would make sets 10-12 worth more per set than the first 10)"
+    },
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 9.001425968690121,
+      "knot_slopes": [
+       0.07504409171075839,
+       0.024625623960066553,
+       0.009302325581395356,
+       0.004031007751937989
+      ],
+      "pieces": [
+       [
+        6.0,
+        7.408032733929149,
+        0.575,
+        0.07504409171075839,
+        4.9280771225709214e-18
+       ],
+       [
+        7.408032733929149,
+        9.0,
+        0.6806645376167288,
+        0.0750440917107584,
+        -0.015835271498744485
+       ],
+       [
+        9.0,
+        14.160101010101005,
+        0.76,
+        0.024625623960066553,
+        -0.0014847866687760108
+       ],
+       [
+        14.160101010101005,
+        15.5,
+        0.8475358233497767,
+        0.009302325581395352,
+        1.2946673510870961e-18
+       ],
+       [
+        15.5,
+        20.0,
+        0.86,
+        0.009302325581395356,
+        -0.0005857019810508185
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 22.07884615384615
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 12.001901291586828,
+      "knot_slopes": [
+       0.056283068783068796,
+       0.024503311258278142,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        8.0,
+        9.474349821519635,
+        0.575,
+        0.056283068783068796,
+        0.0
+       ],
+       [
+        9.474349821519635,
+        12.0,
+        0.6579809324148947,
+        0.056283068783068796,
+        -0.006291401278682212
+       ],
+       [
+        12.0,
+        13.207999999999986,
+        0.76,
+        0.024503311258278142,
+        -0.003606720850193588
+       ],
+       [
+        13.207999999999986,
+        18.0,
+        0.7843368421052629,
+        0.015789473684210534,
+        0.0
+       ],
+       [
+        18.0,
+        20.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.64,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 146.7033780866108,
+      "knot_slopes": [
+       0.06193548387096774,
+       0.02608695652173913,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        10.0,
+        11.784037558685446,
+        0.64,
+        0.06193548387096774,
+        -1.9447163178055784e-18
+       ],
+       [
+        11.784037558685446,
+        12.0,
+        0.7504952294411631,
+        0.061935483870967735,
+        -0.08299713397158362
+       ],
+       [
+        12.0,
+        13.02222222222221,
+        0.76,
+        0.02608695652173913,
+        -0.005036812257486875
+       ],
+       [
+        13.02222222222221,
+        18.0,
+        0.7814035087719295,
+        0.015789473684210534,
+        0.0
+       ],
+       [
+        18.0,
+        20.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     }
+    }
+   },
+   "front_delts": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 2.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.5,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 10.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 3.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 6.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 12.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 4.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 6.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 12.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 1.0216262851645448,
+      "knot_slopes": [
+       0.13193798449612407,
+       0.03039014373716632,
+       0.007843137254901966,
+       0.002156862745098043
+      ],
+      "pieces": [
+       [
+        2.5,
+        2.9465259250666977,
+        0.575,
+        0.13193798449612407,
+        0.0
+       ],
+       [
+        2.9465259250666977,
+        4.5,
+        0.6339137305785674,
+        0.13193798449612407,
+        -0.032684111823146345
+       ],
+       [
+        4.5,
+        9.54392857142857,
+        0.76,
+        0.03039014373716632,
+        -0.002235064014385761
+       ],
+       [
+        9.54392857142857,
+        10.0,
+        0.856422969187675,
+        0.007843137254901968,
+        -1.9018111717834926e-18
+       ],
+       [
+        10.0,
+        16.0,
+        0.86,
+        0.007843137254901966,
+        -0.0004738562091503269
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 41.26363636363633
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 0.6993770866189832,
+      "knot_slopes": [
+       0.09331140350877194,
+       0.02624113475177305,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        3.0,
+        3.16911196911197,
+        0.575,
+        0.09331140350877194,
+        0.0
+       ],
+       [
+        3.16911196911197,
+        6.0,
+        0.5907800751879699,
+        0.09331140350877194,
+        -0.011846153578875286
+       ],
+       [
+        6.0,
+        10.772307692307688,
+        0.76,
+        0.02624113475177305,
+        -0.0016654738326270157
+       ],
+       [
+        10.772307692307688,
+        12.0,
+        0.8472997347480106,
+        0.0103448275862069,
+        7.06497656256216e-19
+       ],
+       [
+        12.0,
+        16.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 6.00095064579341,
+      "knot_slopes": [
+       0.11256613756613759,
+       0.0282442748091603,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        4.0,
+        5.048116969428445,
+        0.575,
+        0.11256613756613759,
+        0.0
+       ],
+       [
+        5.048116969428445,
+        6.0,
+        0.6929824789660856,
+        0.11256613756613759,
+        -0.04429213466824098
+       ],
+       [
+        6.0,
+        10.238235294117644,
+        0.76,
+        0.0282442748091603,
+        -0.0021116627535753504
+       ],
+       [
+        10.238235294117644,
+        12.0,
+        0.8417748478701825,
+        0.010344827586206902,
+        0.0
+       ],
+       [
+        12.0,
+        16.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     }
+    }
+   },
+   "side_delts": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 5.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 9.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 15.5,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 22.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 6.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 12.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 18.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 22.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 8.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 12.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 18.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 22.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 2.0432525703290896,
+      "knot_slopes": [
+       0.06596899224806203,
+       0.023088923556942274,
+       0.007100591715976336,
+       0.0021301775147929023
+      ],
+      "pieces": [
+       [
+        5.0,
+        5.321089429197539,
+        0.575,
+        0.06596899224806203,
+        0.0
+       ],
+       [
+        5.321089429197539,
+        9.0,
+        0.596181946065667,
+        0.06596899224806203,
+        -0.0058278215610126334
+       ],
+       [
+        9.0,
+        9.235681293302537,
+        0.76,
+        0.023088923556942274,
+        -7.360463156276012e-18
+       ],
+       [
+        9.235681293302537,
+        15.5,
+        0.7654416273648635,
+        0.02308892355694227,
+        -0.0012761429127059016
+       ],
+       [
+        15.5,
+        22.0,
+        0.86,
+        0.007100591715976336,
+        -0.00038233955393718723
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 41.78055555555554
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 2.3073722186927146,
+      "knot_slopes": [
+       0.04873997709049256,
+       0.02228915662650602,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        6.5,
+        11.218918918918922,
+        0.575,
+        0.04873997709049256,
+        -0.0028026356161726844
+       ],
+       [
+        11.218918918918922,
+        12.0,
+        0.7425903614457832,
+        0.02228915662650602,
+        0.0
+       ],
+       [
+        12.0,
+        12.351304347826083,
+        0.76,
+        0.02228915662650602,
+        -4.9379504885478926e-18
+       ],
+       [
+        12.351304347826083,
+        18.0,
+        0.7678302776322681,
+        0.022289156626506018,
+        -0.0010572643470092345
+       ],
+       [
+        18.0,
+        22.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 12.001901291586828,
+      "knot_slopes": [
+       0.056283068783068796,
+       0.024503311258278142,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        8.0,
+        9.474349821519635,
+        0.575,
+        0.056283068783068796,
+        0.0
+       ],
+       [
+        9.474349821519635,
+        12.0,
+        0.6579809324148947,
+        0.056283068783068796,
+        -0.006291401278682212
+       ],
+       [
+        12.0,
+        17.35806451612903,
+        0.76,
+        0.024503311258278142,
+        -0.0013212311674720312
+       ],
+       [
+        17.35806451612903,
+        18.0,
+        0.8533592880978865,
+        0.010344827586206898,
+        2.702333053029187e-18
+       ],
+       [
+        18.0,
+        22.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     }
+    }
+   },
+   "rear_delts": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 3.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 6.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 12.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 18.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 5.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 8.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 14.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 18.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 6.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 8.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 14.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 18.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 1.9067991269567328,
+      "knot_slopes": [
+       0.10203836930455637,
+       0.027205882352941173,
+       0.007692307692307697,
+       0.002307692307692312
+      ],
+      "pieces": [
+       [
+        3.5,
+        4.12659110723627,
+        0.575,
+        0.10203836930455637,
+        0.0
+       ],
+       [
+        4.12659110723627,
+        6.0,
+        0.6389363348031254,
+        0.10203836930455637,
+        -0.019972278139776315
+       ],
+       [
+        6.0,
+        11.518840579710142,
+        0.76,
+        0.027205882352941173,
+        -0.0017679052673105443
+       ],
+       [
+        11.518840579710142,
+        12.0,
+        0.856298773690078,
+        0.007692307692307696,
+        9.01324697608426e-19
+       ],
+       [
+        12.0,
+        18.0,
+        0.86,
+        0.007692307692307697,
+        -0.00044871794871794877
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 38.566666666666634
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 4.330453084805532,
+      "knot_slopes": [
+       0.08028301886792455,
+       0.02624113475177305,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        5.0,
+        5.933119560238205,
+        0.575,
+        0.08028301886792455,
+        0.0
+       ],
+       [
+        5.933119560238205,
+        8.0,
+        0.6499136552606332,
+        0.08028301886792455,
+        -0.013073297099463515
+       ],
+       [
+        8.0,
+        12.772307692307688,
+        0.76,
+        0.02624113475177305,
+        -0.0016654738326270157
+       ],
+       [
+        12.772307692307688,
+        14.0,
+        0.8472997347480106,
+        0.0103448275862069,
+        7.06497656256216e-19
+       ],
+       [
+        14.0,
+        18.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 164.51195464035365,
+      "knot_slopes": [
+       0.09413716814159294,
+       0.0282442748091603,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        6.0,
+        7.900616405879564,
+        0.575,
+        0.09413716814159294,
+        0.0
+       ],
+       [
+        7.900616405879564,
+        8.0,
+        0.7539186461729546,
+        0.09413716814159294,
+        -0.33150790085424814
+       ],
+       [
+        8.0,
+        12.238235294117644,
+        0.76,
+        0.0282442748091603,
+        -0.0021116627535753504
+       ],
+       [
+        12.238235294117644,
+        14.0,
+        0.8417748478701825,
+        0.010344827586206902,
+        0.0
+       ],
+       [
+        14.0,
+        18.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     }
+    }
+   },
+   "lats": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 6.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 9.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 15.5,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 8.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 12.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 18.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 10.0,
+       "pct": 64.0
+      },
+      "sweet_low": {
+       "sets": 12.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 18.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {
+     "advanced": "min anchor raised 57.5% -> 64% (min 10 is only 2 sets below sweet_lo 12; 57.5% would make sets 10-12 worth more per set than the first 10)"
+    },
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 9.001425968690121,
+      "knot_slopes": [
+       0.07504409171075839,
+       0.024625623960066553,
+       0.009302325581395356,
+       0.004031007751937989
+      ],
+      "pieces": [
+       [
+        6.0,
+        7.408032733929149,
+        0.575,
+        0.07504409171075839,
+        4.9280771225709214e-18
+       ],
+       [
+        7.408032733929149,
+        9.0,
+        0.6806645376167288,
+        0.0750440917107584,
+        -0.015835271498744485
+       ],
+       [
+        9.0,
+        14.160101010101005,
+        0.76,
+        0.024625623960066553,
+        -0.0014847866687760108
+       ],
+       [
+        14.160101010101005,
+        15.5,
+        0.8475358233497767,
+        0.009302325581395352,
+        1.2946673510870961e-18
+       ],
+       [
+        15.5,
+        20.0,
+        0.86,
+        0.009302325581395356,
+        -0.0005857019810508185
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 22.07884615384615
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 12.001901291586828,
+      "knot_slopes": [
+       0.056283068783068796,
+       0.024503311258278142,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        8.0,
+        9.474349821519635,
+        0.575,
+        0.056283068783068796,
+        0.0
+       ],
+       [
+        9.474349821519635,
+        12.0,
+        0.6579809324148947,
+        0.056283068783068796,
+        -0.006291401278682212
+       ],
+       [
+        12.0,
+        13.207999999999986,
+        0.76,
+        0.024503311258278142,
+        -0.003606720850193588
+       ],
+       [
+        13.207999999999986,
+        18.0,
+        0.7843368421052629,
+        0.015789473684210534,
+        0.0
+       ],
+       [
+        18.0,
+        20.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.64,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 146.7033780866108,
+      "knot_slopes": [
+       0.06193548387096774,
+       0.02608695652173913,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        10.0,
+        11.784037558685446,
+        0.64,
+        0.06193548387096774,
+        -1.9447163178055784e-18
+       ],
+       [
+        11.784037558685446,
+        12.0,
+        0.7504952294411631,
+        0.061935483870967735,
+        -0.08299713397158362
+       ],
+       [
+        12.0,
+        13.02222222222221,
+        0.76,
+        0.02608695652173913,
+        -0.005036812257486875
+       ],
+       [
+        13.02222222222221,
+        18.0,
+        0.7814035087719295,
+        0.015789473684210534,
+        0.0
+       ],
+       [
+        18.0,
+        20.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     }
+    }
+   },
+   "upper_back": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 6.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 9.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 15.5,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 8.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 12.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 18.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 10.0,
+       "pct": 64.0
+      },
+      "sweet_low": {
+       "sets": 12.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 18.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {
+     "advanced": "min anchor raised 57.5% -> 64% (min 10 is only 2 sets below sweet_lo 12; 57.5% would make sets 10-12 worth more per set than the first 10)"
+    },
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 9.001425968690121,
+      "knot_slopes": [
+       0.07504409171075839,
+       0.024625623960066553,
+       0.009302325581395356,
+       0.004031007751937989
+      ],
+      "pieces": [
+       [
+        6.0,
+        7.408032733929149,
+        0.575,
+        0.07504409171075839,
+        4.9280771225709214e-18
+       ],
+       [
+        7.408032733929149,
+        9.0,
+        0.6806645376167288,
+        0.0750440917107584,
+        -0.015835271498744485
+       ],
+       [
+        9.0,
+        14.160101010101005,
+        0.76,
+        0.024625623960066553,
+        -0.0014847866687760108
+       ],
+       [
+        14.160101010101005,
+        15.5,
+        0.8475358233497767,
+        0.009302325581395352,
+        1.2946673510870961e-18
+       ],
+       [
+        15.5,
+        20.0,
+        0.86,
+        0.009302325581395356,
+        -0.0005857019810508185
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 22.07884615384615
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 12.001901291586828,
+      "knot_slopes": [
+       0.056283068783068796,
+       0.024503311258278142,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        8.0,
+        9.474349821519635,
+        0.575,
+        0.056283068783068796,
+        0.0
+       ],
+       [
+        9.474349821519635,
+        12.0,
+        0.6579809324148947,
+        0.056283068783068796,
+        -0.006291401278682212
+       ],
+       [
+        12.0,
+        13.207999999999986,
+        0.76,
+        0.024503311258278142,
+        -0.003606720850193588
+       ],
+       [
+        13.207999999999986,
+        18.0,
+        0.7843368421052629,
+        0.015789473684210534,
+        0.0
+       ],
+       [
+        18.0,
+        20.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.64,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 146.7033780866108,
+      "knot_slopes": [
+       0.06193548387096774,
+       0.02608695652173913,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        10.0,
+        11.784037558685446,
+        0.64,
+        0.06193548387096774,
+        -1.9447163178055784e-18
+       ],
+       [
+        11.784037558685446,
+        12.0,
+        0.7504952294411631,
+        0.061935483870967735,
+        -0.08299713397158362
+       ],
+       [
+        12.0,
+        13.02222222222221,
+        0.76,
+        0.02608695652173913,
+        -0.005036812257486875
+       ],
+       [
+        13.02222222222221,
+        18.0,
+        0.7814035087719295,
+        0.015789473684210534,
+        0.0
+       ],
+       [
+        18.0,
+        20.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     }
+    }
+   },
+   "traps": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 2.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.5,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 10.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 3.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 6.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 12.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 4.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 6.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 12.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 1.0216262851645448,
+      "knot_slopes": [
+       0.13193798449612407,
+       0.03039014373716632,
+       0.007843137254901966,
+       0.002156862745098043
+      ],
+      "pieces": [
+       [
+        2.5,
+        2.9465259250666977,
+        0.575,
+        0.13193798449612407,
+        0.0
+       ],
+       [
+        2.9465259250666977,
+        4.5,
+        0.6339137305785674,
+        0.13193798449612407,
+        -0.032684111823146345
+       ],
+       [
+        4.5,
+        9.54392857142857,
+        0.76,
+        0.03039014373716632,
+        -0.002235064014385761
+       ],
+       [
+        9.54392857142857,
+        10.0,
+        0.856422969187675,
+        0.007843137254901968,
+        -1.9018111717834926e-18
+       ],
+       [
+        10.0,
+        16.0,
+        0.86,
+        0.007843137254901966,
+        -0.0004738562091503269
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 41.26363636363633
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 0.6993770866189832,
+      "knot_slopes": [
+       0.09331140350877194,
+       0.02624113475177305,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        3.0,
+        3.16911196911197,
+        0.575,
+        0.09331140350877194,
+        0.0
+       ],
+       [
+        3.16911196911197,
+        6.0,
+        0.5907800751879699,
+        0.09331140350877194,
+        -0.011846153578875286
+       ],
+       [
+        6.0,
+        10.772307692307688,
+        0.76,
+        0.02624113475177305,
+        -0.0016654738326270157
+       ],
+       [
+        10.772307692307688,
+        12.0,
+        0.8472997347480106,
+        0.0103448275862069,
+        7.06497656256216e-19
+       ],
+       [
+        12.0,
+        16.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 6.00095064579341,
+      "knot_slopes": [
+       0.11256613756613759,
+       0.0282442748091603,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        4.0,
+        5.048116969428445,
+        0.575,
+        0.11256613756613759,
+        0.0
+       ],
+       [
+        5.048116969428445,
+        6.0,
+        0.6929824789660856,
+        0.11256613756613759,
+        -0.04429213466824098
+       ],
+       [
+        6.0,
+        10.238235294117644,
+        0.76,
+        0.0282442748091603,
+        -0.0021116627535753504
+       ],
+       [
+        10.238235294117644,
+        12.0,
+        0.8417748478701825,
+        0.010344827586206902,
+        0.0
+       ],
+       [
+        12.0,
+        16.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     }
+    }
+   },
+   "biceps": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 5.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 7.5,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 13.5,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 18.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 6.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 10.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 16.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 18.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 8.0,
+       "pct": 61.5
+      },
+      "sweet_low": {
+       "sets": 10.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 16.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 18.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {
+     "advanced": "min anchor raised 57.5% -> 61.5% (min 8 is only 2 sets below sweet_lo 10; 57.5% would make sets 8-10 worth more per set than the first 8)"
+    },
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "direct",
+     "why": "muscle-specific weekly-volume trials exist (Heaselgrave et al., 2019, International Journal of Sports Physiology and Performance; Schoenfeld et al., 2019, Medicine & Science in Sports & Exercise); the exact edge is still a planning choice"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 7.501188307241768,
+      "knot_slopes": [
+       0.09005291005291008,
+       0.027205882352941173,
+       0.00952380952380953,
+       0.0038095238095238147
+      ],
+      "pieces": [
+       [
+        5.0,
+        6.222858451672011,
+        0.575,
+        0.09005291005291008,
+        0.0
+       ],
+       [
+        6.222858451672011,
+        7.5,
+        0.6851219621558605,
+        0.09005291005291008,
+        -0.024604566260586828
+       ],
+       [
+        7.5,
+        12.347524752475243,
+        0.76,
+        0.027205882352941173,
+        -0.0018238249139525102
+       ],
+       [
+        12.347524752475243,
+        13.5,
+        0.849024045261669,
+        0.00952380952380953,
+        0.0
+       ],
+       [
+        13.5,
+        18.0,
+        0.86,
+        0.00952380952380953,
+        -0.000634920634920635
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 23.36249999999999
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 7.706544111777919,
+      "knot_slopes": [
+       0.0661741835147745,
+       0.025342465753424654,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        6.5,
+        7.7169884169884195,
+        0.575,
+        0.0661741835147745,
+        -5.701692643121727e-18
+       ],
+       [
+        7.7169884169884195,
+        10.0,
+        0.6555332148411466,
+        0.06617418351477448,
+        -0.008942512176720463
+       ],
+       [
+        10.0,
+        11.101886792452817,
+        0.76,
+        0.025342465753424654,
+        -0.004334833730037281
+       ],
+       [
+        11.101886792452817,
+        16.0,
+        0.7826613704071497,
+        0.015789473684210537,
+        -3.541615725222285e-19
+       ],
+       [
+        16.0,
+        18.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.615,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 129.93136817532988,
+      "knot_slopes": [
+       0.0746234309623431,
+       0.027102803738317752,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        8.0,
+        9.821262379191028,
+        0.615,
+        0.0746234309623431,
+        0.0
+       ],
+       [
+        9.821262379191028,
+        10.0,
+        0.7509088474178744,
+        0.0746234309623431,
+        -0.13293403763837036
+       ],
+       [
+        10.0,
+        10.930434782608685,
+        0.76,
+        0.027102803738317752,
+        -0.006079593253375443
+       ],
+       [
+        10.930434782608685,
+        16.0,
+        0.7799542334096108,
+        0.01578947368421053,
+        3.421838760503129e-19
+       ],
+       [
+        16.0,
+        18.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     }
+    }
+   },
+   "triceps": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 5.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 7.5,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 13.5,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 18.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 6.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 10.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 16.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 18.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 8.0,
+       "pct": 61.5
+      },
+      "sweet_low": {
+       "sets": 10.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 16.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 18.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {
+     "advanced": "min anchor raised 57.5% -> 61.5% (min 8 is only 2 sets below sweet_lo 10; 57.5% would make sets 8-10 worth more per set than the first 8)"
+    },
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "direct",
+     "why": "muscle-specific weekly-volume trials exist (Schoenfeld et al., 2019, Medicine & Science in Sports & Exercise; Radaelli et al., 2015, Journal of Strength and Conditioning Research); the exact edge is still a planning choice"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 7.501188307241768,
+      "knot_slopes": [
+       0.09005291005291008,
+       0.027205882352941173,
+       0.00952380952380953,
+       0.0038095238095238147
+      ],
+      "pieces": [
+       [
+        5.0,
+        6.222858451672011,
+        0.575,
+        0.09005291005291008,
+        0.0
+       ],
+       [
+        6.222858451672011,
+        7.5,
+        0.6851219621558605,
+        0.09005291005291008,
+        -0.024604566260586828
+       ],
+       [
+        7.5,
+        12.347524752475243,
+        0.76,
+        0.027205882352941173,
+        -0.0018238249139525102
+       ],
+       [
+        12.347524752475243,
+        13.5,
+        0.849024045261669,
+        0.00952380952380953,
+        0.0
+       ],
+       [
+        13.5,
+        18.0,
+        0.86,
+        0.00952380952380953,
+        -0.000634920634920635
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 23.36249999999999
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 7.706544111777919,
+      "knot_slopes": [
+       0.0661741835147745,
+       0.025342465753424654,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        6.5,
+        7.7169884169884195,
+        0.575,
+        0.0661741835147745,
+        -5.701692643121727e-18
+       ],
+       [
+        7.7169884169884195,
+        10.0,
+        0.6555332148411466,
+        0.06617418351477448,
+        -0.008942512176720463
+       ],
+       [
+        10.0,
+        11.101886792452817,
+        0.76,
+        0.025342465753424654,
+        -0.004334833730037281
+       ],
+       [
+        11.101886792452817,
+        16.0,
+        0.7826613704071497,
+        0.015789473684210537,
+        -3.541615725222285e-19
+       ],
+       [
+        16.0,
+        18.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.615,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 129.93136817532988,
+      "knot_slopes": [
+       0.0746234309623431,
+       0.027102803738317752,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        8.0,
+        9.821262379191028,
+        0.615,
+        0.0746234309623431,
+        0.0
+       ],
+       [
+        9.821262379191028,
+        10.0,
+        0.7509088474178744,
+        0.0746234309623431,
+        -0.13293403763837036
+       ],
+       [
+        10.0,
+        10.930434782608685,
+        0.76,
+        0.027102803738317752,
+        -0.006079593253375443
+       ],
+       [
+        10.930434782608685,
+        16.0,
+        0.7799542334096108,
+        0.01578947368421053,
+        3.421838760503129e-19
+       ],
+       [
+        16.0,
+        18.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     }
+    }
+   },
+   "forearms": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 1.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 3.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 7.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 1.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 8.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 2.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 8.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 0.031168207987835306,
+      "knot_slopes": [
+       0.15936329588014986,
+       0.039361702127659576,
+       0.009677419354838715,
+       0.0023225806451612954
+      ],
+      "pieces": [
+       [
+        1.0,
+        2.7712530712530716,
+        0.575,
+        0.15936329588014986,
+        -0.03387477365602964
+       ],
+       [
+        2.7712530712530716,
+        3.0,
+        0.7509961315280465,
+        0.039361702127659576,
+        0.0
+       ],
+       [
+        3.0,
+        3.129479768786125,
+        0.76,
+        0.039361702127659576,
+        0.0
+       ],
+       [
+        3.129479768786125,
+        7.0,
+        0.7650965440905176,
+        0.039361702127659576,
+        -0.0038346631718175076
+       ],
+       [
+        7.0,
+        12.0,
+        0.86,
+        0.009677419354838715,
+        -0.000735483870967742
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 38.31944444444439
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 0.08514149434818252,
+      "knot_slopes": [
+       0.12405247813411083,
+       0.03737373737373737,
+       0.011538461538461544,
+       0.003461538461538469
+      ],
+      "pieces": [
+       [
+        1.5,
+        3.612759270898806,
+        0.575,
+        0.12405247813411083,
+        -0.02051316066962488
+       ],
+       [
+        3.612759270898806,
+        4.0,
+        0.7455273666901574,
+        0.03737373737373738,
+        -8.959406103811402e-18
+       ],
+       [
+        4.0,
+        4.168421052631576,
+        0.76,
+        0.03737373737373737,
+        2.0599841277224954e-17
+       ],
+       [
+        4.168421052631576,
+        8.0,
+        0.7662945241892609,
+        0.03737373737373738,
+        -0.0033713615444384646
+       ],
+       [
+        8.0,
+        12.0,
+        0.86,
+        0.011538461538461544,
+        -0.0010096153846153844
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 25.71111111111108
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 0.466251391079322,
+      "knot_slopes": [
+       0.13996710526315792,
+       0.039361702127659576,
+       0.011538461538461544,
+       0.003461538461538469
+      ],
+      "pieces": [
+       [
+        2.0,
+        2.1127413127413135,
+        0.575,
+        0.13996710526315792,
+        0.0
+       ],
+       [
+        2.1127413127413135,
+        4.0,
+        0.5907800751879699,
+        0.13996710526315792,
+        -0.026653845552469396
+       ],
+       [
+        4.0,
+        7.870588235294115,
+        0.76,
+        0.039361702127659576,
+        -0.0035941876141061305
+       ],
+       [
+        7.870588235294115,
+        8.0,
+        0.8585067873303167,
+        0.011538461538461544,
+        0.0
+       ],
+       [
+        8.0,
+        12.0,
+        0.86,
+        0.011538461538461544,
+        -0.0010096153846153844
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 25.71111111111108
+     }
+    }
+   },
+   "abs": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 2.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.5,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 10.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 3.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 6.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 12.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 4.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 6.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 12.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 1.0216262851645448,
+      "knot_slopes": [
+       0.13193798449612407,
+       0.03039014373716632,
+       0.007843137254901966,
+       0.002156862745098043
+      ],
+      "pieces": [
+       [
+        2.5,
+        2.9465259250666977,
+        0.575,
+        0.13193798449612407,
+        0.0
+       ],
+       [
+        2.9465259250666977,
+        4.5,
+        0.6339137305785674,
+        0.13193798449612407,
+        -0.032684111823146345
+       ],
+       [
+        4.5,
+        9.54392857142857,
+        0.76,
+        0.03039014373716632,
+        -0.002235064014385761
+       ],
+       [
+        9.54392857142857,
+        10.0,
+        0.856422969187675,
+        0.007843137254901968,
+        -1.9018111717834926e-18
+       ],
+       [
+        10.0,
+        16.0,
+        0.86,
+        0.007843137254901966,
+        -0.0004738562091503269
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 41.26363636363633
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 0.6993770866189832,
+      "knot_slopes": [
+       0.09331140350877194,
+       0.02624113475177305,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        3.0,
+        3.16911196911197,
+        0.575,
+        0.09331140350877194,
+        0.0
+       ],
+       [
+        3.16911196911197,
+        6.0,
+        0.5907800751879699,
+        0.09331140350877194,
+        -0.011846153578875286
+       ],
+       [
+        6.0,
+        10.772307692307688,
+        0.76,
+        0.02624113475177305,
+        -0.0016654738326270157
+       ],
+       [
+        10.772307692307688,
+        12.0,
+        0.8472997347480106,
+        0.0103448275862069,
+        7.06497656256216e-19
+       ],
+       [
+        12.0,
+        16.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 6.00095064579341,
+      "knot_slopes": [
+       0.11256613756613759,
+       0.0282442748091603,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        4.0,
+        5.048116969428445,
+        0.575,
+        0.11256613756613759,
+        0.0
+       ],
+       [
+        5.048116969428445,
+        6.0,
+        0.6929824789660856,
+        0.11256613756613759,
+        -0.04429213466824098
+       ],
+       [
+        6.0,
+        10.238235294117644,
+        0.76,
+        0.0282442748091603,
+        -0.0021116627535753504
+       ],
+       [
+        10.238235294117644,
+        12.0,
+        0.8417748478701825,
+        0.010344827586206902,
+        0.0
+       ],
+       [
+        12.0,
+        16.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     }
+    }
+   },
+   "quads": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 6.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 9.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 15.5,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 8.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 12.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 18.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 10.0,
+       "pct": 64.0
+      },
+      "sweet_low": {
+       "sets": 12.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 18.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 20.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {
+     "advanced": "min anchor raised 57.5% -> 64% (min 10 is only 2 sets below sweet_lo 12; 57.5% would make sets 10-12 worth more per set than the first 10)"
+    },
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "direct",
+     "why": "muscle-specific weekly-volume trials exist (Schoenfeld et al., 2019, Medicine & Science in Sports & Exercise; Aube et al., 2022, Journal of Strength and Conditioning Research); the exact edge is still a planning choice"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 9.001425968690121,
+      "knot_slopes": [
+       0.07504409171075839,
+       0.024625623960066553,
+       0.009302325581395356,
+       0.004031007751937989
+      ],
+      "pieces": [
+       [
+        6.0,
+        7.408032733929149,
+        0.575,
+        0.07504409171075839,
+        4.9280771225709214e-18
+       ],
+       [
+        7.408032733929149,
+        9.0,
+        0.6806645376167288,
+        0.0750440917107584,
+        -0.015835271498744485
+       ],
+       [
+        9.0,
+        14.160101010101005,
+        0.76,
+        0.024625623960066553,
+        -0.0014847866687760108
+       ],
+       [
+        14.160101010101005,
+        15.5,
+        0.8475358233497767,
+        0.009302325581395352,
+        1.2946673510870961e-18
+       ],
+       [
+        15.5,
+        20.0,
+        0.86,
+        0.009302325581395356,
+        -0.0005857019810508185
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 22.07884615384615
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 12.001901291586828,
+      "knot_slopes": [
+       0.056283068783068796,
+       0.024503311258278142,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        8.0,
+        9.474349821519635,
+        0.575,
+        0.056283068783068796,
+        0.0
+       ],
+       [
+        9.474349821519635,
+        12.0,
+        0.6579809324148947,
+        0.056283068783068796,
+        -0.006291401278682212
+       ],
+       [
+        12.0,
+        13.207999999999986,
+        0.76,
+        0.024503311258278142,
+        -0.003606720850193588
+       ],
+       [
+        13.207999999999986,
+        18.0,
+        0.7843368421052629,
+        0.015789473684210534,
+        0.0
+       ],
+       [
+        18.0,
+        20.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.64,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 146.7033780866108,
+      "knot_slopes": [
+       0.06193548387096774,
+       0.02608695652173913,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        10.0,
+        11.784037558685446,
+        0.64,
+        0.06193548387096774,
+        -1.9447163178055784e-18
+       ],
+       [
+        11.784037558685446,
+        12.0,
+        0.7504952294411631,
+        0.061935483870967735,
+        -0.08299713397158362
+       ],
+       [
+        12.0,
+        13.02222222222221,
+        0.76,
+        0.02608695652173913,
+        -0.005036812257486875
+       ],
+       [
+        13.02222222222221,
+        18.0,
+        0.7814035087719295,
+        0.015789473684210534,
+        0.0
+       ],
+       [
+        18.0,
+        20.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     }
+    }
+   },
+   "hamstrings": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 5.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 7.5,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 12.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 6.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 10.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 14.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 8.0,
+       "pct": 61.5
+      },
+      "sweet_low": {
+       "sets": 10.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 14.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {
+     "advanced": "min anchor raised 57.5% -> 61.5% (min 8 is only 2 sets below sweet_lo 10; 57.5% would make sets 8-10 worth more per set than the first 8)"
+    },
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 7.501188307241768,
+      "knot_slopes": [
+       0.09005291005291008,
+       0.03418013856812933,
+       0.011214953271028043,
+       0.00378504672897197
+      ],
+      "pieces": [
+       [
+        5.0,
+        6.063440686195178,
+        0.575,
+        0.09005291005291008,
+        0.0
+       ],
+       [
+        6.063440686195178,
+        7.5,
+        0.6707659284605393,
+        0.09005291005291008,
+        -0.019446733228438037
+       ],
+       [
+        7.5,
+        11.813721804511275,
+        0.76,
+        0.03418013856812933,
+        -0.002661876024675997
+       ],
+       [
+        11.813721804511275,
+        12.0,
+        0.8579108987421825,
+        0.011214953271028045,
+        -4.656270884054711e-18
+       ],
+       [
+        12.0,
+        16.0,
+        0.86,
+        0.011214953271028043,
+        -0.0009287383177570092
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 23.513580246913556
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 7.706544111777919,
+      "knot_slopes": [
+       0.0661741835147745,
+       0.03394495412844036,
+       0.018750000000000006,
+       0.01125000000000002
+      ],
+      "pieces": [
+       [
+        6.5,
+        7.10761670761671,
+        0.575,
+        0.0661741835147745,
+        1.1419853695472015e-17
+       ],
+       [
+        7.10761670761671,
+        10.0,
+        0.6152085395164713,
+        0.06617418351477451,
+        -0.0055713966871551186
+       ],
+       [
+        10.0,
+        13.290566037735845,
+        0.76,
+        0.03394495412844036,
+        -0.0023088663096540703
+       ],
+       [
+        13.290566037735845,
+        14.0,
+        0.8466981132075471,
+        0.01875000000000001,
+        -2.44522192092474e-18
+       ],
+       [
+        14.0,
+        16.0,
+        0.86,
+        0.018750000000000006,
+        -0.0018749999999999965
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 7.911111111111103
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.615,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 129.93136817532988,
+      "knot_slopes": [
+       0.0746234309623431,
+       0.03717948717948717,
+       0.018750000000000006,
+       0.01125000000000002
+      ],
+      "pieces": [
+       [
+        8.0,
+        9.773161611965103,
+        0.615,
+        0.0746234309623431,
+        -3.91328904093362e-18
+       ],
+       [
+        9.773161611965103,
+        10.0,
+        0.7473194031355548,
+        0.07462343096234308,
+        -0.08253440722100229
+       ],
+       [
+        10.0,
+        12.713043478260866,
+        0.76,
+        0.03717948717948717,
+        -0.0033964599769888246
+       ],
+       [
+        12.713043478260866,
+        14.0,
+        0.8358695652173912,
+        0.018750000000000006,
+        0.0
+       ],
+       [
+        14.0,
+        16.0,
+        0.86,
+        0.018750000000000006,
+        -0.0018749999999999965
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 7.911111111111103
+     }
+    }
+   },
+   "glutes": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 5.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 7.5,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 12.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 6.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 10.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 14.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 8.0,
+       "pct": 61.5
+      },
+      "sweet_low": {
+       "sets": 10.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 14.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {
+     "advanced": "min anchor raised 57.5% -> 61.5% (min 8 is only 2 sets below sweet_lo 10; 57.5% would make sets 8-10 worth more per set than the first 8)"
+    },
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 7.501188307241768,
+      "knot_slopes": [
+       0.09005291005291008,
+       0.03418013856812933,
+       0.011214953271028043,
+       0.00378504672897197
+      ],
+      "pieces": [
+       [
+        5.0,
+        6.063440686195178,
+        0.575,
+        0.09005291005291008,
+        0.0
+       ],
+       [
+        6.063440686195178,
+        7.5,
+        0.6707659284605393,
+        0.09005291005291008,
+        -0.019446733228438037
+       ],
+       [
+        7.5,
+        11.813721804511275,
+        0.76,
+        0.03418013856812933,
+        -0.002661876024675997
+       ],
+       [
+        11.813721804511275,
+        12.0,
+        0.8579108987421825,
+        0.011214953271028045,
+        -4.656270884054711e-18
+       ],
+       [
+        12.0,
+        16.0,
+        0.86,
+        0.011214953271028043,
+        -0.0009287383177570092
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 23.513580246913556
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 7.706544111777919,
+      "knot_slopes": [
+       0.0661741835147745,
+       0.03394495412844036,
+       0.018750000000000006,
+       0.01125000000000002
+      ],
+      "pieces": [
+       [
+        6.5,
+        7.10761670761671,
+        0.575,
+        0.0661741835147745,
+        1.1419853695472015e-17
+       ],
+       [
+        7.10761670761671,
+        10.0,
+        0.6152085395164713,
+        0.06617418351477451,
+        -0.0055713966871551186
+       ],
+       [
+        10.0,
+        13.290566037735845,
+        0.76,
+        0.03394495412844036,
+        -0.0023088663096540703
+       ],
+       [
+        13.290566037735845,
+        14.0,
+        0.8466981132075471,
+        0.01875000000000001,
+        -2.44522192092474e-18
+       ],
+       [
+        14.0,
+        16.0,
+        0.86,
+        0.018750000000000006,
+        -0.0018749999999999965
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 7.911111111111103
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.615,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 129.93136817532988,
+      "knot_slopes": [
+       0.0746234309623431,
+       0.03717948717948717,
+       0.018750000000000006,
+       0.01125000000000002
+      ],
+      "pieces": [
+       [
+        8.0,
+        9.773161611965103,
+        0.615,
+        0.0746234309623431,
+        -3.91328904093362e-18
+       ],
+       [
+        9.773161611965103,
+        10.0,
+        0.7473194031355548,
+        0.07462343096234308,
+        -0.08253440722100229
+       ],
+       [
+        10.0,
+        12.713043478260866,
+        0.76,
+        0.03717948717948717,
+        -0.0033964599769888246
+       ],
+       [
+        12.713043478260866,
+        14.0,
+        0.8358695652173912,
+        0.018750000000000006,
+        0.0
+       ],
+       [
+        14.0,
+        16.0,
+        0.86,
+        0.018750000000000006,
+        -0.0018749999999999965
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 7.911111111111103
+     }
+    }
+   },
+   "calves": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 3.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 6.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 12.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 5.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 8.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 14.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 6.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 8.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 14.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 16.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 1.9067991269567328,
+      "knot_slopes": [
+       0.10203836930455637,
+       0.027205882352941173,
+       0.010344827586206902,
+       0.004655172413793112
+      ],
+      "pieces": [
+       [
+        3.5,
+        4.12659110723627,
+        0.575,
+        0.10203836930455637,
+        0.0
+       ],
+       [
+        4.12659110723627,
+        6.0,
+        0.6389363348031254,
+        0.10203836930455637,
+        -0.019972278139776315
+       ],
+       [
+        6.0,
+        10.499248120300749,
+        0.76,
+        0.027205882352941173,
+        -0.001873763606263085
+       ],
+       [
+        10.499248120300749,
+        12.0,
+        0.8444749805548353,
+        0.0103448275862069,
+        5.779514586796464e-19
+       ],
+       [
+        12.0,
+        16.0,
+        0.86,
+        0.010344827586206902,
+        -0.0007112068965517237
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 19.118518518518503
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 4.330453084805532,
+      "knot_slopes": [
+       0.08028301886792455,
+       0.02624113475177305,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        5.0,
+        5.933119560238205,
+        0.575,
+        0.08028301886792455,
+        0.0
+       ],
+       [
+        5.933119560238205,
+        8.0,
+        0.6499136552606332,
+        0.08028301886792455,
+        -0.013073297099463515
+       ],
+       [
+        8.0,
+        9.007142857142846,
+        0.76,
+        0.02624113475177305,
+        -0.005188767905882161
+       ],
+       [
+        9.007142857142846,
+        14.0,
+        0.7811654135338344,
+        0.01578947368421053,
+        3.4744103953755713e-19
+       ],
+       [
+        14.0,
+        16.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 164.51195464035365,
+      "knot_slopes": [
+       0.09413716814159294,
+       0.0282442748091603,
+       0.015789473684210534,
+       0.014210526315789493
+      ],
+      "pieces": [
+       [
+        6.0,
+        7.900616405879564,
+        0.575,
+        0.09413716814159294,
+        0.0
+       ],
+       [
+        7.900616405879564,
+        8.0,
+        0.7539186461729546,
+        0.09413716814159294,
+        -0.33150790085424814
+       ],
+       [
+        8.0,
+        8.84516129032257,
+        0.76,
+        0.0282442748091603,
+        -0.00736829837544747
+       ],
+       [
+        8.84516129032257,
+        14.0,
+        0.7786078098471985,
+        0.015789473684210534,
+        0.0
+       ],
+       [
+        14.0,
+        16.0,
+        0.86,
+        0.015789473684210534,
+        -0.0003947368421052602
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 6.26296296296296
+     }
+    }
+   },
+   "adductors": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 2.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 3.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 7.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 2.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 8.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 3.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 8.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 3.000475322896707,
+      "knot_slopes": [
+       0.22513227513227518,
+       0.044047619047619044,
+       0.009677419354838715,
+       0.0023225806451612954
+      ],
+      "pieces": [
+       [
+        2.0,
+        2.556756756756757,
+        0.575,
+        0.22513227513227518,
+        0.0
+       ],
+       [
+        2.556756756756757,
+        3.0,
+        0.7003439153439154,
+        0.22513227513227518,
+        -0.20427232546134994
+       ],
+       [
+        3.0,
+        6.566480446927372,
+        0.76,
+        0.044047619047619044,
+        -0.004818503872969676
+       ],
+       [
+        6.566480446927372,
+        7.0,
+        0.8558046494863939,
+        0.009677419354838722,
+        -8.002976860820791e-18
+       ],
+       [
+        7.0,
+        12.0,
+        0.86,
+        0.009677419354838715,
+        -0.000735483870967742
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 38.31944444444439
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 2.165226542402766,
+      "knot_slopes": [
+       0.1605660377358491,
+       0.04157303370786516,
+       0.011538461538461544,
+       0.003461538461538469
+      ],
+      "pieces": [
+       [
+        2.5,
+        3.0613052076466714,
+        0.575,
+        0.1605660377358491,
+        0.0
+       ],
+       [
+        3.0613052076466714,
+        4.0,
+        0.665126553152324,
+        0.1605660377358491,
+        -0.06338215839552376
+       ],
+       [
+        4.0,
+        7.585611510791367,
+        0.76,
+        0.04157303370786516,
+        -0.00418820779649589
+       ],
+       [
+        7.585611510791367,
+        8.0,
+        0.855218594355285,
+        0.011538461538461536,
+        1.046556263718646e-17
+       ],
+       [
+        8.0,
+        12.0,
+        0.86,
+        0.011538461538461544,
+        -0.0010096153846153844
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 25.71111111111108
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 82.25597732016432,
+      "knot_slopes": [
+       0.18827433628318588,
+       0.044047619047619044,
+       0.011538461538461544,
+       0.003461538461538469
+      ],
+      "pieces": [
+       [
+        3.0,
+        3.954594594594595,
+        0.575,
+        0.18827433628318588,
+        -1.4537886435139713e-17
+       ],
+       [
+        3.954594594594595,
+        4.0,
+        0.7547256637168143,
+        0.18827433628318585,
+        -1.5882108743202459
+       ],
+       [
+        4.0,
+        7.312676056338026,
+        0.76,
+        0.044047619047619044,
+        -0.004906781851934915
+       ],
+       [
+        7.312676056338026,
+        8.0,
+        0.8520693391115925,
+        0.011538461538461543,
+        1.2619402335486987e-18
+       ],
+       [
+        8.0,
+        12.0,
+        0.86,
+        0.011538461538461544,
+        -0.0010096153846153844
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 25.71111111111108
+     }
+    }
+   },
+   "lower_back": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 2.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 3.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 7.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 10.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 2.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 8.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 10.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 3.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 8.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 10.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 3.000475322896707,
+      "knot_slopes": [
+       0.22513227513227518,
+       0.044047619047619044,
+       0.014285714285714294,
+       0.005714285714285724
+      ],
+      "pieces": [
+       [
+        2.0,
+        2.556756756756757,
+        0.575,
+        0.22513227513227518,
+        0.0
+       ],
+       [
+        2.556756756756757,
+        3.0,
+        0.7003439153439154,
+        0.22513227513227518,
+        -0.20427232546134994
+       ],
+       [
+        3.0,
+        5.879999999999997,
+        0.76,
+        0.044047619047619044,
+        -0.005166997354497356
+       ],
+       [
+        5.879999999999997,
+        7.0,
+        0.844,
+        0.014285714285714296,
+        -7.744301232039299e-19
+       ],
+       [
+        7.0,
+        10.0,
+        0.86,
+        0.014285714285714294,
+        -0.0014285714285714284
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 15.574999999999989
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 2.165226542402766,
+      "knot_slopes": [
+       0.1605660377358491,
+       0.04157303370786516,
+       0.018750000000000006,
+       0.01125000000000002
+      ],
+      "pieces": [
+       [
+        2.5,
+        3.0613052076466714,
+        0.575,
+        0.1605660377358491,
+        0.0
+       ],
+       [
+        3.0613052076466714,
+        4.0,
+        0.665126553152324,
+        0.1605660377358491,
+        -0.06338215839552376
+       ],
+       [
+        4.0,
+        6.190769230769228,
+        0.76,
+        0.04157303370786516,
+        -0.005208908676303499
+       ],
+       [
+        6.190769230769228,
+        8.0,
+        0.826076923076923,
+        0.018750000000000006,
+        0.0
+       ],
+       [
+        8.0,
+        10.0,
+        0.86,
+        0.018750000000000006,
+        -0.0018749999999999965
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 7.911111111111103
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 82.25597732016432,
+      "knot_slopes": [
+       0.18827433628318588,
+       0.044047619047619044,
+       0.018750000000000006,
+       0.01125000000000002
+      ],
+      "pieces": [
+       [
+        3.0,
+        3.954594594594595,
+        0.575,
+        0.18827433628318588,
+        -1.4537886435139713e-17
+       ],
+       [
+        3.954594594594595,
+        4.0,
+        0.7547256637168143,
+        0.18827433628318585,
+        -1.5882108743202459
+       ],
+       [
+        4.0,
+        5.976470588235291,
+        0.76,
+        0.044047619047619044,
+        -0.006399695294784589
+       ],
+       [
+        5.976470588235291,
+        8.0,
+        0.8220588235294116,
+        0.01875000000000001,
+        -8.572761363838858e-19
+       ],
+       [
+        8.0,
+        10.0,
+        0.86,
+        0.018750000000000006,
+        -0.0018749999999999965
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 7.911111111111103
+     }
+    }
+   },
+   "obliques": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 1.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 3.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 7.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 1.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 8.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 2.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 8.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 0.031168207987835306,
+      "knot_slopes": [
+       0.15936329588014986,
+       0.039361702127659576,
+       0.009677419354838715,
+       0.0023225806451612954
+      ],
+      "pieces": [
+       [
+        1.0,
+        2.7712530712530716,
+        0.575,
+        0.15936329588014986,
+        -0.03387477365602964
+       ],
+       [
+        2.7712530712530716,
+        3.0,
+        0.7509961315280465,
+        0.039361702127659576,
+        0.0
+       ],
+       [
+        3.0,
+        3.129479768786125,
+        0.76,
+        0.039361702127659576,
+        0.0
+       ],
+       [
+        3.129479768786125,
+        7.0,
+        0.7650965440905176,
+        0.039361702127659576,
+        -0.0038346631718175076
+       ],
+       [
+        7.0,
+        12.0,
+        0.86,
+        0.009677419354838715,
+        -0.000735483870967742
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 38.31944444444439
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 0.08514149434818252,
+      "knot_slopes": [
+       0.12405247813411083,
+       0.03737373737373737,
+       0.011538461538461544,
+       0.003461538461538469
+      ],
+      "pieces": [
+       [
+        1.5,
+        3.612759270898806,
+        0.575,
+        0.12405247813411083,
+        -0.02051316066962488
+       ],
+       [
+        3.612759270898806,
+        4.0,
+        0.7455273666901574,
+        0.03737373737373738,
+        -8.959406103811402e-18
+       ],
+       [
+        4.0,
+        4.168421052631576,
+        0.76,
+        0.03737373737373737,
+        2.0599841277224954e-17
+       ],
+       [
+        4.168421052631576,
+        8.0,
+        0.7662945241892609,
+        0.03737373737373738,
+        -0.0033713615444384646
+       ],
+       [
+        8.0,
+        12.0,
+        0.86,
+        0.011538461538461544,
+        -0.0010096153846153844
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 25.71111111111108
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 0.466251391079322,
+      "knot_slopes": [
+       0.13996710526315792,
+       0.039361702127659576,
+       0.011538461538461544,
+       0.003461538461538469
+      ],
+      "pieces": [
+       [
+        2.0,
+        2.1127413127413135,
+        0.575,
+        0.13996710526315792,
+        0.0
+       ],
+       [
+        2.1127413127413135,
+        4.0,
+        0.5907800751879699,
+        0.13996710526315792,
+        -0.026653845552469396
+       ],
+       [
+        4.0,
+        7.870588235294115,
+        0.76,
+        0.039361702127659576,
+        -0.0035941876141061305
+       ],
+       [
+        7.870588235294115,
+        8.0,
+        0.8585067873303167,
+        0.011538461538461544,
+        0.0
+       ],
+       [
+        8.0,
+        12.0,
+        0.86,
+        0.011538461538461544,
+        -0.0010096153846153844
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 25.71111111111108
+     }
+    }
+   },
+   "abductors": {
+    "anchors_by_level": {
+     "beginner": {
+      "min": {
+       "sets": 2.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 3.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 7.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     },
+     "intermediate": {
+      "min": {
+       "sets": 2.5,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 8.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     },
+     "advanced": {
+      "min": {
+       "sets": 3.0,
+       "pct": 57.5
+      },
+      "sweet_low": {
+       "sets": 4.0,
+       "pct": 76.0
+      },
+      "sweet_high": {
+       "sets": 8.0,
+       "pct": 86.0
+      },
+      "dim": {
+       "sets": 12.0,
+       "pct": 89.0
+      }
+     }
+    },
+    "concave_fallback": {},
+    "basis": "modeled",
+    "note": "Calibrated to the cited meta-analyses (Schoenfeld 2017 low-volume ratio; Pelland 2024 preprint / 2025 diminishing returns); not measured for this muscle.",
+    "min_evidence": {
+     "tag": "rule_of_thumb",
+     "why": "no muscle-specific volume dose-response study supports this edge; pooled/extrapolated coaching rule of thumb"
+    },
+    "params_by_level": {
+     "beginner": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 3.000475322896707,
+      "knot_slopes": [
+       0.22513227513227518,
+       0.044047619047619044,
+       0.009677419354838715,
+       0.0023225806451612954
+      ],
+      "pieces": [
+       [
+        2.0,
+        2.556756756756757,
+        0.575,
+        0.22513227513227518,
+        0.0
+       ],
+       [
+        2.556756756756757,
+        3.0,
+        0.7003439153439154,
+        0.22513227513227518,
+        -0.20427232546134994
+       ],
+       [
+        3.0,
+        6.566480446927372,
+        0.76,
+        0.044047619047619044,
+        -0.004818503872969676
+       ],
+       [
+        6.566480446927372,
+        7.0,
+        0.8558046494863939,
+        0.009677419354838722,
+        -8.002976860820791e-18
+       ],
+       [
+        7.0,
+        12.0,
+        0.86,
+        0.009677419354838715,
+        -0.000735483870967742
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 38.31944444444439
+     },
+     "intermediate": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 2.165226542402766,
+      "knot_slopes": [
+       0.1605660377358491,
+       0.04157303370786516,
+       0.011538461538461544,
+       0.003461538461538469
+      ],
+      "pieces": [
+       [
+        2.5,
+        3.0613052076466714,
+        0.575,
+        0.1605660377358491,
+        0.0
+       ],
+       [
+        3.0613052076466714,
+        4.0,
+        0.665126553152324,
+        0.1605660377358491,
+        -0.06338215839552376
+       ],
+       [
+        4.0,
+        7.585611510791367,
+        0.76,
+        0.04157303370786516,
+        -0.00418820779649589
+       ],
+       [
+        7.585611510791367,
+        8.0,
+        0.855218594355285,
+        0.011538461538461536,
+        1.046556263718646e-17
+       ],
+       [
+        8.0,
+        12.0,
+        0.86,
+        0.011538461538461544,
+        -0.0010096153846153844
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 25.71111111111108
+     },
+     "advanced": {
+      "anchors_pct": [
+       0.575,
+       0.76,
+       0.86,
+       0.89
+      ],
+      "log_k": 82.25597732016432,
+      "knot_slopes": [
+       0.18827433628318588,
+       0.044047619047619044,
+       0.011538461538461544,
+       0.003461538461538469
+      ],
+      "pieces": [
+       [
+        3.0,
+        3.954594594594595,
+        0.575,
+        0.18827433628318588,
+        -1.4537886435139713e-17
+       ],
+       [
+        3.954594594594595,
+        4.0,
+        0.7547256637168143,
+        0.18827433628318585,
+        -1.5882108743202459
+       ],
+       [
+        4.0,
+        7.312676056338026,
+        0.76,
+        0.044047619047619044,
+        -0.004906781851934915
+       ],
+       [
+        7.312676056338026,
+        8.0,
+        0.8520693391115925,
+        0.011538461538461543,
+        1.2619402335486987e-18
+       ],
+       [
+        8.0,
+        12.0,
+        0.86,
+        0.011538461538461544,
+        -0.0010096153846153844
+       ]
+      ],
+      "plateau": 0.9790000000000001,
+      "tau": 25.71111111111108
+     }
+    }
+   }
+  },
+  "smooth": "C1 (value and slope continuous)"
  },
  "credit": {
   "formula": "effective(set, muscle) = rating x prox(RIR_set + offset[role]); rating < 0.25 -> 0; then per-session discount",
@@ -1316,7 +5739,7 @@
    }
   },
   "log": {
-   "active": true,
+   "active": false,
    "formula": "c = D/45; x <= D: S = ln(1 + x/c) / ln(1 + D/c) / 1.1  (= 0.909 at D);  x > D: S = (1 + 0.1*(1 - exp(-(x-D)/tau))) / 1.1, tau = 0.1 * (c + D) * ln(1 + D/c) (slope-continuous);  D = zones diminishing point (targets.max)",
    "chest_values": {
     "8": 0.699,
@@ -1324,12 +5747,12 @@
     "18": 0.885,
     "20": 0.909
    },
-   "note": "Active since vol5 (Mr Dude, 2026-10-31)."
+   "note": "Active vol5-vol8f; inactive since vol8g (history)."
   }
  },
  "session": {
   "unit": "effective sets in one workout for one muscle (credit rules applied)",
-  "credit": "per set n: 1/(1 + (n-1)/c); workout stimulus = sum over its effective sets (fractional last set pro rata); c = 1 x targets.json session.muscles[m].heavy (vol8d; vol8 0.4)",
+  "credit": "per set n: 1/(1 + (n-1)/c); workout stimulus = sum over its effective sets (fractional last set pro rata); c per anchor group (vol8h, session.per_muscle[m].c; vol8d was 1.0 x heavy anchor, vol8 0.4 x)",
   "zones": {
    "useful": "sets 1 .. 1+c/3 (each set worth >= 0.75 of set 1)",
    "diminishing": "1+c/3 .. 1+c (worth 0.75 down to 0.5)",
@@ -1337,694 +5760,880 @@
   },
   "per_muscle": {
    "chest": {
-    "c": 10.0,
-    "useful_up_to": 4.3,
-    "diminishing_from": 4.3,
-    "half_value_from": 11.0,
-    "low_return_from": 11.0,
+    "c": 20.0,
+    "useful_up_to": 7.7,
+    "diminishing_from": 7.7,
+    "half_value_from": 21.0,
+    "low_return_from": 21.0,
     "heavy_anchor": 10,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.909,
-     "3": 0.833,
-     "4": 0.769,
-     "5": 0.714,
-     "6": 0.667,
-     "7": 0.625,
-     "8": 0.588,
-     "9": 0.556,
-     "10": 0.526,
-     "11": 0.5,
-     "12": 0.476,
-     "13": 0.455,
-     "14": 0.435,
-     "15": 0.417,
-     "16": 0.4
+     "2": 0.952,
+     "3": 0.909,
+     "4": 0.87,
+     "5": 0.833,
+     "6": 0.8,
+     "7": 0.769,
+     "8": 0.741,
+     "9": 0.714,
+     "10": 0.69,
+     "11": 0.667,
+     "12": 0.645,
+     "13": 0.625,
+     "14": 0.606,
+     "15": 0.588,
+     "16": 0.571
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.91,
-     "3": 2.74,
-     "4": 3.51,
-     "5": 4.23,
-     "6": 4.89,
-     "7": 5.52,
-     "8": 6.11,
-     "9": 6.66,
-     "10": 7.19,
-     "11": 7.69,
-     "12": 8.16,
-     "13": 8.62,
-     "14": 9.05,
-     "15": 9.47,
-     "16": 9.87
+     "2": 1.95,
+     "3": 2.86,
+     "4": 3.73,
+     "5": 4.56,
+     "6": 5.36,
+     "7": 6.13,
+     "8": 6.87,
+     "9": 7.59,
+     "10": 8.28,
+     "11": 8.94,
+     "12": 9.59,
+     "13": 10.22,
+     "14": 10.82,
+     "15": 11.41,
+     "16": 11.98
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.91,
-     "2": 0.83,
-     "3": 0.77,
-     "4": 0.71,
-     "5": 0.67,
-     "6": 0.62,
-     "7": 0.59,
-     "8": 0.56,
-     "9": 0.53,
-     "10": 0.5,
-     "11": 0.48,
-     "12": 0.45,
-     "13": 0.43,
-     "14": 0.42,
-     "15": 0.4
+     "1": 0.95,
+     "2": 0.91,
+     "3": 0.87,
+     "4": 0.83,
+     "5": 0.8,
+     "6": 0.77,
+     "7": 0.74,
+     "8": 0.71,
+     "9": 0.69,
+     "10": 0.67,
+     "11": 0.65,
+     "12": 0.62,
+     "13": 0.61,
+     "14": 0.59,
+     "15": 0.57
     }
    },
    "front_delts": {
-    "c": 8.0,
-    "useful_up_to": 3.7,
-    "diminishing_from": 3.7,
-    "half_value_from": 9.0,
-    "low_return_from": 9.0,
+    "c": 4.5,
+    "useful_up_to": 2.5,
+    "diminishing_from": 2.5,
+    "half_value_from": 5.5,
+    "low_return_from": 5.5,
     "heavy_anchor": 8,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.889,
-     "3": 0.8,
-     "4": 0.727,
-     "5": 0.667,
-     "6": 0.615,
-     "7": 0.571,
-     "8": 0.533,
-     "9": 0.5,
-     "10": 0.471,
-     "11": 0.444,
-     "12": 0.421,
-     "13": 0.4,
-     "14": 0.381,
-     "15": 0.364,
-     "16": 0.348
+     "2": 0.818,
+     "3": 0.692,
+     "4": 0.6,
+     "5": 0.529,
+     "6": 0.474,
+     "7": 0.429,
+     "8": 0.391,
+     "9": 0.36,
+     "10": 0.333,
+     "11": 0.31,
+     "12": 0.29,
+     "13": 0.273,
+     "14": 0.257,
+     "15": 0.243,
+     "16": 0.231
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.89,
-     "3": 2.69,
-     "4": 3.42,
-     "5": 4.08,
-     "6": 4.7,
-     "7": 5.27,
-     "8": 5.8,
-     "9": 6.3,
-     "10": 6.77,
-     "11": 7.22,
-     "12": 7.64,
-     "13": 8.04,
-     "14": 8.42,
-     "15": 8.78,
-     "16": 9.13
+     "2": 1.82,
+     "3": 2.51,
+     "4": 3.11,
+     "5": 3.64,
+     "6": 4.11,
+     "7": 4.54,
+     "8": 4.93,
+     "9": 5.29,
+     "10": 5.63,
+     "11": 5.94,
+     "12": 6.23,
+     "13": 6.5,
+     "14": 6.76,
+     "15": 7.0,
+     "16": 7.23
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.89,
-     "2": 0.8,
-     "3": 0.73,
-     "4": 0.67,
-     "5": 0.62,
-     "6": 0.57,
-     "7": 0.53,
-     "8": 0.5,
-     "9": 0.47,
-     "10": 0.44,
-     "11": 0.42,
-     "12": 0.4,
-     "13": 0.38,
-     "14": 0.36,
-     "15": 0.35
+     "1": 0.82,
+     "2": 0.69,
+     "3": 0.6,
+     "4": 0.53,
+     "5": 0.47,
+     "6": 0.43,
+     "7": 0.39,
+     "8": 0.36,
+     "9": 0.33,
+     "10": 0.31,
+     "11": 0.29,
+     "12": 0.27,
+     "13": 0.26,
+     "14": 0.24,
+     "15": 0.23
     }
    },
    "side_delts": {
-    "c": 10.0,
-    "useful_up_to": 4.3,
-    "diminishing_from": 4.3,
-    "half_value_from": 11.0,
-    "low_return_from": 11.0,
+    "c": 11.0,
+    "useful_up_to": 4.7,
+    "diminishing_from": 4.7,
+    "half_value_from": 12.0,
+    "low_return_from": 12.0,
     "heavy_anchor": 10,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.909,
-     "3": 0.833,
-     "4": 0.769,
-     "5": 0.714,
-     "6": 0.667,
-     "7": 0.625,
-     "8": 0.588,
-     "9": 0.556,
-     "10": 0.526,
-     "11": 0.5,
-     "12": 0.476,
-     "13": 0.455,
-     "14": 0.435,
-     "15": 0.417,
-     "16": 0.4
+     "2": 0.917,
+     "3": 0.846,
+     "4": 0.786,
+     "5": 0.733,
+     "6": 0.688,
+     "7": 0.647,
+     "8": 0.611,
+     "9": 0.579,
+     "10": 0.55,
+     "11": 0.524,
+     "12": 0.5,
+     "13": 0.478,
+     "14": 0.458,
+     "15": 0.44,
+     "16": 0.423
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.91,
-     "3": 2.74,
-     "4": 3.51,
-     "5": 4.23,
-     "6": 4.89,
-     "7": 5.52,
-     "8": 6.11,
-     "9": 6.66,
-     "10": 7.19,
-     "11": 7.69,
-     "12": 8.16,
-     "13": 8.62,
-     "14": 9.05,
-     "15": 9.47,
-     "16": 9.87
+     "2": 1.92,
+     "3": 2.76,
+     "4": 3.55,
+     "5": 4.28,
+     "6": 4.97,
+     "7": 5.62,
+     "8": 6.23,
+     "9": 6.81,
+     "10": 7.36,
+     "11": 7.88,
+     "12": 8.38,
+     "13": 8.86,
+     "14": 9.32,
+     "15": 9.76,
+     "16": 10.18
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.91,
-     "2": 0.83,
-     "3": 0.77,
-     "4": 0.71,
-     "5": 0.67,
-     "6": 0.62,
-     "7": 0.59,
-     "8": 0.56,
-     "9": 0.53,
-     "10": 0.5,
-     "11": 0.48,
-     "12": 0.45,
-     "13": 0.43,
-     "14": 0.42,
-     "15": 0.4
+     "1": 0.92,
+     "2": 0.85,
+     "3": 0.79,
+     "4": 0.73,
+     "5": 0.69,
+     "6": 0.65,
+     "7": 0.61,
+     "8": 0.58,
+     "9": 0.55,
+     "10": 0.52,
+     "11": 0.5,
+     "12": 0.48,
+     "13": 0.46,
+     "14": 0.44,
+     "15": 0.42
     }
    },
    "rear_delts": {
-    "c": 8.0,
-    "useful_up_to": 3.7,
-    "diminishing_from": 3.7,
-    "half_value_from": 9.0,
-    "low_return_from": 9.0,
+    "c": 10.0,
+    "useful_up_to": 4.3,
+    "diminishing_from": 4.3,
+    "half_value_from": 11.0,
+    "low_return_from": 11.0,
     "heavy_anchor": 8,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.889,
-     "3": 0.8,
-     "4": 0.727,
-     "5": 0.667,
-     "6": 0.615,
-     "7": 0.571,
-     "8": 0.533,
-     "9": 0.5,
-     "10": 0.471,
-     "11": 0.444,
-     "12": 0.421,
-     "13": 0.4,
-     "14": 0.381,
-     "15": 0.364,
-     "16": 0.348
+     "2": 0.909,
+     "3": 0.833,
+     "4": 0.769,
+     "5": 0.714,
+     "6": 0.667,
+     "7": 0.625,
+     "8": 0.588,
+     "9": 0.556,
+     "10": 0.526,
+     "11": 0.5,
+     "12": 0.476,
+     "13": 0.455,
+     "14": 0.435,
+     "15": 0.417,
+     "16": 0.4
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.89,
-     "3": 2.69,
-     "4": 3.42,
-     "5": 4.08,
-     "6": 4.7,
-     "7": 5.27,
-     "8": 5.8,
-     "9": 6.3,
-     "10": 6.77,
-     "11": 7.22,
-     "12": 7.64,
-     "13": 8.04,
-     "14": 8.42,
-     "15": 8.78,
-     "16": 9.13
+     "2": 1.91,
+     "3": 2.74,
+     "4": 3.51,
+     "5": 4.23,
+     "6": 4.89,
+     "7": 5.52,
+     "8": 6.11,
+     "9": 6.66,
+     "10": 7.19,
+     "11": 7.69,
+     "12": 8.16,
+     "13": 8.62,
+     "14": 9.05,
+     "15": 9.47,
+     "16": 9.87
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.89,
-     "2": 0.8,
-     "3": 0.73,
-     "4": 0.67,
-     "5": 0.62,
-     "6": 0.57,
-     "7": 0.53,
-     "8": 0.5,
-     "9": 0.47,
-     "10": 0.44,
-     "11": 0.42,
-     "12": 0.4,
-     "13": 0.38,
-     "14": 0.36,
-     "15": 0.35
+     "1": 0.91,
+     "2": 0.83,
+     "3": 0.77,
+     "4": 0.71,
+     "5": 0.67,
+     "6": 0.62,
+     "7": 0.59,
+     "8": 0.56,
+     "9": 0.53,
+     "10": 0.5,
+     "11": 0.48,
+     "12": 0.45,
+     "13": 0.43,
+     "14": 0.42,
+     "15": 0.4
     }
    },
    "lats": {
-    "c": 10.0,
-    "useful_up_to": 4.3,
-    "diminishing_from": 4.3,
-    "half_value_from": 11.0,
-    "low_return_from": 11.0,
+    "c": 20.0,
+    "useful_up_to": 7.7,
+    "diminishing_from": 7.7,
+    "half_value_from": 21.0,
+    "low_return_from": 21.0,
     "heavy_anchor": 10,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.909,
-     "3": 0.833,
-     "4": 0.769,
-     "5": 0.714,
-     "6": 0.667,
-     "7": 0.625,
-     "8": 0.588,
-     "9": 0.556,
-     "10": 0.526,
-     "11": 0.5,
-     "12": 0.476,
-     "13": 0.455,
-     "14": 0.435,
-     "15": 0.417,
-     "16": 0.4
+     "2": 0.952,
+     "3": 0.909,
+     "4": 0.87,
+     "5": 0.833,
+     "6": 0.8,
+     "7": 0.769,
+     "8": 0.741,
+     "9": 0.714,
+     "10": 0.69,
+     "11": 0.667,
+     "12": 0.645,
+     "13": 0.625,
+     "14": 0.606,
+     "15": 0.588,
+     "16": 0.571
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.91,
-     "3": 2.74,
-     "4": 3.51,
-     "5": 4.23,
-     "6": 4.89,
-     "7": 5.52,
-     "8": 6.11,
-     "9": 6.66,
-     "10": 7.19,
-     "11": 7.69,
-     "12": 8.16,
-     "13": 8.62,
-     "14": 9.05,
-     "15": 9.47,
-     "16": 9.87
+     "2": 1.95,
+     "3": 2.86,
+     "4": 3.73,
+     "5": 4.56,
+     "6": 5.36,
+     "7": 6.13,
+     "8": 6.87,
+     "9": 7.59,
+     "10": 8.28,
+     "11": 8.94,
+     "12": 9.59,
+     "13": 10.22,
+     "14": 10.82,
+     "15": 11.41,
+     "16": 11.98
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.91,
-     "2": 0.83,
-     "3": 0.77,
-     "4": 0.71,
-     "5": 0.67,
-     "6": 0.62,
-     "7": 0.59,
-     "8": 0.56,
-     "9": 0.53,
-     "10": 0.5,
-     "11": 0.48,
-     "12": 0.45,
-     "13": 0.43,
-     "14": 0.42,
-     "15": 0.4
+     "1": 0.95,
+     "2": 0.91,
+     "3": 0.87,
+     "4": 0.83,
+     "5": 0.8,
+     "6": 0.77,
+     "7": 0.74,
+     "8": 0.71,
+     "9": 0.69,
+     "10": 0.67,
+     "11": 0.65,
+     "12": 0.62,
+     "13": 0.61,
+     "14": 0.59,
+     "15": 0.57
     }
    },
    "upper_back": {
-    "c": 10.0,
-    "useful_up_to": 4.3,
-    "diminishing_from": 4.3,
-    "half_value_from": 11.0,
-    "low_return_from": 11.0,
+    "c": 20.0,
+    "useful_up_to": 7.7,
+    "diminishing_from": 7.7,
+    "half_value_from": 21.0,
+    "low_return_from": 21.0,
     "heavy_anchor": 10,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.909,
-     "3": 0.833,
-     "4": 0.769,
-     "5": 0.714,
-     "6": 0.667,
-     "7": 0.625,
-     "8": 0.588,
-     "9": 0.556,
-     "10": 0.526,
-     "11": 0.5,
-     "12": 0.476,
-     "13": 0.455,
-     "14": 0.435,
-     "15": 0.417,
-     "16": 0.4
+     "2": 0.952,
+     "3": 0.909,
+     "4": 0.87,
+     "5": 0.833,
+     "6": 0.8,
+     "7": 0.769,
+     "8": 0.741,
+     "9": 0.714,
+     "10": 0.69,
+     "11": 0.667,
+     "12": 0.645,
+     "13": 0.625,
+     "14": 0.606,
+     "15": 0.588,
+     "16": 0.571
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.91,
-     "3": 2.74,
-     "4": 3.51,
-     "5": 4.23,
-     "6": 4.89,
-     "7": 5.52,
-     "8": 6.11,
-     "9": 6.66,
-     "10": 7.19,
-     "11": 7.69,
-     "12": 8.16,
-     "13": 8.62,
-     "14": 9.05,
-     "15": 9.47,
-     "16": 9.87
+     "2": 1.95,
+     "3": 2.86,
+     "4": 3.73,
+     "5": 4.56,
+     "6": 5.36,
+     "7": 6.13,
+     "8": 6.87,
+     "9": 7.59,
+     "10": 8.28,
+     "11": 8.94,
+     "12": 9.59,
+     "13": 10.22,
+     "14": 10.82,
+     "15": 11.41,
+     "16": 11.98
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.91,
-     "2": 0.83,
-     "3": 0.77,
-     "4": 0.71,
-     "5": 0.67,
-     "6": 0.62,
-     "7": 0.59,
-     "8": 0.56,
-     "9": 0.53,
-     "10": 0.5,
-     "11": 0.48,
-     "12": 0.45,
-     "13": 0.43,
-     "14": 0.42,
-     "15": 0.4
+     "1": 0.95,
+     "2": 0.91,
+     "3": 0.87,
+     "4": 0.83,
+     "5": 0.8,
+     "6": 0.77,
+     "7": 0.74,
+     "8": 0.71,
+     "9": 0.69,
+     "10": 0.67,
+     "11": 0.65,
+     "12": 0.62,
+     "13": 0.61,
+     "14": 0.59,
+     "15": 0.57
     }
    },
    "traps": {
-    "c": 8.0,
-    "useful_up_to": 3.7,
-    "diminishing_from": 3.7,
-    "half_value_from": 9.0,
-    "low_return_from": 9.0,
+    "c": 4.5,
+    "useful_up_to": 2.5,
+    "diminishing_from": 2.5,
+    "half_value_from": 5.5,
+    "low_return_from": 5.5,
     "heavy_anchor": 8,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.889,
-     "3": 0.8,
-     "4": 0.727,
-     "5": 0.667,
-     "6": 0.615,
-     "7": 0.571,
-     "8": 0.533,
-     "9": 0.5,
-     "10": 0.471,
-     "11": 0.444,
-     "12": 0.421,
-     "13": 0.4,
-     "14": 0.381,
-     "15": 0.364,
-     "16": 0.348
+     "2": 0.818,
+     "3": 0.692,
+     "4": 0.6,
+     "5": 0.529,
+     "6": 0.474,
+     "7": 0.429,
+     "8": 0.391,
+     "9": 0.36,
+     "10": 0.333,
+     "11": 0.31,
+     "12": 0.29,
+     "13": 0.273,
+     "14": 0.257,
+     "15": 0.243,
+     "16": 0.231
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.89,
-     "3": 2.69,
-     "4": 3.42,
-     "5": 4.08,
-     "6": 4.7,
-     "7": 5.27,
-     "8": 5.8,
-     "9": 6.3,
-     "10": 6.77,
-     "11": 7.22,
-     "12": 7.64,
-     "13": 8.04,
-     "14": 8.42,
-     "15": 8.78,
-     "16": 9.13
+     "2": 1.82,
+     "3": 2.51,
+     "4": 3.11,
+     "5": 3.64,
+     "6": 4.11,
+     "7": 4.54,
+     "8": 4.93,
+     "9": 5.29,
+     "10": 5.63,
+     "11": 5.94,
+     "12": 6.23,
+     "13": 6.5,
+     "14": 6.76,
+     "15": 7.0,
+     "16": 7.23
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.89,
-     "2": 0.8,
-     "3": 0.73,
-     "4": 0.67,
-     "5": 0.62,
-     "6": 0.57,
-     "7": 0.53,
-     "8": 0.5,
-     "9": 0.47,
-     "10": 0.44,
-     "11": 0.42,
-     "12": 0.4,
-     "13": 0.38,
-     "14": 0.36,
-     "15": 0.35
+     "1": 0.82,
+     "2": 0.69,
+     "3": 0.6,
+     "4": 0.53,
+     "5": 0.47,
+     "6": 0.43,
+     "7": 0.39,
+     "8": 0.36,
+     "9": 0.33,
+     "10": 0.31,
+     "11": 0.29,
+     "12": 0.27,
+     "13": 0.26,
+     "14": 0.24,
+     "15": 0.23
     }
    },
    "biceps": {
-    "c": 8.0,
-    "useful_up_to": 3.7,
-    "diminishing_from": 3.7,
-    "half_value_from": 9.0,
-    "low_return_from": 9.0,
+    "c": 15.0,
+    "useful_up_to": 6.0,
+    "diminishing_from": 6.0,
+    "half_value_from": 16.0,
+    "low_return_from": 16.0,
     "heavy_anchor": 8,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.889,
-     "3": 0.8,
-     "4": 0.727,
-     "5": 0.667,
-     "6": 0.615,
-     "7": 0.571,
-     "8": 0.533,
-     "9": 0.5,
-     "10": 0.471,
-     "11": 0.444,
-     "12": 0.421,
-     "13": 0.4,
-     "14": 0.381,
-     "15": 0.364,
-     "16": 0.348
+     "2": 0.938,
+     "3": 0.882,
+     "4": 0.833,
+     "5": 0.789,
+     "6": 0.75,
+     "7": 0.714,
+     "8": 0.682,
+     "9": 0.652,
+     "10": 0.625,
+     "11": 0.6,
+     "12": 0.577,
+     "13": 0.556,
+     "14": 0.536,
+     "15": 0.517,
+     "16": 0.5
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.89,
-     "3": 2.69,
-     "4": 3.42,
-     "5": 4.08,
-     "6": 4.7,
-     "7": 5.27,
-     "8": 5.8,
-     "9": 6.3,
-     "10": 6.77,
-     "11": 7.22,
-     "12": 7.64,
-     "13": 8.04,
-     "14": 8.42,
-     "15": 8.78,
-     "16": 9.13
+     "2": 1.94,
+     "3": 2.82,
+     "4": 3.65,
+     "5": 4.44,
+     "6": 5.19,
+     "7": 5.91,
+     "8": 6.59,
+     "9": 7.24,
+     "10": 7.87,
+     "11": 8.47,
+     "12": 9.04,
+     "13": 9.6,
+     "14": 10.13,
+     "15": 10.65,
+     "16": 11.15
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.89,
-     "2": 0.8,
-     "3": 0.73,
-     "4": 0.67,
-     "5": 0.62,
-     "6": 0.57,
-     "7": 0.53,
-     "8": 0.5,
-     "9": 0.47,
-     "10": 0.44,
-     "11": 0.42,
-     "12": 0.4,
-     "13": 0.38,
-     "14": 0.36,
-     "15": 0.35
+     "1": 0.94,
+     "2": 0.88,
+     "3": 0.83,
+     "4": 0.79,
+     "5": 0.75,
+     "6": 0.71,
+     "7": 0.68,
+     "8": 0.65,
+     "9": 0.62,
+     "10": 0.6,
+     "11": 0.58,
+     "12": 0.56,
+     "13": 0.54,
+     "14": 0.52,
+     "15": 0.5
     }
    },
    "triceps": {
-    "c": 8.0,
-    "useful_up_to": 3.7,
-    "diminishing_from": 3.7,
-    "half_value_from": 9.0,
-    "low_return_from": 9.0,
+    "c": 15.0,
+    "useful_up_to": 6.0,
+    "diminishing_from": 6.0,
+    "half_value_from": 16.0,
+    "low_return_from": 16.0,
     "heavy_anchor": 8,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.889,
-     "3": 0.8,
-     "4": 0.727,
-     "5": 0.667,
-     "6": 0.615,
-     "7": 0.571,
-     "8": 0.533,
-     "9": 0.5,
-     "10": 0.471,
-     "11": 0.444,
-     "12": 0.421,
-     "13": 0.4,
-     "14": 0.381,
-     "15": 0.364,
-     "16": 0.348
+     "2": 0.938,
+     "3": 0.882,
+     "4": 0.833,
+     "5": 0.789,
+     "6": 0.75,
+     "7": 0.714,
+     "8": 0.682,
+     "9": 0.652,
+     "10": 0.625,
+     "11": 0.6,
+     "12": 0.577,
+     "13": 0.556,
+     "14": 0.536,
+     "15": 0.517,
+     "16": 0.5
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.89,
-     "3": 2.69,
-     "4": 3.42,
-     "5": 4.08,
-     "6": 4.7,
-     "7": 5.27,
-     "8": 5.8,
-     "9": 6.3,
-     "10": 6.77,
-     "11": 7.22,
-     "12": 7.64,
-     "13": 8.04,
-     "14": 8.42,
-     "15": 8.78,
-     "16": 9.13
+     "2": 1.94,
+     "3": 2.82,
+     "4": 3.65,
+     "5": 4.44,
+     "6": 5.19,
+     "7": 5.91,
+     "8": 6.59,
+     "9": 7.24,
+     "10": 7.87,
+     "11": 8.47,
+     "12": 9.04,
+     "13": 9.6,
+     "14": 10.13,
+     "15": 10.65,
+     "16": 11.15
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.89,
-     "2": 0.8,
-     "3": 0.73,
-     "4": 0.67,
-     "5": 0.62,
-     "6": 0.57,
-     "7": 0.53,
-     "8": 0.5,
-     "9": 0.47,
-     "10": 0.44,
-     "11": 0.42,
-     "12": 0.4,
-     "13": 0.38,
-     "14": 0.36,
-     "15": 0.35
+     "1": 0.94,
+     "2": 0.88,
+     "3": 0.83,
+     "4": 0.79,
+     "5": 0.75,
+     "6": 0.71,
+     "7": 0.68,
+     "8": 0.65,
+     "9": 0.62,
+     "10": 0.6,
+     "11": 0.58,
+     "12": 0.56,
+     "13": 0.54,
+     "14": 0.52,
+     "15": 0.5
     }
    },
    "forearms": {
-    "c": 6.0,
-    "useful_up_to": 3.0,
-    "diminishing_from": 3.0,
-    "half_value_from": 7.0,
-    "low_return_from": 7.0,
+    "c": 1.5,
+    "useful_up_to": 1.5,
+    "diminishing_from": 1.5,
+    "half_value_from": 2.5,
+    "low_return_from": 2.5,
     "heavy_anchor": 6,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.857,
-     "3": 0.75,
-     "4": 0.667,
-     "5": 0.6,
-     "6": 0.545,
-     "7": 0.5,
-     "8": 0.462,
-     "9": 0.429,
-     "10": 0.4,
-     "11": 0.375,
-     "12": 0.353,
-     "13": 0.333,
-     "14": 0.316,
-     "15": 0.3,
-     "16": 0.286
+     "2": 0.6,
+     "3": 0.429,
+     "4": 0.333,
+     "5": 0.273,
+     "6": 0.231,
+     "7": 0.2,
+     "8": 0.176,
+     "9": 0.158,
+     "10": 0.143,
+     "11": 0.13,
+     "12": 0.12,
+     "13": 0.111,
+     "14": 0.103,
+     "15": 0.097,
+     "16": 0.091
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.86,
-     "3": 2.61,
-     "4": 3.27,
-     "5": 3.87,
-     "6": 4.42,
-     "7": 4.92,
-     "8": 5.38,
-     "9": 5.81,
-     "10": 6.21,
-     "11": 6.58,
-     "12": 6.94,
-     "13": 7.27,
-     "14": 7.59,
-     "15": 7.89,
-     "16": 8.17
+     "2": 1.6,
+     "3": 2.03,
+     "4": 2.36,
+     "5": 2.63,
+     "6": 2.87,
+     "7": 3.07,
+     "8": 3.24,
+     "9": 3.4,
+     "10": 3.54,
+     "11": 3.67,
+     "12": 3.79,
+     "13": 3.9,
+     "14": 4.01,
+     "15": 4.1,
+     "16": 4.2
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.86,
-     "2": 0.75,
-     "3": 0.67,
-     "4": 0.6,
-     "5": 0.55,
-     "6": 0.5,
-     "7": 0.46,
-     "8": 0.43,
-     "9": 0.4,
-     "10": 0.37,
-     "11": 0.35,
-     "12": 0.33,
-     "13": 0.32,
-     "14": 0.3,
-     "15": 0.29
+     "1": 0.6,
+     "2": 0.43,
+     "3": 0.33,
+     "4": 0.27,
+     "5": 0.23,
+     "6": 0.2,
+     "7": 0.18,
+     "8": 0.16,
+     "9": 0.14,
+     "10": 0.13,
+     "11": 0.12,
+     "12": 0.11,
+     "13": 0.1,
+     "14": 0.1,
+     "15": 0.09
     }
    },
    "abs": {
-    "c": 8.0,
-    "useful_up_to": 3.7,
-    "diminishing_from": 3.7,
-    "half_value_from": 9.0,
-    "low_return_from": 9.0,
+    "c": 4.5,
+    "useful_up_to": 2.5,
+    "diminishing_from": 2.5,
+    "half_value_from": 5.5,
+    "low_return_from": 5.5,
     "heavy_anchor": 8,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.889,
-     "3": 0.8,
-     "4": 0.727,
-     "5": 0.667,
-     "6": 0.615,
-     "7": 0.571,
-     "8": 0.533,
-     "9": 0.5,
-     "10": 0.471,
-     "11": 0.444,
-     "12": 0.421,
-     "13": 0.4,
-     "14": 0.381,
-     "15": 0.364,
-     "16": 0.348
+     "2": 0.818,
+     "3": 0.692,
+     "4": 0.6,
+     "5": 0.529,
+     "6": 0.474,
+     "7": 0.429,
+     "8": 0.391,
+     "9": 0.36,
+     "10": 0.333,
+     "11": 0.31,
+     "12": 0.29,
+     "13": 0.273,
+     "14": 0.257,
+     "15": 0.243,
+     "16": 0.231
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.89,
-     "3": 2.69,
-     "4": 3.42,
-     "5": 4.08,
-     "6": 4.7,
-     "7": 5.27,
-     "8": 5.8,
-     "9": 6.3,
-     "10": 6.77,
-     "11": 7.22,
-     "12": 7.64,
-     "13": 8.04,
-     "14": 8.42,
-     "15": 8.78,
-     "16": 9.13
+     "2": 1.82,
+     "3": 2.51,
+     "4": 3.11,
+     "5": 3.64,
+     "6": 4.11,
+     "7": 4.54,
+     "8": 4.93,
+     "9": 5.29,
+     "10": 5.63,
+     "11": 5.94,
+     "12": 6.23,
+     "13": 6.5,
+     "14": 6.76,
+     "15": 7.0,
+     "16": 7.23
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.89,
-     "2": 0.8,
-     "3": 0.73,
-     "4": 0.67,
-     "5": 0.62,
-     "6": 0.57,
-     "7": 0.53,
-     "8": 0.5,
-     "9": 0.47,
-     "10": 0.44,
-     "11": 0.42,
-     "12": 0.4,
-     "13": 0.38,
-     "14": 0.36,
-     "15": 0.35
+     "1": 0.82,
+     "2": 0.69,
+     "3": 0.6,
+     "4": 0.53,
+     "5": 0.47,
+     "6": 0.43,
+     "7": 0.39,
+     "8": 0.36,
+     "9": 0.33,
+     "10": 0.31,
+     "11": 0.29,
+     "12": 0.27,
+     "13": 0.26,
+     "14": 0.24,
+     "15": 0.23
     }
    },
    "quads": {
+    "c": 20.0,
+    "useful_up_to": 7.7,
+    "diminishing_from": 7.7,
+    "half_value_from": 21.0,
+    "low_return_from": 21.0,
+    "heavy_anchor": 10,
+    "set_credit_at_n": {
+     "1": 1.0,
+     "2": 0.952,
+     "3": 0.909,
+     "4": 0.87,
+     "5": 0.833,
+     "6": 0.8,
+     "7": 0.769,
+     "8": 0.741,
+     "9": 0.714,
+     "10": 0.69,
+     "11": 0.667,
+     "12": 0.645,
+     "13": 0.625,
+     "14": 0.606,
+     "15": 0.588,
+     "16": 0.571
+    },
+    "credit_at_n": {
+     "1": 1.0,
+     "2": 1.95,
+     "3": 2.86,
+     "4": 3.73,
+     "5": 4.56,
+     "6": 5.36,
+     "7": 6.13,
+     "8": 6.87,
+     "9": 7.59,
+     "10": 8.28,
+     "11": 8.94,
+     "12": 9.59,
+     "13": 10.22,
+     "14": 10.82,
+     "15": 11.41,
+     "16": 11.98
+    },
+    "next_set_value_at_n": {
+     "0": 1.0,
+     "1": 0.95,
+     "2": 0.91,
+     "3": 0.87,
+     "4": 0.83,
+     "5": 0.8,
+     "6": 0.77,
+     "7": 0.74,
+     "8": 0.71,
+     "9": 0.69,
+     "10": 0.67,
+     "11": 0.65,
+     "12": 0.62,
+     "13": 0.61,
+     "14": 0.59,
+     "15": 0.57
+    }
+   },
+   "hamstrings": {
+    "c": 15.0,
+    "useful_up_to": 6.0,
+    "diminishing_from": 6.0,
+    "half_value_from": 16.0,
+    "low_return_from": 16.0,
+    "heavy_anchor": 8,
+    "set_credit_at_n": {
+     "1": 1.0,
+     "2": 0.938,
+     "3": 0.882,
+     "4": 0.833,
+     "5": 0.789,
+     "6": 0.75,
+     "7": 0.714,
+     "8": 0.682,
+     "9": 0.652,
+     "10": 0.625,
+     "11": 0.6,
+     "12": 0.577,
+     "13": 0.556,
+     "14": 0.536,
+     "15": 0.517,
+     "16": 0.5
+    },
+    "credit_at_n": {
+     "1": 1.0,
+     "2": 1.94,
+     "3": 2.82,
+     "4": 3.65,
+     "5": 4.44,
+     "6": 5.19,
+     "7": 5.91,
+     "8": 6.59,
+     "9": 7.24,
+     "10": 7.87,
+     "11": 8.47,
+     "12": 9.04,
+     "13": 9.6,
+     "14": 10.13,
+     "15": 10.65,
+     "16": 11.15
+    },
+    "next_set_value_at_n": {
+     "0": 1.0,
+     "1": 0.94,
+     "2": 0.88,
+     "3": 0.83,
+     "4": 0.79,
+     "5": 0.75,
+     "6": 0.71,
+     "7": 0.68,
+     "8": 0.65,
+     "9": 0.62,
+     "10": 0.6,
+     "11": 0.58,
+     "12": 0.56,
+     "13": 0.54,
+     "14": 0.52,
+     "15": 0.5
+    }
+   },
+   "glutes": {
+    "c": 15.0,
+    "useful_up_to": 6.0,
+    "diminishing_from": 6.0,
+    "half_value_from": 16.0,
+    "low_return_from": 16.0,
+    "heavy_anchor": 8,
+    "set_credit_at_n": {
+     "1": 1.0,
+     "2": 0.938,
+     "3": 0.882,
+     "4": 0.833,
+     "5": 0.789,
+     "6": 0.75,
+     "7": 0.714,
+     "8": 0.682,
+     "9": 0.652,
+     "10": 0.625,
+     "11": 0.6,
+     "12": 0.577,
+     "13": 0.556,
+     "14": 0.536,
+     "15": 0.517,
+     "16": 0.5
+    },
+    "credit_at_n": {
+     "1": 1.0,
+     "2": 1.94,
+     "3": 2.82,
+     "4": 3.65,
+     "5": 4.44,
+     "6": 5.19,
+     "7": 5.91,
+     "8": 6.59,
+     "9": 7.24,
+     "10": 7.87,
+     "11": 8.47,
+     "12": 9.04,
+     "13": 9.6,
+     "14": 10.13,
+     "15": 10.65,
+     "16": 11.15
+    },
+    "next_set_value_at_n": {
+     "0": 1.0,
+     "1": 0.94,
+     "2": 0.88,
+     "3": 0.83,
+     "4": 0.79,
+     "5": 0.75,
+     "6": 0.71,
+     "7": 0.68,
+     "8": 0.65,
+     "9": 0.62,
+     "10": 0.6,
+     "11": 0.58,
+     "12": 0.56,
+     "13": 0.54,
+     "14": 0.52,
+     "15": 0.5
+    }
+   },
+   "calves": {
     "c": 10.0,
     "useful_up_to": 4.3,
     "diminishing_from": 4.3,
     "half_value_from": 11.0,
     "low_return_from": 11.0,
-    "heavy_anchor": 10,
+    "heavy_anchor": 8,
     "set_credit_at_n": {
      "1": 1.0,
      "2": 0.909,
@@ -2080,252 +6689,66 @@
      "15": 0.4
     }
    },
-   "hamstrings": {
-    "c": 8.0,
-    "useful_up_to": 3.7,
-    "diminishing_from": 3.7,
-    "half_value_from": 9.0,
-    "low_return_from": 9.0,
-    "heavy_anchor": 8,
-    "set_credit_at_n": {
-     "1": 1.0,
-     "2": 0.889,
-     "3": 0.8,
-     "4": 0.727,
-     "5": 0.667,
-     "6": 0.615,
-     "7": 0.571,
-     "8": 0.533,
-     "9": 0.5,
-     "10": 0.471,
-     "11": 0.444,
-     "12": 0.421,
-     "13": 0.4,
-     "14": 0.381,
-     "15": 0.364,
-     "16": 0.348
-    },
-    "credit_at_n": {
-     "1": 1.0,
-     "2": 1.89,
-     "3": 2.69,
-     "4": 3.42,
-     "5": 4.08,
-     "6": 4.7,
-     "7": 5.27,
-     "8": 5.8,
-     "9": 6.3,
-     "10": 6.77,
-     "11": 7.22,
-     "12": 7.64,
-     "13": 8.04,
-     "14": 8.42,
-     "15": 8.78,
-     "16": 9.13
-    },
-    "next_set_value_at_n": {
-     "0": 1.0,
-     "1": 0.89,
-     "2": 0.8,
-     "3": 0.73,
-     "4": 0.67,
-     "5": 0.62,
-     "6": 0.57,
-     "7": 0.53,
-     "8": 0.5,
-     "9": 0.47,
-     "10": 0.44,
-     "11": 0.42,
-     "12": 0.4,
-     "13": 0.38,
-     "14": 0.36,
-     "15": 0.35
-    }
-   },
-   "glutes": {
-    "c": 8.0,
-    "useful_up_to": 3.7,
-    "diminishing_from": 3.7,
-    "half_value_from": 9.0,
-    "low_return_from": 9.0,
-    "heavy_anchor": 8,
-    "set_credit_at_n": {
-     "1": 1.0,
-     "2": 0.889,
-     "3": 0.8,
-     "4": 0.727,
-     "5": 0.667,
-     "6": 0.615,
-     "7": 0.571,
-     "8": 0.533,
-     "9": 0.5,
-     "10": 0.471,
-     "11": 0.444,
-     "12": 0.421,
-     "13": 0.4,
-     "14": 0.381,
-     "15": 0.364,
-     "16": 0.348
-    },
-    "credit_at_n": {
-     "1": 1.0,
-     "2": 1.89,
-     "3": 2.69,
-     "4": 3.42,
-     "5": 4.08,
-     "6": 4.7,
-     "7": 5.27,
-     "8": 5.8,
-     "9": 6.3,
-     "10": 6.77,
-     "11": 7.22,
-     "12": 7.64,
-     "13": 8.04,
-     "14": 8.42,
-     "15": 8.78,
-     "16": 9.13
-    },
-    "next_set_value_at_n": {
-     "0": 1.0,
-     "1": 0.89,
-     "2": 0.8,
-     "3": 0.73,
-     "4": 0.67,
-     "5": 0.62,
-     "6": 0.57,
-     "7": 0.53,
-     "8": 0.5,
-     "9": 0.47,
-     "10": 0.44,
-     "11": 0.42,
-     "12": 0.4,
-     "13": 0.38,
-     "14": 0.36,
-     "15": 0.35
-    }
-   },
-   "calves": {
-    "c": 8.0,
-    "useful_up_to": 3.7,
-    "diminishing_from": 3.7,
-    "half_value_from": 9.0,
-    "low_return_from": 9.0,
-    "heavy_anchor": 8,
-    "set_credit_at_n": {
-     "1": 1.0,
-     "2": 0.889,
-     "3": 0.8,
-     "4": 0.727,
-     "5": 0.667,
-     "6": 0.615,
-     "7": 0.571,
-     "8": 0.533,
-     "9": 0.5,
-     "10": 0.471,
-     "11": 0.444,
-     "12": 0.421,
-     "13": 0.4,
-     "14": 0.381,
-     "15": 0.364,
-     "16": 0.348
-    },
-    "credit_at_n": {
-     "1": 1.0,
-     "2": 1.89,
-     "3": 2.69,
-     "4": 3.42,
-     "5": 4.08,
-     "6": 4.7,
-     "7": 5.27,
-     "8": 5.8,
-     "9": 6.3,
-     "10": 6.77,
-     "11": 7.22,
-     "12": 7.64,
-     "13": 8.04,
-     "14": 8.42,
-     "15": 8.78,
-     "16": 9.13
-    },
-    "next_set_value_at_n": {
-     "0": 1.0,
-     "1": 0.89,
-     "2": 0.8,
-     "3": 0.73,
-     "4": 0.67,
-     "5": 0.62,
-     "6": 0.57,
-     "7": 0.53,
-     "8": 0.5,
-     "9": 0.47,
-     "10": 0.44,
-     "11": 0.42,
-     "12": 0.4,
-     "13": 0.38,
-     "14": 0.36,
-     "15": 0.35
-    }
-   },
    "adductors": {
-    "c": 6.0,
-    "useful_up_to": 3.0,
-    "diminishing_from": 3.0,
-    "half_value_from": 7.0,
-    "low_return_from": 7.0,
+    "c": 5.0,
+    "useful_up_to": 2.7,
+    "diminishing_from": 2.7,
+    "half_value_from": 6.0,
+    "low_return_from": 6.0,
     "heavy_anchor": 6,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.857,
-     "3": 0.75,
-     "4": 0.667,
-     "5": 0.6,
-     "6": 0.545,
-     "7": 0.5,
-     "8": 0.462,
-     "9": 0.429,
-     "10": 0.4,
-     "11": 0.375,
-     "12": 0.353,
-     "13": 0.333,
-     "14": 0.316,
-     "15": 0.3,
-     "16": 0.286
+     "2": 0.833,
+     "3": 0.714,
+     "4": 0.625,
+     "5": 0.556,
+     "6": 0.5,
+     "7": 0.455,
+     "8": 0.417,
+     "9": 0.385,
+     "10": 0.357,
+     "11": 0.333,
+     "12": 0.312,
+     "13": 0.294,
+     "14": 0.278,
+     "15": 0.263,
+     "16": 0.25
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.86,
-     "3": 2.61,
-     "4": 3.27,
-     "5": 3.87,
-     "6": 4.42,
-     "7": 4.92,
-     "8": 5.38,
-     "9": 5.81,
-     "10": 6.21,
-     "11": 6.58,
-     "12": 6.94,
-     "13": 7.27,
-     "14": 7.59,
-     "15": 7.89,
-     "16": 8.17
+     "2": 1.83,
+     "3": 2.55,
+     "4": 3.17,
+     "5": 3.73,
+     "6": 4.23,
+     "7": 4.68,
+     "8": 5.1,
+     "9": 5.48,
+     "10": 5.84,
+     "11": 6.17,
+     "12": 6.49,
+     "13": 6.78,
+     "14": 7.06,
+     "15": 7.32,
+     "16": 7.57
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.86,
-     "2": 0.75,
-     "3": 0.67,
-     "4": 0.6,
-     "5": 0.55,
-     "6": 0.5,
-     "7": 0.46,
-     "8": 0.43,
-     "9": 0.4,
-     "10": 0.37,
-     "11": 0.35,
-     "12": 0.33,
-     "13": 0.32,
-     "14": 0.3,
-     "15": 0.29
+     "1": 0.83,
+     "2": 0.71,
+     "3": 0.62,
+     "4": 0.56,
+     "5": 0.5,
+     "6": 0.45,
+     "7": 0.42,
+     "8": 0.38,
+     "9": 0.36,
+     "10": 0.33,
+     "11": 0.31,
+     "12": 0.29,
+     "13": 0.28,
+     "14": 0.26,
+     "15": 0.25
     }
    },
    "lower_back": {
@@ -2391,127 +6814,127 @@
     }
    },
    "obliques": {
-    "c": 6.0,
-    "useful_up_to": 3.0,
-    "diminishing_from": 3.0,
-    "half_value_from": 7.0,
-    "low_return_from": 7.0,
+    "c": 1.5,
+    "useful_up_to": 1.5,
+    "diminishing_from": 1.5,
+    "half_value_from": 2.5,
+    "low_return_from": 2.5,
     "heavy_anchor": 6,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.857,
-     "3": 0.75,
-     "4": 0.667,
-     "5": 0.6,
-     "6": 0.545,
-     "7": 0.5,
-     "8": 0.462,
-     "9": 0.429,
-     "10": 0.4,
-     "11": 0.375,
-     "12": 0.353,
-     "13": 0.333,
-     "14": 0.316,
-     "15": 0.3,
-     "16": 0.286
+     "2": 0.6,
+     "3": 0.429,
+     "4": 0.333,
+     "5": 0.273,
+     "6": 0.231,
+     "7": 0.2,
+     "8": 0.176,
+     "9": 0.158,
+     "10": 0.143,
+     "11": 0.13,
+     "12": 0.12,
+     "13": 0.111,
+     "14": 0.103,
+     "15": 0.097,
+     "16": 0.091
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.86,
-     "3": 2.61,
-     "4": 3.27,
-     "5": 3.87,
-     "6": 4.42,
-     "7": 4.92,
-     "8": 5.38,
-     "9": 5.81,
-     "10": 6.21,
-     "11": 6.58,
-     "12": 6.94,
-     "13": 7.27,
-     "14": 7.59,
-     "15": 7.89,
-     "16": 8.17
+     "2": 1.6,
+     "3": 2.03,
+     "4": 2.36,
+     "5": 2.63,
+     "6": 2.87,
+     "7": 3.07,
+     "8": 3.24,
+     "9": 3.4,
+     "10": 3.54,
+     "11": 3.67,
+     "12": 3.79,
+     "13": 3.9,
+     "14": 4.01,
+     "15": 4.1,
+     "16": 4.2
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.86,
-     "2": 0.75,
-     "3": 0.67,
-     "4": 0.6,
-     "5": 0.55,
-     "6": 0.5,
-     "7": 0.46,
-     "8": 0.43,
-     "9": 0.4,
-     "10": 0.37,
-     "11": 0.35,
-     "12": 0.33,
-     "13": 0.32,
-     "14": 0.3,
-     "15": 0.29
+     "1": 0.6,
+     "2": 0.43,
+     "3": 0.33,
+     "4": 0.27,
+     "5": 0.23,
+     "6": 0.2,
+     "7": 0.18,
+     "8": 0.16,
+     "9": 0.14,
+     "10": 0.13,
+     "11": 0.12,
+     "12": 0.11,
+     "13": 0.1,
+     "14": 0.1,
+     "15": 0.09
     }
    },
    "abductors": {
-    "c": 6.0,
-    "useful_up_to": 3.0,
-    "diminishing_from": 3.0,
-    "half_value_from": 7.0,
-    "low_return_from": 7.0,
+    "c": 5.0,
+    "useful_up_to": 2.7,
+    "diminishing_from": 2.7,
+    "half_value_from": 6.0,
+    "low_return_from": 6.0,
     "heavy_anchor": 6,
     "set_credit_at_n": {
      "1": 1.0,
-     "2": 0.857,
-     "3": 0.75,
-     "4": 0.667,
-     "5": 0.6,
-     "6": 0.545,
-     "7": 0.5,
-     "8": 0.462,
-     "9": 0.429,
-     "10": 0.4,
-     "11": 0.375,
-     "12": 0.353,
-     "13": 0.333,
-     "14": 0.316,
-     "15": 0.3,
-     "16": 0.286
+     "2": 0.833,
+     "3": 0.714,
+     "4": 0.625,
+     "5": 0.556,
+     "6": 0.5,
+     "7": 0.455,
+     "8": 0.417,
+     "9": 0.385,
+     "10": 0.357,
+     "11": 0.333,
+     "12": 0.312,
+     "13": 0.294,
+     "14": 0.278,
+     "15": 0.263,
+     "16": 0.25
     },
     "credit_at_n": {
      "1": 1.0,
-     "2": 1.86,
-     "3": 2.61,
-     "4": 3.27,
-     "5": 3.87,
-     "6": 4.42,
-     "7": 4.92,
-     "8": 5.38,
-     "9": 5.81,
-     "10": 6.21,
-     "11": 6.58,
-     "12": 6.94,
-     "13": 7.27,
-     "14": 7.59,
-     "15": 7.89,
-     "16": 8.17
+     "2": 1.83,
+     "3": 2.55,
+     "4": 3.17,
+     "5": 3.73,
+     "6": 4.23,
+     "7": 4.68,
+     "8": 5.1,
+     "9": 5.48,
+     "10": 5.84,
+     "11": 6.17,
+     "12": 6.49,
+     "13": 6.78,
+     "14": 7.06,
+     "15": 7.32,
+     "16": 7.57
     },
     "next_set_value_at_n": {
      "0": 1.0,
-     "1": 0.86,
-     "2": 0.75,
-     "3": 0.67,
-     "4": 0.6,
-     "5": 0.55,
-     "6": 0.5,
-     "7": 0.46,
-     "8": 0.43,
-     "9": 0.4,
-     "10": 0.37,
-     "11": 0.35,
-     "12": 0.33,
-     "13": 0.32,
-     "14": 0.3,
-     "15": 0.29
+     "1": 0.83,
+     "2": 0.71,
+     "3": 0.62,
+     "4": 0.56,
+     "5": 0.5,
+     "6": 0.45,
+     "7": 0.42,
+     "8": 0.38,
+     "9": 0.36,
+     "10": 0.33,
+     "11": 0.31,
+     "12": 0.29,
+     "13": 0.28,
+     "14": 0.26,
+     "15": 0.25
     }
    }
   },
@@ -2519,12 +6942,135 @@
   "reset": "Rest of >= 20 h between workouts resets the count: each day starts again at set 1 (no carryover). Justification: with weekly sets equal, spreading them over more days does not reduce growth (Schoenfeld 2019) [E], and there is no data to size a partial carryover, so none is modeled [M]. Two workouts < 20 h apart (same-day doubles) continue the count.",
   "reset_after_gap_h": 20,
   "carryover": "none",
-  "fit": "Form (unchanged): credit_n = 1/(1 + (n-1)/c), so the cumulative stimulus of n sets ~ c x ln((n + c - 0.5)/(c - 0.5)), a smooth log curve. vol8d refit: c = 1.0 x the targets.json session heavy anchor (10 -> c 10, 8 -> 8, 6 -> 6, 5 -> 5; vol8 used 0.4). Fitted so that, on the weekly %, one workout scores about 5-7% below the same weekly sets split evenly over two days at typical volumes (chest 8/10/12, 8-anchor and 6-anchor muscles at 6/8; see workout-reference.json one-vs-two-vol8d). Target: small, because volume-equated frequency meta-analyses find little or no hypertrophy difference between training a muscle once vs 2+ times a week (Schoenfeld, Grgic & Krieger 2019, J Sports Sci 37(11):1286-95; Pelland et al. 2025, Sports Med, doi 10.1007/s40279-025-02344-w: frequency effect on hypertrophy compatible with negligible, marginal slope 0.32%/extra weekly session, 95% CrI -0.14 to 0.82). A small gap is kept because neither rules out a modest benefit and long single sessions add fatigue. The studies do not give a per-set curve; c is a calibration to that target, not an estimate [modeled].",
+  "fit": "Form (unchanged): credit_n = 1/(1 + (n-1)/c), so the cumulative stimulus of n sets ~ c x ln((n + c - 0.5)/(c - 0.5)), a smooth log curve. vol8d refit: c = 1.0 x the targets.json session heavy anchor (10 -> c 10, 8 -> 8, 6 -> 6, 5 -> 5; vol8 used 0.4). Fitted so that, on the weekly %, one workout scores about 5-7% below the same weekly sets split evenly over two days at typical volumes (chest 8/10/12, 8-anchor and 6-anchor muscles at 6/8; see workout-reference.json one-vs-two-vol8d). Target: small, because volume-equated frequency meta-analyses find little or no hypertrophy difference between training a muscle once vs 2+ times a week (Schoenfeld, Grgic & Krieger 2019, J Sports Sci 37(11):1286-95; Pelland et al. 2025, Sports Med, doi 10.1007/s40279-025-02344-w: frequency effect on hypertrophy compatible with negligible, marginal slope 0.32%/extra weekly session, 95% CrI -0.14 to 0.82). A small gap is kept because neither rules out a modest benefit and long single sessions add fatigue. The studies do not give a per-set curve; c is a calibration to that target, not an estimate [modeled]. vol8h refit (supersedes the vol8d c): the vol8g per-muscle curve is steeper below the minimum than the vol5 curve, so the vol8d c (1.0 x heavy anchor) gave 11-14% gaps for chest/biceps and ~3.5% for forearms. c is now set per anchor group (muscles with the same zone edges share one weekly curve), chosen on a 0.25 grid to keep the one-workout vs two-day gap closest to 7% at the group's min and sweet-low (chest group also at 10 and 12) and rounded to 0.5; every build asserts 4-10% at those points [modeled]. Small muscles with a flat curve past the minimum need a small c (forearms/obliques 1.5), big muscles a large one (chest group 20).",
+  "c_groups": [
+   [
+    [
+     "chest",
+     "lats",
+     "upper_back",
+     "quads"
+    ],
+    20.0
+   ],
+   [
+    [
+     "front_delts",
+     "traps",
+     "abs"
+    ],
+    4.5
+   ],
+   [
+    [
+     "side_delts"
+    ],
+    11.0
+   ],
+   [
+    [
+     "rear_delts",
+     "calves"
+    ],
+    10.0
+   ],
+   [
+    [
+     "biceps",
+     "triceps",
+     "hamstrings",
+     "glutes"
+    ],
+    15.0
+   ],
+   [
+    [
+     "forearms",
+     "obliques"
+    ],
+    1.5
+   ],
+   [
+    [
+     "adductors",
+     "abductors",
+     "lower_back"
+    ],
+    5.0
+   ]
+  ],
+  "c_by_level": {
+   "beginner": {
+    "chest": 13.0,
+    "front_delts": 4.0,
+    "side_delts": 8.5,
+    "rear_delts": 6.0,
+    "lats": 13.0,
+    "upper_back": 13.0,
+    "traps": 4.0,
+    "biceps": 11.0,
+    "triceps": 11.0,
+    "forearms": 1.5,
+    "abs": 4.0,
+    "quads": 13.0,
+    "hamstrings": 11.0,
+    "glutes": 11.0,
+    "calves": 6.0,
+    "adductors": 4.0,
+    "lower_back": 4.0,
+    "obliques": 1.5,
+    "abductors": 4.0
+   },
+   "intermediate": {
+    "chest": 20.0,
+    "front_delts": 4.5,
+    "side_delts": 11.0,
+    "rear_delts": 10.0,
+    "lats": 20.0,
+    "upper_back": 20.0,
+    "traps": 4.5,
+    "biceps": 15.0,
+    "triceps": 15.0,
+    "forearms": 1.5,
+    "abs": 4.5,
+    "quads": 20.0,
+    "hamstrings": 15.0,
+    "glutes": 15.0,
+    "calves": 10.0,
+    "adductors": 5.0,
+    "lower_back": 5.0,
+    "obliques": 1.5,
+    "abductors": 5.0
+   },
+   "advanced": {
+    "chest": 30.0,
+    "front_delts": 9.0,
+    "side_delts": 18.5,
+    "rear_delts": 21.0,
+    "lats": 30.0,
+    "upper_back": 30.0,
+    "traps": 9.0,
+    "biceps": 26.0,
+    "triceps": 26.0,
+    "forearms": 3.0,
+    "abs": 9.0,
+    "quads": 30.0,
+    "hamstrings": 26.0,
+    "glutes": 26.0,
+    "calves": 21.0,
+    "adductors": 10.0,
+    "lower_back": 10.0,
+    "obliques": 3.0,
+    "abductors": 10.0
+   }
+  },
+  "c_by_level_note": "vol8i: c per level (curve fitted per level); c_groups and per_muscle[m].c are the intermediate values. Gap 4-10% asserted at every level.",
+  "dose_note": "one workout gives a muscle more than max(1 + c, 6) effective sets, with c for the user's level (vol8i, session.c_by_level; limits below are intermediate). 1 + c is where the next set earns less than half of set 1; the floor of 6 sets is practitioner judgement, not research (it stops noise on small muscles with a small c). Limits: chest/lats/upper back/quads 21 (in practice junk_volume_session, warn at > 10 raw, comes first), biceps/triceps/hamstrings/glutes 16, side delts 12, rear delts/calves 11, all others 6 (adductors/abductors/lower back, front delts/traps/abs, forearms/obliques). vol8d was 1 + 1.0 x heavy anchor (chest 11).",
   "evidence": {
    "tag": "modeled",
-   "summary": "Shape: smooth log (Remmert 2025 PREPRINT found a linear-log per-session fit). Rate c (vol8d): calibrated so one workout scores ~5-7% below the same sets over two days, consistent with volume-equated frequency meta-analyses (Schoenfeld 2019 J Sports Sci; Pelland 2025 Sports Med) finding little or no frequency effect on hypertrophy. Not estimated from data."
+   "summary": "Shape: smooth log (Remmert 2025 PREPRINT found a linear-log per-session fit). Rate c (vol8h, per anchor group): calibrated on the vol8g curve so one workout scores 4-10% (aim ~7%) below the same sets over two days, consistent with volume-equated frequency meta-analyses (Schoenfeld 2019 J Sports Sci; Pelland 2025 Sports Med) finding little or no frequency effect on hypertrophy. Not estimated from data."
   },
-  "checker_note": "junk_volume_session (warn at > 10 raw effective sets) unchanged; session_dose heavy fires past low_return_from = 1 + c (vol8d: chest 11, 8-anchor 9, 6-anchor 7, lower_back 6)."
+  "checker_note": "junk_volume_session (warn at > 10 raw effective sets) unchanged; session_dose heavy fires past max(low_return_from = 1 + c, 6) (vol8h; 6-set floor = practitioner judgement): chest group 21, biceps/triceps/hams/glutes 16, side delts 12, rear delts/calves 11, all others 6."
  },
  "vol2": {
   "written": {
@@ -3567,115 +8113,115 @@
    "per_muscle_zones": {
     "chest": {
      "dose_floor": 2.0,
-     "useful_to": 4.3,
-     "low_return_from": 11.0,
+     "useful_to": 7.7,
+     "low_return_from": 21.0,
      "meaningful_from": 3,
-     "c": 10.0
+     "c": 20.0
     },
     "front_delts": {
      "dose_floor": 2.0,
-     "useful_to": 3.7,
-     "low_return_from": 9.0,
+     "useful_to": 2.5,
+     "low_return_from": 5.5,
      "meaningful_from": 2,
-     "c": 8.0
+     "c": 4.5
     },
     "side_delts": {
      "dose_floor": 2.0,
-     "useful_to": 4.3,
-     "low_return_from": 11.0,
+     "useful_to": 4.7,
+     "low_return_from": 12.0,
      "meaningful_from": 3,
-     "c": 10.0
+     "c": 11.0
     },
     "rear_delts": {
      "dose_floor": 2.0,
-     "useful_to": 3.7,
-     "low_return_from": 9.0,
+     "useful_to": 4.3,
+     "low_return_from": 11.0,
      "meaningful_from": 2,
-     "c": 8.0
+     "c": 10.0
     },
     "lats": {
      "dose_floor": 2.0,
-     "useful_to": 4.3,
-     "low_return_from": 11.0,
+     "useful_to": 7.7,
+     "low_return_from": 21.0,
      "meaningful_from": 3,
-     "c": 10.0
+     "c": 20.0
     },
     "upper_back": {
      "dose_floor": 2.0,
-     "useful_to": 4.3,
-     "low_return_from": 11.0,
+     "useful_to": 7.7,
+     "low_return_from": 21.0,
      "meaningful_from": 3,
-     "c": 10.0
+     "c": 20.0
     },
     "traps": {
      "dose_floor": 2.0,
-     "useful_to": 3.7,
-     "low_return_from": 9.0,
+     "useful_to": 2.5,
+     "low_return_from": 5.5,
      "meaningful_from": 2,
-     "c": 8.0
+     "c": 4.5
     },
     "biceps": {
      "dose_floor": 2.0,
-     "useful_to": 3.7,
-     "low_return_from": 9.0,
+     "useful_to": 6.0,
+     "low_return_from": 16.0,
      "meaningful_from": 2,
-     "c": 8.0
+     "c": 15.0
     },
     "triceps": {
      "dose_floor": 2.0,
-     "useful_to": 3.7,
-     "low_return_from": 9.0,
+     "useful_to": 6.0,
+     "low_return_from": 16.0,
      "meaningful_from": 2,
-     "c": 8.0
+     "c": 15.0
     },
     "forearms": {
      "dose_floor": 2.0,
-     "useful_to": 3.0,
-     "low_return_from": 7.0,
+     "useful_to": 1.5,
+     "low_return_from": 2.5,
      "meaningful_from": 2,
-     "c": 6.0
+     "c": 1.5
     },
     "abs": {
      "dose_floor": 2.0,
-     "useful_to": 3.7,
-     "low_return_from": 9.0,
+     "useful_to": 2.5,
+     "low_return_from": 5.5,
      "meaningful_from": 2,
-     "c": 8.0
+     "c": 4.5
     },
     "quads": {
      "dose_floor": 2.0,
-     "useful_to": 4.3,
-     "low_return_from": 11.0,
+     "useful_to": 7.7,
+     "low_return_from": 21.0,
      "meaningful_from": 3,
-     "c": 10.0
+     "c": 20.0
     },
     "hamstrings": {
      "dose_floor": 2.0,
-     "useful_to": 3.7,
-     "low_return_from": 9.0,
+     "useful_to": 6.0,
+     "low_return_from": 16.0,
      "meaningful_from": 3,
-     "c": 8.0
+     "c": 15.0
     },
     "glutes": {
      "dose_floor": 2.0,
-     "useful_to": 3.7,
-     "low_return_from": 9.0,
+     "useful_to": 6.0,
+     "low_return_from": 16.0,
      "meaningful_from": 3,
-     "c": 8.0
+     "c": 15.0
     },
     "calves": {
      "dose_floor": 2.0,
-     "useful_to": 3.7,
-     "low_return_from": 9.0,
+     "useful_to": 4.3,
+     "low_return_from": 11.0,
      "meaningful_from": 2,
-     "c": 8.0
+     "c": 10.0
     },
     "adductors": {
      "dose_floor": 2.0,
-     "useful_to": 3.0,
-     "low_return_from": 7.0,
+     "useful_to": 2.7,
+     "low_return_from": 6.0,
      "meaningful_from": 2,
-     "c": 6.0
+     "c": 5.0
     },
     "lower_back": {
      "dose_floor": 2.0,
@@ -3686,20 +8232,20 @@
     },
     "obliques": {
      "dose_floor": 2.0,
-     "useful_to": 3.0,
-     "low_return_from": 7.0,
+     "useful_to": 1.5,
+     "low_return_from": 2.5,
      "meaningful_from": 1,
-     "c": 6.0
+     "c": 1.5
     },
     "abductors": {
      "dose_floor": 2.0,
-     "useful_to": 3.0,
-     "low_return_from": 7.0,
+     "useful_to": 2.7,
+     "low_return_from": 6.0,
      "meaningful_from": 2,
-     "c": 6.0
+     "c": 5.0
     }
    },
-   "tag": "modeled (vol8d per-set decay calibrated to Schoenfeld 2019 / Pelland 2025 frequency findings; dose floor and payout split)"
+   "tag": "modeled (vol8h per-set decay calibrated to Schoenfeld 2019 / Pelland 2025 frequency findings; dose floor and payout split)"
   },
   "ready_in": {
    "formula": "vol8: h = (24 + 4 x max(0, F - 2)) x (1 + 0.15 x stretch share) x size[muscle] x level; clamp 12-96 h; round to 6 h. F = recovery load = sum over that muscle's sets in the workout of credit x effort[RIR of the set] x axial[exercise].",
@@ -3731,7 +8277,7 @@
   },
   "never": "No medical claims; do not say \"fully recovered\" or show exact hours.",
   "invariant": {
-   "checked_cases": 21432,
+   "checked_cases": 64296,
    "violations": 0,
    "smallest_margin": 0.0,
    "at": {
