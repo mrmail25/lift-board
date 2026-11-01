@@ -53,7 +53,7 @@ function sLowerFatigue(dt,days,level){const res=[],DN=dt.rules.day_names;
     for(const c of cands.slice(0,8)){const nw=clone(days),hit=[];for(const d of nw){if(d.tiles.some(t=>t.id===c))continue;for(const t of d.tiles)if(t.id===cur){t.id=c;hit.push(d.day)}}
       if(!hit.length||!valid(dt,days,nw,level))continue;const b=weekCost(dt,days),a=weekCost(dt,nw);if(a>=b)continue;
       const p={target:cur,criteria:'lower_fatigue',days:hit,name:dt.EX[cur].name,new_name:dt.EX[c].name,day:hit[0],day_list:hit.map(x=>DN[x]).join(', '),
-        spf_from:spf(dt,cur,m).toFixed(2),spf_to:spf(dt,c,m).toFixed(2),muscle:m.replace(/_/g,' ')};
+        spf_from:String(+spf(dt,cur,m).toFixed(1)),spf_to:String(+spf(dt,c,m).toFixed(1)),   /* qc3009: one decimal on screen */muscle:m.replace(/_/g,' ')};
       fx.push(pack(dt,'swap_exercise',p,preview(dt,'lower_fatigue_swap',p),nw,days,true,b,a));break}
     res.push({target:{exercise:cur,muscle:m},fixes:fx})}return res}
 function sStretchShare(dt,days,level){const res=[],thr=A(dt).stretch_share_flag_below,STRB=dt.rules.stretch_biased,N=Object.keys(dt.EX).length;
@@ -102,7 +102,7 @@ function sRecovery(dt,days,level,baseline,modifier=1.0){if(!baseline)return [];c
   if(sw.length){const p={target:'lower_fatigue',n:sw.length,parts:sw.join('; ')};fx.push(pack(dt,'swap_exercise',p,preview(dt,'recovery_vs_baseline',Object.assign({},p,{kind:'swap'})),nw,days,pct(nw)<=goal,p0,pct(nw)))}
   return [{target:{pct:pyR(p0*100)},fixes:notResolvesFirst(fx)}]}
 function sWeeklyBand(dt,days,level){const res=[],{T,LF}=ctx(dt),week=PC.check(dt,days,level)[1];
-  for(let [m,x] of Object.entries(week)){if(dt.VM)x=PC.r05(x);const lo=Math.max(0.5,pyR(T[m].min*LF[level]*2)/2),hi=T[m].max;if((lo<=x&&x<=hi)||col(dt,m,x,level)==='R')continue;
+  for(let [m,x] of Object.entries(week)){if(dt.VM)x=PC.r1(x);const lo=Math.max(0.5,pyR(T[m].min*LF[level]*2)/2),hi=T[m].max;if((lo<=x&&x<=hi)||col(dt,m,x,level)==='R')continue;
     const under=x<lo,dist=v=>under?lo-v:v-hi;const gens=under?[X.gAddSets(dt,days,m),X.gAddExercise(dt,days,m)]:[X.gReduceSets(dt,days,null,'highest_contributor',m)];const fx=[];
     for(const g of gens){let best=null,n_=0;for(const [a_,p,nw] of g){if(n_++>200)break;const v=PC.eff(dt,nw.flatMap(d=>d.tiles))[m];
         if(dist(v)>=dist(x)-1e-9||!valid(dt,days,nw,level))continue;const c=pack(dt,a_,p,X.prev(dt,a_,p),nw,days,dist(v)<=0,x,v);if(c.resolves){best=c;break}best=best||c}
@@ -233,7 +233,7 @@ function items(dt,days,level,baseline=null){const am=dt.rules.analysis_metrics,f
     const mine=fd.filter(f=>(it.rules||[]).includes(f.rule)&&f.item===it.id),e={id:it.id,kind:it.kind,section:it.section,label:it.label};
     if(it.kind==='check'){const att=mine.filter(f=>f.severity!=='info');Object.assign(e,{status:!ok?'n/a':att.length?'attention':'pass',flags:ok?att:[],notes:ok?mine.filter(f=>f.severity==='info'):[]})}
     else if(it.kind==='info'&&it.rules&&it.rules.length)Object.assign(e,{applicable:ok,notes:ok?mine:[]});
-    const V={weekly_sets_per_muscle:()=>({muscles:Object.fromEntries(Object.entries(week).map(([m,x])=>[m,{sets:pyR(x,2),colour:col(dt,m,x,level)}])),week_sets_total:allsets}),
+    const V={weekly_sets_per_muscle:()=>({muscles:Object.fromEntries(Object.entries(week).map(([m,x])=>[m,{sets:pyR(x,1),colour:col(dt,m,x,level)}])),week_sets_total:allsets}),
       weekly_sets_per_region:regions,effective_frequency:()=>Object.fromEntries(Object.keys(week).map(m=>[m,train.filter(d=>(PC.eff(dt,d.tiles)[m]||0)>=2).length])),
       push_pull_ratio:()=>pushPull(dt,days),
       stretch_share:()=>({overall:r4(T.filter(x=>stretchFocused(dt,x[1])).reduce((a,x)=>a+x[2],0)/Math.max(1,allsets)),per_muscle:Object.fromEntries(Object.entries(bd.muscle).filter(([,v])=>v.stretch_share!==null).map(([m,v])=>[m,v.stretch_share])),per_pattern:pick(bd.pattern,'stretch_share')}),
@@ -278,8 +278,8 @@ function benchVs(dt,wc){const L=((((dt.targets||{}).recovery||{}).reference||{})
 // swap tradeoff record (volume-model.json swaps.schema), computed with the new counting
 function swapRecord(dt,before,after,level,from_id,to_id){const A0=PC.analytics(dt,before,level).muscles,A1=PC.analytics(dt,after,level).muscles,mus={},drops=[];
   const ch=new Set();after.forEach((d,i)=>{const b=before.find(x=>x.day===d.day);if(JSON.stringify(b&&b.tiles)!==JSON.stringify(d.tiles))ch.add(d.day)});
-  for(const m of Object.keys(A0)){const a=A0[m],b=A1[m],dl=b.raw_exact-a.raw_exact;if(Math.abs(dl)<1e-9)continue;const cr=a.raw>=a.min&&b.raw<a.min;if(cr)drops.push(m);
-    mus[m]={before:a.raw,after:b.raw,delta:r4(dl,2),zone_before:a.zone,zone_after:b.zone,min:a.min,crosses_below_min:cr,stimulus_before:r4(a.stim,3),stimulus_after:r4(b.stim,3)}}
+  for(const m of Object.keys(A0)){const a=A0[m],b=A1[m],dl=b.raw_exact-a.raw_exact,a5=PC.r05(a.raw_exact),b5=PC.r05(b.raw_exact);if(Math.abs(dl)<1e-9)continue;const cr=a5>=a.min&&b5<a.min;if(cr)drops.push(m);
+    mus[m]={before:a5,after:b5,before_shown:a.raw,after_shown:b.raw,delta:r4(dl,2),zone_before:a.zone,zone_after:b.zone,min:a.min,crosses_below_min:cr,stimulus_before:r4(a.stim,3),stimulus_after:r4(b.stim,3)}}
   const fb=weekCost(dt,before),fa=weekCost(dt,after);
   return {from_id,to_id,days:[...ch],fatigue_cost:{before:r4(fb,1),after:r4(fa,1),delta:r4(fa-fb,1)},muscles:mus,drops_below_min:drops,verdict:drops.length?'tradeoff':'clean'}}
 const API={hoursRange,myAverage,sessionHours,weekHours,benchVs,swapRecord,applyOps,invertOps,diff,suggest,sheet,metrics,checksPass,applicable,itemOf,flagDetails,breakdowns,fatigueRating,items,stretchFocused,tierOf,pushPull,ruleApplies,catalogue,typeOf,weekCost,stretchShare,lowerFatigueCandidates,pyDumps};

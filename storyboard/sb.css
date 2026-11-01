@@ -1586,3 +1586,7 @@ html[data-theme=dark] .pmom.gold .pm-txt .eyebrow{color:#FFD88F}
 .rhr .num{white-space:normal}
 .rbmode{display:inline-flex;width:auto}.rbmode button{white-space:nowrap;padding:5px 12px;flex:0 0 auto}.rbmode button[disabled]{opacity:.45}
 .rhh+.rcav{margin:0 0 6px}
+/* qc3009: benchmark mode toggle: selected = filled ink pill, unselected = plain outline */
+.seg.rbmode{background:none;padding:0;gap:6px}
+.seg.rbmode button{background:transparent;box-shadow:none;border:1px solid var(--line-strong);color:var(--text-2);font-weight:500;height:30px;border-radius:15px}
+.seg.rbmode button.on{background:var(--ink);border-color:var(--ink);color:var(--paper);font-weight:600;box-shadow:none}
