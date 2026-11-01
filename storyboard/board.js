@@ -4,7 +4,7 @@
 (function(){'use strict';
 const X=window.SBX,PC=window.PCHECK,RANK=window.RANK,$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const DAYS=PC.ORDER,WD=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],WDL=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const RD=()=>X.RD,LEVELS=['beginner','intermediate','advanced'];
+const RD=()=>{if(window.GOALS)GOALS.sync();return X.RD},RD0=()=>X.RD,LEVELS=['beginner','intermediate','advanced'];
 // Coach's whiteboard data (logic/whiteboard.js = tools/whiteboard.py): short_name, primary body region (edge colour = tokens.css --region-*),
 // rep_range(id, goals)
 const WB=window.WHITEBOARD;
@@ -76,7 +76,7 @@ function stripHtml(st){const {A,C,d}=st,avg=d.length?A.weekMinutes/d.length:0,fa
 function dayMeta(day){const n=sum(day.tiles.map(t=>t.sets));return day.tiles.length?`${n} sets · ≈ ${mins5(PC.sessionMinutes(RD(),day.tiles.map(t=>({id:t.id,sets:t.sets})),B.level))} min`:''}
 function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bmap');if(mp)mp.innerHTML=mapHtml(st,days);const lg=$('#bmleg');if(lg)lg.innerHTML=MLEG||'';const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);s.setAttribute('aria-label',`Analysis: ${st.A.weekSets} sets a week, ${st.C.pass} of ${st.C.total} checks pass`)}
   days.forEach((d,i)=>{const n=sum(d.tiles.map(t=>t.sets));const b=$(`#dstrip [data-jump="${i}"] .dn`);if(b){b.textContent=stripTxt(d);b.parentNode.classList.toggle('rd',isRest(d))}
-    const h=$(`.col[data-day="${d.day}"] .cm`);if(h)h.textContent=dayMeta(d)});
+    const h=$(`.col[data-day="${d.day}"] .cm`);if(h)h.textContent=dayMeta(d);const w=$(`.col[data-day="${d.day}"] .dmxw`);if(w)w.outerHTML=dmxHtml(d)});
   $$('.col').forEach((c,i)=>{const d=days[i];if(!d)return;c.classList.toggle('restday',isRest(d));const l=$('.cl',c);if(l)l.textContent=dayLabel(d)}); // preview days mid-drag
   const bs=$('#bstate');if(bs)bs.innerHTML=stateLine();return st}
 // ------------------------------------------------------------- view
@@ -84,7 +84,62 @@ function chit(t){const e=ex(t.id),g=WB.primaryRegion(RD(),t.id),sel=B.sel.has(t.
   return `<div class="chit${sel}" data-u="${t.u}" data-id="${t.id}" data-region="${g}" style="--mc:var(--region-${g})" role="button" tabindex="0" aria-label="${X.exNameP(t.id)}, ${t.sets} sets"><span class="cg ${e.type}" aria-hidden="true">${X.GLY[e.type]}</span><span class="cn">${shortName(t.id)}</span><span class="cs num">${t.sets}</span><span class="cf" aria-hidden="true">${fracLine(t.id)}</span></div>`}
 // item 6: an open template slot is a dashed placeholder (label + set range); it is not a tile, so stats and checks ignore it.
 const slotHtml=(d,s)=>`<button class="slotc" data-b="slot" data-day="${d.day}" data-sid="${s.sid}" aria-label="Open slot: ${s.label}, ${s.min} to ${s.max} sets. Tap to pick an exercise"><span class="cg ${s.type}" aria-hidden="true">${X.GLY[s.type]}</span><span class="sl">${s.label}</span><span class="sr">${s.min}–${s.max} sets</span></button>`;
-function colHtml(d,i){return `<section class="col${isRest(d)?' restday':''}" data-day="${d.day}" data-i="${i}"><header data-b="dayh" data-day="${d.day}" role="button" tabindex="0" aria-label="${WDL[i]}: ${dayLabel(d)}. Rename or set Rest"><b>${WD[i]}</b><span class="cl">${dayLabel(d)}</span><span class="cm num">${dayMeta(d)}</span></header>
+// vol10 notes: one plain line + a 'Nurd Sh!t ›' chip (the explain-sheet pattern) that opens the deeper detail and its source.
+const nurdChip=(k,m)=>`<button class="xchip xlearn" data-b="nurd" data-k="${k}"${m?` data-m="${m}"`:''} aria-label="Nurd Sh!t: source and detail">Nurd Sh!t ›</button>`;
+// each note's Nurd link shows its data .nurd citation {short, year, type, label, url, note}
+const RUL=id=>(RD().rules.rules||[]).find(r=>r.id===id)||{};
+const srcHtml=n=>!n?'':`<p class="nsrc">Source: ${n.url?`<a href="${n.url}" target="_blank" rel="noopener">${n.short}</a>`:n.short}${n.type?` · ${n.type}`:''}.${n.note?` ${n.note}`:''}</p>`;
+const NURD={
+  session:m=>{const dt=RD(),lv=B.level,g=G()&&G().mode,L=PC.seLim(dt,m,lv),SE=RUL('session_efficiency'),c=(((dt.VM||{}).session||{}).c_by_level||{})[lv],cc=c&&c[m],ls=cc&&L?Math.round(100/(1+(L-1)/cc)):null;
+    return {h:'Per-session returns',n:g==='efficient'?SE.nurd_efficient:SE.nurd,body:`${L!=null?`<p>For ${MLB(m).toLowerCase()} at your level${g?` on ${G().label(g)}`:''} the session limit is ${nfmt(L)} effective sets.${ls?` By then the last set is worth about ${ls}% of the first.`:''}</p>`:''}<p>This is about efficiency only. Every set still counts for the week. Past the limit, split the sets across days, trim them, or swap to a fresher exercise. Adding sets is never the fix.</p>`}},
+  late:()=>({h:'Wasted late sets',n:RUL('wasted_late_sets').nurd,body:`<p>Late sets are the ones that take a muscle past its session limit, plus every later set for it that day. They still count for the week; they would do more on another day.</p>`}),
+  goal:g=>{const c=(G()&&G().cfg()||{})[g]||{};return {h:G().label(g),n:c.nurd,body:`<p>${c.summary||''}</p><p>Both goals use the same weekly curve and zones; only the target and the session limits change.</p>${srcHtml(RUL('weekly_volume').nurd_targets).replace('Source:','Weekly curve:')}`}},
+  recovery:()=>{const dt=RD(),cav=((dt.VM||{}).recovery||{}).caveat||'';return {h:'Recovery estimates',n:((dt.VM.day_metrics||{}).recovery||{}).nurd,body:`<p>Ready-in times are modeled ranges in days, never exact hours.</p>${cav?`<p>${cav}</p>`:''}`}},
+  daymx:()=>{const DM=RD().VM.day_metrics||{},R=DM.reference||{},S=(R.sources||{})[R.source]||R,bd=(DM.sf_ratio||{}).bands||[];return {h:'Day card numbers',n:(DM.sf_ratio||{}).nurd,body:`<p>Stimulus and fatigue are both indexes on the same yardstick: 100 = the median intermediate preset day of the same type on the card, or the median intermediate day for that muscle in the rows. Small print gives the real units: effective sets for stimulus, days to recover for fatigue.</p><p>S:F = stimulus index ÷ fatigue index, so the numbers on screen divide out. ${bd.length?`Below ${bd[0].below}× is amber, above ${bd[bd.length-1].above}× is green; in between is typical.`:''} The cut-offs are a display choice, not research.</p><p>Reference: ${escA(S.description||R.day_level||'preset medians')}</p>`}},
+};
+function nurdSheet(k,m){const f=NURD[k];if(!f)return;const o=f(m);const s=X.sheet({title:'',cls:'grouped xsheet nurds',right:'<button class="btn plain" data-x="close">Done</button>',body:`<div class="xpl nurd" data-k="${k}"><div class="xpsh"><h3>${o.h}</h3><span class="evl" data-ev="modeled">${(o.n||{}).label||'Modeled'}</span></div>${o.body}${srcHtml(o.n)}</div>`});s.el.addEventListener('click',e=>{if(e.target.closest('[data-x=close]'))s.close()});return s}
+// vol10 day card metrics row (logic/daymetrics.js adapter): Stimulus · Fatigue · Recovery · Stim:Fatigue; tap expands per muscle.
+const recD=(h,u)=>{if(!(h>0))return '–';const r=window.ANALYSIS.hoursRange(RD(),h);return `${+r.lo.toFixed(1)}–${+r.hi.toFixed(1)}${u?' days':''}`};
+const rfmt=x=>x==null?'–':(+x).toFixed(2).replace(/^0/,'');
+// vol10 'Trim to efficient' (logic/trim.js): one tap lowers set counts on existing tiles to the Efficient session limits; Undo = exact prior board
+// preset match: an untouched preset board (same days, ids, sets at this level) uses Coach's trimmed counts (splits-efficient-diff.json)
+const presetId=(d,src)=>{const dt=RD(),k=JSON.stringify(d.filter(D=>D.tiles.length).map(D=>[D.day,D.tiles.map(t=>[t.id,t.sets])]));for(const sp of ((src||dt.splits)||{}).splits||[]){const L=(sp.levels||{})[B.level];if(!L)continue;for(const [n,dd] of Object.entries(L))if(JSON.stringify(dd.filter(D=>D.tiles.length).map(D=>[D.day,D.tiles.map(t=>[t.id,t.sets])]))===k)return `${sp.id}/${B.level}/${n}`}return null};
+const trimPlan=()=>{if(!G()||G().mode!=='efficient'||openSlots())return null;const dt=RD(),d=checkDays();if(dt.SPLITS_EFF&&presetId(d,dt.SPLITS_EFF))return null;   // already Coach's efficient preset: residuals stay as info
+  const pid=presetId(d),DF=pid&&dt.TRIMDIFF&&dt.TRIMDIFF.presets[pid];let r;
+  if(DF){const ops=DF.changes.map(c=>{const D=d.find(x=>x.day===c.day),i=D?D.tiles.findIndex(t=>t.id===c.id&&t.sets===c.from):-1;return {day:c.day,i,id:c.id,from:c.from,to:c.to}}).filter(o=>o.i>=0);
+    const nd=d.map(D=>({day:D.day,tiles:D.tiles.map((t,i)=>{const o=ops.find(x=>x.day===D.day&&x.i===i);return o?Object.assign({},t,{sets:o.to}):t}).filter(t=>t.sets>0)}));r={days:nd,ops,removed:ops.reduce((a,o)=>a+o.from-o.to,0),source:'coach',pid}}
+  else if(window.TRIM){r=TRIM.trim(dt,d,B.level,{goal:'efficient',allowRemove:false});r.source='rule'}else return null;
+  if(!r.ops.length)return null;const A0=PC.analytics(dt,d,B.level),A1=PC.analytics(dt,r.days,B.level),below=Object.keys(A1.muscles).filter(m=>A0.muscles[m].raw_sets>=A0.muscles[m].min&&A1.muscles[m].raw_sets<A1.muscles[m].min);
+  return Object.assign(r,{ndays:new Set(r.ops.map(o=>o.day)).size,below})};
+function trimCard(cls=''){const T=trimPlan();if(!T)return '';const ds=[...new Set(T.ops.map(o=>o.day))].map(dayN).join(', ');
+  return `<div class="trimc ${cls}" data-removed="${T.removed}" data-source="${T.source}"${T.pid?` data-preset="${T.pid}"`:''}><div class="grow"><p class="trimt">Trim to efficient</p><p class="trims">Removes ${T.removed} set${T.removed===1?'':'s'} on ${ds}. Only set counts change; nothing moves or is added.${T.ops.some(o=>o.to===0)?` Drops ${T.ops.filter(o=>o.to===0).map(o=>X.exNameP(o.id)).join(', ')} (its last set).`:''}</p>${T.below.length?`<p class="trimw">Drops ${T.below.map(m=>MLB(m).toLowerCase()).join(', ')} below the weekly minimum.</p>`:''}</div><button class="btn xs accent" data-b="trim">Trim</button></div>`}
+function applyTrim(){const T=trimPlan();if(!T)return;const before=snap(),bsig=sigD(),txt=`Trimmed to efficient: −${T.removed} sets`;
+  commit(()=>{for(const o of T.ops.slice().sort((a,b)=>b.i-a.i)){const D=B.days.find(x=>x.day===o.day),t=D&&D.tiles[o.i];if(t&&t.id===o.id&&t.sets===o.from){if(o.to>0)t.sets=o.to;else D.tiles.splice(o.i,1)}}},txt);
+  APPLIED.unshift({preview:`Trim to efficient (−${T.removed} sets)`,before,bsig,asig:sigD(),section:'volume'});if(AN&&!AN.closed)renderAnalysis()}
+const dmxOf=d=>window.DAYMX&&d&&d.tiles.length?DAYMX.dayIdx(RD(),d.tiles.map(t=>({id:t.id,sets:t.sets})),B.level,checkDays(),dayLabel(d)):null;
+// vol10b/c: stimulus and fatigue are indexes on the SAME reference (day_metrics.reference.sources[source]); S:F = si / fi from the
+// rounded whole numbers (DAYMX.idx). No reference for this day (unknown label / unpopulated source) -> raw units only, S:F '–'.
+const SFB=o=>o&&o.sf_band?' sfb-'+o.sf_band:'',xr=o=>o&&o.sf_ratio!=null?o.sf_ratio.toFixed(2)+'×':'–',dd=x=>x==null?'–':`~${+(+x).toFixed(1)} d`;
+const lateTxt=o=>{const n=o.late.reduce((a,z)=>a+z[1],0);return `${n} late set${n===1?'':'s'} · ${nfmt(o.over_limit)} over ${nfmt(o.session_limit)}`};
+const recDays=M=>M.idx?M.idx.recovery_days:(M.recovery_h!=null?Math.round(M.recovery_h/2.4)/10:null);
+// collapsed row on the day column; tapping it opens the per-muscle bottom sheet (dmxSheet)
+function dmxHtml(d){const M=dmxOf(d);if(!M)return `<div class="dmxw" data-day="${d.day}"></div>`;const late=M.over_warn>=0.05,Q=G()&&G().quiet()?' q':'',I=M.idx;
+  const cell=(v,l,cls='',u='')=>`<span class="dmc${cls}"><b class="num">${v}</b><small>${l}</small><small class="dmcu">${u||'&nbsp;'}</small></span>`;
+  const al=I?DAYMX.display(RD(),I).replace(/x typical/,'× typical'):`Stimulus ${nfmt(M.stimulus)} effective sets, about ${dd(recDays(M)).slice(1)} to recover`;
+  return `<div class="dmxw" data-day="${d.day}"><button class="dmx${late?' late'+Q:''}" data-b="dmx" data-day="${d.day}" aria-haspopup="dialog" aria-label="${WDL[DAYS.indexOf(d.day)]}: ${al}${late?`, ${nfmt(M.over_warn)} effective sets over the session limit`:''}. Show per muscle">${cell(I?I.stimulus_index:nfmt(M.stimulus),'Stim','',`${nfmt(M.stimulus)} sets`)}${cell(I?I.fatigue_index:'–','Fatigue','',dd(recDays(M)))}${cell(xr(I),'S:F',SFB(I))}</button>${late?`<div class="dmlate${Q}">${nfmt(M.over_warn)} over ${Q?'efficient ':''}limit</div>`:''}</div>`}
+let DMS=null;
+function dmxBody(day){const D=B.days.find(x=>x.day===day),M=dmxOf(D);if(!M)return '<p class="foot">No sets this day.</p>';const late=M.over_warn>=0.05,Q=G()&&G().quiet()?' q':'',I=M.idx;
+  const tile=(v,l,u)=>`<div class="dmst"><b class="num">${v}</b><small>${l}</small>${u?`<small class="dmu">${u}</small>`:''}</div>`;
+  const eq=I?`<p class="dmeq num">Stimulus ${I.stimulus_index} ÷ Fatigue ${I.fatigue_index} = <b class="${SFB(I).trim()}">${xr(I)}</b> typical</p>`:`<p class="dmeq">No typical ${escA(dayLabel(D))} day to compare with, so raw units only.</p>`;
+  return `<div class="dmsum">${tile(I?I.stimulus_index:'–','Stimulus',`${nfmt(M.stimulus)} effective sets`)}${tile(I?I.fatigue_index:'–','Fatigue',`${dd(recDays(M))} to recover`)}${tile(`<span class="${SFB(I).trim()}">${xr(I)}</span>`,'Stim:Fatigue','vs typical')}</div>${eq}
+   ${late?`<p class="dmslate${Q}">${nfmt(M.over_warn)} effective sets past the session limit. Late sets still count for the week. ${nurdChip('late')}</p>`:''}
+   ${late&&Q?trimCard('dms'):''}<div class="dmst2"><div class="dmsh"><span>Per muscle</span><span class="evl" data-ev="modeled">Modeled</span></div>
+   <div class="dmsr dmsrh"><span>Muscle</span><span>Stim</span><span>Fatigue</span><span>S:F</span></div>
+   ${M.muscles.map(o=>{const J=o.idx,lt=o.over_limit>=0.05&&!o.exempt;return `<div class="dmsr${lt?' late'+Q:''}" data-m="${o.m}" data-sfb="${J&&J.sf_band||''}"><span class="dmsn">${MLB(o.m)}${lt?`<small class="dmmw">${lateTxt(o)}</small>`:''}</span><span class="num">${J?J.stimulus_index:'–'}<small>${nfmt(o.stimulus)} sets</small></span><span class="num">${J?J.fatigue_index:'–'}<small>${dd(J?J.recovery_days:null)}</small></span><span class="num${SFB(J)}">${xr(J)}</span></div>`}).join('')}</div>
+   <p class="dmxk">100 = a typical day (card) or muscle-day (rows). S:F above 1× means more growth per unit of fatigue than typical. ${nurdChip('daymx')}</p>`}
+function dmxSheet(day){if(DMS&&!DMS.closed)DMS.close();const i=DAYS.indexOf(day),D=B.days.find(x=>x.day===day);
+  DMS=X.sheet({title:`${WDL[i]}${D?` · ${dayLabel(D)}`:''}`,cls:'tall grouped dmsheet',right:'<button class="btn plain" data-b="dmclose">Done</button>',onClose(){DMS=null}});DMS.day=day;DMS.body.innerHTML=dmxBody(day);return DMS}
+function colHtml(d,i){return `<section class="col${isRest(d)?' restday':''}" data-day="${d.day}" data-i="${i}"><header data-b="dayh" data-day="${d.day}" role="button" tabindex="0" aria-label="${WDL[i]}: ${dayLabel(d)}. Rename or set Rest"><b>${WD[i]}</b><span class="cl">${dayLabel(d)}</span><span class="cm num">${dayMeta(d)}</span></header>${dmxHtml(d)}
   <div class="chits" data-day="${d.day}">${d.tiles.map(chit).join('')}${(d.slots||[]).map(s=>slotHtml(d,s)).join('')}</div><button class="cadd" data-b="add" data-day="${d.day}" aria-label="Add exercise to ${WDL[i]}">${X.I('plus',2.2)}</button></section>`}
 function boardHtml(){return `<div class="cols">${B.days.map(colHtml).join('')}</div>`}
 X.V.build=()=>{if(!B.days.length){initBoard();cxRestorePlaced()}
@@ -109,7 +164,7 @@ function cxSavePlaced(){try{const P=[];B.days.forEach(d=>d.tiles.forEach((t,i)=>
 function cxRestorePlaced(){let P=[];try{P=JSON.parse(localStorage.getItem(X.cxPlacedKey)||'[]')||[]}catch(e){}
   for(const p of P){const D=B.days.find(d=>d.day===p.day);if(!D||!ex(p.id))continue;D.tiles.splice(Math.min(p.i,D.tiles.length),0,T(p.id,p.sets,p.reps));D.rest=false}}
 function paint(full){const bd=$('#board');if(!bd)return;cxSavePlaced();const sl=bd.scrollLeft;if(!full)bd.innerHTML=boardHtml();bd.classList.toggle('b-detail',BD.detail);const bt=$('#btools');if(bt)bt.innerHTML=toolsHtml();$$('.bdseg').forEach(x=>x.innerHTML=bdsegHtml());bd.scrollLeft=sl;const bn=$('.bname .bn');if(bn)bn.textContent=B.name||'New routine';
-  paintStats();paintSel();paintPcheck();if(AN&&!AN.closed)renderAnalysis();cbRe()}
+  paintStats();paintSel();paintPcheck();if(AN&&!AN.closed)renderAnalysis();cbRe();if(DMS&&!DMS.closed)DMS.body.innerHTML=dmxBody(DMS.day)}
 let JMP=-1;function markDay(){const bd=$('#board');if(!bd)return;const cols=$$('.col',bd),o=cols[0].offsetLeft,x=bd.scrollLeft+8;let k=0;cols.forEach((c,i)=>{if(c.offsetLeft-o<=x)k=i});
   if(JMP>k&&bd.scrollLeft>=bd.scrollWidth-bd.clientWidth-2)k=JMP;$$('#dstrip button').forEach((b,i)=>b.classList.toggle('on',i===k))}
 function jump(i){const bd=$('#board'),c=$$('.col',bd)[i];if(!c)return;JMP=i;bd.scrollTo({left:c.offsetLeft-bd.firstElementChild.offsetLeft,behavior:'smooth'});$$('#dstrip button').forEach((b,j)=>b.classList.toggle('on',j===i))}
@@ -281,6 +336,13 @@ const DEV=(()=>{try{return /[?&]dev=1\b/.test(location.search)||localStorage.get
 const volZone=(m,v)=>{const Z=(RD().targets||{}).volume_zones,z=Z&&(Z[B.level]||{})[m];return z&&z.min!=null&&z.sweet&&z.diminishing!=null?z:null};
 // zone labels (volume-model.json zones.zone_ids): the UI leads with these, the % is secondary ("of this muscle's modeled plateau")
 const ZL=id=>(((RD().VM||{}).zones||{}).zone_ids||{})[id]||id;
+// vol10 goal toggle (logic/goals.js): RD() syncs the goal into PCHECK, so limits, warnings and day metrics follow it live.
+const G=()=>window.GOALS;
+const goalSeg=()=>!G()||!G().options().length?'':`<div class="seg sm2 rbmode gseg" role="group" aria-label="Analysis goal">${G().options().map(g=>`<button type="button" class="${g.id===G().mode?'on':''}" data-b="goal" data-goal="${g.id}" aria-pressed="${g.id===G().mode}">${g.label}</button>`).join('')}</div>`;
+// weekly effective sets per muscle, unrounded (goal target text compares round(x, 2) like Coach's preset recheck)
+const rawWeek=d=>{const o={};d.forEach(D=>{const e=PC.eff(RD0(),D.tiles);for(const m in e)o[m]=(o[m]||0)+e[m]});return o};
+const tgtState=(x,T)=>!T?null:(x=Math.round(x*100)/100)<T.target?'below':x>T.upper?'above':'on';
+const TSL={below:'below target',on:'on target',above:'above upper'};
 // Session length: the stepper default and the day lines come from rules.json session_length.by_level[level] (PC.sessP); user-adjustable.
 const SESSION_RANGE=[30,150],SESSION_STEP=5,SLK='apechit.sb.sessionMin';
 const sessDefault=()=>PC.sessP(RD(),B.level).info_min;
@@ -427,13 +489,23 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   const ambInline=m=>{const a=AMB.find(x=>x.m===m);if(!a||volFix.has(m))return '';const p=cbPick('mus',m);return p?`<div class="sgr inl ambr" data-m="${m}"><div class="sgp">Suggested: ${X.exNameP(p.id)} on ${WDL[DAYS.indexOf(p.day)]}, ${setsFor(p.id)} sets</div><button class="btn xs accent ambadd" data-b="ambadd" data-m="${m}" data-id="${p.id}" data-day="${p.day}">Add</button></div>`:''};
   // analysis2: ONE table, one row per muscle: hard sets, effective sets (with target), stimulus %; thin zone bar when Coach's zones exist
   const E1={},hard=m=>sum(d.map(D=>sum(D.tiles.map(t=>((E1[t.id]=E1[t.id]||PC.eff(dt,[{id:t.id,sets:1}]))[m]||0)>0?t.sets:0))));
-  const zbar=(z,v)=>{const top=Math.max(z.diminishing*1.3,v.raw*1.08,1),P=x=>Math.max(0,Math.min(100,x/top*100)).toFixed(1);
-    return `<span class="mzb${z.placeholder?' ph':''}" aria-hidden="true"><i class="z0" style="left:0;width:${P(z.min)}%"></i><i class="z1" style="left:${P(z.min)}%;width:${(P(z.sweet[0])-P(z.min)).toFixed(1)}%"></i><i class="z2" style="left:${P(z.sweet[0])}%;width:${(P(z.sweet[1])-P(z.sweet[0])).toFixed(1)}%"></i><i class="z1" style="left:${P(z.sweet[1])}%;width:${(P(z.diminishing)-P(z.sweet[1])).toFixed(1)}%"></i><i class="z3" style="left:${P(z.diminishing)}%;right:0"></i><b style="left:${P(v.x!=null?v.x:v.raw)}%"></b></span>`};
+  const zbar=(z,v,TG)=>{const top=Math.max(z.diminishing*1.3,v.raw*1.08,1),P=x=>Math.max(0,Math.min(100,x/top*100)).toFixed(1);
+    return `<span class="mzb${z.placeholder?' ph':''}" aria-hidden="true"><i class="z0" style="left:0;width:${P(z.min)}%"></i><i class="z1" style="left:${P(z.min)}%;width:${(P(z.sweet[0])-P(z.min)).toFixed(1)}%"></i><i class="z2" style="left:${P(z.sweet[0])}%;width:${(P(z.sweet[1])-P(z.sweet[0])).toFixed(1)}%"></i><i class="z1" style="left:${P(z.sweet[1])}%;width:${(P(z.diminishing)-P(z.sweet[1])).toFixed(1)}%"></i><i class="z3" style="left:${P(z.diminishing)}%;right:0"></i>${TG?`<em class="ztg" style="left:${P(TG.target)}%" title="target ${nfmt(TG.target)}"></em>`:''}<b style="left:${P(v.x!=null?v.x:v.raw)}%"></b></span>`};
   const mrow=([m,v])=>{const col=(VCOL[m]||{}).colour,st0=v.raw>0?X.vStat(v.raw,v.min,v.max):'under',st=col==='A'?'amber':col==='R'&&st0==='in'?'red':st0;const ks=col==='A'?(st0==='under'?'close-under':'close-over'):st==='amber'?'close-over':st==='red'?'over':st;
     const z=volZone(m,v),S=Math.round((v.stim!=null?v.stim:1-Math.exp(-v.x/v.k))*100),zl=v.zone?ZL(v.zone):'';
-    return `<div class="mrow${m===cm?' on':''}${z?' hz':''}" data-m="${m}" data-vs="${st}" data-st="${ks}"><button class="mrn" data-b="mus" data-m="${m}" data-anchor="sets">${X.ML[m]||m}${ks==='close-under'||ks==='close-over'||ks==='over'?`<small class="vst ${ks==='over'?'red':'amb'}">${X.VLAB[ks]}</small>`:''}</button><span class="mrc num">${hard(m)}</span><span class="mrc mre num"><i class="vdot vs-${st}"></i>${nfmt(v.raw)}<small>${v.min}–${v.max}</small></span><button class="mrc mrs" data-anm="${m}" data-zone="${v.zone||''}" aria-label="${zl?zl+', ':''}${S}% of the ${MLB(m)} modeled plateau. Show the curve">${zl?`<span class="mzl">${zl}</span>`:''}<small class="num">${S}%</small></button>${z?zbar(z,v):''}</div>`};
+    return `<div class="mrow${m===cm?' on':''}${z?' hz':''}" data-m="${m}" data-vs="${st}" data-st="${ks}"><button class="mrn" data-b="mus" data-m="${m}" data-anchor="sets">${X.ML[m]||m}${ks==='close-under'||ks==='close-over'||ks==='over'?`<small class="vst ${ks==='over'?'red':'amb'}">${X.VLAB[ks]}</small>`:''}</button><span class="mrc num">${hard(m)}</span><span class="mrc mre num"><i class="vdot vs-${st}"></i>${nfmt(v.raw)}<small>${v.min}–${v.max}</small></span><button class="mrc mrs" data-anm="${m}" data-zone="${v.zone||''}" aria-label="${zl?zl+', ':''}${S}% of the ${MLB(m)} modeled plateau. Show the curve">${zl?`<span class="mzl">${zl}</span>`:''}<small class="num">${S}%</small></button>${z?zbar(z,v,GM?PC.goalTarget(dt,m,lv,GM):null):''}</div>`};
+  // vol10 'vs other goal': the other goal's zone + target under each muscle row (only when its data exists)
+  const GM=G()?G().mode:null,GOo=G()?G().other():null,RWK=rawWeek(d),GOL=GOo?G().label(GOo):'';
+  const goRow=m=>{if(!GM)return '';const T=PC.goalTarget(dt,m,lv,GM),To=GOo?PC.goalTarget(dt,m,lv,GOo):null;if(!T)return '';const st=tgtState(RWK[m]||0,T);
+    return `<div class="mgo" data-m="${m}" data-tstate="${st}"><span class="mgc">${G().label(GM)} target <b class="num">${nfmt(T.target)}</b> · <span class="ts-${st}">${TSL[st]}</span></span>${To?`<span class="mgx">vs ${GOL} <b class="num">${nfmt(To.target)}</b></span>`:''}</div>`};
+  const cnt=g=>{const n={below:0,above:0};for(const [m] of T){const t=PC.goalTarget(dt,m,lv,g),st=tgtState(RWK[m]||0,t);if(st==='below')n.below++;if(st==='above')n.above++}return n};
+  const seN=g=>G().withGoal(g,()=>PC.check(dt,d,lv)[0].filter(f=>f[1]==='session_efficiency').length);
+  const gsum=g=>{const n=cnt(g);return `<b>${G().label(g)}</b> <span class="num">${n.below}</span> below target · <span class="num">${n.above}</span> above upper · <span class="num">${seN(g)}</span> session warning${seN(g)===1?'':'s'}`};
+  const GN=GM?G().nurd(GM):null;
+  const goalLine=!G()||!G().options().length?'':GM?`<p class="gcmp" data-goal="${GM}">${gsum(GM)}</p>${GOo?`<p class="gcmp gx" data-other="${GOo}">${gsum(GOo)}</p>`:''}<p class="gnote"><span class="evl" data-ev="modeled">Modeled</span> ${(G().cfg()[GM]||{}).summary||''} ${nurdChip('goal',GM)}</p>${trimCard()}`
+    :`<p class="gcmp nodata">Pick a goal to set weekly targets and session limits. Until then the standard session limits apply.</p>`;
   const anyZ=T.some(([m,v])=>volZone(m,v)),zph=T.some(([m,v])=>(volZone(m,v)||{}).placeholder);
-  const mtab=`<div class="mtab" role="table" aria-label="Sets and stimulus per muscle"><div class="mrow mrh" role="row"><span>Muscle</span><span class="mrc">Sets</span><span class="mrc">Eff.</span><span class="mrc">Zone</span></div>${T.map(r=>mrow(r)+take('volume',s=>s.source==='weekly_band'&&sgM(s)===r[0],true)+ambInline(r[0])).join('')}</div>
+  const mtab=`<div class="mtab" role="table" aria-label="Sets and stimulus per muscle"><div class="mrow mrh" role="row"><span>Muscle</span><span class="mrc">Sets</span><span class="mrc">Eff.</span><span class="mrc">Zone</span></div>${T.map(r=>mrow(r)+goRow(r[0])+take('volume',s=>s.source==='weekly_band'&&sgM(s)===r[0],true)+ambInline(r[0])).join('')}</div>
     ${anyZ?`<div class="zleg"><span><i class="z0"></i>${ZL('below_min')}</span><span><i class="z1"></i>${ZL('growth')} / ${ZL('upper').toLowerCase()}</span><span><i class="z2"></i>${ZL('sweet_spot')}</span><span><i class="z3"></i>${ZL('diminishing')}</span></div>`:''}
     <p class="foot">Sets = hard sets that train the muscle. Eff. = effective sets (sets × each exercise's credit), with the target under it. Zone leads; the % under it is of this muscle's modeled plateau (not comparable across muscles). Tap it to see the curve.</p>`;
   const ambList=AMB.length?`<div class="ckd ambl" data-n="${AMB.length}"><p class="ambh">Passing, ${AMB.length} close to target: ${AMB.map(a=>`${mlk(a.m,'sets')} <span class="num">${bfmt(a.sets,a.min,a.max)} of ${a.min}–${a.max}</span>`).join(', ')}</p>${AMBU&&AMBU.sig===sigD()?`<div class="aplr aplc ambu"><div class="grow"><p>${AMBU.text}</p></div><button class="btn xs ink" data-b="ambundo">Undo</button></div>`:''}</div>`:'';
@@ -451,14 +523,15 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
     const svg=`<svg class="pwc pwbars" viewBox="0 0 ${W} ${H}" data-m="${cm}" data-limit="${L}">${band}${ticks.map(q=>`<text x="${px(q)}" y="${H-8}" text-anchor="middle">${q}</text>`).join('')}${rows}</svg>`;
     const flagged=PC.check(dt,d.filter(D=>D.tiles.length),lv)[0].filter(f=>f[1]==='session_efficiency').map(f=>({m:f[3],day:f[2],v:f[4],lim:PC.seLim(dt,f[3],lv)})).sort((a,b)=>(b.v-b.lim)-(a.v-a.lim));
     const NV=new Set(SE.never_suggest||[]),FO=(SE.fix_order||[]).slice().sort((a,b)=>a.rank-b.rank).filter(o=>!NV.has(o.action)).map(o=>o.label);
-    const tip=FO.length?`Extra sets here mostly add fatigue. Try, in order: ${FO.map((x,k)=>k?x.toLowerCase():x).join(', then ')}.`:'';
+    const tip=FO.length?`Fix in order: ${FO.map(x=>x.toLowerCase()).join(', then ')}.`:'';
     const SRC=((dt.VM.sources||{}).remmert2025session)||null;
     return `<div class="agfx pwv" data-metric="per_workout"><div class="ash"><span>Per workout: ${MLB(cm)}</span><span class="evl" data-ev="modeled">Modeled</span>${L!=null?`<span class="ashv num">session limit ${nfmt(L)} sets</span>`:''}</div>
       <div class="curvec card curve">${svg}<div class="pwleg"><span class="sub">effective sets in one workout, at face value</span></div>
-      ${EF&&EF.last_set_credit!=null?`<p class="pweff"><span class="evl" data-ev="modeled">Modeled</span> At ${nfmt(L)} sets in one workout the last set is worth about ${Math.round(EF.last_set_credit*100)}% of the first (efficiency only; it doesn't change your weekly count).</p>`:''}
-      ${SRC?`<p class="pwsrc">Per-session diminishing returns: ${SRC.cite.split('(2025)')[0].split(',')[0]} et al. (2025), <a href="${SRC.url}" target="_blank" rel="noopener">per-session volume meta-regression</a>, a preprint (not peer-reviewed). The limit is Coach's modeled planning value.</p>`:''}</div>
-      ${flagged.length?`<div class="pwover" data-n="${flagged.length}"><div class="ash"><span>${SE.short_label||'Session efficiency'}</span><span class="ashv num">${flagged.length}</span></div>${flagged.slice(0,4).map(o=>`<div class="pwr">${mlk(o.m,'sets')}<span class="num">${WD[DAYS.indexOf(o.day)]} · ${nfmt(o.v)} sets (limit ${nfmt(o.lim)})</span></div>`).join('')}${tip?`<p class="pwtip">${tip}</p>`:''}</div>`:''}
-      ${wCards()}<p class="foot">Weekly volume counts every effective set at face value, so 12 sets in one day count as 12. ${L!=null?`Past ${nfmt(L)} sets for this muscle in one workout, extra sets mostly add fatigue. `:''}Tap a muscle in the table to chart it here.</p></div>`};
+      ${L!=null?`<p class="pwnote"><span class="evl" data-ev="modeled">Modeled</span> Past ~${nfmt(L)} sets in one workout, extra sets mostly add fatigue. ${nurdChip('session',cm)}</p>`:''}</div>
+      ${flagged.length?(()=>{const Q=G()&&G().quiet(),nd=new Set(flagged.map(o=>o.day)).size,rows=(Q?flagged:flagged.slice(0,4)).map(o=>`<div class="pwr">${mlk(o.m,'sets')}<span class="num">${WD[DAYS.indexOf(o.day)]} · ${nfmt(o.v)} sets (limit ${nfmt(o.lim)})</span></div>`).join('')+(tip?`<p class="pwtip">${tip}</p>`:'');
+        return Q?`<details class="pwover pwq" data-n="${flagged.length}"><summary><span>${nd} session${nd===1?'':'s'} past the efficient limit</span><span class="pwqn num">${flagged.length} muscle${flagged.length===1?'':'s'} ›</span></summary>${rows}${trimCard('inl')}</details>`
+          :`<div class="pwover" data-n="${flagged.length}"><div class="ash"><span>${SE.short_label||'Session efficiency'}</span><span class="ashv num">${flagged.length}</span></div>${rows}</div>`})():''}
+      ${wCards()}<p class="foot">Weekly volume counts every effective set at face value. Tap a muscle in the table to chart it here.</p></div>`};
   // vol8 §10.7 per-workout cards: fatigue index bar (0-180, tick at 100 = typical upper day, tier bands) + up to 6 muscle bars
   // (length = effective sets that day, colour = workout zone, "+N% of weekly plateau", ready-in range). Numbers one decimal; never exact hours.
   const WK=dt.VM&&PC.perSet(dt)?dt.VM.workout:null;
@@ -472,7 +545,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
         <div class="wfnote">100 = a typical upper-body day</div>
         ${top.map(([m,v])=>{const SL=PC.seLim(dt,m,lv),z0=PC.sessZone8(dt,m,v)||'useful',z=SL!=null&&Math.round(v*100)/100>SL?'low_return':z0==='below_dose'?'below_dose':'useful';/* vol9b: red only when session_efficiency fires */return `<div class="wmr" data-m="${m}" data-z="${z}"><span class="wmn">${MLB(m)}</span><span class="wmb"><i style="width:${(v/mx*100).toFixed(1)}%;background:${ZC[z]}"></i></span><span class="wmv num">${nfmt(v)} sets · +${Math.round(pay(m))}%</span><span class="wmh">${H[m]?ANL.hoursRange(dt,H[m]).text:''}</span></div>`}).join('')}
         ${ms.length>6?`<div class="wmore">+${ms.length-6} more muscles</div>`:''}</div>`}).join('');
-    return cards?`<div class="ash wcards-h"><span>This week's workouts</span><span class="evl" data-ev="modeled">Modeled</span></div><div class="wleg"><span><i style="background:var(--line-strong)"></i>small dose</span><span><i style="background:var(--vol-in-range)"></i>within session limit</span><span><i style="background:var(--vol-red,#d4483b)"></i>past session limit</span></div>${cards}<p class="foot">+N% = this workout's share of the muscle's weekly plateau. ${(dt.VM.recovery||{}).caveat||''}</p>`:''};
+    return cards?`<div class="ash wcards-h"><span>This week's workouts</span><span class="evl" data-ev="modeled">Modeled</span></div><div class="wleg"><span><i style="background:var(--line-strong)"></i>small dose</span><span><i style="background:var(--vol-in-range)"></i>within session limit</span><span><i style="background:var(--vol-red,#d4483b)"></i>past session limit</span></div>${cards}<p class="foot">+N% = this workout's share of the muscle's weekly plateau. ${nurdChip('recovery')}</p>`:''};
   // vol8 §10.7 muscle recovery timeline: dots = meaningful sessions, dark band = until the earliest ready time, light = until the latest,
   // red = recovery_overlap (streak / early), grey = gap over 5 days (recovery_gap_long). Mon..Wed of the next week shown.
   const rTimeline=()=>{if(!WK)return '';const FM=dt.rules.frequency_muscles,SMm=(dt.targets.session||{}).muscles||{},FL=PC.check(dt,d,lv)[0],DI=x=>DAYS.indexOf(x),NDAY=10,W=330,L=72,cw=(W-L-6)/NDAY,X=v=>L+v*cw;
@@ -569,7 +642,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
       <div class="asecb">${ap.map(aplc).join('')}<p class="cdesc">${c.description}</p>${body}</div></section>`};
   const nWarn=SH.filter(s=>s.severity==='warn').length,vm=volMap(A);
   if(!AN.body.onclick)AN.body.onclick=()=>{}; // WebKit: taps on the map paths need a listener below body
-  AN.body.innerHTML=`<div class="anh"><div class="anmap" aria-label="This week vs targets">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="anmapleg">${weekLeg()}</div>
+  AN.body.innerHTML=`<div class="angoal"><div class="angh"><span class="evl0">Goal</span>${goalSeg()}</div>${goalLine}</div><div class="anh"><div class="anmap" aria-label="This week vs targets">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="anmapleg">${weekLeg()}</div>
      ${openSlots()?`<div class="big pend" data-pend="1">Fill slots to check</div><div class="sub">${openSlots()} open slots · the check count is pending until every slot is filled</div>`:`<div class="anbig"><div class="big num">${C.pass} of ${C.total}</div><button class="ixb" data-b="anx" data-id="checks_pass" aria-label="How checks are counted">${X.I('info',1.8)}</button></div><div class="sub">checks pass · ${nWarn} need attention · ${SH.length} suggestion${SH.length===1?'':'s'} in the sections below</div>`}
      ${SH.length||APPLIED.length?'':'<p class="sub nosug">No suggestions: nothing on this board needs a change.</p>'}</div>
     ${SECS.map(sec).join('')}
@@ -717,9 +790,11 @@ function slotsBody(){const TT=TJT();if(!TT.length)return '<p class="foot">templa
    <div class="ghead">Slots · ${t.days.length} days · ${ns2} slots</div>
    <div class="group" id="tslots">${t.days.map(d=>`<div class="row"><div class="grow"><div class="t1">${WD[DAYS.indexOf(d.day)]} · ${d.label}</div><div class="t2">${d.slots.map(s=>`${s.label} ${s.sets.min}–${s.sets.max}`).join(', ')}</div></div><span class="val num">${d.slots.length}</span></div>`).join('')}</div>
    <div class="ghead">Volume check · defaults</div><div class="group tvol" id="tvol">${Object.keys(vx).length?Object.entries(vx).map(([m,v])=>`<div class="row" data-mu="${m}" data-st="${v.status}"><div class="grow"><div class="t1"><span class="dot amber"></span>${X.ML[m]||m}</div><div class="t2">${v.sets} sets a week vs ${v.min}–${v.max}: amber, a documented exception</div></div></div>`).join(''):'<div class="row"><div class="grow t2">Every muscle in range with the defaults.</div></div>'}</div>
-   <p class="foot">Each slot lists Coach's eligible exercises. The defaults reproduce the ${t.split_name} ${t.level} ${t.days_per_week}-day prebuilt routine exactly (0 non-info warnings). Amber = within 2 sets under the level minimum or up to 25% over the max.</p>
+   <p class="foot">Each slot lists its eligible exercises. The defaults reproduce the ${t.split_name} ${t.level} ${t.days_per_week}-day prebuilt routine exactly (0 non-info warnings). Amber = within 2 sets under the level minimum or up to 25% over the max.</p>
    <div class="pad"><button class="btn accent block" data-b="nwslots" data-id="${t.id}">Use these slots</button></div></div>`}
-function newBody(view){const SP=RD().splits.splits,PT=RD().patterns.templates;if(view==='slots')return slotsBody();
+// vol10b: under Efficient the presets load from splits-efficient.json (same schema); Max growth keeps splits.json
+const presetSplits=()=>(G()&&G().mode==='efficient'&&RD().SPLITS_EFF?RD().SPLITS_EFF:RD().splits).splits;
+function newBody(view){const SP=presetSplits(),PT=RD().patterns.templates;if(view==='slots')return slotsBody();
   if(view==='tpl'){const s=SP.find(x=>x.id===NS.split),lv=s.levels[NS.level]?NS.level:Object.keys(s.levels)[0];NS.level=lv;const ns=Object.keys(s.levels[lv]);if(!ns.includes(NS.n))NS.n=ns[0];
     const days=s.levels[lv][NS.n],pt=((PT[NS.split]||{}).levels||{})[lv],ptd=pt&&pt[NS.n],SL=RD().patterns.slots,mn=sum(days.map(d=>PC.sessionMinutes(RD(),d.tiles,lv)));
     return `<div class="nwv"><button class="btn plain nwback" data-b="nwback">‹ New</button><div class="ghead">Prebuilt routine</div>
@@ -728,7 +803,7 @@ function newBody(view){const SP=RD().splits.splits,PT=RD().patterns.templates;if
      <div class="ghead">Days a week</div><div class="chips">${ns.map(n=>`<button class="chip ${n===NS.n?'on':''}" data-ns="n" data-v="${n}">${n} days</button>`).join('')}</div>
      <div class="ghead">Preview · ${days.length} days · ≈ ${hm(mn)} a week</div>
      <div class="group">${days.map((d,i)=>`<div class="row"><div class="grow"><div class="t1">${WD[DAYS.indexOf(d.day)]} · ${d.label}</div><div class="t2">${ptd&&ptd[i]?ptd[i].slots.map(x=>SL[x.slot].name).join(', '):d.tiles.length+' exercises'}</div></div><span class="val num">${d.tiles.length}</span></div>`).join('')}</div>
-     <p class="foot">Exercises and slots come from Coach's prebuilt splits. You can move anything after.</p>
+     <p class="foot">Exercises and slots come from the prebuilt splits. You can move anything after.</p>
      <div class="pad"><button class="btn accent block" data-b="nwtpl">Use this template</button></div></div>`}
   if(view==='lib')return `<div class="nwv"><button class="btn plain nwback" data-b="nwback">‹ New</button><div class="ghead">Your library</div>
      <div class="group">${X.ROUTINES.map(r=>`<div class="row"><div class="grow"><div class="t1">${r.name} <span class="smp" title="Mock routine">sample</span></div><div class="t2">${r.meta} · ${r.days.length} days</div></div><button class="btn sm grey" data-b="nwlib" data-id="${r.id}">Duplicate &amp; edit</button></div>`).join('')}</div>
@@ -745,7 +820,7 @@ function startFrom(kind,arg){if(NW)NW.close();
   if(kind!=='slots')B.tpl=null;
   if(kind==='slots'){const t=TP().find(RD().TJ,arg);commit(()=>loadTemplate(t),`Started ${t.split_name} slots`)}
   if(kind==='blank')commit(()=>{B.days=blankDays();B.name='New routine';B.version=0},'Started a blank board');
-  if(kind==='tpl'){const s=RD().splits.splits.find(x=>x.id===NS.split);commit(()=>{loadDays(s.levels[NS.level][NS.n],`${s.name} · ${NS.n} days`);B.level=NS.level;B.version=0},`Started from ${s.name}`)}
+  if(kind==='tpl'){const s=presetSplits().find(x=>x.id===NS.split);commit(()=>{loadDays(s.levels[NS.level][NS.n],`${s.name} · ${NS.n} days`);B.level=NS.level;B.version=0},`Started from ${s.name}`)}
   if(kind==='lib'){const r=X.ROUTINES.find(x=>x.id===arg),dm={Mon:'mon',Tue:'tue',Wed:'wed',Thu:'thu',Fri:'fri',Sat:'sat',Sun:'sun'};
     commit(()=>{loadDays(r.days.map(d=>({day:dm[d.d],label:d.n,tiles:d.ex.map(e=>({id:e.id,sets:e.s,reps:e.r}))})),'Copy of '+r.name);B.level=/Beginner/.test(r.meta)?'beginner':/Advanced/.test(r.meta)?'advanced':'intermediate';B.version=0},`Copied ${r.name}`)}
   const bd=$('#board');if(bd)bd.scrollLeft=0;markDay()}
@@ -770,6 +845,11 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   if(k==='treset'){Object.assign(TFB,{q:'',mus:null,pat:null,eq:null});if(TRAY)$('#tqb',TRAY.el).value='';if(TRAY)$('#tfbb',TRAY.el).innerHTML=X.filterHtml(TFB,'tf');refreshTray();return}
   if(k==='dayh'){setMap('day',DAYS.indexOf(b.dataset.day));return daySheet(b.dataset.day)}if(k==='dsclose')return DS&&DS.close();if(k==='dsrename'||k==='dsrest'||k==='dstrain')return dayAct(k);
   if(k==='tabs')return tabsSheet();if(k==='tabgo'){X.closeAll();return X.go('#'+b.dataset.to)}
+  if(k==='nurd')return nurdSheet(b.dataset.k,b.dataset.m);
+  if(k==='trim')return applyTrim();
+  if(k==='dmx')return dmxSheet(b.dataset.day);
+  if(k==='dmclose'){if(DMS)DMS.close();return}
+  if(k==='goal'){if(G()){G().set(b.dataset.goal);paint()}return}
   if(k==='analysis')return analysisSheet();if(k==='sugmore'){SUGX.add(b.dataset.sec);renderAnalysis();return}if(k==='anx')return explainItem(b.dataset.id);
   if(k==='mus'||k==='pat')return contribSheet(k,b.dataset[k==='mus'?'m':'p'],b.dataset.anchor);
   if(k==='asec'){const s=b.closest('.asec');const o=s.dataset.open!=='1';s.dataset.open=o?'1':'0';b.setAttribute('aria-expanded',String(o));setAnOpen(s.dataset.cat,o);return}
@@ -835,5 +915,5 @@ Object.assign(X.ROUTES,{
  'build-tray-filter':['build','build',0,0,()=>{Object.assign(TFB,{mus:null,pat:'vertical_pull',eq:null})},()=>traySheet('thu')],
 });
 window.BOARD={removeExercise:id=>{B.days.forEach(d=>{d.tiles=d.tiles.filter(t=>t.id!==id)});B.hist=B.hist.filter(h=>!h.includes(`"${id}"`));B.sel.clear();if($('#board'))paint();else cxSavePlaced();refreshTray()},
-  countExercise:id=>sum(B.days.map(d=>d.tiles.filter(t=>t.id===id).length)),repaint:()=>{if($('#board'))paint();refreshTray()},fmt:{bfmt:(...a)=>bfmt(...a),bpct:(...a)=>bpct(...a)},loadPreset:id=>{const [sp,lv,n]=id.split('/'),s=RD().splits.splits.find(x=>x.id===sp);loadDays(s.levels[lv][n],`${s.name} · ${n} days`);B.level=lv;B.hist=[];PCAP=null;APPLIED=[];X.render()},applyOps:ops=>{applyOpsBoard(ops);paint()},get pcheck(){return PCI},get detail(){return BD.detail},fracLine,muscleShort,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,ensurePlan:(days,name,level)=>{if(B.days.length)return false;loadDays(days,name);B.level=level||'intermediate';B.hist=[];B.dirty=false;B.version=1;B.edited=Date.now();B.fromLog=true;return true},progApply:ops=>{const before=snap();B.hist.push(before);applyOpsBoard(ops);B.days.forEach(d=>{if(d.tiles.length)d.rest=false});B.dirty=true;B.edited=Date.now();if($('#board'))paint();return before},progUndo:before=>{restore(before);if($('#board'))paint()},loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
+  countExercise:id=>sum(B.days.map(d=>d.tiles.filter(t=>t.id===id).length)),repaint:()=>{if($('#board'))paint();refreshTray()},fmt:{bfmt:(...a)=>bfmt(...a),bpct:(...a)=>bpct(...a)},loadPreset:id=>{const [sp,lv,n]=id.split('/'),s=presetSplits().find(x=>x.id===sp);loadDays(s.levels[lv][n],`${s.name} · ${n} days`);B.level=lv;B.hist=[];PCAP=null;APPLIED=[];X.render()},applyOps:ops=>{applyOpsBoard(ops);paint()},get pcheck(){return PCI},get detail(){return BD.detail},fracLine,muscleShort,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,ensurePlan:(days,name,level)=>{if(B.days.length)return false;loadDays(days,name);B.level=level||'intermediate';B.hist=[];B.dirty=false;B.version=1;B.edited=Date.now();B.fromLog=true;return true},progApply:ops=>{const before=snap();B.hist.push(before);applyOpsBoard(ops);B.days.forEach(d=>{if(d.tiles.length)d.rest=false});B.dirty=true;B.edited=Date.now();if($('#board'))paint();return before},progUndo:before=>{restore(before);if($('#board'))paint()},loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
 })();

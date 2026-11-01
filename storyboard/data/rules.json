@@ -906,7 +906,608 @@
         "requires": []
       },
       "category": "volume",
-      "metric": "volume_in_reach"
+      "metric": "volume_in_reach",
+      "targets_by_goal": {
+        "efficient": {
+          "beginner": {
+            "chest": {
+              "min": 6.0,
+              "target": 9.0,
+              "upper": 12.0
+            },
+            "front_delts": {
+              "min": 2.5,
+              "target": 4.5,
+              "upper": 7.0
+            },
+            "side_delts": {
+              "min": 5.0,
+              "target": 9.0,
+              "upper": 12.0
+            },
+            "rear_delts": {
+              "min": 3.5,
+              "target": 6.0,
+              "upper": 9.0
+            },
+            "lats": {
+              "min": 6.0,
+              "target": 9.0,
+              "upper": 12.0
+            },
+            "upper_back": {
+              "min": 6.0,
+              "target": 9.0,
+              "upper": 12.0
+            },
+            "traps": {
+              "min": 2.5,
+              "target": 4.5,
+              "upper": 7.0
+            },
+            "biceps": {
+              "min": 5.0,
+              "target": 7.5,
+              "upper": 10.5
+            },
+            "triceps": {
+              "min": 5.0,
+              "target": 7.5,
+              "upper": 10.5
+            },
+            "forearms": {
+              "min": 1.0,
+              "target": 3.0,
+              "upper": 5.0
+            },
+            "abs": {
+              "min": 2.5,
+              "target": 4.5,
+              "upper": 7.0
+            },
+            "quads": {
+              "min": 6.0,
+              "target": 9.0,
+              "upper": 12.0
+            },
+            "hamstrings": {
+              "min": 5.0,
+              "target": 7.5,
+              "upper": 10.0
+            },
+            "glutes": {
+              "min": 5.0,
+              "target": 7.5,
+              "upper": 10.0
+            },
+            "calves": {
+              "min": 3.5,
+              "target": 6.0,
+              "upper": 9.0
+            },
+            "adductors": {
+              "min": 2.0,
+              "target": 3.0,
+              "upper": 5.0
+            },
+            "lower_back": {
+              "min": 2.0,
+              "target": 3.0,
+              "upper": 5.0
+            },
+            "obliques": {
+              "min": 1.0,
+              "target": 3.0,
+              "upper": 5.0
+            },
+            "abductors": {
+              "min": 2.0,
+              "target": 3.0,
+              "upper": 5.0
+            }
+          },
+          "intermediate": {
+            "chest": {
+              "min": 8.0,
+              "target": 12.0,
+              "upper": 15.0
+            },
+            "front_delts": {
+              "min": 3.0,
+              "target": 6.0,
+              "upper": 9.0
+            },
+            "side_delts": {
+              "min": 6.5,
+              "target": 12.0,
+              "upper": 15.0
+            },
+            "rear_delts": {
+              "min": 5.0,
+              "target": 8.0,
+              "upper": 11.0
+            },
+            "lats": {
+              "min": 8.0,
+              "target": 12.0,
+              "upper": 15.0
+            },
+            "upper_back": {
+              "min": 8.0,
+              "target": 12.0,
+              "upper": 15.0
+            },
+            "traps": {
+              "min": 3.0,
+              "target": 6.0,
+              "upper": 9.0
+            },
+            "biceps": {
+              "min": 6.5,
+              "target": 10.0,
+              "upper": 13.0
+            },
+            "triceps": {
+              "min": 6.5,
+              "target": 10.0,
+              "upper": 13.0
+            },
+            "forearms": {
+              "min": 1.5,
+              "target": 4.0,
+              "upper": 6.0
+            },
+            "abs": {
+              "min": 3.0,
+              "target": 6.0,
+              "upper": 9.0
+            },
+            "quads": {
+              "min": 8.0,
+              "target": 12.0,
+              "upper": 15.0
+            },
+            "hamstrings": {
+              "min": 6.5,
+              "target": 10.0,
+              "upper": 12.0
+            },
+            "glutes": {
+              "min": 6.5,
+              "target": 10.0,
+              "upper": 12.0
+            },
+            "calves": {
+              "min": 5.0,
+              "target": 8.0,
+              "upper": 11.0
+            },
+            "adductors": {
+              "min": 2.5,
+              "target": 4.0,
+              "upper": 6.0
+            },
+            "lower_back": {
+              "min": 2.5,
+              "target": 4.0,
+              "upper": 6.0
+            },
+            "obliques": {
+              "min": 1.5,
+              "target": 4.0,
+              "upper": 6.0
+            },
+            "abductors": {
+              "min": 2.5,
+              "target": 4.0,
+              "upper": 6.0
+            }
+          },
+          "advanced": {
+            "chest": {
+              "min": 10.0,
+              "target": 12.0,
+              "upper": 15.0
+            },
+            "front_delts": {
+              "min": 4.0,
+              "target": 6.0,
+              "upper": 9.0
+            },
+            "side_delts": {
+              "min": 8.0,
+              "target": 12.0,
+              "upper": 15.0
+            },
+            "rear_delts": {
+              "min": 6.0,
+              "target": 8.0,
+              "upper": 11.0
+            },
+            "lats": {
+              "min": 10.0,
+              "target": 12.0,
+              "upper": 15.0
+            },
+            "upper_back": {
+              "min": 10.0,
+              "target": 12.0,
+              "upper": 15.0
+            },
+            "traps": {
+              "min": 4.0,
+              "target": 6.0,
+              "upper": 9.0
+            },
+            "biceps": {
+              "min": 8.0,
+              "target": 10.0,
+              "upper": 13.0
+            },
+            "triceps": {
+              "min": 8.0,
+              "target": 10.0,
+              "upper": 13.0
+            },
+            "forearms": {
+              "min": 2.0,
+              "target": 4.0,
+              "upper": 6.0
+            },
+            "abs": {
+              "min": 4.0,
+              "target": 6.0,
+              "upper": 9.0
+            },
+            "quads": {
+              "min": 10.0,
+              "target": 12.0,
+              "upper": 15.0
+            },
+            "hamstrings": {
+              "min": 8.0,
+              "target": 10.0,
+              "upper": 12.0
+            },
+            "glutes": {
+              "min": 8.0,
+              "target": 10.0,
+              "upper": 12.0
+            },
+            "calves": {
+              "min": 6.0,
+              "target": 8.0,
+              "upper": 11.0
+            },
+            "adductors": {
+              "min": 3.0,
+              "target": 4.0,
+              "upper": 6.0
+            },
+            "lower_back": {
+              "min": 3.0,
+              "target": 4.0,
+              "upper": 6.0
+            },
+            "obliques": {
+              "min": 2.0,
+              "target": 4.0,
+              "upper": 6.0
+            },
+            "abductors": {
+              "min": 3.0,
+              "target": 4.0,
+              "upper": 6.0
+            }
+          }
+        },
+        "max_growth": {
+          "beginner": {
+            "chest": {
+              "min": 6.0,
+              "target": 15.5,
+              "upper": 20.0
+            },
+            "front_delts": {
+              "min": 2.5,
+              "target": 10.0,
+              "upper": 16.0
+            },
+            "side_delts": {
+              "min": 5.0,
+              "target": 15.5,
+              "upper": 22.0
+            },
+            "rear_delts": {
+              "min": 3.5,
+              "target": 12.0,
+              "upper": 18.0
+            },
+            "lats": {
+              "min": 6.0,
+              "target": 15.5,
+              "upper": 20.0
+            },
+            "upper_back": {
+              "min": 6.0,
+              "target": 15.5,
+              "upper": 20.0
+            },
+            "traps": {
+              "min": 2.5,
+              "target": 10.0,
+              "upper": 16.0
+            },
+            "biceps": {
+              "min": 5.0,
+              "target": 13.5,
+              "upper": 18.0
+            },
+            "triceps": {
+              "min": 5.0,
+              "target": 13.5,
+              "upper": 18.0
+            },
+            "forearms": {
+              "min": 1.0,
+              "target": 7.0,
+              "upper": 12.0
+            },
+            "abs": {
+              "min": 2.5,
+              "target": 10.0,
+              "upper": 16.0
+            },
+            "quads": {
+              "min": 6.0,
+              "target": 15.5,
+              "upper": 20.0
+            },
+            "hamstrings": {
+              "min": 5.0,
+              "target": 12.0,
+              "upper": 16.0
+            },
+            "glutes": {
+              "min": 5.0,
+              "target": 12.0,
+              "upper": 16.0
+            },
+            "calves": {
+              "min": 3.5,
+              "target": 12.0,
+              "upper": 16.0
+            },
+            "adductors": {
+              "min": 2.0,
+              "target": 7.0,
+              "upper": 12.0
+            },
+            "lower_back": {
+              "min": 2.0,
+              "target": 7.0,
+              "upper": 10.0
+            },
+            "obliques": {
+              "min": 1.0,
+              "target": 7.0,
+              "upper": 12.0
+            },
+            "abductors": {
+              "min": 2.0,
+              "target": 7.0,
+              "upper": 12.0
+            }
+          },
+          "intermediate": {
+            "chest": {
+              "min": 8.0,
+              "target": 18.0,
+              "upper": 20.0
+            },
+            "front_delts": {
+              "min": 3.0,
+              "target": 12.0,
+              "upper": 16.0
+            },
+            "side_delts": {
+              "min": 6.5,
+              "target": 18.0,
+              "upper": 22.0
+            },
+            "rear_delts": {
+              "min": 5.0,
+              "target": 14.0,
+              "upper": 18.0
+            },
+            "lats": {
+              "min": 8.0,
+              "target": 18.0,
+              "upper": 20.0
+            },
+            "upper_back": {
+              "min": 8.0,
+              "target": 18.0,
+              "upper": 20.0
+            },
+            "traps": {
+              "min": 3.0,
+              "target": 12.0,
+              "upper": 16.0
+            },
+            "biceps": {
+              "min": 6.5,
+              "target": 16.0,
+              "upper": 18.0
+            },
+            "triceps": {
+              "min": 6.5,
+              "target": 16.0,
+              "upper": 18.0
+            },
+            "forearms": {
+              "min": 1.5,
+              "target": 8.0,
+              "upper": 12.0
+            },
+            "abs": {
+              "min": 3.0,
+              "target": 12.0,
+              "upper": 16.0
+            },
+            "quads": {
+              "min": 8.0,
+              "target": 18.0,
+              "upper": 20.0
+            },
+            "hamstrings": {
+              "min": 6.5,
+              "target": 14.0,
+              "upper": 16.0
+            },
+            "glutes": {
+              "min": 6.5,
+              "target": 14.0,
+              "upper": 16.0
+            },
+            "calves": {
+              "min": 5.0,
+              "target": 14.0,
+              "upper": 16.0
+            },
+            "adductors": {
+              "min": 2.5,
+              "target": 8.0,
+              "upper": 12.0
+            },
+            "lower_back": {
+              "min": 2.5,
+              "target": 8.0,
+              "upper": 10.0
+            },
+            "obliques": {
+              "min": 1.5,
+              "target": 8.0,
+              "upper": 12.0
+            },
+            "abductors": {
+              "min": 2.5,
+              "target": 8.0,
+              "upper": 12.0
+            }
+          },
+          "advanced": {
+            "chest": {
+              "min": 10.0,
+              "target": 18.0,
+              "upper": 20.0
+            },
+            "front_delts": {
+              "min": 4.0,
+              "target": 12.0,
+              "upper": 16.0
+            },
+            "side_delts": {
+              "min": 8.0,
+              "target": 18.0,
+              "upper": 22.0
+            },
+            "rear_delts": {
+              "min": 6.0,
+              "target": 14.0,
+              "upper": 18.0
+            },
+            "lats": {
+              "min": 10.0,
+              "target": 18.0,
+              "upper": 20.0
+            },
+            "upper_back": {
+              "min": 10.0,
+              "target": 18.0,
+              "upper": 20.0
+            },
+            "traps": {
+              "min": 4.0,
+              "target": 12.0,
+              "upper": 16.0
+            },
+            "biceps": {
+              "min": 8.0,
+              "target": 16.0,
+              "upper": 18.0
+            },
+            "triceps": {
+              "min": 8.0,
+              "target": 16.0,
+              "upper": 18.0
+            },
+            "forearms": {
+              "min": 2.0,
+              "target": 8.0,
+              "upper": 12.0
+            },
+            "abs": {
+              "min": 4.0,
+              "target": 12.0,
+              "upper": 16.0
+            },
+            "quads": {
+              "min": 10.0,
+              "target": 18.0,
+              "upper": 20.0
+            },
+            "hamstrings": {
+              "min": 8.0,
+              "target": 14.0,
+              "upper": 16.0
+            },
+            "glutes": {
+              "min": 8.0,
+              "target": 14.0,
+              "upper": 16.0
+            },
+            "calves": {
+              "min": 6.0,
+              "target": 14.0,
+              "upper": 16.0
+            },
+            "adductors": {
+              "min": 3.0,
+              "target": 8.0,
+              "upper": 12.0
+            },
+            "lower_back": {
+              "min": 3.0,
+              "target": 8.0,
+              "upper": 10.0
+            },
+            "obliques": {
+              "min": 2.0,
+              "target": 8.0,
+              "upper": 12.0
+            },
+            "abductors": {
+              "min": 3.0,
+              "target": 8.0,
+              "upper": 12.0
+            }
+          }
+        }
+      },
+      "targets_by_goal_rule": {
+        "efficient": "min = zone min; target = sweet_lo (low end of the sweet spot); upper = midpoint of the sweet spot (rounded to 0.5, at least sweet_lo + 0.5). Past upper you are adding sets for less return per set.",
+        "max_growth": "min = zone min; target = sweet_hi (high end of the sweet spot); upper = diminishing (zone edge)."
+      },
+      "targets_by_goal_note": "vol10: goal targets only move the target marker and the under/over-target text. Zone colours and weekly_volume warnings keep the existing zones (unchanged).",
+      "nurd_targets": {
+        "short": "Pelland et al. 2025, Sports Medicine (2024 SportRxiv preprint)",
+        "year": 2025,
+        "type": "meta-regression (peer-reviewed; earlier preprint)",
+        "label": "Modeled",
+        "url": "https://doi.org/10.1007/s40279-025-02344-w",
+        "note": "Weekly volume: diminishing returns. Basis for the weekly curve these targets sit on."
+      }
     },
     {
       "id": "recovery_vs_baseline",
@@ -1417,6 +2018,346 @@
       "category": "session",
       "metric": "session_design",
       "evidence": "modeled. Per-session diminishing returns: Remmert et al. 2025 SportRxiv PREPRINT (not peer-reviewed; Pelland is a co-author): hypertrophy rises with per-session volume with diminishing returns, linear-log best fit, point of undetectable outcome superiority ~11 fractional sets per session, interpret cautiously (little data at very high per-session volume). The same preprint cites an unpublished Krieger analysis (diminishing returns above ~6-8 sets per session); unpublished, not verified by us. Weekly volume: Pelland et al. 2024 SportRxiv preprint / Sports Medicine 2025 (diminishing returns with weekly volume; frequency has little effect when volume is equated) and Schoenfeld, Grgic & Krieger 2019 (J Sports Sci; volume-equated frequency, no significant difference): the basis for no longer penalising one-session layouts in weekly volume. Pelland 2024/2025 analyse WEEKLY volume and frequency, not per-session volume. The 6-10 hard sets per muscle per session range is practitioner judgement (e.g. RP volume-landmark material), not a study result. Limits come from the existing per-muscle session anchors (targets.json session.muscles[m].heavy), kept inside 6-10 and below the ~11 PUOS; beginner = intermediate - 2 (floor 6) and advanced = intermediate are modeling choices.",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "limits_by_goal": {
+        "efficient": {
+          "beginner": {
+            "chest": 6,
+            "front_delts": 5,
+            "side_delts": 5,
+            "rear_delts": 5,
+            "lats": 6,
+            "upper_back": 6,
+            "traps": 5,
+            "biceps": 5,
+            "triceps": 5,
+            "forearms": 4,
+            "abs": 5,
+            "quads": 6,
+            "hamstrings": 6,
+            "glutes": 6,
+            "calves": 5,
+            "adductors": 4,
+            "lower_back": 4,
+            "obliques": 4,
+            "abductors": 4
+          },
+          "intermediate": {
+            "chest": 6,
+            "front_delts": 5,
+            "side_delts": 5,
+            "rear_delts": 5,
+            "lats": 6,
+            "upper_back": 6,
+            "traps": 5,
+            "biceps": 5,
+            "triceps": 5,
+            "forearms": 4,
+            "abs": 5,
+            "quads": 6,
+            "hamstrings": 6,
+            "glutes": 6,
+            "calves": 5,
+            "adductors": 4,
+            "lower_back": 4,
+            "obliques": 4,
+            "abductors": 4
+          },
+          "advanced": {
+            "chest": 6,
+            "front_delts": 5,
+            "side_delts": 5,
+            "rear_delts": 5,
+            "lats": 6,
+            "upper_back": 6,
+            "traps": 5,
+            "biceps": 5,
+            "triceps": 5,
+            "forearms": 4,
+            "abs": 5,
+            "quads": 6,
+            "hamstrings": 6,
+            "glutes": 6,
+            "calves": 5,
+            "adductors": 4,
+            "lower_back": 4,
+            "obliques": 4,
+            "abductors": 4
+          }
+        },
+        "max_growth": {
+          "beginner": {
+            "chest": 8,
+            "front_delts": 8,
+            "side_delts": 8,
+            "rear_delts": 8,
+            "lats": 8,
+            "upper_back": 8,
+            "traps": 8,
+            "biceps": 8,
+            "triceps": 8,
+            "forearms": 6,
+            "abs": 8,
+            "quads": 8,
+            "hamstrings": 8,
+            "glutes": 8,
+            "calves": 8,
+            "adductors": 6,
+            "lower_back": 6,
+            "obliques": 6,
+            "abductors": 6
+          },
+          "intermediate": {
+            "chest": 10,
+            "front_delts": 10,
+            "side_delts": 10,
+            "rear_delts": 10,
+            "lats": 10,
+            "upper_back": 10,
+            "traps": 10,
+            "biceps": 10,
+            "triceps": 10,
+            "forearms": 6,
+            "abs": 10,
+            "quads": 10,
+            "hamstrings": 10,
+            "glutes": 10,
+            "calves": 10,
+            "adductors": 6,
+            "lower_back": 6,
+            "obliques": 6,
+            "abductors": 6
+          },
+          "advanced": {
+            "chest": 10,
+            "front_delts": 10,
+            "side_delts": 10,
+            "rear_delts": 10,
+            "lats": 10,
+            "upper_back": 10,
+            "traps": 10,
+            "biceps": 10,
+            "triceps": 10,
+            "forearms": 6,
+            "abs": 10,
+            "quads": 10,
+            "hamstrings": 10,
+            "glutes": 10,
+            "calves": 10,
+            "adductors": 6,
+            "lower_back": 6,
+            "obliques": 6,
+            "abductors": 6
+          }
+        }
+      },
+      "default_goal": "efficient",
+      "size_class": {
+        "big": [
+          "chest",
+          "lats",
+          "upper_back",
+          "quads",
+          "hamstrings",
+          "glutes"
+        ],
+        "medium": [
+          "front_delts",
+          "side_delts",
+          "rear_delts",
+          "traps",
+          "biceps",
+          "triceps",
+          "calves",
+          "abs"
+        ],
+        "small": [
+          "forearms",
+          "adductors",
+          "abductors",
+          "obliques",
+          "lower_back"
+        ]
+      },
+      "limits_by_goal_rule": {
+        "efficient": "Efficient: big 6, medium 5, small 4 at every level (floor 4). Basis: practitioner/HIT judgement that most of a session's stimulus comes from the first ~4-6 hard sets [Modeled]. Illustration only: under a linear-log shape like the one Remmert et al. 2025 (preprint) found best, ln(6)/ln(11) = 0.75, so 6 sets would give about three quarters of the gain of 11 [Modeled; their curve is pooled, not per muscle]. Medium and small muscles step down by 1 because they take less direct work to reach the same relative dose (the vol9 anchors already rank them so). Floor 4: below that, an ordinary two-exercise x 2-set dose would be flagged. Beginners equal, not higher: no data says beginners need a lower per-session cap at this low end, and going under 4-6 would flag normal beginner days.",
+        "max_growth": "Max growth: big 10, medium 10, small 6; beginners big and medium 8. Basis: Remmert et al. 2025 SportRxiv preprint, ~11 fractional sets per session before added sets stop showing a detectable benefit [Modeled when applied]; 10 sits just under it. Small muscles stay at 6 (practitioner floor from vol9). Beginner big-muscle limit stays 8: Remmert adjusted for training status but gives no beginner cap, and beginners recover more slowly in this model (recovery.params.level 1.15), so we see no case to raise it."
+      },
+      "limits_by_level_note": "vol9 limits, kept for clients without the goal toggle. vol10 clients use limits_by_goal[goal][level][muscle].",
+      "nurd": {
+        "short": "Remmert et al. 2025, SportRxiv",
+        "year": 2025,
+        "type": "preprint (not peer-reviewed)",
+        "label": "Modeled",
+        "url": "https://doi.org/10.51224/srxiv.537",
+        "note": "Only per-session dataset: diminishing returns, point of undetectable outcome superiority ~11 fractional sets per session; applied here as a model."
+      },
+      "nurd_efficient": {
+        "short": "Practitioner / HIT low-volume judgement",
+        "year": null,
+        "type": "practitioner judgement",
+        "label": "Modeled",
+        "note": "The ~4-6 sets per muscle per session efficiency point is coaching judgement, not a study result."
+      },
+      "exemption": {
+        "version": "vol10c",
+        "single_day_min_eff": 1.0,
+        "near_margin": 1.0,
+        "rule": "Do not warn when (1) this is the muscle's only session of the week: exactly one day with >= 1 effective set for it, AND (2) weekly effective sets < weekly minimum for the level + 1 (rounded to 0.01). Then show the info note session_efficiency_single_day instead.",
+        "why": "Condition (2) means trimming one full set would drop the muscle below its weekly minimum, so the warning has no valid trim fix. It is the simplest static test for \"at its minimum\".",
+        "goals": "efficient and max_growth (not the vol9 history limits)",
+        "label": "Modeled",
+        "nurd": {
+          "short": "Lift Board model; Schoenfeld, Grgic & Krieger 2019 (frequency, volume-equated)",
+          "year": 2026,
+          "type": "model",
+          "label": "Modeled",
+          "note": "Exemption and note are planning choices. Splitting the same weekly sets over two days is volume-equated and does not reduce growth in the frequency meta-analysis, so a second day is offered, never extra sets."
+        }
+      }
+    },
+    {
+      "id": "session_efficiency_single_day",
+      "severity": "info",
+      "scope": "session",
+      "version": "vol10c",
+      "fires_when": "session_efficiency would fire but rules[id=session_efficiency].exemption applies",
+      "message": "{muscle} gets all {sets} of its weekly effective sets on {day}. If your schedule allows, a second day for {muscle} would spread them out.",
+      "short_label": "All in one session",
+      "flag_tuple": "(info, session_efficiency_single_day, day, muscle, session effective sets, weekly effective sets)",
+      "fixes": [
+        "move_sets_to_day"
+      ],
+      "never_suggest": [
+        "add_sets",
+        "add_exercise"
+      ],
+      "counts_as_warning": false,
+      "category": "session",
+      "metric": "session_design",
+      "evidence": "modeled",
+      "nurd": {
+        "short": "Lift Board model; Schoenfeld, Grgic & Krieger 2019 (frequency, volume-equated)",
+        "year": 2026,
+        "type": "model",
+        "label": "Modeled",
+        "note": "Exemption and note are planning choices. Splitting the same weekly sets over two days is volume-equated and does not reduce growth in the frequency meta-analysis, so a second day is offered, never extra sets."
+      },
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      }
+    },
+    {
+      "id": "wasted_late_sets",
+      "severity": "info",
+      "scope": "session",
+      "version": "vol10",
+      "fires_when": "with session_efficiency: effective sets for the muscle in one workout > session limit (rules session_efficiency.limits_by_goal[goal][level][m], or limits_by_level without a goal)",
+      "which_sets": "Walk the day's tiles in board order and add up effective sets for the muscle. The sets that take the running total past the limit, and every later set for that muscle, are the wasted late sets. wasted effective sets = stimulus - limit.",
+      "c_marginal": "Display: credit of the first wasted set from the session-efficiency decay, 1/(1+(n-1)/c) with c = session.c_by_level[level][m] (volume-model.json session.efficiency_at_limit). Informational; the limit decides which sets count.",
+      "counts_toward_week": true,
+      "counts_note": "Wasted late sets still count in full toward weekly volume (face value). The flag says they are poor value in that session, not that they are discarded.",
+      "message": "{n} late {muscle} sets on {day} ({wasted} effective sets) are past the {limit}-set limit for {goal}. They still count for the week; they would do more on another day.",
+      "short_label": "Wasted late sets",
+      "flag_tuple": "(info, wasted_late_sets, day, muscle, tile ids joined by +, wasted effective sets)",
+      "fixes": [
+        "move_sets_to_day",
+        "reduce_sets:highest_contributor",
+        "swap_exercise:fresher_same_muscle"
+      ],
+      "fix_order": "same as session_efficiency.fix_order",
+      "never_suggest": [
+        "add_sets",
+        "add_exercise"
+      ],
+      "category": "session",
+      "metric": "session_design",
+      "evidence": "modeled",
+      "nurd": {
+        "short": "Remmert et al. 2025, SportRxiv",
+        "year": 2025,
+        "type": "preprint (not peer-reviewed)",
+        "label": "Modeled",
+        "url": "https://doi.org/10.51224/srxiv.537",
+        "note": "Only per-session dataset: diminishing returns, point of undetectable outcome superiority ~11 fractional sets per session; applied here as a model."
+      },
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      }
+    },
+    {
+      "id": "efficient_trim",
+      "severity": "info",
+      "scope": "preset",
+      "version": "vol10b",
+      "goal": "efficient",
+      "purpose": "Turn a preset into its Efficient version by trimming sets until session_efficiency (efficient limits) clears, without breaking any weekly minimum.",
+      "allowed": [
+        "reduce sets on an existing exercise",
+        "remove an exercise only when its sets would reach 0 (last resort)"
+      ],
+      "not_allowed": [
+        "moving lifts between days",
+        "swaps",
+        "adding sets or exercises",
+        "changing exercise ids",
+        "emptying a day"
+      ],
+      "steps": [
+        "1. Run the checker with goal efficient. Collect session_efficiency flags (day, muscle, excess).",
+        "2. Take the first flag: day in week order (mon..sun), then larger excess first, then muscle name A-Z.",
+        "3. Rank the cut candidates on that day (tiles that credit the flagged muscle), see tie_breaks. Cut 1 set from the first candidate that passes every constraint.",
+        "4. Re-run the checker and repeat from step 2 until no session_efficiency flag is left or every remaining flag is blocked.",
+        "5. A flag is blocked (residual) when no candidate passes the constraints; it is left and listed with the reason."
+      ],
+      "tie_breaks": {
+        "pools_in_order": [
+          "A: wasted-late-set tiles (rules wasted_late_sets walk in board order) with sets >= 2",
+          "B: any tile crediting the muscle with sets >= 2",
+          "C: tiles with 1 set (cut = remove the exercise), wasted-late-set tiles first; only when A and B have no feasible cut, so a partial trim is always preferred"
+        ],
+        "within_pool": [
+          "1. lowest per-set stimulus:fatigue for the flagged muscle first: credit(e, m) / (per-set fatigue x rating share of m), rounded to 0.01",
+          "2. then latest in board order first (higher tile index)",
+          "3. then exercise id A-Z"
+        ],
+        "why": "Late sets are where the wasted sets sit (wasted_late_sets), so they go first; within those, the set that buys the least stimulus per unit of fatigue goes first."
+      },
+      "constraints": {
+        "weekly_minimum": "After the cut, every muscle the exercise credits (credit > 0) must have weekly effective sets >= zones(m, level).min (rounded to 0.01). A muscle already below its minimum may not be reduced at all.",
+        "min_sets_per_exercise": 1,
+        "no_new_non_info_flags": "The cut may not create any non-info flag other than session_efficiency (rules fix_validation spirit).",
+        "no_empty_day": "The last exercise on a day is never removed."
+      },
+      "output": {
+        "presets": "data/splits-efficient.json (same schema as splits.json)",
+        "diff": "data/splits-efficient-diff.json"
+      },
+      "evidence": "modeled",
+      "nurd": {
+        "short": "Lift Board model; limits per Remmert et al. 2025 SportRxiv (preprint) and practitioner/HIT judgement",
+        "year": 2026,
+        "type": "model",
+        "label": "Modeled",
+        "note": "Trim order and constraints are planning choices, not research results."
+      },
       "applies": {
         "levels": [
           "beginner",
@@ -7240,5 +8181,45 @@
       "add_sets",
       "add_exercise"
     ]
+  },
+  "goals": {
+    "version": "vol10",
+    "options": [
+      "efficient",
+      "max_growth"
+    ],
+    "default": "efficient",
+    "labels": {
+      "efficient": "Efficient",
+      "max_growth": "Max growth"
+    },
+    "efficient": {
+      "label": "Efficient",
+      "summary": "Weekly target at the low end of the sweet spot; session limit ~6 sets for big muscles.",
+      "weekly": "rules[id=weekly_volume].targets_by_goal.efficient",
+      "session_limits": "rules[id=session_efficiency].limits_by_goal.efficient",
+      "nurd": {
+        "short": "Practitioner / HIT low-volume judgement",
+        "year": null,
+        "type": "practitioner judgement",
+        "label": "Modeled",
+        "note": "The ~4-6 sets per muscle per session efficiency point is coaching judgement, not a study result."
+      }
+    },
+    "max_growth": {
+      "label": "Max growth",
+      "summary": "Weekly target at the high end of the sweet spot; session limit 10 sets for big and medium muscles (8 for beginners).",
+      "weekly": "rules[id=weekly_volume].targets_by_goal.max_growth",
+      "session_limits": "rules[id=session_efficiency].limits_by_goal.max_growth",
+      "nurd": {
+        "short": "Remmert et al. 2025, SportRxiv",
+        "year": 2025,
+        "type": "preprint (not peer-reviewed)",
+        "label": "Modeled",
+        "url": "https://doi.org/10.51224/srxiv.537",
+        "note": "Only per-session dataset: diminishing returns, point of undetectable outcome superiority ~11 fractional sets per session; applied here as a model."
+      }
+    },
+    "same_curve": "Both goals use the same weekly curve, anchors and zones; only the target marker and the session limits change."
   }
 }

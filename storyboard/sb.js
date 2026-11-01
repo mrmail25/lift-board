@@ -466,7 +466,7 @@ V.finish=()=>{if(!FIN)FIN=finBuild(true);const F=FIN,T=finStats(),u=S.unit,nPR=O
   const cards=[`<article class="fc hero" data-card="hero"><div class="fc-logo logo-tile"></div><div class="eyebrow">Workout complete</div><h2>${esc(F.ses.label)}</h2><p class="sub">${hm(F.ses.startedAt)} – ${hm(F.ses.endedAt)}</p>
      <div class="stats"><div><b class="num">${F.min}</b><span>minutes</span></div><div><b class="num">${T.sets}</b><span>sets</span></div><div><b class="num">${fmtVol(T.vol)}</b><span>${u} volume</span></div><div><b class="num acc">${nPR}</b><span>PRs</span></div></div>
      ${ladRankUpHtml()}<ul class="facts">${facts.map(f=>`<li>${f}</li>`).join('')}</ul></article>`,
-   `<article class="fc" data-card="prs"><div class="eyebrow">Personal records</div><h2>${nPR?`${nPR} lift${nPR>1?'s':''} with a PR`:'No PRs today'}</h2>${prRows||`<p class="sub">No set beat your logged bests by more than Coach's tie margin (half a load step or 1%).</p>`}
+   `<article class="fc" data-card="prs"><div class="eyebrow">Personal records</div><h2>${nPR?`${nPR} lift${nPR>1?'s':''} with a PR`:'No PRs today'}</h2>${prRows||`<p class="sub">No set beat your logged bests by more than the tie margin (half a load step or 1%).</p>`}
      <p class="foot fpad">PRs use the same rules as the Log.</p></article>`,
    `<article class="fc" data-card="vs"><div class="eyebrow">vs last time</div><h2>${cmpN?`Up on ${up} of ${cmpN}`:'Nothing to compare yet'}</h2>
      ${T.cmp.map(c=>`<div class="cmp" data-ex="${c.id}"><div class="grow"><b>${exNameP(c.id)}</b><span class="num">${nfmt(c.now.l)} × ${c.now.reps}${c.first?' · first time logged':` · was ${nfmt(c.was.l)} × ${c.was.reps} on Oct ${c.when}`}</span></div><span class="dl ${c.first?'flat':c.c}">${c.first?'new':c.txt}</span></div>`).join('')}
@@ -942,7 +942,7 @@ function ladLeanRow(L){const ln=L.lean,b=L.badges.lean_prime;if(ln.status==='hid
   if(ln.status==='not_tracked')return `<div class="row lean off" data-lean="not_tracked"><div class="grow"><div class="t1">Lean Prime</div><div class="t2">${esc(ln.label)}</div></div><button class="lk" data-go="#settings-ladder">Set up</button></div>`;
   return `<div class="row lean ${b&&b.unlocked?'on':''}${b&&b.greyed?' grey':''}" data-lean="${ln.status}"><span class="lbadge ${b&&b.unlocked?'on':''}">${apeFig('prime')}</span><div class="grow"><div class="t1">Lean Prime${b&&b.unlocked?'':b&&b.greyed?' (greyed)':''}</div><div class="t2">${esc(ln.label||'')}</div></div></div>`}
 V.ladder=()=>{const L=ladderData(),nav=`<div class="nav lnavs"><div class="l"><button class="back" data-go="#progress">${I('chevL',2.4)}Progress</button></div><div class="t">Evolution ladder</div><div class="r"></div></div>`;
-  if(!L)return nav+header('Evolution ladder')+`<p class="foot">The ladder needs Coach's evolution rules.</p>`;
+  if(!L)return nav+header('Evolution ladder')+`<p class="foot">The ladder needs the evolution rules.</p>`;
   if(L.hidden_all)return nav+header('Evolution ladder')+`<div class="card lhidden"><b>The ladder is hidden</b><p class="sub">Turn it back on in Settings to see your rank.</p><button class="btn" data-go="#settings-ladder">Open Settings</button></div>`;
   setTimeout(ladPersist,0);const R=RD.EVO,slots=Object.fromEntries(L.progress.slots.map(s=>[s.lift,s])),core=L.progress.slots.map(s=>s.lift),extra=Object.keys(L.lifts).filter(l=>!core.includes(l)&&L.lifts[l].value!=null);
   const notes=[L.labels.substitution,L.labels.weighted,L.labels.bodyweight,L.labels.table].filter(Boolean);
@@ -1486,7 +1486,7 @@ V.style=()=>`<div class="nav"><div class="l"><button class="back" data-go="#sett
   <div class="card ctl"><div class="two"><button class="btn accent">Primary</button><button class="btn ink">Secondary</button></div><div class="two"><button class="btn grey">Tertiary</button><button class="btn danger">Delete</button></div>
    <div class="seg"><button>Beginner</button><button class="on">Intermediate</button><button>Advanced</button></div>
    <div class="chips" style="padding:0"><button class="chip on">★ Primary</button><button class="chip">${GLY.accessory} Accessory</button><button class="chip">● Isolation</button></div>
-   <div class="tags"><span class="tag acc">More stretch emphasis</span><span class="tag">More stable</span><span class="badge">PR</span><span class="evb ink">Studies</span><span class="evb">Mechanics</span><span class="evb outl">Coach model</span></div>
+   <div class="tags"><span class="tag acc">More stretch emphasis</span><span class="tag">More stable</span><span class="badge">PR</span><span class="evb ink">Studies</span><span class="evb">Mechanics</span><span class="evb outl">Modeled</span></div>
    <div class="fields"><input class="fld demo" readonly value="" placeholder="225"><input class="fld demo active" readonly value="230"><input class="fld demo auto" readonly value="230">${tg(1)}${tg(0)}</div>
    <p class="sub">Field: empty · active · auto-filled from the set above</p></div>
   <div class="ghead">Space · radius · motion</div>
@@ -1549,8 +1549,8 @@ async function afterLearn(){
    <div class="group">${fun.map((p,i)=>{const pg=fpages[i].page;return p.status==='final'?`<button class="row" data-go="#learn-f-${p.id}"><span class="ico acc">${I('book',1.7)}</span><div class="grow"><div class="t1">${p.title}</div><div class="t2 clamp">${pg?pg.summary:''}</div></div>${CHEV}</button>`
      :`<div class="row planned"><span class="ico gr">${I('book',1.7)}</span><div class="grow"><div class="t1">${p.title}</div></div><span class="soon">Coming soon</span></div>`}).join('')}</div>
    ${xp.length?`<div class="sec"><h2>Exercises</h2><span class="more num">${xf.length} of ${xp.length} written</span></div>
-   <div class="group">${xtop.map(p=>`<button class="row" data-go="#learn-ex-${p.id}">${gl(p.id)}<div class="grow"><div class="t1">${exName(p.id)}</div><div class="t2">${p.status==='final'?'Coach guide':'Auto page from the library · guide coming'}</div></div>${CHEV}</button>`).join('')}</div>
-   <p class="foot">Every exercise has a page: Coach's guide when written, otherwise one generated from the library.</p>`:''}
+   <div class="group">${xtop.map(p=>`<button class="row" data-go="#learn-ex-${p.id}">${gl(p.id)}<div class="grow"><div class="t1">${exName(p.id)}</div><div class="t2">${p.status==='final'?'Guide':'Auto page from the library · guide coming'}</div></div>${CHEV}</button>`).join('')}</div>
+   <p class="foot">Every exercise has a page: a written guide when ready, otherwise one generated from the library.</p>`:''}
    <p class="foot">${idx.disclaimer||''}</p>`;
   afterMap();
 }
@@ -1562,7 +1562,7 @@ async function afterLearnMuscle(id){
   const credits=(note,evd)=>sect('Exercises that train it',`${['main','helper','minor'].map(b=>cr[b].length?`<div class="band"><div class="eyebrow">${BANDL[b]} · ${b==='main'?'0.75 and up':b==='helper'?'0.4 to under 0.75':'0.25 to under 0.4'}</div>
       ${cr[b].slice(0,b==='main'?8:6).map(([e,r])=>`<button class="exl" data-act="exinfo" data-id="${e.id}">${gl(e.id)}<span class="grow">${e.name}</span>${rate(r)}</button>`).join('')}${cr[b].length>(b==='main'?8:6)?`<p class="more2">+ ${cr[b].length-(b==='main'?8:6)} more</p>`:''}</div>`:'').join('')}
       ${note?`<p class="note">${note} ${evb(evd)}</p>`:''}<p class="foot" style="padding:6px 0 0">Live from exercises.json. Ratings under 0.25 are not shown and add no sets.</p>`,false,cr.main.length+cr.helper.length+cr.minor.length);
-  if(!j){$('#lm').innerHTML=`${header(nm)}<div class="soonbox"><span class="soon">Coming soon</span><p class="sub">Coach is writing this guide. It appears here as soon as index.json marks it final.</p></div>${mapc}<div class="lsx">${credits()}</div>`;return}
+  if(!j){$('#lm').innerHTML=`${header(nm)}<div class="soonbox"><span class="soon">Coming soon</span><p class="sub">This guide is being written. It appears here as soon as index.json marks it final.</p></div>${mapc}<div class="lsx">${credits()}</div>`;return}
   const W=j.what_it_is||{},heads=W.heads||[],hn=h=>h==='all'?'All heads':((heads.find(x=>x.id===h)||{}).name||h),R=j.relationships||{};
   const rel=(arr)=>(arr||[]).map(s=>`<div class="relr">${s.muscle_id&&s.muscle_id!==id?`<button class="chip" data-go="#learn-${s.muscle_id}">${s.name} ${I('chevR',2.4)}</button>`:`<span class="chip static">${s.name}</span>`}<p>${s.role} ${ev(s)}</p></div>`).join('');
   $('#lm').innerHTML=`${header(nm)}<p class="lsum">${j.summary||''}</p>${mapc}<div class="lsx">
@@ -1741,7 +1741,8 @@ async function loadRank(){if(RD)return RD;if(RDP)return RDP;
     const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
     const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
     R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PR2=pr2;R.SLOG=slog;R.EVO=evo;R.DISP=disp;R.FN=fnotes;
-    R.VM=await getJ(DATA+'volume-model.json');   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
+    R.VM=await getJ(DATA+'volume-model.json');
+    try{R.TRIMDIFF=await getJ(DATA+'splits-efficient-diff.json')}catch(x){R.TRIMDIFF=null}try{R.SPLITS_EFF=await getJ(DATA+'splits-efficient.json')}catch(x){R.SPLITS_EFF=null} // vol10b: Efficient presets   // vol10b: Coach's per-preset Efficient trims   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
     try{await cxLoad(R,exercises,rules,cxd)}catch(x){console.warn('custom exercises not loaded',x)}   // custom exercises: defaults loader + registration (before anything reads RD)
     RD=R;return RD})();
   const r=await RDP;RDP=null;return r}
@@ -1810,8 +1811,8 @@ async function afterLearnEx(id){
   const has=a=>a&&a.length,ph=j&&(j.placeholder||/PLACEHOLDER/.test(j.notice||''));
   const tw=t=>t.change?{h:t.change,tg:(t.target_muscle_ids||[]).map(m=>ML[m]||m).join(', '),k:t.kind}:{h:t.tweak,tg:ML[t.target]||t.target,k:''};
   const cx=isCx(id);
-  const body=cx?`<div class="lsx">${hit}</div><p class="foot cxsrc">Your exercise: there is no Coach page for it. Muscle credit comes from the bands you picked; the other numbers are modeled from similar library exercises.</p>`:!j?`<div class="soonbox"><span class="soon">Coming soon</span><p class="sub">Coach is writing this page.</p></div><div class="lsx">${hit}</div>`:`
-   ${ph?`<div class="ph">${j.notice||'PLACEHOLDER — Coach content pending'}</div>`:''}${j.source==='auto'?`<div class="autob">${I('info',1.8)}<span>${j.source_label||'Auto-generated from the exercise library'}</span></div>`:''}<div class="lsx">${hit}
+  const body=cx?`<div class="lsx">${hit}</div><p class="foot cxsrc">Your exercise: there is no guide page for it. Muscle credit comes from the bands you picked; the other numbers are modeled from similar library exercises.</p>`:!j?`<div class="soonbox"><span class="soon">Coming soon</span><p class="sub">This page is being written.</p></div><div class="lsx">${hit}</div>`:`
+   ${ph?`<div class="ph">${j.notice||'PLACEHOLDER — content pending'}</div>`:''}${j.source==='auto'?`<div class="autob">${I('info',1.8)}<span>${j.source_label||'Auto-generated from the exercise library'}</span></div>`:''}<div class="lsx">${hit}
    ${has(j.setup)?sect('Setup',`<ul class="bul">${j.setup.map(m=>`<li>${m.text} ${ev(m)}</li>`).join('')}</ul>`,false,j.setup.length):''}
    ${has(j.form_cues)?sect('Form cues',j.form_cues.map(c=>`<div class="cue2"><b>“${c.cue}”</b><p>${c.why||''} ${ev(c)}</p></div>`).join(''),true,j.form_cues.length):''}
    ${has(j.bias_tweaks)?sect('Tweaks to bias muscles',j.bias_tweaks.map(t=>{const w=tw(t);return `<div class="bias"><div class="bh"><b>${w.tg}</b>${w.k?`<span class="kind">${w.k}</span>`:''}${ev(t)}</div><p>${w.h}</p><p class="sub">${t.effect||''}</p>${has(t.swap_tags)?`<div class="tags">${tagL(t.swap_tags)}</div>`:''}${has(t.example_exercise_ids)?t.example_exercise_ids.map(exLink).join(''):''}${t.caveat?`<p class="cav">${t.caveat}</p>`:''}</div>`}).join(''),false,j.bias_tweaks.length):''}
@@ -1872,10 +1873,10 @@ const ROUTES={ // route: [screen, tab, fullScreen, sessionActive, before, after]
  'train-start':['train','train',0,0,null,()=>{const b=$('.rt.act [data-act=start]');b&&b.click()}],
  bar:['log','log',0,1],'bar-trash':['log','log',0,1,null,trashSheet],
  finish:['finish','',1,0],'finish-ape':['finish','',1,0,null,()=>{const c=$('#fincards');c.style.scrollBehavior='auto';c.scrollLeft=c.scrollWidth}],
- empty:['empty','',1,1,()=>{SC.day='sat';startWorkout('Empty workout',[],{empty:true})}],tray:['empty','',1,1,null,traySheet],'tray-legs':['empty','',1,1,()=>{SC.note="Coach's case: PPL intermediate legs day (Fri), no goals, bias or favorites";PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],'tray-lib':['empty','',1,1,()=>{TF.mode='lib'},traySheet],'tray-sort-fat':['empty','',1,1,()=>{TF.mode='fat'},traySheet],'tray-sort-stim':['empty','',1,1,()=>{TF.mode='stim';TF.mus='hamstrings'},traySheet],
+ empty:['empty','',1,1,()=>{SC.day='sat';startWorkout('Empty workout',[],{empty:true})}],tray:['empty','',1,1,null,traySheet],'tray-legs':['empty','',1,1,()=>{SC.note="Test case: PPL intermediate legs day (Fri), no goals, bias or favorites";PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],'tray-lib':['empty','',1,1,()=>{TF.mode='lib'},traySheet],'tray-sort-fat':['empty','',1,1,()=>{TF.mode='fat'},traySheet],'tray-sort-stim':['empty','',1,1,()=>{TF.mode='stim';TF.mus='hamstrings'},traySheet],
  'tray-detail':['empty','',1,1,null,()=>{traySheet();setTimeout(()=>exDetail('barbell-bench-press',{onAdd:()=>toast('Added to workout')}),60)}],
  'progress-effort':['progress','progress',0,0,()=>{PROG.empty=false},()=>{const e=$('[data-psec=muscles]');if(e)e.scrollIntoView({block:'start'})}],
- 'tray-calf':['empty','',1,1,()=>{Object.assign(SC,{board:BOARDS.legsGap,day:'mon',cands:BOARDS.legsGapCands,note:"Coach's calf-gap case: legs-only week, calves at 3 of 5 sets"});PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],
+ 'tray-calf':['empty','',1,1,()=>{Object.assign(SC,{board:BOARDS.legsGap,day:'mon',cands:BOARDS.legsGapCands,note:"Calf-gap test case: legs-only week, calves at 3 of 5 sets"});PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},traySheet],
  'swap-lat-home':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Home template ticked (adjustable dumbbells, bench, pull-up bar, bands).';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.home}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
  'swap-lat-com':['build','build',0,0,()=>{SC.board=[];SC.note='Lat pulldown swap with the Commercial template ticked.';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[],gym_profile:RD.rules.equipment_items.example_profiles.commercial}},()=>swapSheet('lat-pulldown',{n:6,debug:1})],
  'swap-a':['build','build',0,0,()=>{SC.day='mon';SC.note='Worked example (a): no goals, bias or favorites. PPL intermediate push day.';PREFS_OVR.p={goals:[],bias_muscles:[],favorites:[]}},()=>swapSheet('barbell-bench-press',{n:8,debug:1})],
@@ -1985,8 +1986,8 @@ window.SB={sheet,S,WK,CLK,ROUTINES,closeAll,startWorkout,gymPlates,plateCalc,mov
 const DEVF=/\b[\w\/-]+(?:\.[\w-]+)*\.(?:json|js|py|md|csv|css|html)\b(?::[\w.#\[\]-]+)?|\b(?:tools|data|logic|test)\/[\w.\/-]+|\b(?:rules|targets|logger|analytics|ranking|exercises|templates|patterns|splits)(?:\.[a-z_#\[\]]+)+/i;
 const DEVG=new RegExp('(?:'+DEVF.source+')(?:\\s+[a-z][a-z0-9]*(?:[._][a-z0-9#]+)+)?','gi'),SNAKE=/\b[a-z][a-z0-9]*(?:_[a-z0-9]+)+\b/g,hasSnake=s=>/\b[a-z][a-z0-9]*(?:_[a-z0-9]+)+\b/.test(s);
 const devWords=ref=>{const k=ref.replace(/^[^:\s]*\.(?:json|js|py|md|csv|css|html)[:\s]*/i,'').replace(/^(?:rules|targets|logger|analytics|ranking)\./i,'').split(/[.#\[\]]+/).filter(x=>x&&!/^(rules|logger|analytics|ranking|targets)$/.test(x));
-  const w=x=>x.replace(/_/g,' ');if(!k.length)return "Coach's data";const last=k[k.length-1];
-  return ML[last]&&k.length>1?`Coach's ${w(k[k.length-2])} list for ${(ML[last]||last).toLowerCase()}`:`Coach's ${w(k.slice(-2).join(' '))} setting`};
+  const w=x=>x.replace(/_/g,' ');if(!k.length)return 'the plan data';const last=k[k.length-1];
+  return ML[last]&&k.length>1?`The ${w(k[k.length-2])} list for ${(ML[last]||last).toLowerCase()}`:`The ${w(k.slice(-2).join(' '))} setting`};
 const DEVNOTE=/^(?:spec|source|fixture|render|see)\b|not from this text|check_education|enforces that|regenerate|generated by/i;
 function devClean(s){if(!s||(!DEVF.test(s)&&!hasSnake(s)))return s;const lead=s.match(/^\s*/)[0],trail=s.match(/\s*$/)[0];let t=s.trim();
   t=t.replace(/\s*[({]([^(){}]*)[)}]/g,(m,inner)=>DEVF.test(inner)||hasSnake(inner)?'':m);

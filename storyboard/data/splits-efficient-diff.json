@@ -1,0 +1,2980 @@
+{
+ "version": "vol10b",
+ "source": "data/splits.json (unchanged)",
+ "goal": "efficient",
+ "rule": "rules.json rules[id=efficient_trim]",
+ "summary": {
+  "before": {
+   "flags": 189,
+   "presets": 36
+  },
+  "after": {
+   "flags": 50,
+   "presets": 18
+  },
+  "sets_removed": 250,
+  "exercises_removed": 4,
+  "in_zone_to_below_target": 56,
+  "fell_below_min": 0,
+  "reduced_while_below_min": 0,
+  "residual": [
+   {
+    "preset": "full-body/intermediate/2",
+    "day": "thu",
+    "muscle": "glutes",
+    "sets": 6.3,
+    "limit": 6,
+    "excess": 0.3,
+    "why": [
+     "bulgarian-split-squat: would put quads below the weekly minimum",
+     "romanian-deadlift: would put lats, upper_back, hamstrings below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "full-body/advanced/2",
+    "day": "mon",
+    "muscle": "triceps",
+    "sets": 7.2,
+    "limit": 5,
+    "excess": 2.2,
+    "why": [
+     "incline-barbell-bench-press: would put chest below the weekly minimum",
+     "overhead-cable-triceps-extension: would put triceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "full-body/advanced/2",
+    "day": "thu",
+    "muscle": "lower_back",
+    "sets": 4.8,
+    "limit": 4,
+    "excess": 0.8,
+    "why": [
+     "pendlay-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+     "romanian-deadlift: would put lats, hamstrings, glutes, abductors below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "full-body/advanced/2",
+    "day": "thu",
+    "muscle": "upper_back",
+    "sets": 6.8,
+    "limit": 6,
+    "excess": 0.8,
+    "why": [
+     "pendlay-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+     "reverse-pec-deck: would put rear_delts, upper_back below the weekly minimum",
+     "romanian-deadlift: would put lats, hamstrings, glutes, abductors below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower/beginner/2",
+    "day": "mon",
+    "muscle": "lats",
+    "sets": 6.2,
+    "limit": 6,
+    "excess": 0.2,
+    "why": [
+     "lat-pulldown: would put rear_delts, upper_back, biceps below the weekly minimum",
+     "seated-cable-row: would put rear_delts, upper_back, biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower/intermediate/2",
+    "day": "mon",
+    "muscle": "lats",
+    "sets": 7.2,
+    "limit": 6,
+    "excess": 1.2,
+    "why": [
+     "chest-supported-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+     "pull-up: would put rear_delts, lats, upper_back, biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower/intermediate/2",
+    "day": "mon",
+    "muscle": "upper_back",
+    "sets": 6.8,
+    "limit": 6,
+    "excess": 0.8,
+    "why": [
+     "chest-supported-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+     "pull-up: would put rear_delts, lats, upper_back, biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower/intermediate/2",
+    "day": "thu",
+    "muscle": "lower_back",
+    "sets": 4.8,
+    "limit": 4,
+    "excess": 0.8,
+    "why": [
+     "back-squat: would put quads, glutes, abductors below the weekly minimum",
+     "romanian-deadlift: would put lats, upper_back, hamstrings, glutes, abductors below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower/intermediate/2",
+    "day": "thu",
+    "muscle": "adductors",
+    "sets": 4.3,
+    "limit": 4,
+    "excess": 0.3,
+    "why": [
+     "back-squat: would put quads, glutes, abductors below the weekly minimum",
+     "romanian-deadlift: would put lats, upper_back, hamstrings, glutes, abductors below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower/advanced/4",
+    "day": "mon",
+    "muscle": "biceps",
+    "sets": 5.6,
+    "limit": 5,
+    "excess": 0.6,
+    "why": [
+     "chest-supported-row: would put biceps below the weekly minimum",
+     "incline-dumbbell-curl: would put biceps below the weekly minimum",
+     "pull-up: would put lats, biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower/advanced/4",
+    "day": "mon",
+    "muscle": "side_delts",
+    "sets": 5.3,
+    "limit": 5,
+    "excess": 0.3,
+    "why": [
+     "cable-lateral-raise: would put side_delts below the weekly minimum",
+     "seated-dumbbell-shoulder-press: would put side_delts below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower/advanced/4",
+    "day": "mon",
+    "muscle": "front_delts",
+    "sets": 5.2,
+    "limit": 5,
+    "excess": 0.2,
+    "why": [
+     "incline-barbell-bench-press: would put chest below the weekly minimum",
+     "seated-dumbbell-shoulder-press: would put side_delts below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "ppl/intermediate/3",
+    "day": "mon",
+    "muscle": "front_delts",
+    "sets": 6.5,
+    "limit": 5,
+    "excess": 1.5,
+    "why": [
+     "barbell-bench-press: would put chest, triceps below the weekly minimum",
+     "cable-fly: would put chest below the weekly minimum",
+     "incline-dumbbell-press: would put chest below the weekly minimum",
+     "overhead-press: would put side_delts, triceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "ppl/intermediate/3",
+    "day": "wed",
+    "muscle": "lats",
+    "sets": 8.2,
+    "limit": 6,
+    "excess": 2.2,
+    "why": [
+     "barbell-row: would put upper_back, biceps below the weekly minimum",
+     "lat-pulldown: would put upper_back, biceps below the weekly minimum",
+     "pull-up: would put upper_back, biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "ppl/intermediate/3",
+    "day": "wed",
+    "muscle": "rear_delts",
+    "sets": 6.0,
+    "limit": 5,
+    "excess": 1.0,
+    "why": [
+     "barbell-row: would put upper_back, biceps below the weekly minimum",
+     "lat-pulldown: would put upper_back, biceps below the weekly minimum",
+     "pull-up: would put upper_back, biceps below the weekly minimum",
+     "reverse-pec-deck: would put upper_back below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "ppl/intermediate/3",
+    "day": "fri",
+    "muscle": "abductors",
+    "sets": 4.6,
+    "limit": 4,
+    "excess": 0.6,
+    "why": [
+     "back-squat: would put quads, glutes below the weekly minimum",
+     "hip-abduction-machine: would put glutes below the weekly minimum",
+     "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "ppl/advanced/3",
+    "day": "mon",
+    "muscle": "front_delts",
+    "sets": 8.5,
+    "limit": 5,
+    "excess": 3.5,
+    "why": [
+     "cable-fly: would put chest below the weekly minimum",
+     "dumbbell-bench-press: would put chest, triceps below the weekly minimum",
+     "incline-barbell-bench-press: would put chest, triceps below the weekly minimum",
+     "seated-dumbbell-shoulder-press: would put triceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "ppl/advanced/3",
+    "day": "wed",
+    "muscle": "lats",
+    "sets": 8.3,
+    "limit": 6,
+    "excess": 2.3,
+    "why": [
+     "chest-supported-row: would put rear_delts, lats below the weekly minimum",
+     "pendlay-row: would put rear_delts, lats below the weekly minimum",
+     "pull-up: would put rear_delts, lats below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "ppl/advanced/3",
+    "day": "wed",
+    "muscle": "upper_back",
+    "sets": 8.3,
+    "limit": 6,
+    "excess": 2.3,
+    "why": [
+     "chest-supported-row: would put rear_delts, lats below the weekly minimum",
+     "pendlay-row: would put rear_delts, lats below the weekly minimum",
+     "pull-up: would put rear_delts, lats below the weekly minimum",
+     "reverse-pec-deck: would put rear_delts below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "ppl/advanced/3",
+    "day": "fri",
+    "muscle": "lower_back",
+    "sets": 4.1,
+    "limit": 4,
+    "excess": 0.1,
+    "why": [
+     "back-squat: would put quads, abductors below the weekly minimum",
+     "romanian-deadlift: would put hamstrings, abductors below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "bro-split/beginner/5",
+    "day": "wed",
+    "muscle": "adductors",
+    "sets": 4.0,
+    "limit": 4,
+    "excess": 0.0,
+    "why": [
+     "back-squat: would put quads below the weekly minimum",
+     "leg-press: would put quads below the weekly minimum",
+     "romanian-deadlift: would put lats below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "mon",
+    "muscle": "chest",
+    "sets": 6.8,
+    "limit": 6,
+    "excess": 0.8,
+    "why": [
+     "barbell-bench-press: would put chest below the weekly minimum",
+     "cable-fly: would put chest below the weekly minimum",
+     "incline-dumbbell-press: would put chest below the weekly minimum",
+     "weighted-dip: would put chest below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "tue",
+    "muscle": "upper_back",
+    "sets": 6.7,
+    "limit": 6,
+    "excess": 0.7,
+    "why": [
+     "barbell-row: would put lats below the weekly minimum",
+     "chest-supported-row: would put lats below the weekly minimum",
+     "lat-pulldown: would put lats below the weekly minimum",
+     "pull-up: would put lats below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "wed",
+    "muscle": "adductors",
+    "sets": 4.8,
+    "limit": 4,
+    "excess": 0.8,
+    "why": [
+     "back-squat: would put quads below the weekly minimum",
+     "leg-press: would put quads below the weekly minimum",
+     "romanian-deadlift: would put hamstrings below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "bro-split/advanced/5",
+    "day": "mon",
+    "muscle": "chest",
+    "sets": 8.8,
+    "limit": 6,
+    "excess": 2.8,
+    "why": [
+     "cable-fly: would put chest below the weekly minimum",
+     "dumbbell-bench-press: would put chest below the weekly minimum",
+     "incline-barbell-bench-press: would put chest below the weekly minimum",
+     "weighted-dip: would put chest below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "bro-split/advanced/5",
+    "day": "tue",
+    "muscle": "upper_back",
+    "sets": 7.3,
+    "limit": 6,
+    "excess": 1.3,
+    "why": [
+     "chest-supported-row: would put lats below the weekly minimum",
+     "close-grip-pulldown: would put lats below the weekly minimum",
+     "pendlay-row: would put lats below the weekly minimum",
+     "pull-up: would put lats below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "bro-split/advanced/5",
+    "day": "wed",
+    "muscle": "adductors",
+    "sets": 4.4,
+    "limit": 4,
+    "excess": 0.4,
+    "why": [
+     "back-squat: would put quads below the weekly minimum",
+     "hack-squat: would put quads below the weekly minimum",
+     "romanian-deadlift: would put hamstrings below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "bro-split/advanced/5",
+    "day": "wed",
+    "muscle": "glutes",
+    "sets": 6.4,
+    "limit": 6,
+    "excess": 0.4,
+    "why": [
+     "back-squat: would put quads below the weekly minimum",
+     "hack-squat: would put quads below the weekly minimum",
+     "romanian-deadlift: would put hamstrings below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "thu",
+    "muscle": "abductors",
+    "sets": 4.6,
+    "limit": 4,
+    "excess": 0.6,
+    "why": [
+     "back-squat: would put quads, glutes below the weekly minimum",
+     "hip-abduction-machine: would put glutes below the weekly minimum",
+     "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "pplu/advanced/4",
+    "day": "tue",
+    "muscle": "lats",
+    "sets": 6.9,
+    "limit": 6,
+    "excess": 0.9,
+    "why": [
+     "chest-supported-row: would put biceps below the weekly minimum",
+     "pendlay-row: would put biceps below the weekly minimum",
+     "pull-up: would put biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "pplu/advanced/4",
+    "day": "tue",
+    "muscle": "biceps",
+    "sets": 5.4,
+    "limit": 5,
+    "excess": 0.4,
+    "why": [
+     "chest-supported-row: would put biceps below the weekly minimum",
+     "incline-dumbbell-curl: would put biceps below the weekly minimum",
+     "pendlay-row: would put biceps below the weekly minimum",
+     "preacher-curl: would put biceps below the weekly minimum",
+     "pull-up: would put biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "pplu/advanced/4",
+    "day": "thu",
+    "muscle": "lower_back",
+    "sets": 4.1,
+    "limit": 4,
+    "excess": 0.1,
+    "why": [
+     "back-squat: would put quads, abductors below the weekly minimum",
+     "romanian-deadlift: would put hamstrings, abductors below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "pplul/advanced/5",
+    "day": "tue",
+    "muscle": "lats",
+    "sets": 6.9,
+    "limit": 6,
+    "excess": 0.9,
+    "why": [
+     "chest-supported-row: would put biceps below the weekly minimum",
+     "pendlay-row: would put biceps below the weekly minimum",
+     "pull-up: would put biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "pplul/advanced/5",
+    "day": "tue",
+    "muscle": "biceps",
+    "sets": 5.4,
+    "limit": 5,
+    "excess": 0.4,
+    "why": [
+     "chest-supported-row: would put biceps below the weekly minimum",
+     "incline-dumbbell-curl: would put biceps below the weekly minimum",
+     "pendlay-row: would put biceps below the weekly minimum",
+     "preacher-curl: would put biceps below the weekly minimum",
+     "pull-up: would put biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "arnold/intermediate/3",
+    "day": "mon",
+    "muscle": "lats",
+    "sets": 8.2,
+    "limit": 6,
+    "excess": 2.2,
+    "why": [
+     "barbell-row: would put upper_back below the weekly minimum",
+     "lat-pulldown: would put upper_back below the weekly minimum",
+     "pull-up: would put upper_back below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "arnold/intermediate/3",
+    "day": "wed",
+    "muscle": "side_delts",
+    "sets": 5.3,
+    "limit": 5,
+    "excess": 0.3,
+    "why": [
+     "dumbbell-lateral-raise: would put side_delts below the weekly minimum",
+     "overhead-press: would put triceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "arnold/intermediate/3",
+    "day": "fri",
+    "muscle": "abductors",
+    "sets": 4.6,
+    "limit": 4,
+    "excess": 0.6,
+    "why": [
+     "back-squat: would put quads, glutes below the weekly minimum",
+     "hip-abduction-machine: would put glutes below the weekly minimum",
+     "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "arnold/advanced/3",
+    "day": "mon",
+    "muscle": "upper_back",
+    "sets": 6.8,
+    "limit": 6,
+    "excess": 0.8,
+    "why": [
+     "chest-supported-row: would put lats, upper_back, biceps below the weekly minimum",
+     "pull-up: would put lats, upper_back, biceps below the weekly minimum",
+     "t-bar-row: would put lats, upper_back, biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "arnold/advanced/3",
+    "day": "fri",
+    "muscle": "lower_back",
+    "sets": 4.1,
+    "limit": 4,
+    "excess": 0.1,
+    "why": [
+     "back-squat: would put quads, abductors below the weekly minimum",
+     "romanian-deadlift: would put upper_back, hamstrings, abductors below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "torso-limbs/intermediate/2",
+    "day": "mon",
+    "muscle": "upper_back",
+    "sets": 6.8,
+    "limit": 6,
+    "excess": 0.8,
+    "why": [
+     "chest-supported-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+     "pull-up: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+     "reverse-pec-deck: would put rear_delts, upper_back below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "torso-limbs/intermediate/2",
+    "day": "mon",
+    "muscle": "lats",
+    "sets": 6.5,
+    "limit": 6,
+    "excess": 0.5,
+    "why": [
+     "chest-supported-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+     "pull-up: would put rear_delts, lats, upper_back, biceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "torso-limbs/intermediate/2",
+    "day": "thu",
+    "muscle": "lower_back",
+    "sets": 4.8,
+    "limit": 4,
+    "excess": 0.8,
+    "why": [
+     "back-squat: would put quads, glutes, abductors below the weekly minimum",
+     "romanian-deadlift: would put lats, upper_back, hamstrings, glutes, abductors below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "torso-limbs/intermediate/2",
+    "day": "thu",
+    "muscle": "adductors",
+    "sets": 4.3,
+    "limit": 4,
+    "excess": 0.3,
+    "why": [
+     "back-squat: would put quads, glutes, abductors below the weekly minimum",
+     "romanian-deadlift: would put lats, upper_back, hamstrings, glutes, abductors below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "phul/advanced/4",
+    "day": "mon",
+    "muscle": "front_delts",
+    "sets": 6.4,
+    "limit": 5,
+    "excess": 1.4,
+    "why": [
+     "barbell-bench-press: would put chest below the weekly minimum",
+     "close-grip-bench-press: would put chest below the weekly minimum",
+     "overhead-press: would put side_delts below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "phul/advanced/4",
+    "day": "mon",
+    "muscle": "triceps",
+    "sets": 6.0,
+    "limit": 5,
+    "excess": 1.0,
+    "why": [
+     "barbell-bench-press: would put chest below the weekly minimum",
+     "close-grip-bench-press: would put chest below the weekly minimum",
+     "overhead-press: would put side_delts below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "phul/advanced/4",
+    "day": "mon",
+    "muscle": "lats",
+    "sets": 6.2,
+    "limit": 6,
+    "excess": 0.2,
+    "why": [
+     "barbell-row: would put rear_delts below the weekly minimum",
+     "pull-up: would put rear_delts below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower-full/advanced/3",
+    "day": "mon",
+    "muscle": "triceps",
+    "sets": 6.6,
+    "limit": 5,
+    "excess": 1.6,
+    "why": [
+     "incline-barbell-bench-press: would put chest, triceps below the weekly minimum",
+     "overhead-cable-triceps-extension: would put triceps below the weekly minimum",
+     "seated-dumbbell-shoulder-press: would put side_delts, triceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower-full/advanced/3",
+    "day": "mon",
+    "muscle": "front_delts",
+    "sets": 5.7,
+    "limit": 5,
+    "excess": 0.7,
+    "why": [
+     "incline-barbell-bench-press: would put chest, triceps below the weekly minimum",
+     "seated-dumbbell-shoulder-press: would put side_delts, triceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower-full/advanced/3",
+    "day": "mon",
+    "muscle": "side_delts",
+    "sets": 5.3,
+    "limit": 5,
+    "excess": 0.3,
+    "why": [
+     "cable-lateral-raise: would put side_delts below the weekly minimum",
+     "seated-dumbbell-shoulder-press: would put side_delts, triceps below the weekly minimum"
+    ]
+   },
+   {
+    "preset": "upper-lower-full/advanced/3",
+    "day": "wed",
+    "muscle": "quads",
+    "sets": 7.0,
+    "limit": 6,
+    "excess": 1.0,
+    "why": [
+     "back-squat: would put quads below the weekly minimum",
+     "leg-extension: would put quads below the weekly minimum"
+    ]
+   }
+  ]
+ },
+ "presets": {
+  "full-body/intermediate/2": {
+   "sets_removed": 0,
+   "changes": [],
+   "flags_before": 1,
+   "flags_after": 1,
+   "residual": [
+    {
+     "day": "thu",
+     "muscle": "glutes",
+     "sets": 6.3,
+     "limit": 6,
+     "excess": 0.3,
+     "why": [
+      "bulgarian-split-squat: would put quads below the weekly minimum",
+      "romanian-deadlift: would put lats, upper_back, hamstrings below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "full-body/advanced/2": {
+   "sets_removed": 0,
+   "changes": [],
+   "flags_before": 3,
+   "flags_after": 3,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "triceps",
+     "sets": 7.2,
+     "limit": 5,
+     "excess": 2.2,
+     "why": [
+      "incline-barbell-bench-press: would put chest below the weekly minimum",
+      "overhead-cable-triceps-extension: would put triceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "thu",
+     "muscle": "lower_back",
+     "sets": 4.8,
+     "limit": 4,
+     "excess": 0.8,
+     "why": [
+      "pendlay-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+      "romanian-deadlift: would put lats, hamstrings, glutes, abductors below the weekly minimum"
+     ]
+    },
+    {
+     "day": "thu",
+     "muscle": "upper_back",
+     "sets": 6.8,
+     "limit": 6,
+     "excess": 0.8,
+     "why": [
+      "pendlay-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+      "reverse-pec-deck: would put rear_delts, upper_back below the weekly minimum",
+      "romanian-deadlift: would put lats, hamstrings, glutes, abductors below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "full-body/advanced/3": {
+   "sets_removed": 1,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 1,
+   "flags_after": 0,
+   "residual": []
+  },
+  "full-body/advanced/4": {
+   "sets_removed": 1,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 1,
+   "flags_after": 0,
+   "residual": []
+  },
+  "upper-lower/beginner/2": {
+   "sets_removed": 0,
+   "changes": [],
+   "flags_before": 1,
+   "flags_after": 1,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "lats",
+     "sets": 6.2,
+     "limit": 6,
+     "excess": 0.2,
+     "why": [
+      "lat-pulldown: would put rear_delts, upper_back, biceps below the weekly minimum",
+      "seated-cable-row: would put rear_delts, upper_back, biceps below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "upper-lower/intermediate/2": {
+   "sets_removed": 0,
+   "changes": [],
+   "flags_before": 4,
+   "flags_after": 4,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "lats",
+     "sets": 7.2,
+     "limit": 6,
+     "excess": 1.2,
+     "why": [
+      "chest-supported-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+      "pull-up: would put rear_delts, lats, upper_back, biceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "mon",
+     "muscle": "upper_back",
+     "sets": 6.8,
+     "limit": 6,
+     "excess": 0.8,
+     "why": [
+      "chest-supported-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+      "pull-up: would put rear_delts, lats, upper_back, biceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "thu",
+     "muscle": "lower_back",
+     "sets": 4.8,
+     "limit": 4,
+     "excess": 0.8,
+     "why": [
+      "back-squat: would put quads, glutes, abductors below the weekly minimum",
+      "romanian-deadlift: would put lats, upper_back, hamstrings, glutes, abductors below the weekly minimum"
+     ]
+    },
+    {
+     "day": "thu",
+     "muscle": "adductors",
+     "sets": 4.3,
+     "limit": 4,
+     "excess": 0.3,
+     "why": [
+      "back-squat: would put quads, glutes, abductors below the weekly minimum",
+      "romanian-deadlift: would put lats, upper_back, hamstrings, glutes, abductors below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "upper-lower/intermediate/4": {
+   "sets_removed": 3,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "hip-thrust",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "hip-abduction-machine",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 2,
+   "flags_after": 0,
+   "residual": []
+  },
+  "upper-lower/advanced/4": {
+   "sets_removed": 10,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "pull-up",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "back-squat",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "leg-extension",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "hip-adduction-machine",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "hip-thrust",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "bulgarian-split-squat",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "hip-abduction-machine",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 8,
+   "flags_after": 3,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "biceps",
+     "sets": 5.6,
+     "limit": 5,
+     "excess": 0.6,
+     "why": [
+      "chest-supported-row: would put biceps below the weekly minimum",
+      "incline-dumbbell-curl: would put biceps below the weekly minimum",
+      "pull-up: would put lats, biceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "mon",
+     "muscle": "side_delts",
+     "sets": 5.3,
+     "limit": 5,
+     "excess": 0.3,
+     "why": [
+      "cable-lateral-raise: would put side_delts below the weekly minimum",
+      "seated-dumbbell-shoulder-press: would put side_delts below the weekly minimum"
+     ]
+    },
+    {
+     "day": "mon",
+     "muscle": "front_delts",
+     "sets": 5.2,
+     "limit": 5,
+     "excess": 0.2,
+     "why": [
+      "incline-barbell-bench-press: would put chest below the weekly minimum",
+      "seated-dumbbell-shoulder-press: would put side_delts below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "ppl/beginner/3": {
+   "sets_removed": 3,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "hammer-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 2,
+   "flags_after": 0,
+   "residual": []
+  },
+  "ppl/beginner/6": {
+   "sets_removed": 4,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "incline-dumbbell-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "hammer-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 2,
+   "flags_after": 0,
+   "residual": []
+  },
+  "ppl/intermediate/3": {
+   "sets_removed": 4,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 6,
+   "flags_after": 4,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "front_delts",
+     "sets": 6.5,
+     "limit": 5,
+     "excess": 1.5,
+     "why": [
+      "barbell-bench-press: would put chest, triceps below the weekly minimum",
+      "cable-fly: would put chest below the weekly minimum",
+      "incline-dumbbell-press: would put chest below the weekly minimum",
+      "overhead-press: would put side_delts, triceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "wed",
+     "muscle": "lats",
+     "sets": 8.2,
+     "limit": 6,
+     "excess": 2.2,
+     "why": [
+      "barbell-row: would put upper_back, biceps below the weekly minimum",
+      "lat-pulldown: would put upper_back, biceps below the weekly minimum",
+      "pull-up: would put upper_back, biceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "wed",
+     "muscle": "rear_delts",
+     "sets": 6.0,
+     "limit": 5,
+     "excess": 1.0,
+     "why": [
+      "barbell-row: would put upper_back, biceps below the weekly minimum",
+      "lat-pulldown: would put upper_back, biceps below the weekly minimum",
+      "pull-up: would put upper_back, biceps below the weekly minimum",
+      "reverse-pec-deck: would put upper_back below the weekly minimum"
+     ]
+    },
+    {
+     "day": "fri",
+     "muscle": "abductors",
+     "sets": 4.6,
+     "limit": 4,
+     "excess": 0.6,
+     "why": [
+      "back-squat: would put quads, glutes below the weekly minimum",
+      "hip-abduction-machine: would put glutes below the weekly minimum",
+      "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "ppl/intermediate/6": {
+   "sets_removed": 18,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "incline-dumbbell-press",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "pull-up",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "lat-pulldown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "reverse-pec-deck",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "hammer-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "skull-crusher",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "face-pull",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "cable-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "hammer-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 10,
+   "flags_after": 0,
+   "residual": []
+  },
+  "ppl/advanced/3": {
+   "sets_removed": 5,
+   "changes": [
+    {
+     "day": "wed",
+     "id": "reverse-pec-deck",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "preacher-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "barbell-shrug",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 7,
+   "flags_after": 4,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "front_delts",
+     "sets": 8.5,
+     "limit": 5,
+     "excess": 3.5,
+     "why": [
+      "cable-fly: would put chest below the weekly minimum",
+      "dumbbell-bench-press: would put chest, triceps below the weekly minimum",
+      "incline-barbell-bench-press: would put chest, triceps below the weekly minimum",
+      "seated-dumbbell-shoulder-press: would put triceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "wed",
+     "muscle": "lats",
+     "sets": 8.3,
+     "limit": 6,
+     "excess": 2.3,
+     "why": [
+      "chest-supported-row: would put rear_delts, lats below the weekly minimum",
+      "pendlay-row: would put rear_delts, lats below the weekly minimum",
+      "pull-up: would put rear_delts, lats below the weekly minimum"
+     ]
+    },
+    {
+     "day": "wed",
+     "muscle": "upper_back",
+     "sets": 8.3,
+     "limit": 6,
+     "excess": 2.3,
+     "why": [
+      "chest-supported-row: would put rear_delts, lats below the weekly minimum",
+      "pendlay-row: would put rear_delts, lats below the weekly minimum",
+      "pull-up: would put rear_delts, lats below the weekly minimum",
+      "reverse-pec-deck: would put rear_delts below the weekly minimum"
+     ]
+    },
+    {
+     "day": "fri",
+     "muscle": "lower_back",
+     "sets": 4.1,
+     "limit": 4,
+     "excess": 0.1,
+     "why": [
+      "back-squat: would put quads, abductors below the weekly minimum",
+      "romanian-deadlift: would put hamstrings, abductors below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "ppl/advanced/6": {
+   "sets_removed": 25,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "incline-barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "skull-crusher",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "pull-up",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "pendlay-row",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "chest-supported-row",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "reverse-pec-deck",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "preacher-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "seated-leg-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "machine-chest-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "pec-deck",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "skull-crusher",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "close-grip-pulldown",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "straight-arm-pulldown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "cable-curl",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "hammer-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 13,
+   "flags_after": 0,
+   "residual": []
+  },
+  "bro-split/beginner/5": {
+   "sets_removed": 11,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "lat-pulldown",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "one-arm-dumbbell-row",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "straight-arm-pulldown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "leg-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "reverse-pec-deck",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 8,
+   "flags_after": 1,
+   "residual": [
+    {
+     "day": "wed",
+     "muscle": "adductors",
+     "sets": 4.0,
+     "limit": 4,
+     "excess": 0.0,
+     "why": [
+      "back-squat: would put quads below the weekly minimum",
+      "leg-press: would put quads below the weekly minimum",
+      "romanian-deadlift: would put lats below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "bro-split/intermediate/5": {
+   "sets_removed": 15,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "weighted-dip",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "lat-pulldown",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "barbell-shrug",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "leg-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "cable-lateral-raise",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "face-pull",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 11,
+   "flags_after": 3,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "chest",
+     "sets": 6.8,
+     "limit": 6,
+     "excess": 0.8,
+     "why": [
+      "barbell-bench-press: would put chest below the weekly minimum",
+      "cable-fly: would put chest below the weekly minimum",
+      "incline-dumbbell-press: would put chest below the weekly minimum",
+      "weighted-dip: would put chest below the weekly minimum"
+     ]
+    },
+    {
+     "day": "tue",
+     "muscle": "upper_back",
+     "sets": 6.7,
+     "limit": 6,
+     "excess": 0.7,
+     "why": [
+      "barbell-row: would put lats below the weekly minimum",
+      "chest-supported-row: would put lats below the weekly minimum",
+      "lat-pulldown: would put lats below the weekly minimum",
+      "pull-up: would put lats below the weekly minimum"
+     ]
+    },
+    {
+     "day": "wed",
+     "muscle": "adductors",
+     "sets": 4.8,
+     "limit": 4,
+     "excess": 0.8,
+     "why": [
+      "back-squat: would put quads below the weekly minimum",
+      "leg-press: would put quads below the weekly minimum",
+      "romanian-deadlift: would put hamstrings below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "bro-split/advanced/5": {
+   "sets_removed": 12,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "weighted-dip",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "barbell-shrug",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "hip-adduction-machine",
+     "from": 2,
+     "to": 0,
+     "removed_exercise": true
+    },
+    {
+     "day": "fri",
+     "id": "cable-lateral-raise",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "face-pull",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "skull-crusher",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "wrist-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 11,
+   "flags_after": 4,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "chest",
+     "sets": 8.8,
+     "limit": 6,
+     "excess": 2.8,
+     "why": [
+      "cable-fly: would put chest below the weekly minimum",
+      "dumbbell-bench-press: would put chest below the weekly minimum",
+      "incline-barbell-bench-press: would put chest below the weekly minimum",
+      "weighted-dip: would put chest below the weekly minimum"
+     ]
+    },
+    {
+     "day": "tue",
+     "muscle": "upper_back",
+     "sets": 7.3,
+     "limit": 6,
+     "excess": 1.3,
+     "why": [
+      "chest-supported-row: would put lats below the weekly minimum",
+      "close-grip-pulldown: would put lats below the weekly minimum",
+      "pendlay-row: would put lats below the weekly minimum",
+      "pull-up: would put lats below the weekly minimum"
+     ]
+    },
+    {
+     "day": "wed",
+     "muscle": "adductors",
+     "sets": 4.4,
+     "limit": 4,
+     "excess": 0.4,
+     "why": [
+      "back-squat: would put quads below the weekly minimum",
+      "hack-squat: would put quads below the weekly minimum",
+      "romanian-deadlift: would put hamstrings below the weekly minimum"
+     ]
+    },
+    {
+     "day": "wed",
+     "muscle": "glutes",
+     "sets": 6.4,
+     "limit": 6,
+     "excess": 0.4,
+     "why": [
+      "back-squat: would put quads below the weekly minimum",
+      "hack-squat: would put quads below the weekly minimum",
+      "romanian-deadlift: would put hamstrings below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "pplu/beginner/4": {
+   "sets_removed": 4,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "incline-dumbbell-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "hammer-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 2,
+   "flags_after": 0,
+   "residual": []
+  },
+  "pplu/intermediate/4": {
+   "sets_removed": 13,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "incline-dumbbell-press",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "pull-up",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "lat-pulldown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "reverse-pec-deck",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "hammer-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 8,
+   "flags_after": 1,
+   "residual": [
+    {
+     "day": "thu",
+     "muscle": "abductors",
+     "sets": 4.6,
+     "limit": 4,
+     "excess": 0.6,
+     "why": [
+      "back-squat: would put quads, glutes below the weekly minimum",
+      "hip-abduction-machine: would put glutes below the weekly minimum",
+      "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "pplu/advanced/4": {
+   "sets_removed": 13,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "incline-barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "skull-crusher",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "pendlay-row",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "chest-supported-row",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "reverse-pec-deck",
+     "from": 3,
+     "to": 0,
+     "removed_exercise": true
+    },
+    {
+     "day": "tue",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "preacher-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 9,
+   "flags_after": 3,
+   "residual": [
+    {
+     "day": "tue",
+     "muscle": "lats",
+     "sets": 6.9,
+     "limit": 6,
+     "excess": 0.9,
+     "why": [
+      "chest-supported-row: would put biceps below the weekly minimum",
+      "pendlay-row: would put biceps below the weekly minimum",
+      "pull-up: would put biceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "tue",
+     "muscle": "biceps",
+     "sets": 5.4,
+     "limit": 5,
+     "excess": 0.4,
+     "why": [
+      "chest-supported-row: would put biceps below the weekly minimum",
+      "incline-dumbbell-curl: would put biceps below the weekly minimum",
+      "pendlay-row: would put biceps below the weekly minimum",
+      "preacher-curl: would put biceps below the weekly minimum",
+      "pull-up: would put biceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "thu",
+     "muscle": "lower_back",
+     "sets": 4.1,
+     "limit": 4,
+     "excess": 0.1,
+     "why": [
+      "back-squat: would put quads, abductors below the weekly minimum",
+      "romanian-deadlift: would put hamstrings, abductors below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "pplul/beginner/5": {
+   "sets_removed": 4,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "incline-dumbbell-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "hammer-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 2,
+   "flags_after": 0,
+   "residual": []
+  },
+  "pplul/intermediate/5": {
+   "sets_removed": 15,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "incline-dumbbell-press",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "pull-up",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "lat-pulldown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "reverse-pec-deck",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "hammer-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "hip-thrust",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "hip-abduction-machine",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 8,
+   "flags_after": 0,
+   "residual": []
+  },
+  "pplul/advanced/5": {
+   "sets_removed": 18,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "incline-barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "skull-crusher",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "pendlay-row",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "chest-supported-row",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "reverse-pec-deck",
+     "from": 3,
+     "to": 0,
+     "removed_exercise": true
+    },
+    {
+     "day": "tue",
+     "id": "incline-dumbbell-curl",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "preacher-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "seated-leg-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "hip-thrust",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "bulgarian-split-squat",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "sat",
+     "id": "hip-abduction-machine",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 11,
+   "flags_after": 2,
+   "residual": [
+    {
+     "day": "tue",
+     "muscle": "lats",
+     "sets": 6.9,
+     "limit": 6,
+     "excess": 0.9,
+     "why": [
+      "chest-supported-row: would put biceps below the weekly minimum",
+      "pendlay-row: would put biceps below the weekly minimum",
+      "pull-up: would put biceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "tue",
+     "muscle": "biceps",
+     "sets": 5.4,
+     "limit": 5,
+     "excess": 0.4,
+     "why": [
+      "chest-supported-row: would put biceps below the weekly minimum",
+      "incline-dumbbell-curl: would put biceps below the weekly minimum",
+      "pendlay-row: would put biceps below the weekly minimum",
+      "preacher-curl: would put biceps below the weekly minimum",
+      "pull-up: would put biceps below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "arnold/beginner/3": {
+   "sets_removed": 2,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 1,
+   "flags_after": 0,
+   "residual": []
+  },
+  "arnold/beginner/6": {
+   "sets_removed": 4,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 2,
+   "flags_after": 0,
+   "residual": []
+  },
+  "arnold/intermediate/3": {
+   "sets_removed": 2,
+   "changes": [
+    {
+     "day": "wed",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 4,
+   "flags_after": 3,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "lats",
+     "sets": 8.2,
+     "limit": 6,
+     "excess": 2.2,
+     "why": [
+      "barbell-row: would put upper_back below the weekly minimum",
+      "lat-pulldown: would put upper_back below the weekly minimum",
+      "pull-up: would put upper_back below the weekly minimum"
+     ]
+    },
+    {
+     "day": "wed",
+     "muscle": "side_delts",
+     "sets": 5.3,
+     "limit": 5,
+     "excess": 0.3,
+     "why": [
+      "dumbbell-lateral-raise: would put side_delts below the weekly minimum",
+      "overhead-press: would put triceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "fri",
+     "muscle": "abductors",
+     "sets": 4.6,
+     "limit": 4,
+     "excess": 0.6,
+     "why": [
+      "back-squat: would put quads, glutes below the weekly minimum",
+      "hip-abduction-machine: would put glutes below the weekly minimum",
+      "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "arnold/intermediate/6": {
+   "sets_removed": 14,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "pull-up",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "lat-pulldown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "dumbbell-lateral-raise",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "pull-up",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "lat-pulldown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "dumbbell-lateral-raise",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "triceps-pushdown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 8,
+   "flags_after": 0,
+   "residual": []
+  },
+  "arnold/advanced/3": {
+   "sets_removed": 1,
+   "changes": [
+    {
+     "day": "wed",
+     "id": "barbell-shrug",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 3,
+   "flags_after": 2,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "upper_back",
+     "sets": 6.8,
+     "limit": 6,
+     "excess": 0.8,
+     "why": [
+      "chest-supported-row: would put lats, upper_back, biceps below the weekly minimum",
+      "pull-up: would put lats, upper_back, biceps below the weekly minimum",
+      "t-bar-row: would put lats, upper_back, biceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "fri",
+     "muscle": "lower_back",
+     "sets": 4.1,
+     "limit": 4,
+     "excess": 0.1,
+     "why": [
+      "back-squat: would put quads, abductors below the weekly minimum",
+      "romanian-deadlift: would put upper_back, hamstrings, abductors below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "arnold/advanced/6": {
+   "sets_removed": 25,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "incline-barbell-bench-press",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "pull-up",
+     "from": 4,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "dumbbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "t-bar-row",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "straight-arm-pulldown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "chest-supported-row",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "cable-lateral-raise",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "skull-crusher",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "seated-leg-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "incline-barbell-bench-press",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "pull-up",
+     "from": 4,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "dumbbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "t-bar-row",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "cable-fly",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "straight-arm-pulldown",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "chest-supported-row",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "cable-lateral-raise",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "overhead-cable-triceps-extension",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "skull-crusher",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 11,
+   "flags_after": 0,
+   "residual": []
+  },
+  "torso-limbs/intermediate/2": {
+   "sets_removed": 1,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-shrug",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 5,
+   "flags_after": 4,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "upper_back",
+     "sets": 6.8,
+     "limit": 6,
+     "excess": 0.8,
+     "why": [
+      "chest-supported-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+      "pull-up: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+      "reverse-pec-deck: would put rear_delts, upper_back below the weekly minimum"
+     ]
+    },
+    {
+     "day": "mon",
+     "muscle": "lats",
+     "sets": 6.5,
+     "limit": 6,
+     "excess": 0.5,
+     "why": [
+      "chest-supported-row: would put rear_delts, lats, upper_back, biceps below the weekly minimum",
+      "pull-up: would put rear_delts, lats, upper_back, biceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "thu",
+     "muscle": "lower_back",
+     "sets": 4.8,
+     "limit": 4,
+     "excess": 0.8,
+     "why": [
+      "back-squat: would put quads, glutes, abductors below the weekly minimum",
+      "romanian-deadlift: would put lats, upper_back, hamstrings, glutes, abductors below the weekly minimum"
+     ]
+    },
+    {
+     "day": "thu",
+     "muscle": "adductors",
+     "sets": 4.3,
+     "limit": 4,
+     "excess": 0.3,
+     "why": [
+      "back-squat: would put quads, glutes, abductors below the weekly minimum",
+      "romanian-deadlift: would put lats, upper_back, hamstrings, glutes, abductors below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "torso-limbs/intermediate/4": {
+   "sets_removed": 1,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-shrug",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 1,
+   "flags_after": 0,
+   "residual": []
+  },
+  "torso-limbs/advanced/4": {
+   "sets_removed": 5,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "incline-barbell-bench-press",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "pull-up",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "reverse-pec-deck",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "cable-fly",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "hip-thrust",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 5,
+   "flags_after": 0,
+   "residual": []
+  },
+  "phul/beginner/4": {
+   "sets_removed": 3,
+   "changes": [
+    {
+     "day": "tue",
+     "id": "leg-press",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "leg-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 2,
+   "flags_after": 0,
+   "residual": []
+  },
+  "phul/intermediate/4": {
+   "sets_removed": 3,
+   "changes": [
+    {
+     "day": "tue",
+     "id": "leg-press",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "leg-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 2,
+   "flags_after": 0,
+   "residual": []
+  },
+  "phul/advanced/4": {
+   "sets_removed": 8,
+   "changes": [
+    {
+     "day": "mon",
+     "id": "barbell-curl",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "back-squat",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "tue",
+     "id": "leg-press",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "front-squat",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "leg-extension",
+     "from": 3,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "hip-abduction-machine",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    }
+   ],
+   "flags_before": 9,
+   "flags_after": 3,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "front_delts",
+     "sets": 6.4,
+     "limit": 5,
+     "excess": 1.4,
+     "why": [
+      "barbell-bench-press: would put chest below the weekly minimum",
+      "close-grip-bench-press: would put chest below the weekly minimum",
+      "overhead-press: would put side_delts below the weekly minimum"
+     ]
+    },
+    {
+     "day": "mon",
+     "muscle": "triceps",
+     "sets": 6.0,
+     "limit": 5,
+     "excess": 1.0,
+     "why": [
+      "barbell-bench-press: would put chest below the weekly minimum",
+      "close-grip-bench-press: would put chest below the weekly minimum",
+      "overhead-press: would put side_delts below the weekly minimum"
+     ]
+    },
+    {
+     "day": "mon",
+     "muscle": "lats",
+     "sets": 6.2,
+     "limit": 6,
+     "excess": 0.2,
+     "why": [
+      "barbell-row: would put rear_delts below the weekly minimum",
+      "pull-up: would put rear_delts below the weekly minimum"
+     ]
+    }
+   ]
+  },
+  "upper-lower-full/advanced/3": {
+   "sets_removed": 2,
+   "changes": [
+    {
+     "day": "wed",
+     "id": "hip-adduction-machine",
+     "from": 2,
+     "to": 0,
+     "removed_exercise": true
+    }
+   ],
+   "flags_before": 5,
+   "flags_after": 4,
+   "residual": [
+    {
+     "day": "mon",
+     "muscle": "triceps",
+     "sets": 6.6,
+     "limit": 5,
+     "excess": 1.6,
+     "why": [
+      "incline-barbell-bench-press: would put chest, triceps below the weekly minimum",
+      "overhead-cable-triceps-extension: would put triceps below the weekly minimum",
+      "seated-dumbbell-shoulder-press: would put side_delts, triceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "mon",
+     "muscle": "front_delts",
+     "sets": 5.7,
+     "limit": 5,
+     "excess": 0.7,
+     "why": [
+      "incline-barbell-bench-press: would put chest, triceps below the weekly minimum",
+      "seated-dumbbell-shoulder-press: would put side_delts, triceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "mon",
+     "muscle": "side_delts",
+     "sets": 5.3,
+     "limit": 5,
+     "excess": 0.3,
+     "why": [
+      "cable-lateral-raise: would put side_delts below the weekly minimum",
+      "seated-dumbbell-shoulder-press: would put side_delts, triceps below the weekly minimum"
+     ]
+    },
+    {
+     "day": "wed",
+     "muscle": "quads",
+     "sets": 7.0,
+     "limit": 6,
+     "excess": 1.0,
+     "why": [
+      "back-squat: would put quads below the weekly minimum",
+      "leg-extension: would put quads below the weekly minimum"
+     ]
+    }
+   ]
+  }
+ }
+}

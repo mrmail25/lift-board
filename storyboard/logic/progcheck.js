@@ -54,7 +54,25 @@ let CUR='intermediate';const setLevel=l=>{if(l)CUR=l};
 const sdRule=dt=>((dt.rules&&dt.rules.rules)||[]).find(r=>r.id==='session_dose')||{};   // vol9: session_dose removed; kept only as an empty fallback
 // vol9b (Coach vol9.builder_paths): session limits = rules[id=session_efficiency].limits_by_level[level][muscle]; read from data, never hardcoded
 const seRule=dt=>((dt.rules&&dt.rules.rules)||[]).find(r=>r.id==='session_efficiency')||null;
-const seLim=(dt,m,lv)=>{const r=seRule(dt),L=lv||CUR,t=r&&r.limits_by_level&&r.limits_by_level[L];return t&&t[m]!=null?t[m]:null};
+// vol10 (vol10.builder_paths): the analysis goal. GOAL=null = no goal (vol9 fallback: limits_by_level, no goal targets).
+// session limits = rules[id=session_efficiency].limits_by_goal[goal][level][muscle] when a goal is set, else limits_by_level.
+let GOAL=null,TONE=null;const setGoal=g=>{GOAL=g||null};const setTone=t=>{TONE=t||null};const getGoal=()=>GOAL;const gOf=g=>g===undefined?GOAL:g;
+const seLim=(dt,m,lv,g)=>{const r=seRule(dt),L=lv||CUR,G=gOf(g),bg=G&&r&&r.limits_by_goal&&r.limits_by_goal[G],t=bg?bg[L]:r&&r.limits_by_level&&r.limits_by_level[L];return t&&t[m]!=null?t[m]:null};
+// weekly targets by goal: rules[id=weekly_volume].targets_by_goal[goal][level][muscle] {min,target,upper}; curve % from volume-model goals[goal].weekly
+const goalTarget=(dt,m,lv,g)=>{const G=gOf(g);if(!G)return null;const w=((dt.rules&&dt.rules.rules)||[]).find(r=>r.id==='weekly_volume'),t=w&&w.targets_by_goal&&w.targets_by_goal[G]&&w.targets_by_goal[G][lv||CUR];const o=t&&t[m];if(!o)return null;
+  const P=(((((dt.VM||{}).goals||{})[G]||{}).weekly||{})[lv||CUR]||{})[m]||{};return Object.assign({},o,{min_pct:P.min_pct,target_pct:P.target_pct,upper_pct:P.upper_pct})};
+const goalsCfg=dt=>(dt.rules&&dt.rules.goals)||null;
+// vol10c (rules[id=session_efficiency].exemption): with a goal set (efficient or max_growth; not the vol9 history limits), no
+// session_efficiency warning when the muscle has exactly one day with >= single_day_min_eff effective sets AND its weekly effective
+// sets (rounded to 0.01) < weekly minimum for the level + near_margin. Show info session_efficiency_single_day instead (never add sets).
+const seExm=dt=>{const r=seRule(dt);return r&&r.exemption||null};
+const exMin=(dt,m,lv)=>{const T=goalTarget(dt,m,lv);if(T&&T.min!=null)return T.min;return zones(dt,m,lv).min};
+function exemptSet(dt,days,lv){const out=new Set(),E=seExm(dt);if(!E||!gOf()||!days)return out;const XW={},XN={};for(const d of days){const v=eff(dt,d.tiles);for(const m in v){XW[m]=(XW[m]||0)+v[m];if(v[m]>=E.single_day_min_eff)XN[m]=(XN[m]||0)+1}}for(const m in XW)if(exempt(dt,m,lv,XW,XN))out.add(m);return out}
+function exempt(dt,m,lv,XW,XN){const E=seExm(dt);if(!E||!gOf())return false;if(XN[m]!==1)return false;return Math.round((XW[m]||0)*100)/100<exMin(dt,m,lv)+(E.near_margin!=null?E.near_margin:1)}
+// vol10 wasted late sets (rules[id=wasted_late_sets]): walk the day's tiles in board order; the set that takes the muscle's running
+// effective sets past the limit, and every later set for that muscle, are late. Returns [[tile id, late sets, wasted effective sets], …].
+function lateSets(dt,tiles,m,limit){let cum=0;const out=[];for(const t of tiles){const e=dt.EX[t.id],r=e&&e.muscles[m]||0;if(!(r>=0.25))continue;const c=credit(dt,e,m,r,t.rir);let n=0,w=0;
+  for(let k=0;k<t.sets;k++){const b=cum;cum+=c;if(Math.round(cum*100)/100>limit){n++;w+=cum-Math.max(b,limit)}}if(n)out.push([t.id,n,pyR(w,2)])}return out}
 const seEff=(dt,m,lv)=>{const r=seRule(dt),L=lv||CUR,t=r&&r.efficiency_at_limit&&r.efficiency_at_limit[L];return (t&&t[m])||null};
 const ruleOff=(dt,id)=>{const r=((dt.rules&&dt.rules.rules)||[]).find(x=>x.id===id);return !r||r.active===false};
 // vol9 (Mr Dude via CoS, supersedes the per-set credit discount): weekly volume = effective sets at face value (RIR /
@@ -116,6 +134,7 @@ function col(dt,m,x,level){const {T,LF}=ctx(dt),a=pyR(T[m].min*LF[level]*2)/2,b=
 // days: [{day:'mon', tiles:[{id,sets}]}] (training days only, any order). Returns [flags, week]
 function check(dt,days,level){setLevel(level);const {R,RU,T,S,HEAVY}=ctx(dt),PAT=dt.PAT,f=[],week={},freq={},rawW={};for(const m in T){week[m]=0;freq[m]=0}
   let push=0,pull=0,spw=0;const byday={};days.forEach(d=>byday[d.day]=d);const HS=new Set(R.heavy_squats),HH=new Set(R.heavy_hinges);
+  const XW={},XN={};if(gOf()&&seExm(dt))for(const d of days){const v=eff(dt,d.tiles);for(const m in v){XW[m]=(XW[m]||0)+v[m];if(v[m]>=seExm(dt).single_day_min_eff)XN[m]=(XN[m]||0)+1}}   // vol10c exemption inputs
   for(const d of days){const n=d.tiles.length,tot=total(d);
     if(n>RU.many_small_entries.min_tiles&&tot/n<RU.many_small_entries.max_avg_sets)f.push(['info','many_small_entries',d.day,n,pyR(tot/n,2)]);
     const hs=RU.session_hard_sets,w=hs.warn_above[level];if(tot>w)f.push(['warn','session_hard_sets',d.day,tot]);else if(tot>w-hs.info_band)f.push(['info','session_hard_sets',d.day,tot]);
@@ -127,7 +146,9 @@ function check(dt,days,level){setLevel(level);const {R,RU,T,S,HEAVY}=ctx(dt),PAT
       if(over.length)f.push(['warn','redundant_pattern',d.day,p,c,over[0],pyR(pv[over[0]],1)])}
     const v=eff(dt,d.tiles);for(const m in v){const x=v[m];week[m]+=dt.VM&&!face(dt)?sessCredit(dt,m,x):x;rawW[m]=(rawW[m]||0)+x;   // qc3009: weekly totals use the per-session credit (JS diverges from Coach's Python here, accepted)
       if(x>=2)freq[m]+=1;if(x>10&&!ruleOff(dt,'junk_volume_session'))f.push(['warn','junk_volume_session',d.day,m,pyR(x,1)]);
-      const SL=seRule(dt)&&seLim(dt,m,level);if(SL!=null&&Math.round(x*100)/100>SL)f.push([seRule(dt).severity||'warn','session_efficiency',d.day,m,pyR(x,1),pyR(x-SL,1)])}   // vol9b
+      const SL=seRule(dt)&&seLim(dt,m,level);if(SL!=null&&Math.round(x*100)/100>SL&&exempt(dt,m,level,XW,XN))f.push(['info','session_efficiency_single_day',d.day,m,pyR(x,1),pyR(XW[m],1)]);   // vol10c
+      else if(SL!=null&&Math.round(x*100)/100>SL){f.push([(TONE&&TONE.session_efficiency)||seRule(dt).severity||'warn','session_efficiency',d.day,m,pyR(x,1),pyR(x-SL,1)]);   // vol9b
+        if(RU.wasted_late_sets&&RU.wasted_late_sets.active!==false){const L=lateSets(dt,d.tiles,m,SL);if(L.length)f.push([RU.wasted_late_sets.severity||'info','wasted_late_sets',d.day,m,L.map(z=>z[0]).join('+'),pyR(x-SL,1)])}}}   // vol10
     const ids=new Set(d.tiles.map(t=>t.id));if(level==='beginner'&&[...ids].some(i=>HS.has(i))&&[...ids].some(i=>HH.has(i)))f.push([RU.beginner_squat_and_deadlift.severity||'warn','beginner_squat_and_deadlift',d.day])} // r2fix: severity from rules[]
   for(let i=0;i<6;i++){const dd=ORDER[i],a=byday[dd],b=byday[ORDER[i+1]];if(!(a&&b))continue;
     if(a.tiles.some(t=>HH.has(t.id))&&b.tiles.some(t=>HS.has(t.id)))f.push([RU.hinge_before_squat.severity||'warn','hinge_before_squat',dd]);
@@ -219,7 +240,7 @@ function* gFillSlot(dt,days,slot,level){const {R,PJ}=ctx(dt),GF=R.pattern_gap_fi
   for(const r of RANK.slotRecommendations(dt,slot,level,days,GF.max_candidates))for(const to of daysFor(dt,days,slot)){if(_day(days,to).tiles.some(x=>x.id===r.id))continue;
     for(const sets of [...new Set([first,GF.fallback_sets])]){const n=clone(days);_day(n,to).tiles.push({id:r.id,sets});yield ['add_slot_exercise',{slot,sets,to_day:to,name:dt.EX[r.id].name,target:r.id},n]}}}
 function gens(dt,days,f,level){const {R,RU,T}=ctx(dt),PAT=dt.PAT,rid=f[1];
-  if(rid==='session_efficiency'){const [d,m]=[f[2],f[3]],G={move_sets_to_day:()=>gMoveSets(dt,days,d,m),'reduce_sets:highest_contributor':()=>gReduceSets(dt,days,d,'highest_contributor',m),'swap_exercise:fresher_same_muscle':()=>gSwap(dt,days,d,'fresher_same_muscle',null,m)},SE=seRule(dt)||{},NV=new Set(SE.never_suggest||[]);
+  if(rid==='session_efficiency'||rid==='wasted_late_sets'||rid==='session_efficiency_single_day'){const [d,m]=[f[2],f[3]],G={move_sets_to_day:()=>gMoveSets(dt,days,d,m),'reduce_sets:highest_contributor':()=>gReduceSets(dt,days,d,'highest_contributor',m),'swap_exercise:fresher_same_muscle':()=>gSwap(dt,days,d,'fresher_same_muscle',null,m)},SE=seRule(dt)||{},NV=new Set(SE.never_suggest||[]);
     return (SE.fix_order||[]).slice().sort((a,b)=>a.rank-b.rank).filter(o=>!NV.has(o.action)&&G[o.fixes_key]).map(o=>G[o.fixes_key]())}
   if(rid==='junk_volume_session'){const [d,m]=[f[2],f[3]];return [gReduceSets(dt,days,d,'highest_contributor',m),gMoveSets(dt,days,d,m),gMoveTile(dt,days,d,_day(days,d).tiles.filter(t=>(dt.EX[t.id].muscles[m]||0)>=0.25).map(t=>t.id))]}
   if(rid==='session_hard_sets'||rid==='session_length'){const d=f[2],dd=_day(days,d),tot=total(dd),hs=RU.session_hard_sets,sl=sessP(dt,level),mins=sessionMinutes(dt,dd.tiles,level);
@@ -262,7 +283,7 @@ function fixes(dt,days,level,f,maxn=3,budget=400){const out=[];
 function message(dt,f,days,level){const {R,RU,PJ}=ctx(dt),DN=R.day_names,id=f[1],rid=id.startsWith('spinal_load')?'spinal_load':id,r=RU[rid],L=m=>{const s=dt.rules.ranking.labels.regions[m]||m.replace(/_/g,' ');return s[0].toUpperCase()+s.slice(1)};
   const P={},put=(ks)=>ks.forEach((k,j)=>P[k]=f[2+j]);
   ({many_small_entries:['day','n'],session_hard_sets:['day','sets'],session_length:['day','min'],spinal_load_session:['day','sets'],sets_per_exercise:['day','exercise'],
-    redundant_pattern:['day','pattern','n','muscle','sets'],junk_volume_session:['day','muscle','sets'],session_efficiency:['day','muscle','sets','over'],beginner_squat_and_deadlift:['day'],hinge_before_squat:['day1'],
+    redundant_pattern:['day','pattern','n','muscle','sets'],junk_volume_session:['day','muscle','sets'],session_efficiency:['day','muscle','sets','over'],wasted_late_sets:['day','muscle','tiles','wasted'],session_efficiency_single_day:['day','muscle','session','sets'],beginner_squat_and_deadlift:['day'],hinge_before_squat:['day1'],
     consecutive_high_volume:['day1','muscle'],spinal_load_week:['sets'],push_pull_imbalance:['ratio'],missing_stretch:['muscle'],low_frequency:['muscle','n'],weekly_volume:['muscle','sets'],pattern_gap:['slot','n','min'],session_dose:['day','muscle','variant','sets','delta'],recovery_gap_long:['muscle','day1','day2','gap','over'],recovery_overlap:['muscle','variant','day1','day2','n','ready']}[id]||[]).forEach((k,j)=>P[k]=f[2+j]);
   if(P.day1&&!P.day2)P.day2=ORDER[ORDER.indexOf(P.day1)+1];for(const k of ['day','day1','day2'])if(P[k])P[k]=DN[P[k]];
   if(id==='sets_per_exercise'){const dd=days.find(x=>x.day===f[2]),t=dd&&dd.tiles.find(x=>x.id===f[3]);P.sets=t?t.sets:''}
@@ -275,7 +296,9 @@ function message(dt,f,days,level){const {R,RU,PJ}=ctx(dt),DN=R.day_names,id=f[1]
   if(id==='session_length'){const sp=sessP(dt,level);P.warn_min=sp.warn_min;P.info_min=sp.info_min;P.level=level} // vol3: messages carry {warn_min}/{info_min} from by_level[level]
   // vol8 flags: variants, {gap} in days, {ready} as a range, {limit} from the per-set curve (never exact hours)
   const dys=h=>{const v=h/24;return `${+v.toFixed(1)} day${v===1?'':'s'}`};
+  if(id==='session_efficiency_single_day'){P.sets=+(+f[5]).toFixed(1);return fmtPy(r.message,P)}
   if(id==='session_efficiency'){P.limit=seLim(dt,f[3]);P.sets=+(+P.sets).toFixed(1);return fmtPy(r.message,P)}
+  if(id==='wasted_late_sets'){const D=(days||[]).find(x=>x.day===f[2]),lim=seLim(dt,f[3],level),L=D?lateSets(dt,D.tiles,f[3],lim):[],G=goalsCfg(dt);P.limit=lim;P.n=L.reduce((a,z)=>a+z[1],0);P.wasted=+(+f[5]).toFixed(1);P.goal=GOAL?((G&&G.labels&&G.labels[GOAL])||GOAL):'your level';return fmtPy(r.message,P)}
   // vol9b: session_dose removed from rules.json (its message branch is gone)
   if(id==='recovery_gap_long'){P.gap=dys(f[5]);return fmtPy(f[3]===f[4]&&r.message_once?r.message_once:r.message,P)}
   if(id==='recovery_overlap'){const R8=r;if(f[3]==='streak'){P.n=f[6];return fmtPy(r.message_streak,P)}P.gap=dys(f[6]);P.ready=f[7]?(h=>{h=h/(R8.early_frac_of_lower*0.8);if(h<20)return 'about a day';const lo=Math.floor(h*0.8/12)/2,hi=Math.ceil(h*1.2/12)/2;return (dt.VM.recovery.display.format||'about {lo}–{hi} days').replace('{lo}',String(lo)).replace('{hi}',String(hi))})(f[7]):'';return fmtPy(r.message_early,P)}
@@ -310,8 +333,8 @@ function analytics(dt,days,level){setLevel(level);const TT=dt.targets,C=TT.curve
     spinal:{week:day.reduce((a,d)=>a+d.spinal,0),week_max:RU.spinal_load.week_warn_above[level],session_max:RU.spinal_load.session_warn_above[level]},disclaimer:VM?dt.VM.disclaimer:A.disclaimer,curveModel:VM?dt.VM.curve.reads_as:C.model}}
 function anchors(dt,m,level){const CV=dt.VM.curve||{},P=(CV.per_muscle||{})[m];if(!P)return null;const A=(P.anchors_by_level&&P.anchors_by_level[level])||P.anchors;if(!A)return null;const lm=P.anchors_by_level?A.min:((P.level_min_pct||{})[level]||A.min);return {min:lm,sweet_low:A.sweet_low,sweet_high:A.sweet_high,dim:A.dim,basis:P.basis,ev:(P.min_evidence||{}).tag||null,fallback:(P.concave_fallback||{})[level]||null}}
 const fmtN=v=>{const n=+(+v).toFixed(1);return String(n)};
-const API={face,anchors,heavyLim,seLim,seEff,seRule,ruleOff,setLevel,check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,perSet,gPS,xEquiv,sessZone8,capW,loadPoints,recHours,flags8,effortOf,axialOf,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
+const API={setTone,setGoal,getGoal,goalTarget,goalsCfg,lateSets,face,anchors,heavyLim,seLim,seEff,seRule,ruleOff,setLevel,check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,perSet,gPS,xEquiv,sessZone8,capW,loadPoints,recHours,flags8,effortOf,axialOf,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
   // internals reused by logic/analysis.js and logic/progress.js (same functions, so the ports cannot drift)
-  _x:{gAddSets,gAddExercise,gReduceSets,prev,nonin,_day,load,col,RULE_OF,total,ctx,clone,cmpT,sortBy,fmtPy}};
+  _x:{gAddSets,gAddExercise,gReduceSets,prev,nonin,_day,load,col,RULE_OF,total,ctx,clone,cmpT,sortBy,fmtPy,exemptSet}};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else root.PCHECK=API;
 })(typeof window!=='undefined'?window:this);
