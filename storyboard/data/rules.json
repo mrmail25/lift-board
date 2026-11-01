@@ -534,8 +534,8 @@
       },
       "info_min": 75,
       "warn_min": 90,
-      "message": "{day} runs about {min} minutes. Past 90, focus and output drop. Cut sets or split the day.",
-      "message_info": "{day} runs about {min} minutes. That's long, so make sure the big lifts come first.",
+      "message": "{day} runs about {min} minutes, over the {warn_min}-minute limit for your level. Cut sets or split the day.",
+      "message_info": "{day} runs about {min} minutes, close to the {warn_min}-minute limit for your level. Put the big lifts first, or trim a few sets.",
       "fixes": [
         "reduce_sets:lowest_priority_isolation",
         "move_tile",
@@ -554,7 +554,47 @@
         "requires": []
       },
       "category": "session",
-      "metric": "session_length"
+      "metric": "session_length",
+      "default_limit_min": 75,
+      "by_level": {
+        "beginner": {
+          "info_min": 60,
+          "warn_min": 75,
+          "warmup_min": 8,
+          "work_min_per_set": 0.75,
+          "rest_min_by_type": {
+            "primary": 2.5,
+            "accessory": 2.0,
+            "isolation": 1.5,
+            "warmup": 1.0
+          }
+        },
+        "intermediate": {
+          "info_min": 75,
+          "warn_min": 90,
+          "warmup_min": 10,
+          "work_min_per_set": 0.75,
+          "rest_min_by_type": {
+            "primary": 3.0,
+            "accessory": 2.0,
+            "isolation": 1.5,
+            "warmup": 1.0
+          }
+        },
+        "advanced": {
+          "info_min": 90,
+          "warn_min": 105,
+          "warmup_min": 12,
+          "work_min_per_set": 0.75,
+          "rest_min_by_type": {
+            "primary": 3.5,
+            "accessory": 2.5,
+            "isolation": 1.5,
+            "warmup": 1.0
+          }
+        }
+      },
+      "by_level_note": "vol3: by_level is authoritative and drives session_length warnings in both the UI and the checker (tools/check_program.py sl_for(level)): minutes = warmup_min + sets x (work_min_per_set + rest_min_by_type[type]); info at info_min, warn at warn_min. The top-level warmup_min/work_min_per_set/rest_min_by_type/info_min/warn_min are the intermediate fallback for an unknown level. default_limit_min = intermediate info_min (75). Message placeholders: {day}, {min}, {info_min}, {warn_min} (from by_level[level]). Limits are planning conventions [modeled]; rest values: Schoenfeld 2016, Singer 2024 (see volume-model-spec.md)."
     },
     {
       "id": "spinal_load",
@@ -1410,7 +1450,7 @@
             "session_length",
             "session_hard_sets"
           ],
-          "trigger": "session_length >= 90 min or hard sets above the level cap",
+          "trigger": "session_length at or over your level's warn_min (beginner 75, intermediate 90, advanced 105 min) or hard sets above the level cap",
           "edits": [
             "rules[].fixes (move_tile, move_sets_to_day, reduce_sets, remove_tile)"
           ],
@@ -4786,7 +4826,8 @@
           "what": "Up to a few validated one-tap changes, warnings first.",
           "how": "tools/suggest.py builds candidates for every flag and analytic source, applies each to a copy of the board, keeps it only if it adds no new warning and moves its metric toward the goal; at most 3 fixes per suggestion.",
           "why": "Turns the checks below into concrete edits you can preview, apply and undo.",
-          "learn_page": "exercise-selection#putting-together"
+          "learn_page": "exercise-selection#putting-together",
+          "so_what": "These are the few edits most likely to improve the plan without breaking anything else. Tap one to preview it; you can always undo."
         },
         "formula": "tools/suggest.py suggest(days, level, baseline) + suggestions.analysis_sheet.order",
         "evidence": "modeled",
@@ -4821,7 +4862,8 @@
           "what": "How many of the applicable checks on this sheet are in the pass state.",
           "how": "Count of kind=check items whose applies holds (level, a saved baseline, 2+ training days) and that are in pass. 13 checks apply at every level without a saved baseline (8 board checks + 5 per-muscle stretch checks), 14 with one.",
           "why": "A quick summary; the items themselves say what to look at.",
-          "learn_page": "set-crediting-targets#warnings"
+          "learn_page": "set-crediting-targets#warnings",
+          "so_what": "A quick health score for the plan. Fixing an attention item raises it; a perfect score is not required."
         },
         "formula": "total = rules r in rules.json rules[] whose r.applies holds: level in r.applies.levels AND every r.applies.requires is met (baseline_saved: a normal-week recovery baseline is saved; training_days>=2: at least 2 days with a filled tile). pass = total minus the applicable rules with at least one non-info flag (spinal_load_session and spinal_load_week both count as spinal_load; recovery_vs_baseline fails above its warn_above, 130%). Info flags never fail a check. Only filled tiles are checked: unfilled template slots are not counted (the Builder shows them as pending). Clean board, no baseline: beginner 15/15, intermediate 14/14, advanced 14/14; with a saved baseline one more each.",
         "evidence": "modeled",
@@ -4852,7 +4894,8 @@
           "what": "Effective weekly sets for each muscle against its target band, with the colour key (under / in range / over / far over), the evidence tag behind each target and the total sets in the week.",
           "how": "Each exercise credits sets x its rating for a muscle; ratings below 0.25 are ignored and totals round to 0.5. The band runs from the target minimum x the level factor to the target maximum; amber up to 25% over, red beyond (red_factor). The total line counts every planned set once.",
           "why": "Weekly sets per muscle are the main volume lever in the cited dose-response meta-analyses; the band is a planning range, not a prescription.",
-          "learn_page": "set-crediting-targets#targets"
+          "learn_page": "set-crediting-targets#targets",
+          "so_what": "Shows whether each muscle gets enough weekly work to sit in its growth range. Blue means add sets, amber or red means you can trim."
         },
         "formula": "targets.json counting (fractional, min_rating_to_count, round_to); target = targets[m].min x levelMinFactor[level] .. max | rules.json volume_bands (over); under = total < level min; red = total > max x red_factor; weekly_volume rule warns on red | sum over days and tiles of sets | targets.json targets[m].evidence.tag",
         "evidence": "supported",
@@ -4908,7 +4951,8 @@
           "what": "Passes while no muscle is red: more than 2 sets under its level minimum, or more than 25% over its weekly maximum. Amber (close) passes.",
           "how": "weekly_volume rule on effective weekly sets per muscle. The flag names the muscle, its sets, and the exercises and days that credit it (none when the muscle gets no sets).",
           "why": "Far under, the model expects little growth stimulus for that muscle; far over, little extra stimulus for the added recovery cost.",
-          "learn_page": "set-crediting-targets#status"
+          "learn_page": "set-crediting-targets#status",
+          "so_what": "If this needs attention, at least one muscle is far under or far over its range. Fix that first; it is the biggest lever on the page."
         },
         "formula": "weekly_volume rule on effective weekly sets per muscle. The flag names the muscle, its sets, and the exercises and days that credit it (none when the muscle gets no sets).",
         "evidence": "modeled",
@@ -4949,7 +4993,8 @@
           "what": "For each muscle, the modeled share of its weekly stimulus ceiling reached by the current sets, and what one more weekly set would add.",
           "how": "S(x) = 1 - exp(-x / k[muscle][level]) on weekly effective sets; sets past 10 for one muscle in one session count at 50% (per-session cap). Next set = S(x+1) - S(x).",
           "why": "Shows diminishing returns: the curve flattens, so the next set is worth more on an under-trained muscle. A model for comparing plans, not a measurement of growth.",
-          "learn_page": "set-crediting-targets#curve"
+          "learn_page": "set-crediting-targets#curve",
+          "so_what": "Shows where each muscle sits on its own diminishing-returns curve. Early sets add the most, so extra sets help an under-trained muscle more than one already in its sweet spot."
         },
         "formula": "targets.json curve: S(x) = 1 - exp(-x / k[muscle][level]), x = weekly effective sets after session_discount | targets.json curve.marginal: S(x+1) - S(x) | targets.json curve.session_discount {cap: 10, factor: 0.5}; same threshold as rules junk_volume_session",
         "evidence": "modeled",
@@ -4991,7 +5036,8 @@
           "what": "Effective weekly sets summed per body region (chest, back, shoulders, arms, legs, core).",
           "how": "Sum of weekly sets per muscle grouped by rules.json body_regions.muscles.",
           "why": "A coarse overview for the body map; the per-muscle bands are the real targets.",
-          "learn_page": "volume-frequency#counting-indirect"
+          "learn_page": "volume-frequency#counting-indirect",
+          "so_what": "A zoomed-out view of where your week goes. Use it to spot a region that gets much less work than the rest."
         },
         "formula": "for each muscle m: region = body_regions.muscles[m]; region sets = sum of weekly_sets_per_muscle[m] over its muscles (a set can add to several regions, as it does to several muscles)",
         "evidence": "modeled",
@@ -5023,7 +5069,8 @@
           "what": "For each muscle, the days in the week on which it gets at least 2 effective sets.",
           "how": "Count of days with sum(sets x rating, rating >= 0.25) >= 2 (targets.json analytics.frequency_min_effective).",
           "why": "With weekly sets equal, frequency mainly helps by spreading the sets so each session stays productive.",
-          "learn_page": "volume-frequency#frequency"
+          "learn_page": "volume-frequency#frequency",
+          "so_what": "Shows how many days each muscle gets meaningful work. Spreading the same sets over 2 days keeps each session shorter and fresher."
         },
         "formula": "count of days with sum(sets x rating, rating >= 0.25) >= targets.json analytics.frequency_min_effective (2)",
         "evidence": "supported",
@@ -5065,7 +5112,8 @@
           "what": "Notes the main muscles (rules.json frequency_muscles) trained on fewer than 2 days, naming the day and exercises they get now.",
           "how": "low_frequency rule (info severity), only with 2+ training days.",
           "why": "Info, not a check: volume-equated studies find small or no differences between frequencies, and many sound splits train a muscle once a week. Spreading sets is an option, not a fix.",
-          "learn_page": "volume-frequency#app-frequency-note"
+          "learn_page": "volume-frequency#app-frequency-note",
+          "so_what": "A muscle trained on only one day has to get all its weekly sets in one session. Splitting them over two days is usually easier to recover from."
         },
         "formula": "low_frequency rule (info severity), only with 2+ training days.",
         "evidence": "modeled",
@@ -5108,7 +5156,8 @@
           "what": "Passes while no muscle gets a \"solid\" or heavier session on two days in a row.",
           "how": "consecutive_high_volume rule: effective sets for the muscle >= targets.json session[m].solid on day d and day d+1. The flag names both days, the muscle and the exercises on each day.",
           "why": "The model gives each muscle time between hard sessions; moving a few sets to a later day usually clears it.",
-          "learn_page": "volume-frequency#sessions"
+          "learn_page": "volume-frequency#sessions",
+          "so_what": "Hard sessions for the same muscle on back-to-back days leave little time to recover between them. Move one so there is a day in between."
         },
         "formula": "rules.json rules.#consecutive_high_volume (uses targets.json session[m].solid)",
         "evidence": "modeled",
@@ -5158,7 +5207,8 @@
           "what": "Per-day body-map shade for each muscle: none, light, solid or heavy.",
           "how": "Day effective sets against targets.json session thresholds (light, solid, heavy per muscle).",
           "why": "Shows at a glance where each muscle's work lands in the week.",
-          "learn_page": "volume-frequency#sessions"
+          "learn_page": "volume-frequency#sessions",
+          "so_what": "Shows how hard each day hits each muscle. Use it to see which days are heavy for which muscles."
         },
         "formula": "targets.json session (light, solid, heavy per muscle) + gradient.day",
         "evidence": "modeled",
@@ -5192,7 +5242,8 @@
           "what": "Passes while weekly pulling sets are between 0.75x and 2x the pressing sets; shows the ratio.",
           "how": "Sets of exercises in rules.json push_patterns vs pull_patterns (legacy pattern map); the flag lists the pressing and pulling exercises with their sets.",
           "why": "A coaching convention for an even upper body, not a tested outcome; most programs land inside the band.",
-          "learn_page": "exercise-selection#putting-together"
+          "learn_page": "exercise-selection#putting-together",
+          "so_what": "Keeps pulling roughly level with pressing so the front and back of the upper body get similar work. If it is off, add rows or pulldowns, or trim a press."
         },
         "formula": "rules.json rules.#push_pull_imbalance: pull_sets / push_sets over rules.push_patterns / pull_patterns; band 0.75-2.0",
         "evidence": "modeled",
@@ -5243,7 +5294,8 @@
           "what": "Passes while every required movement slot has at least one exercise; lists slots below the level minimum as notes.",
           "how": "pattern_gap rule: patterns.json weekly_min_by_level per slot; warn when a required slot is at 0, info when below the minimum. The flag names the empty slot (nothing on the board causes it, so it names what is missing).",
           "why": "A few patterns cover the major muscles; a missing one usually means a muscle is under-served.",
-          "learn_page": "exercise-selection#putting-together"
+          "learn_page": "exercise-selection#putting-together",
+          "so_what": "Makes sure the week includes each basic movement, like a squat, hinge, push and pull. A missing pattern usually means a muscle group is being skipped."
         },
         "formula": "check_program.slot_counts + patterns.json weekly_min_by_level; rule pattern_gap",
         "evidence": "modeled",
@@ -5294,7 +5346,8 @@
           "what": "Passes while no day stacks several same-pattern exercises past about 10 effective sets for one muscle.",
           "how": "redundant_pattern rule (legacy pattern map, threshold 10 effective sets); the flag names the day, the pattern and its exercises.",
           "why": "Past about 10 sets per session the model expects diminishing returns; a different pattern or another day spreads the work.",
-          "learn_page": "volume-frequency#sessions"
+          "learn_page": "volume-frequency#sessions",
+          "so_what": "Stacking several similar exercises on one day adds fatigue faster than it adds useful work. Move one to another day or swap it for a different pattern."
         },
         "formula": "rules.json rules.#redundant_pattern",
         "evidence": "modeled",
@@ -5343,7 +5396,8 @@
           "what": "How much of the work comes from stretch-focused exercises: overall, per muscle and per movement pattern.",
           "how": "Per muscle: effective-set share from that muscle's rules.json stretch_biased list. Overall and per pattern: set share from stretch-focused exercises (in any stretch_biased list, or swap stretch_emphasis 3).",
           "why": "Training at long muscle lengths grew muscle as well or better in the cited studies; the share is context, not a target.",
-          "learn_page": "hypertrophy-stimulus#stretch"
+          "learn_page": "hypertrophy-stimulus#stretch",
+          "so_what": "Exercises that load a muscle at long lengths tend to grow it at least as well as others. A low share is a hint to swap one exercise, not a fault."
         },
         "formula": "share[m] = sum(sets x rating, tiles in rules.stretch_biased[m]) / sum(sets x rating), ratings >= 0.25, for muscles in rules.stretch_biased; flag below targets.json analytics.stretch_share_flag_below (0.25) | sum(sets of tiles with swap.stretch_emphasis == 3) / sum(sets)",
         "evidence": "supported",
@@ -5388,7 +5442,8 @@
           "what": "Passes when the week has at least one stretch-focused exercise for hamstrings.",
           "how": "Any exercise from rules.json stretch_biased.hamstrings on the board. The flag names the hamstrings exercises and days you have now, none of them stretch-focused.",
           "why": "Seated leg curls (hamstrings longer) grew the hamstrings more than lying leg curls. The check asks for one such exercise, not a share.",
-          "learn_page": "exercise-selection#stretch"
+          "learn_page": "exercise-selection#stretch",
+          "so_what": "Hamstrings respond well to work at long lengths, such as Romanian deadlifts or seated curls. One such exercise a week covers it."
         },
         "formula": "Any exercise from rules.json stretch_biased.hamstrings on the board. The flag names the hamstrings exercises and days you have now, none of them stretch-focused.",
         "evidence": "supported",
@@ -5432,7 +5487,8 @@
           "what": "Passes when the week has at least one stretch-focused exercise for calves.",
           "how": "Any exercise from rules.json stretch_biased.calves on the board. The flag names the calves exercises and days you have now, none of them stretch-focused.",
           "why": "Straight-knee calf raises grew the gastrocnemius far more than seated raises; stretched-range partials beat top-range partials. The check asks for one such exercise, not a share.",
-          "learn_page": "exercise-selection#stretch"
+          "learn_page": "exercise-selection#stretch",
+          "so_what": "Calves respond well to work at long lengths, such as calf raises with a deep stretch at the bottom. One such exercise a week covers it."
         },
         "formula": "Any exercise from rules.json stretch_biased.calves on the board. The flag names the calves exercises and days you have now, none of them stretch-focused.",
         "evidence": "supported",
@@ -5477,7 +5533,8 @@
           "what": "Passes when the week has at least one stretch-focused exercise for triceps.",
           "how": "Any exercise from rules.json stretch_biased.triceps on the board. The flag names the triceps exercises and days you have now, none of them stretch-focused.",
           "why": "Overhead elbow extensions (long head stretched) grew the triceps more than pushdown-position extensions. The check asks for one such exercise, not a share.",
-          "learn_page": "exercise-selection#stretch"
+          "learn_page": "exercise-selection#stretch",
+          "so_what": "Overhead triceps work trains the long head at long lengths. One such exercise a week covers it."
         },
         "formula": "Any exercise from rules.json stretch_biased.triceps on the board. The flag names the triceps exercises and days you have now, none of them stretch-focused.",
         "evidence": "supported",
@@ -5521,7 +5578,8 @@
           "what": "Passes when the week has at least one stretch-focused exercise for quads.",
           "how": "Any exercise from rules.json stretch_biased.quads on the board. The flag names the quads exercises and days you have now, none of them stretch-focused.",
           "why": "Long-length leg-extension partials grew the quads more than short-length partials. The check asks for one such exercise, not a share.",
-          "learn_page": "exercise-selection#stretch"
+          "learn_page": "exercise-selection#stretch",
+          "so_what": "Quads respond well to deep knee bending, such as full-depth squats or split squats. One such exercise a week covers it."
         },
         "formula": "Any exercise from rules.json stretch_biased.quads on the board. The flag names the quads exercises and days you have now, none of them stretch-focused.",
         "evidence": "supported",
@@ -5565,7 +5623,8 @@
           "what": "Passes when the week has at least one stretch-focused exercise for glutes.",
           "how": "Any exercise from rules.json stretch_biased.glutes on the board. The flag names the glutes exercises and days you have now, none of them stretch-focused. Glutes count deep squats (back, front, hack, Smith, belt, goblet, pendulum, V-squat), split squats and Bulgarian split squats, lunges, pistols and RDL-type hinges (RDL, stiff-leg, single-leg RDL, good morning). Hip thrusts and glute bridges do not: they are hardest at short length.",
           "why": "Full (deep) squats grew the glute max more than half squats. Split squats, lunges and RDLs are counted by the same long-length mechanism (modeled). Hip thrusts and bridges are not stretch-loaded; Plotkin 2023 found them similar to squats for glute growth, so they remain good glute work. The check asks for one such exercise, not a share.",
-          "learn_page": "exercise-selection#stretch"
+          "learn_page": "exercise-selection#stretch",
+          "so_what": "Glutes respond well to deep hip bending, such as deep squats, lunges or Romanian deadlifts. One such exercise a week covers it."
         },
         "formula": "Any exercise from rules.json stretch_biased.glutes on the board. The flag names the glutes exercises and days you have now, none of them stretch-focused. Glutes count deep squats (back, front, hack, Smith, belt, goblet, pendulum, V-squat), split squats and Bulgarian split squats, lunges, pistols and RDL-type hinges (RDL, stiff-leg, single-leg RDL, good morning). Hip thrusts and glute bridges do not: they are hardest at short length.",
         "evidence": "supported",
@@ -5610,7 +5669,8 @@
           "what": "Notes each measure-only muscle (chest, biceps, lats) with no stretch-focused exercise this week, naming the exercises it gets now.",
           "how": "missing_stretch rule at info severity for muscles outside rules.json stretch_check.checked.",
           "why": "Info, not a check: for these muscles the reference list has no direct (or only one) long-length vs short-length growth comparison, so the share is shown as a measure only.",
-          "learn_page": "exercise-selection#stretch"
+          "learn_page": "exercise-selection#stretch",
+          "so_what": "A nudge for muscles without a stretch-focused exercise this week. Optional; the plan can work fine without it."
         },
         "formula": "rules.json rules.#missing_stretch",
         "evidence": "modeled",
@@ -5651,7 +5711,8 @@
           "what": "Share of the work done one side at a time: overall (sets), per muscle (effective sets) and per movement pattern (sets).",
           "how": "Tiles with the swap flag unilateral.",
           "why": "Context for time per session and stability demand; there is no target.",
-          "learn_page": "exercise-selection#stability"
+          "learn_page": "exercise-selection#stability",
+          "so_what": "One-side-at-a-time work can even out left/right differences and add variety. There is no target; use it to see your mix."
         },
         "formula": "sum(sets of tiles with swap flag unilateral) / sum(sets)",
         "evidence": "modeled",
@@ -5684,7 +5745,8 @@
           "what": "Weekly sets per tray movement pattern (horizontal push ... other).",
           "how": "Whole sets grouped by exercises[].movement_pattern; no ratings.",
           "why": "Shows how the week is split between patterns.",
-          "learn_page": "exercise-selection#putting-together"
+          "learn_page": "exercise-selection#putting-together",
+          "so_what": "Shows how your sets split across movement patterns. A pattern with very few sets is the first place to add work."
         },
         "formula": "sum of tile sets grouped by exercises[].movement_pattern (whole sets, no ratings)",
         "evidence": "modeled",
@@ -5716,7 +5778,8 @@
           "what": "The average modeled fatigue per working set this week, with every component that makes it up.",
           "how": "Each exercise has a fatigue rating (1.5 heavy axial compound, 1.1-1.2 other compound, 1.0 lighter compound, 0.8 isolation). Rating = sum(sets x fatigue) / sets. Breakdown: sets and cost per fatigue tier, per day, per exercise, per muscle (cost split by rating share among the muscles it counts for) and per pattern; plus heavy spine sets, the mean systemic-fatigue swap tag and any recovery modifiers (off by default).",
           "why": "Explains where the recovery cost comes from; heavier compounds cost more per set than isolation work. A rough model, not a measurement.",
-          "learn_page": "exercise-selection#fatigue"
+          "learn_page": "exercise-selection#fatigue",
+          "so_what": "Heavy compound lifts tire you out more per set than machines or isolation work. A higher rating means the same number of sets will feel harder to recover from."
         },
         "formula": "Each exercise has a fatigue rating (1.5 heavy axial compound, 1.1-1.2 other compound, 1.0 lighter compound, 0.8 isolation). Rating = sum(sets x fatigue) / sets. Breakdown: sets and cost per fatigue tier, per day, per exercise, per muscle (cost split by rating share among the muscles it counts for) and per pattern; plus heavy spine sets, the mean systemic-fatigue swap tag and any recovery modifiers (off by default).",
         "evidence": "modeled",
@@ -5746,7 +5809,8 @@
           "what": "Sets x fatigue rating summed per day and for the week; a percentage of your saved normal week once one exists.",
           "how": "targets.json recovery: session_cost = sum(sets x fatigue); week_cost = sum of sessions; per muscle = sum(sets x fatigue x rating share); per pattern = sum over its exercises.",
           "why": "Lets you compare two versions of a plan; adjust to how you actually recover.",
-          "learn_page": "exercise-selection#fatigue"
+          "learn_page": "exercise-selection#fatigue",
+          "so_what": "A model of how demanding the week is, compared with common routines. Use it to compare versions of your plan, not as a prediction of how you will feel."
         },
         "formula": "targets.json recovery: session_cost = sum(sets x fatigue); week_cost = sum; x optional modifiers; % of baseline",
         "evidence": "modeled",
@@ -5785,7 +5849,8 @@
           "what": "With a saved normal week, passes while this week's recovery cost is at most 115% of it.",
           "how": "week_cost / baseline_week_cost <= 1.15 (rules recovery_vs_baseline warn_above). Attention names the days and the highest-cost exercises.",
           "why": "A jump well above your usual week is the change most worth a second look; the threshold is a planning choice.",
-          "learn_page": "exercise-selection#fatigue"
+          "learn_page": "exercise-selection#fatigue",
+          "so_what": "Flags a week that is much more demanding than your usual one. Big jumps are worth a second look; small ones are normal progress."
         },
         "formula": "week_cost / baseline_week_cost <= 1.15 (rules recovery_vs_baseline warn_above). Attention names the days and the highest-cost exercises.",
         "evidence": "modeled",
@@ -5828,7 +5893,8 @@
           "what": "Effective sets gained per point of fatigue: per exercise, per muscle and per movement pattern.",
           "how": "Exercise: main-muscle rating / fatigue (targets.json analytics.spf). Muscle: sum(sets x rating) / sum(sets x fatigue) over exercises that count for it. Pattern: sum(sets x main rating) / sum(sets x fatigue).",
           "why": "Drives the lower-fatigue swap suggestions; higher means more targeted work for the recovery spent.",
-          "learn_page": "exercise-selection#fatigue"
+          "learn_page": "exercise-selection#fatigue",
+          "so_what": "Shows which exercises give a muscle the most work for the least overall fatigue. Swapping to a higher one keeps the stimulus while costing less recovery."
         },
         "formula": "targets.json analytics.spf: rating[m] / fatigue",
         "evidence": "modeled",
@@ -5865,7 +5931,8 @@
           "what": "Passes while heavy squat and hinge sets stay within the per-session and per-week caps for the level.",
           "how": "spinal_load rule: sets of rules.json heavy_squats + heavy_hinges per day and per week against the level caps. The flag names the day(s) and the heavy lifts.",
           "why": "Heavy axial lifts are the costliest sets in the fatigue model; the caps keep them spread out. A planning choice.",
-          "learn_page": "exercise-selection#fatigue"
+          "learn_page": "exercise-selection#fatigue",
+          "so_what": "Caps heavy squats and deadlifts per session and week for your level. Past that, extra heavy spine sets add fatigue faster than useful work."
         },
         "formula": "rules.json rules.#spinal_load (heavy_squats + heavy_hinges)",
         "evidence": "modeled",
@@ -5917,7 +5984,8 @@
           "what": "Notes a heavy hinge the day before heavy squats, and (beginner level) heavy squats and deadlifts on the same day, naming the days and lifts.",
           "how": "Good: heavy hinges and heavy squats on non-adjacent days. Noted: heavy_hinges on day d and heavy_squats on day d+1, or both on one beginner day. Info severity in round 2 (was warn).",
           "why": "The evidence is thin. The idea is that the lower back and hips need time between heavy hinges and squats, but in the one direct comparison we found, recovery after deadlifts was not slower than after squats or bench press (Belcher 2019). So this is shown as a note to consider, not a check, and it never blocks a program.",
-          "learn_page": "exercise-selection#fatigue"
+          "learn_page": "exercise-selection#fatigue",
+          "so_what": "A heavy hinge the day before heavy squats means your lower back gets little rest between them. Consider reordering the days."
         },
         "formula": "rules.json rules.#hinge_before_squat (heavy_hinges on day d, heavy_squats on day d+1) | rules.json rules.#beginner_squat_and_deadlift (applies.levels = [beginner]; same heavy_squats / heavy_hinges lists as spinal_load)",
         "evidence": "thin",
@@ -5967,7 +6035,8 @@
           "what": "Passes while every day keeps its hard sets under the level cap, no exercise has more than 5 sets, and no muscle gets more than about 10 effective sets in one session. Many tiny entries are listed as a note.",
           "how": "session_hard_sets (warn above the level cap, note within 2 of it), sets_per_exercise (> 5), junk_volume_session (> 10 effective sets for one muscle in a day), many_small_entries (note: more than 10 exercises averaging under 2 sets). Every flag names its day and exercises.",
           "why": "Past these points the model expects extra sets in that session to add little; moving them to another day keeps each session productive.",
-          "learn_page": "volume-frequency#sessions"
+          "learn_page": "volume-frequency#sessions",
+          "so_what": "Keeps each day a workable size. Too many sets in one session, or too many for one muscle, mostly adds fatigue."
         },
         "formula": "rules.json rules.#session_hard_sets | rules.json rules.#sets_per_exercise | rules.json rules.#many_small_entries | rules.json rules.#junk_volume_session",
         "evidence": "modeled",
@@ -6019,18 +6088,19 @@
       },
       {
         "id": "session_length",
-        "label": "Sessions under 90 minutes",
+        "label": "Sessions within your level's limit",
         "kind": "check",
         "section": "session",
         "tab": "build_analysis",
-        "description": "Passes while every day is estimated under 90 minutes; shows minutes per day, the average and hard sets per hour. Days from 75 minutes are listed as a note.",
+        "description": "Passes while every day is estimated under your level's limit (beginner 60/75, intermediate 75/90, advanced 90/105 minutes (note/limit)); shows minutes per day, the average and hard sets per hour. Days past your level's note point are listed as a note.",
         "explain": {
-          "what": "Passes while every day is estimated under 90 minutes; shows minutes per day, the average and hard sets per hour. Days from 75 minutes are listed as a note.",
-          "how": "Warm-up 10 min + per set 0.75 min work + rest by type (primary 3, accessory 2, isolation 1.5 min). The flag names the day and its longest exercises.",
+          "what": "Passes while every day is estimated under your level's limit (beginner 60/75, intermediate 75/90, advanced 90/105 minutes (note/limit)); shows minutes per day, the average and hard sets per hour. Days past your level's note point are listed as a note.",
+          "how": "Warm-up + per set 0.75 min work + rest by type, using your level's values (rules.json session_length by_level: beginner 8 min warm-up, rest 2.5/2/1.5; intermediate 10, rest 3/2/1.5; advanced 12, rest 3.5/2.5/1.5 for primary/accessory/isolation). The flag names the day and its longest exercises.",
           "why": "A time estimate for planning; your own rest times decide the real length.",
-          "learn_page": "volume-frequency#sessions"
+          "learn_page": "volume-frequency#sessions",
+          "so_what": "An estimate of how long each day takes for your level. If a day runs long, trim isolation sets or split the day."
         },
-        "formula": "rules.json rules.#session_length: warmup_min + sum(sets x (work_min_per_set + rest_min_by_type[type])); info 75, warn 90 | sum(session_length) / training days | session_hard_sets / (session_length / 60)",
+        "formula": "rules.json rules.#session_length.by_level[level] (top level = intermediate fallback): warmup_min + sum(sets x (work_min_per_set + rest_min_by_type[type])); info at info_min, warn at warn_min (beginner 60/75, intermediate 75/90, advanced 90/105) | sum(session_length) / training days | session_hard_sets / (session_length / 60)",
         "evidence": "modeled",
         "status": "defined",
         "rules": [
@@ -6101,7 +6171,8 @@
           "what": "Credited hard sets per muscle from completed workouts.",
           "how": "Working sets x rating (>= 0.25) with set_tags credit (rules.json logger.completed_analytics.hard_sets).",
           "why": "What you actually did, next to the plan.",
-          "learn_page": "set-crediting-targets#hard-sets"
+          "learn_page": "set-crediting-targets#hard-sets",
+          "so_what": "What you actually did, counted the same way as the plan. Compare it with the plan to see where the week went."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6131,7 +6202,8 @@
           "what": "Planned working sets and sessions done, out of planned.",
           "how": "rules.json logger.completed_analytics.adherence.",
           "why": "Consistency over time matters more than any one week.",
-          "learn_page": "set-crediting-targets#on-plan"
+          "learn_page": "set-crediting-targets#on-plan",
+          "so_what": "How much of the plan you completed. Consistency over weeks matters more than any single session."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6157,7 +6229,8 @@
           "what": "Load x reps of working sets per session, week and muscle.",
           "how": "rules.json logger.completed_analytics.volume.",
           "why": "A rough workload trend; it rises with load or reps.",
-          "learn_page": "hypertrophy-stimulus#tension"
+          "learn_page": "hypertrophy-stimulus#tension",
+          "so_what": "Total weight moved. Rising numbers over weeks usually mean you are progressing; one-week dips are normal."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6185,7 +6258,8 @@
           "what": "Best estimated 1RM per session for each exercise.",
           "how": "Epley on working sets with reps <= 12 (rules.json logger.e1rm_formula).",
           "why": "A load trend you can compare across rep ranges; an estimate, not a tested max.",
-          "learn_page": "hypertrophy-stimulus#tension"
+          "learn_page": "hypertrophy-stimulus#tension",
+          "so_what": "Your best estimated one-rep max per session for each lift. A rising line means you are getting stronger on it."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6211,7 +6285,8 @@
           "what": "Weight, set-volume, e1RM and rep PRs.",
           "how": "rules.json logger.prs with the tie rule.",
           "why": "Marks milestones; no PR this week is normal.",
-          "learn_page": "hypertrophy-stimulus#tension"
+          "learn_page": "hypertrophy-stimulus#tension",
+          "so_what": "Personal records you set. A good sign that training is working."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6241,7 +6316,8 @@
           "what": "Up / stalled / dropping per exercise.",
           "how": "Slope of best e1RM over 4 weeks (rules.json logger.progress_signals).",
           "why": "A nudge to look at an exercise, not a verdict.",
-          "learn_page": "hypertrophy-stimulus#failure"
+          "learn_page": "hypertrophy-stimulus#failure",
+          "so_what": "Tells you whether each lift is going up, holding or dropping over the last 4 weeks. Two or more dropping lifts can mean it is time for a lighter week."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6267,7 +6343,8 @@
           "what": "Credited done vs planned sets per muscle this week.",
           "how": "rules.json review.on_plan_margin + completed_analytics.",
           "why": "Shows where the week drifted from the plan.",
-          "learn_page": "set-crediting-targets#on-plan"
+          "learn_page": "set-crediting-targets#on-plan",
+          "so_what": "Shows which muscles got less work than planned this week. If the same ones keep falling short, the plan may be too long."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6293,7 +6370,8 @@
           "what": "Top set, e1RM and volume against the last session of the same workout.",
           "how": "Flat band 1% (rules.json review.flat_pct).",
           "why": "Immediate feedback after a session.",
-          "learn_page": "hypertrophy-stimulus#tension"
+          "learn_page": "hypertrophy-stimulus#tension",
+          "so_what": "A quick comparison with your last session of the same day. Small ups and downs are normal."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6319,7 +6397,8 @@
           "what": "The last 4 training weeks against the 4 before.",
           "how": "rules.json review.block_* (deload and current week excluded).",
           "why": "Trends over a block are steadier than week to week.",
-          "learn_page": "volume-frequency#volume"
+          "learn_page": "volume-frequency#volume",
+          "so_what": "Compares the last 4 weeks with the 4 before. It is the best place to see real progress or a stall."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6349,7 +6428,8 @@
           "what": "Points toward a suggested lighter week.",
           "how": "rules.json logger.deload_signals: weeks since deload, stalls, RIR drift, over-target weeks, readiness.",
           "why": "A planning prompt; you decide.",
-          "learn_page": "hypertrophy-stimulus#failure"
+          "learn_page": "hypertrophy-stimulus#failure",
+          "so_what": "Adds up signs that fatigue is building. A high score suggests an easier week; it is an option, not a requirement."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6375,7 +6455,8 @@
           "what": "Loads that look about 10x too high.",
           "how": "rules.json logger.suspect_decimal.",
           "why": "Catches keypad slips before they skew trends.",
-          "learn_page": null
+          "learn_page": null,
+          "so_what": "Some old entries may have a misplaced decimal point. Check and fix them so your charts and records stay accurate."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6406,7 +6487,8 @@
           "what": "Mean logged reps in reserve of working sets this week, and the share of sets with RIR entered.",
           "how": "mean(set.rir) over working sets with rir entered.",
           "why": "How close to failure you trained, as you logged it.",
-          "learn_page": "hypertrophy-stimulus#failure"
+          "learn_page": "hypertrophy-stimulus#failure",
+          "so_what": "How close to failure your logged sets were. About 1 to 3 reps in reserve is the usual target for building muscle."
         },
         "breakdowns": [],
         "flags_name": []
@@ -6582,268 +6664,5 @@
         "action": "reschedule: move every tile of that day to the nearest empty weekday (earlier first on a tie) whose result adds no non-info flag -> {op: remove} x n + {op: add} x n; none -> info only."
       }
     }
-  },
-  "check_priority": {
-    "version": 2,
-    "note": "Round 3 program-check card priority. Shaped as a rules.json key: merge `check_priority` into rules.json as-is. Card order (CoS call 2026-10-23): state first (red, then amber), score only within a state; info items never show on the card (they stay in the full analysis); red / amber always show (no minimum score) and an issue without a validated fix shows with action see_analysis instead of Apply. Cap 3; a board with no red / amber issue shows none. score = severity x importance x fixability; importance = check weight x muscle weight. Design choices, not evidence; scores are a model. Reference: tools/check_priority.py; spec: data/check-priority-spec.md; fixture: data/check-priority-reference.json.",
-    "formula": "score = severity * importance * fixability",
-    "severity": {
-      "state_band": {
-        "red": [
-          0.7,
-          1.0
-        ],
-        "amber": [
-          0.4,
-          0.6
-        ],
-        "info": [
-          0.1,
-          0.3
-        ]
-      },
-      "rule": "severity = lo + (hi - lo) * d, where [lo, hi] = state_band[state] and d in [0, 1] is the distance from range (see distance). red = a failing check (non-info flag); amber = close to target (weekly_band, stretch share below 0.25); info = an info note.",
-      "distance": {
-        "weekly_volume / weekly_band under": "min(1, (level_min - sets) / level_min)",
-        "weekly_volume / weekly_band over": "min(1, (sets - max) / max)",
-        "stretch_share": "min(1, (0.25 - share) / 0.25)",
-        "missing_stretch": "1",
-        "low_frequency / effective_frequency": "(2 - days) / 2",
-        "session_length": "info: (min - 75) / 15; warn: min(1, (min - 90) / 30)",
-        "session_hard_sets": "info: (sets - (cap - info_band)) / info_band; warn: min(1, (sets - cap) / cap)",
-        "junk_volume_session / redundant_pattern": "min(1, (sets - 10) / 10)",
-        "pattern_gap": "(min - count) / min",
-        "push_pull_imbalance": "min(1, distance of the ratio outside 0.75-2.0 / 0.75)",
-        "recovery_vs_baseline": "min(1, (ratio - 1.15) / 0.35)",
-        "other": "1"
-      }
-    },
-    "importance": {
-      "rule": "check_weight[family] * muscle_weight[muscle] (board-level issues use muscle weight 1.0)",
-      "check_weight": {
-        "weekly_volume": {
-          "weight": 1.0,
-          "sources": [
-            "weekly_volume",
-            "weekly_band"
-          ],
-          "item": "volume_in_reach",
-          "note": "weekly sets per muscle: the main lever"
-        },
-        "stretch": {
-          "weight": 0.7,
-          "sources": [
-            "missing_stretch",
-            "stretch_share"
-          ],
-          "item": "stretch_share",
-          "note": "per-muscle stretch checks; low share (amber) for checked or measure-only muscles"
-        },
-        "push_pull": {
-          "weight": 0.9,
-          "sources": [
-            "push_pull_imbalance"
-          ],
-          "item": "push_pull_ratio",
-          "note": ""
-        },
-        "pattern_gap": {
-          "weight": 0.85,
-          "sources": [
-            "pattern_gap"
-          ],
-          "item": "pattern_coverage",
-          "note": ""
-        },
-        "redundant_pattern": {
-          "weight": 0.7,
-          "sources": [
-            "redundant_pattern"
-          ],
-          "item": "redundant_pattern",
-          "note": ""
-        },
-        "consecutive": {
-          "weight": 0.75,
-          "sources": [
-            "consecutive_high_volume"
-          ],
-          "item": "consecutive_high_volume",
-          "note": ""
-        },
-        "frequency": {
-          "weight": 0.45,
-          "sources": [
-            "low_frequency",
-            "effective_frequency"
-          ],
-          "item": "frequency_two_days",
-          "note": "scheduling suggestion only (volume-equated studies find little effect)"
-        },
-        "spinal_load": {
-          "weight": 0.9,
-          "sources": [
-            "spinal_load",
-            "spinal_load_session",
-            "spinal_load_week"
-          ],
-          "item": "spinal_load",
-          "note": ""
-        },
-        "recovery": {
-          "weight": 0.8,
-          "sources": [
-            "recovery_vs_baseline"
-          ],
-          "item": "recovery_vs_baseline",
-          "note": ""
-        },
-        "session_volume": {
-          "weight": 0.8,
-          "sources": [
-            "junk_volume_session"
-          ],
-          "item": "session_design",
-          "note": ""
-        },
-        "session_size": {
-          "weight": 0.8,
-          "sources": [
-            "session_hard_sets",
-            "session_length"
-          ],
-          "item": "session_design",
-          "note": ""
-        },
-        "sets_per_exercise": {
-          "weight": 0.6,
-          "sources": [
-            "sets_per_exercise"
-          ],
-          "item": "session_design",
-          "note": ""
-        },
-        "small_entries": {
-          "weight": 0.35,
-          "sources": [
-            "many_small_entries"
-          ],
-          "item": "session_design",
-          "note": ""
-        },
-        "lower_back": {
-          "weight": 0.3,
-          "sources": [
-            "hinge_before_squat",
-            "beginner_squat_and_deadlift"
-          ],
-          "item": "lower_back_fatigue",
-          "note": "thin evidence (Belcher 2019); info only"
-        }
-      },
-      "muscle_weight": {
-        "chest": 1.0,
-        "lats": 1.0,
-        "upper_back": 1.0,
-        "quads": 1.0,
-        "glutes": 1.0,
-        "hamstrings": 1.0,
-        "side_delts": 0.85,
-        "rear_delts": 0.75,
-        "front_delts": 0.6,
-        "triceps": 0.8,
-        "biceps": 0.8,
-        "calves": 0.7,
-        "traps": 0.6,
-        "abs": 0.6,
-        "adductors": 0.55,
-        "obliques": 0.45,
-        "abductors": 0.45,
-        "lower_back": 0.45,
-        "forearms": 0.4
-      },
-      "muscle_weight_rationale": "Big prime movers that carry most of a physique and most weekly sets (chest, back, quads, glutes, hamstrings) = 1.0. Delts and arms, which the app targets directly and users notice, 0.75-0.85; front delts 0.6 because pressing already covers them. Calves 0.7. Muscles that mostly get indirect work or small targets (traps, abs, adductors, obliques, abductors, lower back, forearms) 0.4-0.6. A design choice for ordering the card, not evidence about which muscles matter more. The app has no neck muscle.",
-      "board_level_muscle_weight": 1.0
-    },
-    "fixability": {
-      "rules": [
-        {
-          "id": "single_op",
-          "value": 1.0,
-          "when": "a validated fix resolves the issue with one op (sets, swap, add or move one tile)"
-        },
-        {
-          "id": "two_ops",
-          "value": 0.8,
-          "when": "a validated fix resolves it with two ops"
-        },
-        {
-          "id": "restructure",
-          "value": 0.6,
-          "when": "a validated fix resolves it with three or more ops"
-        },
-        {
-          "id": "partial",
-          "value": 0.4,
-          "when": "only partial fixes (move toward the goal without meeting it)"
-        },
-        {
-          "id": "none",
-          "value": 0.2,
-          "when": "no validated fix: needs restructuring by hand"
-        }
-      ],
-      "source": "the validated fixes of tools/analysis.py sheet() (suggestions.validation: never adds a non-info flag, so every fix stays within session limits)"
-    },
-    "excluded_sources": {
-      "lower_fatigue_swap": "An optimisation, not a check: it never appears on the program-check card (it stays in the Recovery & fatigue suggestions)."
-    },
-    "dedupe": "One issue per (family, muscle or day): weekly_volume + weekly_band, low_frequency + effective_frequency, missing_stretch + stretch_share collapse to the highest score.",
-    "sort_order": [
-      "state: red, then amber",
-      "score (rounded to 4 decimals) desc",
-      "distance d desc",
-      "muscle weight desc",
-      "issue id asc"
-    ],
-    "card_states": [
-      "red",
-      "amber"
-    ],
-    "exclude_kinds": {
-      "states": [
-        "info"
-      ],
-      "sources": [
-        "lower_fatigue_swap"
-      ],
-      "note": "info-state issues and excluded sources never appear on the program-check card; they stay in the full analysis"
-    },
-    "no_fix_action": {
-      "action": "see_analysis",
-      "when": "no validated fix (fixability rule none)",
-      "fix": null,
-      "note": "show the issue with a link to its Analysis item (analysis_item) instead of Apply; no Apply / Undo ops. Not dropped: there is no minimum score on the card."
-    },
-    "cap": 3,
-    "min_score": null,
-    "action": "apply when fix is set, else no_fix_action.action",
-    "analysis_item": {
-      "rule": {
-        "missing_stretch": "stretch_<muscle> when the muscle is in rules.stretch_check.checked (its own check item), else stretch_coverage",
-        "stretch_share": "stretch_share (the measure item; the muscle is in analysis_item_muscle, matching stretch_share.per_muscle)",
-        "session_hard_sets": "session_design",
-        "session_length": "session_length",
-        "other sources": "check_weight[family].item"
-      },
-      "item_by_source": {
-        "stretch_share": "stretch_share",
-        "session_hard_sets": "session_design",
-        "session_length": "session_length"
-      },
-      "muscle_field": "analysis_item_muscle: the muscle row to highlight inside analysis_item (same as issue.muscle; null for board-level issues)",
-      "note": "r3fu: replaces the literal stretch_<muscle> placeholder; always a real analysis_metrics item id"
-    },
-    "apply": "Each issue carries fix = the best validated fix (resolving first, then fewest ops): ops (swap / add / sets / move as analysis.py apply_ops diff), preview, resolves, and undo ops (invert_ops)."
   }
 }

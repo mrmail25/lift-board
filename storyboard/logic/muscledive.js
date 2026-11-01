@@ -19,9 +19,9 @@ function deepdive(dt,days,level,baseline=null,goals=null,profile=null,only=null,
   const [fl,week]=PC.check(dt,days,level),bd=AN.breakdowns(dt,days).muscle,sheet=opt.sheet||AN.sheet(dt,days,level,baseline),chk=(dt.rules.stretch_check||{}).checked||{};
   const fmin=dt.targets.analytics.frequency_min_effective,labels=((dt.exl.muscle_short_labels||{}).muscles)||{},MR=((dt.targets.counting||{}).min_rating_to_count??0.25),MUS=dt.exl.muscles,BR=dt.rules.body_regions.muscles,out={};
   for(const m of Object.keys(dt.targets.targets)){if(only&&m!==only)continue;
-    const [lo,hi]=band(dt,m,level),x=week[m],k=dt.targets.curve.k_by_muscle[m][level],xd=curveX(dt,days,m),perDay=dayEff(dt,days,m),hit=Object.keys(perDay).filter(d=>perDay[d]>=fmin);
+    const [lo,hi]=band(dt,m,level),x=week[m],k=dt.VM?null:dt.targets.curve.k_by_muscle[m][level],xd=curveX(dt,days,m),perDay=dayEff(dt,days,m),hit=Object.keys(perDay).filter(d=>perDay[d]>=fmin);
     const contrib=new Map();for(const d of days)for(const t of d.tiles){const r=dt.EX[t.id].muscles[m]||0;if(r<MR)continue;
-      if(!contrib.has(t.id))contrib.set(t.id,{id:t.id,name:dt.EX[t.id].name,rating:r,sets:0,effective_sets:0,days:[]});const c=contrib.get(t.id);c.sets+=t.sets;c.effective_sets+=t.sets*r;c.days.push({day:d.day,sets:t.sets,effective_sets:_r(t.sets*r)})}
+      if(!contrib.has(t.id))contrib.set(t.id,{id:t.id,name:dt.EX[t.id].name,rating:r,sets:0,effective_sets:0,days:[]});const c=contrib.get(t.id);c.sets+=t.sets;const cr=PC.credit(dt,dt.EX[t.id],m,r,t.rir);c.effective_sets+=t.sets*cr;c.days.push({day:d.day,sets:t.sets,effective_sets:_r(t.sets*cr)})}
     const cl=[...contrib.values()].sort((a,b)=>(b.effective_sets-a.effective_sets)||(a.id<b.id?-1:a.id>b.id?1:0));for(const c of cl){c.effective_sets=_r(c.effective_sets);c.share=x?_r(c.effective_sets/x):0}
     const b=bd[m]||{},g=key=>key in b?b[key]:null;
     const train=days.filter(d=>d.tiles.length).map(d=>d.day),reg=BR[m];
@@ -33,7 +33,7 @@ function deepdive(dt,days,level,baseline=null,goals=null,profile=null,only=null,
       fix:s.fixes.length?{ops:s.fixes[0].diff,preview:s.fixes[0].preview,resolves:s.fixes[0].resolves}:null,_i:i}));
     out[m]={id:m,label:m.replace(/_/g,' '),short_label:labels[m]??null,anchor:`deepdive-${m}`,
       sets:{effective:_r(x,2),level_min:lo,max:hi,red_under_below:lo-2,red_over_above:_r(hi*dt.rules.volume_bands.red_factor,2),status:status(dt,m,x,level),mev_band:[lo,hi],evidence_tag:dt.targets.targets[m].evidence.tag},
-      curve:{k,x_after_session_discount:_r(xd),stimulus:_r(S(xd,k)),next_set:_r(S(xd+1,k)-S(xd,k)),ideal_band:[_r(S(lo,k)),_r(S(hi,k))],position:xd<lo-1e-9?'below':xd>hi+1e-9?'above':'in_band'},
+      curve:dt.VM?(()=>{const z=PC.zones(dt,m,level),Sv=v=>PC.stim(dt,m,level,v);return {zones:z,zone:PC.zoneOf(z,xd),x_after_session_discount:_r(xd),stimulus:_r(Sv(xd)),next_set:_r(Sv(xd+1)-Sv(xd)),ideal_band:z.sweet?[_r(Sv(z.sweet[0])),_r(Sv(z.sweet[1]))]:[_r(Sv(lo)),_r(Sv(hi))],position:xd<lo-1e-9?'below':xd>hi+1e-9?'above':'in_band'}})():{k,x_after_session_discount:_r(xd),stimulus:_r(S(xd,k)),next_set:_r(S(xd+1,k)-S(xd,k)),ideal_band:[_r(S(lo,k)),_r(S(hi,k))],position:xd<lo-1e-9?'below':xd>hi+1e-9?'above':'in_band'},
       frequency:{days_hit:hit.length,days:hit,effective_by_day:perDay,min_effective_per_day:fmin},
       stretch:{share:g('stretch_share'),checked:m in chk,check_pass:m in chk?!fl.some(f=>f[1]==='missing_stretch'&&f[2]===m):null},
       one_side_share:g('one_side_share'),recovery_cost:g('recovery_cost'),stimulus_per_fatigue:g('stimulus_per_fatigue'),fatigue:g('fatigue'),

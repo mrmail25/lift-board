@@ -1493,8 +1493,65 @@ html[data-theme=dark] .pmom.gold .pm-txt .eyebrow{color:#FFD88F}
 .pmet .pmc.off{opacity:.42;text-decoration:none}.pmet .pmc.off.on{opacity:1}
 .pmetwhy,.pmetfb{margin:4px 18px 0;font-size:12px}.pmetone{margin:2px 0 0;font-size:12px;text-align:center}
 
-/* plan (Mr Dude): the Analysis sheet's body map and every Nerd Sh*t (Learn) body map fill the full content width (page margins kept);
+/* plan (Mr Dude): the Analysis sheet's body map and every Nurd Sh!t (Learn) body map fill the full content width (page margins kept);
    front + back sit side by side in two equal columns and the height scales with the width */
 .anh .anmap{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}.anh .anmap .mmap{width:100%;height:auto}
 #learnbody .mapcard .maps,#lm .mapcard .maps,#lx .mapcard .maps{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:none;width:100%;margin:0}
 #learnbody .mapcard .mmap,#lm .mapcard .mmap,#lx .mapcard .mmap{width:100%;height:auto}
+/* analysis2 (Mr Dude): merged per-muscle table, zone slot, session limit, swap tradeoff, recovery reference, so-what notes */
+.mtab{display:flex;flex-direction:column;width:100%;margin-top:6px}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) 38px 58px 44px;column-gap:6px;align-items:center;min-height:36px;padding:3px 0;border-bottom:.5px solid var(--line);width:100%;box-sizing:border-box}
+.mrow.mrh{min-height:22px;font-size:11px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.02em;border-bottom:.5px solid var(--line-strong)}
+.mrow .mrn{all:unset;cursor:pointer;font-size:14px;line-height:1.15;display:flex;flex-direction:column;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.mrow .mrc{text-align:right;font-size:14px;justify-self:end}
+.mrow .mre{display:flex;flex-direction:column;align-items:flex-end;line-height:1.1;position:relative;padding-left:10px}
+.mrow .mre small{font-size:10px;color:var(--text-3)}
+.mrow .vdot{position:absolute;left:0;top:5px;width:7px;height:7px;border-radius:50%}
+.mrow .mrs{all:unset;cursor:pointer;justify-self:end;text-align:right;font-size:13px;color:var(--text-2);padding:4px 0 4px 6px;font-variant-numeric:tabular-nums}
+.mrow.on .mrs{color:var(--accent-press);font-weight:600}
+.mrow.on .mrn{color:var(--accent-press)}
+.mrow .mzb{grid-column:1/-1;position:relative;height:4px;border-radius:2px;background:var(--fill);margin:4px 0 2px;overflow:visible}
+.mzb i,.zleg i{position:absolute;top:0;bottom:0}
+.mzb .z0{background:var(--vol-under);opacity:.45}.mzb .z1{background:var(--vol-in-range);opacity:.35}.mzb .z2{background:var(--vol-in-range)}.mzb .z3{background:var(--vol-amber);opacity:.55}
+.mzb b{position:absolute;top:-3px;width:2px;height:10px;margin-left:-1px;background:var(--ink);border-radius:1px}
+.mzb.ph{opacity:.6}
+.zleg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11px;color:var(--text-2);margin-top:6px}
+.zleg span{display:inline-flex;align-items:center;gap:4px}.zleg i{position:static;display:inline-block;width:12px;height:4px;border-radius:2px}
+.zleg .z0{background:var(--vol-under)}.zleg .z2{background:var(--vol-in-range)}.zleg .z3{background:var(--vol-amber)}.zleg em{font-style:normal;color:var(--warn-ink)}
+.mtab .sgr.inl{margin:4px 0 6px}
+.slim{display:flex;align-items:center;gap:10px;padding:8px 0 10px}
+.slim .grow{display:flex;flex-direction:column;min-width:0}.slim small{font-size:12px;color:var(--text-2)}
+.stp{display:inline-flex;align-items:center;gap:6px}.stp .btn{min-width:36px;min-height:36px;font-size:18px;padding:0}.stp .slv{min-width:56px;text-align:center;font-weight:600}
+.ssgl{margin-top:8px}.ssg .sgp .sub{color:var(--text-2);font-size:12px;white-space:nowrap}
+.sgtr{display:block}
+.rcref{display:flex;flex-wrap:wrap;gap:2px 8px;margin-top:8px;padding:8px 10px;border-radius:var(--r-md);background:var(--fill);font-size:13px}
+.rcref .k{font-weight:600}.rcref .v{color:var(--text-2)}.rcref.ph{border:1px dashed var(--line-strong);background:none}
+.xsw{font-size:16px;line-height:1.4;margin:8px var(--s5) 12px}
+.xchip{display:inline-flex;align-items:center;vertical-align:baseline;margin-left:4px;padding:2px 9px;border-radius:var(--r-pill);background:var(--accent-tint);color:var(--accent-press);font-size:13px;font-weight:600;border:0;cursor:pointer;position:relative;white-space:nowrap}
+.xchip::after{content:'';position:absolute;inset:-10px -4px}
+.mtab .mrow span.mzb{display:block;height:4px;min-height:0;padding:0;align-self:center}
+.mtab .mrow[data-vs=under] .vdot{background:var(--vol-under)}.mtab .mrow[data-vs=in] .vdot{background:var(--vol-in-range)}.mtab .mrow[data-vs=amber] .vdot{background:var(--vol-amber)}.mtab .mrow[data-vs=red] .vdot{background:var(--vol-red)}
+/* vol2 (Coach's volume model): zone bands on the curve, zone column, recovery hours + benchmark ladder, swap tradeoff */
+.ancurve .zb0{fill:var(--vol-under);opacity:.16}.ancurve .zb1{fill:var(--vol-in-range);opacity:.16}.ancurve .zb2{fill:var(--vol-in-range);opacity:.38}.ancurve .zb3{fill:var(--vol-amber);opacity:.22}
+.anread .anpct{display:block;font-size:12px;color:var(--text-2);margin-top:2px}
+.mrow{grid-template-columns:minmax(0,1fr) 32px 50px 84px}
+.mrow .mrs{display:flex;flex-direction:column;align-items:flex-end;line-height:1.1;padding:2px 0 2px 4px}
+.mrow .mrs .mzl{font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap}.mrow .mrs small{font-size:11px;color:var(--text-2)}
+.mrow[data-st=close-under] .mzl,.mrow[data-vs=under] .mzl{color:var(--text-2)}.mrow.on .mrs .mzl{color:var(--accent-press)}
+.mrow .mrs[data-zone=diminishing] .mzl{color:var(--warn-ink)}
+.zleg .z1{background:var(--vol-in-range);opacity:.45}
+.rbench{margin-top:10px}.rbl{font-size:14px;margin:2px 0 8px}
+.rbt{position:relative;height:6px;border-radius:3px;background:var(--fill);margin:4px 6px 4px}
+.rbt i{position:absolute;top:-3px;width:2px;height:12px;margin-left:-1px;background:var(--text-3)}
+.rbt b{position:absolute;top:-5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--accent);border:2px solid var(--paper)}
+.rbn{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;font-size:11px;color:var(--text-2);margin-top:6px}
+.rbn>span{display:flex;flex-direction:column;align-items:center;text-align:center;line-height:1.15}.rbn em{font-style:normal}.rbn .num{font-weight:600;color:var(--ink)}.rbn .me em,.rbn .me .num{color:var(--accent-press)}
+.rhh{margin-top:12px}.rhrs{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px}
+.rhr{display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-size:13px;min-height:28px;border-bottom:.5px solid var(--line);min-width:0}
+.rhr .mlk{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rhr .num{white-space:nowrap;color:var(--text-2);font-size:12px}.rhr small{color:var(--text-3)}
+.sgfd{display:block;font-size:12px;color:var(--text-2);margin-top:2px}
+.sgr .sgtr{display:block;font-size:13px;color:var(--warn-ink);font-weight:600;margin-top:2px}
+.mrow{grid-template-columns:minmax(0,1fr) 30px 46px 92px}
+.mrow .mrs .mzl{font-size:11.5px}
+.rhr{flex-direction:column;align-items:flex-start;justify-content:center;gap:0;padding:3px 0;min-height:36px}
+.rhr .mlk{max-width:100%;font-size:13px}

@@ -1,0 +1,1095 @@
+{
+ "version": "vol1",
+ "date": "2026-10-31",
+ "status": "proposed for port (Builder); replaces targets.json curve for the Modeled stimulus item",
+ "disclaimer": "A model for comparing plans, not a measurement of growth or recovery.",
+ "evidence_tags": {
+  "evidence": "Evidence-based: the number or shape comes from a cited peer-reviewed study or meta-analysis.",
+  "extrapolated": "Extrapolated: pooled or neighbouring evidence stretched to a muscle, level or range the studies did not measure directly.",
+  "modeled": "Modeled: a planning convention chosen by Coach. Not measured; adjust to how you actually respond."
+ },
+ "sources": {
+  "schoenfeld2017": {
+   "cite": "Schoenfeld, Ogborn & Krieger (2017). Dose-response relationship between weekly resistance training volume and increases in muscle mass: a systematic review and meta-analysis. Journal of Sports Sciences 35(11):1073-1082.",
+   "url": "https://doi.org/10.1080/02640414.2016.1210197",
+   "peer_reviewed": true,
+   "used_for": "Graded dose-response: <5, 5-9 and 10+ weekly sets all grew, 10+ most. Supports a curve that rises from zero with no hard floor and that the minimum is where useful growth starts, not where growth begins at all."
+  },
+  "pelland2025": {
+   "cite": "Pelland et al. The Resistance Training Dose Response: Meta-Regressions Exploring the Effects of Weekly Volume and Frequency on Muscle Hypertrophy and Strength Gains. Sports Medicine (online Dec 2025). Earlier version: SportRxiv preprint 2024 (not peer-reviewed), doi 10.51224/srxiv.460.",
+   "url": "https://doi.org/10.1007/s40279-025-02344-w",
+   "peer_reviewed": true,
+   "used_for": "67 studies. Counting indirect sets as 0.5 (\"fractional\") fit best. Hypertrophy keeps rising with weekly volume with diminishing returns; best-fit hypertrophy model was a square-root curve. Basis for the square-root curve shape and for keeping ~0.5 credit on indirect sets."
+  },
+  "bazvalle2022": {
+   "cite": "Baz-Valle, Balsalobre-Fernandez, Alix-Fages & Santos-Concejero (2022). A Systematic Review of the Effects of Different Resistance Training Volumes on Muscle Hypertrophy. Journal of Human Kinetics 81:199-210.",
+   "url": "https://doi.org/10.2478/hukin-2022-0017",
+   "peer_reviewed": true,
+   "used_for": "Trained young men: 12-20 weekly sets per muscle a reasonable range; >20 no clear extra gain for quads and biceps (triceps an exception, with pressing counted). Basis for 12-18/20 sweet spots and the ~20 diminishing-returns point on big muscles."
+  },
+  "robinson2024": {
+   "cite": "Robinson, Pelland, Remmert, Refalo, Jukic, Steele & Zourdos (2024). Exploring the Dose-Response Relationship Between Estimated Resistance Training Proximity to Failure, Strength Gain, and Muscle Hypertrophy: A Series of Meta-Regressions. Sports Medicine 54(9):2209-2231.",
+   "url": "https://doi.org/10.1007/s40279-024-02069-2",
+   "peer_reviewed": true,
+   "used_for": "Hypertrophy increases as sets end closer to failure (negative slope per estimated RIR); exploratory, RIR estimated, exact shape unclear. Basis for discounting sets with more reps in reserve; the specific multipliers are extrapolated/modeled."
+  },
+  "refalo2023": {
+   "cite": "Refalo, Helms, Trexler, Hamilton & Fyfe (2023). Influence of Resistance Training Proximity-to-Failure on Skeletal Muscle Hypertrophy: A Systematic Review with Meta-analysis. Sports Medicine 53(3):649-665.",
+   "url": "https://doi.org/10.1007/s40279-022-01784-y",
+   "peer_reviewed": true,
+   "used_for": "Failure vs non-failure gave similar hypertrophy when volume was equated. Supports full credit at 0-2 RIR (no bonus for failure)."
+  },
+  "refalo2024": {
+   "cite": "Refalo, Helms, Robinson, Hamilton & Fyfe (2024). Similar muscle hypertrophy following eight weeks of resistance training to momentary muscular failure or with repetitions-in-reserve in resistance-trained individuals. Journal of Sports Sciences 42(1):85-101.",
+   "url": "https://doi.org/10.1080/02640414.2024.2321021",
+   "peer_reviewed": true,
+   "used_for": "Quads: failure vs 1-2 RIR gave the same growth; failure caused more acute fatigue. Supports multiplier 1.0 through RIR 2 and a failure surcharge on recovery, not on stimulus."
+  },
+  "moran2017": {
+   "cite": "Moran-Navarro et al. (2017). Time course of recovery following resistance training leading or not to failure. European Journal of Applied Physiology.",
+   "url": "https://doi.org/10.1007/s00421-017-3725-7",
+   "peer_reviewed": true,
+   "used_for": "Trained men, bench and squat: non-failure protocols recovered mechanical performance faster between 24 and 48 h; failure slowed recovery by up to 24-48 h, some markers still off at 72 h. Anchors the 24-72 h range and the failure factor."
+  },
+  "cheung2003": {
+   "cite": "Cheung, Hume & Maxwell (2003). Delayed onset muscle soreness: treatment strategies and performance factors. Sports Medicine 33(2):145-164.",
+   "url": "https://doi.org/10.2165/00007256-200333020-00005",
+   "peer_reviewed": true,
+   "used_for": "Soreness after unaccustomed, eccentric-heavy work rises within 24 h and peaks around 24-72 h. Basis for the stretch/eccentric factor and the 96 h clamp."
+  },
+  "mchugh2003": {
+   "cite": "McHugh (2003). Recent advances in the understanding of the repeated bout effect. Scandinavian Journal of Medicine & Science in Sports 13(2):88-97.",
+   "url": "https://doi.org/10.1034/j.1600-0838.2003.02477.x",
+   "peer_reviewed": true,
+   "used_for": "Repeated exposure protects against damage from the same work. Basis for the beginner recovery factor (less protection on novel work); the 1.15 value is modeled."
+  },
+  "schoenfeld2016rest": {
+   "cite": "Schoenfeld, Pope, Benik et al. (2016). Longer Interset Rest Periods Enhance Muscle Strength and Hypertrophy in Resistance-Trained Men. Journal of Strength and Conditioning Research 30(7):1805-1812.",
+   "url": "https://doi.org/10.1519/JSC.0000000000001272",
+   "peer_reviewed": true,
+   "used_for": "3 min beat 1 min rest on compound lifts for trained men. Supports ~3 min rest for primary lifts at intermediate/advanced."
+  },
+  "singer2024rest": {
+   "cite": "Singer, Wolf, Generoso et al. (2024). Give it a rest: a systematic review with Bayesian meta-analysis on the effect of inter-set rest interval duration on muscle hypertrophy. Frontiers in Sports and Active Living 6:1429789.",
+   "url": "https://doi.org/10.3389/fspor.2024.1429789",
+   "peer_reviewed": true,
+   "used_for": "Small advantage for resting >60 s; no clear extra hypertrophy benefit beyond ~90 s. Supports 1.5 min isolation rest at every level."
+  },
+  "rp_landmarks": {
+   "cite": "Renaissance Periodization: Israetel, Hoffmann & Smith, Scientific Principles of Hypertrophy Training (2021) and RP \"training volume landmarks\" articles (MV/MEV/MAV/MRV).",
+   "url": "https://rpstrength.com/blogs/articles/training-volume-landmarks-muscle-growth",
+   "peer_reviewed": false,
+   "used_for": "PRACTITIONER, NOT PEER-REVIEWED. The three-zone idea (minimum effective, adaptive sweet spot, recoverable maximum) and the low direct minimum for front delts and traps given pressing/pulling. Used for zone structure and small-muscle sweet spots only; no RP number is copied as evidence. Note RP counts direct sets only; our zones are in fractional effective sets."
+  }
+ },
+ "levels": [
+  "beginner",
+  "intermediate",
+  "advanced"
+ ],
+ "zones": {
+  "unit": "weekly effective sets (after credit rules and the per-session discount)",
+  "zone_ids": {
+   "none": "Not trained",
+   "below_min": "Below minimum",
+   "growth": "Growing",
+   "sweet_spot": "Sweet spot",
+   "upper": "Upper range",
+   "diminishing": "Diminishing returns"
+  },
+  "definition": {
+   "min": "Minimum: where the model's growth zone starts (= targets.json min x levelMinFactor; same blue/green edge as today). Sets below it still count.",
+   "sweet_lo..sweet_hi": "Sweet spot: the range the model favours for this muscle and level.",
+   "diminishing": "Diminishing-returns point (= targets.json max; amber starts above it, same as rules.json volume_bands). Past it, extra sets add little modeled stimulus for their recovery cost."
+  },
+  "level_rule": {
+   "min": "targets.min x levelMinFactor, rounded to 0.5",
+   "sweet": "intermediate sweet spot x {\"beginner\": [0.75, 0.85], \"intermediate\": [1.0, 1.0], \"advanced\": [1.0, 1.0]} (lo, hi), kept above min+1 and at least 2 wide",
+   "diminishing": "targets.max (all levels)",
+   "tag": "modeled"
+  },
+  "per_muscle": {
+   "chest": {
+    "by_level": {
+     "beginner": {
+      "min": 6.0,
+      "sweet_lo": 9.0,
+      "sweet_hi": 15.5,
+      "diminishing": 20.0
+     },
+     "intermediate": {
+      "min": 8.0,
+      "sweet_lo": 12.0,
+      "sweet_hi": 18.0,
+      "diminishing": 20.0
+     },
+     "advanced": {
+      "min": 10.0,
+      "sweet_lo": 12.0,
+      "sweet_hi": 18.0,
+      "diminishing": 20.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "extrapolated",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "pooled",
+    "note": "Large muscle; studied mostly through bench-type pressing in pooled data."
+   },
+   "front_delts": {
+    "by_level": {
+     "beginner": {
+      "min": 2.5,
+      "sweet_lo": 4.5,
+      "sweet_hi": 10.0,
+      "diminishing": 16.0
+     },
+     "intermediate": {
+      "min": 3.0,
+      "sweet_lo": 6.0,
+      "sweet_hi": 12.0,
+      "diminishing": 16.0
+     },
+     "advanced": {
+      "min": 4.0,
+      "sweet_lo": 6.0,
+      "sweet_hi": 12.0,
+      "diminishing": 16.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "modeled",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "extrapolated",
+    "note": "Gets most of its work from pressing (credited at the discounted secondary rate). Direct front-delt work is rarely needed once pressing is in the plan."
+   },
+   "side_delts": {
+    "by_level": {
+     "beginner": {
+      "min": 5.0,
+      "sweet_lo": 9.0,
+      "sweet_hi": 15.5,
+      "diminishing": 22.0
+     },
+     "intermediate": {
+      "min": 6.5,
+      "sweet_lo": 12.0,
+      "sweet_hi": 18.0,
+      "diminishing": 22.0
+     },
+     "advanced": {
+      "min": 8.0,
+      "sweet_lo": 12.0,
+      "sweet_hi": 18.0,
+      "diminishing": 22.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "extrapolated",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "pooled"
+   },
+   "rear_delts": {
+    "by_level": {
+     "beginner": {
+      "min": 3.5,
+      "sweet_lo": 6.0,
+      "sweet_hi": 12.0,
+      "diminishing": 18.0
+     },
+     "intermediate": {
+      "min": 5.0,
+      "sweet_lo": 8.0,
+      "sweet_hi": 14.0,
+      "diminishing": 18.0
+     },
+     "advanced": {
+      "min": 6.0,
+      "sweet_lo": 8.0,
+      "sweet_hi": 14.0,
+      "diminishing": 18.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "extrapolated",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "pooled"
+   },
+   "lats": {
+    "by_level": {
+     "beginner": {
+      "min": 6.0,
+      "sweet_lo": 9.0,
+      "sweet_hi": 15.5,
+      "diminishing": 20.0
+     },
+     "intermediate": {
+      "min": 8.0,
+      "sweet_lo": 12.0,
+      "sweet_hi": 18.0,
+      "diminishing": 20.0
+     },
+     "advanced": {
+      "min": 10.0,
+      "sweet_lo": 12.0,
+      "sweet_hi": 18.0,
+      "diminishing": 20.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "extrapolated",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "pooled"
+   },
+   "upper_back": {
+    "by_level": {
+     "beginner": {
+      "min": 6.0,
+      "sweet_lo": 9.0,
+      "sweet_hi": 15.5,
+      "diminishing": 20.0
+     },
+     "intermediate": {
+      "min": 8.0,
+      "sweet_lo": 12.0,
+      "sweet_hi": 18.0,
+      "diminishing": 20.0
+     },
+     "advanced": {
+      "min": 10.0,
+      "sweet_lo": 12.0,
+      "sweet_hi": 18.0,
+      "diminishing": 20.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "extrapolated",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "pooled"
+   },
+   "traps": {
+    "by_level": {
+     "beginner": {
+      "min": 2.5,
+      "sweet_lo": 4.5,
+      "sweet_hi": 10.0,
+      "diminishing": 16.0
+     },
+     "intermediate": {
+      "min": 3.0,
+      "sweet_lo": 6.0,
+      "sweet_hi": 12.0,
+      "diminishing": 16.0
+     },
+     "advanced": {
+      "min": 4.0,
+      "sweet_lo": 6.0,
+      "sweet_hi": 12.0,
+      "diminishing": 16.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "modeled",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "extrapolated",
+    "note": "Gets indirect work from rows, deadlifts and shrug-like pulls."
+   },
+   "biceps": {
+    "by_level": {
+     "beginner": {
+      "min": 5.0,
+      "sweet_lo": 7.5,
+      "sweet_hi": 13.5,
+      "diminishing": 18.0
+     },
+     "intermediate": {
+      "min": 6.5,
+      "sweet_lo": 10.0,
+      "sweet_hi": 16.0,
+      "diminishing": 18.0
+     },
+     "advanced": {
+      "min": 8.0,
+      "sweet_lo": 10.0,
+      "sweet_hi": 16.0,
+      "diminishing": 18.0
+     }
+    },
+    "tags": {
+     "min": "evidence",
+     "sweet_spot": "evidence",
+     "diminishing": "evidence"
+    },
+    "targets_evidence_tag": "direct"
+   },
+   "triceps": {
+    "by_level": {
+     "beginner": {
+      "min": 5.0,
+      "sweet_lo": 7.5,
+      "sweet_hi": 13.5,
+      "diminishing": 18.0
+     },
+     "intermediate": {
+      "min": 6.5,
+      "sweet_lo": 10.0,
+      "sweet_hi": 16.0,
+      "diminishing": 18.0
+     },
+     "advanced": {
+      "min": 8.0,
+      "sweet_lo": 10.0,
+      "sweet_hi": 16.0,
+      "diminishing": 18.0
+     }
+    },
+    "tags": {
+     "min": "evidence",
+     "sweet_spot": "evidence",
+     "diminishing": "evidence"
+    },
+    "targets_evidence_tag": "direct",
+    "note": "Baz-Valle 2022 found >20 sets helped triceps when pressing was counted; the model keeps 18 as the point where returns flatten."
+   },
+   "forearms": {
+    "by_level": {
+     "beginner": {
+      "min": 1.0,
+      "sweet_lo": 3.0,
+      "sweet_hi": 7.0,
+      "diminishing": 12.0
+     },
+     "intermediate": {
+      "min": 1.5,
+      "sweet_lo": 4.0,
+      "sweet_hi": 8.0,
+      "diminishing": 12.0
+     },
+     "advanced": {
+      "min": 2.0,
+      "sweet_lo": 4.0,
+      "sweet_hi": 8.0,
+      "diminishing": 12.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "modeled",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "extrapolated"
+   },
+   "abs": {
+    "by_level": {
+     "beginner": {
+      "min": 2.5,
+      "sweet_lo": 4.5,
+      "sweet_hi": 10.0,
+      "diminishing": 16.0
+     },
+     "intermediate": {
+      "min": 3.0,
+      "sweet_lo": 6.0,
+      "sweet_hi": 12.0,
+      "diminishing": 16.0
+     },
+     "advanced": {
+      "min": 4.0,
+      "sweet_lo": 6.0,
+      "sweet_hi": 12.0,
+      "diminishing": 16.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "modeled",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "extrapolated"
+   },
+   "quads": {
+    "by_level": {
+     "beginner": {
+      "min": 6.0,
+      "sweet_lo": 9.0,
+      "sweet_hi": 15.5,
+      "diminishing": 20.0
+     },
+     "intermediate": {
+      "min": 8.0,
+      "sweet_lo": 12.0,
+      "sweet_hi": 18.0,
+      "diminishing": 20.0
+     },
+     "advanced": {
+      "min": 10.0,
+      "sweet_lo": 12.0,
+      "sweet_hi": 18.0,
+      "diminishing": 20.0
+     }
+    },
+    "tags": {
+     "min": "evidence",
+     "sweet_spot": "evidence",
+     "diminishing": "evidence"
+    },
+    "targets_evidence_tag": "direct"
+   },
+   "hamstrings": {
+    "by_level": {
+     "beginner": {
+      "min": 5.0,
+      "sweet_lo": 7.5,
+      "sweet_hi": 12.0,
+      "diminishing": 16.0
+     },
+     "intermediate": {
+      "min": 6.5,
+      "sweet_lo": 10.0,
+      "sweet_hi": 14.0,
+      "diminishing": 16.0
+     },
+     "advanced": {
+      "min": 8.0,
+      "sweet_lo": 10.0,
+      "sweet_hi": 14.0,
+      "diminishing": 16.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "extrapolated",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "pooled"
+   },
+   "glutes": {
+    "by_level": {
+     "beginner": {
+      "min": 5.0,
+      "sweet_lo": 7.5,
+      "sweet_hi": 12.0,
+      "diminishing": 16.0
+     },
+     "intermediate": {
+      "min": 6.5,
+      "sweet_lo": 10.0,
+      "sweet_hi": 14.0,
+      "diminishing": 16.0
+     },
+     "advanced": {
+      "min": 8.0,
+      "sweet_lo": 10.0,
+      "sweet_hi": 14.0,
+      "diminishing": 16.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "extrapolated",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "pooled"
+   },
+   "calves": {
+    "by_level": {
+     "beginner": {
+      "min": 3.5,
+      "sweet_lo": 6.0,
+      "sweet_hi": 12.0,
+      "diminishing": 16.0
+     },
+     "intermediate": {
+      "min": 5.0,
+      "sweet_lo": 8.0,
+      "sweet_hi": 14.0,
+      "diminishing": 16.0
+     },
+     "advanced": {
+      "min": 6.0,
+      "sweet_lo": 8.0,
+      "sweet_hi": 14.0,
+      "diminishing": 16.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "extrapolated",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "pooled"
+   },
+   "adductors": {
+    "by_level": {
+     "beginner": {
+      "min": 2.0,
+      "sweet_lo": 3.0,
+      "sweet_hi": 7.0,
+      "diminishing": 12.0
+     },
+     "intermediate": {
+      "min": 2.5,
+      "sweet_lo": 4.0,
+      "sweet_hi": 8.0,
+      "diminishing": 12.0
+     },
+     "advanced": {
+      "min": 3.0,
+      "sweet_lo": 4.0,
+      "sweet_hi": 8.0,
+      "diminishing": 12.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "modeled",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "extrapolated"
+   },
+   "lower_back": {
+    "by_level": {
+     "beginner": {
+      "min": 2.0,
+      "sweet_lo": 3.0,
+      "sweet_hi": 7.0,
+      "diminishing": 10.0
+     },
+     "intermediate": {
+      "min": 2.5,
+      "sweet_lo": 4.0,
+      "sweet_hi": 8.0,
+      "diminishing": 10.0
+     },
+     "advanced": {
+      "min": 3.0,
+      "sweet_lo": 4.0,
+      "sweet_hi": 8.0,
+      "diminishing": 10.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "modeled",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "extrapolated"
+   },
+   "obliques": {
+    "by_level": {
+     "beginner": {
+      "min": 1.0,
+      "sweet_lo": 3.0,
+      "sweet_hi": 7.0,
+      "diminishing": 12.0
+     },
+     "intermediate": {
+      "min": 1.5,
+      "sweet_lo": 4.0,
+      "sweet_hi": 8.0,
+      "diminishing": 12.0
+     },
+     "advanced": {
+      "min": 2.0,
+      "sweet_lo": 4.0,
+      "sweet_hi": 8.0,
+      "diminishing": 12.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "modeled",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "extrapolated"
+   },
+   "abductors": {
+    "by_level": {
+     "beginner": {
+      "min": 2.0,
+      "sweet_lo": 3.0,
+      "sweet_hi": 7.0,
+      "diminishing": 12.0
+     },
+     "intermediate": {
+      "min": 2.5,
+      "sweet_lo": 4.0,
+      "sweet_hi": 8.0,
+      "diminishing": 12.0
+     },
+     "advanced": {
+      "min": 3.0,
+      "sweet_lo": 4.0,
+      "sweet_hi": 8.0,
+      "diminishing": 12.0
+     }
+    },
+    "tags": {
+     "min": "extrapolated",
+     "sweet_spot": "modeled",
+     "diminishing": "extrapolated"
+    },
+    "targets_evidence_tag": "extrapolated"
+   }
+  }
+ },
+ "curve": {
+  "replaces": "targets.json curve (S = 1 - exp(-x/k), k = level min / ln 2.5)",
+  "formula": "x <= D: S = sqrt(x/D) / 1.1;  x > D: S = (1 + 0.1*(1 - exp(-(x-D)/(0.2*D)))) / 1.1;  D = zones diminishing point",
+  "params": {
+   "plateau_gain": 0.1,
+   "plateau_tau_frac_of_D": 0.2,
+   "normaliser": 1.1
+  },
+  "reads_as": "share of this muscle's modeled plateau (100% = plateau). At the diminishing-returns point every muscle reads 91%. Percentages are within one muscle only; do not compare chest % with front-delt %.",
+  "next_set": "S(x+1) - S(x)",
+  "monotonic": true,
+  "concave": true,
+  "tags": {
+   "shape": "evidence (Pelland 2025 best-fit hypertrophy model was square root)",
+   "plateau_beyond_D": "modeled (Baz-Valle 2022: no clear extra gain >20 sets for quads/biceps)",
+   "normalisation": "modeled"
+  },
+  "session_discount": {
+   "cap": 10,
+   "factor": 0.5,
+   "note": "unchanged from targets.json curve.session_discount",
+   "tag": "modeled"
+  }
+ },
+ "credit": {
+  "formula": "effective(set, muscle) = rating x prox(RIR_set + offset[role]); rating < 0.25 -> 0; then per-session discount",
+  "roles": {
+   "prime": {
+    "rule": "muscle with the exercise's highest rating (ties all prime), or rating >= 0.75",
+    "rir_offset": 0
+   },
+   "secondary": {
+    "rule": "0.5 <= rating < 0.75",
+    "rir_offset": 1
+   },
+   "minor": {
+    "rule": "0.25 <= rating < 0.5",
+    "rir_offset": 2
+   }
+  },
+  "rir_offset_tag": "modeled (a synergist that is not the limiting muscle is further from its own failure; no study measures the offset)",
+  "prox": {
+   "table": {
+    "0": 1.0,
+    "1": 1.0,
+    "2": 1.0,
+    "3": 0.9,
+    "4": 0.8,
+    "5": 0.65,
+    "6": 0.5
+   },
+   "cap": "RIR >= 6 uses 0.5",
+   "tags": {
+    "0": "evidence",
+    "1": "evidence",
+    "2": "evidence",
+    "3": "extrapolated",
+    "4": "extrapolated",
+    "5": "modeled",
+    "6": "modeled"
+   }
+  },
+  "planned_rir_default": {
+   "primary": 2,
+   "accessory": 2,
+   "isolation": 1,
+   "note": "Planner tiles carry no RIR: use these (logging-spec target RIR 1-3, isolation 0-2). Prime movers therefore score exactly as today in the planner."
+  },
+  "logged": "Use set.rir (0-4, 4 = 4+). Null RIR = planned default for that exercise type (logging-spec: no RIR logged still counts).",
+  "vs_current": "Current: every set adds sets x rating (>= 0.25) whatever the RIR. New: prime movers unchanged at RIR 0-2; secondary movers at planned RIR get x0.9, minor movers x0.8; logged sets at RIR 3/4 lose 10%/20% (more for synergists).",
+  "tag": "rating from exercises.json (modeled coaching estimates, 0.5 ~ Pelland fractional); prox 0-2 evidence, 3-4 extrapolated, 5+ modeled"
+ },
+ "recovery": {
+  "recommendation": "Show both: estimated recovery hours per muscle per session (for spacing) and the week against generic benchmark routines (for total load). Drop raw \"pts\" from the UI; keep % of saved baseline as an optional third line.",
+  "hours_formula": "h = (24 + 4 x max(0, E - 2)) x effort[avg RIR] x (1 + 0.15 x stretch share) x size[muscle] x level; clamp 12-96 h; round to 6 h. E = that muscle's effective sets in the session.",
+  "params": {
+   "base_h": 24,
+   "free_sets": 2,
+   "h_per_set": 4,
+   "effort": {
+    "0": 1.2,
+    "1": 1.1,
+    "2": 1.0
+   },
+   "stretch_add": 0.15,
+   "level": {
+    "beginner": 1.15,
+    "intermediate": 1.0,
+    "advanced": 1.0
+   },
+   "clamp": [
+    12,
+    96
+   ],
+   "round_to_h": 6,
+   "size": {
+    "chest": 1.1,
+    "front_delts": 1.0,
+    "side_delts": 0.85,
+    "rear_delts": 0.85,
+    "lats": 1.1,
+    "upper_back": 1.1,
+    "traps": 1.0,
+    "biceps": 1.0,
+    "triceps": 1.0,
+    "forearms": 0.85,
+    "abs": 0.85,
+    "quads": 1.1,
+    "hamstrings": 1.1,
+    "glutes": 1.1,
+    "calves": 0.85,
+    "adductors": 1.1,
+    "lower_back": 1.1,
+    "obliques": 0.85,
+    "abductors": 0.85
+   }
+  },
+  "tags": {
+   "range_24_72h": "evidence (Moran-Navarro 2017; Cheung 2003)",
+   "effort_factor": "extrapolated (Moran-Navarro 2017; Refalo 2024)",
+   "h_per_set": "modeled",
+   "stretch_add": "extrapolated (Cheung 2003: eccentric/novel work drives soreness)",
+   "size": "modeled",
+   "level_beginner_1.15": "extrapolated (McHugh 2003)"
+  },
+  "min_effective_sets_for_hours": 1,
+  "display": {
+   "hours": "Round to half days: \"Chest: ready in about 2 days\". Never \"fully recovered\"; say \"modeled\".",
+   "spacing_info": "Info (not warn) when the same muscle gets >= its session light anchor again before its modeled hours have passed."
+  },
+  "benchmarks": {
+   "list": [
+    {
+     "name": "Classic 3-day full body",
+     "source": "splits.json full-body intermediate 3-day",
+     "week_cost": 62.2,
+     "hard_sets": 61
+    },
+    {
+     "name": "4-day upper/lower",
+     "source": "splits.json upper-lower intermediate 4-day",
+     "week_cost": 75.9,
+     "hard_sets": 74
+    },
+    {
+     "name": "5-day body-part split",
+     "source": "splits.json bro-split intermediate 5-day",
+     "week_cost": 88.5,
+     "hard_sets": 88
+    },
+    {
+     "name": "6-day push/pull/legs",
+     "source": "splits.json ppl intermediate 6-day",
+     "week_cost": 101.1,
+     "hard_sets": 101
+    }
+   ],
+   "metric": "week_cost = sum(sets x exercises.fatigue), the current recovery cost",
+   "display": "Week load ≈ {ratio}x a {nearest}. Show the ladder of benchmarks with this week marked.",
+   "tag": "modeled (relative comparison only)"
+  }
+ },
+ "session_time": {
+  "current": {
+   "warmup_min": 10,
+   "work_min_per_set": 0.75,
+   "rest_min_by_type": {
+    "primary": 3.0,
+    "accessory": 2.0,
+    "isolation": 1.5,
+    "warmup": 1.0
+   },
+   "info_min": 75,
+   "warn_min": 90,
+   "same_for_all_levels": true,
+   "formula": "warmup_min + sum(sets x (work_min_per_set + rest_min_by_type[type]))"
+  },
+  "proposed_by_level": {
+   "beginner": {
+    "warmup_min": 8,
+    "work_min_per_set": 0.75,
+    "rest_min_by_type": {
+     "primary": 2.5,
+     "accessory": 2.0,
+     "isolation": 1.5,
+     "warmup": 1.0
+    },
+    "info_min": 60,
+    "warn_min": 75
+   },
+   "intermediate": {
+    "warmup_min": 10,
+    "work_min_per_set": 0.75,
+    "rest_min_by_type": {
+     "primary": 3.0,
+     "accessory": 2.0,
+     "isolation": 1.5,
+     "warmup": 1.0
+    },
+    "info_min": 75,
+    "warn_min": 90
+   },
+   "advanced": {
+    "warmup_min": 12,
+    "work_min_per_set": 0.75,
+    "rest_min_by_type": {
+     "primary": 3.5,
+     "accessory": 2.5,
+     "isolation": 1.5,
+     "warmup": 1.0
+    },
+    "info_min": 90,
+    "warn_min": 105
+   }
+  },
+  "tags": {
+   "rest_primary_3min": "evidence (Schoenfeld 2016)",
+   "rest_isolation_1.5min": "evidence (Singer 2024)",
+   "warmup_min": "modeled",
+   "info/warn limits": "modeled (planning convenience, not a physiological limit)"
+  },
+  "wording": {
+   "message": "{day} runs about {min} minutes, over the {warn_min}-minute limit for your level. Cut sets or split the day.",
+   "message_info": "{day} runs about {min} minutes, close to the {warn_min}-minute limit for your level. Put the big lifts first, or trim a few sets.",
+   "note": "vol3: written to rules.json rules[id=session_length]; replaces the unsourced \"focus and output drop\" text."
+  },
+  "status": "vol3: live. rules.json rules[id=session_length].by_level drives warnings in the UI and tools/check_program.py."
+ },
+ "swaps": {
+  "schema": {
+   "from_id": "exercise id",
+   "to_id": "exercise id",
+   "days": [
+    "day ids changed"
+   ],
+   "fatigue_cost": {
+    "before": "week sum(sets x fatigue)",
+    "after": "",
+    "delta": ""
+   },
+   "muscles": {
+    "<muscle>": {
+     "before": "weekly effective sets (0.5)",
+     "after": "",
+     "delta": "raw",
+     "zone_before": "zone id",
+     "zone_after": "zone id",
+     "min": "level min",
+     "crosses_below_min": "bool",
+     "stimulus_before": "S_new",
+     "stimulus_after": "S_new"
+    }
+   },
+   "drops_below_min": [
+    "muscles that were >= min and fall below it"
+   ],
+   "recovery_hours": {
+    "<muscle>": [
+     {
+      "day": "",
+      "before_h": 0,
+      "after_h": 0
+     }
+    ]
+   },
+   "verdict": "clean | tradeoff (tradeoff when drops_below_min is non-empty)"
+  },
+  "candidates": "unchanged: tools/suggest.py lower_fatigue_candidates (logic/analysis.js lowerFatigueCandidates)",
+  "display": "Show the swap with its fatigue delta; if verdict = tradeoff, add one line: \"Drops {muscle} below its minimum ({after} of {min} sets)\". Only list muscles whose delta is >= 0.5 set."
+ },
+ "vol2": {
+  "written": {
+   "targets.json": [
+    "volume_zones",
+    "volume_zones_meta",
+    "goal_muscle_weights",
+    "goal_muscle_weights_meta",
+    "recovery.reference"
+   ],
+   "rules.json": [
+    "rules[id=session_length].default_limit_min",
+    "rules[id=session_length].by_level",
+    "rules[id=session_length].by_level_note",
+    "analysis_metrics.items[].explain.so_what"
+   ]
+  },
+  "goal_muscle_weights": {
+   "muscle_size": {
+    "chest": 1.0,
+    "front_delts": 1.0,
+    "side_delts": 1.0,
+    "rear_delts": 1.0,
+    "lats": 1.0,
+    "upper_back": 1.0,
+    "traps": 1.0,
+    "biceps": 1.0,
+    "triceps": 1.0,
+    "forearms": 1.0,
+    "abs": 1.0,
+    "quads": 1.0,
+    "hamstrings": 1.0,
+    "glutes": 1.0,
+    "calves": 1.0,
+    "adductors": 1.0,
+    "lower_back": 1.0,
+    "obliques": 1.0,
+    "abductors": 1.0
+   },
+   "strength": {
+    "chest": 1.1,
+    "front_delts": 1.0,
+    "side_delts": 0.9,
+    "rear_delts": 1.0,
+    "lats": 1.0,
+    "upper_back": 1.1,
+    "traps": 1.0,
+    "biceps": 0.9,
+    "triceps": 1.05,
+    "forearms": 1.0,
+    "abs": 1.0,
+    "quads": 1.1,
+    "hamstrings": 1.05,
+    "glutes": 1.1,
+    "calves": 0.9,
+    "adductors": 1.0,
+    "lower_back": 1.1,
+    "obliques": 1.0,
+    "abductors": 0.9
+   },
+   "joint_friendly": {
+    "chest": 1.0,
+    "front_delts": 1.0,
+    "side_delts": 1.0,
+    "rear_delts": 1.0,
+    "lats": 1.0,
+    "upper_back": 1.0,
+    "traps": 1.0,
+    "biceps": 1.0,
+    "triceps": 1.0,
+    "forearms": 1.0,
+    "abs": 1.0,
+    "quads": 1.0,
+    "hamstrings": 1.0,
+    "glutes": 1.0,
+    "calves": 1.0,
+    "adductors": 1.0,
+    "lower_back": 1.0,
+    "obliques": 1.0,
+    "abductors": 1.0
+   },
+   "maintain": {
+    "chest": 1.0,
+    "front_delts": 1.0,
+    "side_delts": 1.0,
+    "rear_delts": 1.0,
+    "lats": 1.0,
+    "upper_back": 1.0,
+    "traps": 1.0,
+    "biceps": 1.0,
+    "triceps": 1.0,
+    "forearms": 1.0,
+    "abs": 1.0,
+    "quads": 1.0,
+    "hamstrings": 1.0,
+    "glutes": 1.0,
+    "calves": 1.0,
+    "adductors": 1.0,
+    "lower_back": 1.0,
+    "obliques": 1.0,
+    "abductors": 1.0
+   },
+   "aesthetic_v_taper": {
+    "chest": 1.1,
+    "front_delts": 1.0,
+    "side_delts": 1.3,
+    "rear_delts": 1.1,
+    "lats": 1.25,
+    "upper_back": 1.1,
+    "traps": 1.0,
+    "biceps": 1.2,
+    "triceps": 1.2,
+    "forearms": 1.0,
+    "abs": 1.0,
+    "quads": 0.9,
+    "hamstrings": 0.9,
+    "glutes": 0.9,
+    "calves": 1.0,
+    "adductors": 1.0,
+    "lower_back": 1.0,
+    "obliques": 1.0,
+    "abductors": 1.0
+   },
+   "aesthetic_lower_emphasis": {
+    "chest": 0.9,
+    "front_delts": 1.0,
+    "side_delts": 1.15,
+    "rear_delts": 1.05,
+    "lats": 1.0,
+    "upper_back": 1.0,
+    "traps": 0.8,
+    "biceps": 0.95,
+    "triceps": 0.95,
+    "forearms": 0.9,
+    "abs": 1.0,
+    "quads": 1.1,
+    "hamstrings": 1.15,
+    "glutes": 1.3,
+    "calves": 1.0,
+    "adductors": 1.05,
+    "lower_back": 1.0,
+    "obliques": 1.0,
+    "abductors": 1.2
+   },
+   "conditioning": {
+    "chest": 1.0,
+    "front_delts": 1.0,
+    "side_delts": 1.0,
+    "rear_delts": 1.0,
+    "lats": 1.0,
+    "upper_back": 1.0,
+    "traps": 1.0,
+    "biceps": 1.0,
+    "triceps": 1.0,
+    "forearms": 1.0,
+    "abs": 1.0,
+    "quads": 1.0,
+    "hamstrings": 1.0,
+    "glutes": 1.0,
+    "calves": 1.0,
+    "adductors": 1.0,
+    "lower_back": 1.0,
+    "obliques": 1.0,
+    "abductors": 1.0
+   }
+  },
+  "goal_notes": {
+   "muscle_size": "All 1: the default targets are already built for whole-body size.",
+   "strength": "Prime movers of squat, bench, deadlift and row at 1.05-1.1; small isolation-only muscles at 0.9. Kept modest because strength comes mostly from load and practice, not volume order.",
+   "joint_friendly": "All 1: this goal changes exercise choice and rep ranges, not which muscles get priority.",
+   "maintain": "All 1: maintenance keeps every muscle level.",
+   "aesthetic_v_taper": "Side delts 1.3, lats 1.25, biceps and triceps 1.2, rear delts, upper back and chest 1.1; legs 0.9. Puts width and arms first when filling sets.",
+   "aesthetic_lower_emphasis": "Glutes 1.3, abductors 1.2, hamstrings and side delts 1.15, quads 1.1; chest, arms, forearms 0.9-0.95, traps 0.8. Puts glutes and legs first when filling sets.",
+   "conditioning": "All 1: conditioning work changes session design, not muscle priority."
+  }
+ }
+}

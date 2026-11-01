@@ -231,8 +231,8 @@ function hideSnack(){const u=$('#sundo');if(u)u.classList.remove('on');SUF=null}
 let tt;function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),1800)}
 
 // ---------------------------------------------------------------- tab bar + floating workout bar
-// Recommended 4 tabs: Train · Log · Plan · Progress (plan: the Build tab is shown as 'Plan'; ids/routes keep 'build'). Settings = gear on Plan; Learn = 'Nerd Sh*t' text pill in headers (nerdpill; was a book icon).
-// Visible / aria name of the Learn page is "Nerd Sh*t" (Mr Dude); routes (#learn…), ids, data-x=learn and storage keys keep 'learn'.
+// Recommended 4 tabs: Train · Log · Plan · Progress (plan: the Build tab is shown as 'Plan'; ids/routes keep 'build'). Settings = gear on Plan; Learn = 'Nurd Sh!t' text pill in headers (nerdpill; was a book icon).
+// Visible / aria name of the Learn page is "Nurd Sh!t" (Mr Dude); routes (#learn…), ids, data-x=learn and storage keys keep 'learn'.
 const TABS=[['build','Plan'],['train','Train'],['log','Log'],['progress','Progress']]; // Build leftmost (markup round 1)
 function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,l])=>`<button data-go="#${k}" class="${S.tab===k?'on':''}" aria-label="${l}">${I(k,1.7)}<span>${l}</span></button>`).join('')}
 function renderBar(){
@@ -257,8 +257,8 @@ function confirmSheet(t,p,btn,fn){const c=sheet({body:`<div class="act-sheet"><h
 // ---------------------------------------------------------------- screens
 const V={};
 const header=(t,acts='')=>`<div class="lt"><h1>${t}</h1><div class="acts">${acts}</div></div>`;
-// nerdpill (Mr Dude): the header Learn button is a compact text pill "Nerd Sh*t" (was a book icon); same spot, 44px tap target.
-const bookBtn=`<button class="ibtn npill" data-go="#learn" aria-label="Learn: Nerd Sh*t">Nerd Sh*t</button>`;
+// nerdpill (Mr Dude): the header Learn button is a compact text pill "Nurd Sh!t" (was a book icon); same spot, 44px tap target.
+const bookBtn=`<button class="ibtn npill" data-go="#learn" aria-label="Learn: Nurd Sh!t">Nurd Sh!t</button>`;
 const gearBtn=`<button class="ibtn" data-go="#settings" aria-label="Settings">${I('gear',1.6)}</button>`;
 
 // 1. TRAIN
@@ -745,7 +745,7 @@ V.buildList=()=>{const r=ROUTINES[0],d=r.days[S.buildDay];
   <div class="sec"><h2>${d.n}</h2><span class="more num">${setsOf(d)} sets · ≈ ${d.min} min</span></div>
   <div class="group">${d.ex.map(e=>`<div class="swipe"><button class="del">Delete</button><div class="in"><div class="row brow"><span class="drag">${I('grip',2)}</span>${gl(e.id)}
     <div class="grow"><div class="t1">${exName(e.id)}</div><div class="t2 num">${e.s} × ${e.r} · ${exSub(e.id)}</div></div>
-    <button class="ib-i" data-act="info" data-id="${e.id}" aria-label="Nerd Sh*t">${I('info',1.7)}</button><button class="ib-i" data-act="swap" data-id="${e.id}" aria-label="Swap">${I('swap',1.7)}</button></div></div></div>`).join('')}
+    <button class="ib-i" data-act="info" data-id="${e.id}" aria-label="Nurd Sh!t">${I('info',1.7)}</button><button class="ib-i" data-act="swap" data-id="${e.id}" aria-label="Swap">${I('swap',1.7)}</button></div></div></div>`).join('')}
     <button class="row addrow" data-act="tray">${I('plus',2)} Add exercise</button></div>
   ${RD?(()=>{const sl='side_delts',rs=rk('preset',null,{slot:sl,day:'mon'},3);return `<div class="sec"><h2>Fill a slot</h2><span class="more">${RD.patterns.slots[sl].name}</span></div>
   <div class="group">${rs.map(r=>`<div class="row sugr" data-id="${r.id}">${gl(r.id)}<div class="grow"><div class="t1">${exName(r.id)}</div>${whyR(r)}</div><button class="addc" data-act="add" aria-label="Add">${I('plus',2.2)}</button></div>`).join('')}</div>`})():''}
@@ -775,7 +775,7 @@ function swapSheet(id,opt={}){
     ${opt.workout?`<div class="ghead">Apply to</div><div class="group scope noswipe"><div class="row"><div class="grow"><div class="t1" id="scl">This workout only</div><div class="t2" id="sct">${WK.ref?`${(ROUTINES.find(x=>x.id===WK.ref.rid)||{}).name} stays as it is`:'Your routine stays as it is'}</div></div><span class="scok">${I('check',2.6)}</span></div>
       <div class="row"><div class="grow"><div class="t1">Also update routine</div><div class="t2">Use the new exercise in this routine day from now on</div></div><span class="tg" data-sw="routine" role="switch" aria-checked="false"></span></div></div>`:''}
     <div class="pad"><div class="seg"><button class="on">Similar</button><button>Browse all</button><button>Create new</button></div></div>
-    <div class="group">${alts.map(a=>`<div class="row alt" data-x="pick" data-id="${a.id}" data-score="${a.score!=null?a.score:''}" role="button" tabindex="0">${gl(a.id)}<div class="grow"><div class="t1">${exName(a.id)}</div>${exSub(a.id)?`<div class="t2">${exSub(a.id)}</div>`:''}</div><span class="altb">${starBtn(a.id)}<button class="ib-i" data-act="exinfo" data-id="${a.id}" aria-label="Nerd Sh*t">${I('info',1.7)}</button></span>
+    <div class="group">${alts.map(a=>`<div class="row alt" data-x="pick" data-id="${a.id}" data-score="${a.score!=null?a.score:''}" role="button" tabindex="0">${gl(a.id)}<div class="grow"><div class="t1">${exName(a.id)}</div>${exSub(a.id)?`<div class="t2">${exSub(a.id)}</div>`:''}</div><span class="altb">${starBtn(a.id)}<button class="ib-i" data-act="exinfo" data-id="${a.id}" aria-label="Nurd Sh!t">${I('info',1.7)}</button></span>
       <div class="altx">${diffRow(a)}${a.reasons&&a.reasons.length?whyR(a):''}${opt.debug&&a.score!=null?`<div class="dbg num">score ${a.score} · fit ${a.fit}</div>`:''}</div></div>`).join('')}</div>
     <p class="foot">Typical differences, not guarantees.</p>`});
   let also=false;
@@ -1535,7 +1535,7 @@ function creditList(mu){const L=Object.values(EX).map(e=>[e,e.rat[mu]||0]).filte
   const g={main:[],helper:[],minor:[]};L.forEach(([e,r])=>g[BAND(r)].push([e,r]));return g}
 const rate=r=>`<span class="rate ${BAND(r)}"><b class="num">${+r.toFixed(2)}</b>${BANDL[BAND(r)]||''}</span>`;
 
-V.learn=()=>`<div class="nav"><div class="l">${backBtn()}</div><div class="t">Nerd Sh*t</div><div class="r"></div></div>${header('Nerd Sh*t')}<div id="learnbody"><p class="foot">Loading…</p></div>`;
+V.learn=()=>`<div class="nav"><div class="l">${backBtn()}</div><div class="t">Nurd Sh!t</div><div class="r"></div></div>${header('Nurd Sh!t')}<div id="learnbody"><p class="foot">Loading…</p></div>`;
 async function afterLearn(){
   const idx=await eduLoad(),mus=idx.pages.filter(p=>p.kind==='muscle'),fun=idx.pages.filter(p=>p.kind==='fundamental');
   const vm={};mus.forEach(p=>vm[p.id]=p.status==='final'?1:.3);const nf=mus.filter(p=>p.status==='final').length;
@@ -1584,7 +1584,7 @@ async function afterLearnMuscle(id){
    <p class="foot">${(EDU.idx||{}).disclaimer||''} Updated ${j.updated||''}.</p>`;
   afterMap();
 }
-V.learnFund=()=>`<div class="nav"><div class="l">${backBtn('Nerd Sh*t')}</div><div class="t"></div><div class="r"></div></div><div id="lf"><p class="foot">Loading…</p></div>`;
+V.learnFund=()=>`<div class="nav"><div class="l">${backBtn('Nurd Sh!t')}</div><div class="t"></div><div class="r"></div></div><div id="lf"><p class="foot">Loading…</p></div>`;
 async function afterLearnFund(id){
   const sx=String(id||'').split('~')[1]||null;id=id&&String(id).split('~')[0];
   CITES=[];const idx=await eduLoad();if(!id){const f=idx.pages.find(p=>p.kind==='fundamental'&&p.status==='final');id=f&&f.id}
@@ -1611,15 +1611,46 @@ const itemDef=id=>(((RD&&RD.rules.analysis_metrics)||{}).items||[]).find(i=>i.id
 const EVT={supported:'Supported',thin:'Thin evidence',modeled:'Modeled'};
 const learnGo=lp=>{const [p,sx]=String(lp).split('#');return `#learn-f-${p}${sx?'~'+sx:''}`};
 const ibtn=(id,attr='data-xpl')=>`<button class="ixb" ${attr}="${id}" aria-label="What is this?">${I('info',1.8)}</button>`;
-function explainSheet(id,extra=''){const it=itemDef(id);if(!it)return null;const x=it.explain||{},lp=x.learn_page;
+// analysis2 (Mr Dude): each explanatory note is a plain-English "so what" (1-2 sentences) plus a small 'Nurd Sh!t ›' chip to the same Learn page.
+// Copy order: Coach's explain.so_what (data) > SO_WHAT below (storyboard copy) > first two sentences of explain.why.
+const SO_WHAT={
+  suggestion_list:'Each suggestion is a change you can try, apply and undo.',
+  checks_pass:'How many checks this plan passes. Open the sections below to see what needs a look.',
+  weekly_sets_per_muscle:'Weekly sets are the main thing that drives growth for each muscle. Aim to land each one inside its range.',
+  volume_in_reach:'Too few sets and a muscle barely grows; too many and you pay recovery for little extra.',
+  stimulus_curve:'Each extra set adds a bit less. A set does more for a muscle that gets little work than for one that is already full.',
+  weekly_sets_per_region:'A quick look at upper vs lower body. The per-muscle ranges are the real targets.',
+  effective_frequency:'Spreading the same sets over two days keeps each session productive.',
+  frequency_two_days:'Training a muscle on two days is an option, not a fix. Once a week works too.',
+  consecutive_high_volume:'Give a muscle a day between hard sessions. Moving a few sets usually clears this.',
+  day_shading:'Shows which days each muscle gets its work.',
+  push_pull_ratio:'Roughly as much pulling as pressing keeps the upper body even.',
+  pattern_coverage:'A missing movement pattern usually means some muscle is short on work.',
+  redundant_pattern:'Past about 10 sets of one pattern in a session, extra sets add little. Spread them out.',
+  stretch_share:'Work at long muscle lengths grows muscle as well or better. This is context, not a target.',
+  stretch_hamstrings:'One exercise that loads the hamstrings long, like a seated leg curl, is enough.',
+  stretch_calves:'One straight-knee calf raise through a full stretch is enough.',
+  stretch_triceps:'One overhead triceps exercise is enough.',
+  stretch_quads:'One exercise that loads the quads long is enough.',
+  stretch_glutes:'One deep squat, split squat, lunge or RDL is enough. Hip thrusts are still good glute work.',
+  stretch_coverage:'Shown for context only. The research is thin for these muscles.',
+  unilateral_share:'One-side work takes longer and asks more balance. There is no target.',
+  movement_pattern_sets:'How the week splits across movement patterns.',
+  fatigue_rating:'Heavy compound lifts cost more recovery per set than isolation work.',
+  recovery_cost:'Use it to compare two versions of a plan, then adjust to how you actually recover.',
+  recovery_vs_baseline:'A big jump over your normal week is worth a second look.',
+  stimulus_per_fatigue:'Higher means more growth work for the recovery you spend. Low muscles get swap ideas.',
+  spinal_load:'Heavy back-loading lifts cost the most recovery. Keep them spread out.',
+  lower_back_fatigue:'A note to consider, not a check. The evidence is thin and it never blocks a plan.',
+  session_design:'Past a point, extra sets in one session add little. Move them to another day.',
+  session_length:'A planning estimate. Your own rest times decide the real length.'};
+const sent2=t=>{const m=String(t||'').match(/[^.!?]+[.!?]+(\s|$)/g);return m?m.slice(0,2).join('').trim():String(t||'')};
+function explainSheet(id,extra=''){const it=itemDef(id);if(!it)return null;const x=it.explain||{},lp=x.learn_page,sw=x.so_what||SO_WHAT[id]||sent2(x.why||x.what||it.description);
   const s=sheet({title:'',cls:'grouped xsheet',right:'<button class="btn plain" data-x="close">Done</button>',
     body:`<div class="xpl" data-item="${id}">${kchip(it.kind)?`<div class="xh">${kchip(it.kind)}</div>`:''}<div class="xpsh"><h3>${dispL(id,it.label)}</h3><span class="evl" data-ev="${it.evidence||'modeled'}">${EVT[it.evidence]||'Modeled'}</span></div>${it.status==='proposed'?'<p class="xprop">This measure is still proposed in the analysis spec, not yet a settled check.</p>':''}
-     <div class="group xq"><div class="row"><div class="grow"><div class="xk">What it measures</div><p>${x.what||it.description||''}</p></div></div>
-      <div class="row"><div class="grow"><div class="xk">How it's calculated</div><p>${x.how||it.formula||''}</p></div></div>
-      <div class="row"><div class="grow"><div class="xk">Why it matters</div><p>${x.why||''}</p></div></div></div>
-     ${extra}
-     ${lp?`<div class="pad"><button class="btn grey block xlearn" data-x="learn" data-go="${learnGo(lp)}">${I('book',1.8)} <span>Nerd Sh*t: ${lp.split('#')[0].replace(/-/g,' ')}</span></button></div>`:'<p class="foot">No Nerd Sh*t page for this one yet.</p>'}</div>`});
-  if(lp)eduLoad().then(idx=>{const p=(idx.pages||[]).find(q=>q.id===lp.split('#')[0]),b=$('.xlearn span',s.el);if(p&&b)b.textContent='Nerd Sh*t: '+p.title}).catch(()=>{});
+     <p class="xsw">${sw}${lp?` <button class="xchip xlearn" data-x="learn" data-go="${learnGo(lp)}" aria-label="Nurd Sh!t: ${lp.split('#')[0].replace(/-/g,' ')}">Nurd Sh!t ›</button>`:''}</p>
+     ${extra}</div>`});
+  if(lp)eduLoad().then(idx=>{const p=(idx.pages||[]).find(q=>q.id===lp.split('#')[0]),b=$('.xlearn',s.el);if(p&&b)b.setAttribute('aria-label','Nurd Sh!t: '+p.title)}).catch(()=>{});
   s.el.addEventListener('click',e=>{if(e.target.closest('[data-x=close]'))return s.close();const g=e.target.closest('[data-go]');if(g){e.preventDefault();e.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
 // exercise detail popup: data/exercise-details.json (loaded on first open, 590 KB). Photos only when show_photo (exact match);
 // approximate photos are never shown. The files are copied into assets/ex-photos by build-photos.py (free-exercise-db, The Unlicense).
@@ -1651,9 +1682,9 @@ function exDetailBody(id,d){const e=EX[id]||{},f=d.fatigue||{},st=d.stretch||{},
 function exDetail(id,o={}){if(isCx(id))return cxDetail(id,o);const e=EX[id];if(!e)return null;
   const s=sheet({title:'',cls:'grouped tall xdet',right:'<button class="btn plain" data-x="close">Done</button>',
     body:`<div class="xd" data-id="${id}"><div class="exi-h">${gl(id)}<div><h3>${exName(id)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${e.eq||''}</p></div></div><div id="xdb"><p class="foot">Loading…</p></div>
-     <div class="pad two">${e.learn!==false?`<button class="btn grey" data-x="learn" data-go="#learn-ex-${id}">${I('book',1.8)} Nerd Sh*t</button>`:''}${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:''}</div></div>`});
+     <div class="pad two">${e.learn!==false?`<button class="btn grey" data-x="learn" data-go="#learn-ex-${id}">${I('book',1.8)} Nurd Sh!t</button>`:''}${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:''}</div></div>`});
   exdLoad().then(D=>{const d=D[id],b=$('#xdb',s.el);if(!b)return;b.innerHTML=d?exDetailBody(id,d):'<p class="foot">No detail data for this exercise.</p>';
-    const lb=$('[data-x=learn]',s.el);if(lb&&d&&!(d.learn||{}).authored)lb.innerHTML=`${I('book',1.8)} Nerd Sh*t (draft)`});
+    const lb=$('[data-x=learn]',s.el);if(lb&&d&&!(d.learn||{}).authored)lb.innerHTML=`${I('book',1.8)} Nurd Sh!t (draft)`});
   xvLoad().then(()=>{const h=$('.exi-h',s.el);if(h&&xvOf(id)&&e.learn!==false&&!$('.xwatch',s.el))h.insertAdjacentHTML('beforeend',`<button class="xwatch" data-go="#learn-ex-${id}~video" aria-label="Watch the technique video">${I('play')}Watch</button>`)});
   s.el.addEventListener('click',ev=>{if(ev.target.closest('[data-x=close]'))return s.close();if(ev.target.closest('[data-x=add]')){s.close();return o.onAdd&&o.onAdd(id)}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
@@ -1710,6 +1741,7 @@ async function loadRank(){if(RD)return RD;if(RDP)return RDP;
     const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
     const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
     R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PR2=pr2;R.SLOG=slog;R.EVO=evo;R.DISP=disp;R.FN=fnotes;
+    R.VM=await getJ(DATA+'volume-model.json');   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
     try{await cxLoad(R,exercises,rules,cxd)}catch(x){console.warn('custom exercises not loaded',x)}   // custom exercises: defaults loader + registration (before anything reads RD)
     RD=R;return RD})();
   const r=await RDP;RDP=null;return r}
@@ -1811,7 +1843,7 @@ function profileHtml(){const bm={};BIAS.forEach(m=>bm[m]=1);
    <div class="chiprow center" id="biaschips">${BIAS.map(m=>`<button class="chip on" data-bias="${m}">${ML[m]} ${I('x',2.4)}</button>`).join('')||'<span class="sub">Tap muscles on the map</span>'}</div></div>
   <p class="foot">Tap muscles to bring up. Ranking favours exercises that train them hard.</p>`}
 function favsHtml(){return `<div class="ghead" id="favs">Favorites</div><div class="group favl">${FAV.map(id=>`<div class="swipe" data-fav="${id}"><button class="del">Remove</button><div class="in"><div class="row frow"><span class="drag fdrag">${I('grip',2)}</span>${gl(id)}<div class="grow"><div class="t1">${exNameP(id)}</div><div class="t2">${exSub(id)}</div></div><span class="fstar">${starSvg(1)}</span></div></div></div>`).join('')||'<div class="row sub">No favorites yet</div>'}</div>
-  <p class="foot">Star exercises on their Nerd Sh*t page, in the tray or in swaps. Swipe to remove, drag to reorder; order breaks ties in suggestions.</p>`}
+  <p class="foot">Star exercises on their Nurd Sh!t page, in the tray or in swaps. Swipe to remove, drag to reorder; order breaks ties in suggestions.</p>`}
 function afterSettings(){bindSwipes($('#view'));
   $$('.favl .swipe').forEach(r=>{$(':scope > .del',r).addEventListener('click',()=>{FAV=FAV.filter(x=>x!==r.dataset.fav);sv(LSK.fav,FAV)})});
   $$('.bmap .mp').forEach(p=>p.addEventListener('click',()=>{const m=p.dataset.mu;if(!m)return;BIAS=BIAS.includes(m)?BIAS.filter(x=>x!==m):[...BIAS,m];sv(LSK.bias,BIAS);refreshProfile()}));

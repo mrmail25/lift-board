@@ -906,12 +906,766 @@
    "training_age": "covered by level",
    "baseline": "baseline stores modifiers as saved; current modifiers apply to the current week only"
   },
-  "note": "Rough estimate. Adjust to how you actually recover."
+  "note": "Rough estimate. Adjust to how you actually recover.",
+  "reference": {
+   "label": "Compared with common routines",
+   "text": "Recovery cost adds up every set, weighted by how tiring the exercise is (heavy squats and deadlifts count more than machines or isolation work). To make the number meaningful, it is shown next to typical weeks of common routines. It is a model for comparing plans, not a prediction of how you will feel.",
+   "benchmarks": [
+    {
+     "name": "Classic 3-day full body",
+     "week_cost": 62.2
+    },
+    {
+     "name": "4-day upper/lower",
+     "week_cost": 75.9
+    },
+    {
+     "name": "5-day body-part split",
+     "week_cost": 88.5
+    },
+    {
+     "name": "6-day push/pull/legs",
+     "week_cost": 101.1
+    }
+   ],
+   "tag": "modeled",
+   "metric": "week_cost = sum(sets x exercises.fatigue); benchmarks are our own intermediate presets (splits.json)."
+  }
  },
  "analytics": {
   "frequency_min_effective": 2,
   "stretch_share_flag_below": 0.25,
   "spf": "rating/fatigue per muscle; suggest swap when another exercise rates >= rating-0.1 for that muscle with higher spf; only within the same movement pattern (rules.json patterns), never compound to isolation",
   "disclaimer": "Model for comparing plans, not a measurement of growth or recovery."
+ },
+ "volume_zones": {
+  "beginner": {
+   "chest": {
+    "min": 6.0,
+    "sweet": [
+     9.0,
+     15.5
+    ],
+    "diminishing": 20.0
+   },
+   "front_delts": {
+    "min": 2.5,
+    "sweet": [
+     4.5,
+     10.0
+    ],
+    "diminishing": 16.0
+   },
+   "side_delts": {
+    "min": 5.0,
+    "sweet": [
+     9.0,
+     15.5
+    ],
+    "diminishing": 22.0
+   },
+   "rear_delts": {
+    "min": 3.5,
+    "sweet": [
+     6.0,
+     12.0
+    ],
+    "diminishing": 18.0
+   },
+   "lats": {
+    "min": 6.0,
+    "sweet": [
+     9.0,
+     15.5
+    ],
+    "diminishing": 20.0
+   },
+   "upper_back": {
+    "min": 6.0,
+    "sweet": [
+     9.0,
+     15.5
+    ],
+    "diminishing": 20.0
+   },
+   "traps": {
+    "min": 2.5,
+    "sweet": [
+     4.5,
+     10.0
+    ],
+    "diminishing": 16.0
+   },
+   "biceps": {
+    "min": 5.0,
+    "sweet": [
+     7.5,
+     13.5
+    ],
+    "diminishing": 18.0
+   },
+   "triceps": {
+    "min": 5.0,
+    "sweet": [
+     7.5,
+     13.5
+    ],
+    "diminishing": 18.0
+   },
+   "forearms": {
+    "min": 1.0,
+    "sweet": [
+     3.0,
+     7.0
+    ],
+    "diminishing": 12.0
+   },
+   "abs": {
+    "min": 2.5,
+    "sweet": [
+     4.5,
+     10.0
+    ],
+    "diminishing": 16.0
+   },
+   "quads": {
+    "min": 6.0,
+    "sweet": [
+     9.0,
+     15.5
+    ],
+    "diminishing": 20.0
+   },
+   "hamstrings": {
+    "min": 5.0,
+    "sweet": [
+     7.5,
+     12.0
+    ],
+    "diminishing": 16.0
+   },
+   "glutes": {
+    "min": 5.0,
+    "sweet": [
+     7.5,
+     12.0
+    ],
+    "diminishing": 16.0
+   },
+   "calves": {
+    "min": 3.5,
+    "sweet": [
+     6.0,
+     12.0
+    ],
+    "diminishing": 16.0
+   },
+   "adductors": {
+    "min": 2.0,
+    "sweet": [
+     3.0,
+     7.0
+    ],
+    "diminishing": 12.0
+   },
+   "lower_back": {
+    "min": 2.0,
+    "sweet": [
+     3.0,
+     7.0
+    ],
+    "diminishing": 10.0
+   },
+   "obliques": {
+    "min": 1.0,
+    "sweet": [
+     3.0,
+     7.0
+    ],
+    "diminishing": 12.0
+   },
+   "abductors": {
+    "min": 2.0,
+    "sweet": [
+     3.0,
+     7.0
+    ],
+    "diminishing": 12.0
+   }
+  },
+  "intermediate": {
+   "chest": {
+    "min": 8.0,
+    "sweet": [
+     12.0,
+     18.0
+    ],
+    "diminishing": 20.0
+   },
+   "front_delts": {
+    "min": 3.0,
+    "sweet": [
+     6.0,
+     12.0
+    ],
+    "diminishing": 16.0
+   },
+   "side_delts": {
+    "min": 6.5,
+    "sweet": [
+     12.0,
+     18.0
+    ],
+    "diminishing": 22.0
+   },
+   "rear_delts": {
+    "min": 5.0,
+    "sweet": [
+     8.0,
+     14.0
+    ],
+    "diminishing": 18.0
+   },
+   "lats": {
+    "min": 8.0,
+    "sweet": [
+     12.0,
+     18.0
+    ],
+    "diminishing": 20.0
+   },
+   "upper_back": {
+    "min": 8.0,
+    "sweet": [
+     12.0,
+     18.0
+    ],
+    "diminishing": 20.0
+   },
+   "traps": {
+    "min": 3.0,
+    "sweet": [
+     6.0,
+     12.0
+    ],
+    "diminishing": 16.0
+   },
+   "biceps": {
+    "min": 6.5,
+    "sweet": [
+     10.0,
+     16.0
+    ],
+    "diminishing": 18.0
+   },
+   "triceps": {
+    "min": 6.5,
+    "sweet": [
+     10.0,
+     16.0
+    ],
+    "diminishing": 18.0
+   },
+   "forearms": {
+    "min": 1.5,
+    "sweet": [
+     4.0,
+     8.0
+    ],
+    "diminishing": 12.0
+   },
+   "abs": {
+    "min": 3.0,
+    "sweet": [
+     6.0,
+     12.0
+    ],
+    "diminishing": 16.0
+   },
+   "quads": {
+    "min": 8.0,
+    "sweet": [
+     12.0,
+     18.0
+    ],
+    "diminishing": 20.0
+   },
+   "hamstrings": {
+    "min": 6.5,
+    "sweet": [
+     10.0,
+     14.0
+    ],
+    "diminishing": 16.0
+   },
+   "glutes": {
+    "min": 6.5,
+    "sweet": [
+     10.0,
+     14.0
+    ],
+    "diminishing": 16.0
+   },
+   "calves": {
+    "min": 5.0,
+    "sweet": [
+     8.0,
+     14.0
+    ],
+    "diminishing": 16.0
+   },
+   "adductors": {
+    "min": 2.5,
+    "sweet": [
+     4.0,
+     8.0
+    ],
+    "diminishing": 12.0
+   },
+   "lower_back": {
+    "min": 2.5,
+    "sweet": [
+     4.0,
+     8.0
+    ],
+    "diminishing": 10.0
+   },
+   "obliques": {
+    "min": 1.5,
+    "sweet": [
+     4.0,
+     8.0
+    ],
+    "diminishing": 12.0
+   },
+   "abductors": {
+    "min": 2.5,
+    "sweet": [
+     4.0,
+     8.0
+    ],
+    "diminishing": 12.0
+   }
+  },
+  "advanced": {
+   "chest": {
+    "min": 10.0,
+    "sweet": [
+     12.0,
+     18.0
+    ],
+    "diminishing": 20.0
+   },
+   "front_delts": {
+    "min": 4.0,
+    "sweet": [
+     6.0,
+     12.0
+    ],
+    "diminishing": 16.0
+   },
+   "side_delts": {
+    "min": 8.0,
+    "sweet": [
+     12.0,
+     18.0
+    ],
+    "diminishing": 22.0
+   },
+   "rear_delts": {
+    "min": 6.0,
+    "sweet": [
+     8.0,
+     14.0
+    ],
+    "diminishing": 18.0
+   },
+   "lats": {
+    "min": 10.0,
+    "sweet": [
+     12.0,
+     18.0
+    ],
+    "diminishing": 20.0
+   },
+   "upper_back": {
+    "min": 10.0,
+    "sweet": [
+     12.0,
+     18.0
+    ],
+    "diminishing": 20.0
+   },
+   "traps": {
+    "min": 4.0,
+    "sweet": [
+     6.0,
+     12.0
+    ],
+    "diminishing": 16.0
+   },
+   "biceps": {
+    "min": 8.0,
+    "sweet": [
+     10.0,
+     16.0
+    ],
+    "diminishing": 18.0
+   },
+   "triceps": {
+    "min": 8.0,
+    "sweet": [
+     10.0,
+     16.0
+    ],
+    "diminishing": 18.0
+   },
+   "forearms": {
+    "min": 2.0,
+    "sweet": [
+     4.0,
+     8.0
+    ],
+    "diminishing": 12.0
+   },
+   "abs": {
+    "min": 4.0,
+    "sweet": [
+     6.0,
+     12.0
+    ],
+    "diminishing": 16.0
+   },
+   "quads": {
+    "min": 10.0,
+    "sweet": [
+     12.0,
+     18.0
+    ],
+    "diminishing": 20.0
+   },
+   "hamstrings": {
+    "min": 8.0,
+    "sweet": [
+     10.0,
+     14.0
+    ],
+    "diminishing": 16.0
+   },
+   "glutes": {
+    "min": 8.0,
+    "sweet": [
+     10.0,
+     14.0
+    ],
+    "diminishing": 16.0
+   },
+   "calves": {
+    "min": 6.0,
+    "sweet": [
+     8.0,
+     14.0
+    ],
+    "diminishing": 16.0
+   },
+   "adductors": {
+    "min": 3.0,
+    "sweet": [
+     4.0,
+     8.0
+    ],
+    "diminishing": 12.0
+   },
+   "lower_back": {
+    "min": 3.0,
+    "sweet": [
+     4.0,
+     8.0
+    ],
+    "diminishing": 10.0
+   },
+   "obliques": {
+    "min": 2.0,
+    "sweet": [
+     4.0,
+     8.0
+    ],
+    "diminishing": 12.0
+   },
+   "abductors": {
+    "min": 3.0,
+    "sweet": [
+     4.0,
+     8.0
+    ],
+    "diminishing": 12.0
+   }
+  }
+ },
+ "volume_zones_meta": {
+  "unit": "weekly effective sets (volume-model.json credit rules)",
+  "source": "data/volume-model.json zones (tools/build_volume_model.py)",
+  "tags": {
+   "chest": {
+    "min": "extrapolated",
+    "sweet_spot": "extrapolated",
+    "diminishing": "extrapolated"
+   },
+   "front_delts": {
+    "min": "extrapolated",
+    "sweet_spot": "modeled",
+    "diminishing": "extrapolated"
+   },
+   "side_delts": {
+    "min": "extrapolated",
+    "sweet_spot": "extrapolated",
+    "diminishing": "extrapolated"
+   },
+   "rear_delts": {
+    "min": "extrapolated",
+    "sweet_spot": "extrapolated",
+    "diminishing": "extrapolated"
+   },
+   "lats": {
+    "min": "extrapolated",
+    "sweet_spot": "extrapolated",
+    "diminishing": "extrapolated"
+   },
+   "upper_back": {
+    "min": "extrapolated",
+    "sweet_spot": "extrapolated",
+    "diminishing": "extrapolated"
+   },
+   "traps": {
+    "min": "extrapolated",
+    "sweet_spot": "modeled",
+    "diminishing": "extrapolated"
+   },
+   "biceps": {
+    "min": "evidence",
+    "sweet_spot": "evidence",
+    "diminishing": "evidence"
+   },
+   "triceps": {
+    "min": "evidence",
+    "sweet_spot": "evidence",
+    "diminishing": "evidence"
+   },
+   "forearms": {
+    "min": "extrapolated",
+    "sweet_spot": "modeled",
+    "diminishing": "extrapolated"
+   },
+   "abs": {
+    "min": "extrapolated",
+    "sweet_spot": "modeled",
+    "diminishing": "extrapolated"
+   },
+   "quads": {
+    "min": "evidence",
+    "sweet_spot": "evidence",
+    "diminishing": "evidence"
+   },
+   "hamstrings": {
+    "min": "extrapolated",
+    "sweet_spot": "extrapolated",
+    "diminishing": "extrapolated"
+   },
+   "glutes": {
+    "min": "extrapolated",
+    "sweet_spot": "extrapolated",
+    "diminishing": "extrapolated"
+   },
+   "calves": {
+    "min": "extrapolated",
+    "sweet_spot": "extrapolated",
+    "diminishing": "extrapolated"
+   },
+   "adductors": {
+    "min": "extrapolated",
+    "sweet_spot": "modeled",
+    "diminishing": "extrapolated"
+   },
+   "lower_back": {
+    "min": "extrapolated",
+    "sweet_spot": "modeled",
+    "diminishing": "extrapolated"
+   },
+   "obliques": {
+    "min": "extrapolated",
+    "sweet_spot": "modeled",
+    "diminishing": "extrapolated"
+   },
+   "abductors": {
+    "min": "extrapolated",
+    "sweet_spot": "modeled",
+    "diminishing": "extrapolated"
+   }
+  },
+  "note": "min and diminishing equal targets[m].min x levelMinFactor and targets[m].max, so the weekly colour band is unchanged. A model, not a measurement."
+ },
+ "goal_muscle_weights": {
+  "muscle_size": {
+   "chest": 1.0,
+   "front_delts": 1.0,
+   "side_delts": 1.0,
+   "rear_delts": 1.0,
+   "lats": 1.0,
+   "upper_back": 1.0,
+   "traps": 1.0,
+   "biceps": 1.0,
+   "triceps": 1.0,
+   "forearms": 1.0,
+   "abs": 1.0,
+   "quads": 1.0,
+   "hamstrings": 1.0,
+   "glutes": 1.0,
+   "calves": 1.0,
+   "adductors": 1.0,
+   "lower_back": 1.0,
+   "obliques": 1.0,
+   "abductors": 1.0
+  },
+  "strength": {
+   "chest": 1.1,
+   "front_delts": 1.0,
+   "side_delts": 0.9,
+   "rear_delts": 1.0,
+   "lats": 1.0,
+   "upper_back": 1.1,
+   "traps": 1.0,
+   "biceps": 0.9,
+   "triceps": 1.05,
+   "forearms": 1.0,
+   "abs": 1.0,
+   "quads": 1.1,
+   "hamstrings": 1.05,
+   "glutes": 1.1,
+   "calves": 0.9,
+   "adductors": 1.0,
+   "lower_back": 1.1,
+   "obliques": 1.0,
+   "abductors": 0.9
+  },
+  "joint_friendly": {
+   "chest": 1.0,
+   "front_delts": 1.0,
+   "side_delts": 1.0,
+   "rear_delts": 1.0,
+   "lats": 1.0,
+   "upper_back": 1.0,
+   "traps": 1.0,
+   "biceps": 1.0,
+   "triceps": 1.0,
+   "forearms": 1.0,
+   "abs": 1.0,
+   "quads": 1.0,
+   "hamstrings": 1.0,
+   "glutes": 1.0,
+   "calves": 1.0,
+   "adductors": 1.0,
+   "lower_back": 1.0,
+   "obliques": 1.0,
+   "abductors": 1.0
+  },
+  "maintain": {
+   "chest": 1.0,
+   "front_delts": 1.0,
+   "side_delts": 1.0,
+   "rear_delts": 1.0,
+   "lats": 1.0,
+   "upper_back": 1.0,
+   "traps": 1.0,
+   "biceps": 1.0,
+   "triceps": 1.0,
+   "forearms": 1.0,
+   "abs": 1.0,
+   "quads": 1.0,
+   "hamstrings": 1.0,
+   "glutes": 1.0,
+   "calves": 1.0,
+   "adductors": 1.0,
+   "lower_back": 1.0,
+   "obliques": 1.0,
+   "abductors": 1.0
+  },
+  "aesthetic_v_taper": {
+   "chest": 1.1,
+   "front_delts": 1.0,
+   "side_delts": 1.3,
+   "rear_delts": 1.1,
+   "lats": 1.25,
+   "upper_back": 1.1,
+   "traps": 1.0,
+   "biceps": 1.2,
+   "triceps": 1.2,
+   "forearms": 1.0,
+   "abs": 1.0,
+   "quads": 0.9,
+   "hamstrings": 0.9,
+   "glutes": 0.9,
+   "calves": 1.0,
+   "adductors": 1.0,
+   "lower_back": 1.0,
+   "obliques": 1.0,
+   "abductors": 1.0
+  },
+  "aesthetic_lower_emphasis": {
+   "chest": 0.9,
+   "front_delts": 1.0,
+   "side_delts": 1.15,
+   "rear_delts": 1.05,
+   "lats": 1.0,
+   "upper_back": 1.0,
+   "traps": 0.8,
+   "biceps": 0.95,
+   "triceps": 0.95,
+   "forearms": 0.9,
+   "abs": 1.0,
+   "quads": 1.1,
+   "hamstrings": 1.15,
+   "glutes": 1.3,
+   "calves": 1.0,
+   "adductors": 1.05,
+   "lower_back": 1.0,
+   "obliques": 1.0,
+   "abductors": 1.2
+  },
+  "conditioning": {
+   "chest": 1.0,
+   "front_delts": 1.0,
+   "side_delts": 1.0,
+   "rear_delts": 1.0,
+   "lats": 1.0,
+   "upper_back": 1.0,
+   "traps": 1.0,
+   "biceps": 1.0,
+   "triceps": 1.0,
+   "forearms": 1.0,
+   "abs": 1.0,
+   "quads": 1.0,
+   "hamstrings": 1.0,
+   "glutes": 1.0,
+   "calves": 1.0,
+   "adductors": 1.0,
+   "lower_back": 1.0,
+   "obliques": 1.0,
+   "abductors": 1.0
+  }
+ },
+ "goal_muscle_weights_meta": {
+  "neutral": 1.0,
+  "tag": "modeled",
+  "use": "Order fill (add sets) suggestions by weight x shortfall below min, and trim suggestions by excess over diminishing / weight. With several goals selected, use the mean per muscle (same as rules.json ranking.combine).",
+  "source": "Mirrors rules.json ranking.goals[goal].muscle_priority so exercise ranking and fill/trim agree (one source of truth).",
+  "notes": {
+   "muscle_size": "All 1: the default targets are already built for whole-body size.",
+   "strength": "Prime movers of squat, bench, deadlift and row at 1.05-1.1; small isolation-only muscles at 0.9. Kept modest because strength comes mostly from load and practice, not volume order.",
+   "joint_friendly": "All 1: this goal changes exercise choice and rep ranges, not which muscles get priority.",
+   "maintain": "All 1: maintenance keeps every muscle level.",
+   "aesthetic_v_taper": "Side delts 1.3, lats 1.25, biceps and triceps 1.2, rear delts, upper back and chest 1.1; legs 0.9. Puts width and arms first when filling sets.",
+   "aesthetic_lower_emphasis": "Glutes 1.3, abductors 1.2, hamstrings and side delts 1.15, quads 1.1; chest, arms, forearms 0.9-0.95, traps 0.8. Puts glutes and legs first when filling sets.",
+   "conditioning": "All 1: conditioning work changes session design, not muscle priority."
+  }
  }
 }

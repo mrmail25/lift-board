@@ -149,7 +149,7 @@
       "state_icon": true
     },
     "session_length": {
-      "display_label": "Sessions under 90 minutes",
+      "display_label": "Sessions within your level's limit",
       "kind": "check",
       "state_icon": true
     },
