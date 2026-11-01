@@ -896,9 +896,9 @@
   }
  },
  "recovery": {
-  "fatigue_field": "exercises[].fatigue (1.5 heavy axial compound, 1.2 other compound, 0.8 isolation)",
-  "session_cost": "sum(sets*fatigue)",
-  "week_cost": "sum of sessions; show as % of user's saved baseline week (first saved week if none set)",
+  "fatigue_field": "vol8b: per-set fatigue = volume-model.json recovery.params type_base[type] x axial_by_exercise[id] x effort[RIR] (exercises[].fatigue no longer used for recovery cost)",
+  "session_cost": "sum over the workout's sets of per-set fatigue (= workout load points; index = 100 x points / workout.fatigue.reference.points)",
+  "week_cost": "sum of sessions; show as % of the baseline: saved week (override) else My average (4 logged weeks) else Typical routines (recovery.reference.check_baseline)",
   "modifiers": {
    "default_off": true,
    "sleep_under_6h": 1.15,
@@ -914,19 +914,19 @@
    "benchmarks": [
     {
      "name": "Classic 3-day full body",
-     "week_cost": 62.2
+     "week_cost": 61.684
     },
     {
      "name": "4-day upper/lower",
-     "week_cost": 75.9
+     "week_cost": 75.208
     },
     {
      "name": "5-day body-part split",
-     "week_cost": 88.5
+     "week_cost": 89.252
     },
     {
      "name": "6-day push/pull/legs",
-     "week_cost": 101.1
+     "week_cost": 98.764
     }
    ],
    "tag": "modeled",
@@ -950,7 +950,48 @@
     "deload-overlay weeks",
     "weeks with < 50% of planned working sets done"
    ],
-   "metric": "week_cost = sum(sets x exercises.fatigue); benchmarks are our own intermediate presets (splits.json)."
+   "metric": "vol8b: week_cost = sum of per-set fatigue (volume-model.json recovery.params type_base x axial_by_exercise x effort); benchmarks are our own intermediate presets (splits.json).",
+   "check_baseline": {
+    "used_by": "rules.json rules[id=recovery_vs_baseline]",
+    "order": [
+     "saved_week",
+     "my_average",
+     "typical_routines"
+    ],
+    "saved_week": "optional override: used only while the user keeps a manually saved normal week",
+    "my_average": "after personal_after_weeks (4) qualifying logged weeks: rolling personal_window_weeks (4) mean of personal_metric, same exclusions",
+    "typical_by_days": {
+     "1": {
+      "benchmark": "Classic 3-day full body",
+      "week_cost": 61.684
+     },
+     "2": {
+      "benchmark": "Classic 3-day full body",
+      "week_cost": 61.684
+     },
+     "3": {
+      "benchmark": "Classic 3-day full body",
+      "week_cost": 61.684
+     },
+     "4": {
+      "benchmark": "4-day upper/lower",
+      "week_cost": 75.208
+     },
+     "5": {
+      "benchmark": "5-day body-part split",
+      "week_cost": 89.252
+     },
+     "6": {
+      "benchmark": "6-day push/pull/legs",
+      "week_cost": 98.764
+     },
+     "7": {
+      "benchmark": "6-day push/pull/legs",
+      "week_cost": 98.764
+     }
+    },
+    "tag": "modeled"
+   }
   }
  },
  "analytics": {

@@ -911,8 +911,8 @@
       "scope": "week",
       "uses": "targets.recovery",
       "app_only": true,
-      "message": "This week's recovery cost is {pct}% of your saved normal week. Expect more fatigue than usual.",
-      "note": "Compared to saved baseline week. Info above 115%, warn above 130%.",
+      "message": "This week's recovery cost is {pct}% of {baseline_label}. Expect more fatigue than usual.",
+      "note": "vol7: compared to the user's own 4-week average (saved week = optional override; Typical routines before 4 logged weeks). Info above 115%, warn above 130%.",
       "info_above": 1.15,
       "warn_above": 1.3,
       "fixes": [
@@ -926,12 +926,129 @@
           "intermediate",
           "advanced"
         ],
-        "requires": [
-          "baseline_saved"
-        ]
+        "requires": []
       },
       "category": "recovery_fatigue",
-      "metric": "recovery_vs_baseline"
+      "metric": "recovery_vs_baseline",
+      "baseline": {
+        "order": [
+          "saved_week: the manually saved normal week, if one exists and the user keeps it as the override",
+          "my_average: rolling mean week cost of the last 4 qualifying logged weeks (targets.json recovery.reference personal_*), once 4 exist",
+          "typical_routines: week cost of the benchmark routine with the nearest number of training days (targets.json recovery.reference.check_baseline.typical_by_days)"
+        ],
+        "labels": {
+          "saved_week": "your saved normal week",
+          "my_average": "your average week",
+          "typical_routines": "a typical {benchmark} week"
+        }
+      }
+    },
+    {
+      "id": "recovery_overlap",
+      "severity": "info",
+      "scope": "week",
+      "uses": "volume-model.json workout.gaps + recovery.params",
+      "meaningful": "light",
+      "streak_days": 3,
+      "early_frac_of_lower": 0.5,
+      "min_gap_h": 24,
+      "variants": {
+        "streak": "the muscle gets a meaningful session on 3+ days in a row",
+        "early": "the next meaningful session comes before 0.5 x the lower edge of the previous one's ready-in range (0.5 x 0.8 x recovery hours), or within 24 h"
+      },
+      "message_streak": "{muscle} is trained hard {n} days in a row ({day1} to {day2}). Give it a day off in between, or make one of those days light for {muscle}.",
+      "message_early": "{muscle} is trained again on {day2}, {gap} after a big {day1} session that needs {ready}. Move it a day later, or trim {muscle} sets on {day2}.",
+      "fixes": [
+        "move_sets_to_day",
+        "reduce_sets:highest_contributor"
+      ],
+      "short_label": "Muscle not recovered",
+      "short_label_variants": {
+        "streak": "Same muscle 3 days running",
+        "early": "Trained again too soon"
+      },
+      "category": "recovery_spacing",
+      "metric": "recovery_gap",
+      "evidence": "modeled (recovery hours anchored to the 24-72 h range: Moran-Navarro 2017, Cheung 2003; thresholds are planning choices)",
+      "caveat": "A planning baseline. Sleep, nutrition, stress and age change real recovery.",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": [
+          "training_days>=2"
+        ]
+      },
+      "note": "vol8: replaces recovery_gap_short. Next-day training after a normal session is not flagged (rest resets most of the decline); only streaks and clearly early repeats are."
+    },
+    {
+      "id": "session_dose",
+      "severity": "info",
+      "scope": "session",
+      "uses": "volume-model.json session.per_muscle + workout.stimulus",
+      "heavy_from": "low_return_from",
+      "light_below": 2.0,
+      "light_requires": "a direct exercise for that muscle that day (it is the prime mover)",
+      "message_heavy": "{muscle} gets {sets} effective sets on {day}. Past about {limit}, each extra set is worth less than a third of the first. Move some to another day.",
+      "message_light": "{muscle} gets only {sets} effective sets on {day}, below a useful dose of about 2. Add a set, or move this exercise to a day that trains {muscle} more.",
+      "fixes": [
+        "move_sets_to_day",
+        "reduce_sets:highest_contributor",
+        "add_sets"
+      ],
+      "short_label": "Session too heavy or too light for a muscle",
+      "short_label_variants": {
+        "heavy": "Too much for one session",
+        "light": "Too little to count"
+      },
+      "category": "session",
+      "metric": "session_design",
+      "evidence": "modeled (per-set decay fitted to Remmert 2025 PREPRINT anchors; dose floor 2)",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      },
+      "note": "vol8: heavy threshold from the per-set curve (chest 10.3, 8-anchor muscles 8.5). Layered under junk_volume_session (warn at > 10 raw effective sets).",
+      "c_frac": 0.4,
+      "heavy_when_set_credit_below": 0.3
+    },
+    {
+      "id": "recovery_gap_long",
+      "severity": "info",
+      "scope": "week",
+      "uses": "volume-model.json workout.gaps",
+      "meaningful": "light",
+      "max_gap_h": 120,
+      "muscles": "frequency_muscles",
+      "message": "{muscle} goes {gap} between hard sessions ({day1} to {day2}). Training it every 2–4 days gives it more growth signals; total weekly sets still matter most.",
+      "message_once": "{muscle} gets a hard session only on {day1}, so it goes a week between sessions. Training it every 2–4 days gives it more growth signals; total weekly sets still matter most.",
+      "message_note": "Use message_once when day1 == day2 (one meaningful session a week).",
+      "fixes": [
+        "move_sets_to_day",
+        "add_exercise(other day)"
+      ],
+      "short_label": "Long gap between sessions",
+      "category": "recovery_spacing",
+      "metric": "recovery_gap",
+      "evidence": "extrapolated (MacDougall 1995; Damas 2016; Schoenfeld 2016, 2019). Cut-off modeled.",
+      "supersedes_in_ui": "low_frequency (same muscle: show this one)",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": [
+          "training_days>=2"
+        ]
+      },
+      "note": "vol7."
     },
     {
       "id": "pattern_gap",
@@ -1280,7 +1397,7 @@
     "recovery_vs_baseline": {
       "kind": "analytics",
       "where": "check.js (app_only rule recovery_vs_baseline) + analytics.js 'Recovery cost' week %",
-      "trigger": "saved baseline exists and week cost x modifiers / baseline > info_above (1.15)",
+      "trigger": "week cost x modifiers / baseline > info_above (1.15); baseline = saved week (override) else My average (>= 4 logged weeks) else Typical routines",
       "actions": [
         "reduce_sets:highest_fatigue",
         "swap_exercise:lower_fatigue"
@@ -1409,7 +1526,7 @@
           "sources": [
             "recovery_vs_baseline"
           ],
-          "trigger": "saved baseline and week cost > 115% of it",
+          "trigger": "week cost > 115% of the baseline (saved week override, else My average after 4 logged weeks, else Typical routines)",
           "edits": [
             "sets (reduce_sets highest_fatigue)",
             "swap (lower_fatigue)"
@@ -4766,7 +4883,7 @@
     "version": 2,
     "note": "Round 2 (2026-10-22) restructure. Every item has kind (check | measure | info), section, tab and explain {what, how, why, learn_page}. Check labels state the good condition. Flags name the days and exercises causing them (tools/analysis.py flag_details). Breakdowns per muscle and per movement pattern for stretch share, one-side share, recovery cost, stimulus per fatigue and fatigue (tools/analysis.py breakdowns). Values are models for comparing plans, not measurements. Spec: data/analysis-spec-r2.md; fixture: data/analysis-items-reference.json.",
     "kinds": {
-      "check": "A rule with a pass / attention state. The label states the good condition. Counts toward checks_pass when applicable. Attention = at least one non-info flag from its rules (or, for recovery_vs_baseline, week cost above 115% of the saved baseline). Info-level flags of its rules are listed as notes and never change the state.",
+      "check": "A rule with a pass / attention state. The label states the good condition. Counts toward checks_pass when applicable. Attention = at least one non-info flag from its rules (or, for recovery_vs_baseline, week cost above 115% of its baseline (vol7: saved week if kept, else My average after 4 logged weeks, else Typical routines)). Info-level flags of its rules are listed as notes and never change the state.",
       "measure": "A value or breakdown with no judgment and no state.",
       "info": "Context or an advisory note. Never counts toward checks_pass and never shows as attention. Used for model-only notes whose evidence is thin, and for info-severity rules that fire on many sound programs."
     },
@@ -4865,7 +4982,7 @@
           "learn_page": "set-crediting-targets#warnings",
           "so_what": "A quick health score for the plan. Fixing an attention item raises it; a perfect score is not required."
         },
-        "formula": "total = rules r in rules.json rules[] whose r.applies holds: level in r.applies.levels AND every r.applies.requires is met (baseline_saved: a normal-week recovery baseline is saved; training_days>=2: at least 2 days with a filled tile). pass = total minus the applicable rules with at least one non-info flag (spinal_load_session and spinal_load_week both count as spinal_load; recovery_vs_baseline fails above its warn_above, 130%). Info flags never fail a check. Only filled tiles are checked: unfilled template slots are not counted (the Builder shows them as pending). Clean board, no baseline: beginner 15/15, intermediate 14/14, advanced 14/14; with a saved baseline one more each.",
+        "formula": "total = rules r in rules.json rules[] whose r.applies holds: level in r.applies.levels AND every r.applies.requires is met (baseline_saved: a normal-week recovery baseline is saved; training_days>=2: at least 2 days with a filled tile). pass = total minus the applicable rules with at least one non-info flag (spinal_load_session and spinal_load_week both count as spinal_load; recovery_vs_baseline fails above its warn_above, 130%). Info flags never fail a check. Only filled tiles are checked: unfilled template slots are not counted (the Builder shows them as pending). vol7: recovery_vs_baseline always applies (Typical routines fallback), and recovery_overlap, recovery_gap_long (training_days>=2) and session_dose are added as info-only checks; clean board: beginner 19/19, intermediate 18/18, advanced 18/18.",
         "evidence": "modeled",
         "status": "added",
         "breakdowns": [],
@@ -5804,15 +5921,15 @@
         "kind": "measure",
         "section": "recovery_fatigue",
         "tab": "build_analysis",
-        "description": "Sets x fatigue rating summed per day and for the week; a percentage of your saved normal week once one exists.",
+        "description": "Per-set fatigue (exercise type x axial loading x closeness to failure) summed per workout and for the week; workouts add up to the week. Compared with typical routines, or your average week once you have 4 logged weeks.",
         "explain": {
-          "what": "Sets x fatigue rating summed per day and for the week; a percentage of your saved normal week once one exists.",
-          "how": "targets.json recovery: session_cost = sum(sets x fatigue); week_cost = sum of sessions; per muscle = sum(sets x fatigue x rating share); per pattern = sum over its exercises.",
+          "what": "Per-set fatigue (exercise type x axial loading x closeness to failure) summed per workout and for the week; workouts add up to the week. Compared with typical routines, or your average week once you have 4 logged weeks.",
+          "how": "volume-model.json recovery.params: per set type_base x axial_by_exercise x effort[RIR]; session_cost = sum over the workout; week_cost = sum of workouts; per muscle = sum(sets x per-set fatigue x rating share); per pattern = sum over its exercises.",
           "why": "Lets you compare two versions of a plan; adjust to how you actually recover.",
           "learn_page": "exercise-selection#fatigue",
-          "so_what": "A model of how demanding the week is, compared with common routines. Use it to compare versions of your plan, not as a prediction of how you will feel."
+          "so_what": "Read it per workout: the fatigue bar compares each workout with a typical upper-body day (100), and each muscle shows how long until it is ready again. The week total is for comparing plans."
         },
-        "formula": "targets.json recovery: session_cost = sum(sets x fatigue); week_cost = sum; x optional modifiers; % of baseline",
+        "formula": "session_cost = sum(sets x type_base x axial x effort[RIR]); week_cost = sum of sessions; x optional modifiers; % of baseline (rules recovery_vs_baseline)",
         "evidence": "modeled",
         "status": "defined",
         "breakdowns": [
@@ -5844,15 +5961,15 @@
         "kind": "check",
         "section": "recovery_fatigue",
         "tab": "build_analysis",
-        "description": "With a saved normal week, passes while this week's recovery cost is at most 115% of it.",
+        "description": "Passes while this week's recovery cost is at most 115% of your average week (last 4 logged weeks). Before 4 weeks it compares with a typical routine of the same number of days; a saved normal week overrides both.",
         "explain": {
-          "what": "With a saved normal week, passes while this week's recovery cost is at most 115% of it.",
-          "how": "week_cost / baseline_week_cost <= 1.15 (rules recovery_vs_baseline warn_above). Attention names the days and the highest-cost exercises.",
+          "what": "Passes while this week's recovery cost is at most 115% of your average week (last 4 logged weeks). Before 4 weeks it compares with a typical routine of the same number of days; a saved normal week overrides both.",
+          "how": "week_cost / baseline_week_cost <= 1.15 (rules recovery_vs_baseline); baseline = saved week (override) else My average (rolling 4 qualifying logged weeks) else Typical routines (targets.json recovery.reference.check_baseline). Attention names the days and the highest-cost exercises.",
           "why": "A jump well above your usual week is the change most worth a second look; the threshold is a planning choice.",
           "learn_page": "exercise-selection#fatigue",
-          "so_what": "Flags a week that is much more demanding than your usual one. Big jumps are worth a second look; small ones are normal progress."
+          "so_what": "Flags a week that is much more demanding than what you usually do. Big jumps are worth a second look; small ones are normal progress."
         },
-        "formula": "week_cost / baseline_week_cost <= 1.15 (rules recovery_vs_baseline warn_above). Attention names the days and the highest-cost exercises.",
+        "formula": "week_cost / baseline_week_cost <= 1.15 (rules recovery_vs_baseline); baseline = saved week (override) else My average (rolling 4 qualifying logged weeks) else Typical routines (targets.json recovery.reference.check_baseline). Attention names the days and the highest-cost exercises.",
         "evidence": "modeled",
         "status": "added",
         "rules": [
@@ -5864,9 +5981,7 @@
             "intermediate",
             "advanced"
           ],
-          "requires": [
-            "baseline_saved"
-          ]
+          "requires": []
         },
         "breakdowns": [
           "day",

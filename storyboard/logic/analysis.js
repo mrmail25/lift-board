@@ -22,7 +22,7 @@ function invertOps(ops){const inv={swap:o=>({op:'swap',day:o.day,from_id:o.to_id
 const fat=(dt,i)=>dt.EX[i].fatigue;
 // Python 3.12+ sum() of floats is compensated (Neumaier); pySum reproduces it bit for bit so rounded values match Coach's tools
 function pySum(a){let s=0,c=0;for(const x of a){const t=s+x;if(Math.abs(s)>=Math.abs(x))c+=(s-t)+x;else c+=(x-t)+s;s=t}return c&&isFinite(c)?s+c:s}
-const weekCost=(dt,days)=>{const a=[];for(const d of days)for(const t of d.tiles)a.push(t.sets*fat(dt,t.id));return pySum(a)};
+const weekCost=(dt,days)=>{const a=[];if(PC.perSet(dt)){for(const d of days)for(const t of d.tiles)a.push(PC.loadPoints(dt,[t]));return pySum(a)}for(const d of days)for(const t of d.tiles)a.push(t.sets*fat(dt,t.id));return pySum(a)};   // vol8b: per-set fatigue points
 function mainMuscle(dt,i){let best=null,bv=-Infinity;for(const [m,v] of Object.entries(dt.EX[i].muscles))if(v>bv){bv=v;best=m}return best}
 const spf=(dt,i,m)=>(dt.EX[i].muscles[m]||0)/fat(dt,i);
 const MINR=dt=>((dt.targets.counting||{}).min_rating_to_count??0.25);
@@ -252,7 +252,7 @@ function catalogue(dt){const AM=dt.rules.analysis_metrics||{categories:[],metric
   if(AM.sections&&AM.items)return AM.sections.map(s=>Object.assign({},s,{metrics:AM.items.filter(m=>m.section===s.id)}));
   return AM.categories.map(c=>Object.assign({},c,{metrics:AM.metrics.filter(m=>m.category===c.id)}))}
 // ---------- vol2: recovery hours per muscle (volume-model.json recovery.hours_formula) and the week vs benchmark routines ----------
-function sessionHours(dt,tiles,level){const RC=dt.VM.recovery,P=RC.params,PR=dt.VM.credit.planned_rir_default,E=PC.eff(dt,tiles),out={};
+function sessionHours(dt,tiles,level){if(PC.perSet(dt))return PC.recHours(dt,tiles,level);const RC=dt.VM.recovery,P=RC.params,PR=dt.VM.credit.planned_rir_default,E=PC.eff(dt,tiles),out={};
   for(const m of Object.keys(E)){const x=E[m];if(!(x>=(RC.min_effective_sets_for_hours||1)))continue;let n=0,q=0;
     for(const t of tiles){const e=dt.EX[t.id];if(!((e.muscles[m]||0)>=0.25))continue;n+=t.sets;q+=t.sets*(t.rir!=null?t.rir:(PR[e.type]!=null?PR[e.type]:2))}
     const ef=P.effort[String(Math.max(0,Math.min(2,pyR(n?q/n:2))))],st=m in dt.rules.stretch_biased?stretchShare(dt,[{tiles}],m)[0]:0;
@@ -278,8 +278,8 @@ function benchVs(dt,wc){const L=((((dt.targets||{}).recovery||{}).reference||{})
 // swap tradeoff record (volume-model.json swaps.schema), computed with the new counting
 function swapRecord(dt,before,after,level,from_id,to_id){const A0=PC.analytics(dt,before,level).muscles,A1=PC.analytics(dt,after,level).muscles,mus={},drops=[];
   const ch=new Set();after.forEach((d,i)=>{const b=before.find(x=>x.day===d.day);if(JSON.stringify(b&&b.tiles)!==JSON.stringify(d.tiles))ch.add(d.day)});
-  for(const m of Object.keys(A0)){const a=A0[m],b=A1[m],dl=b.raw_exact-a.raw_exact,a5=PC.dRound(dt,a.raw_exact),b5=PC.dRound(dt,b.raw_exact);if(Math.abs(dl)<1e-9)continue;const cr=a.raw_exact>=a.min&&b.raw_exact<a.min;   /* vol6 warnings_rounding none: judged on exact credit */if(cr)drops.push(m);
-    mus[m]={before:a5,after:b5,before_shown:a.raw,after_shown:b.raw,delta:r4(dl,2),zone_before:a.zone,zone_after:b.zone,min:a.min,crosses_below_min:cr,stimulus_before:r4(a.stim,3),stimulus_after:r4(b.stim,3)}}
+  for(const m of Object.keys(A0)){const a=A0[m],b=A1[m],ra=PC.perSet(dt)?a.raw_sets:a.raw_exact,rb=PC.perSet(dt)?b.raw_sets:b.raw_exact,dl=rb-ra,a5=PC.dRound(dt,ra),b5=PC.dRound(dt,rb);if(Math.abs(dl)<1e-9)continue;const cr=ra>=a.min&&rb<a.min;   /* vol8b: Coach's swap record stays on raw weekly sets; the app card uses *_shown (the credited value) */   /* vol6 warnings_rounding none: judged on exact credit */if(cr)drops.push(m);
+    mus[m]={before:a5,after:b5,before_shown:a.raw,after_shown:b.raw,delta:r4(dl,2),zone_before:PC.perSet(dt)?PC.zoneOf(a.zones,ra):a.zone,zone_after:PC.perSet(dt)?PC.zoneOf(b.zones,rb):b.zone,zone_after_shown:b.zone,min:a.min,crosses_below_min:cr,stimulus_before:r4(a.stim,3),stimulus_after:r4(b.stim,3)}}
   const fb=weekCost(dt,before),fa=weekCost(dt,after);
   return {from_id,to_id,days:[...ch],fatigue_cost:{before:r4(fb,1),after:r4(fa,1),delta:r4(fa-fb,1)},muscles:mus,drops_below_min:drops,verdict:drops.length?'tradeoff':'clean'}}
 const API={hoursRange,myAverage,sessionHours,weekHours,benchVs,swapRecord,applyOps,invertOps,diff,suggest,sheet,metrics,checksPass,applicable,itemOf,flagDetails,breakdowns,fatigueRating,items,stretchFocused,tierOf,pushPull,ruleApplies,catalogue,typeOf,weekCost,stretchShare,lowerFatigueCandidates,pyDumps};
