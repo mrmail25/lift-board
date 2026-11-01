@@ -738,6 +738,7 @@
   },
   "logged": "Use set.rir (0-4, 4 = 4+). Null RIR = planned default for that exercise type (logging-spec: no RIR logged still counts).",
   "vs_current": "Current: every set adds sets x rating (>= 0.25) whatever the RIR. New: prime movers unchanged at RIR 0-2; secondary movers at planned RIR get x0.9, minor movers x0.8; logged sets at RIR 3/4 lose 10%/20% (more for synergists).",
+  "warnings_rounding": "none (vol6): zones, colours and warnings use exact effective sets; 0.5 rounding is display-only (targets.json counting.display_round_to)",
   "tag": "rating from exercises.json (modeled coaching estimates, 0.5 ~ Pelland fractional); prox 0-2 evidence, 3-4 extrapolated, 5+ modeled"
  },
  "recovery": {

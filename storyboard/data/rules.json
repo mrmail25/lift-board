@@ -4892,12 +4892,12 @@
         "description": "Effective weekly sets for each muscle against its target band, with the colour key (under / in range / over / far over), the evidence tag behind each target and the total sets in the week.",
         "explain": {
           "what": "Effective weekly sets for each muscle against its target band, with the colour key (under / in range / over / far over), the evidence tag behind each target and the total sets in the week.",
-          "how": "Each exercise credits sets x its rating for a muscle; ratings below 0.25 are ignored and totals round to 0.5. The band runs from the target minimum x the level factor to the target maximum; amber up to 25% over, red beyond (red_factor). The total line counts every planned set once.",
+          "how": "Each exercise credits sets x its rating for a muscle, discounted for synergists further from failure (volume-model.json credit); ratings below 0.25 are ignored. Totals may be shown rounded to 0.5, but colours and warnings use the exact total. The band runs from the target minimum x the level factor to the target maximum; amber up to 25% over, red beyond (red_factor). The total line counts every planned set once.",
           "why": "Weekly sets per muscle are the main volume lever in the cited dose-response meta-analyses; the band is a planning range, not a prescription.",
           "learn_page": "set-crediting-targets#targets",
           "so_what": "Shows whether each muscle gets enough weekly work to sit in its growth range. Blue means add sets, amber or red means you can trim."
         },
-        "formula": "targets.json counting (fractional, min_rating_to_count, round_to); target = targets[m].min x levelMinFactor[level] .. max | rules.json volume_bands (over); under = total < level min; red = total > max x red_factor; weekly_volume rule warns on red | sum over days and tiles of sets | targets.json targets[m].evidence.tag",
+        "formula": "targets.json counting (fractional, min_rating_to_count; volume-model.json credit; unrounded for colour and warnings, display_round_to 0.5 for display only); target = targets[m].min x levelMinFactor[level] .. max | rules.json volume_bands (over); under = total < level min; red = total > max x red_factor; weekly_volume rule warns on red | sum over days and tiles of sets | targets.json targets[m].evidence.tag",
         "evidence": "supported",
         "status": "defined",
         "citations": [

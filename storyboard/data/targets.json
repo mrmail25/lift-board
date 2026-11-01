@@ -4,14 +4,15 @@
   "method": "fractional",
   "description": "Each working set adds the exercise's muscle rating (0-1) to that muscle. Ratings below 0.25 count as 0 (noise). Weekly total = sum over all tiles of sets x rating.",
   "min_rating_to_count": 0.25,
-  "round_to": 0.5,
   "status": {
    "green": "min <= total <= max",
    "amber_under": "min - 2 <= total < min",
    "amber_over": "max < total <= max * 1.25",
    "red_under": "total < min - 2",
    "red_over": "total > max * 1.25"
-  }
+  },
+  "display_round_to": 0.5,
+  "rounding_note": "vol6: weekly totals may be DISPLAYED rounded to 0.5, but colours, zones and warnings always use the unrounded total. Effective sets follow data/volume-model.json credit (rating x proximity multiplier at planned RIR)."
  },
  "targets": {
   "chest": {

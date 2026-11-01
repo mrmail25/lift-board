@@ -102,7 +102,7 @@ function sRecovery(dt,days,level,baseline,modifier=1.0){if(!baseline)return [];c
   if(sw.length){const p={target:'lower_fatigue',n:sw.length,parts:sw.join('; ')};fx.push(pack(dt,'swap_exercise',p,preview(dt,'recovery_vs_baseline',Object.assign({},p,{kind:'swap'})),nw,days,pct(nw)<=goal,p0,pct(nw)))}
   return [{target:{pct:pyR(p0*100)},fixes:notResolvesFirst(fx)}]}
 function sWeeklyBand(dt,days,level){const res=[],{T,LF}=ctx(dt),week=PC.check(dt,days,level)[1];
-  for(let [m,x] of Object.entries(week)){if(dt.VM)x=PC.r1(x);const lo=Math.max(0.5,pyR(T[m].min*LF[level]*2)/2),hi=T[m].max;if((lo<=x&&x<=hi)||col(dt,m,x,level)==='R')continue;
+  for(let [m,x] of Object.entries(week)){const lo=Math.max(0.5,pyR(T[m].min*LF[level]*2)/2),hi=T[m].max;if((lo<=x&&x<=hi)||col(dt,m,x,level)==='R')continue;
     const under=x<lo,dist=v=>under?lo-v:v-hi;const gens=under?[X.gAddSets(dt,days,m),X.gAddExercise(dt,days,m)]:[X.gReduceSets(dt,days,null,'highest_contributor',m)];const fx=[];
     for(const g of gens){let best=null,n_=0;for(const [a_,p,nw] of g){if(n_++>200)break;const v=PC.eff(dt,nw.flatMap(d=>d.tiles))[m];
         if(dist(v)>=dist(x)-1e-9||!valid(dt,days,nw,level))continue;const c=pack(dt,a_,p,X.prev(dt,a_,p),nw,days,dist(v)<=0,x,v);if(c.resolves){best=c;break}best=best||c}
@@ -278,7 +278,7 @@ function benchVs(dt,wc){const L=((((dt.targets||{}).recovery||{}).reference||{})
 // swap tradeoff record (volume-model.json swaps.schema), computed with the new counting
 function swapRecord(dt,before,after,level,from_id,to_id){const A0=PC.analytics(dt,before,level).muscles,A1=PC.analytics(dt,after,level).muscles,mus={},drops=[];
   const ch=new Set();after.forEach((d,i)=>{const b=before.find(x=>x.day===d.day);if(JSON.stringify(b&&b.tiles)!==JSON.stringify(d.tiles))ch.add(d.day)});
-  for(const m of Object.keys(A0)){const a=A0[m],b=A1[m],dl=b.raw_exact-a.raw_exact,a5=PC.r05(a.raw_exact),b5=PC.r05(b.raw_exact);if(Math.abs(dl)<1e-9)continue;const cr=a5>=a.min&&b5<a.min;if(cr)drops.push(m);
+  for(const m of Object.keys(A0)){const a=A0[m],b=A1[m],dl=b.raw_exact-a.raw_exact,a5=PC.dRound(dt,a.raw_exact),b5=PC.dRound(dt,b.raw_exact);if(Math.abs(dl)<1e-9)continue;const cr=a.raw_exact>=a.min&&b.raw_exact<a.min;   /* vol6 warnings_rounding none: judged on exact credit */if(cr)drops.push(m);
     mus[m]={before:a5,after:b5,before_shown:a.raw,after_shown:b.raw,delta:r4(dl,2),zone_before:a.zone,zone_after:b.zone,min:a.min,crosses_below_min:cr,stimulus_before:r4(a.stim,3),stimulus_after:r4(b.stim,3)}}
   const fb=weekCost(dt,before),fa=weekCost(dt,after);
   return {from_id,to_id,days:[...ch],fatigue_cost:{before:r4(fb,1),after:r4(fa,1),delta:r4(fa-fb,1)},muscles:mus,drops_below_min:drops,verdict:drops.length?'tradeoff':'clean'}}

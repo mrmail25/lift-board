@@ -16,7 +16,9 @@ function ctx(dt){if(dt._pc)return dt._pc;const R=dt.rules,RU={};R.rules.forEach(
   return dt._pc={R,RU,T:TT.targets,S:TT.session.muscles,LF:TT.levelMinFactor,HEAVY,PJ:dt.patterns,MUS:dt.exl.muscles}}
 const total=d=>d.tiles.reduce((a,t)=>a+t.sets,0);
 // ---- vol2 (Coach's data/volume-model.json = dt.VM; targets.json volume_zones; rules.json session_length.by_level). Without dt.VM the old maths run.
-const r05=x=>Math.floor(x*2+0.5)/2,r1=x=>Math.round(x*10)/10;   // qc3009: display + zoning use the credited value at one decimal (r1); r05 kept only for Coach's swap records
+const r05=x=>Math.floor(x*2+0.5)/2,r1=x=>Math.round(x*10)/10;   // vol6: volume-model credit.warnings_rounding 'none' -> zones, colours and warnings use the exact credited total; numbers show at one decimal (shown())
+const dRound=(dt,v)=>{const s=((dt.targets||{}).counting||{}).display_round_to;return s?Math.floor(v/s+0.5)*s:v};   // targets.json counting.display_round_to (display-only; Coach's swap records)
+const exactWarn=dt=>!dt.VM||!/^none/.test(String((dt.VM.credit||{}).warnings_rounding||'none'));
    // weekly totals round to 0.5 before colouring (targets.json counting.round_to); ships with the new counting
 function roleOff(dt,e,r){const C=dt.VM.credit.roles;let mx=0;for(const v of Object.values(e.muscles))if(v>mx)mx=v;return r>=mx-1e-9||r>=0.75?C.prime.rir_offset:r>=0.5?C.secondary.rir_offset:C.minor.rir_offset}
 function prox(dt,rir){const T=dt.VM.credit.prox.table;return T[String(Math.max(0,Math.min(6,Math.round(rir))))]}
@@ -34,6 +36,8 @@ function stim(dt,m,level,x){const z=zones(dt,m,level),D=z.diminishing,CV=dt.VM.c
 function sessCredit(dt,m,s){const SD=(dt.VM&&dt.VM.curve.session_discount)||dt.targets.curve.session_discount;
   if(SD.active==='smooth'&&SD.smooth){const H=((dt.targets.session||{}).muscles||{})[m];if(H&&H.heavy){const a=SD.smooth.a_frac_of_heavy*H.heavy,b=SD.smooth.b_frac_of_heavy*H.heavy;return s<=a?s:a+b*Math.log(1+(s-a)/b)}}
   return Math.min(s,SD.cap)+Math.max(0,s-SD.cap)*SD.factor}
+// shown value: one decimal, nudged (floor/ceil at 1 dp) when plain rounding would cross a zone or colour boundary, so number, zone and colour agree
+function shown(dt,m,level,z,x){const r=r1(x),k=v=>zoneOf(z,v)+'|'+col(dt,m,v,level);if(k(r)===k(x))return r;const f=r>x?Math.floor(x*10)/10:Math.ceil(x*10)/10;return k(f)===k(x)?f:r}
 function sessZones(dt,m){const SD=(dt.VM&&dt.VM.curve.session_discount)||{},H=((dt.targets.session||{}).muscles||{})[m];if(!(SD.smooth&&H&&H.heavy))return null;const a=SD.smooth.a_frac_of_heavy*H.heavy,b=SD.smooth.b_frac_of_heavy*H.heavy;return {useful:a,half:a+b,heavy:H.heavy}}
 function zoneOf(z,x){if(!(x>0))return 'none';if(x<z.min-1e-9)return 'below_min';if(z.sweet&&x<z.sweet[0]-1e-9)return 'growth';if(z.sweet&&x<=z.sweet[1]+1e-9)return 'sweet_spot';if(x<=z.diminishing+1e-9)return z.sweet?'upper':'growth';return 'diminishing'}
 // session time for the UI: rules.json session_length.by_level[level] (flag_min / warn_min / warm-up / rest); program-check parity stays in Python
@@ -44,7 +48,7 @@ function slotCounts(dt,days){const {PJ}=ctx(dt),c={};for(const k in PJ.slots)c[k
   for(const d of days)for(const t of d.tiles){const e=dt.EX[t.id],hit=new Set();for(const s of e.patterns||[]){if(PJ.slots[s].kind==='compound'&&e.type==='isolation')continue;hit.add(s);(PJ.slots[s].counts_toward||[]).forEach(x=>hit.add(x))}hit.forEach(s=>c[s]+=1)}return c}
 function patternFlags(dt,days,level){const {PJ}=ctx(dt);if(!days.some(d=>d.tiles.length))return [];const c=slotCounts(dt,days),out=[];
   for(const [s,mn] of Object.entries(PJ.weekly_min_by_level[level])){if(mn<=0||c[s]>=mn)continue;out.push([c[s]===0&&PJ.required.includes(s)?'warn':'info','pattern_gap',s,c[s],mn])}return out}
-function col(dt,m,x,level){const {T,LF}=ctx(dt),a=pyR(T[m].min*LF[level]*2)/2,b=T[m].max;if(dt.VM)x=r1(x);if(a<=x&&x<=b)return 'G';if((a-2<=x&&x<a)||(b<x&&x<=b*1.25))return 'A';return 'R'}
+function col(dt,m,x,level){const {T,LF}=ctx(dt),a=pyR(T[m].min*LF[level]*2)/2,b=T[m].max;if(dt.VM&&!exactWarn(dt))x=r1(x);if(a<=x&&x<=b)return 'G';if((a-2<=x&&x<a)||(b<x&&x<=b*1.25))return 'A';return 'R'}
 // days: [{day:'mon', tiles:[{id,sets}]}] (training days only, any order). Returns [flags, week]
 function check(dt,days,level){const {R,RU,T,S,HEAVY}=ctx(dt),PAT=dt.PAT,f=[],week={},freq={};for(const m in T){week[m]=0;freq[m]=0}
   let push=0,pull=0,spw=0;const byday={};days.forEach(d=>byday[d.day]=d);const HS=new Set(R.heavy_squats),HH=new Set(R.heavy_hinges);
@@ -221,14 +225,14 @@ function analytics(dt,days,level){const TT=dt.targets,C=TT.curve,A=TT.analytics,
   const kOf=m=>(C.k_by_muscle&&C.k_by_muscle[m]&&C.k_by_muscle[m][level])||C.k[level],Sx=(x,k)=>1-Math.exp(-x/k),SD=C.session_discount,disc=(v,m)=>VM?sessCredit(dt,m,v):Math.min(v,SD.cap)+Math.max(0,v-SD.cap)*SD.factor;
   const perDay=days.map(d=>eff(dt,d.tiles)),muscles={};
   for(const m of MUS){const rawx=perDay.reduce((a,v)=>a+v[m],0),x=perDay.reduce((a,v)=>a+disc(v[m],m),0),freq=perDay.filter(v=>v[m]>=A.frequency_min_effective).length;
-    if(VM){const z=zones(dt,m,level);muscles[m]={raw:r1(x),raw_exact:x,raw_sets:rawx,x,zones:z,zone:zoneOf(z,r1(x)),stim:stim(dt,m,level,x),next:stim(dt,m,level,x+1)-stim(dt,m,level,x),min:z.min,max:z.diminishing,freq};continue}
+    if(VM){const z=zones(dt,m,level);muscles[m]={raw:shown(dt,m,level,z,x),raw_exact:x,raw_sets:rawx,x,zones:z,zone:zoneOf(z,x),stim:stim(dt,m,level,x),next:stim(dt,m,level,x+1)-stim(dt,m,level,x),min:z.min,max:z.diminishing,freq};continue}
     const k=kOf(m),min=pyR(T[m].min*LF[level]*2)/2;
     muscles[m]={raw:rawx,x,k,stim:Sx(x,k),next:Sx(x+1,k)-Sx(x,k),min,max:T[m].max,freq}}
   const fat=e=>e.fatigue!=null?e.fatigue:(e.type==='isolation'?.8:1.2);
   const day=days.map(d=>({day:d.day,minutes:sessionMinutes(dt,d.tiles,level),sets:total(d),cost:d.tiles.reduce((a,t)=>a+t.sets*fat(dt.EX[t.id]),0),spinal:d.tiles.reduce((a,t)=>a+(HEAVY.has(t.id)?t.sets:0),0)}));
   return {muscles,day,weekSets:days.reduce((a,d)=>a+total(d),0),weekMinutes:day.reduce((a,d)=>a+d.minutes,0),weekCost:day.reduce((a,d)=>a+d.cost,0),
     spinal:{week:day.reduce((a,d)=>a+d.spinal,0),week_max:RU.spinal_load.week_warn_above[level],session_max:RU.spinal_load.session_warn_above[level]},disclaimer:VM?dt.VM.disclaimer:A.disclaimer,curveModel:VM?dt.VM.curve.reads_as:C.model}}
-const API={check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,zones,stim,zoneOf,sessP,r05,r1,flagKey,ORDER,shortLabel,ruleLabel,
+const API={check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
   // internals reused by logic/analysis.js and logic/progress.js (same functions, so the ports cannot drift)
   _x:{gAddSets,gAddExercise,gReduceSets,prev,nonin,_day,load,col,RULE_OF,total,ctx,clone,cmpT,sortBy,fmtPy}};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else root.PCHECK=API;
