@@ -991,7 +991,7 @@
       "heavy_from": "low_return_from",
       "light_below": 2.0,
       "light_requires": "a direct exercise for that muscle that day (it is the prime mover)",
-      "message_heavy": "{muscle} gets {sets} effective sets on {day}. Past about {limit}, each extra set is worth less than a third of the first. Move some to another day.",
+      "message_heavy": "{muscle} gets {sets} effective sets on {day}. Past about {limit}, each extra set is worth less than half the first. Move some to another day.",
       "message_light": "{muscle} gets only {sets} effective sets on {day}, below a useful dose of about 2. Add a set, or move this exercise to a day that trains {muscle} more.",
       "fixes": [
         "move_sets_to_day",
@@ -1005,7 +1005,7 @@
       },
       "category": "session",
       "metric": "session_design",
-      "evidence": "modeled (per-set decay fitted to Remmert 2025 PREPRINT anchors; dose floor 2)",
+      "evidence": "modeled (vol8d per-set decay calibrated to volume-equated frequency meta-analyses: Schoenfeld 2019, Pelland 2025; dose floor 2)",
       "applies": {
         "levels": [
           "beginner",
@@ -1014,9 +1014,9 @@
         ],
         "requires": []
       },
-      "note": "vol8: heavy threshold from the per-set curve (chest 10.3, 8-anchor muscles 8.5). Layered under junk_volume_session (warn at > 10 raw effective sets).",
-      "c_frac": 0.4,
-      "heavy_when_set_credit_below": 0.3
+      "note": "vol8d: heavy when effective sets in one workout > 1 + c = the point where the next set earns < half of set 1 (chest 11, 8-anchor muscles 9, 6-anchor 7, lower_back 6; vol8 was credit < 0.3 with c 0.4x: chest 10.3, 8.5). Layered under junk_volume_session (warn at > 10 raw effective sets).",
+      "c_frac": 1.0,
+      "heavy_when_set_credit_below": 0.5
     },
     {
       "id": "recovery_gap_long",
