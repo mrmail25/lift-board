@@ -929,6 +929,26 @@
     }
    ],
    "tag": "modeled",
+   "caveat": "A planning baseline. Sleep, nutrition, stress and age change real recovery.",
+   "baseline_modes": [
+    {
+     "id": "typical_routines",
+     "label": "Typical routines",
+     "default_until_available": true
+    },
+    {
+     "id": "my_average",
+     "label": "My average",
+     "default_once_available": true
+    }
+   ],
+   "personal_after_weeks": 4,
+   "personal_window_weeks": 4,
+   "personal_metric": "week_cost from logged working sets (done sets x exercises.fatigue)",
+   "personal_exclude": [
+    "deload-overlay weeks",
+    "weeks with < 50% of planned working sets done"
+   ],
    "metric": "week_cost = sum(sets x exercises.fatigue); benchmarks are our own intermediate presets (splits.json)."
   }
  },

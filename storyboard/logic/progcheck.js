@@ -25,8 +25,15 @@ function credit(dt,e,m,r,rir){if(!(r>=0.25))return 0;if(!dt.VM)return r;const q=
 // zones {min, sweet:[lo,hi], diminishing} for one muscle at one level (targets.json volume_zones), else the old band
 function zones(dt,m,level){const Z=dt.targets.volume_zones,z=Z&&Z[level]&&Z[level][m];if(z)return z;const T=dt.targets.targets[m],LF=dt.targets.levelMinFactor;return {min:pyR(T.min*LF[level]*2)/2,sweet:null,diminishing:T.max}}
 // curve: x <= D: sqrt(x/D)/1.1; x > D: (1 + 0.1(1 - exp(-(x-D)/(0.2D))))/1.1 (volume-model.json curve.params); no k_by_muscle
-function stim(dt,m,level,x){const z=zones(dt,m,level),D=z.diminishing,p=(dt.VM.curve||{}).params||{plateau_gain:.1,plateau_tau_frac_of_D:.2,normaliser:1.1};x=Math.max(0,x);
-  return x<=D?Math.sqrt(x/D)/p.normaliser:(1+p.plateau_gain*(1-Math.exp(-(x-D)/(p.plateau_tau_frac_of_D*D))))/p.normaliser}
+function stim(dt,m,level,x){const z=zones(dt,m,level),D=z.diminishing,CV=dt.VM.curve||{},p=CV.params||{};x=Math.max(0,x);
+  if(CV.active==='log'){const c=D*(p.c_frac_of_D!=null?p.c_frac_of_D:1/45),n=p.normaliser||1.1,g=p.plateau_gain!=null?p.plateau_gain:.1,L=Math.log(1+D/c);   // vol5 log: c = D/45
+    if(x<=D)return Math.log(1+x/c)/L/n;const tau=0.1*(c+D)*L;return (1+g*(1-Math.exp(-(x-D)/tau)))/n}
+  return x<=D?Math.sqrt(x/D)/(p.normaliser||1.1):(1+(p.plateau_gain||.1)*(1-Math.exp(-(x-D)/((p.plateau_tau_frac_of_D||.2)*D))))/(p.normaliser||1.1)}
+// vol5 per-session credit (curve.session_discount.smooth): s <= a: s; s > a: a + b ln(1 + (s-a)/b); a = 0.8H, b = 0.4H, H = targets session.muscles[m].heavy
+function sessCredit(dt,m,s){const SD=(dt.VM&&dt.VM.curve.session_discount)||dt.targets.curve.session_discount;
+  if(SD.active==='smooth'&&SD.smooth){const H=((dt.targets.session||{}).muscles||{})[m];if(H&&H.heavy){const a=SD.smooth.a_frac_of_heavy*H.heavy,b=SD.smooth.b_frac_of_heavy*H.heavy;return s<=a?s:a+b*Math.log(1+(s-a)/b)}}
+  return Math.min(s,SD.cap)+Math.max(0,s-SD.cap)*SD.factor}
+function sessZones(dt,m){const SD=(dt.VM&&dt.VM.curve.session_discount)||{},H=((dt.targets.session||{}).muscles||{})[m];if(!(SD.smooth&&H&&H.heavy))return null;const a=SD.smooth.a_frac_of_heavy*H.heavy,b=SD.smooth.b_frac_of_heavy*H.heavy;return {useful:a,half:a+b,heavy:H.heavy}}
 function zoneOf(z,x){if(!(x>0))return 'none';if(x<z.min-1e-9)return 'below_min';if(z.sweet&&x<z.sweet[0]-1e-9)return 'growth';if(z.sweet&&x<=z.sweet[1]+1e-9)return 'sweet_spot';if(x<=z.diminishing+1e-9)return z.sweet?'upper':'growth';return 'diminishing'}
 // session time for the UI: rules.json session_length.by_level[level] (flag_min / warn_min / warm-up / rest); program-check parity stays in Python
 function sessP(dt,level){const SL=ctx(dt).RU.session_length,L=level&&SL.by_level&&SL.by_level[level];return L?{warmup_min:L.warmup_min,work_min_per_set:L.work_min_per_set,rest_min_by_type:L.rest_min_by_type,info_min:L.info_min!=null?L.info_min:L.flag_min,warn_min:L.warn_min}:SL}
@@ -209,17 +216,17 @@ function checks(dt,days,level){const [fl,week]=check(dt,days,level),rules=dt.rul
   const list=rules.map(r=>byRule[r.id]),pass=list.filter(c=>!c.warn.length).length;return {list,pass,total:list.length,flags:fl,week}}
 // ---------------- analytics (old app analytics.js; targets.json curve / recovery / analytics) ----------------
 function analytics(dt,days,level){const TT=dt.targets,C=TT.curve,A=TT.analytics,{T,LF,RU,HEAVY}=ctx(dt),MUS=Object.keys(T),VM=!!dt.VM;
-  const kOf=m=>(C.k_by_muscle&&C.k_by_muscle[m]&&C.k_by_muscle[m][level])||C.k[level],Sx=(x,k)=>1-Math.exp(-x/k),SD=VM&&dt.VM.curve.session_discount||C.session_discount,disc=v=>Math.min(v,SD.cap)+Math.max(0,v-SD.cap)*SD.factor;
+  const kOf=m=>(C.k_by_muscle&&C.k_by_muscle[m]&&C.k_by_muscle[m][level])||C.k[level],Sx=(x,k)=>1-Math.exp(-x/k),SD=C.session_discount,disc=(v,m)=>VM?sessCredit(dt,m,v):Math.min(v,SD.cap)+Math.max(0,v-SD.cap)*SD.factor;
   const perDay=days.map(d=>eff(dt,d.tiles)),muscles={};
-  for(const m of MUS){const rawx=perDay.reduce((a,v)=>a+v[m],0),x=perDay.reduce((a,v)=>a+disc(v[m]),0),freq=perDay.filter(v=>v[m]>=A.frequency_min_effective).length;
-    if(VM){const z=zones(dt,m,level);muscles[m]={raw:r05(rawx),raw_exact:rawx,x,zones:z,zone:zoneOf(z,x),stim:stim(dt,m,level,x),next:stim(dt,m,level,x+1)-stim(dt,m,level,x),min:z.min,max:z.diminishing,freq};continue}
+  for(const m of MUS){const rawx=perDay.reduce((a,v)=>a+v[m],0),x=perDay.reduce((a,v)=>a+disc(v[m],m),0),freq=perDay.filter(v=>v[m]>=A.frequency_min_effective).length;
+    if(VM){const z=zones(dt,m,level);muscles[m]={raw:r05(x),raw_exact:x,raw_sets:rawx,x,zones:z,zone:zoneOf(z,x),stim:stim(dt,m,level,x),next:stim(dt,m,level,x+1)-stim(dt,m,level,x),min:z.min,max:z.diminishing,freq};continue}
     const k=kOf(m),min=pyR(T[m].min*LF[level]*2)/2;
     muscles[m]={raw:rawx,x,k,stim:Sx(x,k),next:Sx(x+1,k)-Sx(x,k),min,max:T[m].max,freq}}
   const fat=e=>e.fatigue!=null?e.fatigue:(e.type==='isolation'?.8:1.2);
   const day=days.map(d=>({day:d.day,minutes:sessionMinutes(dt,d.tiles,level),sets:total(d),cost:d.tiles.reduce((a,t)=>a+t.sets*fat(dt.EX[t.id]),0),spinal:d.tiles.reduce((a,t)=>a+(HEAVY.has(t.id)?t.sets:0),0)}));
   return {muscles,day,weekSets:days.reduce((a,d)=>a+total(d),0),weekMinutes:day.reduce((a,d)=>a+d.minutes,0),weekCost:day.reduce((a,d)=>a+d.cost,0),
     spinal:{week:day.reduce((a,d)=>a+d.spinal,0),week_max:RU.spinal_load.week_warn_above[level],session_max:RU.spinal_load.session_warn_above[level]},disclaimer:VM?dt.VM.disclaimer:A.disclaimer,curveModel:VM?dt.VM.curve.reads_as:C.model}}
-const API={check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,zones,stim,zoneOf,sessP,r05,flagKey,ORDER,shortLabel,ruleLabel,
+const API={check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,zones,stim,zoneOf,sessP,r05,flagKey,ORDER,shortLabel,ruleLabel,
   // internals reused by logic/analysis.js and logic/progress.js (same functions, so the ports cannot drift)
   _x:{gAddSets,gAddExercise,gReduceSets,prev,nonin,_day,load,col,RULE_OF,total,ctx,clone,cmpT,sortBy,fmtPy}};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else root.PCHECK=API;

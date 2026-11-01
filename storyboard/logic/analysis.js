@@ -258,6 +258,19 @@ function sessionHours(dt,tiles,level){const RC=dt.VM.recovery,P=RC.params,PR=dt.
     const ef=P.effort[String(Math.max(0,Math.min(2,pyR(n?q/n:2))))],st=m in dt.rules.stretch_biased?stretchShare(dt,[{tiles}],m)[0]:0;
     let h=(P.base_h+P.h_per_set*Math.max(0,x-P.free_sets))*ef*(1+P.stretch_add*st)*(P.size[m]||1)*(P.level[level]||1);h=Math.max(P.clamp[0],Math.min(P.clamp[1],h));
     out[m]=P.round_to_h*Math.floor(h/P.round_to_h+0.5)}return out}
+// vol5: never exact hours; range = hours x 0.8 / x 1.2 in half days (floor / ceil); under 20 h "about a day" (recovery.display)
+function hoursRange(dt,h){const D=dt.VM.recovery.display||{};if(h<20)return {lo:0.5,hi:1,text:'about a day'};const lo=Math.floor(h*0.8/12)/2,hi=Math.ceil(h*1.2/12)/2,f=v=>String(+v.toFixed(1));
+  return {lo,hi,text:(D.format||'about {lo}–{hi} days').replace('{lo}',f(lo)).replace('{hi}',f(hi))}}
+// vol5 "My average": rolling mean of logged week_cost (done working sets x fatigue) over the last personal_window_weeks qualifying weeks
+// (excludes deload-overlay weeks and weeks with < 50% of planned working sets done); available after personal_after_weeks such weeks
+function myAverage(dt,hist){const R=((dt.targets||{}).recovery||{}).reference||{},need=R.personal_after_weeks||4,win=R.personal_window_weeks||4;if(!hist||!hist.sessions)return {available:false,weeks:0,need};
+  const ent={};(hist.entries||[]).forEach(e=>ent[e.id]=e);const wk=iso=>{const d=new Date(iso.slice(0,10)+'T12:00:00Z'),k=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()-k);return d.toISOString().slice(0,10)};
+  const W={};for(const s of hist.sessions){if(s.status&&s.status!=='completed')continue;const w=wk(s.date),o=W[w]||(W[w]={cost:0,done:0,planned:0,ids:new Set()});o.ids.add(s.id);o.planned+=((s.snapshot||{}).exercises||[]).reduce((a,x)=>a+(x.sets||0),0)}
+  const sid={};Object.entries(W).forEach(([w,o])=>o.ids.forEach(i=>sid[i]=w));
+  for(const t of hist.sets||[]){if(!t.done||t.kind==='warmup')continue;const e=ent[t.entryId];if(!e)continue;const w=sid[e.sessionId];if(!w)continue;const ex=dt.EX[e.exerciseId];W[w].done+=1;if(ex)W[w].cost+=ex.fatigue}
+  const DL=(hist.deloads||[]).map(x=>[x.start,x.end]),inDL=w=>{const e=new Date(w+'T12:00:00Z');e.setUTCDate(e.getUTCDate()+6);const we=e.toISOString().slice(0,10);return DL.some(([a,b])=>a<=we&&b>=w)};
+  const ok=Object.keys(W).sort().filter(w=>!inDL(w)&&W[w].planned>0&&W[w].done/W[w].planned>=0.5),use=ok.slice(-win);
+  return {available:ok.length>=need,weeks:ok.length,need,window:use,avg:use.length?r4(pySum(use.map(w=>W[w].cost))/use.length,1):null}}
 function weekHours(dt,days,level){const per={},by_day={};for(const d of days){if(!d.tiles.length)continue;const H=sessionHours(dt,d.tiles,level);by_day[d.day]=H;
     for(const [m,h] of Object.entries(H))if(!per[m]||h>per[m].hours)per[m]={hours:h,day:d.day}}return {per_muscle:per,by_day}}
 function benchVs(dt,wc){const L=((((dt.targets||{}).recovery||{}).reference||{}).benchmarks)||dt.VM.recovery.benchmarks.list;if(!L||!L.length)return null;
@@ -269,6 +282,6 @@ function swapRecord(dt,before,after,level,from_id,to_id){const A0=PC.analytics(d
     mus[m]={before:a.raw,after:b.raw,delta:r4(dl,2),zone_before:a.zone,zone_after:b.zone,min:a.min,crosses_below_min:cr,stimulus_before:r4(a.stim,3),stimulus_after:r4(b.stim,3)}}
   const fb=weekCost(dt,before),fa=weekCost(dt,after);
   return {from_id,to_id,days:[...ch],fatigue_cost:{before:r4(fb,1),after:r4(fa,1),delta:r4(fa-fb,1)},muscles:mus,drops_below_min:drops,verdict:drops.length?'tradeoff':'clean'}}
-const API={sessionHours,weekHours,benchVs,swapRecord,applyOps,invertOps,diff,suggest,sheet,metrics,checksPass,applicable,itemOf,flagDetails,breakdowns,fatigueRating,items,stretchFocused,tierOf,pushPull,ruleApplies,catalogue,typeOf,weekCost,stretchShare,lowerFatigueCandidates,pyDumps};
+const API={hoursRange,myAverage,sessionHours,weekHours,benchVs,swapRecord,applyOps,invertOps,diff,suggest,sheet,metrics,checksPass,applicable,itemOf,flagDetails,breakdowns,fatigueRating,items,stretchFocused,tierOf,pushPull,ruleApplies,catalogue,typeOf,weekCost,stretchShare,lowerFatigueCandidates,pyDumps};
 if(isNode)module.exports=API;else root.ANALYSIS=API;
 })(typeof window!=='undefined'?window:this);

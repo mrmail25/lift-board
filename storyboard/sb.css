@@ -1573,3 +1573,16 @@ html[data-theme=dark] .pmom.gold .pm-txt .eyebrow{color:#FFD88F}
 .rbme,.rbl0,.rbl1,.rbme *,.rbl0 *,.rbl1 *{line-height:14px;font-size:11px}
 .rbl1{top:22px}.rbl1::before{top:-22px;height:20px}.rbn{height:40px}
 .rbn>span{display:block;text-align:left}
+/* vol5: per-workout view, recovery ranges + caveat, benchmark modes */
+.pwv{margin-top:12px}.pwc .pwid{stroke:var(--line-strong);stroke-dasharray:3 3;fill:none}
+.pwleg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11px;color:var(--text-2);padding:4px 8px 6px}.pwleg span{display:inline-flex;align-items:center;gap:4px}.pwleg i{display:inline-block;width:12px;height:6px;border-radius:2px}
+.pwleg .z2{background:var(--vol-in-range);opacity:.6}.pwleg .z1{background:var(--vol-in-range);opacity:.25}.pwleg .z3{background:var(--vol-amber);opacity:.4}
+.pwdays{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;margin:6px 0}.pwdays b{font-weight:600}
+.pwcase{margin:8px 0;padding:6px 10px;border-radius:var(--r-md);background:var(--fill)}
+.pwr{display:flex;justify-content:space-between;gap:8px;font-size:13px;min-height:26px;align-items:center}.pwr .num{color:var(--text-2);font-size:12px;text-align:right}
+.rcav{font-size:12px;color:var(--text-2);font-style:italic;margin:6px 0 0}
+.rbmode{margin:6px 0 4px}.rbt i.me{background:var(--accent-press);width:3px}.rbmine em,.rbmine .num{color:var(--accent-press)!important}
+.rbl1::before{display:none}
+.rhr .num{white-space:normal}
+.rbmode{display:inline-flex;width:auto}.rbmode button{white-space:nowrap;padding:5px 12px;flex:0 0 auto}.rbmode button[disabled]{opacity:.45}
+.rhh+.rcav{margin:0 0 6px}
