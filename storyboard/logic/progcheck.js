@@ -53,6 +53,8 @@ const face=dt=>!!(dt.VM&&((dt.VM.curve||{}).input||{}).vol9);
 let CUR='intermediate';const setLevel=l=>{if(l)CUR=l};
 const sdRule=dt=>((dt.rules&&dt.rules.rules)||[]).find(r=>r.id==='session_dose')||{};   // vol9: session_dose removed; kept only as an empty fallback
 // vol9b (Coach vol9.builder_paths): session limits = rules[id=session_efficiency].limits_by_level[level][muscle]; read from data, never hardcoded
+// vol13 (CoS #17): the session limit is strictly greater-than on the shown value: effective sets rounded half-up to 0.1, then > limit
+const seOver=(x,L)=>L!=null&&x!=null&&Math.floor(x*10+0.5+1e-9)/10>L;
 const seRule=dt=>((dt.rules&&dt.rules.rules)||[]).find(r=>r.id==='session_efficiency')||null;
 // vol10 (vol10.builder_paths): the analysis goal. GOAL=null = no goal (vol9 fallback: limits_by_level, no goal targets).
 // session limits = rules[id=session_efficiency].limits_by_goal[goal][level][muscle] when a goal is set, else limits_by_level.
@@ -163,8 +165,8 @@ function check(dt,days,level){setLevel(level);const {R,RU,T,S,HEAVY}=ctx(dt),PAT
       if(over.length)f.push(['warn','redundant_pattern',d.day,p,c,over[0],pyR(pv[over[0]],1)])}
     const v=eff(dt,d.tiles);for(const m in v){const x=v[m];week[m]+=dt.VM&&!face(dt)?sessCredit(dt,m,x):x;rawW[m]=(rawW[m]||0)+x;   // qc3009: weekly totals use the per-session credit (JS diverges from Coach's Python here, accepted)
       if(x>=2)freq[m]+=1;if(x>10&&!ruleOff(dt,'junk_volume_session'))f.push(['warn','junk_volume_session',d.day,m,pyR(x,1)]);
-      const SL=seRule(dt)&&seLim(dt,m,level);if(SL!=null&&Math.round(x*100)/100>SL&&exempt(dt,m,level,XW,XN))f.push(['info','session_efficiency_single_day',d.day,m,pyR(x,1),pyR(XW[m],1)]);   // vol10c
-      else if(SL!=null&&Math.round(x*100)/100>SL){f.push([(TONE&&TONE.session_efficiency)||seRule(dt).severity||'warn','session_efficiency',d.day,m,pyR(x,1),pyR(x-SL,1)]);   // vol9b
+      const SL=seRule(dt)&&seLim(dt,m,level);if(seOver(x,SL)&&exempt(dt,m,level,XW,XN))f.push(['info','session_efficiency_single_day',d.day,m,pyR(x,1),pyR(XW[m],1)]);   // vol10c
+      else if(seOver(x,SL)){f.push([(TONE&&TONE.session_efficiency)||seRule(dt).severity||'warn','session_efficiency',d.day,m,pyR(x,1),pyR(x-SL,1)]);   // vol9b
         if(RU.wasted_late_sets&&RU.wasted_late_sets.active!==false){const L=lateSets(dt,d.tiles,m,SL);if(L.length)f.push([RU.wasted_late_sets.severity||'info','wasted_late_sets',d.day,m,L.map(z=>z[0]).join('+'),pyR(x-SL,1)])}}}   // vol10
     const ids=new Set(d.tiles.map(t=>t.id));if(level==='beginner'&&[...ids].some(i=>HS.has(i))&&[...ids].some(i=>HH.has(i)))f.push([RU.beginner_squat_and_deadlift.severity||'warn','beginner_squat_and_deadlift',d.day])} // r2fix: severity from rules[]
   for(let i=0;i<6;i++){const dd=ORDER[i],a=byday[dd],b=byday[ORDER[i+1]];if(!(a&&b))continue;
@@ -350,7 +352,7 @@ function analytics(dt,days,level){setLevel(level);const TT=dt.targets,C=TT.curve
     spinal:{week:day.reduce((a,d)=>a+d.spinal,0),week_max:RU.spinal_load.week_warn_above[level],session_max:RU.spinal_load.session_warn_above[level]},disclaimer:VM?dt.VM.disclaimer:A.disclaimer,curveModel:VM?dt.VM.curve.reads_as:C.model}}
 function anchors(dt,m,level){const CV=dt.VM.curve||{},P=(CV.per_muscle||{})[m];if(!P)return null;const A=(P.anchors_by_level&&P.anchors_by_level[level])||P.anchors;if(!A)return null;const lm=P.anchors_by_level?A.min:((P.level_min_pct||{})[level]||A.min);return {min:lm,sweet_low:A.sweet_low,sweet_high:A.sweet_high,dim:A.dim,basis:P.basis,ev:(P.min_evidence||{}).tag||null,fallback:(P.concave_fallback||{})[level]||null}}
 const fmtN=v=>{const n=+(+v).toFixed(1);return String(n)};
-const API={recInputs,r2u,exemptSet,fatSet,fatMus,roleOff,setTone,setGoal,getGoal,goalTarget,goalsCfg,lateSets,face,anchors,heavyLim,seLim,seEff,seRule,ruleOff,setLevel,check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,perSet,gPS,xEquiv,sessZone8,capW,loadPoints,recHours,flags8,effortOf,axialOf,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
+const API={seOver,recInputs,r2u,exemptSet,fatSet,fatMus,roleOff,setTone,setGoal,getGoal,goalTarget,goalsCfg,lateSets,face,anchors,heavyLim,seLim,seEff,seRule,ruleOff,setLevel,check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,perSet,gPS,xEquiv,sessZone8,capW,loadPoints,recHours,flags8,effortOf,axialOf,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
   // internals reused by logic/analysis.js and logic/progress.js (same functions, so the ports cannot drift)
   _x:{gAddSets,gAddExercise,gReduceSets,prev,nonin,_day,load,col,RULE_OF,total,ctx,clone,cmpT,sortBy,fmtPy}};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else root.PCHECK=API;

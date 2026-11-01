@@ -546,3 +546,15 @@ The suite runs all three (`r3*` checks).
   - Analysis workout cards show whole-body fatigue in fresh-set eq (`IMPACT.liveDay`). The 100-index bar, its tiers and the "typical upper-body day" note are retired.
   - The impact legend is one sentence. The day card and day sheet now read the board as it is; before this they wrongly showed the Efficient trim preview when the goal was Efficient.
   - analysis-reference.json and progress-reference.json are used only by tests. evolution-rules.json drives the ladder and has no curve values.
+- **vol13** (QC audit batch, 37 findings, plus Coach's vol13 data):
+  - Approach toggle ('Efficient' / 'Max volume'; label from rules.json goals.toggle_label / labels; internal keys unchanged). There is one interactive toggle, in the Analysis summary. The Plan Impact card shows a read-only chip.
+  - Analysis has 7 sections, each title stating its result: Summary, Weekly volume, Per-workout limits, Balance, Recovery (merges Frequency and Fatigue & recovery; fatigue in fresh-set eq vs the week benchmarks), Session length, Other suggestions (collapsed and de-duplicated).
+  - Everything shows the actual board. The Efficient trim is a labelled preview ('Preview trim' → Apply trim, with an Undo toast).
+  - The session limit is strictly greater-than on the displayed 0.1 value (`PCHECK.seOver`; rules session_efficiency.comparison_vol13).
+  - One minutes calculation (`MINS`).
+  - Efficiency map: S:F = muscle stimulus ÷ whole-set fatigue of the sets that trained it, scored against the size-class reference. Bands are green ≥ 0.60, amber 0.30–0.60, red < 0.30, drawn on the map's own periwinkle→teal ramp. Muscles under 1 ES show '–'.
+    - Adapter: `logic/impact.js` effClass / effRef / effScale / dial / effTone.
+    - Live boards match day-metrics-presets for every preset muscle-day, and the 10 vol13-efficiency cases pass.
+  - The past-limit glow is now an outline stroke.
+  - Learn articles are brought to the current model at render time by `logic/learnfix.js`, without editing data/education. It also applies citation fixes: Remmert = PREPRINT + ABSTRACT; Pelland = Sports Med 56(2):481–505.
+  - Retired displays (analysis-display.json display_status 'retired') never render.

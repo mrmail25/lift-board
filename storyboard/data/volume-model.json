@@ -16,10 +16,11 @@
    "used_for": "15 studies / 34 groups. Mean gains 5.4% (<5 weekly sets, ES 0.307), 6.6% (5-9, ES 0.378), 9.8% (10+, ES 0.520); 3-level trend P = 0.074; continuous model +0.37% per weekly set (P = 0.002). vol8g: 5.4/9.8 ~ 55% is the nearest evidence for the minimum anchor (vol12: 60%, rule of thumb). Published online 2016, issue 2017."
   },
   "pelland2025": {
-   "cite": "Pelland et al. The Resistance Training Dose Response: Meta-Regressions Exploring the Effects of Weekly Volume and Frequency on Muscle Hypertrophy and Strength Gains. Sports Medicine (online Dec 2025). Earlier version: SportRxiv preprint 2024 (not peer-reviewed), doi 10.51224/srxiv.460.",
+   "cite": "Pelland et al. The Resistance Training Dose Response: Meta-Regressions Exploring the Effects of Weekly Volume and Frequency on Muscle Hypertrophy and Strength Gains. Sports Medicine 56(2):481-505 (2026 issue; online Dec 2025). Earlier version: SportRxiv preprint 2024 (not peer-reviewed), doi 10.51224/srxiv.460.",
    "url": "https://doi.org/10.1007/s40279-025-02344-w",
    "peer_reviewed": true,
-   "used_for": "67 studies. Counting indirect sets as 0.5 (\"fractional\") fit best. Hypertrophy keeps rising with weekly volume with diminishing returns; best-fit hypertrophy model was a square-root curve. Basis for the square-root curve shape and for keeping ~0.5 credit on indirect sets. vol8g: diminishing returns basis for the sweet-spot and D anchors and a plateau below 100% (preprint 2024 and Sports Med 2025 cited separately, preprint labelled)."
+   "used_for": "67 studies. Counting indirect sets as 0.5 (\"fractional\") fit best. Hypertrophy keeps rising with weekly volume with diminishing returns; best-fit hypertrophy model was a square-root curve. Basis for the square-root curve shape and for keeping ~0.5 credit on indirect sets. vol8g: diminishing returns basis for the sweet-spot and D anchors and a plateau below 100% (preprint 2024 and Sports Med 2025 cited separately, preprint labelled).",
+   "cite_history_vol12": "Pelland et al. The Resistance Training Dose Response: Meta-Regressions Exploring the Effects of Weekly Volume and Frequency on Muscle Hypertrophy and Strength Gains. Sports Medicine (online Dec 2025). Earlier version: SportRxiv preprint 2024 (not peer-reviewed), doi 10.51224/srxiv.460."
   },
   "bazvalle2022": {
    "cite": "Baz-Valle, Balsalobre-Fernandez, Alix-Fages & Santos-Concejero (2022). A Systematic Review of the Effects of Different Resistance Training Volumes on Muscle Hypertrophy. Journal of Human Kinetics 81:199-210.",
@@ -82,10 +83,12 @@
    "used_for": "PRACTITIONER, NOT PEER-REVIEWED. The three-zone idea (minimum effective, adaptive sweet spot, recoverable maximum) and the low direct minimum for front delts and traps given pressing/pulling. Used for zone structure and small-muscle sweet spots only; no RP number is copied as evidence. Note RP counts direct sets only; our zones are in fractional effective sets."
   },
   "remmert2025session": {
-   "cite": "Remmert, Pelland, Robinson, Hinson & Zourdos (2025). Is There Too Much of a Good Thing? Meta-Regressions of the Effect of Per-Session Volume on Hypertrophy and Strength. SportRxiv PREPRINT (not peer-reviewed); conference abstract in Medicine & Science in Sports & Exercise 2025.",
+   "cite": "Remmert, Pelland, Robinson, Hinson & Zourdos (2025). Is There Too Much of a Good Thing? Meta-Regressions of the Effect of Per-Session Volume on Hypertrophy and Strength. SportRxiv PREPRINT (not peer-reviewed); conference abstract (not a full paper): Joachim, Remmert, Pelland, Robinson, Hinson & Zourdos, Medicine & Science in Sports & Exercise 58(10S), 2026, doi 10.1249/01.mss.0001259712.79343.1b (same ~11 fractional sets PUOS). No full peer-reviewed version found as of 2026-11-01.",
    "url": "https://doi.org/10.51224/srxiv.537",
    "peer_reviewed": false,
-   "used_for": "PREPRINT. Hypertrophy rises with per-session volume with diminishing returns from the start; best-fit hypertrophy model linear-log; point of undetectable outcome superiority ~11 fractional sets per session (more sets still added a little, with a much smaller slope and wide uncertainty; too little data at very high per-session volumes). Reports an unpublished analysis by Krieger finding diminishing returns above 6-8 total sets per session with >= 2 min rest (not verified by us; unpublished). Basis for the per-session knee near 8-12 sets for a large muscle."
+   "used_for": "PREPRINT. Hypertrophy rises with per-session volume with diminishing returns from the start; best-fit hypertrophy model linear-log; point of undetectable outcome superiority ~11 fractional sets per session (more sets still added a little, with a much smaller slope and wide uncertainty; too little data at very high per-session volumes). Reports an unpublished analysis by Krieger finding diminishing returns above 6-8 total sets per session with >= 2 min rest (not verified by us; unpublished). Basis for the per-session knee near 8-12 sets for a large muscle.",
+   "cite_history_vol12": "Remmert, Pelland, Robinson, Hinson & Zourdos (2025). Is There Too Much of a Good Thing? Meta-Regressions of the Effect of Per-Session Volume on Hypertrophy and Strength. SportRxiv PREPRINT (not peer-reviewed); conference abstract in Medicine & Science in Sports & Exercise 2025.",
+   "label": "PREPRINT + ABSTRACT, NOT PEER-REVIEWED"
   },
   "schoenfeld2019freq": {
    "cite": "Schoenfeld, Grgic & Krieger (2019). How many times per week should a muscle be trained to maximize muscle hypertrophy? A systematic review and meta-analysis of studies examining the effects of resistance training frequency. Journal of Sports Sciences 37(11):1286-1295.",
@@ -11446,7 +11449,12 @@
    "type": "model",
    "label": "Modeled",
    "note": "Derived from existing model parameters; no study measures this number."
-  }
+  },
+  "labels": {
+   "efficient": "Efficient",
+   "max_growth": "Max volume"
+  },
+  "toggle_display": "Approach: Efficient / Max volume"
  },
  "day_metrics": {
   "version": "vol11",
@@ -14515,7 +14523,7 @@
       "lower_fence": 0.555
      },
      "muscle": {
-      "n": 1629,
+      "n": 1630,
       "min": 0.64,
       "p5": 0.64,
       "q1": 0.77,
@@ -14543,18 +14551,19 @@
      "all_levels": true
     },
     "heavy_compound_note": null
-   }
+   },
+   "superseded_vol13": "Cuts here (green >= 0.90, amber 0.15-0.90) are retired; see visuals.body_map.efficiency (vol13)."
   },
   "distribution": {
    "efficient": {
     "muscle_dial": {
-     "amber": 710,
-     "green": 919
+     "amber": 712,
+     "green": 918
     },
     "fatigue_band": {
-     "cool": 970,
+     "cool": 971,
      "hot": 62,
-     "none": 248,
+     "none": 247,
      "warm": 597
     },
     "session_efficiency_warnings": 49,
@@ -14615,46 +14624,385 @@
   "body_map": {
    "version": "vol11c",
    "efficiency": {
-    "field": "data/day-metrics-presets.json ...days[i].muscles[m].sf_ratio, sf_dial",
-    "formula": "sf_ratio = round(round(stimulus, 2) / round(fatigue, 2), 2): computed from the shown two-decimal numbers so the division checks out (per muscle)",
-    "cuts": {
-     "green_from": 0.9,
-     "amber_from": 0.15
+    "version": "vol13",
+    "label": "Modeled (references and bands are planning choices, not study results)",
+    "field": "data/day-metrics-presets.json ...days[i].muscles[m] {set_fatigue_fresh_set_eq, sf_ratio, sf_class, sf_score, sf_dial}",
+    "formula": "sf_ratio = stimulus on the muscle (sum sets x credit) / fatigue of the sets that trained it (sum sets x set_fatigue over tiles with credit > 0; set_fatigue = fatigue_per_set x effort(planned RIR), the same once-per-set number as the day row). sf_score = r2(sf_ratio / class reference).",
+    "why_new_denominator": "The vol11c ratio divided stimulus by rating-weighted fatigue, so the rating cancelled: every muscle read 1 / fatigue_per_set of the lifts it got, a helper exactly like a prime mover. Legs on a squat day were amber only because squats are heavy, and red (< 0.15) was unreachable (lowest possible ~0.53). Charging the muscle the whole set it rode on makes helper-only credit from heavy lifts read low, which is the waste case. Not additive: never sum it across muscles; the day total stays once per set.",
+    "class_reference": {
+     "big": {
+      "value": 0.641,
+      "formula": "1.0 x prox 1.0 / (1.56 x effort 1.0)",
+      "lift": "heavy barbell compound (back squat, deadlift family, barbell row) with the muscle as prime mover",
+      "why": "The standard primary lift for big muscles is a heavy axial barbell compound, so a normal squat session for quads reads 1.00 by construction and every lighter way to train a big muscle reads higher.",
+      "muscles": [
+       "chest",
+       "lats",
+       "upper_back",
+       "quads",
+       "hamstrings",
+       "glutes"
+      ],
+      "label": "Modeled"
+     },
+     "medium": {
+      "value": 0.758,
+      "formula": "1.0 x prox 1.0 / (1.32 x effort 1.0)",
+      "lift": "free-weight compound (overhead press, chin-up, close-grip bench) with the muscle as prime mover",
+      "why": "The heaviest standard prime lift for medium muscles is a free-weight compound. Isolation work (the usual way to train arms, side delts, calves, abs) reads above 1.",
+      "muscles": [
+       "front_delts",
+       "side_delts",
+       "rear_delts",
+       "traps",
+       "biceps",
+       "triceps",
+       "calves",
+       "abs"
+      ],
+      "label": "Modeled"
+     },
+     "small": {
+      "value": 0.341,
+      "formula": "0.5 x prox 0.9 / (1.32 x effort 1.0)",
+      "lift": "free-weight compound with the muscle as a secondary mover (rating 0.5, +1 RIR role offset)",
+      "why": "Small muscles are mostly trained as helpers: 89% of their effective sets in the presets come from secondary or minor roles, so a typical helper dose is the fair yardstick.",
+      "muscles": [
+       "forearms",
+       "adductors",
+       "abductors",
+       "obliques",
+       "lower_back"
+      ],
+      "label": "Modeled"
+     }
     },
     "bands": [
      {
       "id": "green",
-      "from": 0.9
+      "from": 0.6
      },
      {
       "id": "amber",
-      "from": 0.15,
-      "to": 0.9
+      "from": 0.3,
+      "to": 0.6
      },
      {
       "id": "red",
-      "below": 0.15
+      "below": 0.3
      }
     ],
-    "applies_to": "muscle-days with r2(effective sets) >= 1.00; below that no efficiency colour",
-    "reference_distribution": {
-     "n": 1629,
-     "min": 0.64,
-     "p5": 0.64,
-     "q1": 0.77,
-     "median": 0.91,
-     "q3": 1.17,
-     "max": 1.39,
-     "lower_fence": 0.17
+    "bands_rule": "compare r2(sf_score): green >= 0.60; amber 0.30 to < 0.60; red < 0.30",
+    "bands_why": "Green = at least 60% of the class reference: covers every prime-mover set and a rating >= 0.7 helper on a heavy compound (squat glutes 0.63). Red = under 30%: only minor-role credit (rating ~0.35 or less) from heavy or free-weight compounds, i.e. a full heavy set buys under a third of the reference stimulus for that muscle.",
+    "applies_to": "muscle-days with r2(effective sets) >= 1.00; below that sf_ratio, sf_score and sf_dial are null and the map shows no efficiency colour (\"-\")",
+    "unchanged": "fatigue_fresh_set_eq (rating-weighted) still drives the fatigue glow and recovery hours; stimulus numbers unchanged",
+    "heavy_junk_volume": "Sets past the session limit are caught by session_efficiency / wasted_late_sets and the glow, not by this colour (weekly counting is face value). Heavy junk helper volume (e.g. RDL sets giving upper back or lats minor credit) reads red here.",
+    "worked_examples": {
+     "green": [
+      {
+       "exercise": "back-squat",
+       "sets": 3,
+       "muscle": "quads",
+       "class": "big",
+       "role": "prime",
+       "rating": 1,
+       "fatigue_per_set": 1.56,
+       "sf_ratio": 0.64,
+       "sf_score": 1.0,
+       "colour": "green"
+      },
+      {
+       "exercise": "back-squat",
+       "sets": 3,
+       "muscle": "glutes",
+       "class": "big",
+       "role": "secondary",
+       "rating": 0.7,
+       "fatigue_per_set": 1.56,
+       "sf_ratio": 0.4,
+       "sf_score": 0.63,
+       "colour": "green"
+      },
+      {
+       "exercise": "barbell-bench-press",
+       "sets": 3,
+       "muscle": "chest",
+       "class": "big",
+       "role": "prime",
+       "rating": 1,
+       "fatigue_per_set": 1.32,
+       "sf_ratio": 0.76,
+       "sf_score": 1.18,
+       "colour": "green"
+      },
+      {
+       "exercise": "leg-extension",
+       "sets": 3,
+       "muscle": "quads",
+       "class": "big",
+       "role": "prime",
+       "rating": 1,
+       "fatigue_per_set": 0.72,
+       "sf_ratio": 1.26,
+       "sf_score": 1.97,
+       "colour": "green"
+      }
+     ],
+     "amber": [
+      {
+       "exercise": "barbell-bench-press",
+       "sets": 3,
+       "muscle": "triceps",
+       "class": "medium",
+       "role": "secondary",
+       "rating": 0.5,
+       "fatigue_per_set": 1.32,
+       "sf_ratio": 0.34,
+       "sf_score": 0.45,
+       "colour": "amber"
+      },
+      {
+       "exercise": "barbell-row",
+       "sets": 3,
+       "muscle": "biceps",
+       "class": "medium",
+       "role": "secondary",
+       "rating": 0.5,
+       "fatigue_per_set": 1.56,
+       "sf_ratio": 0.29,
+       "sf_score": 0.38,
+       "colour": "amber"
+      },
+      {
+       "exercise": "deadlift",
+       "sets": 4,
+       "muscle": "lats",
+       "class": "big",
+       "role": "minor",
+       "rating": 0.4,
+       "fatigue_per_set": 1.56,
+       "sf_ratio": 0.21,
+       "sf_score": 0.32,
+       "colour": "amber"
+      }
+     ],
+     "red": [
+      {
+       "exercise": "overhead-press",
+       "sets": 5,
+       "muscle": "traps",
+       "class": "medium",
+       "role": "minor",
+       "rating": 0.3,
+       "fatigue_per_set": 1.32,
+       "sf_ratio": 0.18,
+       "sf_score": 0.24,
+       "colour": "red"
+      },
+      {
+       "exercise": "romanian-deadlift",
+       "sets": 5,
+       "muscle": "upper_back",
+       "class": "big",
+       "role": "minor",
+       "rating": 0.25,
+       "fatigue_per_set": 1.56,
+       "sf_ratio": 0.13,
+       "sf_score": 0.2,
+       "colour": "red"
+      },
+      {
+       "exercise": "romanian-deadlift",
+       "sets": 5,
+       "muscle": "lats",
+       "class": "big",
+       "role": "minor",
+       "rating": 0.25,
+       "fatigue_per_set": 1.56,
+       "sf_ratio": 0.13,
+       "sf_score": 0.2,
+       "colour": "red"
+      }
+     ]
     },
-    "rule": "green >= median; amber from the lower Tukey fence (Q1 - 1.5 x IQR) up to the median; red below the fence. Cuts rounded to the nearest 0.05. Quartiles: Python statistics.quantiles(n=4, method=inclusive).",
-    "label": "Display choice",
-    "nurd": {
-     "short": "Lift Board display choice",
-     "year": 2026,
-     "type": "model / display choice",
-     "label": "Modeled",
-     "note": "Cut-offs set against the preset distribution; no study measures them."
+    "distribution_vol13": {
+     "efficient": {
+      "muscle_days_gated": 1630,
+      "green": 1359,
+      "amber": 263,
+      "red": 8,
+      "by_class": {
+       "big/amber": 26,
+       "big/green": 512,
+       "big/red": 4,
+       "medium/amber": 207,
+       "medium/green": 503,
+       "medium/red": 4,
+       "small/amber": 30,
+       "small/green": 344
+      }
+     },
+     "max_growth": {
+      "muscle_days_gated": 1641,
+      "green": 1373,
+      "amber": 260,
+      "red": 8,
+      "by_class": {
+       "big/amber": 26,
+       "big/green": 512,
+       "big/red": 4,
+       "medium/amber": 205,
+       "medium/green": 509,
+       "medium/red": 4,
+       "small/amber": 29,
+       "small/green": 352
+      }
+     }
+    },
+    "squat_day_quads_glutes": {
+     "efficient": {
+      "glutes/amber": 3,
+      "glutes/green": 46,
+      "quads/green": 49
+     },
+     "max_growth": {
+      "glutes/amber": 3,
+      "glutes/green": 46,
+      "quads/green": 49
+     }
+    },
+    "preset_examples": {
+     "green": [
+      [
+       0.6,
+       "glutes",
+       "torso-limbs/advanced/4/tue",
+       [
+        "hack-squat x5",
+        "romanian-deadlift x3"
+       ]
+      ],
+      [
+       0.6,
+       "glutes",
+       "torso-limbs/advanced/4/tue",
+       [
+        "hack-squat x5",
+        "romanian-deadlift x3"
+       ]
+      ],
+      [
+       0.61,
+       "glutes",
+       "ppl/intermediate/3/fri",
+       [
+        "back-squat x4",
+        "romanian-deadlift x4",
+        "hip-abduction-machine x3"
+       ]
+      ]
+     ],
+     "amber": [
+      [
+       0.3,
+       "rear_delts",
+       "arnold/intermediate/6/mon",
+       [
+        "pull-up x3",
+        "barbell-row x2",
+        "lat-pulldown x1"
+       ]
+      ],
+      [
+       0.3,
+       "rear_delts",
+       "arnold/intermediate/6/thu",
+       [
+        "pull-up x3",
+        "barbell-row x2",
+        "lat-pulldown x1"
+       ]
+      ],
+      [
+       0.32,
+       "rear_delts",
+       "arnold/intermediate/3/mon",
+       [
+        "pull-up x3",
+        "barbell-row x4",
+        "lat-pulldown x2"
+       ]
+      ]
+     ],
+     "red": [
+      [
+       0.2,
+       "lats",
+       "torso-limbs/intermediate/2/thu",
+       [
+        "romanian-deadlift x5"
+       ]
+      ],
+      [
+       0.2,
+       "lats",
+       "torso-limbs/intermediate/2/thu",
+       [
+        "romanian-deadlift x5"
+       ]
+      ],
+      [
+       0.2,
+       "lats",
+       "upper-lower/intermediate/2/thu",
+       [
+        "romanian-deadlift x5"
+       ]
+      ]
+     ]
+    },
+    "history_vol12": {
+     "field": "data/day-metrics-presets.json ...days[i].muscles[m].sf_ratio, sf_dial",
+     "formula": "sf_ratio = round(round(stimulus, 2) / round(fatigue, 2), 2): computed from the shown two-decimal numbers so the division checks out (per muscle)",
+     "cuts": {
+      "green_from": 0.9,
+      "amber_from": 0.15
+     },
+     "bands": [
+      {
+       "id": "green",
+       "from": 0.9
+      },
+      {
+       "id": "amber",
+       "from": 0.15,
+       "to": 0.9
+      },
+      {
+       "id": "red",
+       "below": 0.15
+      }
+     ],
+     "applies_to": "muscle-days with r2(effective sets) >= 1.00; below that no efficiency colour",
+     "reference_distribution": {
+      "n": 1630,
+      "min": 0.64,
+      "p5": 0.64,
+      "q1": 0.77,
+      "median": 0.91,
+      "q3": 1.17,
+      "max": 1.39,
+      "lower_fence": 0.17
+     },
+     "rule": "green >= median; amber from the lower Tukey fence (Q1 - 1.5 x IQR) up to the median; red below the fence. Cuts rounded to the nearest 0.05. Quartiles: Python statistics.quantiles(n=4, method=inclusive).",
+     "label": "Display choice",
+     "nurd": {
+      "short": "Lift Board display choice",
+      "year": 2026,
+      "type": "model / display choice",
+      "label": "Modeled",
+      "note": "Cut-offs set against the preset distribution; no study measures them."
+     }
     }
    },
    "fatigue_bands": {
@@ -16980,6 +17328,94 @@
     "vol10-chest-6-set-day-max_growth",
     "vol10-chest-10-set-day-efficient",
     "vol10-chest-10-set-day-max_growth"
+   ]
+  }
+ },
+ "vol13": {
+  "version": "vol13",
+  "date": "2026-11-01",
+  "source": "QC audit /workspace/qc-audit/findings.md #7, #9, #15, #17, #18, #2 via CoS",
+  "changes": [
+   "body-map efficiency normalised within size class (new denominator, class references, bands 0.60 / 0.30)",
+   "weekly S:F list and fatigue per effective set retired from display",
+   "session limit strict > on the displayed 0.1 value",
+   "toggle label Approach: Efficient / Max volume",
+   "earlier history frozen to the .pre-vol13 snapshot"
+  ],
+  "minimum_anchor_refs": "analysis-reference.json and progress-reference.json contain no 57.5% minimum-anchor reference (their only 57.5 values are \"legs\": 57.5 credited sets per region and 157.5 lb loads), so nothing to change. Live volume-model.json, targets.json, spec and reference cases already read 60%; remaining 57.5 values are history (requested anchors, used_vol8g_to_vol11c, vol12 change text) or the inactive sqrt curve.",
+  "session_limit": {
+   "rule": "warn when r1(effective sets) > limit; equal never warns",
+   "files": [
+    "tools/check_program.py workout_flags (2 comparisons)",
+    "rules.json session_efficiency.fires_when + comparison_vol13",
+    "rules.json wasted_late_sets.fires_when",
+    "rules.json efficient_trim.algorithm[0]"
+   ]
+  },
+  "retired": {
+   "weekly_sf_list": "rules.json analysis_metrics.items[id=stimulus_per_fatigue].display_status = retired (vol13); analysis-display.json items.stimulus_per_fatigue.display_status",
+   "fatigue_per_effective_set": "muscle-deepdive-spec.md fields stimulus_per_fatigue and fatigue marked RETIRED vol13 (display)",
+   "old_cuts": "visuals.sf_dial (superseded_vol13); visuals.body_map.efficiency.history_vol12"
+  },
+  "builder_paths": {
+   "efficiency_scale": "volume-model.json visuals.body_map.efficiency {formula, class_reference, bands, bands_rule, applies_to}",
+   "muscle_fields": "data/day-metrics-presets.json presets[goal][preset].days[i].muscles[m] {set_fatigue_fresh_set_eq, sf_ratio, sf_class, sf_score, sf_dial (green|amber|red|null), display}; old values muscles[m].history_vol12",
+   "size_class": "volume-model.json goals.size_class",
+   "fatigue_glow": "volume-model.json visuals.body_map.fatigue_bands (unchanged)",
+   "session_limit_rule": "rules.json rules[id=session_efficiency].fires_when / comparison_vol13; limits rules[id=session_efficiency].limits_by_goal[goal][level][m] (unchanged)",
+   "single_day_exemption": "rules.json rules[id=session_efficiency].exemption (unchanged; gated by the same r1 > limit test)",
+   "toggle": "rules.json goals {toggle_label, toggle_display, labels} (ids efficient / max_growth unchanged)",
+   "reference_cases": "workout-reference.json cases vol13-efficiency-* (worked examples) and the sf fields of vol10-chest-*, vol10b-sf-real-full-body-day, vol11-* (history_vol12)"
+  },
+  "history_frozen": [
+   "vmref:top:new_counting_preset_check",
+   "vmref:top:vol9_preset_recheck",
+   "vmref:top:vol10_preset_recheck",
+   "vmref:top:vol10b_trim_summary",
+   "model:vol9",
+   "model:vol10",
+   "model:vol10b",
+   "model:vol10c",
+   "model:vol11",
+   "model:vol11b",
+   "model:vol12"
+  ],
+  "citation_fixes": [
+   "remmert2025session: MSSE abstract year 2025 -> 2026 (58(10S), online 2026-09-14), first author Joachim, DOI added; still a preprint + abstract, label unchanged",
+   "remmert2025session: spec label was PRACTITIONER; now PREPRINT + ABSTRACT, NOT PEER-REVIEWED",
+   "pelland2025: issue details added, Sports Medicine 56(2):481-505, 2026 (online Dec 2025); \"2025\" elsewhere = online-first year, left as is"
+  ],
+  "trim_effect": {
+   "sets_removed_vol12": 252,
+   "sets_removed_vol13": 250,
+   "presets_changed": [
+    "bro-split/beginner/5",
+    "phul/beginner/4"
+   ],
+   "why": "With strict > on the displayed 0.1 value, a cut that only cleared a value like 6.04 (shown as 6.0) is no longer made."
+  },
+  "reference_cases_changed": {
+   "workout-reference.json": [
+    "vol10-chest-6-set-day-efficient",
+    "vol10-chest-6-set-day-max_growth",
+    "vol10-chest-10-set-day-efficient",
+    "vol10-chest-10-set-day-max_growth",
+    "vol10b-sf-real-full-body-day",
+    "vol11-anchor-set",
+    "vol11-squat-set",
+    "vol11-lateral-raise-set",
+    "vol11-chest-10-set-day",
+    "vol11-full-body-day",
+    "vol13-efficiency-green-back-squat-quads",
+    "vol13-efficiency-green-back-squat-glutes",
+    "vol13-efficiency-green-barbell-bench-press-chest",
+    "vol13-efficiency-green-leg-extension-quads",
+    "vol13-efficiency-amber-barbell-bench-press-triceps",
+    "vol13-efficiency-amber-barbell-row-biceps",
+    "vol13-efficiency-amber-deadlift-lats",
+    "vol13-efficiency-red-overhead-press-traps",
+    "vol13-efficiency-red-romanian-deadlift-upper_back",
+    "vol13-efficiency-red-romanian-deadlift-lats"
    ]
   }
  }

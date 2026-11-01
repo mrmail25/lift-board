@@ -11,7 +11,10 @@ const KEY='apechit.sb.goalMode';
 // vol10b: the initial goal comes from the data: rules.json goals.default (= rules[id=session_efficiency].default_goal), not a constant
 const DEFAULT_GOAL=()=>{const c=cfg();if(c&&c.default)return c.default;const d=dt(),r=d&&d.rules&&(d.rules.rules||[]).find(x=>x.id==='session_efficiency');return r&&r.default_goal||null};
 const dt=()=>window.SBX&&window.SBX.RD,cfg=()=>{const d=dt();return d&&d.rules&&d.rules.goals||null};
-const options=()=>{const c=cfg();return c?(c.options||[]).map(id=>({id,label:(c.labels||{})[id]||(c[id]||{}).label||id})):[]};
+// vol13 (Mr Dude via CoS): the control is called 'Approach'; Max growth displays as 'Max volume'. Internal keys stay (efficient / max_growth).
+const DISP={max_growth:'Max volume'};   // fallback only: rules.json goals.labels (vol13) wins
+const toggleLabel=()=>{const c=cfg();return c&&c.toggle_label||'Approach'},toggleDisplay=()=>{const c=cfg();return c&&c.toggle_display||'Approach: Efficient / Max volume'};
+const options=()=>{const c=cfg();return c?(c.options||[]).map(id=>({id,label:(c.labels||{})[id]||DISP[id]||(c[id]||{}).label||id})):[]};
 let MODE;const valid=g=>g===null||options().some(o=>o.id===g);
 function mode(){if(MODE===undefined){let v=null;try{v=localStorage.getItem(KEY)}catch(e){}MODE=v&&valid(v)?v:(DEFAULT_GOAL()&&valid(DEFAULT_GOAL())?DEFAULT_GOAL():null);if(!cfg())MODE=undefined}return MODE===undefined?null:MODE}
 const QUIET={efficient:{session_efficiency:'info'}};
@@ -22,5 +25,5 @@ function withGoal(g,fn){const P=window.PCHECK,o=P.getGoal();P.setGoal(g);try{ret
 const label=g=>(options().find(o=>o.id===g)||{}).label||g;
 const other=g=>{g=g===undefined?mode():g;const o=options();return g?((o.find(x=>x.id!==g)||{}).id||null):null};
 const nurd=g=>{const c=cfg();return c&&c[g]&&c[g].nurd||null};
-window.GOALS={get DEFAULT_GOAL(){return DEFAULT_GOAL()},QUIET,quiet,get mode(){return mode()},options,set,sync,withGoal,label,other,nurd,cfg};
+window.GOALS={toggleLabel,toggleDisplay,get DEFAULT_GOAL(){return DEFAULT_GOAL()},QUIET,quiet,get mode(){return mode()},options,set,sync,withGoal,label,other,nurd,cfg};
 })();

@@ -15,13 +15,28 @@ const ORDER=['mon','tue','wed','thu','fri','sat','sun'];
 const pr=(x,n)=>RANK().pyRound(x,n);
 const V=dt=>(dt.VM&&dt.VM.visuals)||{};
 // vol11c: S:F is per muscle only; colour cuts = visuals.body_map.efficiency.cuts (the day/exercise dials are retired)
-function dial(dt,x){if(x==null)return null;const c=(((V(dt).body_map||{}).efficiency||{}).cuts)||{green_from:.9,amber_from:.15};return x>=c.green_from?'green':x>=c.amber_from?'amber':'red'}
+// ---- vol13 ADAPTER SPOT (wired to Coach's vol13 scale, volume-model.json vol13.builder_paths.efficiency_scale):
+//   visuals.body_map.efficiency {formula, class_reference:{big|medium|small:{value, muscles}}, bands:[green from .6, amber .3-.6, red < .3]}
+//   class = goals.size_class (fallback: class_reference[c].muscles). Score = r2(sf_ratio / class reference); bands on r2(score).
+//   Muscle-days under r2(ES) 1.00 have no ratio/score/colour ('-'). Presets carry {set_fatigue_fresh_set_eq, sf_ratio, sf_class, sf_score,
+//   sf_dial}; custom boards compute the same here (liveDay) and test/vol13 checks live == preset for every preset muscle-day.
+const EFF=dt=>((V(dt).body_map||{}).efficiency)||{};
+function effClass(dt,m){const SC=(dt.VM&&dt.VM.goals&&dt.VM.goals.size_class)||{};for(const [k,l] of Object.entries(SC))if((l||[]).includes(m))return k;
+  for(const [k,o] of Object.entries(EFF(dt).class_reference||{}))if((o.muscles||[]).includes(m))return k;return 'medium'}
+// exact reference from its formula 'r x prox p / (f x effort e)' (value is that number shown to 3 decimals); falls back to value
+const effRef=(dt,cls)=>{const o=(EFF(dt).class_reference||{})[cls];if(!o)return null;const k=/([\d.]+)\s*x\s*prox\s*([\d.]+)\s*\/\s*\(\s*([\d.]+)\s*x\s*effort\s*([\d.]+)\s*\)/.exec(o.formula||'');
+  if(k){const x=(+k[1])*(+k[2])/((+k[3])*(+k[4]));if(o.value==null||Math.abs(x-o.value)<0.0006)return x}return o.value>0?+o.value:null};
+function bandCuts(dt){const B=EFF(dt).bands||[],g=B.find(b=>b.id==='green'),a=B.find(b=>b.id==='amber');return {hi:g&&g.from!=null?+g.from:.6,lo:a&&a.from!=null?+a.from:.3}}
+function effScale(dt,m){const cls=effClass(dt,m);return {src:'class',cls,ref:effRef(dt,cls),cuts:bandCuts(dt)}}
+function dial(dt,score){if(score==null)return null;const c=bandCuts(dt),x=pr(score,2);return x>=c.hi?'green':x>=c.lo?'amber':'red'}
+// tone for the body map's own ramp (distinct from the volume colours): green->'hi', amber->'mid', red->'lo'; null = '-' (under 1 ES)
+function effTone(dt,m,o){if(!o)return null;let d=o.sf_dial;if(d===undefined)d=o.sf_score!=null?dial(dt,o.sf_score):null;return d==='green'?'hi':d==='amber'?'mid':d==='red'?'lo':null}
 function fband(dt,es,f,lim){const c=(V(dt).fatigue_bands||{}).cuts||{warm_from_x_limit:.75,hot_above_x_limit:1.5};if(!(PCm().r2u(es)>=1))return 'none';if(lim==null)return 'cool';   // vol11b: 'none' is effective-set based
   return f<c.warm_from_x_limit*lim?'cool':f<=c.hot_above_x_limit*lim?'warm':'hot'}
 const num=x=>String(+(+x).toFixed(2)),dnum=x=>String(+(+x).toFixed(1));
-function display(dt,o){const t=((dt.VM.day_metrics||{}).sf_ratio||{}).display||'S:F {stim} / {fatigue} = {ratio} (ready in ~{days} days)';
-  const s=t.replace('{stim}',num(o.stimulus_hard_set_eq)).replace('{fatigue}',num(o.fatigue_fresh_set_eq)).replace('{ratio}',o.sf_ratio!=null?o.sf_ratio.toFixed(2):'–');
-  return o.recovery_days>0?s.replace('{days}',dnum(o.recovery_days)):s.replace(/\(ready in ~\{days\} days\)/,'(below the recovery threshold)')}
+function display(dt,o){const tail=o.recovery_days>0?`(ready in ~${dnum(o.recovery_days)} days)`:'(below the recovery threshold)';
+  if(o.sf_score==null)return `Efficiency - (under 1 effective set) ${tail}`;
+  return `Efficiency ${o.sf_score.toFixed(2)} x ${o.sf_class}-muscle reference (S:F ${num(o.stimulus_hard_set_eq)} / ${num(o.set_fatigue_fresh_set_eq)} = ${o.sf_ratio.toFixed(2)}) ${tail}`}
 const ratio=(s,f)=>{const a=pr(s,2),b=pr(f,2);return b>0?pr(a/b,2):null};
 const range=h=>h>0?[Math.max(0.5,Math.floor(0.8*h/12)/2),Math.ceil(1.2*h/12)/2]:[0,0];
 // prime + secondary roles (vol11b.stimulus_roles): top rating or >= 0.75 prime, 0.5-0.75 secondary; minor excluded
@@ -37,8 +52,11 @@ function sysOf(dt,tiles){const PC=PCm(),by={};let S=0,F=0;for(const t of tiles){
 const plannedRir=(dt,e)=>{const P=dt.VM.credit.planned_rir_default;return P[e.type]!=null?P[e.type]:2};
 const dayDisp=o=>`Stimulus ${num(o.stimulus_hard_set_eq)} hard sets, fatigue ${num(o.fatigue_fresh_set_eq)} fresh-set eq, slowest muscle ready in ~${dnum(o.recovery_days)} days`;
 function liveDay(dt,tiles,lv,goal){const PC=PCm(),E=PC.eff(dt,tiles),F=PC.fatMus(dt,tiles),RI=PC.recInputs(dt,tiles,lv),mus={};let rd=0;
+  const SF={};for(const t of tiles){const e=dt.EX[t.id];if(!e)continue;const FE=dt.FAT&&dt.FAT.exercises[t.id],sf=t.sets*(FE?FE.fatigue_per_set:1)*PC.effortOf(dt,t.rir!=null?t.rir:plannedRir(dt,e));
+    for(const [m,r] of Object.entries(e.muscles||{})){if(!(r>=0.25))continue;if(PC.credit(dt,e,m,r,t.rir)>0)SF[m]=(SF[m]||0)+sf}}
   for(const m of Object.keys(Object.assign({},E,F))){const s=E[m]||0,f=F[m]||0;if(!(s>0)&&!(f>0))continue;const R=RI[m]||{hours:0,days:0,inputs:null},lim=PC.seLim(dt,m,lv,goal===undefined?PC.getGoal():goal);
-    const o={stimulus_hard_set_eq:pr(s,2),fatigue_fresh_set_eq:pr(f,2),sf_ratio:ratio(s,f)};o.sf_dial=dial(dt,o.sf_ratio);o.recovery_days=R.days;o.display=display(dt,o);o.recovery_hours=R.hours;if(R.inputs)o.recovery_inputs=R.inputs;
+    const o={stimulus_hard_set_eq:pr(s,2),fatigue_fresh_set_eq:pr(f,2)},cls=effClass(dt,m),ok=PC.r2u(s)>=1;o.set_fatigue_fresh_set_eq=pr(SF[m]||0,2);o.sf_class=cls;
+    const q=ok&&SF[m]>0?s/SF[m]:null;o.sf_ratio=q!=null?pr(q,2):null;o.sf_score=q!=null&&effRef(dt,cls)?PC.r2u(q/effRef(dt,cls)):null;o.sf_dial=dial(dt,o.sf_score);o.recovery_days=R.days;o.display=display(dt,o);o.recovery_hours=R.hours;if(R.inputs)o.recovery_inputs=R.inputs;
     o.ready_range_days=range(R.hours);o.fatigue_band=fband(dt,s,pr(f,2),lim);o.session_limit=lim;mus[m]=o;if(o.recovery_days>rd)rd=o.recovery_days}
   const exercises=tiles.filter(t=>dt.EX[t.id]).map(t=>Object.assign({id:t.id,sets:t.sets},t.rir!==undefined?{rir:t.rir}:{},sysOf(dt,[t])));
   const S0=sysOf(dt,tiles),ds={stimulus_hard_set_eq:S0.stimulus_hard_set_eq,fatigue_fresh_set_eq:S0.fatigue_fresh_set_eq,recovery_days:rd};ds.display=dayDisp(ds);
@@ -61,5 +79,5 @@ function presetFor(dt,goal,pid){const P=dt.DMP&&dt.DMP.presets&&dt.DMP.presets[g
 function week(dt,days,lv,goal,pid){const P=presetFor(dt,goal,pid);
   if(P){const out={};for(const d of P.days)out[d.day]={day_summary:d.day_summary,exercises:d.exercises,muscles:d.muscles,label:d.label};return {days:out,strip:P.recovery_strip,source:'preset',pid}}
   const out={};for(const d of days)if(d.tiles&&d.tiles.length)out[d.day]=liveDay(dt,d.tiles,lv,goal);return {days:out,strip:liveStrip(dt,days,lv,goal),source:'live'}}
-const API={week,liveDay,liveStrip,dial,fband,display,ratio,range,presetFor};
+const API={effScale,effTone,effClass,effRef,week,liveDay,liveStrip,dial,fband,display,ratio,range,presetFor};
 if(isNode)module.exports=API;else root.IMPACT=API})(typeof window!=='undefined'?window:globalThis);

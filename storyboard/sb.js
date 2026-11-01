@@ -1151,11 +1151,12 @@ if(window.MM&&!MM._g1b){MM._g1b=1;MM.front.m.forEach(e=>{if(e[1]==='traps_upper'
 // volume fills and trend colours work as before). Back traps keep the light mhWarp lift.
 const MHEAD={front:`${MHD_NECK}<g class="mhead" pointer-events="none" aria-hidden="true" transform="${MHD_T}"><path d="${MHD_SIL}" fill="${MHD_D}"/><path d="${MHD_F}" fill="${MHD_W}"/></g>`,
  back:`${MHD_NECK}<g class="mhead" pointer-events="none" aria-hidden="true" transform="${MHD_T}"><path d="${MHD_SIL}" fill="${MHD_D}"/><path d="${MHD_B}" fill="${MHD_W}"/></g>`};
-function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
-  return `<svg viewBox="${opt.crop?MAPCROP:`0 0 ${w} ${h}`}" class="mmap${opt.crop?' crop':''}" aria-label="${side} muscle map">${opt.over?`<defs><pattern id="fhot-${opt.oid||side}" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="22" height="22" fill="var(--fat-hot-base,rgba(240,110,40,.38))"/><rect width="9" height="22" fill="var(--fat-hot,#e8552a)"/></pattern></defs>`:''}<clipPath id="mhclip-${side}"><rect x="0" y="250" width="${w}" height="${h}"/></clipPath><path clip-path="url(#mhclip-${side})" d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>${MHEAD[side]}
+function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);const OVL=[];
+  return `<svg viewBox="${opt.crop?MAPCROP:`0 0 ${w} ${h}`}" class="mmap${opt.crop?' crop':''}" aria-label="${side} muscle map"><clipPath id="mhclip-${side}"><rect x="0" y="250" width="${w}" height="${h}"/></clipPath><path clip-path="url(#mhclip-${side})" d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>${MHEAD[side]}
    ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="var(--map-base)" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */const P=`<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'var(--map-off)'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"${opt.over?` style="fill:${FILL(v)}"`:''}/>`;
      /* vol11: optional fatigue overlay (opt.over = {muscle: 0..1}); always drawn so a goal switch can animate its opacity */
-     return opt.over?P+`<path d="${d}" data-mo="${mu}" class="mpo" fill="url(#fhot-${opt.oid||side})" pointer-events="none" style="opacity:${(opt.over[mu]||0).toFixed(2)}"/>`:P}).join('')}
+     /* vol13: the overlay is an OUTLINE (opt.over = {muscle: stroke width in map units, 0 = none}), never a fill over the S:F colour */
+     if(opt.over)OVL.push(`<path d="${d}" data-mo="${mu}" class="mpo" fill="none" stroke="var(--fat-out,#e8552a)" stroke-linejoin="round" pointer-events="none" style="opacity:${opt.over[mu]?1:0};stroke-width:${opt.over[mu]||0}px"/>`);return P}).join('')}${OVL.join('')}
 </svg>`}
 const VOL_X=[['traps',8,6,12],['forearms',6,4,12],['obliques',4,4,10],['lower_back',6,4,10],['adductors',4,4,10],['abductors',3,4,10]];
 const volMap=()=>{const o={};[...VOL,...VOL_X].forEach(([m,n,lo,hi])=>o[m]=volFill(n,lo,hi));return o}; // same vStat bands as the panel, in-range shaded from --vol-in-range
@@ -1516,7 +1517,7 @@ async function eduLoad(){
 async function eduPage(id){const idx=await eduLoad(),p=idx.pages.find(x=>x.id===id);if(!p)return {entry:null,page:null};
   if(p.status!=='final')return {entry:p,page:null};
   if(!(p.path in EDU.cache)){try{const r=await fetch(EDU.base+p.path,{cache:'no-store'});EDU.cache[p.path]=r.ok?await r.json():null}catch(e){EDU.cache[p.path]=null}}
-  return {entry:p,page:EDU.cache[p.path]};
+  const pg=EDU.cache[p.path];return {entry:p,page:window.LEARNFIX&&pg?LEARNFIX.page(p.id,pg,(window.SBX||{}).RD||(typeof RD!=='undefined'?RD:null)):pg};   // vol13: current-model text (logic/learnfix.js)
 }
 // Learn evidence labels: quiet inline text (same .evl rule as Analysis' Modeled / Thin evidence); tapping one opens the Evidence sheet
 const EVXT={supported:'a training study measured it',biomechanics:'follows from anatomy and mechanics',modeled:'coach consensus or app model'};
@@ -1537,7 +1538,7 @@ function creditList(mu){const L=Object.values(EX).map(e=>[e,e.rat[mu]||0]).filte
   const g={main:[],helper:[],minor:[]};L.forEach(([e,r])=>g[BAND(r)].push([e,r]));return g}
 const rate=r=>`<span class="rate ${BAND(r)}"><b class="num">${+r.toFixed(2)}</b>${BANDL[BAND(r)]||''}</span>`;
 
-V.learn=()=>`<div class="nav"><div class="l">${backBtn()}</div><div class="t">Nurd Sh!t</div><div class="r"></div></div>${header('Nurd Sh!t')}<div id="learnbody"><p class="foot">Loading…</p></div>`;
+V.learn=()=>`<div class="nav"><div class="l">${backBtn()}</div><div class="t"></div><div class="r"></div></div>${header('Nurd Sh!t')}<div id="learnbody"><p class="foot">Loading…</p></div>`;
 async function afterLearn(){
   const idx=await eduLoad(),mus=idx.pages.filter(p=>p.kind==='muscle'),fun=idx.pages.filter(p=>p.kind==='fundamental');
   const vm={};mus.forEach(p=>vm[p.id]=p.status==='final'?1:.3);const nf=mus.filter(p=>p.status==='final').length;
@@ -1596,7 +1597,7 @@ async function afterLearnFund(id){
   $('#lf').innerHTML=`<div class="fund-hero"><div class="eyebrow">Fundamentals</div><h1>${j.title}</h1><p>${j.summary||''}</p></div>
    ${al.explains?`<div class="card inapp"><div class="eyebrow">In Ape-Chit</div><p>${al.explains}</p><ul>${(al.features||[]).map(f=>`<li>${f.replace(/\s*\([^)]*\)/,'')}</li>`).join('')}</ul></div>`:''}
    <div class="lsx">${(j.sections||[]).map((s,i)=>sect(s.heading,`${(s.body||[]).map(p=>`<p>${p}</p>`).join('')}
-      ${(s.points||[]).length?`<div class="pts">${s.points.map(p=>`<div class="pt"><p>${p.text}</p><div class="ptm">${ev(p)}${tagL(p.swap_tags)}</div></div>`).join('')}</div>`:''}`,i===0,(s.points||[]).length?s.points.length+' points':'')).join('')}
+      ${(s.points||[]).length?`<div class="pts">${s.points.map(p=>`<div class="pt"><p>${p.text}</p><div class="ptm">${ev(p)}${tagL(p.swap_tags)}</div>${p.nurd&&window.LEARNFIX?LEARNFIX.srcHtml(p.nurd,'ptsrc'):''}</div>`).join('')}</div>`:''}`,i===0,(s.points||[]).length?s.points.length+' points':'')).join('')}
    ${(j.notes||[]).length?sect('Honest limits',`<ul class="bul">${j.notes.map(n=>`<li>${n}</li>`).join('')}</ul>`):''}
    ${refList()}</div><p class="foot">${(EDU.idx||{}).disclaimer||''}</p>`;
   // page#section from an analysis item's Learn link: open that section and scroll to it
@@ -1650,9 +1651,9 @@ const sent2=t=>{const m=String(t||'').match(/[^.!?]+[.!?]+(\s|$)/g);return m?m.s
 function explainSheet(id,extra=''){const it=itemDef(id);if(!it)return null;const x=it.explain||{},lp=x.learn_page,sw=x.so_what||SO_WHAT[id]||sent2(x.why||x.what||it.description);
   const s=sheet({title:'',cls:'grouped xsheet',right:'<button class="btn plain" data-x="close">Done</button>',
     body:`<div class="xpl" data-item="${id}">${kchip(it.kind)?`<div class="xh">${kchip(it.kind)}</div>`:''}<div class="xpsh"><h3>${dispL(id,it.label)}</h3><span class="evl" data-ev="${it.evidence||'modeled'}">${EVT[it.evidence]||'Modeled'}</span></div>${it.status==='proposed'?'<p class="xprop">This measure is still proposed in the analysis spec, not yet a settled check.</p>':''}
-     <p class="xsw">${sw}${lp?` <button class="xchip xlearn" data-x="learn" data-go="${learnGo(lp)}" aria-label="Nurd Sh!t: ${lp.split('#')[0].replace(/-/g,' ')}">Nurd Sh!t ›</button>`:''}</p>
+     <p class="xsw">${sw}${lp?` <button class="xchip xlearn" data-x="learn" data-go="${learnGo(lp)}" aria-label="Source: ${lp.split('#')[0].replace(/-/g,' ')}">Source ›</button>`:''}</p>
      ${extra}</div>`});
-  if(lp)eduLoad().then(idx=>{const p=(idx.pages||[]).find(q=>q.id===lp.split('#')[0]),b=$('.xlearn',s.el);if(p&&b)b.setAttribute('aria-label','Nurd Sh!t: '+p.title)}).catch(()=>{});
+  if(lp)eduLoad().then(idx=>{const p=(idx.pages||[]).find(q=>q.id===lp.split('#')[0]),b=$('.xlearn',s.el);if(p&&b)b.setAttribute('aria-label','Source: '+p.title)}).catch(()=>{});
   s.el.addEventListener('click',e=>{if(e.target.closest('[data-x=close]'))return s.close();const g=e.target.closest('[data-go]');if(g){e.preventDefault();e.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
 // exercise detail popup: data/exercise-details.json (loaded on first open, 590 KB). Photos only when show_photo (exact match);
 // approximate photos are never shown. The files are copied into assets/ex-photos by build-photos.py (free-exercise-db, The Unlicense).

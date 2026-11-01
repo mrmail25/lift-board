@@ -46,7 +46,9 @@ function undo(){const s=B.hist.pop();if(!s)return;restore(s);paint();hideUndo();
 const checkDays=days=>(days||B.days).filter(d=>d.tiles.length).map(d=>({day:d.day,tiles:d.tiles.map(t=>({id:t.id,sets:t.sets}))}));
 const rankBoard=()=>B.days.filter(d=>d.tiles.length).map(d=>({day:d.day,label:d.label,tiles:d.tiles.map(t=>({id:t.id,sets:t.sets}))}));
 const sum=a=>a.reduce((x,y)=>x+y,0);
-const mins5=m=>Math.round(m/5)*5,hm=m=>{m=Math.round(m);const h=Math.floor(m/60);return h?`${h} h ${String(m%60).padStart(2,'0')} m`:`${m} min`};
+// vol13: ONE minutes calculation everywhere (Plan header, day cards, Analysis, suggestions): PC.sessionMinutes, rounded to whole minutes
+const MINS=tiles=>Math.round(PC.sessionMinutes(RD(),tiles.map(t=>({id:t.id,sets:t.sets})),B.level)),avgMins=days=>{const L=days.filter(D=>D.tiles.length);return L.length?Math.round(L.reduce((a,D)=>a+PC.sessionMinutes(RD(),D.tiles.map(t=>({id:t.id,sets:t.sets})),B.level),0)/L.length):0};
+const mins5=m=>Math.round(m),hm=m=>{m=Math.round(m);const h=Math.floor(m/60);return h?`${h} h ${String(m%60).padStart(2,'0')} m`:`${m} min`};
 function stateLine(){if(!B.dirty)return `<b class="saved">Saved v${B.version}</b> · in your Library${LVL()}`;const s=Math.max(0,(Date.now()-B.edited)/1000);
   const ago=s<60?'just now':Math.round(s/60)+' min ago';return `<b class="draft">Draft</b> · edited ${ago}${B.version?` · last saved v${B.version}`:' · not saved yet'}${LVL()}`}
 const LVL=()=>` · <span class="blv">${B.level[0].toUpperCase()+B.level.slice(1)}</span>`;
@@ -69,11 +71,11 @@ function mapHtml(st,days){const day=MAPV.mode==='day',d=days[MAPV.day],vm=day?da
   MLEG=leg; // Round 3: the key sits in the right column (#bmleg) so the cropped map gets the card's full height
   return `<div class="bmaps" data-mode="${MAPV.mode}" data-day="${d?d.day:''}">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="bmcap" id="bmcap">${cap}</div>`}
 function setMap(mode,i){MAPV.mode=mode;if(i!=null)MAPV.day=i;$$('#mapseg button').forEach(b=>b.classList.toggle('on',b.dataset.mm===MAPV.mode));paintStats()}
-function stripHtml(st){const {A,C,d}=st,avg=d.length?A.weekMinutes/d.length:0,fail=C.total-C.pass;
+function stripHtml(st){const {A,C,d}=st,avg=avgMins(d),fail=C.total-C.pass;
   return `<span class="ast"><b class="num" data-s="sets">${A.weekSets}</b><small>sets / wk</small></span>
-   <span class="ast"><b class="num" data-s="min">${d.length?'≈ '+mins5(avg):'–'}</b><small>min / session</small></span>
-   ${openSlots()?`<span class="ast chk pend"><b class="num" data-s="checks">–</b><small>Fill slots to check</small></span>`:`<span class="ast chk ${fail?'bad':'ok'}"><b class="num" data-s="checks">${C.pass}/${C.total}</b><small>checks pass</small></span>`}<span class="ago">Analysis ›</span>`}
-function dayMeta(day){const n=sum(day.tiles.map(t=>t.sets));return day.tiles.length?`${n} sets · ≈ ${mins5(PC.sessionMinutes(RD(),day.tiles.map(t=>({id:t.id,sets:t.sets})),B.level))} min`:''}
+   <span class="ast"><b class="num" data-s="min">${d.length?'≈ '+avg:'–'}</b><small>min / session</small></span>
+   ${openSlots()?`<span class="ast chk pend"><b class="num" data-s="checks">–</b><small>Fill slots to check</small></span>`:`<span class="ast chk"><b class="num" data-s="checks">${C.pass}/${C.total}</b><small>checks pass${fail?` · <em class="chkbad">${fail} need${fail===1?'s':''} attention</em>`:''}</small></span>`}<span class="ago">Analysis ›</span>`}
+function dayMeta(day){const n=sum(day.tiles.map(t=>t.sets));return day.tiles.length?`${n} sets · ≈ ${MINS(day.tiles)} min`:''}
 function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bmap');if(mp)mp.innerHTML=mapHtml(st,days);const lg=$('#bmleg');if(lg)lg.innerHTML=MLEG||'';const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);s.setAttribute('aria-label',`Analysis: ${st.A.weekSets} sets a week, ${st.C.pass} of ${st.C.total} checks pass`)}
   days.forEach((d,i)=>{const n=sum(d.tiles.map(t=>t.sets));const b=$(`#dstrip [data-jump="${i}"] .dn`);if(b){b.textContent=stripTxt(d);b.parentNode.classList.toggle('rd',isRest(d))}
     const h=$(`.col[data-day="${d.day}"] .cm`);if(h)h.textContent=dayMeta(d);const w=$(`.col[data-day="${d.day}"] .dmxw`);if(w)w.outerHTML=dmxHtml(d)});
@@ -85,18 +87,19 @@ function chit(t){const e=ex(t.id),g=WB.primaryRegion(RD(),t.id),sel=B.sel.has(t.
 // item 6: an open template slot is a dashed placeholder (label + set range); it is not a tile, so stats and checks ignore it.
 const slotHtml=(d,s)=>`<button class="slotc" data-b="slot" data-day="${d.day}" data-sid="${s.sid}" aria-label="Open slot: ${s.label}, ${s.min} to ${s.max} sets. Tap to pick an exercise"><span class="cg ${s.type}" aria-hidden="true">${X.GLY[s.type]}</span><span class="sl">${s.label}</span><span class="sr">${s.min}–${s.max} sets</span></button>`;
 // vol10 notes: one plain line + a 'Nurd Sh!t ›' chip (the explain-sheet pattern) that opens the deeper detail and its source.
-const nurdChip=(k,m)=>`<button class="xchip xlearn" data-b="nurd" data-k="${k}"${m?` data-m="${m}"`:''} aria-label="Nurd Sh!t: source and detail">Nurd Sh!t ›</button>`;
+// vol13 (#27): inline chips say 'Source ›'; 'Nurd Sh!t' names only the Learn page
+const nurdChip=(k,m)=>`<button class="xchip xlearn" data-b="nurd" data-k="${k}"${m?` data-m="${m}"`:''} aria-label="Source and detail">Source ›</button>`;
 // each note's Nurd link shows its data .nurd citation {short, year, type, label, url, note}
 const RUL=id=>(RD().rules.rules||[]).find(r=>r.id===id)||{};
-const srcHtml=n=>!n?'':`<p class="nsrc">Source: ${n.url?`<a href="${n.url}" target="_blank" rel="noopener">${n.short}</a>`:n.short}${n.type?` · ${n.type}`:''}.${n.note?` ${n.note}`:''}</p>`;
+const srcHtml=n=>window.LEARNFIX?LEARNFIX.srcHtml(n,'nsrc'):!n?'':`<p class="nsrc">Source: ${n.url?`<a href="${n.url}" target="_blank" rel="noopener">${n.short}</a>`:n.short}${n.type?` · ${n.type}`:''}.${n.note?` ${n.note}`:''}</p>`;
 const NURD={
   session:m=>{const dt=RD(),lv=B.level,g=G()&&G().mode,L=PC.seLim(dt,m,lv),SE=RUL('session_efficiency'),c=(((dt.VM||{}).session||{}).c_by_level||{})[lv],cc=c&&c[m],ls=cc&&L?Math.round(100/(1+(L-1)/cc)):null;
     return {h:'Per-session returns',n:g==='efficient'?SE.nurd_efficient:SE.nurd,body:`${L!=null?`<p>For ${MLB(m).toLowerCase()} at your level${g?` on ${G().label(g)}`:''} the session limit is ${nfmt(L)} effective sets.${ls?` By then the last set is worth about ${ls}% of the first.`:''}</p>`:''}<p>This is about efficiency only. Every set still counts for the week. Past the limit, split the sets across days, trim them, or swap to a fresher exercise. Adding sets is never the fix.</p>`}},
   late:()=>({h:'Wasted late sets',n:RUL('wasted_late_sets').nurd,body:`<p>Late sets are the ones that take a muscle past its session limit, plus every later set for it that day. They still count for the week; they would do more on another day.</p>`}),
-  goal:g=>{const c=(G()&&G().cfg()||{})[g]||{};return {h:G().label(g),n:c.nurd,body:`<p>${c.summary||''}</p><p>Both goals use the same weekly curve and zones; only the target and the session limits change.</p>${srcHtml(RUL('weekly_volume').nurd_targets).replace('Source:','Weekly curve:')}`}},
+  goal:g=>{const c=(G()&&G().cfg()||{})[g]||{};return {h:`${G().toggleLabel?G().toggleLabel():'Approach'}: ${G().label(g)}`,n:c.nurd,body:`<p>${c.summary||''}</p><p>Both approaches use the same weekly curve and zones; only the weekly target and the per-workout limits change. The limits are info only.</p>${srcHtml(RUL('weekly_volume').nurd_targets).replace('Source:','Weekly curve:')}`}},
   recovery:()=>{const dt=RD(),cav=((dt.VM||{}).recovery||{}).caveat||'';return {h:'Recovery estimates',n:((dt.VM.day_metrics||{}).recovery||{}).nurd,body:`<p>Ready-in times are modeled ranges in days, never exact hours.</p>${cav?`<p>${cav}</p>`:''}`}},
-  impact:()=>{const BM=BMAP(),E=BM.efficiency||{},c=E.cuts||{};return {h:'Impact map and recovery strip',n:E.nurd,body:`<p>Each muscle's colour is its growth per fatigue that day (S:F = hard-set stimulus ÷ fresh-set fatigue for that muscle): green from ${c.green_from}, amber from ${c.amber_from}, red below. Darker means more stimulus. Muscles under 1 effective set get no colour. The cut-offs are a display choice set against the presets.</p><p>The orange glow is fatigue against the goal's per-session limit: faint (cool), stronger past 0.75× the limit (warm), strongest past 1.5× (hot).</p><p>Recovery bars run to when each muscle is ready again (planning baseline). Red marks a next session before 40% of that time (at least a day), or 3+ days in a row. The week repeats.</p><p>The Efficient view shows this board after Trim to efficient, without applying it.</p>`}},
-  daymx:()=>{const DM=RD().VM.day_metrics||{};return {h:'Day card numbers',n:(DM.fatigue||{}).nurd,body:`<p>Stimulus = hard-set equivalents over every credited muscle. Fatigue = whole-body fatigue in fresh-set equivalents, counted once per set (1.0 = one fresh hard set of machine chest press at 2 RIR; heavy squats and hinges cost more, isolation less). Ready = when the slowest muscle is recovered.</p><p>S:F is per muscle only: that muscle's stimulus ÷ its fatigue.</p>`}},
+  impact:()=>{const BM=BMAP(),E=BM.efficiency||{},sc=IMPACT.effScale(RD(),'quads'),R=c=>{const o=(E.class_reference||{})[c];return o?o.value:'–'};return {h:'Impact map and recovery strip',n:E.nurd||((RD().VM.day_metrics||{}).sf_ratio||{}).nurd,body:`<p>Colour is each muscle's growth per fatigue that day, scored against its size class: S:F = the stimulus on the muscle ÷ the whole-set fatigue of the sets that trained it, then ÷ the class reference (big ${R('big')}, medium ${R('medium')}, small ${R('small')}; 1.00 = a heavy compound with the muscle as prime mover). Its own blue-to-teal scale: teal from ${sc.cuts.hi.toFixed(2)}, lighter from ${sc.cuts.lo.toFixed(2)}, palest below. Helper-only credit from heavy lifts reads pale. Darker means more stimulus. Muscles under 1 effective set show '–' and no colour.</p><p>An orange outline marks a muscle past this approach's per-workout limit (more than the limit, info only).</p><p>Recovery bars run to when each muscle is ready again (planning baseline). Red marks a next session before 40% of that time (at least a day), or 3+ days in a row. The week repeats.</p>`}},
+  daymx:()=>{const DM=RD().VM.day_metrics||{};return {h:'Day numbers',n:(DM.fatigue||{}).nurd,body:`<p>Fatigue = whole-body fatigue in fresh-set equivalents, counted once per set: 1 = one fresh hard set of machine chest press at 2 RIR. Heavy squats and hinges cost more, isolation less.</p><p>Stimulus = hard-set equivalents over every credited muscle. Effic. is per muscle only: that muscle's stimulus ÷ the whole-set fatigue of the sets that trained it, ÷ its size-class reference. Never summed across muscles.</p><p>Ready = a modeled range in days for the slowest muscle, never exact hours.</p>`}},
 };
 function nurdSheet(k,m){const f=NURD[k];if(!f)return;const o=f(m);const s=X.sheet({title:'',cls:'grouped xsheet nurds',right:'<button class="btn plain" data-x="close">Done</button>',body:`<div class="xpl nurd" data-k="${k}"><div class="xpsh"><h3>${o.h}</h3><span class="evl" data-ev="modeled">${(o.n||{}).label||'Modeled'}</span></div>${o.body}${srcHtml(o.n)}</div>`});s.el.addEventListener('click',e=>{if(e.target.closest('[data-x=close]'))s.close()});return s}
 // vol10 day card metrics row (logic/daymetrics.js adapter): Stimulus · Fatigue · Recovery · Stim:Fatigue; tap expands per muscle.
@@ -114,73 +117,80 @@ const trimPlan=force=>{if(!G()||(!force&&G().mode!=='efficient')||openSlots())re
   return Object.assign(r,{ndays:new Set(r.ops.map(o=>o.day)).size,below})};
 function trimCard(cls=''){const T=trimPlan();if(!T)return '';const ds=[...new Set(T.ops.map(o=>o.day))].map(dayN).join(', ');
   return `<div class="trimc ${cls}" data-removed="${T.removed}" data-source="${T.source}"${T.pid?` data-preset="${T.pid}"`:''}><div class="grow"><p class="trimt">Trim to efficient</p><p class="trims">Removes ${T.removed} set${T.removed===1?'':'s'} on ${ds}. Only set counts change; nothing moves or is added.${T.ops.some(o=>o.to===0)?` Drops ${T.ops.filter(o=>o.to===0).map(o=>X.exNameP(o.id)).join(', ')} (its last set).`:''}</p>${T.below.length?`<p class="trimw">Drops ${T.below.map(m=>MLB(m).toLowerCase()).join(', ')} below the weekly minimum.</p>`:''}</div><button class="btn xs accent" data-b="trim">Trim</button></div>`}
-function applyTrim(){const T=trimPlan();if(!T)return;const before=snap(),bsig=sigD(),txt=`Trimmed to efficient: −${T.removed} sets`;
+function applyTrim(){const T=trimPlan();if(!T)return;IMPV.prev=false;const before=snap(),bsig=sigD(),txt=`Trimmed to efficient: −${T.removed} sets`;
   commit(()=>{for(const o of T.ops.slice().sort((a,b)=>b.i-a.i)){const D=B.days.find(x=>x.day===o.day),t=D&&D.tiles[o.i];if(t&&t.id===o.id&&t.sets===o.from){if(o.to>0)t.sets=o.to;else D.tiles.splice(o.i,1)}}},txt);
   APPLIED.unshift({preview:`Trim to efficient (−${T.removed} sets)`,before,bsig,asig:sigD(),section:'volume'});if(AN&&!AN.closed)renderAnalysis()}
-// ---- vol11c impact (volume-model.json vol11c.builder_paths). Units: stimulus = hard sets, fatigue = fresh-set equivalents,
-// recovery = days; S:F is per muscle only (visuals.body_map.efficiency). Data: logic/impact.js -> day-metrics-presets.json for an
-// unmodified preset of that goal, the same formulas live for anything else. Each goal has its own view of the board: Max growth =
-// the board as it is; Efficient = the board after "Trim to efficient" (a preview, nothing is applied). Both views are computed so a
-// goal switch only changes styles (CSS transitions on fills, glow and bar widths).
-const IMPV={day:-1};let IMPC={k:null,v:null};
-const presetOf=(days,src)=>{const dt=RD();return src?presetId(days,src):null};
-function impViews(){const k=sigD()+'|'+B.level;if(IMPC.k===k)return IMPC.v;const dt=RD(),d=checkDays(),T=G()?G().withGoal('efficient',()=>trimPlan(true)):null,ed=T?T.days:d;
-  const V={trim:T,g:{max_growth:IMPACT.week(dt,d,B.level,'max_growth',presetOf(d,dt.splits)),efficient:IMPACT.week(dt,ed,B.level,'efficient',presetOf(ed,dt.SPLITS_EFF))}};IMPC={k,v:V};return V}
-const impCur=()=>{if(!window.IMPACT)return null;const V=impViews(),g=G()&&G().mode==='efficient'?'efficient':'max_growth';return {V,g,W:V.g[g]}};
+// ---- vol13 impact (Plan). ONE view: the ACTUAL board under the current approach (CoS override 3). Trim is a preview/action only:
+// 'Preview trim' lists the cuts without changing a number; Apply edits the board (toast with Undo). Data: logic/impact.js (presets
+// precomputed in day-metrics-presets.json for an unmodified preset of that approach, else the same formulas live).
+// Map: its OWN ramp (periwinkle -> teal = growth per fatigue, IMPACT.effTone via the effScale adapter), darker = more stimulus;
+// muscles past the approach's per-workout limit (PC.seOver, strictly greater) get an orange OUTLINE. Volume keeps green/amber/red.
+const IMPV={day:-1,prev:false};let IMPC={k:null,v:null};
+const presetOf=(days,src)=>src?presetId(days,src):null;
+const APR=()=>G()&&G().mode==='efficient'?'efficient':'max_growth';
+function impBoard(){const g=APR(),k=sigD()+'|'+B.level+'|'+g;if(IMPC.k===k)return IMPC.v;const dt=RD(),d=checkDays();
+  const W=IMPACT.week(dt,d,B.level,g,presetOf(d,g==='efficient'?dt.SPLITS_EFF:dt.splits));IMPC={k,v:W};return W}
+const impCur=()=>window.IMPACT?{g:APR(),W:impBoard()}:null;
 const BMAP=()=>(RD().VM.visuals||{}).body_map||{};
-// fill: hue = per-muscle efficiency band (green / amber / red; only muscle-days with r2(effective sets) >= 1.00), strength = stimulus
-// (hard sets, 1 -> 6+); a muscle under 1 effective set gets a pale neutral tint. Glow = fatigue band (none / cool / warm / hot).
-const EFFC={green:'var(--vol-in-range)',amber:'var(--vol-amber)',red:'var(--vol-red)'};
-function impFill(o){if(!o||!(o.stimulus_hard_set_eq>0))return 'var(--map-empty)';const s=o.stimulus_hard_set_eq;if(!(PC.r2u(s)>=1))return 'color-mix(in srgb, var(--text-3,#9aa0a6) 28%, var(--map-empty))';
-  const p=Math.round(45+55*Math.min(1,(s-1)/5));return `color-mix(in srgb, ${EFFC[o.sf_dial]||EFFC.green} ${p}%, var(--map-empty))`}
-const GLOW={none:0,cool:.14,warm:.38,hot:.7};
+const EFFC={hi:'var(--eff-hi)',mid:'var(--eff-mid)',lo:'var(--eff-lo)'};
+const effTone=(m,o)=>IMPACT.effTone(RD(),m,o);
+function impFill(m,o){if(!o||!(o.stimulus_hard_set_eq>0))return 'var(--map-empty)';const s=o.stimulus_hard_set_eq,t=effTone(m,o);if(!t)return 'color-mix(in srgb, var(--text-3,#9aa0a6) 26%, var(--map-empty))';
+  const p=Math.round(45+55*Math.min(1,(s-1)/5));return `color-mix(in srgb, ${EFFC[t]} ${p}%, var(--map-empty))`}
+const pastLim=o=>!!o&&PC.seOver(o.stimulus_hard_set_eq,o.session_limit);
+const OUTW=o=>pastLim(o)?(o.fatigue_band==='hot'?30:18):0;   // outline width (map units) only past the limit; thicker when the data's band is 'hot'
+const rr=a=>!a||!(a[1]>0)?'–':a[0]===a[1]?`${nfmt(a[0])} d`:`${nfmt(a[0])}–${nfmt(a[1])} d`;
+const slowest=X1=>{let b=null;for(const o of Object.values(X1.muscles||{}))if(o.recovery_hours>0&&(!b||o.recovery_hours>b.recovery_hours))b=o;return b};
+const dayRange=X1=>{const b=X1&&slowest(X1);return b?rr(b.ready_range_days):'–'};
 function impDay(){const i=IMPV.day>=0&&B.days[IMPV.day]&&B.days[IMPV.day].tiles.length?IMPV.day:Math.max(0,B.days.findIndex(d=>d.tiles.length));return i}
-function impStrip(C){const V=impViews(),bars={},ov={};for(const g of ['max_growth','efficient'])for(const b of V.g[g].strip.bars){(bars[b.muscle]=bars[b.muscle]||new Set()).add(DAYS.indexOf(b.day))}
-  const W=C.strip,rows=Object.keys(X.ML).filter(m=>bars[m]);if(!rows.length)return '<p class="foot">No trained muscles yet.</p>';const pc=x=>(Math.max(0,x)/7*100).toFixed(2)+'%';
-  return `<div class="imps" role="list">${rows.map(m=>{const red=W.overlaps.filter(o=>o.muscle===m);return `<div class="impr${red.length?' ov':''}" role="listitem" data-m="${m}"><span class="impn">${MLB(m)}</span><span class="impt">${[...bars[m]].sort((a,b)=>a-b).map(i=>{const b=W.bars.find(x=>x.muscle===m&&DAYS.indexOf(x.day)===i),r=b?b.ready_days:0,o=red.find(x=>DAYS.indexOf(x.day)===i),j=o?DAYS.indexOf(o.next_day):i,jj=j<i?j+7:j,ow=o?Math.max(0,i+r-jj):0;
+function impStrip(W){const bars={};for(const b of W.strip.bars)(bars[b.muscle]=bars[b.muscle]||new Set()).add(DAYS.indexOf(b.day));
+  const rows=Object.keys(X.ML).filter(m=>bars[m]);if(!rows.length)return '<p class="foot">No trained muscles yet.</p>';const pc=x=>(Math.max(0,x)/7*100).toFixed(2)+'%';
+  return `<div class="imps" role="list">${rows.map(m=>{const red=W.strip.overlaps.filter(o=>o.muscle===m);return `<div class="impr${red.length?' ov':''}" role="listitem" data-m="${m}"><span class="impn">${MLB(m)}</span><span class="impt">${[...bars[m]].sort((a,b)=>a-b).map(i=>{const b=W.strip.bars.find(x=>x.muscle===m&&DAYS.indexOf(x.day)===i),r=b?b.ready_days:0,o=red.find(x=>DAYS.indexOf(x.day)===i),j=o?DAYS.indexOf(o.next_day):i,jj=j<i?j+7:j,ow=o?Math.max(0,i+r-jj):0;
       return `<i class="ib" data-k="${m}:${i}" style="left:${pc(i)};width:${pc(Math.min(r,7-i))}"></i><i class="ib w" data-k="${m}:${i}:w" style="left:0;width:${pc(i+r-7)}"></i><i class="io" data-k="${m}:${i}:o" style="left:${pc(jj>=7?jj-7:jj)};width:${pc(o&&o.variant==='streak'?Math.max(ow,1):ow)}"></i><i class="id" data-k="${m}:${i}:d" style="left:${pc(i)};opacity:${b?1:0}"></i>`}).join('')}</span></div>`}).join('')}</div>`}
-function impHtml(){const C0=impCur();if(!C0)return '';const {V,g,W}=C0,i=impDay(),dd=B.days[i],X1=dd&&W.days[dd.day],t=X1&&X1.day_summary;
-  const vm={},ov={};for(const m of Object.keys(X.ML)){const o=X1&&X1.muscles[m];vm[m]=impFill(o);ov[m]=o?GLOW[o.fatigue_band]||0:0}
-  const cap=g==='efficient'&&V.trim?`Efficient view: this board trimmed (−${V.trim.removed} sets), not applied.`:g==='efficient'?'Efficient view: nothing to trim on this board.':'';
-  return `<div class="imph"><b>Impact</b><span class="evl" data-ev="modeled">Modeled</span>${goalSeg()}</div>
+// trim preview (no numbers change): the cuts, then Apply / Close. Apply = applyTrim (toast with Undo).
+function trimPreview(T,cls=''){if(!T)return '';const by={};T.ops.forEach(o=>(by[o.day]=by[o.day]||[]).push(o));
+  return `<div class="trimp ${cls}" data-removed="${T.removed}"><p class="trimpt"><b>Preview trim</b> · −${T.removed} set${T.removed===1?'':'s'}. Nothing changes until you apply.</p><ul class="trimpl">${Object.entries(by).map(([d,L])=>`<li><b>${dayN(d)}</b> ${L.map(o=>`${X.exNameP(o.id)} <span class="num">${o.from}→${o.to}</span>`).join(', ')}</li>`).join('')}</ul>${T.below.length?`<p class="trimw">Drops ${T.below.map(m=>MLB(m).toLowerCase()).join(', ')} below the weekly minimum.</p>`:''}<div class="trimpb"><button class="btn xs grey" data-b="trimprev">Close</button><button class="btn xs accent" data-b="trim">Apply trim</button></div></div>`}
+function impHtml(){const C0=impCur();if(!C0)return '';const {g,W}=C0,i=impDay(),dd=B.days[i],X1=dd&&W.days[dd.day],t=X1&&X1.day_summary;
+  const vm={},ov={};for(const m of Object.keys(X.ML)){const o=X1&&X1.muscles[m];vm[m]=impFill(m,o);ov[m]=OUTW(o)}
+  const T=trimPlan(),np=X1?Object.values(X1.muscles).filter(pastLim).length:0;
+  return `<div class="imph"><b>Impact</b><span class="evl" data-ev="modeled">Modeled</span><span class="apchip" data-goal="${g}" aria-label="${G()&&G().toggleLabel?G().toggleLabel():'Approach'}: ${G()?G().label(g):''} (change it in Analysis)">${G()?G().label(g):''}</span></div>
    <div class="impd" role="group" aria-label="Day">${B.days.map((d,k)=>`<button class="${k===i?'on':''}" data-b="impday" data-i="${k}"${d.tiles.length?'':' disabled'}>${WD[k]}</button>`).join('')}</div>
    <div class="impm"><div class="impmaps">${X.map('front',vm,{crop:1,over:ov,oid:'if'})}${X.map('back',vm,{crop:1,over:ov,oid:'ib'})}</div>
-    <div class="impside"><dl class="impn3"><div><dt>Stimulus</dt><dd class="num" data-v="stim">${t?nfmt(t.stimulus_hard_set_eq):'–'}</dd><small>hard sets</small></div><div><dt>Fatigue</dt><dd class="num" data-v="fat">${t?nfmt(t.fatigue_fresh_set_eq):'–'}</dd><small>fresh-set eq</small></div><div><dt>Ready in</dt><dd class="num" data-v="rec">${t?`~${nfmt(t.recovery_days)} d`:'–'}</dd><small>slowest muscle</small></div></dl>
+    <div class="impside"><dl class="impn3"><div><dt>Stimulus</dt><dd class="num" data-v="stim">${t?nfmt(t.stimulus_hard_set_eq):'–'}</dd><small>hard sets</small></div><div><dt>Fatigue</dt><dd class="num" data-v="fat">${t?nfmt(t.fatigue_fresh_set_eq):'–'}</dd><small>fresh-set eq</small></div><div><dt>Ready in</dt><dd class="num" data-v="rec">${dayRange(X1)}</dd><small>slowest muscle</small></div></dl>
      <button class="btn xs grey" data-b="dmx" data-day="${dd?dd.day:''}">Per muscle ›</button></div></div>
-   <p class="impk impk1"><i class="k3"></i>Colour = growth per fatigue · darker = more stimulus · <i class="kh"></i>glow = past session limit</p>${cap?`<p class="impcap" data-v="cap">${cap}</p>`:'<p class="impcap" data-v="cap"></p>'}
-   <p class="impnote">A glowing muscle is paying in fatigue for this day's work. ${nurdChip('impact')}</p>
+   <p class="impk impk1"><i class="k3"></i>Colour = growth per fatigue · darker = more stimulus · <i class="kh"></i>outline = past session limit</p>
+   <p class="impnote" data-v="note">${np?`${np} muscle${np===1?' is':'s are'} past this approach's per-workout limit (info only).`:'No muscle is past the per-workout limit this day.'} ${nurdChip('impact')}</p>
+   ${T?(IMPV.prev?trimPreview(T):`<button class="btn plain sm trimpbtn" data-b="trimprev">Preview trim (−${T.removed} sets) ›</button>`):''}
    <div class="imph2"><b>Recovery this week</b><span class="evl" data-ev="modeled">Modeled</span></div>
    <div class="impax"><span></span><span class="impt0">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>
    ${impStrip(W)}
    <p class="impk">Bar = days until ready after each session. <i class="kr"></i>next session lands too soon.</p>`}
-// in place when the structure is unchanged (goal switch), so fills, glow and bar widths animate
+// in place when the structure is unchanged (approach switch, day pick), so fills, outlines and bar widths animate
 function paintImpact(){const el=$('#impc');if(!el)return;const h=impHtml();const tmp=document.createElement('div');tmp.innerHTML=h;
-  const sig=e=>[...e.querySelectorAll('[data-k],.mp,.impd button')].map(x=>x.dataset.k||x.dataset.mu||x.dataset.i).join(',');
+  const sig=e=>[...e.querySelectorAll('[data-k],.mp,.impd button,.trimp,.trimpbtn')].map(x=>x.dataset.k||x.dataset.mu||x.dataset.i||x.className).join(',');
   if(!el.firstElementChild||sig(el)!==sig(tmp)){el.innerHTML=h;return}
   tmp.querySelectorAll('[data-k]').forEach(n=>{const o=el.querySelector(`[data-k="${n.dataset.k}"]`);if(o)o.setAttribute('style',n.getAttribute('style'))});
   const om=[...el.querySelectorAll('.mp,.mpo')],nm=[...tmp.querySelectorAll('.mp,.mpo')];nm.forEach((n,k)=>{if(om[k])om[k].setAttribute('style',n.getAttribute('style'))});
-  for(const sel of ['[data-v]','.impd','.gseg','.impr','.impside [data-b=dmx]']){const os=[...el.querySelectorAll(sel)],ns=[...tmp.querySelectorAll(sel)];ns.forEach((n,k)=>{const o=os[k];if(!o)return;if(sel==='.impr'){o.className=n.className;return}if(sel==='[data-v]')o.className=n.className;if(n.dataset.day!=null)o.dataset.day=n.dataset.day;o.innerHTML=n.innerHTML})}}
-// ---- day card row + per-muscle sheet (vol11c units; late-set marks still from DAYMX.day / the session limits)
+  for(const sel of ['[data-v]','.impd','.apchip','.impr','.impside [data-b=dmx]']){const os=[...el.querySelectorAll(sel)],ns=[...tmp.querySelectorAll(sel)];ns.forEach((n,k)=>{const o=os[k];if(!o)return;if(sel==='.impr'){o.className=n.className;return}if(sel==='[data-v]'||sel==='.apchip')o.className=n.className;if(n.dataset.day!=null)o.dataset.day=n.dataset.day;if(n.dataset.goal!=null)o.dataset.goal=n.dataset.goal;o.innerHTML=n.innerHTML})}}
+// ---- day card row + per-muscle sheet: the actual board, current approach (late-set marks from DAYMX.day, strictly > the limit)
 const dmxOf=d=>window.DAYMX&&d&&d.tiles.length?DAYMX.day(RD(),d.tiles.map(t=>({id:t.id,sets:t.sets})),B.level,checkDays()):null;
-// day card + sheet describe the board as it is (never the Efficient trim preview), under the current goal's limits/bands
-const impOf=d=>{if(!window.IMPACT||!d)return null;const V=impViews(),g=G()&&G().mode==='efficient'?'efficient':'max_growth';
-  if(!V.board)V.board={};if(!V.board[g]){const dt=RD(),cd=checkDays();V.board[g]=g==='max_growth'?V.g.max_growth:IMPACT.week(dt,cd,B.level,g,presetOf(cd,dt.SPLITS_EFF))}return V.board[g].days[d.day]||null};
+const impOf=d=>{if(!window.IMPACT||!d)return null;return impBoard().days[d.day]||null};
 const dd=x=>x==null?'–':`~${+(+x).toFixed(1)} d`;
 const lateTxt=o=>{const n=o.late.reduce((a,z)=>a+z[1],0);return `${n} late set${n===1?'':'s'} · ${nfmt(o.over_limit)} over ${nfmt(o.session_limit)}`};
-// collapsed row on the day column; tapping it opens the per-muscle bottom sheet (dmxSheet). No ratio on the day row (vol11c).
-function dmxHtml(d){const M=dmxOf(d),I=impOf(d);if(!M||!I)return `<div class="dmxw" data-day="${d.day}"></div>`;const late=M.over_warn>=0.05,Q=G()&&G().quiet()?' q':'',t=I.day_summary;
-  const cell=(v,l,u)=>`<span class="dmc"><b class="num">${v}</b><small>${l}</small><small class="dmcu">${u}</small></span>`;
-  return `<div class="dmxw" data-day="${d.day}"><button class="dmx d3${late?' late'+Q:''}" data-b="dmx" data-day="${d.day}" aria-haspopup="dialog" aria-label="${WDL[DAYS.indexOf(d.day)]}: ${escA(t.display||'')}${late?`, ${nfmt(M.over_warn)} effective sets over the session limit`:''}. Show per muscle">${cell(nfmt(t.stimulus_hard_set_eq),'Stim','hard sets')}${cell(nfmt(t.fatigue_fresh_set_eq),'Fatigue','fresh-set eq')}${cell(dd(t.recovery_days),'Ready','slowest')}</button>${late?`<div class="dmlate${Q}">${nfmt(M.over_warn)} over ${Q?'efficient ':''}limit</div>`:''}</div>`}
+const INFO='<span class="ig" aria-hidden="true">i</span>';
+// collapsed row on the day column (one compact line: fatigue · ready range); tapping it opens the per-muscle sheet
+function dmxHtml(d){const M=dmxOf(d),I=impOf(d);if(!M||!I)return `<div class="dmxw" data-day="${d.day}"></div>`;const late=M.n_over>0&&M.over_warn>0,t=I.day_summary,R=dayRange(I);
+  return `<div class="dmxw" data-day="${d.day}"><button class="dmx d1" data-b="dmx" data-day="${d.day}" aria-haspopup="dialog" aria-label="${WDL[DAYS.indexOf(d.day)]}: fatigue ${nfmt(t.fatigue_fresh_set_eq)} fresh-set equivalents, slowest muscle ready in ${R.replace('–',' to ').replace(' d',' days')}${late?`, ${nfmt(M.over_warn)} effective sets past the per-workout limit`:''}. Show per muscle"><span><b class="num">${nfmt(t.fatigue_fresh_set_eq)}</b> fatigue</span><span>ready <b class="num">${R}</b></span></button>${late?`<div class="dmlate">${INFO}${nfmt(M.over_warn)} past the limit</div>`:''}</div>`}
 let DMS=null;
-function dmxBody(day){const D=B.days.find(x=>x.day===day),M=dmxOf(D),I=impOf(D);if(!M||!I)return '<p class="foot">No sets this day.</p>';const late=M.over_warn>=0.05,Q=G()&&G().quiet()?' q':'',t=I.day_summary;
+function dmxBody(day){const D=B.days.find(x=>x.day===day),M=dmxOf(D),I=impOf(D);if(!M||!I)return '<p class="foot">No sets this day.</p>';const late=M.n_over>0&&M.over_warn>0,t=I.day_summary;
   const tile=(v,l,u)=>`<div class="dmst"><b class="num">${v}</b><small>${l}</small><small class="dmu">${u}</small></div>`;const LM={};M.muscles.forEach(o=>LM[o.m]=o);
   const rows=Object.keys(X.ML).filter(m=>I.muscles[m]&&I.muscles[m].stimulus_hard_set_eq>=0.5).sort((a,b)=>I.muscles[b].stimulus_hard_set_eq-I.muscles[a].stimulus_hard_set_eq);
-  return `<div class="dmsum">${tile(nfmt(t.stimulus_hard_set_eq),'Stimulus','hard sets')}${tile(nfmt(t.fatigue_fresh_set_eq),'Fatigue','fresh-set eq')}${tile(dd(t.recovery_days),'Ready in','slowest muscle')}</div>
-   ${late?`<p class="dmslate${Q}">${nfmt(M.over_warn)} effective sets past the session limit. Late sets still count for the week. ${nurdChip('late')}</p>`:''}
-   ${late&&Q?trimCard('dms'):''}<div class="dmst2"><div class="dmsh"><span>Per muscle</span><span class="evl" data-ev="modeled">Modeled</span></div>
-   <div class="dmsr dmsrh"><span>Muscle</span><span>Stim</span><span>Fatigue</span><span>S:F</span><span>Ready</span></div>
-   ${rows.map(m=>{const o=I.muscles[m],L=LM[m],lt=L&&L.over_limit>=0.05&&!L.exempt,tr=PC.r2u(o.stimulus_hard_set_eq)>=1;return `<div class="dmsr${lt?' late'+Q:''}" data-m="${m}" data-eff="${tr?o.sf_dial:''}" data-glow="${o.fatigue_band}"><span class="dmsn">${MLB(m)}${lt?`<small class="dmmw">${lateTxt(L)}</small>`:''}</span><span class="num">${nfmt(o.stimulus_hard_set_eq)}</span><span class="num">${nfmt(o.fatigue_fresh_set_eq)}</span><span class="num${tr?' eff-'+o.sf_dial:''}">${o.sf_ratio!=null?o.sf_ratio.toFixed(2):'–'}</span><span class="num">${o.recovery_days>0?dd(o.recovery_days):'–'}</span></div>`}).join('')}</div>
-   <p class="dmxk">Stim in hard sets, fatigue in fresh-set equivalents; S:F = stim ÷ fatigue for that muscle (1.00 = a machine chest press set). ${nurdChip('daymx')}</p>`}
+  const T=late&&APR()==='efficient'?trimPlan():null;
+  return `<div class="dmsum">${tile(nfmt(t.stimulus_hard_set_eq),'Stimulus','hard sets')}${tile(nfmt(t.fatigue_fresh_set_eq),'Fatigue','fresh-set eq')}${tile(dayRange(I),'Ready in','slowest muscle')}</div>
+   ${late?`<p class="dmslate">${INFO}${nfmt(M.over_warn)} effective sets past the per-workout limit. They still count for the week. ${nurdChip('late')}</p>`:''}
+   ${T?trimPreview(T,'dms'):''}<div class="dmst2"><div class="dmsh"><span>Per muscle</span><span class="evl" data-ev="modeled">Modeled</span></div>
+   <div class="dmsr dmsrh"><span>Muscle</span><span>Stim</span><span>Fatigue</span><span>Effic.</span><span>Ready</span></div>
+   ${rows.map(m=>{const o=I.muscles[m],L=LM[m],lt=L&&L.over&&!L.exempt,tn=effTone(m,o);return `<div class="dmsr${lt?' late':''}" data-m="${m}" data-eff="${tn||''}" data-past="${pastLim(o)?1:0}"><span class="dmsn">${MLB(m)}${lt?`<small class="dmmw">${INFO}${lateTxt(L)}</small>`:''}</span><span class="num">${nfmt(o.stimulus_hard_set_eq)}</span><span class="num">${nfmt(o.fatigue_fresh_set_eq)}</span><span class="num${tn?' eff-'+tn:''}"${o.sf_score!=null?` title="S:F ${o.sf_ratio.toFixed(2)} ÷ ${o.sf_class} reference"`:''}>${tn&&o.sf_score!=null?o.sf_score.toFixed(2):'–'}</span><span class="num">${o.recovery_hours>0?rr(o.ready_range_days):'–'}</span></div>`}).join('')}</div>
+   <p class="dmxk">Fatigue: 1 = one hard set of machine chest press. Effic. = this muscle\'s S:F ÷ its size-class reference (1.00 = a heavy compound with the muscle as prime mover); – = under 1 effective set. ${nurdChip('daymx')}</p>`}
 function dmxSheet(day){if(DMS&&!DMS.closed)DMS.close();const i=DAYS.indexOf(day),D=B.days.find(x=>x.day===day);
   DMS=X.sheet({title:`${WDL[i]}${D?` · ${dayLabel(D)}`:''}`,cls:'tall grouped dmsheet',right:'<button class="btn plain" data-b="dmclose">Done</button>',onClose(){DMS=null}});DMS.day=day;DMS.body.innerHTML=dmxBody(day);return DMS}
 function colHtml(d,i){return `<section class="col${isRest(d)?' restday':''}" data-day="${d.day}" data-i="${i}"><header data-b="dayh" data-day="${d.day}" role="button" tabindex="0" aria-label="${WDL[i]}: ${dayLabel(d)}. Rename or set Rest"><b>${WD[i]}</b><span class="cl">${dayLabel(d)}</span><span class="cm num">${dayMeta(d)}</span></header>${dmxHtml(d)}
@@ -383,7 +393,7 @@ const volZone=(m,v)=>{const Z=(RD().targets||{}).volume_zones,z=Z&&(Z[B.level]||
 const ZL=id=>(((RD().VM||{}).zones||{}).zone_ids||{})[id]||id;
 // vol10 goal toggle (logic/goals.js): RD() syncs the goal into PCHECK, so limits, warnings and day metrics follow it live.
 const G=()=>window.GOALS;
-const goalSeg=()=>!G()||!G().options().length?'':`<div class="seg sm2 rbmode gseg" role="group" aria-label="Analysis goal">${G().options().map(g=>`<button type="button" class="${g.id===G().mode?'on':''}" data-b="goal" data-goal="${g.id}" aria-pressed="${g.id===G().mode}">${g.label}</button>`).join('')}</div>`;
+const goalSeg=()=>!G()||!G().options().length?'':`<div class="seg sm2 rbmode gseg" role="group" aria-label="${G().toggleDisplay?G().toggleDisplay():'Approach'}">${G().options().map(g=>`<button type="button" class="${g.id===G().mode?'on':''}" data-b="goal" data-goal="${g.id}" aria-pressed="${g.id===G().mode}">${g.label}</button>`).join('')}</div>`;
 // weekly effective sets per muscle, unrounded (goal target text compares round(x, 2) like Coach's preset recheck)
 const rawWeek=d=>{const o={};d.forEach(D=>{const e=PC.eff(RD0(),D.tiles);for(const m in e)o[m]=(o[m]||0)+e[m]});return o};
 const tgtState=(x,T)=>!T?null:(x=Math.round(x*100)/100)<T.target?'below':x>T.upper?'above':'on';
@@ -409,8 +419,8 @@ function curve(m,A){const v=A.muscles[m],x=v.x,z=v.zones&&v.zones.sweet?v.zones:
   // level_min_pct for the user's level). No computed fallback: a muscle without official anchors shows no marks. Numbered marks on the
   // curve (the sweet spot gets a mark at its low edge and a small tick at its high edge); a mark that would crowd its neighbour or the
   // week's dot drops below the curve.
-  const OA=z?PC.anchors(RD(),m,B.level):null,EVL={direct:'direct study',rule_of_thumb:'rule of thumb'};
-  const ANC=OA?[{k:'min',q:OA.min.sets,lab:`Minimum ${nfmt(OA.min.sets)} sets · <b class="num">${nfmt(OA.min.pct)}%</b>${OA.ev&&EVL[OA.ev]?` <em class="anev" data-ev="${OA.ev}">${EVL[OA.ev]}</em>`:''}`,p:OA.min.pct},
+  const OA=z?PC.anchors(RD(),m,B.level):null,AR=((RD().VM.curve||{}).anchors_rule||{}).min_vol12||{},MINTAG=AR.label||'rule of thumb';
+  const ANC=OA?[{k:'min',q:OA.min.sets,lab:`Minimum ${nfmt(OA.min.sets)} sets · <b class="num">${nfmt(OA.min.pct)}%</b> <em class="anev" data-ev="rule_of_thumb">${MINTAG}</em>`,p:OA.min.pct},
     {k:'sweet',q:OA.sweet_low.sets,q2:OA.sweet_high.sets,lab:`Sweet spot ${nfmt(OA.sweet_low.sets)}–${nfmt(OA.sweet_high.sets)} sets · <b class="num">${nfmt(OA.sweet_low.pct)}–${nfmt(OA.sweet_high.pct)}%</b>`,p:OA.sweet_low.pct+'-'+OA.sweet_high.pct},
     {k:'dim',q:OA.dim.sets,lab:`Diminishing returns ${nfmt(OA.dim.sets)} sets · <b class="num">${nfmt(OA.dim.pct)}%</b>`,p:OA.dim.pct}]:[];
   ANC.forEach((o,i)=>{const nP=i>0&&px(o.q)-px(ANC[i-1].q)<16,nD=Math.abs(px(o.q)-px(Math.min(x,Xm)))<13;o.dn=(nP&&!ANC[i-1].dn)||(nD&&!(nP&&ANC[i-1].dn))});
@@ -451,7 +461,7 @@ function setAnOpen(id,v){const o=anOpen();o[id]=v?1:0;try{localStorage.setItem(A
 const ICO={pass:'<span class="cki ok" role="img" aria-label="Pass">✓</span>',close:'<span class="cki amb" role="img" aria-label="Close to target">!</span>',attention:'<span class="cki bad" role="img" aria-label="Needs attention">!</span>','n/a':'<span class="cki na" role="img" aria-label="Not counted">–</span>'};
 const mlk=(m,anchor)=>`<button class="mlk" data-b="mus" data-m="${m}"${anchor?` data-anchor="${anchor}"`:''}>${MLB(m)}</button>`;
 const escA=s=>String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-const nfmt=x=>+(+x).toFixed(1);   // qc3009: one decimal max, no trailing .0
+const nfmt=x=>{x=+x;const r=Math.sign(x)*Math.round(Math.abs(x)*10+1e-9)/10;return r===0?0:r};   // vol13 #28: ONE rounding (half-up, 1 decimal) for every header and body
 // a value shown next to a target range never looks in range when it isn't: whole numbers stay whole; otherwise one decimal,
 // rounded normally unless that flips the side of the range, then rounded away from the range (7.95 of 8–20 -> 7.9)
 const bfmt=(v,lo,hi)=>{v=+v;if(Number.isInteger(v))return String(v);const side=x=>x<lo?-1:hi!=null&&x>hi?1:0,s=side(v);let r=Math.round(v*10)/10;
@@ -462,7 +472,8 @@ const weekLeg=()=>`<span class="mleg">${['under','in','amber','red'].map(k=>`<i 
 function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules,lv=B.level;FIX=[];const sc0=AN.body.scrollTop;
   const cur=sigD();APPLIED=APPLIED.filter(a=>a.bsig!==cur); // undone (here or with the Undo bar): drop it
   const SH=ANL.sheet(dt,d,lv,null);
-  const EV=R.analysis_metrics,AMI={};EV.items.forEach(i=>AMI[i.id]=i);const IT=ANL.items(dt,d,lv,null),IB={};IT.forEach(i=>IB[i.id]=i);AN.items=IB;
+  const EV=R.analysis_metrics,AMI={};EV.items.forEach(i=>AMI[i.id]=i);const RETI=id=>/^retired/.test(((((dt.DISP||{}).items||{})[id])||{}).display_status||''),IT=ANL.items(dt,d,lv,null).filter(i=>!RETI(i.id)),IB={};   // vol13: retired displays (analysis-display.json display_status) never render
+  IT.forEach(i=>IB[i.id]=i);AN.items=IB;
   const LB=id=>DLAB(id)||(IB[id]||AMI[id]||{}).label||id;
   const VCOL=((IB.weekly_sets_per_muscle||{}).value||{}).muscles||{};
   // Coach's per-muscle colour (G in range, A close, R far): amber shows amber with a Close status and is never green
@@ -470,7 +481,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
     return `<button class="row vrow${col==='A'?' vclose':''}" data-vs="${st}" data-st="${ks}" data-col="${col||''}" data-b="mus" data-m="${m}" data-anchor="sets"><span class="vm">${X.ML[m]||m}${ks==='close-under'||ks==='close-over'||ks==='over'?`<small class="vst ${ks==='over'?'red':'amb'}">${X.VLAB[ks]}</small>`:''}</span><span class="vb"><i style="--w:${Math.min(1,v.raw/top)*100}%" class="vs-${st}"></i><b style="--x:${v.max/top*100}%"></b></span><span class="vn num">${bfmt(v.raw,v.min,v.max)}<small>/${v.min}–${v.max}</small></span></button>`};
   const T=Object.entries(A.muscles).filter(([m,v])=>v.raw>0||v.min>0),RU={};R.rules.forEach(r=>RU[r.id]=r);
   const FM=R.frequency_muscles,fq=m=>B.days.map((dd,i)=>{const e=PC.eff(dt,dd.tiles.map(t=>({id:t.id,sets:t.sets})))[m]||0;const ok=e>=dt.targets.analytics.frequency_min_effective;return `<i class="${ok?'on':e>0?'lo':''}" data-r="${RAMPL(e)}" title="${WD[i]} · ${+e.toFixed(1)} sets${ok?' (counts)':''}"></i>`}).join('');
-  const SL=PC.sessP(dt,lv),mx=Math.max(SL.warn_min+15,...A.day.map(x=>x.minutes)),SP=A.spinal,cm=Object.keys(A.muscles).includes(AN.mus)?AN.mus:'chest';
+  const SL=PC.sessP(dt,lv),mx=Math.max(SL.warn_min+15,...A.day.map(x=>x.minutes)),SP=A.spinal,cm=AN.mus===null?null:Object.keys(A.muscles).includes(AN.mus)?AN.mus:'chest';
   const MPL=(R.movement_patterns||{}).labels||{},RGL=k=>k[0].toUpperCase()+k.slice(1);
   const val=id=>(IB[id]||{}).value,ntc=id=>((IB[id]||{}).notes||[]).length;
   const fz=val('fatigue_rating')||{},rc=val('recovery_cost')||{},ss=val('stretch_share')||{per_muscle:{}},mps=val('movement_pattern_sets')||{},us=val('unilateral_share')||{},spf=(val('stimulus_per_fatigue')||{}).per_muscle||{},pp=val('push_pull_ratio');
@@ -509,7 +520,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   // vol2: lower-fatigue swap card = the swap + its fatigue delta; when ANALYSIS.swapRecord(...).drops_below_min is non-empty, one more
   // line in volume-model.json swaps.display wording: "Drops {muscle} below its minimum ({after} of {min} sets)" (muscles with a delta >= 0.5 set)
   const swapTrade=s=>{const f=s.fixes[0];if(!f||!f.days||!dt.VM)return '';const sx=(f.diff||[]).find(x=>x.op==='swap');const r=ANL.swapRecord(dt,d,f.days,lv,sx&&sx.from_id,sx&&sx.to_id);
-    const fd=r.fatigue_cost.delta,line1=`<span class="sgfd num">${fd<0?`Saves ${nfmt(-fd)}`:`Adds ${nfmt(fd)}`} fatigue a week</span>`;
+    const fd=r.fatigue_cost.delta,same=Object.values(r.muscles).every(o=>Math.abs(o.delta)<0.5),line1=`<span class="sgfd num">${fd<0?`Saves ${nfmt(-fd)}`:`Adds ${nfmt(fd)}`} fresh-set eq a week${same?', same stimulus':''}</span>`;
     const dr=Object.keys(r.muscles).filter(m=>{const o=r.muscles[m];return o.before_shown>=o.min&&o.after_shown<o.min&&Math.abs(o.delta)>=0.5});   // qc3009: judged on the shown (credited, 1-dp) values so the card agrees with the table
     return line1+dr.map(m=>`<span class="sgtr" data-m="${m}">Drops ${MLB(m).toLowerCase()} below its minimum (${nfmt(r.muscles[m].after_shown)} of ${nfmt(r.muscles[m].min)} sets)</span>`).join('')};
   const sgRow=(s,inl)=>{const [who,num]=sgHead(s),f0=s.fixes[0];let k=-1;if(f0){FIX.push(Object.assign({section:s.section},f0));k=FIX.length-1}const m=sgM(s);
@@ -524,8 +535,19 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
     return `${ds?`<b>${ds}</b>`:''}${xs.length?`${ds?' · ':''}${xs.slice(0,5).join(', ')}${xs.length>5?` +${xs.length-5} more`:''}`:''}${f.missing_slot?`Nothing on the board fills ${(MPL[f.missing_slot]||f.missing_slot.replace(/_/g,' ')).toLowerCase()}`:''}`};
   const fdet=(it,f,note)=>`<div class="ckd fdet ${note?'note':f.severity}" data-rule="${f.rule}"${f.muscle?` data-m="${f.muscle}"`:''}><p>${f.muscle?mlk(f.muscle)+' · ':''}${PC.message(dt,f.flag,d,lv)}</p>${who(f)?`<p class="fwho">${who(f)}</p>`:''}</div>${take(it.section,s=>(s.target||{}).flag&&JSON.stringify(s.target.flag)===JSON.stringify(f.flag),true)}`;
   const flagsOf=it=>(it.flags||[]).map(f=>fdet(it,f)).join('')+(it.notes||[]).map(f=>fdet(it,f,1)).join('');
+  // vol13 #22: a check's title states its result (failing titles never read as passes)
+  const fm=it=>[...new Set((it.flags||[]).map(f=>f.muscle).filter(Boolean))].map(MLB);
+  const lst=a=>a.length<=2?a.join(' and '):`${a.slice(0,2).join(', ')} +${a.length-2} more`;
+  const RT=(id,it)=>{if(!it||it.kind!=='check'||it.status==='n/a')return LB(id);const ok=it.status==='pass',nf=(it.flags||[]).length;
+    if(id==='volume_in_reach')return ok?'Every muscle within reach of its weekly range':`${lst(fm(it))} out of reach`;
+    if(id==='session_design'){if(ok)return 'Sets per exercise and session size are fine';const x=(it.flags||[]).filter(f=>f.rule==='sets_per_exercise').length;return x?`${x} exercise${x===1?' has':'s have'} too many sets in one session`:`${nf} session${nf===1?'':'s'} to resize`}
+    if(id==='push_pull_ratio')return ok?'Pulling and pressing in balance':pp&&pp.pull_to_push!=null?`Pull:push is ${pp.pull_to_push}, outside 0.75–2`:'Pulling and pressing out of balance';
+    if(id==='frequency_two_days')return ok?'Main muscles on 2+ days':`${nf||ntc(id)} muscle${(nf||ntc(id))===1?'':'s'} on 1 day`;
+    if(id==='spinal_load')return ok?'Heavy spine sets within the caps':`Heavy spine sets over the cap on ${[...new Set(A.day.filter(x=>x.spinal>SP.session_max).map(x=>WD[DAYS.indexOf(x.day)]))].join(', ')||'the week'}`;
+    if(id==='consecutive_high_volume')return ok?'Hard days for a muscle are not back to back':`${lst(fm(it))} hard on back-to-back days`;
+    return ok?LB(id):`Needs attention: ${LB(id).charAt(0).toLowerCase()+LB(id).slice(1)}`};
   const ckRow=(id,o={})=>{const it=IB[id];if(!it)return '';const def=AMI[id]||{},s=st(it);
-    return `<div class="ckr${s?'':' ms'}" data-metric="${id}" data-kind="${it.kind}" data-status="${def.status}" data-evidence="${def.evidence}"${it.status?` data-check="${it.status}"`:''}${s?` data-state="${s}"`:''}${id==='volume_in_reach'?` data-amber="${AMB.length}"`:''}>${s?ICO[s]:''}<span class="ckt">${LB(id)}</span><span class="ckv num">${it.status==='n/a'?`n/a · ${NA(it)}`:o.v!=null?o.v:(VAL[id]||'')}</span>${ibx(id)}</div>${o.after||''}${o.noflags?'':flagsOf(it)}`};
+    return `<div class="ckr${s?'':' ms'}" data-metric="${id}" data-kind="${it.kind}" data-status="${def.status}" data-evidence="${def.evidence}"${it.status?` data-check="${it.status}"`:''}${s?` data-state="${s}"`:''}${id==='volume_in_reach'?` data-amber="${AMB.length}"`:''}>${s?ICO[s]:''}<span class="ckt">${RT(id,it)}</span><span class="ckv num">${it.status==='n/a'?`n/a · ${NA(it)}`:o.v!=null?o.v:(VAL[id]||'')}</span>${ibx(id)}</div>${o.after||''}${o.noflags?'':flagsOf(it)}`};
   const gfx=(id,inner,o={})=>{const it=IB[id];if(!it)return '';const s=st(it),def=AMI[id]||{};
     return `<div class="agfx" data-metric="${id}" data-kind="${it.kind}" data-status="${def.status}" data-evidence="${def.evidence}"${it.status?` data-check="${it.status}"`:''}${s?` data-state="${s}"`:''}><div class="ash">${s?ICO[s]:''}<span>${o.label||LB(id)}</span>${o.mod?'<span class="evl" data-ev="modeled">Modeled</span>':''}<span class="ashv num">${o.v!=null?o.v:(VAL[id]||'')}</span>${ibx(id)}</div>${inner}${o.noflags?'':flagsOf(it)}</div>`};
   const hbar=(lab,w,v,o={})=>`<div class="hbar${o.cls?' '+o.cls:''}"${o.attr||''}><span class="vm hbs">${lab}</span><span class="hbt"><i class="${o.c||''}" style="--w:${Math.max(0,Math.min(100,w))}%"></i>${o.x!=null?`<b style="--x:${o.x}%"></b>`:''}</span><span class="vn num">${v}</span></div>`;
@@ -605,15 +627,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
       r.ses.forEach(o=>g+=`<circle cx="${X(o.i)}" cy="${y}" r="4.5" class="rtdot"/>`)});
     return `<div class="ash rth"><span>Muscle recovery timeline</span><span class="evl" data-ev="modeled">Modeled</span></div><svg class="rtl8" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Recovery timeline">${g}</svg>
       <div class="rtleg8"><span><i class="k dot"></i>session</span><span><i class="k dk"></i>until earliest ready</span><span><i class="k lt8"></i>until latest</span><span><i class="k ov"></i>3+ days running or too soon</span><span><i class="k gp"></i>gap over 5 days</span></div>`};
-  const BODY={
-    volume:()=>gfx('weekly_sets_per_muscle',`<div class="curvec card curve">${curve(cm,A)}</div>${mtab}${X.volLegend(true)}`,{label:'Sets and stimulus per muscle',mod:1})+perWorkout()
-      +`<div class="ckl">${ckRow('volume_in_reach',{after:IB.volume_in_reach&&IB.volume_in_reach.status==='pass'?ambList:''})}${ckRow('weekly_sets_per_region')}</div>`+rest('volume'),
-    frequency:()=>{const N=dt.FN&&window.FREQNOTES?FREQNOTES.notes(dt,d,lv,dt.FN.templates):[];
-      const nrow=n=>{const m=n.link&&n.link.muscle,lab=m?MLB(m):'',txt=m&&n.text.toLowerCase().startsWith(m.replace(/_/g,' ')+':')?n.text.slice(m.length+1):n.text;
-        return `<div class="nrow" data-note="${n.id}" data-pol="${n.polarity}"${m?` data-m="${m}"`:''}>${n.polarity==='positive'?ICO.pass:ICO.close}<span>${m?`<button class="mlk" data-b="mus" data-m="${m}" data-anchor="${n.link.anchor.replace('deepdive-'+m+'-','')}">${lab}</button>:`:''}${txt}</span></div>${m&&n.polarity==='negative'?take('frequency',s=>sgM(s)===m,true):''}`};
-      return gfx('effective_frequency',`<div class="group freq"><div class="row fqh"><span class="vm"></span><span class="fq">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>${FM.map(m=>`<button class="row" data-b="mus" data-m="${m}" data-anchor="frequency"><span class="vm">${X.ML[m]}</span><span class="fq">${fq(m)}</span></button>`).join('')}<div class="row fqleg">${rampLeg()}</div></div>`)
-        +gfx('frequency_two_days',`<div class="ckl fnotes">${N.map(nrow).join('')}</div>`,{noflags:1})
-        +`<div class="ckl">${ckRow('consecutive_high_volume',{noflags:1})}${ckRow('day_shading')}</div>`+rest('frequency')},
+  const B0={
     balance:()=>{const fb=dt.targets.analytics.stretch_share_flag_below,inG=new Set();
       // bar colour follows the muscle's own stretch check when it has one (pass = green + tick, otherwise amber, no tick);
       // muscles without a check are coloured by their share against the line. A pass below the line says why in a short note.
@@ -621,46 +635,14 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
       const ssRows=Object.entries(ss.per_muscle||{}).map(([m,v])=>{const ci=IB['stretch_'+m];if(ci)inG.add(ci.id);
         const c=ci&&ci.status!=='n/a'?(ci.status==='pass'?'ok':'amb'):(v<fb?'amb':'ok');
         const why=ci&&ci.status==='pass'&&v<fb?(()=>{const ex=(SB[m]||[]).filter(i=>onB.has(i)).map(EXN);return `<p class="ssn" data-m="${m}">Passes because ${ex.length?ex.join(' and ')+(ex.length>1?' count':' counts')+' as':'it has'} stretch-focused work. Its share is still under ${pct(fb)}.</p>`})():'';
-        return hbar(`${mlk(m,'stretch')}${ci?`<button class="cbx" data-b="anx" data-id="${ci.id}" data-check-item="${ci.id}" data-check="${ci.status}" aria-label="Explain: ${DLAB(ci.id)||ci.id}">${ci.status==='pass'?ICO.pass:ci.status==='attention'?ICO.close:ICO['n/a']}</button>`:''}`,v*100,bpct(v,fb),{cls:'ssr',attr:` data-m="${m}" data-c="${c}"`,c,x:fb*100})+why+take('balance',s=>s.source==='stretch_share'&&sgM(s)===m,true)}).join('');
+        return hbar(`${mlk(m,'stretch')}${ci?`<button class="cbx" data-b="anx" data-id="${ci.id}" data-check-item="${ci.id}" data-check="${ci.status}" aria-label="Explain: ${DLAB(ci.id)||ci.id}">${ci.status==='pass'?(v<fb?'<span class="cki na" role="img" aria-label="Passes on exercise choice">i</span>':ICO.pass):ci.status==='attention'?ICO.close:ICO['n/a']}</button>`:''}`,v*100,bpct(v,fb),{cls:'ssr',attr:` data-m="${m}" data-c="${c}"`,c,x:fb*100})+why+take('balance',s=>s.source==='stretch_share'&&sgM(s)===m,true)}).join('');
       const pmx=Math.max(1,...Object.values(mps));
-      const ppBar=pp&&(pp.pull_sets+pp.push_sets)?`<div class="ckd"><div class="ppbar"><span class="pu" style="flex:${pp.pull_sets}">Pull ${pp.pull_sets}</span><span class="ps" style="flex:${pp.push_sets}">Push ${pp.push_sets}</span></div><p class="ppcap">${pp.pull_to_push} pull per push · in balance at 0.75–2</p></div>`:'';
+      const ppBar=pp&&(pp.pull_sets+pp.push_sets)?`<div class="ckd"><div class="ppbar"><span class="pu" style="flex:${pp.pull_sets}">Pull ${pp.pull_sets}</span><span class="ps" style="flex:${pp.push_sets}">Push ${pp.push_sets}</span></div><p class="ppcap">${pp.pull_to_push} pull per push · in balance at 0.75–2</p><p class="ppwho">${(()=>{const PAT=dt.PAT,RR=dt.rules,cnt=(L)=>{const o={};d.forEach(D=>D.tiles.forEach(t=>{if(L.includes(PAT[t.id]))o[t.id]=(o[t.id]||0)+t.sets}));return Object.entries(o).map(([i,n])=>`${X.exNameP(i)} ${n}`).join(', ')};return `Push counts presses, dips and chest flyes: ${cnt(RR.push_patterns)||'none'}. Pull counts rows, pulldowns, rear-delt and lat isolation: ${cnt(RR.pull_patterns)||'none'}.`})()}</p></div>`:'';
       const stretchChecks=IT.filter(i=>/^stretch_/.test(i.id)&&i.kind==='check'&&(!inG.has(i.id)||i.status!=='pass')).map(i=>ckRow(i.id)).join('');
       return gfx('stretch_share',`<div class="hbars">${ssRows}</div><p class="foot">Line = ${pct(fb)}: below it a muscle gets few stretch-focused sets. ✓ = the muscle's own stretch check passes; the bar colour follows that check.</p>`)
         +gfx('unilateral_share',hbar('All sets',(us.overall||0)*100,pct(us.overall||0)))
         +gfx('movement_pattern_sets',`<div class="hbars pats">${Object.entries(mps).map(([k,v])=>`<button class="hbar prow" data-b="pat" data-p="${k}"><span class="vm hbs">${MPL[k]||k}</span><span class="hbt"><i style="--w:${v/pmx*100}%"></i></span><span class="vn num">${v} sets</span></button>`).join('')}</div>`)
         +`<div class="ckl">${ckRow('push_pull_ratio',{after:ppBar})}${ckRow('pattern_coverage')}${ckRow('redundant_pattern')}${stretchChecks}${ckRow('stretch_coverage')}</div>`+rest('balance')},
-    recovery_fatigue:()=>{const bd=rc.by_day||{},bmx=Math.max(1e-9,...Object.values(bd)),sm=Object.entries(spf).sort((a,b)=>a[1]-b[1]),smx=Math.max(1e-9,...sm.map(x=>x[1]));
-      const tiers=(fz.components||{}).tiers||[],FTI=l=>['heavy axial compound','other compound','lighter compound','isolation'].indexOf(l)+1; // week tier list: same tier colours as the day stacks
-      // r3fu: each day's bar stacked by fatigue tier (MUSCLEDIVE.recoveryTiers, port of Coach's recovery_tiers; tier costs sum exactly to the day total)
-      const RTD=window.MUSCLEDIVE&&MUSCLEDIVE.recoveryTiers?MUSCLEDIVE.recoveryTiers(dt,checkDays()):null,TI=id=>(RTD?RTD.tiers.findIndex(t=>t.id===id):0)+1,TL=id=>RGL(((RTD&&RTD.tiers.find(t=>t.id===id))||{label:id}).label);
-      const stk=(k,v)=>{const T=((RTD||{}).by_day||{})[k];if(!T)return hbar(dayN(k),v/bmx*100,v);
-        const hh=Math.max(0,...Object.values(((rc.hours||{}).by_day||{})[k]||{})),hr=hh?RG(hh):null;return `<div class="hbar rtrow" data-day="${k}" data-total="${T.total}"><span class="vm hbs">${dayN(k)}</span><span class="hbt rtk"><span class="rtstk" style="--w:${T.total/bmx*100}%">${T.tiers.map(t=>`<i data-tier="${t.tier}" data-cost="${t.cost}" style="--tw:${T.total?t.cost/T.total*100:0}%;background:var(--tier-${TI(t.tier)})" title="${TL(t.tier)} · ${t.cost} pts · ${t.sets} sets"></i>`).join('')}</span></span><span class="vn num rgv" title="${hr?'Longest: '+hr.text:''}">${hr?(hr.text==='about a day'?'~1 d':`${hr.lo}–${hr.hi} d`):''}</span></div>`};
-      const RG=h=>ANL.hoursRange(dt,h),CAV=((dt.VM||{}).recovery||{}).caveat||'';const RH=(rc.hours||{}).per_muscle||{},hoursHtml=()=>{const L=Object.entries(RH).sort((a,b)=>b[1].hours-a[1].hours);return L.length?`<div class="ash rhh"><span>Ready to train hard again</span><span class="ashv">modeled</span></div><p class="rcav">${CAV}</p><div class="rhrs">${L.map(([m,o])=>`<div class="rhr" data-m="${m}">${mlk(m,'fatigue')}<span class="num">${RG(o.hours).text} <small>after ${WD[DAYS.indexOf(o.day)]}</small></span></div>`).join('')}</div><p class="foot">Ranges after each muscle's hardest session of the week; bars show the longest range that day (d = days).${lv==='beginner'?' Newer lifters get a 15% longer estimate.':''}</p>`:''};
-      // QC 645: the ladder is a real value scale. Domain = benchmarks ± 10% padding; benchmark labels stagger below (alternate rows),
-      // "This week" sits above its dot; a week outside the domain is clamped at the end with an arrow and a note.
-      // vol5 benchmarks: modes from targets.json recovery.reference.baseline_modes. "Typical routines" first; "My average" (ANALYSIS.myAverage:
-      // rolling personal_window_weeks mean of logged week_cost) becomes the default once personal_after_weeks qualifying weeks exist; toggle saved locally.
-      // Scale (960b070 fixes): value order, domain = all points ±12%, greedy label rows so nothing collides, clamped ends with ‹/› and a note.
-      const benchHtml=()=>{const b=rc.benchmarks,ref=recRef()||{};if(!b)return '';const MA=ANL.myAverage(dt,X.progHist?X.progHist():null),MO=ref.baseline_modes||[{id:'typical_routines',label:'Typical routines'},{id:'my_average',label:'My average'}];
-        let mode=benchMode();if(!mode)mode=MA.available?'my_average':'typical_routines';if(mode==='my_average'&&!MA.available)mode='typical_routines';
-        const mine=mode==='my_average',L=b.list.map(x=>({name:x.name,v:x.week_cost})).concat(mine?[{name:'My average',v:MA.avg,me:1}]:[]).sort((p,q)=>p.v-q.v);
-        const vs=L.map(x=>x.v),bl=Math.min(...vs),bh=Math.max(...vs),pad=(bh-bl)*.12||8,lo=bl-pad,hi=bh+pad,P=v=>Math.max(0,Math.min(100,(v-lo)/(hi-lo)*100)),out=b.week<lo?'lo':b.week>hi?'hi':'';
-        const SH=n=>n.replace(/^Classic /,'').replace(' body-part split',' split').replace(' push/pull/legs',' PPL'),TW=330,cw=t=>t.length*5.6+8;
-        const rows=[];const place=x=>{const t=`${SH(x.name)} ${Math.round(x.v)}`,p=P(x.v),w=cw(t),tx=p<12?0:p>88?-1:-.5,l=p/100*TW+tx*w,r=l+w;let k=0;while((rows[k]||[]).some(([a,c])=>l<c+6&&a<r+6))k++;(rows[k]=rows[k]||[]).push([l,r]);return {x,t,p,tx,k}};
-        const PL=L.map(place),at=(p,tx,cls,inner,top)=>`<span class="${cls}" style="left:${p.toFixed(1)}%;--tx:${tx*100}%${top!=null?`;top:${top}px`:''}">${inner}</span>`;
-        const wp=P(b.week),ratio=nfmt(mine?b.week/MA.avg:b.ratio),wl=`${out==='lo'?'‹ ':''}This week <b class="num">${Math.round(b.week)}</b>${out==='hi'?' ›':''}`;
-        const seg=`<div class="seg sm2 rbmode" role="group" aria-label="Compare with">${MO.map(o=>{const dis=o.id==='my_average'&&!MA.available;return `<button type="button" class="${o.id===mode?'on':''}" data-b="bmode" data-mode="${o.id}" aria-pressed="${o.id===mode}"${dis?' disabled':''}>${o.label}</button>`}).join('')}</div>`;
-        const line=mine?`This week ≈ <b class="num">${ratio}×</b> your 4-week average`:`This week ≈ <b class="num">${ratio}×</b> a ${b.nearest.replace(/^Classic /,'').toLowerCase()}`;
-        return `<div class="rbench" data-mode="${mode}" data-ratio="${ratio}" data-out="${out}"><div class="ash"><span>${ref.label||'Compared with common routines'}</span></div>${seg}<p class="rbl">${line}</p>
-          <div class="rbs"><div class="rbw">${at(wp,wp<12?0:wp>88?-1:-.5,'rbme',wl)}</div><div class="rbt">${L.map(x=>`<i class="${x.me?'me':''}" style="left:${P(x.v).toFixed(1)}%" title="${x.name}"></i>`).join('')}<b class="${out?'clamp':''}" style="left:${wp.toFixed(1)}%"></b></div>
-          <div class="rbn" style="height:${rows.length*20+2}px">${PL.map(o=>at(o.p,o.tx,'rbl'+(o.k?1:0)+(o.x.me?' rbmine':''),`<em>${SH(o.x.name)}</em> <span class="num">${Math.round(o.x.v)}</span>`,o.k*20)).join('')}</div></div>
-          ${out?`<p class="foot">This week is ${out==='lo'?'lighter than':'heavier than'} everything on the scale, so its dot is pinned to the ${out==='lo'?'left':'right'} end.</p>`:''}
-          <p class="foot">${mine?`My average: the last ${MA.window.length} logged weeks (deload weeks and weeks under half done left out).`:MA.available?'':`My average unlocks after ${MA.need} logged weeks (${MA.weeks} so far).`}</p></div>`};
-      const rleg=RTD?`<div class="tierleg rtleg">${RTD.tiers.map(t=>`<span data-tier="${t.id}"><i style="background:var(--tier-${TI(t.id)})"></i>${RGL(t.label)}</span>`).join('')}</div>`:'';
-      return gfx('recovery_cost',`<div class="hbars">${Object.entries(bd).map(([k,v])=>stk(k,v)).join('')||'<p class="foot">No training days yet.</p>'}</div>${Object.keys(bd).length?rleg:''}${benchHtml()}${rTimeline()}${hoursHtml()}`,{mod:1})
-        +gfx('stimulus_per_fatigue',`<div class="hbars">${sm.map(([m,v])=>hbar(mlk(m,'fatigue'),v/smx*100,String(nfmt(v)))).join('')}</div><p class="foot">Effective sets per fatigue point; lowest first.</p>`,{mod:1})
-        +gfx('fatigue_rating',fz.sets?`<div class="tierbar">${tiers.map(t=>`<i style="flex:${t.share_of_cost};background:var(--tier-${FTI(t.tier)})" title="${RGL(t.tier)}"></i>`).join('')}</div><div class="tierleg">${tiers.map(t=>`<span><i style="background:var(--tier-${FTI(t.tier)})"></i>${RGL(t.tier)} ${pct(t.share_of_cost)}</span>`).join('')}</div><button class="btn plain sm fzmore" data-b="anx" data-id="fatigue_rating">Full breakdown ›</button>`:'',{mod:1})
-        +`<div class="ckl">${ckRow('recovery_vs_baseline')}${ckRow('spinal_load',{after:A.day.length?`<div class="ckd">${A.day.map(x=>`<span class="${x.spinal>SP.session_max?'over':''}">${WD[DAYS.indexOf(x.day)]} ${x.spinal}/${SP.session_max}</span>`).join(' · ')} spine sets</div>`:''})}${ckRow('lower_back_fatigue')}</div>`+rest('recovery_fatigue','Lower-fatigue swaps')},
     session:()=>{const lim=sessLimit(),mx2=Math.max(mx,lim+15),SM=t=>PC.sessionMinutes(dt,t,lv);
       // fill/trim suggestions, ordered by goal fit (goal-weighted modeled stimulus per minute); each Apply goes through FIX/APPLIED (undoable)
       const wStim=days=>{const M=PC.analytics(dt,days,lv).muscles;return sum(Object.entries(M).map(([m,v])=>goalW(m)*(v.stim||0)))},base=wStim(d),SG=[];
@@ -678,20 +660,89 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
         <div class="group sess">${A.day.map(x=>`<div class="row"><span class="vm">${WD[DAYS.indexOf(x.day)]}</span><span class="sbar"><i style="--w:${x.minutes/mx2*100}%" class="${x.minutes>=SL.warn_min?'w':x.minutes>lim?'i':''}"></i><b style="--x:${lim/mx2*100}%"></b><b class="w" style="--x:${SL.warn_min/mx2*100}%"></b></span><span class="vn num">${Math.round(x.minutes)}</span></div>`).join('')||'<div class="row sub">No training days yet</div>'}</div>
         <p class="foot">Minutes per day. Grey line: your limit (${lim} min). Red line: too long for your level (${SL.warn_min} min).</p>
         ${top.length?`<div class="sgl ssgl"><div class="ash"><span>${over?'Trim to fit':'Room to fill'}</span><span class="ashv sub">best goal fit first</span></div>${sgx}</div>`:''}`)
-      +`<div class="ckl">${ckRow('session_design')}</div>`+rest('session')}};
-  const aplc=([a,i])=>`<div class="aplr aplc" data-k="${i}"><div class="grow"><p><b>Applied</b> · ${a.preview}</p>${a.asig===cur?'':'<p class="sub">The board changed after this. Undo puts the whole board back as it was just before Apply, so later edits are lost.</p>'}</div><button class="btn xs ink" data-b="unapply" data-k="${i}">Undo</button></div>`;
-  const SECS=EV.sections.filter(s=>s.tab==='build_analysis'&&s.id!=='suggestions'),OPEN=anOpen();
-  const sec=c=>{const its=IT.filter(i=>i.section===c.id),chk=its.filter(i=>i.kind==='check'&&i.status!=='n/a'),bad=chk.filter(i=>i.status==='attention').length,cl=c.id==='volume'&&its.some(i=>st(i)==='close')?AMB.length:0;
-    const ap=APPLIED.map((a,i)=>[a,i]).filter(([a])=>a.section===c.id),open=OPEN[c.id]!==0,body=BODY[c.id]?BODY[c.id]():'';
-    return `<section class="asec acat" data-cat="${c.id}" data-open="${open?1:0}"><button class="asech" data-b="asec" aria-expanded="${open}"><span class="asl">${c.label}</span><span class="ass gsub">${chk.length?`${bad?ICO.attention:cl?ICO.close:ICO.pass}${chk.length-bad} of ${chk.length} pass`:''}${cl?` · ${cl} close`:''}</span>${X.CHEV}</button>
-      <div class="asecb">${ap.map(aplc).join('')}<p class="cdesc">${c.description}</p>${body}</div></section>`};
-  const nWarn=SH.filter(s=>s.severity==='warn').length,vm=volMap(A);
+      +`<div class="ckl">${ckRow('session_design')}</div>`+rest('session')}
+  };
+  // ===== vol13 layout (CoS, approved by Mr Dude): exactly 7 sections in this order: Summary, Weekly volume, Per-workout limits,
+  // Balance, Recovery, Session length, Other suggestions. Every number is the ACTUAL board; Trim is a preview/action only.
+  // Section titles state the result. Suggestions not shown next to their data are de-duplicated into 'Other suggestions' (collapsed).
+  const GT=m=>GM?PC.goalTarget(dt,m,lv,GM):null;
+  const pwChart=m=>{if(!dt.VM||!PC.sessZones(dt,m))return '';const L=PC.seLim(dt,m,lv),dd0=d.filter(D=>D.tiles.length).map(D=>({day:D.day,s:PC.eff(dt,D.tiles)[m]||0})).filter(o=>o.s>0);
+    const mx0=Math.max(0,...dd0.map(o=>o.s)),N=Math.max(12,Math.ceil(((L||0)+4)/2)*2,Math.ceil((mx0+1)/2)*2),W=320,RH=22,top=20,H=top+Math.max(1,dd0.length)*RH+22,x0=34,px=q=>x0+Math.min(q,N)/N*(W-x0-8);
+    const stp=N>16?4:2,ticks=[];for(let q=0;q<=N;q+=stp)ticks.push(q);
+    const band=L!=null?`<rect x="${px(L)}" y="${top-4}" width="${px(N)-px(L)}" height="${H-top-18}" class="pwband"/><line x1="${px(L)}" x2="${px(L)}" y1="${top-4}" y2="${H-22}" class="pwlim"/><text x="${px(N)-2}" y="${top-8}" text-anchor="end" class="pwbl">past the limit · Modeled</text>`:'';
+    const rows=dd0.length?dd0.map((o,k)=>{const y=top+k*RH;return `<text x="${x0-6}" y="${y+12}" text-anchor="end" class="pwdl">${WD[DAYS.indexOf(o.day)]}</text><rect x="${x0}" y="${y+3}" width="${Math.max(2,px(o.s)-x0).toFixed(1)}" height="12" rx="3" class="pwbar${PC.seOver(o.s,L)?' over':''}"/><text x="${Math.min(px(o.s)+4,W-30).toFixed(1)}" y="${y+13}" class="pwval num">${nfmt(o.s)}</text>`}).join(''):`<text x="${x0}" y="${top+12}" class="pwdl">No sets this week</text>`;
+    return `<div class="pwv13"><div class="ash"><span>Per workout: ${MLB(m)}</span>${L!=null?`<span class="ashv num">limit ${nfmt(L)} sets</span>`:''}</div><svg class="pwc pwbars" viewBox="0 0 ${W} ${H}" data-m="${m}" data-limit="${L}">${band}${ticks.map(q=>`<text x="${px(q)}" y="${H-8}" text-anchor="middle">${q}</text>`).join('')}${rows}</svg></div>`};
+  const FLG=PC.check(dt,d.filter(D=>D.tiles.length),lv)[0];
+  const seFl=FLG.filter(f=>f[1]==='session_efficiency').map(f=>({m:f[3],day:f[2],v:f[4],lim:PC.seLim(dt,f[3],lv)})).sort((a,b)=>(b.v-b.lim)-(a.v-a.lim)||DAYS.indexOf(a.day)-DAYS.indexOf(b.day));
+  const isSE=s=>{const f=(s.target||{}).flag;return !!f&&['session_efficiency','wasted_late_sets','session_efficiency_single_day','junk_volume_session'].includes(ruleOf(f))};
+  const W13=window.IMPACT?impBoard():null,OVM=W13?[...new Set(W13.strip.overlaps.map(o=>o.muscle))]:[];
+  const FN13=dt.FN&&window.FREQNOTES?FREQNOTES.notes(dt,d,lv,dt.FN.templates):[],ONE=FN13.filter(n=>['freq_one_day','freq_none','back_to_back'].includes(n.id));
+  const SDN=FLG.filter(f=>f[1]==='session_efficiency_single_day'&&!ONE.some(n=>(n.muscles||[]).includes(f[3])));
+  const belowN=T.filter(([m])=>tgtState(RWK[m]||0,GT(m))==='below').length;
+  const daysOver=A.day.filter(x=>Math.round(x.minutes)>sessLimit()).length;
+  const B13={
+    volume:()=>{const rows=T.map(([m,v])=>{const z=volZone(m,v),TG=GT(m),ts=tgtState(RWK[m]||0,TG),open=m===cm;
+        return `<div class="vr13${open?' on':''}" data-m="${m}" data-zone="${v.zone||''}" data-t="${ts||''}"><button class="vr13b" data-anm="${m}" aria-expanded="${open}" aria-label="${MLB(m)}: ${nfmt(v.raw)} effective sets, ${v.zone?ZL(v.zone):''}${ts==='below'?', below target':''}. Show the curve"><span class="vrn">${MLB(m)}<small class="vrz z-${v.zone||''}">${v.zone?ZL(v.zone):''}</small></span><span class="vre num${ts==='below'?' need':''}">${nfmt(v.raw)}</span>${z?zbar(z,v,TG):'<span></span>'}</button><button class="vrgo" data-b="mus" data-m="${m}" data-anchor="sets" aria-label="Open ${MLB(m)}">›</button></div>
+          ${open?`<div class="vrx" data-m="${m}"><div class="curvec card curve">${curve(m,A)}</div>${pwChart(m)}${take('volume',s=>s.source==='weekly_band'&&sgM(s)===m,true)}</div>`:''}`}).join('');
+      return `<div class="vt13" role="list" aria-label="Weekly effective sets per muscle"><div class="vr13 vrh"><span>Muscle</span><span>Eff. sets</span><span>Zone and ${GM?G().label(GM).toLowerCase()+' target':'target'}</span><span></span></div>${rows}</div>
+        ${anyZ?`<div class="zleg"><span><i class="z0"></i>${ZL('below_min')}</span><span><i class="z1"></i>${ZL('growth')} / ${ZL('upper').toLowerCase()}</span><span><i class="z2"></i>${ZL('sweet_spot')}</span><span><i class="z3"></i>${ZL('diminishing')}</span><span><em class="ztg"></em>target</span></div>`:''}
+        <p class="foot">Effective sets at face value. Tap a row for its curve and per-workout bars; › opens the muscle.</p>
+        <div class="ckl">${ckRow('volume_in_reach')}</div>`},
+    limits:()=>{const SE=PC.seRule(dt)||{},NV=new Set(SE.never_suggest||[]),FO=(SE.fix_order||[]).slice().sort((a,b)=>a.rank-b.rank).filter(o=>!NV.has(o.action)).map(o=>o.label),TP=trimPlan();
+      const rows=seFl.map(o=>`<div class="pwr" data-m="${o.m}" data-day="${o.day}">${mlk(o.m,'sets')}<span class="num">${WD[DAYS.indexOf(o.day)]} · ${nfmt(o.v)} sets (limit ${nfmt(o.lim)})</span></div>`).join('');
+      return `<p class="cdesc">Sets for one muscle in one workout, against ${GM?G().label(GM):'the standard'} limits. Flags only when sets are more than the limit. Info only: every set still counts for the week. ${nurdChip('session',seFl[0]?seFl[0].m:'chest')}</p>
+        ${seFl.length?`<div class="pwover" data-n="${seFl.length}">${rows}${FO.length?`<p class="pwtip">Fix in order: ${FO.map(x=>x.toLowerCase()).join(', then ')}.</p>`:''}</div>`:'<p class="foot">Nothing past the limit.</p>'}
+        ${TP?(SUGX.has('trimprev')?trimPreview(TP,'inl an'):`<button class="btn plain sm trimpbtn" data-b="antrimprev">Preview trim (−${TP.removed} sets) ›</button>`):''}
+        ${(()=>{const L=SH.filter(s=>isSE(s)&&!used.has(s)&&s.fixes.length);const sn=new Set();const L2=L.filter(s=>{const k=(sgM(s)||'')+'|'+((s.fixes[0]||{}).preview||'');if(sn.has(k))return false;sn.add(k);return true});L.forEach(s=>used.add(s));return L2.length?`<div class="sgl"><div class="ash"><span>Split or swap</span><span class="ashv num">${L2.length}</span></div>${L2.slice(0,SUGX.has('limits')?99:3).map(x=>sgRow(x)).join('')}${L2.length>3&&!SUGX.has('limits')?`<button class="btn plain block more" data-b="sugmore" data-sec="limits">Show all ${L2.length}</button>`:''}</div>`:''})()}`},
+    balance:()=>B0.balance(),
+    recovery:()=>{const nrow=n=>{const m=n.link&&n.link.muscle,txt=m&&n.text.toLowerCase().startsWith(m.replace(/_/g,' ')+':')?n.text.slice(m.length+1):n.text;
+        return `<div class="nrow" data-note="${n.id}" data-pol="${n.polarity}"${m?` data-m="${m}"`:''}>${ICO.close}<span>${m?`<button class="mlk" data-b="mus" data-m="${m}" data-anchor="frequency">${MLB(m)}</button>:`:''}${txt}</span></div>${m?take('frequency',s=>sgM(s)===m&&!isSE(s),true):''}`};
+      const sdn=SDN.map(f=>`<div class="nrow" data-note="single_day" data-m="${f[3]}">${ICO.close}<span>${mlk(f[3],'frequency')}: ${PC.message(dt,f,d,lv).replace(new RegExp('^'+MLB(f[3])+'\\s*'),'')}</span></div>`).join('');
+      const ovr=W13?W13.strip.overlaps.map(o=>`<div class="nrow ov" data-note="overlap" data-m="${o.muscle}">${ICO.attention}<span>${mlk(o.muscle,'fatigue')}: ${dayN(o.day)} → ${dayN(o.next_day)}${o.variant==='streak'?', 3+ days running':', before it is ready'}</span></div>`).join(''):'';
+      const wk=W13?Object.values(W13.days).reduce((a,x)=>a+x.day_summary.fatigue_fresh_set_eq,0):0,BL=((recRef()||{}).benchmarks||[]).map(b=>({name:b.name.replace(/^Classic /,''),v:b.week_cost})),near=BL.slice().sort((a,b)=>Math.abs(a.v-wk)-Math.abs(b.v-wk))[0],bmx=Math.max(wk,...BL.map(b=>b.v),1);
+      const fat=`<div class="agfx" data-metric="weekly_fatigue"><div class="ash"><span>Weekly fatigue</span><span class="evl" data-ev="modeled">Modeled</span><span class="ashv num">${nfmt(wk)} fresh-set eq</span></div>
+        <div class="hbars">${hbar('<b>This week</b>',wk/bmx*100,nfmt(wk),{cls:'wkme'})}${BL.map(b=>hbar(b.name,b.v/bmx*100,nfmt(b.v),{cls:'wkb'})).join('')}</div>
+        <p class="foot">${near?`Week: ${nfmt(wk)} fresh-set eq · a ${near.name.toLowerCase()} is ${nfmt(near.v)}.`:''} 1 = one hard set of machine chest press. ${nurdChip('daymx')}</p></div>`;
+      return `${gfx('effective_frequency',`<div class="group freq"><div class="row fqh"><span class="vm"></span><span class="fq">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>${FM.map(m=>`<button class="row" data-b="mus" data-m="${m}" data-anchor="frequency"><span class="vm">${X.ML[m]}</span><span class="fq">${fq(m)}</span></button>`).join('')}<div class="row fqleg">${rampLeg()}</div></div>`,{label:'Days per muscle',noflags:1})}
+        ${ONE.length||SDN.length?`<div class="ckl fnotes"><div class="ash"><span>On 1 day</span><span class="ashv num">${ONE.length+SDN.length}</span></div>${ONE.map(nrow).join('')}${sdn}</div>`:''}
+        ${ovr?`<div class="ckl"><div class="ash"><span>Back too soon</span><span class="ashv num">${OVM.length}</span></div>${ovr}<p class="foot">From the Plan recovery strip. ${nurdChip('recovery')}</p></div>`:''}
+        ${fat}
+        <div class="ckl">${ckRow('frequency_two_days',{noflags:1})}${ckRow('consecutive_high_volume',{noflags:1})}${ckRow('spinal_load',{after:A.day.length?`<div class="ckd">${A.day.map(x=>`<span class="${x.spinal>SP.session_max?'over':''}">${WD[DAYS.indexOf(x.day)]} ${x.spinal}/${SP.session_max}</span>`).join(' · ')} heavy spine sets</div>`:''})}${ckRow('lower_back_fatigue')}${ckRow('recovery_vs_baseline')}</div>
+        ${(()=>{const L=(SGS.recovery_fatigue||[]).filter(s=>!used.has(s)&&s.source==='lower_fatigue_swap'&&s.fixes.length);L.forEach(s=>used.add(s));return L.length?`<div class="sgl"><div class="ash"><span>Lower-fatigue swaps</span><span class="ashv num">${L.length}</span></div>${L.slice(0,SUGX.has('swaps')?99:3).map(x=>sgRow(x)).join('')}${L.length>3&&!SUGX.has('swaps')?`<button class="btn plain block more" data-b="sugmore" data-sec="swaps">Show all ${L.length}</button>`:''}</div>`:''})()}`},
+    session:()=>B0.session(),
+    other:()=>{const L=SH.filter(s=>!used.has(s)),seen2=new Map();
+      L.forEach(s=>{const [w,n]=sgHead(s),k=[String(w).replace(/<[^>]+>/g,''),n,(s.fixes[0]||{}).preview||'nofix:'+s.type].join('|');if(seen2.has(k))seen2.get(k).n++;else seen2.set(k,{s,n:1})});
+      const U=[...seen2.values()],fx=U.filter(o=>o.s.fixes.length),nf=U.filter(o=>!o.s.fixes.length);L.forEach(s=>used.add(s));
+      const nfg={};nf.forEach(o=>{const t=TYL[o.s.type]||o.s.type;(nfg[t]=nfg[t]||[]).push(o)});
+      return `${fx.length?fx.map(o=>sgRow(o.s)).join(''):'<p class="foot">No other one-tap fixes.</p>'}
+        ${nf.length?`<details class="sgnofix"><summary>${nf.length} without a one-tap fix</summary>${Object.entries(nfg).map(([t,os])=>`<div class="sgr nofix"><div class="sgt">${t} <span class="num">${os.length}</span></div><div class="sgp">${os.map(o=>sgHead(o.s)[0]).join(', ')}. No one-tap change passes the checks; change it by hand.</div></div>`).join('')}</details>`:''}`}};
+  const OPEN=anOpen(),aplc=([a,i])=>`<div class="aplr aplc" data-k="${i}"><div class="grow"><p><b>Applied</b> · ${a.preview}</p>${a.asig===cur?'':'<p class="sub">The board changed after this. Undo puts the whole board back as it was just before Apply, so later edits are lost.</p>'}</div><button class="btn xs ink" data-b="unapply" data-k="${i}">Undo</button></div>`;
+  const chkOf=ids=>ids.map(i=>IB[i]).filter(i=>i&&i.kind==='check'&&i.status!=='n/a');
+  // summary: the only Approach toggle, one-line approach summary (#33), checks, top 3 fixes, trim preview
+  const apSum=g=>{const c=(G().cfg()||{})[g]||{},end=/high end/.test(c.summary||'')?'high':'low',SC=(PC.seRule(dt)||{}).size_class||{},L=k=>G().withGoal(g,()=>PC.seLim(dt,(SC[k]||[])[0],lv));
+    const lims=['big','medium','small'].map(L);return `Target: ${end} end of the sweet spot · per-workout limit ${lims.map(x=>x==null?'–':nfmt(x)).join(' / ')} (big / medium / small)`};
+  const top3=(()=>{const L=SH.filter(s=>s.fixes.length&&!isSE(s)).sort((a,b)=>(a.severity==='warn'?0:1)-(b.severity==='warn'?0:1));const sn=new Set(),o=[];for(const x of L){const k=(sgM(x)||'')+'|'+x.fixes[0].preview;if(sn.has(k))continue;sn.add(k);o.push(x);if(o.length===3)break}o.forEach(x=>used.add(x));return o})();
+  const nAtt=C.total-C.pass,TP0=trimPlan();
+  const summary=`<section class="asec acat ansum" data-cat="summary" data-open="1"><div class="asech static"><span class="asl">Summary</span><span class="ass gsub">${openSlots()?'Fill slots to check':`${C.pass} of ${C.total} checks pass${nAtt?` · <em class="chkbad">${nAtt} need${nAtt===1?'s':''} attention</em>`:''}`}</span></div><div class="asecb">
+    ${G()&&G().options().length?`<div class="angh"><span class="evl0">${G().toggleLabel?G().toggleLabel():'Approach'}</span>${goalSeg()}</div><p class="gnote" data-goal="${GM||''}">${GM?apSum(GM):'Pick an approach to set weekly targets and per-workout limits.'} ${GM?nurdChip('goal',GM):''}</p>`:''}
+    ${openSlots()?`<p class="sub">${openSlots()} open slots · the check count is pending until every slot is filled</p>`:`<div class="anbig sm"><span class="sub">How the ${C.total} checks are counted</span><button class="ixb" data-b="anx" data-id="checks_pass" aria-label="How checks are counted">${X.I('info',1.8)}</button></div>`}
+    ${APPLIED.map((a,i)=>[a,i]).map(aplc).join('')}
+    ${top3.length?`<div class="sgl top3"><div class="ash"><span>Top fixes</span><span class="ashv num">${top3.length}</span></div>${top3.map(x=>sgRow(x)).join('')}</div>`:'<p class="sub nosug">No fixes needed on this board.</p>'}
+    ${TP0?(SUGX.has('trimprev')?trimPreview(TP0,'inl an'):`<button class="btn plain sm trimpbtn" data-b="antrimprev">Preview trim (−${TP0.removed} sets) ›</button>`):''}</div></section>`;
+  const S13=[
+    {id:'volume',label:'Weekly volume',res:()=>belowN?`${belowN} muscle${belowN===1?'':'s'} need${belowN===1?'s':''} sets`:'all at target',chk:['volume_in_reach']},
+    {id:'limits',label:'Per-workout limits',res:()=>seFl.length?`${new Set(seFl.map(o=>o.m)).size} muscle${new Set(seFl.map(o=>o.m)).size===1?'':'s'} past the limit`:'none past the limit',chk:[]},
+    {id:'balance',label:'Balance',res:()=>{const b=chkOf(IT.filter(i=>i.section==='balance').map(i=>i.id)).filter(i=>i.status==='attention').length;return b?`${b} need${b===1?'s':''} attention`:'in balance'},chk:IT.filter(i=>i.section==='balance').map(i=>i.id)},
+    {id:'recovery',label:'Recovery',res:()=>{const p=[];if(OVM.length)p.push(`${OVM.length} muscle${OVM.length===1?'':'s'} back too soon`);const n1=ONE.filter(n=>n.id!=='back_to_back').length+SDN.length;if(n1)p.push(`${n1} on 1 day`);return p.join(' · ')||'all recovered in time'},chk:['frequency_two_days','consecutive_high_volume','spinal_load','lower_back_fatigue','recovery_vs_baseline']},
+    {id:'session',label:'Session length',res:()=>daysOver?`${daysOver} day${daysOver===1?'':'s'} over ${sessLimit()} min`:`all within ${sessLimit()} min`,chk:['session_design']},
+    {id:'other',label:'Other suggestions',res:null,chk:[],closed:1}];
+  const sec13=c=>{const open=OPEN[c.id]!=null?OPEN[c.id]!==0:!c.closed,body=B13[c.id](),bad=chkOf(c.chk).some(i=>i.status==='attention');const res=c.id==='other'?`${(body.match(/class="sgr /g)||[]).length}`:c.res();
+    return `<section class="asec acat" data-cat="${c.id}" data-open="${open?1:0}"><button class="asech" data-b="asec" aria-expanded="${open}"><span class="asl">${c.label}${c.id==='other'?'':`: <span class="asr${bad||/need|past|soon|over|1 day/.test(res)&&!/^all|^none|^in bal/.test(res)?' bad':''}">${res}</span>`}</span>${c.id==='other'?`<span class="ass gsub num">${res}</span>`:''}${X.CHEV}</button>
+      <div class="asecb">${body}</div></section>`};
+  const secs=S13.filter(c=>c.id!=='other').map(sec13).join('')+sec13(S13[5]);   // 'other' last: it collects what the sections did not show
   if(!AN.body.onclick)AN.body.onclick=()=>{}; // WebKit: taps on the map paths need a listener below body
-  AN.body.innerHTML=`<div class="angoal"><div class="angh"><span class="evl0">Goal</span>${goalSeg()}</div>${goalLine}</div><div class="anh"><div class="anmap" aria-label="This week vs targets">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="anmapleg">${weekLeg()}</div>
-     ${openSlots()?`<div class="big pend" data-pend="1">Fill slots to check</div><div class="sub">${openSlots()} open slots · the check count is pending until every slot is filled</div>`:`<div class="anbig"><div class="big num">${C.pass} of ${C.total}</div><button class="ixb" data-b="anx" data-id="checks_pass" aria-label="How checks are counted">${X.I('info',1.8)}</button></div><div class="sub">checks pass · ${nWarn} need attention · ${SH.length} suggestion${SH.length===1?'':'s'} in the sections below</div>`}
-     ${SH.length||APPLIED.length?'':'<p class="sub nosug">No suggestions: nothing on this board needs a change.</p>'}</div>
-    ${SECS.map(sec).join('')}
-    <div class="ghead">Still sample data <span class="smp">sample</span></div><div class="group asks" id="anasks">${DATA_ASKS.map(t=>`<div class="row"><div class="grow t2">${t}</div></div>`).join('')}</div>
+  AN.body.innerHTML=`${summary}${secs}
+    <p class="foot asks" id="anasks">Still sample data: ${DATA_ASKS.join(' ')}</p>
     <div style="height:24px"></div>`;AN.body.scrollTop=sc0}
 // explain sheet for an item; the fatigue rating adds its breakdown
 function explainItem(id){const it=(AN&&AN.items||{})[id];const ex=id==='fatigue_rating'&&it?fatigueHtml(it.value):id==='checks_pass'?(()=>{const c=stats().C;return `<div class="group"><div class="row"><div class="grow t1">This board</div><span class="val num">${c.pass} of ${c.total}</span></div></div>`})():'';return X.explainSheet(id,ex)}
@@ -710,7 +761,7 @@ function applyOpsBoard(ops){for(const o of ops){const D=B.days.find(x=>x.day===o
   else if(o.op==='add')t.push(T(o.id,o.sets));
   else if(o.op==='remove'){const k=t.findIndex(x=>x.id===o.id);if(k<0)throw new Error('remove: no '+o.id);t.splice(k,1)}
   else throw new Error(o.op)}}
-function ddBody(){const m=CB.key,dt=RD(),d=checkDays(),lv=B.level,SH=ANL.sheet(dt,d,lv,null),P=window.MUSCLEDIVE.muscle(dt,d,lv,m,{sheet:SH}),{A}=stats();CFIX=[];
+function ddBody(){const m=CB.key,dt=RD(),d=checkDays(),lv=B.level,GM=G()?G().mode:null,GOo=G()?G().other():null,SH=ANL.sheet(dt,d,lv,null),P=window.MUSCLEDIVE.muscle(dt,d,lv,m,{sheet:SH}),{A}=stats();CFIX=[];
   const s=P.sets,[stl,stk]=DDST[s.status]||[s.status,''],top=Math.max(s.red_over_above,s.effective,1)*1.04,X0=v=>Math.max(0,Math.min(100,v/top*100)),sec=(id,lab,inner,o={})=>`<div class="ddsec" id="deepdive-${m}-${id}" data-dd="${id}"><div class="ash"><span>${lab}</span>${o.mod?'<span class="evl" data-ev="modeled">Modeled</span>':''}<span class="ashv num">${o.v||''}</span></div>${inner}</div>`;
   const kv=(k,v)=>`<div class="ddkv"><span>${k}</span><span class="num">${v}</span></div>`;
   const RAMP=e=>RAMPL(e);
@@ -719,13 +770,14 @@ function ddBody(){const m=CB.key,dt=RD(),d=checkDays(),lv=B.level,SH=ANL.sheet(d
   const sgs=ap.map(a=>{if(!a.fix)return `<div class="sgr" data-src="${a.source}"><div class="sgp">${(R0=>R0[a.type]||a.type)(Object.fromEntries((dt.rules.suggestions.analysis_sheet.types||[]).map(t=>[t.id,t.label])))}: no one-tap change passes the checks.</div></div>`;
     CFIX.push({preview:a.fix.preview,ops:a.fix.ops});return `<div class="sgr hasfix" data-src="${a.source}"><div class="sgp">${a.fix.preview}${a.fix.resolves?'':` <em>${dt.rules.partial_label}</em>`}</div><button class="btn xs accent" data-b="ddapply" data-k="${CFIX.length-1}">Apply</button></div>`}).join('');
   const FN=dt.FN&&window.FREQNOTES?FREQNOTES.notes(dt,d,lv,dt.FN.templates).filter(n=>(n.muscles||[]).includes(m)):[];
-  return `<div class="cbh dd" data-st="${stk}"><div class="big num">${+(+s.effective).toFixed(1)}</div><div class="sub">effective sets a week · target ${s.level_min}–${s.max} · <b class="vst ${stk==='in'?'':stk==='over'||stk==='under'?'red':'amb'}">${stl}</b></div></div>
+  return `<div class="cbh dd" data-st="${stk}"><div class="big num">${nfmt(s.effective)}</div><div class="sub">effective sets a week · target ${s.level_min}–${s.max} · <b class="vst ${stk==='in'?'':stk==='over'||stk==='under'?'red':'amb'}">${stl}</b></div></div>
    ${CB.last?`<div class="aplc cbu"><div class="grow"><p>${CB.last}</p></div><button class="btn sm ink" data-b="cbundo">Undo</button></div>`:''}
    ${sec('sets','Sets vs target',`<div class="hbar ddsets"><span class="vm hbs">This week</span><span class="hbt"><s class="bnd" style="left:${X0(s.level_min)}%;width:${X0(s.max)-X0(s.level_min)}%"></s><i class="${stk==='in'?'ok':stk==='over'||stk==='under'?'bad':'amb'}" style="--w:${X0(s.effective)}%"></i></span><span class="vn num">${bfmt(s.effective,s.level_min,s.max)}</span></div>${kv('Ideal band',`${s.level_min}–${s.max} sets`)}${kv('Far under / far over',`below ${s.red_under_below} · above ${s.red_over_above}`)}${kv('Target evidence',s.evidence_tag)}`)}
    ${sec('curve','Stimulus curve',A.muscles[m]?`<div class="curvec">${curve(m,A)}</div>${P.curve.zone?`${kv('Zone',ZL(P.curve.zone))}${kv('Sweet spot',`${P.curve.zones.sweet[0]}–${P.curve.zones.sweet[1]} sets · min ${P.curve.zones.min} · diminishing past ${P.curve.zones.diminishing}`)}${kv('Plateau',`${Math.round(P.curve.stimulus*100)}% of this muscle's modeled plateau`)}`:kv('Position',({below:'Below the ideal band',in_band:'In the ideal band',above:'Above the ideal band'})[P.curve.position])}${kv('Next set',`+${(P.curve.next_set*100).toFixed(1)}%`)}`:'',{mod:1,v:P.curve.zone?ZL(P.curve.zone):`${Math.round(P.curve.stimulus*100)}% of max`})}
    ${sec('frequency','Frequency',`<div class="ddfq">${Object.entries(P.frequency.effective_by_day).map(([k,v])=>`<span><i data-r="${RAMP(v)}"></i>${WD[DAYS.indexOf(k)]} ${nfmt(v)}</span>`).join('')}</div>${FN.map(n=>`<div class="nrow" data-note="${n.id}" data-pol="${n.polarity}">${n.polarity==='positive'?ICO.pass:ICO.close}<span>${n.text}</span></div>`).join('')}`,{v:`${P.frequency.days_hit} day${P.frequency.days_hit===1?'':'s'} with ${P.frequency.min_effective_per_day}+ sets`})}
    ${sec('stretch','Stretch',P.stretch.share==null?'<p class="foot">No stretch list for this muscle, or no sets.</p>':`<div class="hbar"><span class="vm hbs">Share${P.stretch.checked?(P.stretch.check_pass?ICO.pass:ICO.attention):''}</span><span class="hbt"><i class="${P.stretch.share<dt.targets.analytics.stretch_share_flag_below?'amb':'ok'}" style="--w:${P.stretch.share*100}%"></i><b style="--x:${dt.targets.analytics.stretch_share_flag_below*100}%"></b></span><span class="vn num">${pct(P.stretch.share)}</span></div>${P.stretch.checked?kv('Stretch check',P.stretch.check_pass?'Passes':'Needs stretch-focused work'):''}`)}
-   ${sec('fatigue','Recovery and fatigue',`${(h=>kv('Ready again',h?`${ANL.hoursRange(RD(),h.hours).text} after ${WDL[DAYS.indexOf(h.day)]}`:'–'))(RD().VM?ANL.weekHours(RD(),checkDays(),B.level).per_muscle[m]:null)}${RD().VM?`<p class="rcav">${RD().VM.recovery.caveat}</p>`:''}${kv('Stimulus per fatigue',P.stimulus_per_fatigue!=null?nfmt(P.stimulus_per_fatigue):'–')}${kv('Fatigue per effective set',P.fatigue!=null?nfmt(P.fatigue):'–')}${kv('One-side share',P.one_side_share!=null?pct(P.one_side_share):'–')}`,{mod:1})}
+   ${(()=>{const T1=GM?PC.goalTarget(dt,m,lv,GM):null,T2=GOo?PC.goalTarget(dt,m,lv,GOo):null;return T1?sec('targets','Approach targets',`${kv(G().label(GM)+' target',nfmt(T1.target)+' sets')}${T2?kv(G().label(GOo)+' target',nfmt(T2.target)+' sets'):''}${kv('Hard sets this week',String(sum(d.map(D=>sum(D.tiles.filter(t=>(PC.eff(dt,[{id:t.id,sets:1}])[m]||0)>0).map(t=>t.sets))))))}`):''})()}
+    ${sec('fatigue','Recovery',`${(h=>kv('Ready again',h?`${rr(IMPACT.range(h.hours))} after ${WDL[DAYS.indexOf(h.day)]}`:'–'))(RD().VM?ANL.weekHours(RD(),checkDays(),B.level).per_muscle[m]:null)}${RD().VM?`<p class="rcav">${RD().VM.recovery.caveat}</p>`:''}${kv('One-side share',P.one_side_share!=null?pct(P.one_side_share):'–')}`,{mod:1})}
    ${sec('session','Contributing exercises',rows.length?`<div class="group cbl">${rows.map(r=>`<div class="row cbr" data-u="${r.t.u}" data-id="${r.t.id}">${X.gl(r.t.id)}<div class="grow"><div class="t1">${X.exNameP(r.t.id)}${X.cxL(r.t.id)}</div><div class="t2 num">${WD[r.di]} · ${r.sets} sets → ${nfmt(r.eff)} effective</div></div><button class="btn sm grey" data-b="cbrm" data-u="${r.t.u}">Remove</button></div>`).join('')}</div>`:'<p class="foot">Nothing on the board trains this yet.</p>',{v:rows.length?`${P.contributors.length} exercise${P.contributors.length===1?'':'s'}`:''})}
    ${sec('suggest','Suggestions',`${sgs||'<p class="foot">No suggestions for this muscle.</p>'}${pk?`<div class="pad0"><button class="btn accent block cbadd" data-b="cbadd" data-id="${pk.id}" data-day="${ra.day}"><span>${X.I('plus',2)} Add suggested</span><small>${X.exNameP(pk.id)} · ${WD[DAYS.indexOf(ra.day)]}</small></button></div><p class="foot">Top pick of the shared ranker for ${MLB(m).toLowerCase()} on ${WDL[DAYS.indexOf(ra.day)]}${ra.items.length>1?`; then ${ra.items.slice(1,3).map(x=>X.exNameP(x.id)).join(', ')}`:''}; ${setsFor(pk.id)} sets.</p>`:''}`)}
    <p class="foot">Effective sets = sets × the exercise's counted credit for this muscle (the Volume model). Curve, recovery and fatigue values are models, not measurements.</p>`}
@@ -878,7 +930,7 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   const tm=e.target.closest('[data-tm]');if(tm&&TRAY){if(tm.disabled)return;TFB.mode=tm.dataset.tm;refreshTray();return}
   const tr=e.target.closest('.trow[data-id]');if(tr&&TRAY&&!e.target.closest('button')){e.stopPropagation();return X.exDetail(tr.dataset.id,{addLabel:TFB.slot?'Fill slot':`Add to ${WD[DAYS.indexOf(TFB.day)]}`,onAdd:trayAdd})}
   const tf=e.target.closest('[data-tf]');if(tf&&TRAY){const k=tf.dataset.tf;TFB[k]=TFB[k]===tf.dataset.v?null:tf.dataset.v;$$(`[data-tf=${k}]`,TRAY.el).forEach(c=>c.classList.toggle('on',TFB[k]===c.dataset.v));refreshTray();return}
-  const am=e.target.closest('[data-anm]');if(am&&AN){AN.mus=am.dataset.anm;const sc=AN.body.scrollTop;renderAnalysis();AN.body.scrollTop=sc;return}
+  const am=e.target.closest('[data-anm]');if(am&&AN){AN.mus=am.closest('.vr13')&&AN.mus===am.dataset.anm?null:am.dataset.anm;const sc=AN.body.scrollTop;renderAnalysis();AN.body.scrollTop=sc;return}
   const ns=e.target.closest('[data-ns]');if(ns&&NW){NS[ns.dataset.ns]=ns.dataset.v;nwView(NW.v==='slots'?'slots':'tpl');return}
   const j=e.target.closest('[data-jump]');if(j){setMap('day',+j.dataset.jump);return jump(+j.dataset.jump)}
   const amp=e.target.closest('.anmap .mp');if(amp&&amp.dataset.mu&&AN){e.preventDefault();return contribSheet('mus',amp.dataset.mu)}
@@ -896,6 +948,8 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   if(k==='dmclose'){if(DMS)DMS.close();return}
   if(k==='goal'){if(G()){G().set(b.dataset.goal);paint()}return}
   if(k==='impday'){IMPV.day=+b.dataset.i;paintImpact();return}
+  if(k==='antrimprev'){SUGX.add('trimprev');renderAnalysis();return}
+  if(k==='trimprev'){const tp=b.closest('.trimp');if(tp&&tp.closest('.ansheet')){SUGX.delete('trimprev');renderAnalysis();return}if(tp&&tp.closest('.dmsheet')){tp.remove();return}IMPV.prev=!IMPV.prev;paintImpact();return}
   if(k==='analysis')return analysisSheet();if(k==='sugmore'){SUGX.add(b.dataset.sec);renderAnalysis();return}if(k==='anx')return explainItem(b.dataset.id);
   if(k==='mus'||k==='pat')return contribSheet(k,b.dataset[k==='mus'?'m':'p'],b.dataset.anchor);
   if(k==='asec'){const s=b.closest('.asec');const o=s.dataset.open!=='1';s.dataset.open=o?'1':'0';b.setAttribute('aria-expanded',String(o));setAnOpen(s.dataset.cat,o);return}

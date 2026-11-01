@@ -5,16 +5,16 @@
  "rule": "rules.json rules[id=efficient_trim]",
  "summary": {
   "before": {
-   "flags": 189,
+   "flags": 187,
    "presets": 36
   },
   "after": {
    "flags": 49,
    "presets": 18
   },
-  "sets_removed": 252,
+  "sets_removed": 250,
   "exercises_removed": 4,
-  "in_zone_to_below_target": 68,
+  "in_zone_to_below_target": 67,
   "fell_below_min": 0,
   "reduced_while_below_min": 0,
   "residual": [
@@ -1417,7 +1417,7 @@
    "residual": []
   },
   "bro-split/beginner/5": {
-   "sets_removed": 11,
+   "sets_removed": 10,
    "changes": [
     {
      "day": "mon",
@@ -1456,13 +1456,6 @@
     },
     {
      "day": "wed",
-     "id": "romanian-deadlift",
-     "from": 3,
-     "to": 2,
-     "removed_exercise": false
-    },
-    {
-     "day": "wed",
      "id": "leg-press",
      "from": 3,
      "to": 2,
@@ -1483,7 +1476,7 @@
      "removed_exercise": false
     }
    ],
-   "flags_before": 8,
+   "flags_before": 7,
    "flags_after": 1,
    "residual": [
     {
@@ -2738,15 +2731,8 @@
    "residual": []
   },
   "phul/beginner/4": {
-   "sets_removed": 3,
+   "sets_removed": 2,
    "changes": [
-    {
-     "day": "tue",
-     "id": "leg-press",
-     "from": 2,
-     "to": 1,
-     "removed_exercise": false
-    },
     {
      "day": "fri",
      "id": "leg-extension",
@@ -2755,7 +2741,7 @@
      "removed_exercise": false
     }
    ],
-   "flags_before": 2,
+   "flags_before": 1,
    "flags_after": 0,
    "residual": []
   },
