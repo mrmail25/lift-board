@@ -1454,11 +1454,11 @@
               "tiles": [
                 {
                   "id": "back-squat",
-                  "sets": 3
+                  "sets": 4
                 },
                 {
                   "id": "romanian-deadlift",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "leg-extension",
@@ -1522,11 +1522,11 @@
               "tiles": [
                 {
                   "id": "front-squat",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "hip-thrust",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "lying-leg-curl",
@@ -1662,7 +1662,7 @@
               "tiles": [
                 {
                   "id": "barbell-bench-press",
-                  "sets": 3
+                  "sets": 1
                 },
                 {
                   "id": "incline-dumbbell-press",
@@ -1678,7 +1678,7 @@
                 },
                 {
                   "id": "overhead-cable-triceps-extension",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "triceps-pushdown",
@@ -1696,7 +1696,7 @@
                 },
                 {
                   "id": "seated-cable-row",
-                  "sets": 3
+                  "sets": 1
                 },
                 {
                   "id": "face-pull",
@@ -1704,7 +1704,7 @@
                 },
                 {
                   "id": "incline-dumbbell-curl",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "hammer-curl",
@@ -1884,11 +1884,11 @@
                 },
                 {
                   "id": "incline-dumbbell-curl",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "hammer-curl",
-                  "sets": 2
+                  "sets": 1
                 },
                 {
                   "id": "barbell-shrug",
@@ -1938,11 +1938,11 @@
               "tiles": [
                 {
                   "id": "barbell-bench-press",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "overhead-press",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "incline-dumbbell-press",
@@ -1972,11 +1972,11 @@
               "tiles": [
                 {
                   "id": "pull-up",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "barbell-row",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "lat-pulldown",
@@ -1984,7 +1984,7 @@
                 },
                 {
                   "id": "reverse-pec-deck",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "incline-dumbbell-curl",
@@ -2040,7 +2040,7 @@
               "tiles": [
                 {
                   "id": "incline-dumbbell-press",
-                  "sets": 3
+                  "sets": 1
                 },
                 {
                   "id": "machine-chest-press",
@@ -2056,7 +2056,7 @@
                 },
                 {
                   "id": "skull-crusher",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "triceps-pushdown",
@@ -2074,7 +2074,7 @@
                 },
                 {
                   "id": "chest-supported-row",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "face-pull",
@@ -2082,7 +2082,7 @@
                 },
                 {
                   "id": "cable-curl",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "hammer-curl",
@@ -2280,11 +2280,11 @@
               "tiles": [
                 {
                   "id": "pull-up",
-                  "sets": 3
+                  "sets": 4
                 },
                 {
                   "id": "pendlay-row",
-                  "sets": 2
+                  "sets": 1
                 },
                 {
                   "id": "chest-supported-row",
@@ -2292,7 +2292,7 @@
                 },
                 {
                   "id": "reverse-pec-deck",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "incline-dumbbell-curl",
@@ -2348,15 +2348,15 @@
               "tiles": [
                 {
                   "id": "incline-dumbbell-press",
-                  "sets": 3
+                  "sets": 1
                 },
                 {
                   "id": "machine-chest-press",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "machine-shoulder-press",
-                  "sets": 2
+                  "sets": 1
                 },
                 {
                   "id": "pec-deck",
@@ -2368,7 +2368,7 @@
                 },
                 {
                   "id": "skull-crusher",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "triceps-pushdown",
@@ -2398,7 +2398,7 @@
                 },
                 {
                   "id": "cable-curl",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "hammer-curl",
@@ -2489,11 +2489,11 @@
               "tiles": [
                 {
                   "id": "lat-pulldown",
-                  "sets": 1
+                  "sets": 3
                 },
                 {
                   "id": "seated-cable-row",
-                  "sets": 3
+                  "sets": 1
                 },
                 {
                   "id": "one-arm-dumbbell-row",
@@ -2519,7 +2519,7 @@
                 },
                 {
                   "id": "romanian-deadlift",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "leg-press",
@@ -2553,7 +2553,7 @@
                 },
                 {
                   "id": "reverse-pec-deck",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "seated-calf-raise",
@@ -2631,15 +2631,15 @@
                 },
                 {
                   "id": "lat-pulldown",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "chest-supported-row",
-                  "sets": 2
+                  "sets": 1
                 },
                 {
                   "id": "barbell-shrug",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "cable-crunch",
@@ -2661,11 +2661,11 @@
                 },
                 {
                   "id": "leg-press",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "leg-extension",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "seated-leg-curl",
@@ -2918,7 +2918,7 @@
               "tiles": [
                 {
                   "id": "barbell-bench-press",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "incline-dumbbell-press",
@@ -2952,7 +2952,7 @@
                 },
                 {
                   "id": "seated-cable-row",
-                  "sets": 3
+                  "sets": 1
                 },
                 {
                   "id": "face-pull",
@@ -2960,7 +2960,7 @@
                 },
                 {
                   "id": "incline-dumbbell-curl",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "hammer-curl",
@@ -3046,11 +3046,11 @@
               "tiles": [
                 {
                   "id": "barbell-bench-press",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "overhead-press",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "incline-dumbbell-press",
@@ -3084,11 +3084,11 @@
               "tiles": [
                 {
                   "id": "pull-up",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "barbell-row",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "lat-pulldown",
@@ -3096,7 +3096,7 @@
                 },
                 {
                   "id": "reverse-pec-deck",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "incline-dumbbell-curl",
@@ -3232,11 +3232,11 @@
                 },
                 {
                   "id": "pendlay-row",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "chest-supported-row",
-                  "sets": 2
+                  "sets": 1
                 },
                 {
                   "id": "incline-dumbbell-curl",
@@ -3339,7 +3339,7 @@
               "tiles": [
                 {
                   "id": "barbell-bench-press",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "incline-dumbbell-press",
@@ -3373,7 +3373,7 @@
                 },
                 {
                   "id": "seated-cable-row",
-                  "sets": 3
+                  "sets": 1
                 },
                 {
                   "id": "face-pull",
@@ -3381,7 +3381,7 @@
                 },
                 {
                   "id": "incline-dumbbell-curl",
-                  "sets": 1
+                  "sets": 2
                 },
                 {
                   "id": "hammer-curl",
@@ -3497,11 +3497,11 @@
               "tiles": [
                 {
                   "id": "barbell-bench-press",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "overhead-press",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "incline-dumbbell-press",
@@ -3531,11 +3531,11 @@
               "tiles": [
                 {
                   "id": "pull-up",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "barbell-row",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "lat-pulldown",
@@ -3543,7 +3543,7 @@
                 },
                 {
                   "id": "reverse-pec-deck",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "incline-dumbbell-curl",
@@ -3709,11 +3709,11 @@
                 },
                 {
                   "id": "pendlay-row",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "chest-supported-row",
-                  "sets": 2
+                  "sets": 1
                 },
                 {
                   "id": "incline-dumbbell-curl",
@@ -3803,11 +3803,11 @@
               "tiles": [
                 {
                   "id": "front-squat",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "hip-thrust",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "lying-leg-curl",
@@ -4137,7 +4137,7 @@
               "tiles": [
                 {
                   "id": "overhead-press",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "dumbbell-lateral-raise",
@@ -4153,7 +4153,7 @@
                 },
                 {
                   "id": "overhead-cable-triceps-extension",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "hammer-curl",
@@ -4211,7 +4211,7 @@
                 },
                 {
                   "id": "pull-up",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "incline-dumbbell-press",
@@ -4219,7 +4219,7 @@
                 },
                 {
                   "id": "barbell-row",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "cable-fly",
@@ -4237,11 +4237,11 @@
               "tiles": [
                 {
                   "id": "overhead-press",
-                  "sets": 3
+                  "sets": 1
                 },
                 {
                   "id": "dumbbell-lateral-raise",
-                  "sets": 3
+                  "sets": 4
                 },
                 {
                   "id": "reverse-pec-deck",
@@ -4253,7 +4253,7 @@
                 },
                 {
                   "id": "overhead-cable-triceps-extension",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "hammer-curl",
@@ -4309,7 +4309,7 @@
                 },
                 {
                   "id": "pull-up",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "incline-dumbbell-press",
@@ -4317,7 +4317,7 @@
                 },
                 {
                   "id": "barbell-row",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "cable-fly",
@@ -4335,11 +4335,11 @@
               "tiles": [
                 {
                   "id": "overhead-press",
-                  "sets": 3
+                  "sets": 1
                 },
                 {
                   "id": "dumbbell-lateral-raise",
-                  "sets": 3
+                  "sets": 4
                 },
                 {
                   "id": "reverse-pec-deck",
@@ -4351,7 +4351,7 @@
                 },
                 {
                   "id": "overhead-cable-triceps-extension",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "hammer-curl",
@@ -4515,7 +4515,7 @@
                 },
                 {
                   "id": "pull-up",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "dumbbell-bench-press",
@@ -4523,7 +4523,7 @@
                 },
                 {
                   "id": "t-bar-row",
-                  "sets": 2
+                  "sets": 1
                 },
                 {
                   "id": "cable-fly",
@@ -4545,7 +4545,7 @@
               "tiles": [
                 {
                   "id": "seated-dumbbell-shoulder-press",
-                  "sets": 3
+                  "sets": 2
                 },
                 {
                   "id": "cable-lateral-raise",
@@ -4561,7 +4561,7 @@
                 },
                 {
                   "id": "overhead-cable-triceps-extension",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "barbell-shrug",
@@ -4617,7 +4617,7 @@
                 },
                 {
                   "id": "pull-up",
-                  "sets": 2
+                  "sets": 3
                 },
                 {
                   "id": "dumbbell-bench-press",
@@ -4625,7 +4625,7 @@
                 },
                 {
                   "id": "t-bar-row",
-                  "sets": 2
+                  "sets": 1
                 },
                 {
                   "id": "cable-fly",

@@ -15,28 +15,31 @@ const DO=['mon','tue','wed','thu','fri','sat','sun'],r2=x=>Math.round(x*100)/100
 const clone=days=>days.map(d=>({day:d.day,tiles:d.tiles.map(t=>Object.assign({},t))}));
 function weekly(PC,dt,days){const W={};for(const d of days){const e=PC.eff(dt,d.tiles);for(const m in e)W[m]=(W[m]||0)+e[m]}return W}
 const keyF=f=>JSON.stringify(f);
-function trim(dt,days0,lv,o={}){const PC=PCm(),DM=DMm(),goal=o.goal===undefined?'efficient':o.goal,allowRemove=!!o.allowRemove,g0=PC.getGoal(),t0=PC.getTone?null:null;
-  PC.setGoal(goal);if(PC.setTone)PC.setTone(null);
+// vol11b: rules.json rules[id=efficient_trim].algorithm (Coach), step for step; returns a trace like the reference case
+function trim(dt,days0,lv,o={}){const PC=PCm(),goal=o.goal===undefined?'efficient':o.goal,allowRemove=!!o.allowRemove,g0=PC.getGoal();const r2=PC.r2u;
+  PC.setGoal(goal);if(PC.setTone)PC.setTone(null);const trace=[],blocked=new Map();
   try{let days=clone(days0).filter(d=>d.tiles.length);const base=()=>PC.check(dt,days,lv)[0];
-    for(let guard=0;guard<400;guard++){const F=base(),se=F.filter(f=>f[1]==='session_efficiency').map(f=>({f,day:f[2],m:f[3],ex:PC.eff(dt,days.find(d=>d.day===f[2]).tiles)[f[3]]-PC.seLim(dt,f[3],lv)}))
+    for(let guard=0;guard<500;guard++){const F=base(),se=F.filter(f=>f[1]==='session_efficiency'&&!blocked.has(f[2]+'|'+f[3])).map(f=>{const D=days.find(d=>d.day===f[2]),lim=PC.seLim(dt,f[3],lv),x=PC.eff(dt,D.tiles)[f[3]]||0;return {day:f[2],m:f[3],lim,x,ex:Math.round((x-lim)*10)/10}})
         .sort((a,b)=>DO.indexOf(a.day)-DO.indexOf(b.day)||b.ex-a.ex||(a.m<b.m?-1:a.m>b.m?1:0));
-      if(!se.length)break;const NI=new Set(F.filter(f=>f[0]!=='info'&&f[1]!=='session_efficiency').map(keyF)),W0=weekly(PC,dt,days);let done=false;
-      for(const {day,m} of se){const D=days.find(d=>d.day===day),lim=PC.seLim(dt,m,lv),late=new Set(PC.lateSets(dt,D.tiles,m,lim).map(z=>z[0]));
-        const cand=D.tiles.map((t,i)=>{const e=dt.EX[t.id],r=(e.muscles||{})[m]||0;if(!(r>=0.25))return null;const c=PC.credit(dt,e,m,r,t.rir),fp=PC.loadPoints(dt,[{id:t.id,sets:1,rir:t.rir}])*DM.rshare(e,m);return {t,i,sfr:fp>0?r2(c/fp):0,late:late.has(t.id)}}).filter(Boolean);
-        const ord=L=>L.sort((a,b)=>a.sfr-b.sfr||b.i-a.i||(a.t.id<b.t.id?-1:a.t.id>b.t.id?1:0));
-        const A=ord(cand.filter(x=>x.late&&x.t.sets>=2)),Bp=ord(cand.filter(x=>x.t.sets>=2)),C=allowRemove?[...ord(cand.filter(x=>x.t.sets===1&&x.late)),...ord(cand.filter(x=>x.t.sets===1&&!x.late))]:[];
-        const ok=x=>{if(x.t.sets===1&&D.tiles.length<=1)return false;const n=clone(days),Dn=n.find(d=>d.day===day);if(x.t.sets===1)Dn.tiles.splice(x.i,1);else Dn.tiles[x.i].sets--;
-          const W1=weekly(PC,dt,n),e=dt.EX[x.t.id];for(const mm of Object.keys(e.muscles)){const rr=e.muscles[mm];if(!(rr>=0.25)||!(PC.credit(dt,e,mm,rr,x.t.rir)>0))continue;const mn=PC.zones(dt,mm,lv).min;if(mn==null)continue;if(r2(W0[mm]||0)<mn)return false;if(r2(W1[mm]||0)<mn)return false}
-          const F1=PC.check(dt,n,lv)[0];if(F1.some(f=>f[0]!=='info'&&f[1]!=='session_efficiency'&&!NI.has(keyF(f))))return false;return n};
-        let res=null;for(const P of [A,Bp,C]){for(const x of P){const n=ok(x);if(n){res=n;break}}if(res)break}
-        if(res){days=res;done=true;break}}
-      if(!done)break}
+      if(!se.length)break;const {day,m,lim,x,ex}=se[0],NI=new Set(F.filter(f=>f[0]!=='info'&&f[1]!=='session_efficiency').map(keyF));
+      const D=days.find(d=>d.day===day),wasted=new Set(PC.lateSets(dt,D.tiles,m,lim).map(z=>z[0]));
+      const cand=D.tiles.map((t,i)=>{const e=dt.EX[t.id],r=(e.muscles||{})[m]||0;if(!(r>=0.25))return null;const rir=t.rir!=null?t.rir:PC.plannedRir?PC.plannedRir(dt,e):null;const c=PC.credit(dt,e,m,r,t.rir);if(!(c>0))return null;
+        const f=PC.fatSet(dt,e,m,r,t.rir!=null?t.rir:(dt.VM.credit.planned_rir_default[e.type]!=null?dt.VM.credit.planned_rir_default[e.type]:2),t.id);return {t,i,sf:f>0?r2(c/f):0,w:wasted.has(t.id)}}).filter(Boolean);
+      const key=(a,b)=>a.sf-b.sf||b.i-a.i||(a.t.id<b.t.id?-1:a.t.id>b.t.id?1:0);
+      const A=cand.filter(c=>c.w&&c.t.sets>=2).sort(key),Bp=cand.filter(c=>c.t.sets>=2).sort(key),C=allowRemove&&D.tiles.length>=2?cand.filter(c=>c.t.sets===1).sort((a,b)=>(a.w?0:1)-(b.w?0:1)||key(a,b)):[];
+      const rejected=[];const tryCut=c=>{const n=clone(days),Dn=n.find(d=>d.day===day);if(c.t.sets===1)Dn.tiles.splice(c.i,1);else Dn.tiles[c.i].sets--;
+        const W1=weekly(PC,dt,n),e=dt.EX[c.t.id];const low=[];for(const [mm,rr] of Object.entries(e.muscles||{})){if(!(rr>=0.25)||!(PC.credit(dt,e,mm,rr,c.t.rir)>0))continue;const mn=PC.zones(dt,mm,lv).min;if(mn!=null&&r2(W1[mm]||0)<mn)low.push(mm)}
+        if(low.length){rejected.push(`${c.t.id}: would put ${low.join(', ')} below the weekly minimum`);return null}
+        const nf=PC.check(dt,n,lv)[0].filter(f=>f[0]!=='info'&&f[1]!=='session_efficiency'&&!NI.has(keyF(f)));if(nf.length){rejected.push(`${c.t.id}: would add ${nf[0][1]}`);return null}return n};
+      let res=null,cut=null;for(const [pn,P] of [['A',A],['B',Bp],['C',C]]){for(const c of P){const n=tryCut(c);if(n){res=n;cut={id:c.t.id,tile_index:c.i,sets_from:c.t.sets,sets_to:c.t.sets-1,pool:pn};break}}if(res)break}
+      const seen=[...new Set(rejected)];trace.push({flag:{day,muscle:m,effective_sets:Math.round(x*10)/10,excess:ex,limit:lim},rejected:seen,cut});
+      if(res)days=res;else blocked.set(day+'|'+m,seen)}
     const R=base().filter(f=>f[1]==='session_efficiency').map(f=>({day:f[2],muscle:f[3]}));
     // ops against the original board (tile order per day is kept; a removed tile shows as to: 0)
     const ops=[];let removed=0;for(const d0 of days0){if(!d0.tiles.length)continue;const dn=days.find(d=>d.day===d0.day);let j=0;
       d0.tiles.forEach((t,i)=>{const u=dn.tiles[j];if(u&&u.id===t.id){if(u.sets!==t.sets){ops.push({day:d0.day,i,id:t.id,from:t.sets,to:u.sets});removed+=t.sets-u.sets}j++}else{ops.push({day:d0.day,i,id:t.id,from:t.sets,to:0});removed+=t.sets}})}
     const full=days0.map(d=>d.tiles.length?days.find(x=>x.day===d.day):{day:d.day,tiles:[]});
-    return {days:full,ops,removed,residual:R}}
+    return {days:full,ops,removed,residual:R,trace,blocked:[...blocked].map(([k,why])=>({day:k.split('|')[0],muscle:k.split('|')[1],why}))}}
   finally{PC.setGoal(g0)}}
 const API={trim};if(isNode)module.exports=API;else root.TRIM=API;
 })(typeof window!=='undefined'?window:globalThis);

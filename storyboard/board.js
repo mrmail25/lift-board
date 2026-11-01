@@ -95,7 +95,8 @@ const NURD={
   late:()=>({h:'Wasted late sets',n:RUL('wasted_late_sets').nurd,body:`<p>Late sets are the ones that take a muscle past its session limit, plus every later set for it that day. They still count for the week; they would do more on another day.</p>`}),
   goal:g=>{const c=(G()&&G().cfg()||{})[g]||{};return {h:G().label(g),n:c.nurd,body:`<p>${c.summary||''}</p><p>Both goals use the same weekly curve and zones; only the target and the session limits change.</p>${srcHtml(RUL('weekly_volume').nurd_targets).replace('Source:','Weekly curve:')}`}},
   recovery:()=>{const dt=RD(),cav=((dt.VM||{}).recovery||{}).caveat||'';return {h:'Recovery estimates',n:((dt.VM.day_metrics||{}).recovery||{}).nurd,body:`<p>Ready-in times are modeled ranges in days, never exact hours.</p>${cav?`<p>${cav}</p>`:''}`}},
-  daymx:()=>{const DM=RD().VM.day_metrics||{},R=DM.reference||{},S=(R.sources||{})[R.source]||R,bd=(DM.sf_ratio||{}).bands||[];return {h:'Day card numbers',n:(DM.sf_ratio||{}).nurd,body:`<p>Stimulus and fatigue are both indexes on the same yardstick: 100 = the median intermediate preset day of the same type on the card, or the median intermediate day for that muscle in the rows. Small print gives the real units: effective sets for stimulus, days to recover for fatigue.</p><p>S:F = stimulus index ÷ fatigue index, so the numbers on screen divide out. ${bd.length?`Below ${bd[0].below}× is amber, above ${bd[bd.length-1].above}× is green; in between is typical.`:''} The cut-offs are a display choice, not research.</p><p>Reference: ${escA(S.description||R.day_level||'preset medians')}</p>`}},
+  impact:()=>{const BM=BMAP(),E=BM.efficiency||{},c=E.cuts||{};return {h:'Impact map and recovery strip',n:E.nurd,body:`<p>Each muscle's colour is its growth per fatigue that day (S:F = hard-set stimulus ÷ fresh-set fatigue for that muscle): green from ${c.green_from}, amber from ${c.amber_from}, red below. Darker means more stimulus. Muscles under 1 effective set get no colour. The cut-offs are a display choice set against the presets.</p><p>The orange glow is fatigue against the goal's per-session limit: faint (cool), stronger past 0.75× the limit (warm), strongest past 1.5× (hot).</p><p>Recovery bars run to when each muscle is ready again (planning baseline). Red marks a next session before 40% of that time (at least a day), or 3+ days in a row. The week repeats.</p><p>The Efficient view shows this board after Trim to efficient, without applying it.</p>`}},
+  daymx:()=>{const DM=RD().VM.day_metrics||{};return {h:'Day card numbers',n:(DM.fatigue||{}).nurd,body:`<p>Stimulus = hard-set equivalents over every credited muscle. Fatigue = whole-body fatigue in fresh-set equivalents, counted once per set (1.0 = one fresh hard set of machine chest press at 2 RIR; heavy squats and hinges cost more, isolation less). Ready = when the slowest muscle is recovered.</p><p>S:F is per muscle only: that muscle's stimulus ÷ its fatigue.</p>`}},
 };
 function nurdSheet(k,m){const f=NURD[k];if(!f)return;const o=f(m);const s=X.sheet({title:'',cls:'grouped xsheet nurds',right:'<button class="btn plain" data-x="close">Done</button>',body:`<div class="xpl nurd" data-k="${k}"><div class="xpsh"><h3>${o.h}</h3><span class="evl" data-ev="modeled">${(o.n||{}).label||'Modeled'}</span></div>${o.body}${srcHtml(o.n)}</div>`});s.el.addEventListener('click',e=>{if(e.target.closest('[data-x=close]'))s.close()});return s}
 // vol10 day card metrics row (logic/daymetrics.js adapter): Stimulus · Fatigue · Recovery · Stim:Fatigue; tap expands per muscle.
@@ -104,7 +105,7 @@ const rfmt=x=>x==null?'–':(+x).toFixed(2).replace(/^0/,'');
 // vol10 'Trim to efficient' (logic/trim.js): one tap lowers set counts on existing tiles to the Efficient session limits; Undo = exact prior board
 // preset match: an untouched preset board (same days, ids, sets at this level) uses Coach's trimmed counts (splits-efficient-diff.json)
 const presetId=(d,src)=>{const dt=RD(),k=JSON.stringify(d.filter(D=>D.tiles.length).map(D=>[D.day,D.tiles.map(t=>[t.id,t.sets])]));for(const sp of ((src||dt.splits)||{}).splits||[]){const L=(sp.levels||{})[B.level];if(!L)continue;for(const [n,dd] of Object.entries(L))if(JSON.stringify(dd.filter(D=>D.tiles.length).map(D=>[D.day,D.tiles.map(t=>[t.id,t.sets])]))===k)return `${sp.id}/${B.level}/${n}`}return null};
-const trimPlan=()=>{if(!G()||G().mode!=='efficient'||openSlots())return null;const dt=RD(),d=checkDays();if(dt.SPLITS_EFF&&presetId(d,dt.SPLITS_EFF))return null;   // already Coach's efficient preset: residuals stay as info
+const trimPlan=force=>{if(!G()||(!force&&G().mode!=='efficient')||openSlots())return null;const dt=RD(),d=checkDays();if(dt.SPLITS_EFF&&presetId(d,dt.SPLITS_EFF))return null;   // already Coach's efficient preset: residuals stay as info
   const pid=presetId(d),DF=pid&&dt.TRIMDIFF&&dt.TRIMDIFF.presets[pid];let r;
   if(DF){const ops=DF.changes.map(c=>{const D=d.find(x=>x.day===c.day),i=D?D.tiles.findIndex(t=>t.id===c.id&&t.sets===c.from):-1;return {day:c.day,i,id:c.id,from:c.from,to:c.to}}).filter(o=>o.i>=0);
     const nd=d.map(D=>({day:D.day,tiles:D.tiles.map((t,i)=>{const o=ops.find(x=>x.day===D.day&&x.i===i);return o?Object.assign({},t,{sets:o.to}):t}).filter(t=>t.sets>0)}));r={days:nd,ops,removed:ops.reduce((a,o)=>a+o.from-o.to,0),source:'coach',pid}}
@@ -116,27 +117,68 @@ function trimCard(cls=''){const T=trimPlan();if(!T)return '';const ds=[...new Se
 function applyTrim(){const T=trimPlan();if(!T)return;const before=snap(),bsig=sigD(),txt=`Trimmed to efficient: −${T.removed} sets`;
   commit(()=>{for(const o of T.ops.slice().sort((a,b)=>b.i-a.i)){const D=B.days.find(x=>x.day===o.day),t=D&&D.tiles[o.i];if(t&&t.id===o.id&&t.sets===o.from){if(o.to>0)t.sets=o.to;else D.tiles.splice(o.i,1)}}},txt);
   APPLIED.unshift({preview:`Trim to efficient (−${T.removed} sets)`,before,bsig,asig:sigD(),section:'volume'});if(AN&&!AN.closed)renderAnalysis()}
-const dmxOf=d=>window.DAYMX&&d&&d.tiles.length?DAYMX.dayIdx(RD(),d.tiles.map(t=>({id:t.id,sets:t.sets})),B.level,checkDays(),dayLabel(d)):null;
-// vol10b/c: stimulus and fatigue are indexes on the SAME reference (day_metrics.reference.sources[source]); S:F = si / fi from the
-// rounded whole numbers (DAYMX.idx). No reference for this day (unknown label / unpopulated source) -> raw units only, S:F '–'.
-const SFB=o=>o&&o.sf_band?' sfb-'+o.sf_band:'',xr=o=>o&&o.sf_ratio!=null?o.sf_ratio.toFixed(2)+'×':'–',dd=x=>x==null?'–':`~${+(+x).toFixed(1)} d`;
+// ---- vol11c impact (volume-model.json vol11c.builder_paths). Units: stimulus = hard sets, fatigue = fresh-set equivalents,
+// recovery = days; S:F is per muscle only (visuals.body_map.efficiency). Data: logic/impact.js -> day-metrics-presets.json for an
+// unmodified preset of that goal, the same formulas live for anything else. Each goal has its own view of the board: Max growth =
+// the board as it is; Efficient = the board after "Trim to efficient" (a preview, nothing is applied). Both views are computed so a
+// goal switch only changes styles (CSS transitions on fills, glow and bar widths).
+const IMPV={day:-1};let IMPC={k:null,v:null};
+const presetOf=(days,src)=>{const dt=RD();return src?presetId(days,src):null};
+function impViews(){const k=sigD()+'|'+B.level;if(IMPC.k===k)return IMPC.v;const dt=RD(),d=checkDays(),T=G()?G().withGoal('efficient',()=>trimPlan(true)):null,ed=T?T.days:d;
+  const V={trim:T,g:{max_growth:IMPACT.week(dt,d,B.level,'max_growth',presetOf(d,dt.splits)),efficient:IMPACT.week(dt,ed,B.level,'efficient',presetOf(ed,dt.SPLITS_EFF))}};IMPC={k,v:V};return V}
+const impCur=()=>{if(!window.IMPACT)return null;const V=impViews(),g=G()&&G().mode==='efficient'?'efficient':'max_growth';return {V,g,W:V.g[g]}};
+const BMAP=()=>(RD().VM.visuals||{}).body_map||{};
+// fill: hue = per-muscle efficiency band (green / amber / red; only muscle-days with r2(effective sets) >= 1.00), strength = stimulus
+// (hard sets, 1 -> 6+); a muscle under 1 effective set gets a pale neutral tint. Glow = fatigue band (none / cool / warm / hot).
+const EFFC={green:'var(--vol-in-range)',amber:'var(--vol-amber)',red:'var(--vol-red)'};
+function impFill(o){if(!o||!(o.stimulus_hard_set_eq>0))return 'var(--map-empty)';const s=o.stimulus_hard_set_eq;if(!(PC.r2u(s)>=1))return 'color-mix(in srgb, var(--text-3,#9aa0a6) 28%, var(--map-empty))';
+  const p=Math.round(45+55*Math.min(1,(s-1)/5));return `color-mix(in srgb, ${EFFC[o.sf_dial]||EFFC.green} ${p}%, var(--map-empty))`}
+const GLOW={none:0,cool:.14,warm:.38,hot:.7};
+function impDay(){const i=IMPV.day>=0&&B.days[IMPV.day]&&B.days[IMPV.day].tiles.length?IMPV.day:Math.max(0,B.days.findIndex(d=>d.tiles.length));return i}
+function impStrip(C){const V=impViews(),bars={},ov={};for(const g of ['max_growth','efficient'])for(const b of V.g[g].strip.bars){(bars[b.muscle]=bars[b.muscle]||new Set()).add(DAYS.indexOf(b.day))}
+  const W=C.strip,rows=Object.keys(X.ML).filter(m=>bars[m]);if(!rows.length)return '<p class="foot">No trained muscles yet.</p>';const pc=x=>(Math.max(0,x)/7*100).toFixed(2)+'%';
+  return `<div class="imps" role="list">${rows.map(m=>{const red=W.overlaps.filter(o=>o.muscle===m);return `<div class="impr${red.length?' ov':''}" role="listitem" data-m="${m}"><span class="impn">${MLB(m)}</span><span class="impt">${[...bars[m]].sort((a,b)=>a-b).map(i=>{const b=W.bars.find(x=>x.muscle===m&&DAYS.indexOf(x.day)===i),r=b?b.ready_days:0,o=red.find(x=>DAYS.indexOf(x.day)===i),j=o?DAYS.indexOf(o.next_day):i,jj=j<i?j+7:j,ow=o?Math.max(0,i+r-jj):0;
+      return `<i class="ib" data-k="${m}:${i}" style="left:${pc(i)};width:${pc(Math.min(r,7-i))}"></i><i class="ib w" data-k="${m}:${i}:w" style="left:0;width:${pc(i+r-7)}"></i><i class="io" data-k="${m}:${i}:o" style="left:${pc(jj>=7?jj-7:jj)};width:${pc(o&&o.variant==='streak'?Math.max(ow,1):ow)}"></i><i class="id" data-k="${m}:${i}:d" style="left:${pc(i)};opacity:${b?1:0}"></i>`}).join('')}</span></div>`}).join('')}</div>`}
+function impHtml(){const C0=impCur();if(!C0)return '';const {V,g,W}=C0,i=impDay(),dd=B.days[i],X1=dd&&W.days[dd.day],t=X1&&X1.day_summary;
+  const vm={},ov={};for(const m of Object.keys(X.ML)){const o=X1&&X1.muscles[m];vm[m]=impFill(o);ov[m]=o?GLOW[o.fatigue_band]||0:0}
+  const cap=g==='efficient'&&V.trim?`Efficient view: this board trimmed (−${V.trim.removed} sets), not applied.`:g==='efficient'?'Efficient view: nothing to trim on this board.':'Max growth view: the board as it is.';
+  return `<div class="imph"><b>Impact</b><span class="evl" data-ev="modeled">Modeled</span>${goalSeg()}</div>
+   <div class="impd" role="group" aria-label="Day">${B.days.map((d,k)=>`<button class="${k===i?'on':''}" data-b="impday" data-i="${k}"${d.tiles.length?'':' disabled'}>${WD[k]}</button>`).join('')}</div>
+   <div class="impm"><div class="impmaps">${X.map('front',vm,{crop:1,over:ov,oid:'if'})}${X.map('back',vm,{crop:1,over:ov,oid:'ib'})}</div>
+    <div class="impside"><dl class="impn3"><div><dt>Stimulus</dt><dd class="num" data-v="stim">${t?nfmt(t.stimulus_hard_set_eq):'–'}</dd><small>hard sets</small></div><div><dt>Fatigue</dt><dd class="num" data-v="fat">${t?nfmt(t.fatigue_fresh_set_eq):'–'}</dd><small>fresh-set eq</small></div><div><dt>Ready in</dt><dd class="num" data-v="rec">${t?`~${nfmt(t.recovery_days)} d`:'–'}</dd><small>slowest muscle</small></div></dl>
+     <button class="btn xs grey" data-b="dmx" data-day="${dd?dd.day:''}">Per muscle ›</button></div></div>
+   <p class="impk"><i class="kg"></i><i class="ka"></i><i class="kr2"></i>growth per fatigue, darker = more stimulus <i class="kh"></i>fatigue near or past the session limit. <span data-v="cap">${cap}</span></p>
+   <p class="impnote">A glowing muscle is paying in fatigue for this day's work. ${nurdChip('impact')}</p>
+   <div class="imph2"><b>Recovery this week</b><span class="evl" data-ev="modeled">Modeled</span></div>
+   <div class="impax"><span></span><span class="impt0">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>
+   ${impStrip(W)}
+   <p class="impk">Bar = days until ready after each session. <i class="kr"></i>next session lands too soon.</p>`}
+// in place when the structure is unchanged (goal switch), so fills, glow and bar widths animate
+function paintImpact(){const el=$('#impc');if(!el)return;const h=impHtml();const tmp=document.createElement('div');tmp.innerHTML=h;
+  const sig=e=>[...e.querySelectorAll('[data-k],.mp,.impd button')].map(x=>x.dataset.k||x.dataset.mu||x.dataset.i).join(',');
+  if(!el.firstElementChild||sig(el)!==sig(tmp)){el.innerHTML=h;return}
+  tmp.querySelectorAll('[data-k]').forEach(n=>{const o=el.querySelector(`[data-k="${n.dataset.k}"]`);if(o)o.setAttribute('style',n.getAttribute('style'))});
+  const om=[...el.querySelectorAll('.mp,.mpo')],nm=[...tmp.querySelectorAll('.mp,.mpo')];nm.forEach((n,k)=>{if(om[k])om[k].setAttribute('style',n.getAttribute('style'))});
+  for(const sel of ['[data-v]','.impd','.gseg','.impr','.impside [data-b=dmx]']){const os=[...el.querySelectorAll(sel)],ns=[...tmp.querySelectorAll(sel)];ns.forEach((n,k)=>{const o=os[k];if(!o)return;if(sel==='.impr'){o.className=n.className;return}if(sel==='[data-v]')o.className=n.className;if(n.dataset.day!=null)o.dataset.day=n.dataset.day;o.innerHTML=n.innerHTML})}}
+// ---- day card row + per-muscle sheet (vol11c units; late-set marks still from DAYMX.day / the session limits)
+const dmxOf=d=>window.DAYMX&&d&&d.tiles.length?DAYMX.day(RD(),d.tiles.map(t=>({id:t.id,sets:t.sets})),B.level,checkDays()):null;
+const impOf=d=>{const C=impCur();return C&&d?C.W.days[d.day]||null:null};
+const dd=x=>x==null?'–':`~${+(+x).toFixed(1)} d`;
 const lateTxt=o=>{const n=o.late.reduce((a,z)=>a+z[1],0);return `${n} late set${n===1?'':'s'} · ${nfmt(o.over_limit)} over ${nfmt(o.session_limit)}`};
-const recDays=M=>M.idx?M.idx.recovery_days:(M.recovery_h!=null?Math.round(M.recovery_h/2.4)/10:null);
-// collapsed row on the day column; tapping it opens the per-muscle bottom sheet (dmxSheet)
-function dmxHtml(d){const M=dmxOf(d);if(!M)return `<div class="dmxw" data-day="${d.day}"></div>`;const late=M.over_warn>=0.05,Q=G()&&G().quiet()?' q':'',I=M.idx;
-  const cell=(v,l,cls='',u='')=>`<span class="dmc${cls}"><b class="num">${v}</b><small>${l}</small><small class="dmcu">${u||'&nbsp;'}</small></span>`;
-  const al=I?DAYMX.display(RD(),I).replace(/x typical/,'× typical'):`Stimulus ${nfmt(M.stimulus)} effective sets, about ${dd(recDays(M)).slice(1)} to recover`;
-  return `<div class="dmxw" data-day="${d.day}"><button class="dmx${late?' late'+Q:''}" data-b="dmx" data-day="${d.day}" aria-haspopup="dialog" aria-label="${WDL[DAYS.indexOf(d.day)]}: ${al}${late?`, ${nfmt(M.over_warn)} effective sets over the session limit`:''}. Show per muscle">${cell(I?I.stimulus_index:nfmt(M.stimulus),'Stim','',`${nfmt(M.stimulus)} sets`)}${cell(I?I.fatigue_index:'–','Fatigue','',dd(recDays(M)))}${cell(xr(I),'S:F',SFB(I))}</button>${late?`<div class="dmlate${Q}">${nfmt(M.over_warn)} over ${Q?'efficient ':''}limit</div>`:''}</div>`}
+// collapsed row on the day column; tapping it opens the per-muscle bottom sheet (dmxSheet). No ratio on the day row (vol11c).
+function dmxHtml(d){const M=dmxOf(d),I=impOf(d);if(!M||!I)return `<div class="dmxw" data-day="${d.day}"></div>`;const late=M.over_warn>=0.05,Q=G()&&G().quiet()?' q':'',t=I.day_summary;
+  const cell=(v,l,u)=>`<span class="dmc"><b class="num">${v}</b><small>${l}</small><small class="dmcu">${u}</small></span>`;
+  return `<div class="dmxw" data-day="${d.day}"><button class="dmx d3${late?' late'+Q:''}" data-b="dmx" data-day="${d.day}" aria-haspopup="dialog" aria-label="${WDL[DAYS.indexOf(d.day)]}: ${escA(t.display||'')}${late?`, ${nfmt(M.over_warn)} effective sets over the session limit`:''}. Show per muscle">${cell(nfmt(t.stimulus_hard_set_eq),'Stim','hard sets')}${cell(nfmt(t.fatigue_fresh_set_eq),'Fatigue','fresh-set eq')}${cell(dd(t.recovery_days),'Ready','slowest')}</button>${late?`<div class="dmlate${Q}">${nfmt(M.over_warn)} over ${Q?'efficient ':''}limit</div>`:''}</div>`}
 let DMS=null;
-function dmxBody(day){const D=B.days.find(x=>x.day===day),M=dmxOf(D);if(!M)return '<p class="foot">No sets this day.</p>';const late=M.over_warn>=0.05,Q=G()&&G().quiet()?' q':'',I=M.idx;
-  const tile=(v,l,u)=>`<div class="dmst"><b class="num">${v}</b><small>${l}</small>${u?`<small class="dmu">${u}</small>`:''}</div>`;
-  const eq=I?`<p class="dmeq num">Stimulus ${I.stimulus_index} ÷ Fatigue ${I.fatigue_index} = <b class="${SFB(I).trim()}">${xr(I)}</b> typical</p>`:`<p class="dmeq">No typical ${escA(dayLabel(D))} day to compare with, so raw units only.</p>`;
-  return `<div class="dmsum">${tile(I?I.stimulus_index:'–','Stimulus',`${nfmt(M.stimulus)} effective sets`)}${tile(I?I.fatigue_index:'–','Fatigue',`${dd(recDays(M))} to recover`)}${tile(`<span class="${SFB(I).trim()}">${xr(I)}</span>`,'Stim:Fatigue','vs typical')}</div>${eq}
+function dmxBody(day){const D=B.days.find(x=>x.day===day),M=dmxOf(D),I=impOf(D);if(!M||!I)return '<p class="foot">No sets this day.</p>';const late=M.over_warn>=0.05,Q=G()&&G().quiet()?' q':'',t=I.day_summary;
+  const tile=(v,l,u)=>`<div class="dmst"><b class="num">${v}</b><small>${l}</small><small class="dmu">${u}</small></div>`;const LM={};M.muscles.forEach(o=>LM[o.m]=o);
+  const rows=Object.keys(X.ML).filter(m=>I.muscles[m]&&I.muscles[m].stimulus_hard_set_eq>=0.5).sort((a,b)=>I.muscles[b].stimulus_hard_set_eq-I.muscles[a].stimulus_hard_set_eq);
+  return `<div class="dmsum">${tile(nfmt(t.stimulus_hard_set_eq),'Stimulus','hard sets')}${tile(nfmt(t.fatigue_fresh_set_eq),'Fatigue','fresh-set eq')}${tile(dd(t.recovery_days),'Ready in','slowest muscle')}</div>
    ${late?`<p class="dmslate${Q}">${nfmt(M.over_warn)} effective sets past the session limit. Late sets still count for the week. ${nurdChip('late')}</p>`:''}
    ${late&&Q?trimCard('dms'):''}<div class="dmst2"><div class="dmsh"><span>Per muscle</span><span class="evl" data-ev="modeled">Modeled</span></div>
-   <div class="dmsr dmsrh"><span>Muscle</span><span>Stim</span><span>Fatigue</span><span>S:F</span></div>
-   ${M.muscles.map(o=>{const J=o.idx,lt=o.over_limit>=0.05&&!o.exempt;return `<div class="dmsr${lt?' late'+Q:''}" data-m="${o.m}" data-sfb="${J&&J.sf_band||''}"><span class="dmsn">${MLB(o.m)}${lt?`<small class="dmmw">${lateTxt(o)}</small>`:''}</span><span class="num">${J?J.stimulus_index:'–'}<small>${nfmt(o.stimulus)} sets</small></span><span class="num">${J?J.fatigue_index:'–'}<small>${dd(J?J.recovery_days:null)}</small></span><span class="num${SFB(J)}">${xr(J)}</span></div>`}).join('')}</div>
-   <p class="dmxk">100 = a typical day (card) or muscle-day (rows). S:F above 1× means more growth per unit of fatigue than typical. ${nurdChip('daymx')}</p>`}
+   <div class="dmsr dmsrh"><span>Muscle</span><span>Stim</span><span>Fatigue</span><span>S:F</span><span>Ready</span></div>
+   ${rows.map(m=>{const o=I.muscles[m],L=LM[m],lt=L&&L.over_limit>=0.05&&!L.exempt,tr=PC.r2u(o.stimulus_hard_set_eq)>=1;return `<div class="dmsr${lt?' late'+Q:''}" data-m="${m}" data-eff="${tr?o.sf_dial:''}" data-glow="${o.fatigue_band}"><span class="dmsn">${MLB(m)}${lt?`<small class="dmmw">${lateTxt(L)}</small>`:''}</span><span class="num">${nfmt(o.stimulus_hard_set_eq)}</span><span class="num">${nfmt(o.fatigue_fresh_set_eq)}</span><span class="num${tr?' eff-'+o.sf_dial:''}">${o.sf_ratio!=null?o.sf_ratio.toFixed(2):'–'}</span><span class="num">${o.recovery_days>0?dd(o.recovery_days):'–'}</span></div>`}).join('')}</div>
+   <p class="dmxk">Stim in hard sets, fatigue in fresh-set equivalents; S:F = stim ÷ fatigue for that muscle (1.00 = a machine chest press set). ${nurdChip('daymx')}</p>`}
 function dmxSheet(day){if(DMS&&!DMS.closed)DMS.close();const i=DAYS.indexOf(day),D=B.days.find(x=>x.day===day);
   DMS=X.sheet({title:`${WDL[i]}${D?` · ${dayLabel(D)}`:''}`,cls:'tall grouped dmsheet',right:'<button class="btn plain" data-b="dmclose">Done</button>',onClose(){DMS=null}});DMS.day=day;DMS.body.innerHTML=dmxBody(day);return DMS}
 function colHtml(d,i){return `<section class="col${isRest(d)?' restday':''}" data-day="${d.day}" data-i="${i}"><header data-b="dayh" data-day="${d.day}" role="button" tabindex="0" aria-label="${WDL[i]}: ${dayLabel(d)}. Rename or set Rest"><b>${WD[i]}</b><span class="cl">${dayLabel(d)}</span><span class="cm num">${dayMeta(d)}</span></header>${dmxHtml(d)}
@@ -155,6 +197,7 @@ X.V.build=()=>{if(!B.days.length){initBoard();cxRestorePlaced()}
   <div class="btools" id="btools">${toolsHtml()}</div>
   <div class="board${BD.detail?' b-detail':''}" id="board">${boardHtml()}</div>
   <div class="pcheck" id="pcheck"></div>
+  <section class="impc" id="impc" aria-label="Impact: day map and week recovery"></section>
   <div class="glegend" aria-label="Chit shapes">${['primary','accessory','isolation'].map(t=>`<span><span class="cg ${t}">${X.GLY[t]}</span>${t[0].toUpperCase()+t.slice(1)}</span>`).join('')}</div>
   <p class="foot bhint">Tap a muscle on the map to learn about it. Hold a chit to lift it. Drag it to another day, or off the board to remove it. Tap a day's name to rename it or make it a Rest day.</p></div>`};
 X.AFTER.build=()=>{paint(true);const bd=$('#board');bd.addEventListener('scroll',markDay,{passive:true});markDay()};
@@ -164,7 +207,7 @@ function cxSavePlaced(){try{const P=[];B.days.forEach(d=>d.tiles.forEach((t,i)=>
 function cxRestorePlaced(){let P=[];try{P=JSON.parse(localStorage.getItem(X.cxPlacedKey)||'[]')||[]}catch(e){}
   for(const p of P){const D=B.days.find(d=>d.day===p.day);if(!D||!ex(p.id))continue;D.tiles.splice(Math.min(p.i,D.tiles.length),0,T(p.id,p.sets,p.reps));D.rest=false}}
 function paint(full){const bd=$('#board');if(!bd)return;cxSavePlaced();const sl=bd.scrollLeft;if(!full)bd.innerHTML=boardHtml();bd.classList.toggle('b-detail',BD.detail);const bt=$('#btools');if(bt)bt.innerHTML=toolsHtml();$$('.bdseg').forEach(x=>x.innerHTML=bdsegHtml());bd.scrollLeft=sl;const bn=$('.bname .bn');if(bn)bn.textContent=B.name||'New routine';
-  paintStats();paintSel();paintPcheck();if(AN&&!AN.closed)renderAnalysis();cbRe();if(DMS&&!DMS.closed)DMS.body.innerHTML=dmxBody(DMS.day)}
+  paintStats();paintSel();paintPcheck();paintImpact();if(AN&&!AN.closed)renderAnalysis();cbRe();if(DMS&&!DMS.closed)DMS.body.innerHTML=dmxBody(DMS.day)}
 let JMP=-1;function markDay(){const bd=$('#board');if(!bd)return;const cols=$$('.col',bd),o=cols[0].offsetLeft,x=bd.scrollLeft+8;let k=0;cols.forEach((c,i)=>{if(c.offsetLeft-o<=x)k=i});
   if(JMP>k&&bd.scrollLeft>=bd.scrollWidth-bd.clientWidth-2)k=JMP;$$('#dstrip button').forEach((b,i)=>b.classList.toggle('on',i===k))}
 function jump(i){const bd=$('#board'),c=$$('.col',bd)[i];if(!c)return;JMP=i;bd.scrollTo({left:c.offsetLeft-bd.firstElementChild.offsetLeft,behavior:'smooth'});$$('#dstrip button').forEach((b,j)=>b.classList.toggle('on',j===i))}
@@ -850,6 +893,7 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   if(k==='dmx')return dmxSheet(b.dataset.day);
   if(k==='dmclose'){if(DMS)DMS.close();return}
   if(k==='goal'){if(G()){G().set(b.dataset.goal);paint()}return}
+  if(k==='impday'){IMPV.day=+b.dataset.i;paintImpact();return}
   if(k==='analysis')return analysisSheet();if(k==='sugmore'){SUGX.add(b.dataset.sec);renderAnalysis();return}if(k==='anx')return explainItem(b.dataset.id);
   if(k==='mus'||k==='pat')return contribSheet(k,b.dataset[k==='mus'?'m':'p'],b.dataset.anchor);
   if(k==='asec'){const s=b.closest('.asec');const o=s.dataset.open!=='1';s.dataset.open=o?'1':'0';b.setAttribute('aria-expanded',String(o));setAnOpen(s.dataset.cat,o);return}

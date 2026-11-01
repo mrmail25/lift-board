@@ -1,0 +1,2080 @@
+{
+ "version": "vol11",
+ "label": "Modeled",
+ "unit": "fresh-set equivalents per set",
+ "anchor": "1.0 = one fresh hard set of machine-chest-press (accessory, machine compound) at its planned 2 RIR: type_base 1.0 x axial 1.0 x effort 1.0",
+ "formula": "fatigue_per_set = recovery.params.type_base[type] x axial(exercise) (axial classes: high 1.3 / free_compound 1.1 / machine_compound 1.0 / isolation 0.9). Already on the anchor scale, so the rescale factor is 1.0.",
+ "per_muscle": "muscle fatigue per set = rating[m] x fatigue_per_set x effort[RIR + role offset] (effort: RIR 0 1.2, 1 1.1, 2 1.0, 3 0.9, 4+ 0.8; role offsets as in volume-model.json credit). Muscles rated < 0.25 get 0.",
+ "manual_adjustments": [],
+ "manual_adjustments_note": "None. Every value comes from type x axial; no lift was hand-tuned.",
+ "basis": "Heavy axial compounds (heavy squat/hinge lists, fatigue rating 1.5, good mornings) > 1, isolation < 1. Classes come from existing exercises.json data (type, equipment, fatigue).",
+ "nurd": {
+  "short": "Lift Board model; effort factors anchored to Moran-Navarro 2017 and Refalo 2024",
+  "year": 2026,
+  "type": "model",
+  "label": "Modeled",
+  "note": "Modeled. type_base and axial classes are planning factors from existing exercise data; the RIR effort factor follows studies showing slower recovery after sets to failure (Moran-Navarro et al. 2017, Eur J Appl Physiol) and similar hypertrophy with less fatigue short of failure (Refalo et al. 2024). No study gives per-exercise fatigue multipliers."
+ },
+ "by_class": [
+  {
+   "type": "primary",
+   "axial_class": "high",
+   "fatigue_per_set": 1.56,
+   "n": 9,
+   "examples": [
+    "back-squat",
+    "barbell-row",
+    "deadlift",
+    "front-squat"
+   ]
+  },
+  {
+   "type": "primary",
+   "axial_class": "free_compound",
+   "fatigue_per_set": 1.32,
+   "n": 14,
+   "examples": [
+    "barbell-bench-press",
+    "barbell-glute-bridge",
+    "chin-up",
+    "close-grip-bench-press"
+   ]
+  },
+  {
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "fatigue_per_set": 1.2,
+   "n": 19,
+   "examples": [
+    "belt-squat",
+    "converging-smith-bench-press",
+    "converging-smith-incline-press",
+    "converging-smith-shoulder-press"
+   ]
+  },
+  {
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "fatigue_per_set": 1.1,
+   "n": 60,
+   "examples": [
+    "archer-push-up",
+    "arnold-press",
+    "bounding",
+    "box-jump"
+   ]
+  },
+  {
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "fatigue_per_set": 1.0,
+   "n": 33,
+   "examples": [
+    "arc-lat-pulldown",
+    "assisted-dip",
+    "assisted-pull-up",
+    "cable-woodchop"
+   ]
+  },
+  {
+   "type": "isolation",
+   "axial_class": "isolation",
+   "fatigue_per_set": 0.72,
+   "n": 112,
+   "examples": [
+    "45-degree-hyperextension",
+    "ab-crunch-machine",
+    "ab-wheel-rollout",
+    "active-hang"
+   ]
+  }
+ ],
+ "exercises": {
+  "45-degree-hyperextension": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "ab-crunch-machine": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "ab-wheel-rollout": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "active-hang": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "arc-lat-pulldown": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "archer-push-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "arnold-press": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "assisted-dip": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "assisted-pull-up": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "back-extension": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "back-extension-machine": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "back-squat": {
+   "fatigue_per_set": 1.56,
+   "type": "primary",
+   "axial_class": "high",
+   "type_base": 1.2,
+   "axial": 1.3,
+   "planned_rir": 2
+  },
+  "banded-lateral-walk": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "barbell-bench-press": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "barbell-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "barbell-glute-bridge": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "barbell-rollout": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "barbell-row": {
+   "fatigue_per_set": 1.56,
+   "type": "primary",
+   "axial_class": "high",
+   "type_base": 1.2,
+   "axial": 1.3,
+   "planned_rir": 2
+  },
+  "barbell-shrug": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "bayesian-cable-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "belt-squat": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "bounding": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "box-jump": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "broad-jump": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "bulgarian-split-squat": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "cable-crossover-high-to-low": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-crossover-low-to-high": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-crunch": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-fly": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-hip-abduction": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-kickback": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-lateral-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-overhead-rope-extension": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-preacher-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-rear-delt-fly": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-rope-hammer-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "cable-woodchop": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "cable-y-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "captains-chair-knee-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "chest-supported-dumbbell-row": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "chest-supported-row": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "chin-up": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "close-grip-bench-press": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "close-grip-pulldown": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "concentration-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "converging-smith-bench-press": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "converging-smith-incline-press": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "converging-smith-shoulder-press": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "copenhagen-plank": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dead-hang": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "deadlift": {
+   "fatigue_per_set": 1.56,
+   "type": "primary",
+   "axial_class": "high",
+   "type_base": 1.2,
+   "axial": 1.3,
+   "planned_rir": 2
+  },
+  "decline-bench-press": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "decline-machine-press": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "deficit-push-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "depth-jump": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "dip-machine": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "donkey-calf-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dragon-flag": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dumbbell-bench-press": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "dumbbell-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dumbbell-fly": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dumbbell-incline-y-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dumbbell-kickback": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dumbbell-lateral-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dumbbell-pullover": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dumbbell-rdl": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "dumbbell-rear-delt-fly": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dumbbell-reverse-lunge": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "dumbbell-shrug": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dumbbell-side-bend": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "dumbbell-step-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "ez-bar-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "face-pull": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "farmer-carry": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "front-lever-row": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "front-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "front-squat": {
+   "fatigue_per_set": 1.56,
+   "type": "primary",
+   "axial_class": "high",
+   "type_base": 1.2,
+   "axial": 1.3,
+   "planned_rir": 2
+  },
+  "glute-ham-raise": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "glute-kickback-machine": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "goblet-squat": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "good-morning": {
+   "fatigue_per_set": 1.56,
+   "type": "primary",
+   "axial_class": "high",
+   "type_base": 1.2,
+   "axial": 1.3,
+   "planned_rir": 2
+  },
+  "hack-squat": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "hack-squat-calf-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "hammer-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "hanging-leg-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "high-cable-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "high-foot-leg-press": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "high-row-machine": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "high-to-low-row-machine": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "hip-abduction-machine": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "hip-adduction-machine": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "hip-thrust": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "hip-thrust-machine": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "hollow-body-hold": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "horizontal-leg-press": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "incline-barbell-bench-press": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "incline-cable-pullover": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "incline-dumbbell-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "incline-dumbbell-fly": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "incline-dumbbell-press": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "incline-machine-press": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "inverted-row": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "iso-lateral-chest-press": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "iso-lateral-row": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "iso-lateral-shoulder-press": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "jm-press": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "jump-squat": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "kettlebell-clean": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "kettlebell-front-squat": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "kettlebell-halo": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "kettlebell-press": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "kettlebell-push-press": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "kettlebell-row": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "kettlebell-single-leg-rdl": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "kettlebell-snatch": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "kettlebell-swing": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "kettlebell-windmill": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "kneeling-leg-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "l-sit": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "landmine-press-one-arm": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "landmine-press-two-arm": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "landmine-rdl": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "landmine-rotation": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "landmine-squat": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "landmine-t-bar-row": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "lat-pulldown": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "lateral-raise-machine": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "leg-extension": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "leg-press": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "leg-press-calf-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "low-row-machine": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "lying-leg-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "machine-chest-press": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "machine-preacher-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "machine-shoulder-press": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "machine-triceps-extension": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "meadows-row": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "med-ball-chest-pass": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "med-ball-slam": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "muscle-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "neutral-grip-lat-pulldown": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "nordic-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "one-arm-dumbbell-row": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "overhead-cable-triceps-extension": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "overhead-press": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "overhead-triceps-machine": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "pallof-press": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "pec-deck": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "pendlay-row": {
+   "fatigue_per_set": 1.56,
+   "type": "primary",
+   "axial_class": "high",
+   "type_base": 1.2,
+   "axial": 1.3,
+   "planned_rir": 2
+  },
+  "pendulum-squat": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "pike-push-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "pistol-squat": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "plate-loaded-chest-press": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "plate-loaded-chest-supported-row": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "plyo-push-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "preacher-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "pseudo-planche-push-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "pull-up": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "pullover-machine": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "push-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "rack-pull": {
+   "fatigue_per_set": 1.56,
+   "type": "primary",
+   "axial_class": "high",
+   "type_base": 1.2,
+   "axial": 1.3,
+   "planned_rir": 2
+  },
+  "reverse-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "reverse-hack-squat": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "reverse-hyper": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "reverse-pec-deck": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "reverse-wrist-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "ring-biceps-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "ring-dip": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "ring-face-pull": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "ring-fly": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "ring-l-sit": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "ring-pull-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "ring-push-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "ring-row": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "ring-triceps-extension": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "romanian-deadlift": {
+   "fatigue_per_set": 1.56,
+   "type": "primary",
+   "axial_class": "high",
+   "type_base": 1.2,
+   "axial": 1.3,
+   "planned_rir": 2
+  },
+  "rotary-torso-machine": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "scapular-pull-up": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "seal-row": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "seated-band-hip-abduction": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "seated-cable-row": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "seated-calf-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "seated-dumbbell-lateral-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "seated-dumbbell-shoulder-press": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "seated-leg-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "seated-machine-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "seated-row-machine": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "selectorized-pulldown-machine": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "shrimp-squat": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "shrug-machine": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "side-lying-hip-abduction": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "side-plank": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "single-arm-cable-row": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "single-arm-lat-pulldown": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "single-leg-dumbbell-calf-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "single-leg-press": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "sissy-squat": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "skull-crusher": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "smith-bench-press": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "smith-calf-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "smith-hip-thrust": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "smith-incline-press": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "smith-overhead-press": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "smith-rdl": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "smith-row": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "smith-shrug": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "smith-split-squat": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "smith-squat": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "smith-squat-feet-forward": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "spider-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "stability-ball-rollout": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "standing-ab-wheel-rollout": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "standing-cable-adduction": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "standing-cable-crunch": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "standing-calf-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "standing-lateral-raise-machine": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "standing-leg-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "stiff-leg-dumbbell-deadlift": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "straight-arm-pulldown": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "suitcase-carry": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "t-bar-row": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "tibialis-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "trap-bar-deadlift": {
+   "fatigue_per_set": 1.56,
+   "type": "primary",
+   "axial_class": "high",
+   "type_base": 1.2,
+   "axial": 1.3,
+   "planned_rir": 2
+  },
+  "triceps-pushdown": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "trx-assisted-pistol": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "trx-biceps-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "trx-fallout": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "trx-hamstring-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "trx-pike": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "trx-push-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "trx-row": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "trx-triceps-extension": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "trx-y-t-raise": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "tuck-front-lever": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "turkish-get-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "upright-row": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "v-squat": {
+   "fatigue_per_set": 1.2,
+   "type": "primary",
+   "axial_class": "machine_compound",
+   "type_base": 1.2,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "viking-press": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "walking-lunge": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "wall-handstand-push-up": {
+   "fatigue_per_set": 1.1,
+   "type": "accessory",
+   "axial_class": "free_compound",
+   "type_base": 1.0,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "weighted-decline-crunch": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "weighted-dip": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  },
+  "wide-grip-cable-row": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "wide-grip-lat-pulldown": {
+   "fatigue_per_set": 1.0,
+   "type": "accessory",
+   "axial_class": "machine_compound",
+   "type_base": 1.0,
+   "axial": 1.0,
+   "planned_rir": 2
+  },
+  "wrist-curl": {
+   "fatigue_per_set": 0.72,
+   "type": "isolation",
+   "axial_class": "isolation",
+   "type_base": 0.8,
+   "axial": 0.9,
+   "planned_rir": 1
+  },
+  "yates-row": {
+   "fatigue_per_set": 1.32,
+   "type": "primary",
+   "axial_class": "free_compound",
+   "type_base": 1.2,
+   "axial": 1.1,
+   "planned_rir": 2
+  }
+ },
+ "levels_vol11b": {
+  "muscle_local": "muscle fatigue per set = rating[m] x fatigue_per_set x effort[RIR + role offset] (effort: RIR 0 1.2, 1 1.1, 2 1.0, 3 0.9, 4+ 0.8; role offsets as in volume-model.json credit). Muscles rated < 0.25 get 0.",
+  "systemic": "systemic fatigue per set = fatigue_per_set x effort[planned RIR], charged once per set (exercise and day level)",
+  "anchor_stimulus": "one machine-chest-press set = 1 hard-set eq of prime + secondary stimulus (chest 1; its minor credits front_delts/triceps are excluded); exercise/day stimulus is divided by this so the anchor reads 1.0",
+  "sentences": {
+   "muscle": "Muscle S:F = hard-set equivalents on that muscle / fresh-set fatigue on that muscle (rating-weighted); 1.0 = one machine chest press set on chest.",
+   "exercise": "Exercise S:F = stimulus on its prime and secondary muscles (rating >= 0.5, or its top rating) / its systemic fatigue, both counted in machine-chest-press sets; 1.0 = as efficient as a machine chest press set.",
+   "day": "Day S:F = the same ratio summed over all sets of the day (each set's fatigue charged once, not per muscle); 1.0 = a day as efficient as machine chest press sets."
+  }
+ }
+}

@@ -1679,3 +1679,26 @@ svg.pwbars .pwbl{font-size:10px;fill:var(--text-2)}
 .dmst .dmu{font-size:10.5px;margin-top:1px}.dmsum{grid-template-columns:repeat(3,minmax(0,1fr))}
 .dmeq{margin:0 16px 8px;font-size:13px;color:var(--text-2);text-align:center}.dmeq b{font-weight:700}
 .dmc small.dmcu{font-size:8px;margin-top:0;overflow:hidden;text-overflow:clip}
+/* vol11c impact card + day row (stimulus hard sets, fatigue fresh-set eq, ready days; S:F per muscle only) */
+.dmx.d3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.dmsr{grid-template-columns:minmax(0,1.6fr) repeat(4,minmax(0,.7fr))}.dmsum{grid-template-columns:repeat(3,minmax(0,1fr))}
+.eff-green{color:var(--vol-in-range-ink,#1f7a4c);font-weight:700}.eff-amber{color:var(--warn-ink,#8a5a00);font-weight:700}.eff-red{color:var(--vol-red);font-weight:700}
+.impc{margin:10px var(--s4) 6px;padding:12px;background:var(--paper);border-radius:var(--r-md);box-shadow:0 0 0 .5px var(--line)}
+.impc:empty{display:none}
+.imph,.imph2{display:flex;align-items:center;gap:8px;margin-bottom:8px}.imph b,.imph2 b{font-size:16px}.imph .gseg{margin-left:auto;width:auto}.imph2{margin:12px 0 4px}
+.impd{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}.impd button{border:0;border-radius:8px;background:var(--fill);font:inherit;font-size:13px;padding:5px 0;color:inherit}.impd button.on{background:var(--ink,#111);color:#fff}.impd button:disabled{opacity:.35}
+.impm{display:grid;grid-template-columns:minmax(0,1fr) 96px;gap:8px;align-items:center}
+.impmaps{display:flex;gap:4px;justify-content:center}.impmaps .mmap{height:190px;width:auto;pointer-events:none}
+.impmaps .mp{transition:fill .6s ease}.impmaps .mpo{transition:opacity .6s ease}
+.impside{display:flex;flex-direction:column;gap:8px}.impn3{margin:0;display:flex;flex-direction:column;gap:6px}.impn3 div{display:flex;flex-direction:column}
+.impn3 dt{font-size:11px;color:var(--text-2)}.impn3 dd{margin:0;font-size:18px;font-weight:700;line-height:1.1}.impn3 small{font-size:10.5px;color:var(--text-2)}
+.impk{font-size:12px;color:var(--text-2);margin:6px 0 0;line-height:1.35}.impk i{display:inline-block;width:10px;height:10px;border-radius:3px;margin:0 3px -1px 0}
+.impk .kg{background:var(--vol-in-range)}.impk .ka{background:var(--vol-amber)}.impk .kr2{background:var(--vol-red)}.impk .kh{background:repeating-linear-gradient(45deg,#e8552a 0 3px,rgba(240,110,40,.38) 3px 6px);margin-left:6px}.impk .kr{background:var(--vol-red);margin-left:4px}
+.impnote{font-size:13px;margin:6px 0 0}
+.impax,.impr{display:grid;grid-template-columns:84px minmax(0,1fr);gap:6px;align-items:center}.impt0{display:grid;grid-template-columns:repeat(7,1fr)}.impt0 i{font-style:normal;font-size:10.5px;color:var(--text-2);text-align:left}
+.imps{display:flex;flex-direction:column;gap:3px}.impn{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.impt{position:relative;height:12px;background:repeating-linear-gradient(90deg,var(--fill) 0 calc(100%/7 - 1px),var(--paper) calc(100%/7 - 1px) calc(100%/7));border-radius:3px;overflow:hidden}
+.impt i{position:absolute;top:2px;height:8px;border-radius:4px;transition:width .6s ease,left .6s ease,opacity .4s}
+.impt .ib{background:color-mix(in srgb,var(--vol-in-range) 70%,var(--paper))}.impt .io{background:var(--vol-red);z-index:2}.impt .id{width:4px;top:1px;height:10px;background:var(--ink,#111);border-radius:2px;z-index:3}
+.impr.ov .impn{color:var(--vol-red);font-weight:600}
+.dmx.d3 .dmcu{white-space:normal;font-size:9.5px;line-height:1.05;overflow:visible;text-overflow:clip}

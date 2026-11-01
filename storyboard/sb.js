@@ -1152,8 +1152,10 @@ if(window.MM&&!MM._g1b){MM._g1b=1;MM.front.m.forEach(e=>{if(e[1]==='traps_upper'
 const MHEAD={front:`${MHD_NECK}<g class="mhead" pointer-events="none" aria-hidden="true" transform="${MHD_T}"><path d="${MHD_SIL}" fill="${MHD_D}"/><path d="${MHD_F}" fill="${MHD_W}"/></g>`,
  back:`${MHD_NECK}<g class="mhead" pointer-events="none" aria-hidden="true" transform="${MHD_T}"><path d="${MHD_SIL}" fill="${MHD_D}"/><path d="${MHD_B}" fill="${MHD_W}"/></g>`};
 function map(side,vol,opt={}){const m=MM[side],[,,w,h]=m.vb.split(' ').map(Number);
-  return `<svg viewBox="${opt.crop?MAPCROP:`0 0 ${w} ${h}`}" class="mmap${opt.crop?' crop':''}" aria-label="${side} muscle map"><clipPath id="mhclip-${side}"><rect x="0" y="250" width="${w}" height="${h}"/></clipPath><path clip-path="url(#mhclip-${side})" d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>${MHEAD[side]}
-   ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="var(--map-base)" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */return `<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'var(--map-off)'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"/>`}).join('')}
+  return `<svg viewBox="${opt.crop?MAPCROP:`0 0 ${w} ${h}`}" class="mmap${opt.crop?' crop':''}" aria-label="${side} muscle map">${opt.over?`<defs><pattern id="fhot-${opt.oid||side}" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="22" height="22" fill="var(--fat-hot-base,rgba(240,110,40,.38))"/><rect width="9" height="22" fill="var(--fat-hot,#e8552a)"/></pattern></defs>`:''}<clipPath id="mhclip-${side}"><rect x="0" y="250" width="${w}" height="${h}"/></clipPath><path clip-path="url(#mhclip-${side})" d="${m.outline.join(' ')}" fill="var(--map-base)" stroke="var(--map-line)" stroke-width="3"/>${MHEAD[side]}
+   ${m.m.map(([id,reg,d])=>{const mu=REG2M(reg),v=vol[mu];if(!mu)return `<path d="${d}" class="nr" fill="var(--map-base)" pointer-events="none"/>`; /* the two back ABDUCTOR paths have no region in the live map either */const P=`<path d="${d}" data-mu="${mu}" data-reg="${reg}" class="mp" fill="${opt.sel?(opt.sel.includes(mu)?'var(--accent)':'var(--map-off)'):opt.hl&&mu===opt.hl?'var(--accent)':FILL(v)}"${opt.over?` style="fill:${FILL(v)}"`:''}/>`;
+     /* vol11: optional fatigue overlay (opt.over = {muscle: 0..1}); always drawn so a goal switch can animate its opacity */
+     return opt.over?P+`<path d="${d}" data-mo="${mu}" class="mpo" fill="url(#fhot-${opt.oid||side})" pointer-events="none" style="opacity:${(opt.over[mu]||0).toFixed(2)}"/>`:P}).join('')}
 </svg>`}
 const VOL_X=[['traps',8,6,12],['forearms',6,4,12],['obliques',4,4,10],['lower_back',6,4,10],['adductors',4,4,10],['abductors',3,4,10]];
 const volMap=()=>{const o={};[...VOL,...VOL_X].forEach(([m,n,lo,hi])=>o[m]=volFill(n,lo,hi));return o}; // same vStat bands as the panel, in-range shaded from --vol-in-range
@@ -1742,7 +1744,8 @@ async function loadRank(){if(RD)return RD;if(RDP)return RDP;
     const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
     R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PR2=pr2;R.SLOG=slog;R.EVO=evo;R.DISP=disp;R.FN=fnotes;
     R.VM=await getJ(DATA+'volume-model.json');
-    try{R.TRIMDIFF=await getJ(DATA+'splits-efficient-diff.json')}catch(x){R.TRIMDIFF=null}try{R.SPLITS_EFF=await getJ(DATA+'splits-efficient.json')}catch(x){R.SPLITS_EFF=null} // vol10b: Efficient presets   // vol10b: Coach's per-preset Efficient trims   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
+    try{R.TRIMDIFF=await getJ(DATA+'splits-efficient-diff.json')}catch(x){R.TRIMDIFF=null}try{R.SPLITS_EFF=await getJ(DATA+'splits-efficient.json')}catch(x){R.SPLITS_EFF=null} // vol10b: Efficient presets
+    try{R.FAT=await getJ(DATA+'fatigue.json')}catch(x){R.FAT=null}try{R.DMP=await getJ(DATA+'day-metrics-presets.json')}catch(x){R.DMP=null} // vol11: per-exercise fatigue; precomputed preset visuals   // vol10b: Coach's per-preset Efficient trims   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
     try{await cxLoad(R,exercises,rules,cxd)}catch(x){console.warn('custom exercises not loaded',x)}   // custom exercises: defaults loader + registration (before anything reads RD)
     RD=R;return RD})();
   const r=await RDP;RDP=null;return r}

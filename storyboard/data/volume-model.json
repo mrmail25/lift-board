@@ -5209,7 +5209,7 @@
  },
  "recovery": {
   "recommendation": "Show both: estimated recovery hours per muscle per session (for spacing) and the week against generic benchmark routines (for total load). Drop raw \"pts\" from the UI; keep % of saved baseline as an optional third line.",
-  "hours_formula": "vol8: h = (24 + 4 x max(0, F - 2)) x (1 + 0.15 x stretch share) x size[muscle] x level; clamp 12-96 h; round to 6 h. F = recovery load = sum over that muscle's sets in the workout of credit x effort[RIR of the set] x axial[exercise].",
+  "hours_formula": "vol11b: see recovery.load_vol11b.formula (exact steps). 1. Per tile and muscle m: c = sets x rating x prox[RIR] (credit; 0 if rating < 0.25), f = sets x rating x fatigue_per_set x effort[RIR] (muscle fatigue). Use full floats. 2. ES = sum c, ST = sum c over tiles whose exercise is in stretch_biased[m], F = sum f. 3. Round half-up to 0.01: r2(x) = floor(x x 100 + 0.5 + 1e-9) / 100. ES2 = r2(ES), F2 = r2(F), share = r2(ST / ES). 4. Gate: if ES2 < 1.00 then hours = 0 (no bar, no recovery days). F is NOT gated (vol11b; vol8-vol11 also returned 0 when F < 1). 5. h_raw = (24 + 4 x max(0, F2 - 2)) x (1 + 0.15 x share) x size[m] x level[level], multiplied left to right (size: big muscles 1.1, side/rear delts, calves, forearms, abs, obliques, abductors 0.85, others 1.0; level: beginner 1.15, intermediate/advanced 1.0). 6. Clamp to [12, 96]. 7. hours = 6 x floor(h_clamped / 6 + 0.5) (integer).",
   "params": {
    "base_h": 24,
    "free_sets": 2,
@@ -5625,6 +5625,73 @@
    "why_4": "Four weeks smooths normal week-to-week swings and matches the 4-week windows used by block_compare and the progress trend. Modeled.",
    "toggle": "User can switch between the two at any time; the choice is saved.",
    "tag": "modeled"
+  },
+  "load_vol11": "vol11: recovery load F = sum over sets of rating x fatigue_per_set x effort[RIR + role offset] (was credit x effort x axial in vol8-vol10c). hours = (base_h + h_per_set x max(0, F - free_sets)) x stretch x size x level, clamped and rounded (unchanged).",
+  "hours_formula_vol8": "vol8: h = (24 + 4 x max(0, F - 2)) x (1 + 0.15 x stretch share) x size[muscle] x level; clamp 12-96 h; round to 6 h. F = recovery load = sum over that muscle's sets in the workout of credit x effort[RIR of the set] x axial[exercise].",
+  "load_vol11b": {
+   "formula": [
+    "Inputs per tile: exercise id, sets, level; per exercise from exercises.json: muscles[m] rating, type; fatigue_per_set from data/fatigue.json; stretch list rules.json stretch_biased[m]. All RIR = planned RIR (primary 2, accessory 2, isolation 1) + role offset (prime 0, secondary 1, minor 2).",
+    "1. Per tile and muscle m: c = sets x rating x prox[RIR] (credit; 0 if rating < 0.25), f = sets x rating x fatigue_per_set x effort[RIR] (muscle fatigue). Use full floats.",
+    "2. ES = sum c, ST = sum c over tiles whose exercise is in stretch_biased[m], F = sum f.",
+    "3. Round half-up to 0.01: r2(x) = floor(x x 100 + 0.5 + 1e-9) / 100. ES2 = r2(ES), F2 = r2(F), share = r2(ST / ES).",
+    "4. Gate: if ES2 < 1.00 then hours = 0 (no bar, no recovery days). F is NOT gated (vol11b; vol8-vol11 also returned 0 when F < 1).",
+    "5. h_raw = (24 + 4 x max(0, F2 - 2)) x (1 + 0.15 x share) x size[m] x level[level], multiplied left to right (size: big muscles 1.1, side/rear delts, calves, forearms, abs, obliques, abductors 0.85, others 1.0; level: beginner 1.15, intermediate/advanced 1.0).",
+    "6. Clamp to [12, 96].",
+    "7. hours = 6 x floor(h_clamped / 6 + 0.5) (integer).",
+    "8. days = floor(hours x 10 / 24 + 0.5) / 10, computed as integer (hours x 10 + 12) // 24, then / 10 (half-up; 30 h -> 1.3 d).",
+    "9. ready_range_days = [max(0.5, floor(0.8 x hours / 12) / 2), ceil(1.2 x hours / 12) / 2] (unchanged)."
+   ],
+   "label": "Modeled",
+   "used_by": [
+    "build_volume_model.session_recovery (day-metrics-presets muscles[m].recovery_hours / recovery_days, day_summary)",
+    "check_program.rec_hours (recovery_overlap, recovery_strip bars)"
+   ],
+   "worked_example": {
+    "board": "efficient full-body/beginner/3 Friday",
+    "muscle": "triceps",
+    "inputs": [
+     {
+      "id": "machine-chest-press",
+      "sets": 3,
+      "rating": 0.4,
+      "role": "minor",
+      "credit_per_set": 0.32,
+      "fatigue_per_set_muscle": 0.32,
+      "stretch_biased": false
+     },
+     {
+      "id": "overhead-cable-triceps-extension",
+      "sets": 2,
+      "rating": 1,
+      "role": "prime",
+      "credit_per_set": 1.0,
+      "fatigue_per_set_muscle": 0.792,
+      "stretch_biased": true
+     }
+    ],
+    "ES": 2.96,
+    "ES_r2": 2.96,
+    "gate": "ES_r2 2.96 >= 1.00 -> True",
+    "F": 2.544,
+    "F_r2": 2.54,
+    "stretch_share_r2": 0.68,
+    "size": 1.0,
+    "level_factor": 1.15,
+    "base_h": 26.16,
+    "stretch_factor": 1.102,
+    "h_raw": 33.1526,
+    "h_clamped": 33.1526,
+    "hours": 36,
+    "days": 1.5,
+    "arithmetic": "(24 + 4 x (2.54 - 2)) = 26.16; x (1 + 0.15 x 0.68) = x 1.102; x size 1.0 x beginner 1.15 = 33.1526 h; round to 6 h = 36 h; days = (36 x 10 + 12) // 24 / 10 = 1.5"
+   },
+   "mismatch_vol11": {
+    "builder_report": "101 of 352 preset days differ; triceps fatigue 2.54 gives 1.2 days live vs 1.5 in the file",
+    "cause": "The 1.5 d file value is right per the formula: the stretch factor (overhead cable triceps extension is stretch-biased, share 0.68, x1.10) lifts 30.1 h to 33.2 h -> 36 h. 1.2 d is what the formula gives WITHOUT the stretch factor (26.16 x 1.15 = 30.1 -> 30 h). The same F 2.54 on torso-limbs/beginner/4 Monday (no stretch exercise) correctly reads 30 h. The file did not publish the stretch share or hours, and recovery.hours_formula still described the vol8 load (credit x effort x axial), so a calc from the published fields alone could not match.",
+    "which_side": "Builder side for the example (stretch factor missing); file side for the documentation (stale hours_formula text, inputs not published) and two ambiguities now fixed: days used Python round (half-even: 30 h -> 1.2, 54 h -> 2.2) and hours were zeroed when F < 1 even with >= 1 effective set.",
+    "not_reproduced": "The count 101 could not be reproduced from any single hypothesis (no stretch: 317 days, half-up days: 334, no level factor: 119), so Builder may differ in more than one place; the exact steps and the per-muscle inputs in the presets file should settle it.",
+    "fix": "day-metrics-presets muscles[m] now carry recovery_hours and recovery_inputs {effective_sets_r2, recovery_load_r2, stretch_share_r2, size, level_factor}; days from hours by the integer rule."
+   }
   }
  },
  "session_time": {
@@ -10183,7 +10250,13 @@
    "volume-model-reference.json": [
     "board-machine-chest-press-8",
     "board-barbell-bench-press-8",
-    "session-chest-12-vs-6plus6"
+    "recovery-barbell-bench-press-4x-rir2",
+    "recovery-barbell-bench-press-8x-rir1",
+    "recovery-barbell-bench-press-8x-rir0",
+    "recovery-romanian-deadlift-4x-rir2",
+    "recovery-cable-lateral-raise-4x-rir1",
+    "session-chest-12-vs-6plus6",
+    "recovery-ranges-by-level"
    ],
    "workout-reference.json": [
     "reference-upper-day",
@@ -10194,6 +10267,7 @@
     "chest-10-in-one-workout",
     "chest-5-plus-5-consecutive-days",
     "invariant-5-plus-5-vs-10",
+    "recovery-per-set-examples",
     "weekly-pct-vol8b",
     "chest-12-in-one-day-vol8c",
     "chest-6-plus-6-vol8c",
@@ -11363,107 +11437,1379 @@
   }
  },
  "day_metrics": {
-  "version": "vol10b",
-  "unit_note": "All metrics are per muscle per workout day. Effective sets = sets x rating x proximity credit (secondary and minor roles), the same face-value counting as weekly volume.",
-  "stimulus": {
-   "formula": "stimulus[m, day] = sum over the day's tiles of sets x credit(exercise, m) (volume-model.json credit; planned RIR)",
-   "unit": "effective sets",
-   "decay": "none. The session-efficiency decay 1/(1+(n-1)/c) is NOT applied to stimulus, so the days add up exactly to the weekly value. Poor value late in a session is shown separately as over_limit / wasted_late_sets, which are a portion of the same stimulus, not a deduction.",
-   "reference": "the goal's session limit (rules session_efficiency.limits_by_goal) and the weekly target (goals.<goal>.weekly)",
-   "nurd": {
-    "short": "Lift Board model (this spec)",
-    "year": 2026,
-    "type": "model",
+  "version": "vol11",
+  "history_vol10b": {
+   "version": "vol10b",
+   "unit_note": "All metrics are per muscle per workout day. Effective sets = sets x rating x proximity credit (secondary and minor roles), the same face-value counting as weekly volume.",
+   "stimulus": {
+    "formula": "stimulus[m, day] = sum over the day's tiles of sets x credit(exercise, m) (volume-model.json credit; planned RIR)",
+    "unit": "effective sets",
+    "decay": "none. The session-efficiency decay 1/(1+(n-1)/c) is NOT applied to stimulus, so the days add up exactly to the weekly value. Poor value late in a session is shown separately as over_limit / wasted_late_sets, which are a portion of the same stimulus, not a deduction.",
+    "reference": "the goal's session limit (rules session_efficiency.limits_by_goal) and the weekly target (goals.<goal>.weekly)",
+    "nurd": {
+     "short": "Lift Board model (this spec)",
+     "year": 2026,
+     "type": "model",
+     "label": "Modeled",
+     "note": "Derived from existing model parameters; no study measures this number."
+    }
+   },
+   "fatigue": {
+    "formula": "fatigue[m, day] = sum over tiles crediting m of sets x per-set fatigue x rating share; per-set fatigue = recovery.params.type_base[type] x axial_by_exercise[id] x effort[planned RIR]; rating share = rating[m] / sum of the exercise's ratings >= 0.25",
+    "unit": "load points (the workout fatigue index points; 100 index = workout.fatigue.reference.points 19.33)",
+    "reference": "the muscle's points add up to the workout load points, so a day card can show each muscle's share of the workout index",
+    "nurd": {
+     "short": "Lift Board model (this spec)",
+     "year": 2026,
+     "type": "model",
+     "label": "Modeled",
+     "note": "Derived from existing model parameters; no study measures this number."
+    }
+   },
+   "recovery": {
+    "formula": "recovery_h[m, day] = volume-model.json recovery.hours_formula (per set; existing vol8 formula, unchanged)",
+    "unit": "hours until ready (planning baseline), shown as a day range (recovery.display)",
+    "reference": "recovery.benchmarks (typical routines) and the 24-72 h range in recovery.tags",
+    "nurd": {
+     "short": "Moran-Navarro 2017; Cheung 2003 (recovery anchors)",
+     "year": 2017,
+     "type": "peer-reviewed studies; applied as a model",
+     "label": "Modeled"
+    }
+   },
+   "stimulus_per_set": {
+    "formula": "stimulus / sets of tiles that credit m",
+    "unit": "effective sets per set",
+    "reference": "1.0 = a direct (prime) set at <= 2 RIR; 0.5 = typical secondary credit",
+    "nurd": {
+     "short": "Lift Board model (this spec)",
+     "year": 2026,
+     "type": "model",
+     "label": "Modeled",
+     "note": "Derived from existing model parameters; no study measures this number."
+    }
+   },
+   "stimulus_per_min": {
+    "formula": "stimulus / minutes[m]; minutes[m] = sum over tiles crediting m of sets x (work_min_per_set + rest_min_by_type[type]) x rating share (rules session_length.by_level[level])",
+    "unit": "effective sets per minute",
+    "assumption": "Modeled minutes per set by type (star = primary, plus = accessory, circle = isolation): work 0.75 min + rest; intermediate rest 3.0 / 2.0 / 1.5 min (beginner 2.5/2.0/1.5, advanced 3.5/2.5/1.5). Warm-up minutes are excluded. Rest values follow rules session_length (Schoenfeld 2016; Singer 2024); work time and the plus rest are practitioner planning values.",
+    "reference": "per_min_vs_benchmark_pct: 100 = the median muscle-day across the 46 presets at intermediate (0.677 effective sets per minute; quartiles [0.578, 0.677, 0.817]); per_min_pct_of_preset_avg: 100 = the preset's week average",
+    "benchmark_per_min": 0.677,
+    "nurd": {
+     "short": "Schoenfeld et al. 2016, JSCR; Singer et al. 2024",
+     "year": 2016,
+     "type": "RCT; Bayesian meta-analysis (peer-reviewed)",
+     "label": "Modeled",
+     "note": "Rest periods used in rules session_length (primary 2.5-3.5 min, isolation 1.5 min). Minutes per set are a planning assumption built on them."
+    }
+   },
+   "over_limit": {
+    "formula": "max(0, stimulus - session limit for goal and level)",
+    "unit": "effective sets",
+    "nurd": {
+     "short": "Remmert et al. 2025, SportRxiv",
+     "year": 2025,
+     "type": "preprint (not peer-reviewed)",
+     "label": "Modeled",
+     "url": "https://doi.org/10.51224/srxiv.537",
+     "note": "Only per-session dataset: diminishing returns, point of undetectable outcome superiority ~11 fractional sets per session; applied here as a model."
+    }
+   },
+   "display_rule": "Show relative numbers (index, %) with whole numbers only; show raw units in a details row. Never show more precision than the table gives.",
+   "retired": {
+    "sfr_index": "vol10 sfr_index (100 = median muscle-day stimulus/fatigue 1.82) and its 80/120 zones are RETIRED: stimulus and fatigue were on different references, so the shown numbers did not divide to the shown ratio.",
+    "vol10_sfr": {
+     "formula": "sfr = stimulus / fatigue",
+     "unit": "effective sets per load point",
+     "index": "sfr_index = round(100 x sfr / 1.82); 100 = the median muscle-day across the 46 presets at intermediate (465 muscle-days with >= 2 effective sets; quartiles [1.64, 1.82, 2.15])",
+     "zones": [
+      {
+       "id": "low",
+       "below": 80
+      },
+      {
+       "id": "typical",
+       "from": 80,
+       "to": 120
+      },
+      {
+       "id": "high",
+       "above": 120
+      }
+     ],
+     "zones_note": "low < 80, typical 80-120, high > 120 (index). The cut-offs are a display choice around the preset median; no study measures a stimulus:fatigue ratio.",
+     "also": "sfr_pct_of_preset_avg = 100 x sfr / (preset week stimulus / preset week fatigue)",
+     "benchmark_sfr": 1.82,
+     "nurd": {
+      "short": "Lift Board model (this spec)",
+      "year": 2026,
+      "type": "model",
+      "label": "Modeled",
+      "note": "Derived from existing model parameters; no study measures this number."
+     }
+    }
+   },
+   "reference": {
+    "day_level": "100 = the median intermediate preset day of the same day type (day_type_map)",
+    "muscle_level": "100 = the median intermediate muscle-day for that muscle, over days with >= 1 effective set for it",
+    "day_type_map": {
+     "Full Body A": "full",
+     "Full Body B": "full",
+     "Full Body C": "full",
+     "Upper A": "upper",
+     "Upper B": "upper",
+     "Power Upper": "upper",
+     "Hypertrophy Upper": "upper",
+     "Lower A": "lower",
+     "Lower B": "lower",
+     "Power Lower": "lower",
+     "Hypertrophy Lower": "lower",
+     "Push": "push",
+     "Push B": "push",
+     "Pull": "pull",
+     "Pull B": "pull",
+     "Legs": "legs",
+     "Legs B": "legs",
+     "Chest & Back": "chest_back",
+     "Shoulders & Arms": "shoulders_arms",
+     "Torso": "torso",
+     "Torso B": "torso",
+     "Limbs": "limbs",
+     "Limbs B": "limbs",
+     "Chest": "single_group",
+     "Back": "single_group",
+     "Shoulders": "single_group",
+     "Arms": "single_group"
+    },
+    "day_type_note": "Day type comes from the splits.json day label (exact match). Several presets share identical days (e.g. the PPL Pull day), so some IQRs are narrow or zero-width. single_group pools the bro-split Chest, Back, Shoulders and Arms days (only 1 intermediate day each); Legs from the bro split counts as legs. A custom day with an unknown label uses the muscle-level indexes only.",
+    "by_day_type": {
+     "chest_back": {
+      "stimulus_eff_sets": {
+       "median": 36.05,
+       "n": 3,
+       "iqr": [
+        36.05,
+        40.12
+       ]
+      },
+      "fatigue_points": {
+       "median": 19.48,
+       "n": 3,
+       "iqr": [
+        19.48,
+        21.85
+       ]
+      }
+     },
+     "full": {
+      "stimulus_eff_sets": {
+       "median": 42.22,
+       "n": 10,
+       "iqr": [
+        33.09,
+        44.04
+       ]
+      },
+      "fatigue_points": {
+       "median": 20.57,
+       "n": 10,
+       "iqr": [
+        19.52,
+        21.26
+       ]
+      }
+     },
+     "legs": {
+      "stimulus_eff_sets": {
+       "median": 34.76,
+       "n": 9,
+       "iqr": [
+        34.76,
+        45.36
+       ]
+      },
+      "fatigue_points": {
+       "median": 19.66,
+       "n": 9,
+       "iqr": [
+        19.66,
+        25.15
+       ]
+      }
+     },
+     "limbs": {
+      "stimulus_eff_sets": {
+       "median": 40.49,
+       "n": 3,
+       "iqr": [
+        34.73,
+        45.09
+       ]
+      },
+      "fatigue_points": {
+       "median": 22.8,
+       "n": 3,
+       "iqr": [
+        21.32,
+        24.74
+       ]
+      }
+     },
+     "lower": {
+      "stimulus_eff_sets": {
+       "median": 32.76,
+       "n": 7,
+       "iqr": [
+        27.57,
+        34.35
+       ]
+      },
+      "fatigue_points": {
+       "median": 18.1,
+       "n": 7,
+       "iqr": [
+        17.82,
+        19.26
+       ]
+      }
+     },
+     "pull": {
+      "stimulus_eff_sets": {
+       "median": 37.36,
+       "n": 5,
+       "iqr": [
+        37.36,
+        37.36
+       ]
+      },
+      "fatigue_points": {
+       "median": 18.56,
+       "n": 5,
+       "iqr": [
+        18.56,
+        18.56
+       ]
+      }
+     },
+     "push": {
+      "stimulus_eff_sets": {
+       "median": 29.32,
+       "n": 5,
+       "iqr": [
+        29.32,
+        31.32
+       ]
+      },
+      "fatigue_points": {
+       "median": 19.14,
+       "n": 5,
+       "iqr": [
+        19.14,
+        20.72
+       ]
+      }
+     },
+     "shoulders_arms": {
+      "stimulus_eff_sets": {
+       "median": 29.36,
+       "n": 3,
+       "iqr": [
+        29.36,
+        29.36
+       ]
+      },
+      "fatigue_points": {
+       "median": 17.42,
+       "n": 3,
+       "iqr": [
+        17.42,
+        17.42
+       ]
+      }
+     },
+     "single_group": {
+      "stimulus_eff_sets": {
+       "median": 27.2,
+       "n": 4,
+       "iqr": [
+        21.62,
+        33.45
+       ]
+      },
+      "fatigue_points": {
+       "median": 15.93,
+       "n": 4,
+       "iqr": [
+        14.16,
+        17.69
+       ]
+      }
+     },
+     "torso": {
+      "stimulus_eff_sets": {
+       "median": 38.85,
+       "n": 3,
+       "iqr": [
+        35.92,
+        43.19
+       ]
+      },
+      "fatigue_points": {
+       "median": 20.56,
+       "n": 3,
+       "iqr": [
+        18.85,
+        23.04
+       ]
+      }
+     },
+     "upper": {
+      "stimulus_eff_sets": {
+       "median": 35.92,
+       "n": 8,
+       "iqr": [
+        34.48,
+        38.29
+       ]
+      },
+      "fatigue_points": {
+       "median": 19.33,
+       "n": 8,
+       "iqr": [
+        18.11,
+        21.2
+       ]
+      }
+     }
+    },
+    "by_muscle": {
+     "chest": {
+      "stimulus_eff_sets": {
+       "median": 5.0,
+       "n": 32,
+       "iqr": [
+        3.0,
+        8.0
+       ]
+      },
+      "fatigue_points": {
+       "median": 2.77,
+       "n": 32,
+       "iqr": [
+        1.94,
+        4.85
+       ]
+      }
+     },
+     "front_delts": {
+      "stimulus_eff_sets": {
+       "median": 3.0,
+       "n": 34,
+       "iqr": [
+        2.16,
+        4.19
+       ]
+      },
+      "fatigue_points": {
+       "median": 1.65,
+       "n": 34,
+       "iqr": [
+        1.32,
+        2.54
+       ]
+      }
+     },
+     "side_delts": {
+      "stimulus_eff_sets": {
+       "median": 3.32,
+       "n": 30,
+       "iqr": [
+        3.0,
+        4.35
+       ]
+      },
+      "fatigue_points": {
+       "median": 2.04,
+       "n": 30,
+       "iqr": [
+        1.83,
+        2.65
+       ]
+      }
+     },
+     "rear_delts": {
+      "stimulus_eff_sets": {
+       "median": 3.62,
+       "n": 31,
+       "iqr": [
+        2.84,
+        4.25
+       ]
+      },
+      "fatigue_points": {
+       "median": 1.35,
+       "n": 31,
+       "iqr": [
+        1.25,
+        1.86
+       ]
+      }
+     },
+     "lats": {
+      "stimulus_eff_sets": {
+       "median": 4.89,
+       "n": 32,
+       "iqr": [
+        3.0,
+        7.21
+       ]
+      },
+      "fatigue_points": {
+       "median": 2.12,
+       "n": 32,
+       "iqr": [
+        1.36,
+        3.13
+       ]
+      }
+     },
+     "upper_back": {
+      "stimulus_eff_sets": {
+       "median": 4.6,
+       "n": 36,
+       "iqr": [
+        1.96,
+        5.59
+       ]
+      },
+      "fatigue_points": {
+       "median": 1.71,
+       "n": 36,
+       "iqr": [
+        0.97,
+        2.33
+       ]
+      }
+     },
+     "traps": {
+      "stimulus_eff_sets": {
+       "median": 2.88,
+       "n": 37,
+       "iqr": [
+        2.07,
+        4.43
+       ]
+      },
+      "fatigue_points": {
+       "median": 1.73,
+       "n": 37,
+       "iqr": [
+        1.19,
+        2.28
+       ]
+      }
+     },
+     "biceps": {
+      "stimulus_eff_sets": {
+       "median": 4.16,
+       "n": 33,
+       "iqr": [
+        2.95,
+        5.58
+       ]
+      },
+      "fatigue_points": {
+       "median": 2.16,
+       "n": 33,
+       "iqr": [
+        1.47,
+        3.02
+       ]
+      }
+     },
+     "triceps": {
+      "stimulus_eff_sets": {
+       "median": 3.35,
+       "n": 35,
+       "iqr": [
+        2.36,
+        5.7
+       ]
+      },
+      "fatigue_points": {
+       "median": 2.57,
+       "n": 35,
+       "iqr": [
+        1.65,
+        4.15
+       ]
+      }
+     },
+     "forearms": {
+      "stimulus_eff_sets": {
+       "median": 1.89,
+       "n": 40,
+       "iqr": [
+        1.48,
+        2.61
+       ]
+      },
+      "fatigue_points": {
+       "median": 0.95,
+       "n": 40,
+       "iqr": [
+        0.8,
+        1.34
+       ]
+      }
+     },
+     "abs": {
+      "stimulus_eff_sets": {
+       "median": 3.0,
+       "n": 22,
+       "iqr": [
+        2.0,
+        3.0
+       ]
+      },
+      "fatigue_points": {
+       "median": 1.32,
+       "n": 22,
+       "iqr": [
+        0.88,
+        1.7
+       ]
+      }
+     },
+     "quads": {
+      "stimulus_eff_sets": {
+       "median": 5.0,
+       "n": 30,
+       "iqr": [
+        3.0,
+        6.0
+       ]
+      },
+      "fatigue_points": {
+       "median": 2.68,
+       "n": 30,
+       "iqr": [
+        1.66,
+        3.96
+       ]
+      }
+     },
+     "hamstrings": {
+      "stimulus_eff_sets": {
+       "median": 5.0,
+       "n": 29,
+       "iqr": [
+        3.0,
+        6.0
+       ]
+      },
+      "fatigue_points": {
+       "median": 3.31,
+       "n": 29,
+       "iqr": [
+        2.38,
+        3.45
+       ]
+      }
+     },
+     "glutes": {
+      "stimulus_eff_sets": {
+       "median": 4.32,
+       "n": 29,
+       "iqr": [
+        3.49,
+        5.85
+       ]
+      },
+      "fatigue_points": {
+       "median": 2.23,
+       "n": 29,
+       "iqr": [
+        1.38,
+        3.03
+       ]
+      }
+     },
+     "calves": {
+      "stimulus_eff_sets": {
+       "median": 3.0,
+       "n": 28,
+       "iqr": [
+        3.0,
+        3.0
+       ]
+      },
+      "fatigue_points": {
+       "median": 2.38,
+       "n": 28,
+       "iqr": [
+        2.38,
+        2.38
+       ]
+      }
+     },
+     "adductors": {
+      "stimulus_eff_sets": {
+       "median": 2.58,
+       "n": 27,
+       "iqr": [
+        1.86,
+        3.42
+       ]
+      },
+      "fatigue_points": {
+       "median": 1.38,
+       "n": 27,
+       "iqr": [
+        1.15,
+        1.77
+       ]
+      }
+     },
+     "lower_back": {
+      "stimulus_eff_sets": {
+       "median": 1.89,
+       "n": 33,
+       "iqr": [
+        1.35,
+        3.08
+       ]
+      },
+      "fatigue_points": {
+       "median": 0.82,
+       "n": 33,
+       "iqr": [
+        0.62,
+        1.39
+       ]
+      }
+     },
+     "obliques": {
+      "stimulus_eff_sets": {
+       "median": 1.08,
+       "n": 19,
+       "iqr": [
+        1.0,
+        1.47
+       ]
+      },
+      "fatigue_points": {
+       "median": 0.66,
+       "n": 19,
+       "iqr": [
+        0.44,
+        0.68
+       ]
+      }
+     },
+     "abductors": {
+      "stimulus_eff_sets": {
+       "median": 2.76,
+       "n": 22,
+       "iqr": [
+        1.5,
+        3.5
+       ]
+      },
+      "fatigue_points": {
+       "median": 1.42,
+       "n": 22,
+       "iqr": [
+        0.67,
+        2.06
+       ]
+      }
+     }
+    },
     "label": "Modeled",
-    "note": "Derived from existing model parameters; no study measures this number."
-   }
-  },
-  "fatigue": {
-   "formula": "fatigue[m, day] = sum over tiles crediting m of sets x per-set fatigue x rating share; per-set fatigue = recovery.params.type_base[type] x axial_by_exercise[id] x effort[planned RIR]; rating share = rating[m] / sum of the exercise's ratings >= 0.25",
-   "unit": "load points (the workout fatigue index points; 100 index = workout.fatigue.reference.points 19.33)",
-   "reference": "the muscle's points add up to the workout load points, so a day card can show each muscle's share of the workout index",
-   "nurd": {
-    "short": "Lift Board model (this spec)",
-    "year": 2026,
-    "type": "model",
-    "label": "Modeled",
-    "note": "Derived from existing model parameters; no study measures this number."
-   }
-  },
-  "recovery": {
-   "formula": "recovery_h[m, day] = volume-model.json recovery.hours_formula (per set; existing vol8 formula, unchanged)",
-   "unit": "hours until ready (planning baseline), shown as a day range (recovery.display)",
-   "reference": "recovery.benchmarks (typical routines) and the 24-72 h range in recovery.tags",
-   "nurd": {
-    "short": "Moran-Navarro 2017; Cheung 2003 (recovery anchors)",
-    "year": 2017,
-    "type": "peer-reviewed studies; applied as a model",
-    "label": "Modeled"
-   }
-  },
-  "stimulus_per_set": {
-   "formula": "stimulus / sets of tiles that credit m",
-   "unit": "effective sets per set",
-   "reference": "1.0 = a direct (prime) set at <= 2 RIR; 0.5 = typical secondary credit",
-   "nurd": {
-    "short": "Lift Board model (this spec)",
-    "year": 2026,
-    "type": "model",
-    "label": "Modeled",
-    "note": "Derived from existing model parameters; no study measures this number."
-   }
-  },
-  "stimulus_per_min": {
-   "formula": "stimulus / minutes[m]; minutes[m] = sum over tiles crediting m of sets x (work_min_per_set + rest_min_by_type[type]) x rating share (rules session_length.by_level[level])",
-   "unit": "effective sets per minute",
-   "assumption": "Modeled minutes per set by type (star = primary, plus = accessory, circle = isolation): work 0.75 min + rest; intermediate rest 3.0 / 2.0 / 1.5 min (beginner 2.5/2.0/1.5, advanced 3.5/2.5/1.5). Warm-up minutes are excluded. Rest values follow rules session_length (Schoenfeld 2016; Singer 2024); work time and the plus rest are practitioner planning values.",
-   "reference": "per_min_vs_benchmark_pct: 100 = the median muscle-day across the 46 presets at intermediate (0.677 effective sets per minute; quartiles [0.578, 0.677, 0.817]); per_min_pct_of_preset_avg: 100 = the preset's week average",
-   "benchmark_per_min": 0.677,
-   "nurd": {
-    "short": "Schoenfeld et al. 2016, JSCR; Singer et al. 2024",
-    "year": 2016,
-    "type": "RCT; Bayesian meta-analysis (peer-reviewed)",
-    "label": "Modeled",
-    "note": "Rest periods used in rules session_length (primary 2.5-3.5 min, isolation 1.5 min). Minutes per set are a planning assumption built on them."
-   }
-  },
-  "over_limit": {
-   "formula": "max(0, stimulus - session limit for goal and level)",
-   "unit": "effective sets",
-   "nurd": {
-    "short": "Remmert et al. 2025, SportRxiv",
-    "year": 2025,
-    "type": "preprint (not peer-reviewed)",
-    "label": "Modeled",
-    "url": "https://doi.org/10.51224/srxiv.537",
-    "note": "Only per-session dataset: diminishing returns, point of undetectable outcome superiority ~11 fractional sets per session; applied here as a model."
-   }
-  },
-  "display_rule": "Show relative numbers (index, %) with whole numbers only; show raw units in a details row. Never show more precision than the table gives.",
-  "retired": {
-   "sfr_index": "vol10 sfr_index (100 = median muscle-day stimulus/fatigue 1.82) and its 80/120 zones are RETIRED: stimulus and fatigue were on different references, so the shown numbers did not divide to the shown ratio.",
-   "vol10_sfr": {
-    "formula": "sfr = stimulus / fatigue",
-    "unit": "effective sets per load point",
-    "index": "sfr_index = round(100 x sfr / 1.82); 100 = the median muscle-day across the 46 presets at intermediate (465 muscle-days with >= 2 effective sets; quartiles [1.64, 1.82, 2.15])",
-    "zones": [
+    "nurd": {
+     "short": "Lift Board preset medians",
+     "year": 2026,
+     "type": "model (descriptive statistics of our own presets)",
+     "label": "Modeled",
+     "note": "A typical-day reference, not a physiological norm."
+    },
+    "source_description_vol10b": "ORIGINAL data/splits.json intermediate presets (not splits-efficient.json); every preset day counted as it appears (shared days count once per preset).",
+    "source": "preset_medians",
+    "sources": {
+     "preset_medians": {
+      "by_day_type": {
+       "chest_back": {
+        "stimulus_eff_sets": {
+         "median": 36.05,
+         "n": 3,
+         "iqr": [
+          36.05,
+          40.12
+         ]
+        },
+        "fatigue_points": {
+         "median": 19.48,
+         "n": 3,
+         "iqr": [
+          19.48,
+          21.85
+         ]
+        }
+       },
+       "full": {
+        "stimulus_eff_sets": {
+         "median": 42.22,
+         "n": 10,
+         "iqr": [
+          33.09,
+          44.04
+         ]
+        },
+        "fatigue_points": {
+         "median": 20.57,
+         "n": 10,
+         "iqr": [
+          19.52,
+          21.26
+         ]
+        }
+       },
+       "legs": {
+        "stimulus_eff_sets": {
+         "median": 34.76,
+         "n": 9,
+         "iqr": [
+          34.76,
+          45.36
+         ]
+        },
+        "fatigue_points": {
+         "median": 19.66,
+         "n": 9,
+         "iqr": [
+          19.66,
+          25.15
+         ]
+        }
+       },
+       "limbs": {
+        "stimulus_eff_sets": {
+         "median": 40.49,
+         "n": 3,
+         "iqr": [
+          34.73,
+          45.09
+         ]
+        },
+        "fatigue_points": {
+         "median": 22.8,
+         "n": 3,
+         "iqr": [
+          21.32,
+          24.74
+         ]
+        }
+       },
+       "lower": {
+        "stimulus_eff_sets": {
+         "median": 32.76,
+         "n": 7,
+         "iqr": [
+          27.57,
+          34.35
+         ]
+        },
+        "fatigue_points": {
+         "median": 18.1,
+         "n": 7,
+         "iqr": [
+          17.82,
+          19.26
+         ]
+        }
+       },
+       "pull": {
+        "stimulus_eff_sets": {
+         "median": 37.36,
+         "n": 5,
+         "iqr": [
+          37.36,
+          37.36
+         ]
+        },
+        "fatigue_points": {
+         "median": 18.56,
+         "n": 5,
+         "iqr": [
+          18.56,
+          18.56
+         ]
+        }
+       },
+       "push": {
+        "stimulus_eff_sets": {
+         "median": 29.32,
+         "n": 5,
+         "iqr": [
+          29.32,
+          31.32
+         ]
+        },
+        "fatigue_points": {
+         "median": 19.14,
+         "n": 5,
+         "iqr": [
+          19.14,
+          20.72
+         ]
+        }
+       },
+       "shoulders_arms": {
+        "stimulus_eff_sets": {
+         "median": 29.36,
+         "n": 3,
+         "iqr": [
+          29.36,
+          29.36
+         ]
+        },
+        "fatigue_points": {
+         "median": 17.42,
+         "n": 3,
+         "iqr": [
+          17.42,
+          17.42
+         ]
+        }
+       },
+       "single_group": {
+        "stimulus_eff_sets": {
+         "median": 27.2,
+         "n": 4,
+         "iqr": [
+          21.62,
+          33.45
+         ]
+        },
+        "fatigue_points": {
+         "median": 15.93,
+         "n": 4,
+         "iqr": [
+          14.16,
+          17.69
+         ]
+        }
+       },
+       "torso": {
+        "stimulus_eff_sets": {
+         "median": 38.85,
+         "n": 3,
+         "iqr": [
+          35.92,
+          43.19
+         ]
+        },
+        "fatigue_points": {
+         "median": 20.56,
+         "n": 3,
+         "iqr": [
+          18.85,
+          23.04
+         ]
+        }
+       },
+       "upper": {
+        "stimulus_eff_sets": {
+         "median": 35.92,
+         "n": 8,
+         "iqr": [
+          34.48,
+          38.29
+         ]
+        },
+        "fatigue_points": {
+         "median": 19.33,
+         "n": 8,
+         "iqr": [
+          18.11,
+          21.2
+         ]
+        }
+       }
+      },
+      "by_muscle": {
+       "chest": {
+        "stimulus_eff_sets": {
+         "median": 5.0,
+         "n": 32,
+         "iqr": [
+          3.0,
+          8.0
+         ]
+        },
+        "fatigue_points": {
+         "median": 2.77,
+         "n": 32,
+         "iqr": [
+          1.94,
+          4.85
+         ]
+        }
+       },
+       "front_delts": {
+        "stimulus_eff_sets": {
+         "median": 3.0,
+         "n": 34,
+         "iqr": [
+          2.16,
+          4.19
+         ]
+        },
+        "fatigue_points": {
+         "median": 1.65,
+         "n": 34,
+         "iqr": [
+          1.32,
+          2.54
+         ]
+        }
+       },
+       "side_delts": {
+        "stimulus_eff_sets": {
+         "median": 3.32,
+         "n": 30,
+         "iqr": [
+          3.0,
+          4.35
+         ]
+        },
+        "fatigue_points": {
+         "median": 2.04,
+         "n": 30,
+         "iqr": [
+          1.83,
+          2.65
+         ]
+        }
+       },
+       "rear_delts": {
+        "stimulus_eff_sets": {
+         "median": 3.62,
+         "n": 31,
+         "iqr": [
+          2.84,
+          4.25
+         ]
+        },
+        "fatigue_points": {
+         "median": 1.35,
+         "n": 31,
+         "iqr": [
+          1.25,
+          1.86
+         ]
+        }
+       },
+       "lats": {
+        "stimulus_eff_sets": {
+         "median": 4.89,
+         "n": 32,
+         "iqr": [
+          3.0,
+          7.21
+         ]
+        },
+        "fatigue_points": {
+         "median": 2.12,
+         "n": 32,
+         "iqr": [
+          1.36,
+          3.13
+         ]
+        }
+       },
+       "upper_back": {
+        "stimulus_eff_sets": {
+         "median": 4.6,
+         "n": 36,
+         "iqr": [
+          1.96,
+          5.59
+         ]
+        },
+        "fatigue_points": {
+         "median": 1.71,
+         "n": 36,
+         "iqr": [
+          0.97,
+          2.33
+         ]
+        }
+       },
+       "traps": {
+        "stimulus_eff_sets": {
+         "median": 2.88,
+         "n": 37,
+         "iqr": [
+          2.07,
+          4.43
+         ]
+        },
+        "fatigue_points": {
+         "median": 1.73,
+         "n": 37,
+         "iqr": [
+          1.19,
+          2.28
+         ]
+        }
+       },
+       "biceps": {
+        "stimulus_eff_sets": {
+         "median": 4.16,
+         "n": 33,
+         "iqr": [
+          2.95,
+          5.58
+         ]
+        },
+        "fatigue_points": {
+         "median": 2.16,
+         "n": 33,
+         "iqr": [
+          1.47,
+          3.02
+         ]
+        }
+       },
+       "triceps": {
+        "stimulus_eff_sets": {
+         "median": 3.35,
+         "n": 35,
+         "iqr": [
+          2.36,
+          5.7
+         ]
+        },
+        "fatigue_points": {
+         "median": 2.57,
+         "n": 35,
+         "iqr": [
+          1.65,
+          4.15
+         ]
+        }
+       },
+       "forearms": {
+        "stimulus_eff_sets": {
+         "median": 1.89,
+         "n": 40,
+         "iqr": [
+          1.48,
+          2.61
+         ]
+        },
+        "fatigue_points": {
+         "median": 0.95,
+         "n": 40,
+         "iqr": [
+          0.8,
+          1.34
+         ]
+        }
+       },
+       "abs": {
+        "stimulus_eff_sets": {
+         "median": 3.0,
+         "n": 22,
+         "iqr": [
+          2.0,
+          3.0
+         ]
+        },
+        "fatigue_points": {
+         "median": 1.32,
+         "n": 22,
+         "iqr": [
+          0.88,
+          1.7
+         ]
+        }
+       },
+       "quads": {
+        "stimulus_eff_sets": {
+         "median": 5.0,
+         "n": 30,
+         "iqr": [
+          3.0,
+          6.0
+         ]
+        },
+        "fatigue_points": {
+         "median": 2.68,
+         "n": 30,
+         "iqr": [
+          1.66,
+          3.96
+         ]
+        }
+       },
+       "hamstrings": {
+        "stimulus_eff_sets": {
+         "median": 5.0,
+         "n": 29,
+         "iqr": [
+          3.0,
+          6.0
+         ]
+        },
+        "fatigue_points": {
+         "median": 3.31,
+         "n": 29,
+         "iqr": [
+          2.38,
+          3.45
+         ]
+        }
+       },
+       "glutes": {
+        "stimulus_eff_sets": {
+         "median": 4.32,
+         "n": 29,
+         "iqr": [
+          3.49,
+          5.85
+         ]
+        },
+        "fatigue_points": {
+         "median": 2.23,
+         "n": 29,
+         "iqr": [
+          1.38,
+          3.03
+         ]
+        }
+       },
+       "calves": {
+        "stimulus_eff_sets": {
+         "median": 3.0,
+         "n": 28,
+         "iqr": [
+          3.0,
+          3.0
+         ]
+        },
+        "fatigue_points": {
+         "median": 2.38,
+         "n": 28,
+         "iqr": [
+          2.38,
+          2.38
+         ]
+        }
+       },
+       "adductors": {
+        "stimulus_eff_sets": {
+         "median": 2.58,
+         "n": 27,
+         "iqr": [
+          1.86,
+          3.42
+         ]
+        },
+        "fatigue_points": {
+         "median": 1.38,
+         "n": 27,
+         "iqr": [
+          1.15,
+          1.77
+         ]
+        }
+       },
+       "lower_back": {
+        "stimulus_eff_sets": {
+         "median": 1.89,
+         "n": 33,
+         "iqr": [
+          1.35,
+          3.08
+         ]
+        },
+        "fatigue_points": {
+         "median": 0.82,
+         "n": 33,
+         "iqr": [
+          0.62,
+          1.39
+         ]
+        }
+       },
+       "obliques": {
+        "stimulus_eff_sets": {
+         "median": 1.08,
+         "n": 19,
+         "iqr": [
+          1.0,
+          1.47
+         ]
+        },
+        "fatigue_points": {
+         "median": 0.66,
+         "n": 19,
+         "iqr": [
+          0.44,
+          0.68
+         ]
+        }
+       },
+       "abductors": {
+        "stimulus_eff_sets": {
+         "median": 2.76,
+         "n": 22,
+         "iqr": [
+          1.5,
+          3.5
+         ]
+        },
+        "fatigue_points": {
+         "median": 1.42,
+         "n": 22,
+         "iqr": [
+          0.67,
+          2.06
+         ]
+        }
+       }
+      },
+      "day_type_map": {
+       "Full Body A": "full",
+       "Full Body B": "full",
+       "Full Body C": "full",
+       "Upper A": "upper",
+       "Upper B": "upper",
+       "Power Upper": "upper",
+       "Hypertrophy Upper": "upper",
+       "Lower A": "lower",
+       "Lower B": "lower",
+       "Power Lower": "lower",
+       "Hypertrophy Lower": "lower",
+       "Push": "push",
+       "Push B": "push",
+       "Pull": "pull",
+       "Pull B": "pull",
+       "Legs": "legs",
+       "Legs B": "legs",
+       "Chest & Back": "chest_back",
+       "Shoulders & Arms": "shoulders_arms",
+       "Torso": "torso",
+       "Torso B": "torso",
+       "Limbs": "limbs",
+       "Limbs B": "limbs",
+       "Chest": "single_group",
+       "Back": "single_group",
+       "Shoulders": "single_group",
+       "Arms": "single_group"
+      },
+      "day_type_note": "Day type comes from the splits.json day label (exact match). Several presets share identical days (e.g. the PPL Pull day), so some IQRs are narrow or zero-width. single_group pools the bro-split Chest, Back, Shoulders and Arms days (only 1 intermediate day each); Legs from the bro split counts as legs. A custom day with an unknown label uses the muscle-level indexes only.",
+      "muscle_level": "100 = the median intermediate muscle-day for that muscle, over days with >= 1 effective set for it",
+      "day_level": "100 = the median intermediate preset day of the same day type (day_type_map)",
+      "label": "Modeled",
+      "nurd": {
+       "short": "Lift Board preset medians",
+       "year": 2026,
+       "type": "model (descriptive statistics of our own presets)",
+       "label": "Modeled",
+       "note": "A typical-day reference, not a physiological norm."
+      },
+      "status": "populated",
+      "populated": true,
+      "description": "ORIGINAL data/splits.json intermediate presets (not splits-efficient.json); every preset day counted as it appears (shared days count once per preset)."
+     },
+     "classic_programs": {
+      "status": "not_populated",
+      "populated": false,
+      "intended": "Published intermediate programs, e.g. one 4-day upper/lower and one 6-day push/pull/legs, entered day by day as tiles (exercise ids + sets) with a citation each.",
+      "programs": [],
+      "program_schema": {
+       "id": "string",
+       "name": "string",
+       "citation": {
+        "short": "string",
+        "year": "int",
+        "type": "book | article | practitioner",
+        "url": "string"
+       },
+       "level": "intermediate",
+       "days": [
+        {
+         "day": "mon..sun",
+         "label": "splits.json-style label (maps through day_type_map)",
+         "tiles": [
+          {
+           "id": "exercise id",
+           "sets": "int"
+          }
+         ]
+        }
+       ]
+      },
+      "by_day_type": null,
+      "by_muscle": null,
+      "build": "Same statistics as preset_medians (median, n, IQR per day type and per muscle) computed from programs[] by the builder; no code change is needed to switch, only reference.source.",
+      "note": "Mr Dude has not decided. No program data is entered; do not use this source until populated is true."
+     }
+    },
+    "swap_rule": "Readers use reference.sources[reference.source].by_day_type / by_muscle. reference.by_day_type and reference.by_muscle mirror the active source for older clients. Only populated sources may be selected."
+   },
+   "stimulus_index": {
+    "formula": "round(100 x stimulus / reference median stimulus)",
+    "day_stimulus": "sum over muscles of that day's effective sets (face value)",
+    "unit_shown": "effective sets",
+    "nurd": {
+     "short": "Lift Board model (this spec)",
+     "year": 2026,
+     "type": "model",
+     "label": "Modeled",
+     "note": "Derived from existing model parameters; no study measures this number."
+    }
+   },
+   "fatigue_index": {
+    "formula": "round(100 x fatigue points / reference median fatigue points)",
+    "day_fatigue": "sum over sets of per-set fatigue (type_base x axial x effort) = workout load points",
+    "muscle_fatigue": "rating-share split of the same points (day_metrics.fatigue)",
+    "unit_shown": "recovery days = recovery_h / 24 (existing recovery formula; day = the slowest muscle), rounded to 0.1",
+    "nurd": {
+     "short": "Lift Board model (this spec)",
+     "year": 2026,
+     "type": "model",
+     "label": "Modeled",
+     "note": "Derived from existing model parameters; no study measures this number."
+    }
+   },
+   "sf_ratio": {
+    "formula": "sf_ratio = round(stimulus_index / fatigue_index, 2), computed from the two rounded whole-number indexes so the display divides exactly",
+    "display": "Stimulus {si} ({eff} effective sets) / Fatigue {fi} (~{days} days to recover) = {ratio}x typical",
+    "bands": [
      {
-      "id": "low",
-      "below": 80
+      "id": "below_typical",
+      "below": 0.8,
+      "label": "less stimulus per fatigue than typical"
      },
      {
       "id": "typical",
-      "from": 80,
-      "to": 120
+      "from": 0.8,
+      "to": 1.2,
+      "label": "typical"
      },
      {
-      "id": "high",
-      "above": 120
+      "id": "above_typical",
+      "above": 1.2,
+      "label": "more stimulus per fatigue than typical"
      }
     ],
-    "zones_note": "low < 80, typical 80-120, high > 120 (index). The cut-offs are a display choice around the preset median; no study measures a stimulus:fatigue ratio.",
-    "also": "sfr_pct_of_preset_avg = 100 x sfr / (preset week stimulus / preset week fatigue)",
-    "benchmark_sfr": 1.82,
+    "bands_note": "Display choice, not research: < 0.8x, 0.8-1.2x, > 1.2x of the typical day/muscle-day.",
+    "label": "Modeled",
     "nurd": {
      "short": "Lift Board model (this spec)",
      "year": 2026,
@@ -11473,1223 +12819,10 @@
     }
    }
   },
-  "reference": {
-   "day_level": "100 = the median intermediate preset day of the same day type (day_type_map)",
-   "muscle_level": "100 = the median intermediate muscle-day for that muscle, over days with >= 1 effective set for it",
-   "day_type_map": {
-    "Full Body A": "full",
-    "Full Body B": "full",
-    "Full Body C": "full",
-    "Upper A": "upper",
-    "Upper B": "upper",
-    "Power Upper": "upper",
-    "Hypertrophy Upper": "upper",
-    "Lower A": "lower",
-    "Lower B": "lower",
-    "Power Lower": "lower",
-    "Hypertrophy Lower": "lower",
-    "Push": "push",
-    "Push B": "push",
-    "Pull": "pull",
-    "Pull B": "pull",
-    "Legs": "legs",
-    "Legs B": "legs",
-    "Chest & Back": "chest_back",
-    "Shoulders & Arms": "shoulders_arms",
-    "Torso": "torso",
-    "Torso B": "torso",
-    "Limbs": "limbs",
-    "Limbs B": "limbs",
-    "Chest": "single_group",
-    "Back": "single_group",
-    "Shoulders": "single_group",
-    "Arms": "single_group"
-   },
-   "day_type_note": "Day type comes from the splits.json day label (exact match). Several presets share identical days (e.g. the PPL Pull day), so some IQRs are narrow or zero-width. single_group pools the bro-split Chest, Back, Shoulders and Arms days (only 1 intermediate day each); Legs from the bro split counts as legs. A custom day with an unknown label uses the muscle-level indexes only.",
-   "by_day_type": {
-    "chest_back": {
-     "stimulus_eff_sets": {
-      "median": 36.05,
-      "n": 3,
-      "iqr": [
-       36.05,
-       40.12
-      ]
-     },
-     "fatigue_points": {
-      "median": 19.48,
-      "n": 3,
-      "iqr": [
-       19.48,
-       21.85
-      ]
-     }
-    },
-    "full": {
-     "stimulus_eff_sets": {
-      "median": 42.22,
-      "n": 10,
-      "iqr": [
-       33.09,
-       44.04
-      ]
-     },
-     "fatigue_points": {
-      "median": 20.57,
-      "n": 10,
-      "iqr": [
-       19.52,
-       21.26
-      ]
-     }
-    },
-    "legs": {
-     "stimulus_eff_sets": {
-      "median": 34.76,
-      "n": 9,
-      "iqr": [
-       34.76,
-       45.36
-      ]
-     },
-     "fatigue_points": {
-      "median": 19.66,
-      "n": 9,
-      "iqr": [
-       19.66,
-       25.15
-      ]
-     }
-    },
-    "limbs": {
-     "stimulus_eff_sets": {
-      "median": 40.49,
-      "n": 3,
-      "iqr": [
-       34.73,
-       45.09
-      ]
-     },
-     "fatigue_points": {
-      "median": 22.8,
-      "n": 3,
-      "iqr": [
-       21.32,
-       24.74
-      ]
-     }
-    },
-    "lower": {
-     "stimulus_eff_sets": {
-      "median": 32.76,
-      "n": 7,
-      "iqr": [
-       27.57,
-       34.35
-      ]
-     },
-     "fatigue_points": {
-      "median": 18.1,
-      "n": 7,
-      "iqr": [
-       17.82,
-       19.26
-      ]
-     }
-    },
-    "pull": {
-     "stimulus_eff_sets": {
-      "median": 37.36,
-      "n": 5,
-      "iqr": [
-       37.36,
-       37.36
-      ]
-     },
-     "fatigue_points": {
-      "median": 18.56,
-      "n": 5,
-      "iqr": [
-       18.56,
-       18.56
-      ]
-     }
-    },
-    "push": {
-     "stimulus_eff_sets": {
-      "median": 29.32,
-      "n": 5,
-      "iqr": [
-       29.32,
-       31.32
-      ]
-     },
-     "fatigue_points": {
-      "median": 19.14,
-      "n": 5,
-      "iqr": [
-       19.14,
-       20.72
-      ]
-     }
-    },
-    "shoulders_arms": {
-     "stimulus_eff_sets": {
-      "median": 29.36,
-      "n": 3,
-      "iqr": [
-       29.36,
-       29.36
-      ]
-     },
-     "fatigue_points": {
-      "median": 17.42,
-      "n": 3,
-      "iqr": [
-       17.42,
-       17.42
-      ]
-     }
-    },
-    "single_group": {
-     "stimulus_eff_sets": {
-      "median": 27.2,
-      "n": 4,
-      "iqr": [
-       21.62,
-       33.45
-      ]
-     },
-     "fatigue_points": {
-      "median": 15.93,
-      "n": 4,
-      "iqr": [
-       14.16,
-       17.69
-      ]
-     }
-    },
-    "torso": {
-     "stimulus_eff_sets": {
-      "median": 38.85,
-      "n": 3,
-      "iqr": [
-       35.92,
-       43.19
-      ]
-     },
-     "fatigue_points": {
-      "median": 20.56,
-      "n": 3,
-      "iqr": [
-       18.85,
-       23.04
-      ]
-     }
-    },
-    "upper": {
-     "stimulus_eff_sets": {
-      "median": 35.92,
-      "n": 8,
-      "iqr": [
-       34.48,
-       38.29
-      ]
-     },
-     "fatigue_points": {
-      "median": 19.33,
-      "n": 8,
-      "iqr": [
-       18.11,
-       21.2
-      ]
-     }
-    }
-   },
-   "by_muscle": {
-    "chest": {
-     "stimulus_eff_sets": {
-      "median": 5.0,
-      "n": 32,
-      "iqr": [
-       3.0,
-       8.0
-      ]
-     },
-     "fatigue_points": {
-      "median": 2.77,
-      "n": 32,
-      "iqr": [
-       1.94,
-       4.85
-      ]
-     }
-    },
-    "front_delts": {
-     "stimulus_eff_sets": {
-      "median": 3.0,
-      "n": 34,
-      "iqr": [
-       2.16,
-       4.19
-      ]
-     },
-     "fatigue_points": {
-      "median": 1.65,
-      "n": 34,
-      "iqr": [
-       1.32,
-       2.54
-      ]
-     }
-    },
-    "side_delts": {
-     "stimulus_eff_sets": {
-      "median": 3.32,
-      "n": 30,
-      "iqr": [
-       3.0,
-       4.35
-      ]
-     },
-     "fatigue_points": {
-      "median": 2.04,
-      "n": 30,
-      "iqr": [
-       1.83,
-       2.65
-      ]
-     }
-    },
-    "rear_delts": {
-     "stimulus_eff_sets": {
-      "median": 3.62,
-      "n": 31,
-      "iqr": [
-       2.84,
-       4.25
-      ]
-     },
-     "fatigue_points": {
-      "median": 1.35,
-      "n": 31,
-      "iqr": [
-       1.25,
-       1.86
-      ]
-     }
-    },
-    "lats": {
-     "stimulus_eff_sets": {
-      "median": 4.89,
-      "n": 32,
-      "iqr": [
-       3.0,
-       7.21
-      ]
-     },
-     "fatigue_points": {
-      "median": 2.12,
-      "n": 32,
-      "iqr": [
-       1.36,
-       3.13
-      ]
-     }
-    },
-    "upper_back": {
-     "stimulus_eff_sets": {
-      "median": 4.6,
-      "n": 36,
-      "iqr": [
-       1.96,
-       5.59
-      ]
-     },
-     "fatigue_points": {
-      "median": 1.71,
-      "n": 36,
-      "iqr": [
-       0.97,
-       2.33
-      ]
-     }
-    },
-    "traps": {
-     "stimulus_eff_sets": {
-      "median": 2.88,
-      "n": 37,
-      "iqr": [
-       2.07,
-       4.43
-      ]
-     },
-     "fatigue_points": {
-      "median": 1.73,
-      "n": 37,
-      "iqr": [
-       1.19,
-       2.28
-      ]
-     }
-    },
-    "biceps": {
-     "stimulus_eff_sets": {
-      "median": 4.16,
-      "n": 33,
-      "iqr": [
-       2.95,
-       5.58
-      ]
-     },
-     "fatigue_points": {
-      "median": 2.16,
-      "n": 33,
-      "iqr": [
-       1.47,
-       3.02
-      ]
-     }
-    },
-    "triceps": {
-     "stimulus_eff_sets": {
-      "median": 3.35,
-      "n": 35,
-      "iqr": [
-       2.36,
-       5.7
-      ]
-     },
-     "fatigue_points": {
-      "median": 2.57,
-      "n": 35,
-      "iqr": [
-       1.65,
-       4.15
-      ]
-     }
-    },
-    "forearms": {
-     "stimulus_eff_sets": {
-      "median": 1.89,
-      "n": 40,
-      "iqr": [
-       1.48,
-       2.61
-      ]
-     },
-     "fatigue_points": {
-      "median": 0.95,
-      "n": 40,
-      "iqr": [
-       0.8,
-       1.34
-      ]
-     }
-    },
-    "abs": {
-     "stimulus_eff_sets": {
-      "median": 3.0,
-      "n": 22,
-      "iqr": [
-       2.0,
-       3.0
-      ]
-     },
-     "fatigue_points": {
-      "median": 1.32,
-      "n": 22,
-      "iqr": [
-       0.88,
-       1.7
-      ]
-     }
-    },
-    "quads": {
-     "stimulus_eff_sets": {
-      "median": 5.0,
-      "n": 30,
-      "iqr": [
-       3.0,
-       6.0
-      ]
-     },
-     "fatigue_points": {
-      "median": 2.68,
-      "n": 30,
-      "iqr": [
-       1.66,
-       3.96
-      ]
-     }
-    },
-    "hamstrings": {
-     "stimulus_eff_sets": {
-      "median": 5.0,
-      "n": 29,
-      "iqr": [
-       3.0,
-       6.0
-      ]
-     },
-     "fatigue_points": {
-      "median": 3.31,
-      "n": 29,
-      "iqr": [
-       2.38,
-       3.45
-      ]
-     }
-    },
-    "glutes": {
-     "stimulus_eff_sets": {
-      "median": 4.32,
-      "n": 29,
-      "iqr": [
-       3.49,
-       5.85
-      ]
-     },
-     "fatigue_points": {
-      "median": 2.23,
-      "n": 29,
-      "iqr": [
-       1.38,
-       3.03
-      ]
-     }
-    },
-    "calves": {
-     "stimulus_eff_sets": {
-      "median": 3.0,
-      "n": 28,
-      "iqr": [
-       3.0,
-       3.0
-      ]
-     },
-     "fatigue_points": {
-      "median": 2.38,
-      "n": 28,
-      "iqr": [
-       2.38,
-       2.38
-      ]
-     }
-    },
-    "adductors": {
-     "stimulus_eff_sets": {
-      "median": 2.58,
-      "n": 27,
-      "iqr": [
-       1.86,
-       3.42
-      ]
-     },
-     "fatigue_points": {
-      "median": 1.38,
-      "n": 27,
-      "iqr": [
-       1.15,
-       1.77
-      ]
-     }
-    },
-    "lower_back": {
-     "stimulus_eff_sets": {
-      "median": 1.89,
-      "n": 33,
-      "iqr": [
-       1.35,
-       3.08
-      ]
-     },
-     "fatigue_points": {
-      "median": 0.82,
-      "n": 33,
-      "iqr": [
-       0.62,
-       1.39
-      ]
-     }
-    },
-    "obliques": {
-     "stimulus_eff_sets": {
-      "median": 1.08,
-      "n": 19,
-      "iqr": [
-       1.0,
-       1.47
-      ]
-     },
-     "fatigue_points": {
-      "median": 0.66,
-      "n": 19,
-      "iqr": [
-       0.44,
-       0.68
-      ]
-     }
-    },
-    "abductors": {
-     "stimulus_eff_sets": {
-      "median": 2.76,
-      "n": 22,
-      "iqr": [
-       1.5,
-       3.5
-      ]
-     },
-     "fatigue_points": {
-      "median": 1.42,
-      "n": 22,
-      "iqr": [
-       0.67,
-       2.06
-      ]
-     }
-    }
-   },
-   "label": "Modeled",
-   "nurd": {
-    "short": "Lift Board preset medians",
-    "year": 2026,
-    "type": "model (descriptive statistics of our own presets)",
-    "label": "Modeled",
-    "note": "A typical-day reference, not a physiological norm."
-   },
-   "source_description_vol10b": "ORIGINAL data/splits.json intermediate presets (not splits-efficient.json); every preset day counted as it appears (shared days count once per preset).",
-   "source": "preset_medians",
-   "sources": {
-    "preset_medians": {
-     "by_day_type": {
-      "chest_back": {
-       "stimulus_eff_sets": {
-        "median": 36.05,
-        "n": 3,
-        "iqr": [
-         36.05,
-         40.12
-        ]
-       },
-       "fatigue_points": {
-        "median": 19.48,
-        "n": 3,
-        "iqr": [
-         19.48,
-         21.85
-        ]
-       }
-      },
-      "full": {
-       "stimulus_eff_sets": {
-        "median": 42.22,
-        "n": 10,
-        "iqr": [
-         33.09,
-         44.04
-        ]
-       },
-       "fatigue_points": {
-        "median": 20.57,
-        "n": 10,
-        "iqr": [
-         19.52,
-         21.26
-        ]
-       }
-      },
-      "legs": {
-       "stimulus_eff_sets": {
-        "median": 34.76,
-        "n": 9,
-        "iqr": [
-         34.76,
-         45.36
-        ]
-       },
-       "fatigue_points": {
-        "median": 19.66,
-        "n": 9,
-        "iqr": [
-         19.66,
-         25.15
-        ]
-       }
-      },
-      "limbs": {
-       "stimulus_eff_sets": {
-        "median": 40.49,
-        "n": 3,
-        "iqr": [
-         34.73,
-         45.09
-        ]
-       },
-       "fatigue_points": {
-        "median": 22.8,
-        "n": 3,
-        "iqr": [
-         21.32,
-         24.74
-        ]
-       }
-      },
-      "lower": {
-       "stimulus_eff_sets": {
-        "median": 32.76,
-        "n": 7,
-        "iqr": [
-         27.57,
-         34.35
-        ]
-       },
-       "fatigue_points": {
-        "median": 18.1,
-        "n": 7,
-        "iqr": [
-         17.82,
-         19.26
-        ]
-       }
-      },
-      "pull": {
-       "stimulus_eff_sets": {
-        "median": 37.36,
-        "n": 5,
-        "iqr": [
-         37.36,
-         37.36
-        ]
-       },
-       "fatigue_points": {
-        "median": 18.56,
-        "n": 5,
-        "iqr": [
-         18.56,
-         18.56
-        ]
-       }
-      },
-      "push": {
-       "stimulus_eff_sets": {
-        "median": 29.32,
-        "n": 5,
-        "iqr": [
-         29.32,
-         31.32
-        ]
-       },
-       "fatigue_points": {
-        "median": 19.14,
-        "n": 5,
-        "iqr": [
-         19.14,
-         20.72
-        ]
-       }
-      },
-      "shoulders_arms": {
-       "stimulus_eff_sets": {
-        "median": 29.36,
-        "n": 3,
-        "iqr": [
-         29.36,
-         29.36
-        ]
-       },
-       "fatigue_points": {
-        "median": 17.42,
-        "n": 3,
-        "iqr": [
-         17.42,
-         17.42
-        ]
-       }
-      },
-      "single_group": {
-       "stimulus_eff_sets": {
-        "median": 27.2,
-        "n": 4,
-        "iqr": [
-         21.62,
-         33.45
-        ]
-       },
-       "fatigue_points": {
-        "median": 15.93,
-        "n": 4,
-        "iqr": [
-         14.16,
-         17.69
-        ]
-       }
-      },
-      "torso": {
-       "stimulus_eff_sets": {
-        "median": 38.85,
-        "n": 3,
-        "iqr": [
-         35.92,
-         43.19
-        ]
-       },
-       "fatigue_points": {
-        "median": 20.56,
-        "n": 3,
-        "iqr": [
-         18.85,
-         23.04
-        ]
-       }
-      },
-      "upper": {
-       "stimulus_eff_sets": {
-        "median": 35.92,
-        "n": 8,
-        "iqr": [
-         34.48,
-         38.29
-        ]
-       },
-       "fatigue_points": {
-        "median": 19.33,
-        "n": 8,
-        "iqr": [
-         18.11,
-         21.2
-        ]
-       }
-      }
-     },
-     "by_muscle": {
-      "chest": {
-       "stimulus_eff_sets": {
-        "median": 5.0,
-        "n": 32,
-        "iqr": [
-         3.0,
-         8.0
-        ]
-       },
-       "fatigue_points": {
-        "median": 2.77,
-        "n": 32,
-        "iqr": [
-         1.94,
-         4.85
-        ]
-       }
-      },
-      "front_delts": {
-       "stimulus_eff_sets": {
-        "median": 3.0,
-        "n": 34,
-        "iqr": [
-         2.16,
-         4.19
-        ]
-       },
-       "fatigue_points": {
-        "median": 1.65,
-        "n": 34,
-        "iqr": [
-         1.32,
-         2.54
-        ]
-       }
-      },
-      "side_delts": {
-       "stimulus_eff_sets": {
-        "median": 3.32,
-        "n": 30,
-        "iqr": [
-         3.0,
-         4.35
-        ]
-       },
-       "fatigue_points": {
-        "median": 2.04,
-        "n": 30,
-        "iqr": [
-         1.83,
-         2.65
-        ]
-       }
-      },
-      "rear_delts": {
-       "stimulus_eff_sets": {
-        "median": 3.62,
-        "n": 31,
-        "iqr": [
-         2.84,
-         4.25
-        ]
-       },
-       "fatigue_points": {
-        "median": 1.35,
-        "n": 31,
-        "iqr": [
-         1.25,
-         1.86
-        ]
-       }
-      },
-      "lats": {
-       "stimulus_eff_sets": {
-        "median": 4.89,
-        "n": 32,
-        "iqr": [
-         3.0,
-         7.21
-        ]
-       },
-       "fatigue_points": {
-        "median": 2.12,
-        "n": 32,
-        "iqr": [
-         1.36,
-         3.13
-        ]
-       }
-      },
-      "upper_back": {
-       "stimulus_eff_sets": {
-        "median": 4.6,
-        "n": 36,
-        "iqr": [
-         1.96,
-         5.59
-        ]
-       },
-       "fatigue_points": {
-        "median": 1.71,
-        "n": 36,
-        "iqr": [
-         0.97,
-         2.33
-        ]
-       }
-      },
-      "traps": {
-       "stimulus_eff_sets": {
-        "median": 2.88,
-        "n": 37,
-        "iqr": [
-         2.07,
-         4.43
-        ]
-       },
-       "fatigue_points": {
-        "median": 1.73,
-        "n": 37,
-        "iqr": [
-         1.19,
-         2.28
-        ]
-       }
-      },
-      "biceps": {
-       "stimulus_eff_sets": {
-        "median": 4.16,
-        "n": 33,
-        "iqr": [
-         2.95,
-         5.58
-        ]
-       },
-       "fatigue_points": {
-        "median": 2.16,
-        "n": 33,
-        "iqr": [
-         1.47,
-         3.02
-        ]
-       }
-      },
-      "triceps": {
-       "stimulus_eff_sets": {
-        "median": 3.35,
-        "n": 35,
-        "iqr": [
-         2.36,
-         5.7
-        ]
-       },
-       "fatigue_points": {
-        "median": 2.57,
-        "n": 35,
-        "iqr": [
-         1.65,
-         4.15
-        ]
-       }
-      },
-      "forearms": {
-       "stimulus_eff_sets": {
-        "median": 1.89,
-        "n": 40,
-        "iqr": [
-         1.48,
-         2.61
-        ]
-       },
-       "fatigue_points": {
-        "median": 0.95,
-        "n": 40,
-        "iqr": [
-         0.8,
-         1.34
-        ]
-       }
-      },
-      "abs": {
-       "stimulus_eff_sets": {
-        "median": 3.0,
-        "n": 22,
-        "iqr": [
-         2.0,
-         3.0
-        ]
-       },
-       "fatigue_points": {
-        "median": 1.32,
-        "n": 22,
-        "iqr": [
-         0.88,
-         1.7
-        ]
-       }
-      },
-      "quads": {
-       "stimulus_eff_sets": {
-        "median": 5.0,
-        "n": 30,
-        "iqr": [
-         3.0,
-         6.0
-        ]
-       },
-       "fatigue_points": {
-        "median": 2.68,
-        "n": 30,
-        "iqr": [
-         1.66,
-         3.96
-        ]
-       }
-      },
-      "hamstrings": {
-       "stimulus_eff_sets": {
-        "median": 5.0,
-        "n": 29,
-        "iqr": [
-         3.0,
-         6.0
-        ]
-       },
-       "fatigue_points": {
-        "median": 3.31,
-        "n": 29,
-        "iqr": [
-         2.38,
-         3.45
-        ]
-       }
-      },
-      "glutes": {
-       "stimulus_eff_sets": {
-        "median": 4.32,
-        "n": 29,
-        "iqr": [
-         3.49,
-         5.85
-        ]
-       },
-       "fatigue_points": {
-        "median": 2.23,
-        "n": 29,
-        "iqr": [
-         1.38,
-         3.03
-        ]
-       }
-      },
-      "calves": {
-       "stimulus_eff_sets": {
-        "median": 3.0,
-        "n": 28,
-        "iqr": [
-         3.0,
-         3.0
-        ]
-       },
-       "fatigue_points": {
-        "median": 2.38,
-        "n": 28,
-        "iqr": [
-         2.38,
-         2.38
-        ]
-       }
-      },
-      "adductors": {
-       "stimulus_eff_sets": {
-        "median": 2.58,
-        "n": 27,
-        "iqr": [
-         1.86,
-         3.42
-        ]
-       },
-       "fatigue_points": {
-        "median": 1.38,
-        "n": 27,
-        "iqr": [
-         1.15,
-         1.77
-        ]
-       }
-      },
-      "lower_back": {
-       "stimulus_eff_sets": {
-        "median": 1.89,
-        "n": 33,
-        "iqr": [
-         1.35,
-         3.08
-        ]
-       },
-       "fatigue_points": {
-        "median": 0.82,
-        "n": 33,
-        "iqr": [
-         0.62,
-         1.39
-        ]
-       }
-      },
-      "obliques": {
-       "stimulus_eff_sets": {
-        "median": 1.08,
-        "n": 19,
-        "iqr": [
-         1.0,
-         1.47
-        ]
-       },
-       "fatigue_points": {
-        "median": 0.66,
-        "n": 19,
-        "iqr": [
-         0.44,
-         0.68
-        ]
-       }
-      },
-      "abductors": {
-       "stimulus_eff_sets": {
-        "median": 2.76,
-        "n": 22,
-        "iqr": [
-         1.5,
-         3.5
-        ]
-       },
-       "fatigue_points": {
-        "median": 1.42,
-        "n": 22,
-        "iqr": [
-         0.67,
-         2.06
-        ]
-       }
-      }
-     },
-     "day_type_map": {
-      "Full Body A": "full",
-      "Full Body B": "full",
-      "Full Body C": "full",
-      "Upper A": "upper",
-      "Upper B": "upper",
-      "Power Upper": "upper",
-      "Hypertrophy Upper": "upper",
-      "Lower A": "lower",
-      "Lower B": "lower",
-      "Power Lower": "lower",
-      "Hypertrophy Lower": "lower",
-      "Push": "push",
-      "Push B": "push",
-      "Pull": "pull",
-      "Pull B": "pull",
-      "Legs": "legs",
-      "Legs B": "legs",
-      "Chest & Back": "chest_back",
-      "Shoulders & Arms": "shoulders_arms",
-      "Torso": "torso",
-      "Torso B": "torso",
-      "Limbs": "limbs",
-      "Limbs B": "limbs",
-      "Chest": "single_group",
-      "Back": "single_group",
-      "Shoulders": "single_group",
-      "Arms": "single_group"
-     },
-     "day_type_note": "Day type comes from the splits.json day label (exact match). Several presets share identical days (e.g. the PPL Pull day), so some IQRs are narrow or zero-width. single_group pools the bro-split Chest, Back, Shoulders and Arms days (only 1 intermediate day each); Legs from the bro split counts as legs. A custom day with an unknown label uses the muscle-level indexes only.",
-     "muscle_level": "100 = the median intermediate muscle-day for that muscle, over days with >= 1 effective set for it",
-     "day_level": "100 = the median intermediate preset day of the same day type (day_type_map)",
-     "label": "Modeled",
-     "nurd": {
-      "short": "Lift Board preset medians",
-      "year": 2026,
-      "type": "model (descriptive statistics of our own presets)",
-      "label": "Modeled",
-      "note": "A typical-day reference, not a physiological norm."
-     },
-     "status": "populated",
-     "populated": true,
-     "description": "ORIGINAL data/splits.json intermediate presets (not splits-efficient.json); every preset day counted as it appears (shared days count once per preset)."
-    },
-    "classic_programs": {
-     "status": "not_populated",
-     "populated": false,
-     "intended": "Published intermediate programs, e.g. one 4-day upper/lower and one 6-day push/pull/legs, entered day by day as tiles (exercise ids + sets) with a citation each.",
-     "programs": [],
-     "program_schema": {
-      "id": "string",
-      "name": "string",
-      "citation": {
-       "short": "string",
-       "year": "int",
-       "type": "book | article | practitioner",
-       "url": "string"
-      },
-      "level": "intermediate",
-      "days": [
-       {
-        "day": "mon..sun",
-        "label": "splits.json-style label (maps through day_type_map)",
-        "tiles": [
-         {
-          "id": "exercise id",
-          "sets": "int"
-         }
-        ]
-       }
-      ]
-     },
-     "by_day_type": null,
-     "by_muscle": null,
-     "build": "Same statistics as preset_medians (median, n, IQR per day type and per muscle) computed from programs[] by the builder; no code change is needed to switch, only reference.source.",
-     "note": "Mr Dude has not decided. No program data is entered; do not use this source until populated is true."
-    }
-   },
-   "swap_rule": "Readers use reference.sources[reference.source].by_day_type / by_muscle. reference.by_day_type and reference.by_muscle mirror the active source for older clients. Only populated sources may be selected."
-  },
-  "stimulus_index": {
-   "formula": "round(100 x stimulus / reference median stimulus)",
-   "day_stimulus": "sum over muscles of that day's effective sets (face value)",
-   "unit_shown": "effective sets",
+  "retired": "vol11: stimulus_index, fatigue_index, the index-based sf_ratio and day_metrics.reference (preset_medians and the classic_programs placeholder) are retired; kept under history_vol10b.",
+  "stimulus": {
+   "formula": "stimulus_hard_set_eq[m, day] = sum over tiles of sets x credit(exercise, m) (face value, no decay); day = sum over muscles",
+   "unit": "hard-set equivalents (effective sets)",
    "nurd": {
     "short": "Lift Board model (this spec)",
     "year": 2026,
@@ -12698,42 +12831,23 @@
     "note": "Derived from existing model parameters; no study measures this number."
    }
   },
-  "fatigue_index": {
-   "formula": "round(100 x fatigue points / reference median fatigue points)",
-   "day_fatigue": "sum over sets of per-set fatigue (type_base x axial x effort) = workout load points",
-   "muscle_fatigue": "rating-share split of the same points (day_metrics.fatigue)",
-   "unit_shown": "recovery days = recovery_h / 24 (existing recovery formula; day = the slowest muscle), rounded to 0.1",
+  "fatigue": {
+   "formula": "fatigue_fresh_set_eq[m, day] = sum over tiles of sets x rating[m] x fatigue_per_set(exercise) x effort[planned RIR + role offset] (data/fatigue.json); day = sum over muscles",
+   "unit": "fresh-set equivalents (1.0 = one fresh hard set of machine-chest-press at 2 RIR)",
+   "why_rating_not_share": "Charged by the muscle's rating (like stimulus credit), not split by rating share: a share split gives the anchor's target muscle only half its set (S:F 2.0 on the anchor). With rating weighting the anchor's first set on chest reads 1.0 / 1.0 = 1.00, and S:F depends only on how fatiguing the exercise and effort are.",
+   "one_number": "The same number drives S:F, the fatigue glow and recovery hours (recovery.hours_formula uses it as F; the per-set growth h_per_set beyond free_sets is unchanged).",
    "nurd": {
-    "short": "Lift Board model (this spec)",
+    "short": "Lift Board model; effort factors anchored to Moran-Navarro 2017 and Refalo 2024",
     "year": 2026,
     "type": "model",
     "label": "Modeled",
-    "note": "Derived from existing model parameters; no study measures this number."
+    "note": "Modeled. type_base and axial classes are planning factors from existing exercise data; the RIR effort factor follows studies showing slower recovery after sets to failure (Moran-Navarro et al. 2017, Eur J Appl Physiol) and similar hypertrophy with less fatigue short of failure (Refalo et al. 2024). No study gives per-exercise fatigue multipliers."
    }
   },
   "sf_ratio": {
-   "formula": "sf_ratio = round(stimulus_index / fatigue_index, 2), computed from the two rounded whole-number indexes so the display divides exactly",
-   "display": "Stimulus {si} ({eff} effective sets) / Fatigue {fi} (~{days} days to recover) = {ratio}x typical",
-   "bands": [
-    {
-     "id": "below_typical",
-     "below": 0.8,
-     "label": "less stimulus per fatigue than typical"
-    },
-    {
-     "id": "typical",
-     "from": 0.8,
-     "to": 1.2,
-     "label": "typical"
-    },
-    {
-     "id": "above_typical",
-     "above": 1.2,
-     "label": "more stimulus per fatigue than typical"
-    }
-   ],
-   "bands_note": "Display choice, not research: < 0.8x, 0.8-1.2x, > 1.2x of the typical day/muscle-day.",
-   "label": "Modeled",
+   "formula": "sf_ratio = round(round(stimulus, 2) / round(fatigue, 2), 2): computed from the shown two-decimal numbers so the division checks out",
+   "display": "S:F {stim} / {fatigue} = {ratio} (ready in ~{days} days)",
+   "unit": "plain ratio",
    "nurd": {
     "short": "Lift Board model (this spec)",
     "year": 2026,
@@ -12741,6 +12855,64 @@
     "label": "Modeled",
     "note": "Derived from existing model parameters; no study measures this number."
    }
+  },
+  "recovery": {
+   "formula": "recovery_days = recovery hours / 24 (rounded 0.1), hours from recovery.hours_formula with F = fatigue_fresh_set_eq; day = slowest muscle",
+   "nurd": {
+    "short": "Moran-Navarro 2017; Cheung 2003 (recovery anchors)",
+    "year": 2017,
+    "type": "peer-reviewed studies; applied as a model",
+    "label": "Modeled"
+   }
+  },
+  "unchanged": [
+   "stimulus_per_set",
+   "stimulus_per_min (vol10, history_vol10b)",
+   "over_limit / wasted_late_sets"
+  ],
+  "history_vol11": {
+   "day_sf": "vol11: day S:F = sum over muscles of stimulus / sum over muscles of rating-weighted muscle fatigue (charged systemic fatigue once per muscle trained; per-muscle and day S:F were ~1/fatigue_per_set for every lift)"
+  },
+  "levels": {
+   "muscle": "Muscle S:F = hard-set equivalents on that muscle / fresh-set fatigue on that muscle (rating-weighted); 1.0 = one machine chest press set on chest.",
+   "exercise": "retired (vol11c): no S:F; row shows stimulus and systemic fatigue",
+   "day": "retired (vol11c): no S:F; row shows stimulus, systemic fatigue and slowest-muscle recovery days"
+  },
+  "systemic": {
+   "formula": "fatigue_systemic = sum over sets of fatigue_per_set x effort[planned RIR] (= set_fatigue, the workout load points); stimulus_total = sum over sets of credit(e, m) for muscles whose role is prime or secondary (rating >= 0.5, or the exercise top rating; minor 0.25-0.5 excluded); S:F = (stimulus_total / ANCHOR_STIM) / fatigue_systemic",
+   "anchor_stimulus": 1.0,
+   "per_set_growth": "Systemic fatigue is linear per set. The within-session per-set growth stays in the muscle-level recovery hours (h_per_set beyond free_sets), unchanged.",
+   "caveat": "Minor credits are excluded so lifts with many small synergist credits (deadlift) are not over-rewarded.",
+   "nurd": {
+    "short": "Lift Board model; effort factors anchored to Moran-Navarro 2017 and Refalo 2024",
+    "year": 2026,
+    "type": "model",
+    "label": "Modeled",
+    "note": "Modeled. type_base and axial classes are planning factors from existing exercise data; the RIR effort factor follows studies showing slower recovery after sets to failure (Moran-Navarro et al. 2017, Eur J Appl Physiol) and similar hypertrophy with less fatigue short of failure (Refalo et al. 2024). No study gives per-exercise fatigue multipliers."
+   },
+   "retired_vol11c": "The S:F part (stimulus_total / ANCHOR_STIM / fatigue_systemic) is retired. Systemic fatigue (once per set) stays as the day/exercise fatigue number; day/exercise stimulus = all credited muscles."
+  },
+  "boundary_vol11b": {
+   "rule": "A muscle counts as trained in a session when r2(effective sets) >= 1.00 (inclusive), r2 = half-up to 0.01: floor(x x 100 + 0.5 + 1e-9) / 100. Other effective-set thresholds (session light, weekly minimum, session limits) compare r2(x) the same way.",
+   "applies_to": {
+    "recovery_hours": "gate ES_r2 >= 1.00 (fatigue not gated)",
+    "fatigue_glow": "'none' when r2(effective sets) < 1.00, otherwise bands by fatigue",
+    "overlap_counting": "session counts when r2(effective sets) >= targets.session.muscles[m].light (light is 1 for lower_back and obliques)",
+    "single_day_exemption": "days with r2(effective sets) >= 1.00",
+    "recovery_strip_bars": "r2(effective sets) >= light and hours > 0",
+    "muscle_dial": "muscle-days with r2(effective sets) >= 1.00"
+   },
+   "edge_case": {
+    "board": "efficient full-body/beginner/2 Monday",
+    "muscle": "obliques",
+    "was": "ES 1.00, F 0.72 -> 0 h (the F < 1 gate)",
+    "now": "24 h = 1 day"
+   }
+  },
+  "levels_history_vol11b": {
+   "muscle": "Muscle S:F = hard-set equivalents on that muscle / fresh-set fatigue on that muscle (rating-weighted); 1.0 = one machine chest press set on chest.",
+   "exercise": "Exercise S:F = stimulus on its prime and secondary muscles (rating >= 0.5, or its top rating) / its systemic fatigue, both counted in machine-chest-press sets; 1.0 = as efficient as a machine chest press set.",
+   "day": "Day S:F = the same ratio summed over all sets of the day (each set's fatigue charged once, not per muscle); 1.0 = a day as efficient as machine chest press sets."
   }
  },
  "vol10": {
@@ -12869,62 +13041,74 @@
     "presets": 36
    },
    "after": {
-    "flags": 50,
+    "flags": 49,
     "presets": 18
    },
-   "sets_removed": 250,
+   "sets_removed": 252,
    "exercises_removed": 4,
-   "in_zone_to_below_target": 56,
+   "in_zone_to_below_target": 68,
    "in_zone_to_below_target_list": [
     "full-body/advanced/4 biceps 10.43->9.43 (target 10)",
     "upper-lower/intermediate/4 glutes 10.27->9 (target 10)",
     "upper-lower/intermediate/4 abductors 4.82->3.58 (target 4)",
     "upper-lower/advanced/4 triceps 10.11->8.11 (target 10)",
     "upper-lower/advanced/4 quads 13->10 (target 12)",
-    "upper-lower/advanced/4 glutes 11.97->9 (target 10)",
-    "upper-lower/advanced/4 abductors 6.47->3.58 (target 4)",
-    "ppl/intermediate/6 chest 13->9 (target 12)",
-    "ppl/intermediate/6 lats 12.89->10.89 (target 12)",
-    "ppl/intermediate/6 upper_back 12.55->10.78 (target 12)",
-    "ppl/intermediate/6 biceps 14.38->8.79 (target 10)",
-    "ppl/intermediate/6 triceps 15.43->9.34 (target 10)",
+    "upper-lower/advanced/4 glutes 11.97->9.55 (target 10)",
+    "upper-lower/advanced/4 lower_back 4.52->3.89 (target 4)",
+    "upper-lower/advanced/4 abductors 6.47->3.82 (target 4)",
+    "ppl/beginner/6 chest 10->8 (target 9)",
+    "ppl/beginner/6 upper_back 10.78->8.78 (target 9)",
+    "ppl/intermediate/6 chest 13->8 (target 12)",
+    "ppl/intermediate/6 lats 12.89->10.46 (target 12)",
+    "ppl/intermediate/6 upper_back 12.55->9.73 (target 12)",
+    "ppl/intermediate/6 biceps 14.38->9.56 (target 10)",
+    "ppl/intermediate/6 triceps 15.43->9.61 (target 10)",
     "ppl/advanced/3 rear_delts 8.01->6.01 (target 8)",
     "ppl/advanced/3 upper_back 12.1->11.1 (target 12)",
-    "ppl/advanced/6 rear_delts 10.89->7.12 (target 8)",
-    "ppl/advanced/6 lats 16.29->11.23 (target 12)",
-    "ppl/advanced/6 upper_back 15.12->10.43 (target 12)",
-    "ppl/advanced/6 biceps 16.26->8.42 (target 10)",
-    "ppl/advanced/6 triceps 16.03->9.26 (target 10)",
+    "ppl/advanced/6 chest 16->11 (target 12)",
+    "ppl/advanced/6 rear_delts 10.89->7.91 (target 8)",
+    "ppl/advanced/6 lats 16.29->11.43 (target 12)",
+    "ppl/advanced/6 upper_back 15.12->10.38 (target 12)",
+    "ppl/advanced/6 biceps 16.26->9.64 (target 10)",
+    "ppl/advanced/6 triceps 16.03->9.49 (target 10)",
     "bro-split/beginner/5 chest 9->6 (target 9)",
-    "bro-split/beginner/5 lats 10->6 (target 9)",
-    "bro-split/beginner/5 upper_back 9.16->7.22 (target 9)",
+    "bro-split/beginner/5 lats 10->6.2 (target 9)",
+    "bro-split/beginner/5 upper_back 9.16->6.16 (target 9)",
     "bro-split/beginner/5 biceps 9.6->7.25 (target 7.5)",
-    "bro-split/intermediate/5 biceps 10.96->9.06 (target 10)",
+    "bro-split/beginner/5 lower_back 3.17->2.54 (target 3)",
+    "bro-split/intermediate/5 biceps 10.96->9.19 (target 10)",
     "bro-split/intermediate/5 triceps 14.07->9.82 (target 10)",
     "bro-split/advanced/5 biceps 10.84->9.84 (target 10)",
-    "pplu/intermediate/4 chest 13->9 (target 12)",
-    "pplu/intermediate/4 lats 13.6->11.6 (target 12)",
-    "pplu/intermediate/4 upper_back 12.25->10.98 (target 12)",
-    "pplu/intermediate/4 biceps 11.17->7.38 (target 10)",
-    "pplu/intermediate/4 triceps 11.89->7.8 (target 10)",
-    "pplu/advanced/4 rear_delts 11.28->7.29 (target 8)",
+    "pplu/beginner/4 upper_back 10.98->8.98 (target 9)",
+    "pplu/beginner/4 triceps 9.85->7.4 (target 7.5)",
+    "pplu/intermediate/4 chest 13->10 (target 12)",
+    "pplu/intermediate/4 lats 13.6->11.8 (target 12)",
+    "pplu/intermediate/4 upper_back 12.25->10.93 (target 12)",
+    "pplu/intermediate/4 biceps 11.17->7.47 (target 10)",
+    "pplu/intermediate/4 triceps 11.89->7.71 (target 10)",
+    "pplu/advanced/4 rear_delts 11.28->7.2 (target 8)",
     "pplu/advanced/4 upper_back 15.32->11.82 (target 12)",
     "pplu/advanced/4 biceps 11.66->8.02 (target 10)",
     "pplu/advanced/4 triceps 12.17->8.72 (target 10)",
-    "pplul/intermediate/5 chest 13->9 (target 12)",
-    "pplul/intermediate/5 lats 13.4->11.4 (target 12)",
-    "pplul/intermediate/5 upper_back 12.05->10.78 (target 12)",
-    "pplul/intermediate/5 biceps 11.17->7.38 (target 10)",
-    "pplul/intermediate/5 triceps 11.89->7.8 (target 10)",
+    "pplul/beginner/5 upper_back 10.78->8.78 (target 9)",
+    "pplul/beginner/5 triceps 9.85->7.4 (target 7.5)",
+    "pplul/intermediate/5 chest 13->10 (target 12)",
+    "pplul/intermediate/5 lats 13.4->11.6 (target 12)",
+    "pplul/intermediate/5 upper_back 12.05->10.73 (target 12)",
+    "pplul/intermediate/5 biceps 11.17->7.47 (target 10)",
+    "pplul/intermediate/5 triceps 11.89->7.71 (target 10)",
     "pplul/intermediate/5 glutes 10.81->9.54 (target 10)",
-    "pplul/advanced/5 rear_delts 11.28->7.29 (target 8)",
+    "pplul/advanced/5 rear_delts 11.28->7.2 (target 8)",
     "pplul/advanced/5 biceps 11.66->8.02 (target 10)",
     "pplul/advanced/5 triceps 12.17->8.72 (target 10)",
-    "pplul/advanced/5 quads 12->11 (target 12)",
-    "pplul/advanced/5 hamstrings 10.6->9.28 (target 10)",
-    "arnold/intermediate/6 lats 15.4->11.4 (target 12)",
-    "arnold/advanced/6 lats 19.92->11.06 (target 12)",
-    "arnold/advanced/6 upper_back 17.2->11.4 (target 12)",
+    "pplul/advanced/5 quads 12->10 (target 12)",
+    "pplul/advanced/5 hamstrings 10.6->9.6 (target 10)",
+    "arnold/intermediate/3 front_delts 6.51->5.51 (target 6)",
+    "arnold/intermediate/3 traps 6.18->5.94 (target 6)",
+    "arnold/intermediate/6 lats 15.4->11.8 (target 12)",
+    "arnold/intermediate/6 upper_back 13.58->10.94 (target 12)",
+    "arnold/advanced/6 lats 19.92->11.46 (target 12)",
+    "arnold/advanced/6 upper_back 17.2->10.3 (target 12)",
     "torso-limbs/advanced/4 chest 13->11 (target 12)",
     "torso-limbs/advanced/4 rear_delts 8.27->7.03 (target 8)",
     "torso-limbs/advanced/4 glutes 10.38->9.38 (target 10)",
@@ -13104,9 +13288,9 @@
      "limit": 6,
      "excess": 2.2,
      "why": [
-      "barbell-row: would put upper_back, biceps below the weekly minimum",
-      "lat-pulldown: would put upper_back, biceps below the weekly minimum",
-      "pull-up: would put upper_back, biceps below the weekly minimum"
+      "barbell-row: would put upper_back below the weekly minimum",
+      "lat-pulldown: would put upper_back below the weekly minimum",
+      "pull-up: would put upper_back below the weekly minimum"
      ]
     },
     {
@@ -13117,9 +13301,9 @@
      "limit": 5,
      "excess": 1.0,
      "why": [
-      "barbell-row: would put upper_back, biceps below the weekly minimum",
-      "lat-pulldown: would put upper_back, biceps below the weekly minimum",
-      "pull-up: would put upper_back, biceps below the weekly minimum",
+      "barbell-row: would put upper_back below the weekly minimum",
+      "lat-pulldown: would put upper_back below the weekly minimum",
+      "pull-up: would put upper_back below the weekly minimum",
       "reverse-pec-deck: would put upper_back below the weekly minimum"
      ]
     },
@@ -13191,15 +13375,14 @@
     },
     {
      "preset": "bro-split/beginner/5",
-     "day": "wed",
-     "muscle": "adductors",
-     "sets": 4.0,
-     "limit": 4,
-     "excess": 0.0,
+     "day": "fri",
+     "muscle": "rear_delts",
+     "sets": 6.0,
+     "limit": 5,
+     "excess": 1.0,
      "why": [
-      "back-squat: would put quads below the weekly minimum",
-      "leg-press: would put quads below the weekly minimum",
-      "romanian-deadlift: would put lats below the weekly minimum"
+      "face-pull: would put upper_back below the weekly minimum",
+      "reverse-pec-deck: would put upper_back below the weekly minimum"
      ]
     },
     {
@@ -13218,29 +13401,15 @@
     },
     {
      "preset": "bro-split/intermediate/5",
-     "day": "tue",
-     "muscle": "upper_back",
-     "sets": 6.7,
-     "limit": 6,
-     "excess": 0.7,
-     "why": [
-      "barbell-row: would put lats below the weekly minimum",
-      "chest-supported-row: would put lats below the weekly minimum",
-      "lat-pulldown: would put lats below the weekly minimum",
-      "pull-up: would put lats below the weekly minimum"
-     ]
-    },
-    {
-     "preset": "bro-split/intermediate/5",
      "day": "wed",
      "muscle": "adductors",
-     "sets": 4.8,
+     "sets": 4.3,
      "limit": 4,
-     "excess": 0.8,
+     "excess": 0.3,
      "why": [
-      "back-squat: would put quads below the weekly minimum",
-      "leg-press: would put quads below the weekly minimum",
-      "romanian-deadlift: would put hamstrings below the weekly minimum"
+      "back-squat: would put quads, glutes below the weekly minimum",
+      "leg-press: would put quads, glutes below the weekly minimum",
+      "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
      ]
     },
     {
@@ -13314,9 +13483,9 @@
      "preset": "pplu/advanced/4",
      "day": "tue",
      "muscle": "lats",
-     "sets": 6.9,
+     "sets": 7.0,
      "limit": 6,
-     "excess": 0.9,
+     "excess": 1.0,
      "why": [
       "chest-supported-row: would put biceps below the weekly minimum",
       "pendlay-row: would put biceps below the weekly minimum",
@@ -13354,9 +13523,9 @@
      "preset": "pplul/advanced/5",
      "day": "tue",
      "muscle": "lats",
-     "sets": 6.9,
+     "sets": 7.0,
      "limit": 6,
-     "excess": 0.9,
+     "excess": 1.0,
      "why": [
       "chest-supported-row: would put biceps below the weekly minimum",
       "pendlay-row: would put biceps below the weekly minimum",
@@ -13394,13 +13563,14 @@
     {
      "preset": "arnold/intermediate/3",
      "day": "wed",
-     "muscle": "side_delts",
-     "sets": 5.3,
+     "muscle": "triceps",
+     "sets": 5.1,
      "limit": 5,
-     "excess": 0.3,
+     "excess": 0.1,
      "why": [
-      "dumbbell-lateral-raise: would put side_delts below the weekly minimum",
-      "overhead-press: would put triceps below the weekly minimum"
+      "overhead-cable-triceps-extension: would put triceps below the weekly minimum",
+      "overhead-press: would put side_delts below the weekly minimum",
+      "triceps-pushdown: would put triceps below the weekly minimum"
      ]
     },
     {
@@ -13635,11 +13805,11 @@
    "note": "Counted on the vol10b splits-efficient.json residuals (70 own-minimum, 32 other-muscle). 18 own-minimum residuals are muscles trained on 2+ days, so no single-session option covers them."
   },
   "efficient_after": {
-   "flags": 50,
+   "flags": 49,
    "presets": 18,
    "by_cause": {
     "own_minimum_not_single_day": 18,
-    "other_muscle_minimum": 32
+    "other_muscle_minimum": 31
    },
    "single_day_notes": 52,
    "presets_with_notes": 16
@@ -13650,11 +13820,249 @@
   },
   "trim_diff_vs_vol10b": [
    {
+    "preset": "upper-lower/advanced/4",
+    "day": "tue",
+    "id": "back-squat",
+    "vol10b": 3,
+    "vol10c": 4
+   },
+   {
+    "preset": "upper-lower/advanced/4",
+    "day": "tue",
+    "id": "romanian-deadlift",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "upper-lower/advanced/4",
+    "day": "fri",
+    "id": "front-squat",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "upper-lower/advanced/4",
+    "day": "fri",
+    "id": "hip-thrust",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "ppl/beginner/6",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10b": 3,
+    "vol10c": 1
+   },
+   {
+    "preset": "ppl/beginner/6",
+    "day": "mon",
+    "id": "overhead-cable-triceps-extension",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "ppl/beginner/6",
+    "day": "tue",
+    "id": "incline-dumbbell-curl",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "ppl/beginner/6",
+    "day": "tue",
+    "id": "seated-cable-row",
+    "vol10b": 3,
+    "vol10c": 1
+   },
+   {
+    "preset": "ppl/intermediate/3",
+    "day": "wed",
+    "id": "hammer-curl",
+    "vol10b": 2,
+    "vol10c": 1
+   },
+   {
+    "preset": "ppl/intermediate/3",
+    "day": "wed",
+    "id": "incline-dumbbell-curl",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "mon",
+    "id": "overhead-press",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "tue",
+    "id": "barbell-row",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "tue",
+    "id": "pull-up",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "tue",
+    "id": "reverse-pec-deck",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "thu",
+    "id": "incline-dumbbell-press",
+    "vol10b": 3,
+    "vol10c": 1
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "thu",
+    "id": "skull-crusher",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "fri",
+    "id": "cable-curl",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "fri",
+    "id": "chest-supported-row",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "tue",
+    "id": "pendlay-row",
+    "vol10b": 2,
+    "vol10c": 1
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "tue",
+    "id": "pull-up",
+    "vol10b": 3,
+    "vol10c": 4
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "tue",
+    "id": "reverse-pec-deck",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "thu",
+    "id": "incline-dumbbell-press",
+    "vol10b": 3,
+    "vol10c": 1
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "thu",
+    "id": "machine-chest-press",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "thu",
+    "id": "machine-shoulder-press",
+    "vol10b": 2,
+    "vol10c": 1
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "thu",
+    "id": "skull-crusher",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "fri",
+    "id": "cable-curl",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "bro-split/beginner/5",
+    "day": "tue",
+    "id": "lat-pulldown",
+    "vol10b": 1,
+    "vol10c": 3
+   },
+   {
+    "preset": "bro-split/beginner/5",
+    "day": "tue",
+    "id": "seated-cable-row",
+    "vol10b": 3,
+    "vol10c": 1
+   },
+   {
+    "preset": "bro-split/beginner/5",
+    "day": "wed",
+    "id": "romanian-deadlift",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "bro-split/beginner/5",
+    "day": "fri",
+    "id": "reverse-pec-deck",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
     "preset": "bro-split/beginner/5",
     "day": "fri",
     "id": "seated-dumbbell-shoulder-press",
     "vol10b": 3,
     "vol10c": 4
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "tue",
+    "id": "barbell-shrug",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "tue",
+    "id": "chest-supported-row",
+    "vol10b": 2,
+    "vol10c": 1
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "tue",
+    "id": "lat-pulldown",
+    "vol10b": 1,
+    "vol10c": 2
    },
    {
     "preset": "bro-split/intermediate/5",
@@ -13664,11 +14072,305 @@
     "vol10c": 2
    },
    {
+    "preset": "bro-split/intermediate/5",
+    "day": "wed",
+    "id": "leg-extension",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "wed",
+    "id": "leg-press",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
     "preset": "bro-split/advanced/5",
     "day": "fri",
     "id": "overhead-press",
     "vol10b": 3,
     "vol10c": 4
+   },
+   {
+    "preset": "pplu/beginner/4",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "pplu/beginner/4",
+    "day": "tue",
+    "id": "incline-dumbbell-curl",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "pplu/beginner/4",
+    "day": "tue",
+    "id": "seated-cable-row",
+    "vol10b": 3,
+    "vol10c": 1
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "mon",
+    "id": "overhead-press",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "tue",
+    "id": "barbell-row",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "tue",
+    "id": "pull-up",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "tue",
+    "id": "reverse-pec-deck",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "pplu/advanced/4",
+    "day": "tue",
+    "id": "chest-supported-row",
+    "vol10b": 2,
+    "vol10c": 1
+   },
+   {
+    "preset": "pplu/advanced/4",
+    "day": "tue",
+    "id": "pendlay-row",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "pplul/beginner/5",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "pplul/beginner/5",
+    "day": "tue",
+    "id": "incline-dumbbell-curl",
+    "vol10b": 1,
+    "vol10c": 2
+   },
+   {
+    "preset": "pplul/beginner/5",
+    "day": "tue",
+    "id": "seated-cable-row",
+    "vol10b": 3,
+    "vol10c": 1
+   },
+   {
+    "preset": "pplul/intermediate/5",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "pplul/intermediate/5",
+    "day": "mon",
+    "id": "overhead-press",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "pplul/intermediate/5",
+    "day": "tue",
+    "id": "barbell-row",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "pplul/intermediate/5",
+    "day": "tue",
+    "id": "pull-up",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "pplul/intermediate/5",
+    "day": "tue",
+    "id": "reverse-pec-deck",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "pplul/advanced/5",
+    "day": "tue",
+    "id": "chest-supported-row",
+    "vol10b": 2,
+    "vol10c": 1
+   },
+   {
+    "preset": "pplul/advanced/5",
+    "day": "tue",
+    "id": "pendlay-row",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "pplul/advanced/5",
+    "day": "sat",
+    "id": "front-squat",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "pplul/advanced/5",
+    "day": "sat",
+    "id": "hip-thrust",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "arnold/intermediate/3",
+    "day": "wed",
+    "id": "overhead-cable-triceps-extension",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "arnold/intermediate/3",
+    "day": "wed",
+    "id": "overhead-press",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "mon",
+    "id": "barbell-row",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "mon",
+    "id": "pull-up",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "tue",
+    "id": "dumbbell-lateral-raise",
+    "vol10b": 3,
+    "vol10c": 4
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "tue",
+    "id": "overhead-cable-triceps-extension",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "tue",
+    "id": "overhead-press",
+    "vol10b": 3,
+    "vol10c": 1
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "thu",
+    "id": "barbell-row",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "thu",
+    "id": "pull-up",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "fri",
+    "id": "dumbbell-lateral-raise",
+    "vol10b": 3,
+    "vol10c": 4
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "fri",
+    "id": "overhead-cable-triceps-extension",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "fri",
+    "id": "overhead-press",
+    "vol10b": 3,
+    "vol10c": 1
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "mon",
+    "id": "pull-up",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "mon",
+    "id": "t-bar-row",
+    "vol10b": 2,
+    "vol10c": 1
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "tue",
+    "id": "overhead-cable-triceps-extension",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "tue",
+    "id": "seated-dumbbell-shoulder-press",
+    "vol10b": 3,
+    "vol10c": 2
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "thu",
+    "id": "pull-up",
+    "vol10b": 2,
+    "vol10c": 3
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "thu",
+    "id": "t-bar-row",
+    "vol10b": 2,
+    "vol10c": 1
    }
   ],
   "builder_paths": {
@@ -13679,5 +14381,1284 @@
    "presets_efficient": "data/splits-efficient.json (re-trimmed with the exemption live)",
    "diff": "data/splits-efficient-diff.json"
   }
+ },
+ "visuals": {
+  "version": "vol11",
+  "fields": {
+   "stimulus_hard_set_eq": "stimulus_hard_set_eq[m, day] = sum over tiles of sets x credit(exercise, m) (face value, no decay); day = sum over muscles",
+   "fatigue_fresh_set_eq": "fatigue_fresh_set_eq[m, day] = sum over tiles of sets x rating[m] x fatigue_per_set(exercise) x effort[planned RIR + role offset] (data/fatigue.json); day = sum over muscles",
+   "sf_ratio": "sf_ratio = round(round(stimulus, 2) / round(fatigue, 2), 2): computed from the shown two-decimal numbers so the division checks out",
+   "recovery_days": "recovery_days = recovery hours / 24 (rounded 0.1), hours from recovery.hours_formula with F = fatigue_fresh_set_eq; day = slowest muscle; ready_range_days = [max(0.5, floor(0.8 h / 12) / 2), ceil(1.2 h / 12) / 2]"
+  },
+  "precomputed": {
+   "path": "data/day-metrics-presets.json presets[goal][preset].days[i].muscles[m] / .day_summary / .recovery_strip",
+   "size_note": "All 46 presets x 2 goals, compact JSON. Custom boards: use the formulas above and data/fatigue.json."
+  },
+  "overlap": {
+   "reuses": "rules.json rules[id=recovery_overlap] (unchanged)",
+   "meaningful_session": "r2(effective sets) >= targets.json session.muscles[m].light (half-up 0.01)",
+   "red_early": "gap_days < max(0.4 x recovery_days of the previous session, 1.0) (0.4 = early_frac_of_lower 0.5 x the 0.8 lower edge of the ready range)",
+   "tolerance": "The bar runs to the full ready time; only a session before 40% of it (or within 24 h) is red. Whole days x 24 h, no clock times.",
+   "red_streak": "3+ consecutive days (week wraps)",
+   "label": "Modeled",
+   "nurd": {
+    "short": "Moran-Navarro 2017; Cheung 2003",
+    "year": 2017,
+    "type": "peer-reviewed studies; thresholds are planning choices",
+    "label": "Modeled"
+   }
+  },
+  "fatigue_bands": {
+   "unit": "fresh-set equivalents per muscle per day (rounded 0.01)",
+   "cuts": {
+    "none_below": 1.0,
+    "warm_from_x_limit": 0.75,
+    "hot_above_x_limit": 1.5
+   },
+   "bands": [
+    {
+     "id": "none",
+     "rule": "r2(effective sets) < 1.00 (vol11b; was fatigue < 1.0)"
+    },
+    {
+     "id": "cool",
+     "rule": "trained (r2(effective sets) >= 1.00) and fatigue < 0.75 x limit"
+    },
+    {
+     "id": "warm",
+     "rule": "0.75 x limit <= fatigue <= 1.5 x limit"
+    },
+    {
+     "id": "hot",
+     "rule": "fatigue > 1.5 x limit"
+    }
+   ],
+   "limit": "rules.json rules[id=session_efficiency].limits_by_goal[goal][level][m]",
+   "why_1_5": "Hot = more fatigue than the goal's per-session limit even if every set were the heaviest class (back squat 1.56 fresh-set eq per set), so it marks genuine overload, not ordinary compound work. At 1.5x the Efficient presets show about as many hot muscle-days as remaining session warnings; 1.0x would mark ~7x more.",
+   "label": "Display choice / Modeled",
+   "nurd": {
+    "short": "Lift Board display choice",
+    "year": 2026,
+    "type": "model / display choice",
+    "label": "Modeled",
+    "note": "Cut-offs set against the preset distribution; no study measures them."
+   }
+  },
+  "sf_dial": {
+   "version": "vol11c",
+   "levels": {
+    "muscle": "active",
+    "exercise": "retired",
+    "day": "retired"
+   },
+   "cuts": {
+    "muscle": {
+     "green_from": 0.9,
+     "amber_from": 0.15
+    }
+   },
+   "retired": "vol11c: exercise- and day-level S:F and dial retired; S:F is per muscle only. Moved to visuals.body_map.efficiency.",
+   "history_vol11b": {
+    "version": "vol11b",
+    "sanity_checks": {
+     "vol11-anchor-set": "S:F 1 / 1 = 1.00 (ready in ~1 days) -> green",
+     "vol11-squat-set": "S:F 1 / 1.56 = 0.64 (ready in ~1.3 days) -> amber",
+     "vol11-lateral-raise-set": "S:F 1 / 0.79 = 1.27 (ready in ~0.8 days) -> green",
+     "vol11-chest-10-set-day": "S:F 10 / 10.96 = 0.91 (ready in ~3 days) -> green",
+     "vol11-full-body-day": "S:F 29.18 / 21.31 = 1.37 (prime + secondary stimulus on 11 muscles / fatigue; anchor = 1.00) (slowest muscle ready in ~1.8 days) -> amber"
+    },
+    "cuts": {
+     "day": {
+      "green_from": 1.5,
+      "amber_from": 1.05
+     },
+     "exercise": {
+      "green_from": 1.25,
+      "amber_from": 0.55
+     },
+     "muscle": {
+      "green_from": 0.9,
+      "amber_from": 0.15
+     }
+    },
+    "reference_distribution": {
+     "day": {
+      "n": 176,
+      "min": 1.22,
+      "p5": 1.345,
+      "q1": 1.41,
+      "median": 1.495,
+      "q3": 1.662,
+      "max": 1.95,
+      "lower_fence": 1.031
+     },
+     "exercise": {
+      "n": 1167,
+      "min": 0.76,
+      "p5": 1.26,
+      "q1": 1.26,
+      "median": 1.27,
+      "q3": 1.73,
+      "max": 2.76,
+      "lower_fence": 0.555
+     },
+     "muscle": {
+      "n": 1629,
+      "min": 0.64,
+      "p5": 0.64,
+      "q1": 0.77,
+      "median": 0.91,
+      "q3": 1.17,
+      "max": 1.39,
+      "lower_fence": 0.17
+     }
+    },
+    "reference": "Efficient presets (data/splits-efficient.json), all levels; each level uses its own distribution (day = whole days, exercise = every tile, muscle = muscle-days with r2(effective sets) >= 1.00).",
+    "rule": "green >= median; amber from the lower Tukey fence (Q1 - 1.5 x IQR) up to the median; red below the fence. Cuts rounded to the nearest 0.05. Quartiles: Python statistics.quantiles(n=4, method=inclusive).",
+    "why_fence": "The Tukey fence is the standard definition of an outlier, so red only appears when a value is clearly out of line; P5 would force 5% red by construction.",
+    "why_own_distributions": "The three levels have different spreads: muscle S:F is fixed by exercise class (~1/fatigue_per_set), exercise S:F depends on how many prime/secondary muscles a lift has, and a day averages its exercises. One set of cuts would make days all-green and muscle-days mostly amber.",
+    "label": "Display choice",
+    "nurd": {
+     "short": "Lift Board display choice",
+     "year": 2026,
+     "type": "model / display choice",
+     "label": "Modeled",
+     "note": "Cut-offs set against the preset distribution; no study measures them."
+    },
+    "previous_vol11": {
+     "green_from": 0.75,
+     "amber_from": 0.6,
+     "all_levels": true
+    },
+    "heavy_compound_note": null
+   }
+  },
+  "distribution": {
+   "efficient": {
+    "muscle_dial": {
+     "amber": 710,
+     "green": 919
+    },
+    "fatigue_band": {
+     "cool": 970,
+     "hot": 62,
+     "none": 248,
+     "warm": 597
+    },
+    "session_efficiency_warnings": 49,
+    "muscle_ratio_median": 0.91,
+    "muscle_ratio_p10_p90": [
+     0.64,
+     1.26
+    ],
+    "history_vol11b": {
+     "day_dial": {
+      "amber": 88,
+      "green": 88
+     },
+     "exercise_dial": {
+      "amber": 53,
+      "green": 1114
+     },
+     "day_ratio_median": 1.5,
+     "day_ratio_p10_p90": [
+      1.37,
+      1.79
+     ]
+    }
+   },
+   "max_growth": {
+    "muscle_dial": {
+     "amber": 696,
+     "green": 945
+    },
+    "fatigue_band": {
+     "cool": 1393,
+     "none": 236,
+     "warm": 248
+    },
+    "session_efficiency_warnings": 3,
+    "muscle_ratio_median": 0.92,
+    "muscle_ratio_p10_p90": [
+     0.64,
+     1.26
+    ],
+    "history_vol11b": {
+     "day_dial": {
+      "amber": 89,
+      "green": 87
+     },
+     "exercise_dial": {
+      "amber": 53,
+      "green": 1118
+     },
+     "day_ratio_median": 1.48,
+     "day_ratio_p10_p90": [
+      1.36,
+      1.79
+     ]
+    }
+   }
+  },
+  "body_map": {
+   "version": "vol11c",
+   "efficiency": {
+    "field": "data/day-metrics-presets.json ...days[i].muscles[m].sf_ratio, sf_dial",
+    "formula": "sf_ratio = round(round(stimulus, 2) / round(fatigue, 2), 2): computed from the shown two-decimal numbers so the division checks out (per muscle)",
+    "cuts": {
+     "green_from": 0.9,
+     "amber_from": 0.15
+    },
+    "bands": [
+     {
+      "id": "green",
+      "from": 0.9
+     },
+     {
+      "id": "amber",
+      "from": 0.15,
+      "to": 0.9
+     },
+     {
+      "id": "red",
+      "below": 0.15
+     }
+    ],
+    "applies_to": "muscle-days with r2(effective sets) >= 1.00; below that no efficiency colour",
+    "reference_distribution": {
+     "n": 1629,
+     "min": 0.64,
+     "p5": 0.64,
+     "q1": 0.77,
+     "median": 0.91,
+     "q3": 1.17,
+     "max": 1.39,
+     "lower_fence": 0.17
+    },
+    "rule": "green >= median; amber from the lower Tukey fence (Q1 - 1.5 x IQR) up to the median; red below the fence. Cuts rounded to the nearest 0.05. Quartiles: Python statistics.quantiles(n=4, method=inclusive).",
+    "label": "Display choice",
+    "nurd": {
+     "short": "Lift Board display choice",
+     "year": 2026,
+     "type": "model / display choice",
+     "label": "Modeled",
+     "note": "Cut-offs set against the preset distribution; no study measures them."
+    }
+   },
+   "fatigue_bands": {
+    "field": "...muscles[m].fatigue_band",
+    "definition": "visuals.fatigue_bands (unchanged)",
+    "cuts": {
+     "none_below": 1.0,
+     "warm_from_x_limit": 0.75,
+     "hot_above_x_limit": 1.5
+    },
+    "bands": [
+     {
+      "id": "none",
+      "rule": "r2(effective sets) < 1.00 (vol11b; was fatigue < 1.0)"
+     },
+     {
+      "id": "cool",
+      "rule": "trained (r2(effective sets) >= 1.00) and fatigue < 0.75 x limit"
+     },
+     {
+      "id": "warm",
+      "rule": "0.75 x limit <= fatigue <= 1.5 x limit"
+     },
+     {
+      "id": "hot",
+      "rule": "fatigue > 1.5 x limit"
+     }
+    ]
+   }
+  }
+ },
+ "vol11": {
+  "version": "vol11",
+  "date": "2026-11-01",
+  "trim_diff_vs_vol10c": [
+   {
+    "preset": "upper-lower/advanced/4",
+    "day": "tue",
+    "id": "back-squat",
+    "vol10c": 3,
+    "vol11": 4
+   },
+   {
+    "preset": "upper-lower/advanced/4",
+    "day": "tue",
+    "id": "romanian-deadlift",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "upper-lower/advanced/4",
+    "day": "fri",
+    "id": "front-squat",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "upper-lower/advanced/4",
+    "day": "fri",
+    "id": "hip-thrust",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "ppl/beginner/6",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10c": 3,
+    "vol11": 1
+   },
+   {
+    "preset": "ppl/beginner/6",
+    "day": "mon",
+    "id": "overhead-cable-triceps-extension",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "ppl/beginner/6",
+    "day": "tue",
+    "id": "incline-dumbbell-curl",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "ppl/beginner/6",
+    "day": "tue",
+    "id": "seated-cable-row",
+    "vol10c": 3,
+    "vol11": 1
+   },
+   {
+    "preset": "ppl/intermediate/3",
+    "day": "wed",
+    "id": "hammer-curl",
+    "vol10c": 2,
+    "vol11": 1
+   },
+   {
+    "preset": "ppl/intermediate/3",
+    "day": "wed",
+    "id": "incline-dumbbell-curl",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "mon",
+    "id": "overhead-press",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "tue",
+    "id": "barbell-row",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "tue",
+    "id": "pull-up",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "tue",
+    "id": "reverse-pec-deck",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "thu",
+    "id": "incline-dumbbell-press",
+    "vol10c": 3,
+    "vol11": 1
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "thu",
+    "id": "skull-crusher",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "fri",
+    "id": "cable-curl",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "ppl/intermediate/6",
+    "day": "fri",
+    "id": "chest-supported-row",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "tue",
+    "id": "pendlay-row",
+    "vol10c": 2,
+    "vol11": 1
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "tue",
+    "id": "pull-up",
+    "vol10c": 3,
+    "vol11": 4
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "tue",
+    "id": "reverse-pec-deck",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "thu",
+    "id": "incline-dumbbell-press",
+    "vol10c": 3,
+    "vol11": 1
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "thu",
+    "id": "machine-chest-press",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "thu",
+    "id": "machine-shoulder-press",
+    "vol10c": 2,
+    "vol11": 1
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "thu",
+    "id": "skull-crusher",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "ppl/advanced/6",
+    "day": "fri",
+    "id": "cable-curl",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "bro-split/beginner/5",
+    "day": "tue",
+    "id": "lat-pulldown",
+    "vol10c": 1,
+    "vol11": 3
+   },
+   {
+    "preset": "bro-split/beginner/5",
+    "day": "tue",
+    "id": "seated-cable-row",
+    "vol10c": 3,
+    "vol11": 1
+   },
+   {
+    "preset": "bro-split/beginner/5",
+    "day": "wed",
+    "id": "romanian-deadlift",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "bro-split/beginner/5",
+    "day": "fri",
+    "id": "reverse-pec-deck",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "tue",
+    "id": "barbell-shrug",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "tue",
+    "id": "chest-supported-row",
+    "vol10c": 2,
+    "vol11": 1
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "tue",
+    "id": "lat-pulldown",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "wed",
+    "id": "leg-extension",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "bro-split/intermediate/5",
+    "day": "wed",
+    "id": "leg-press",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "pplu/beginner/4",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "pplu/beginner/4",
+    "day": "tue",
+    "id": "incline-dumbbell-curl",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "pplu/beginner/4",
+    "day": "tue",
+    "id": "seated-cable-row",
+    "vol10c": 3,
+    "vol11": 1
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "mon",
+    "id": "overhead-press",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "tue",
+    "id": "barbell-row",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "tue",
+    "id": "pull-up",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "pplu/intermediate/4",
+    "day": "tue",
+    "id": "reverse-pec-deck",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "pplu/advanced/4",
+    "day": "tue",
+    "id": "chest-supported-row",
+    "vol10c": 2,
+    "vol11": 1
+   },
+   {
+    "preset": "pplu/advanced/4",
+    "day": "tue",
+    "id": "pendlay-row",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "pplul/beginner/5",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "pplul/beginner/5",
+    "day": "tue",
+    "id": "incline-dumbbell-curl",
+    "vol10c": 1,
+    "vol11": 2
+   },
+   {
+    "preset": "pplul/beginner/5",
+    "day": "tue",
+    "id": "seated-cable-row",
+    "vol10c": 3,
+    "vol11": 1
+   },
+   {
+    "preset": "pplul/intermediate/5",
+    "day": "mon",
+    "id": "barbell-bench-press",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "pplul/intermediate/5",
+    "day": "mon",
+    "id": "overhead-press",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "pplul/intermediate/5",
+    "day": "tue",
+    "id": "barbell-row",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "pplul/intermediate/5",
+    "day": "tue",
+    "id": "pull-up",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "pplul/intermediate/5",
+    "day": "tue",
+    "id": "reverse-pec-deck",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "pplul/advanced/5",
+    "day": "tue",
+    "id": "chest-supported-row",
+    "vol10c": 2,
+    "vol11": 1
+   },
+   {
+    "preset": "pplul/advanced/5",
+    "day": "tue",
+    "id": "pendlay-row",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "pplul/advanced/5",
+    "day": "sat",
+    "id": "front-squat",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "pplul/advanced/5",
+    "day": "sat",
+    "id": "hip-thrust",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "arnold/intermediate/3",
+    "day": "wed",
+    "id": "overhead-cable-triceps-extension",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "arnold/intermediate/3",
+    "day": "wed",
+    "id": "overhead-press",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "mon",
+    "id": "barbell-row",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "mon",
+    "id": "pull-up",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "tue",
+    "id": "dumbbell-lateral-raise",
+    "vol10c": 3,
+    "vol11": 4
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "tue",
+    "id": "overhead-cable-triceps-extension",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "tue",
+    "id": "overhead-press",
+    "vol10c": 3,
+    "vol11": 1
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "thu",
+    "id": "barbell-row",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "thu",
+    "id": "pull-up",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "fri",
+    "id": "dumbbell-lateral-raise",
+    "vol10c": 3,
+    "vol11": 4
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "fri",
+    "id": "overhead-cable-triceps-extension",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "arnold/intermediate/6",
+    "day": "fri",
+    "id": "overhead-press",
+    "vol10c": 3,
+    "vol11": 1
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "mon",
+    "id": "pull-up",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "mon",
+    "id": "t-bar-row",
+    "vol10c": 2,
+    "vol11": 1
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "tue",
+    "id": "overhead-cable-triceps-extension",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "tue",
+    "id": "seated-dumbbell-shoulder-press",
+    "vol10c": 3,
+    "vol11": 2
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "thu",
+    "id": "pull-up",
+    "vol10c": 2,
+    "vol11": 3
+   },
+   {
+    "preset": "arnold/advanced/6",
+    "day": "thu",
+    "id": "t-bar-row",
+    "vol10c": 2,
+    "vol11": 1
+   }
+  ],
+  "trim_stats": {
+   "before": {
+    "flags": 189,
+    "presets": 36
+   },
+   "after": {
+    "flags": 49,
+    "presets": 18
+   },
+   "sets_removed": 252,
+   "exercises_removed": 4,
+   "in_zone_to_below_target": 68,
+   "fell_below_min": 0,
+   "reduced_while_below_min": 0
+  },
+  "reference_cases_changed": {
+   "workout-reference.json": [
+    "reference-upper-day",
+    "full-body-3x-mon-wed-fri",
+    "full-body-3x-mon-tue-wed",
+    "bro-split-chest-day",
+    "chest-10-in-one-workout",
+    "chest-5-plus-5-consecutive-days",
+    "recovery-per-set-examples",
+    "chest-6-plus-6-vol8c",
+    "overlap-too-soon",
+    "overlap-streak",
+    "vol10-chest-6-set-day-efficient",
+    "vol10-chest-6-set-day-max_growth",
+    "vol10-chest-10-set-day-efficient",
+    "vol10-chest-10-set-day-max_growth",
+    "vol10b-sf-33-3-over-107",
+    "vol10b-sf-real-full-body-day"
+   ],
+   "volume-model-reference.json": [
+    "recovery-barbell-bench-press-4x-rir2",
+    "recovery-barbell-bench-press-8x-rir1",
+    "recovery-barbell-bench-press-8x-rir0",
+    "recovery-romanian-deadlift-4x-rir2",
+    "recovery-cable-lateral-raise-4x-rir1",
+    "session-chest-12-vs-6plus6",
+    "recovery-ranges-by-level"
+   ]
+  },
+  "builder_paths": {
+   "fatigue_per_set": "data/fatigue.json exercises[id].fatigue_per_set (sidecar; exercises.json unchanged); by_class summary, anchor, formula",
+   "day_metrics": "volume-model.json day_metrics (stimulus, fatigue, sf_ratio, recovery); retired indexes under day_metrics.history_vol10b",
+   "precomputed": "data/day-metrics-presets.json presets[goal][preset] {days[] {day, label, day_summary (vol11b systemic), exercises[] (vol11b), muscles[m] {stimulus_hard_set_eq, fatigue_fresh_set_eq, sf_ratio, sf_dial, recovery_days, ready_range_days, fatigue_band, session_limit, display}}, recovery_strip {bars[], overlaps[]}, session_efficiency_warnings}",
+   "overlap_rule": "volume-model.json visuals.overlap",
+   "fatigue_bands": "volume-model.json visuals.fatigue_bands",
+   "sf_dial": "volume-model.json visuals.sf_dial",
+   "distribution": "volume-model.json visuals.distribution",
+   "recovery_load": "volume-model.json recovery.load_vol11",
+   "reference_cases": "workout-reference.json cases vol11-* (anchor, squat, lateral raise, chest 10-set day, full-body day); vol10-chest-* and vol10b-sf-* regenerated with history_vol10c"
+  }
+ },
+ "vol11b": {
+  "version": "vol11b",
+  "date": "2026-11-01",
+  "cos_read_verified": {
+   "verdict": "Correct. vol11 charged rating x fatigue_per_set to every muscle, so per-muscle and summed day S:F ~ 1/fatigue_per_set and a heavy axial lift could not beat ~0.64 at any level; summing muscle fatigue charged systemic fatigue once per muscle (squat: 4.2 vs 1.56 once).",
+   "by_lift_2rir": {
+    "back-squat": {
+     "fatigue_per_set": 1.56,
+     "vol11_sum_stim": 2.69,
+     "vol11_sum_muscle_fatigue": 4.2,
+     "vol11_exercise_sf": 0.64,
+     "one_over_fps": 0.64,
+     "systemic_fatigue_once": 1.56,
+     "muscle_fatigue_over_systemic": 2.69
+    },
+    "romanian-deadlift": {
+     "fatigue_per_set": 1.56,
+     "vol11_sum_stim": 3.87,
+     "vol11_sum_muscle_fatigue": 6.04,
+     "vol11_exercise_sf": 0.64,
+     "one_over_fps": 0.64,
+     "systemic_fatigue_once": 1.56,
+     "muscle_fatigue_over_systemic": 3.87
+    },
+    "deadlift": {
+     "fatigue_per_set": 1.56,
+     "vol11_sum_stim": 5.15,
+     "vol11_sum_muscle_fatigue": 8.03,
+     "vol11_exercise_sf": 0.64,
+     "one_over_fps": 0.64,
+     "systemic_fatigue_once": 1.56,
+     "muscle_fatigue_over_systemic": 5.15
+    },
+    "barbell-bench-press": {
+     "fatigue_per_set": 1.32,
+     "vol11_sum_stim": 1.9,
+     "vol11_sum_muscle_fatigue": 2.51,
+     "vol11_exercise_sf": 0.76,
+     "one_over_fps": 0.76,
+     "systemic_fatigue_once": 1.32,
+     "muscle_fatigue_over_systemic": 1.9
+    },
+    "machine-chest-press": {
+     "fatigue_per_set": 1.0,
+     "vol11_sum_stim": 1.64,
+     "vol11_sum_muscle_fatigue": 1.64,
+     "vol11_exercise_sf": 1.0,
+     "one_over_fps": 1.0,
+     "systemic_fatigue_once": 1.0,
+     "muscle_fatigue_over_systemic": 1.64
+    },
+    "dumbbell-lateral-raise": {
+     "fatigue_per_set": 0.72,
+     "vol11_sum_stim": 1.24,
+     "vol11_sum_muscle_fatigue": 0.89,
+     "vol11_exercise_sf": 1.39,
+     "one_over_fps": 1.39,
+     "systemic_fatigue_once": 0.72,
+     "muscle_fatigue_over_systemic": 1.24
+    },
+    "hip-thrust": {
+     "fatigue_per_set": 1.32,
+     "vol11_sum_stim": 1.56,
+     "vol11_sum_muscle_fatigue": 2.06,
+     "vol11_exercise_sf": 0.76,
+     "one_over_fps": 0.76,
+     "systemic_fatigue_once": 1.32,
+     "muscle_fatigue_over_systemic": 1.56
+    }
+   }
+  },
+  "levels": {
+   "muscle": "Muscle S:F = hard-set equivalents on that muscle / fresh-set fatigue on that muscle (rating-weighted); 1.0 = one machine chest press set on chest.",
+   "exercise": "Exercise S:F = stimulus on its prime and secondary muscles (rating >= 0.5, or its top rating) / its systemic fatigue, both counted in machine-chest-press sets; 1.0 = as efficient as a machine chest press set.",
+   "day": "Day S:F = the same ratio summed over all sets of the day (each set's fatigue charged once, not per muscle); 1.0 = a day as efficient as machine chest press sets."
+  },
+  "anchor": "Re-anchored by stimulus: exercise/day prime+secondary stimulus is divided by one anchor set's prime+secondary stimulus (1); fatigue keeps the fresh-set unit. Muscle level and recovery unchanged.",
+  "exercise_readouts_2rir": {
+   "back-squat": {
+    "id": "back-squat",
+    "sets": 1,
+    "rir": 2,
+    "stimulus_hard_set_eq_total": 2.17,
+    "stimulus_by_muscle": {
+     "quads": 1.0,
+     "glutes": 0.63,
+     "adductors": 0.54
+    },
+    "stimulus_anchor_eq": 2.17,
+    "fatigue_systemic_anchor_eq": 1.56,
+    "sf_ratio": 1.39,
+    "sf_dial": "green",
+    "display": "S:F 2.17 / 1.56 = 1.39 (prime + secondary stimulus on 3 muscles / fatigue; anchor = 1.00)"
+   },
+   "romanian-deadlift": {
+    "id": "romanian-deadlift",
+    "sets": 1,
+    "rir": 2,
+    "stimulus_hard_set_eq_total": 2.71,
+    "stimulus_by_muscle": {
+     "hamstrings": 1.0,
+     "glutes": 0.63,
+     "lower_back": 0.63,
+     "forearms": 0.45
+    },
+    "stimulus_anchor_eq": 2.71,
+    "fatigue_systemic_anchor_eq": 1.56,
+    "sf_ratio": 1.74,
+    "sf_dial": "green",
+    "display": "S:F 2.71 / 1.56 = 1.74 (prime + secondary stimulus on 4 muscles / fatigue; anchor = 1.00)"
+   },
+   "deadlift": {
+    "id": "deadlift",
+    "sets": 1,
+    "rir": 2,
+    "stimulus_hard_set_eq_total": 4.31,
+    "stimulus_by_muscle": {
+     "lower_back": 0.9,
+     "glutes": 0.8,
+     "hamstrings": 0.63,
+     "traps": 0.54,
+     "forearms": 0.54,
+     "upper_back": 0.45,
+     "quads": 0.45
+    },
+    "stimulus_anchor_eq": 4.31,
+    "fatigue_systemic_anchor_eq": 1.56,
+    "sf_ratio": 2.76,
+    "sf_dial": "green",
+    "display": "S:F 4.31 / 1.56 = 2.76 (prime + secondary stimulus on 7 muscles / fatigue; anchor = 1.00)"
+   },
+   "barbell-bench-press": {
+    "id": "barbell-bench-press",
+    "sets": 1,
+    "rir": 2,
+    "stimulus_hard_set_eq_total": 1.9,
+    "stimulus_by_muscle": {
+     "chest": 1.0,
+     "front_delts": 0.45,
+     "triceps": 0.45
+    },
+    "stimulus_anchor_eq": 1.9,
+    "fatigue_systemic_anchor_eq": 1.32,
+    "sf_ratio": 1.44,
+    "sf_dial": "green",
+    "display": "S:F 1.9 / 1.32 = 1.44 (prime + secondary stimulus on 3 muscles / fatigue; anchor = 1.00)"
+   },
+   "machine-chest-press": {
+    "id": "machine-chest-press",
+    "sets": 1,
+    "rir": 2,
+    "stimulus_hard_set_eq_total": 1.0,
+    "stimulus_by_muscle": {
+     "chest": 1.0
+    },
+    "stimulus_anchor_eq": 1.0,
+    "fatigue_systemic_anchor_eq": 1.0,
+    "sf_ratio": 1.0,
+    "sf_dial": "amber",
+    "display": "S:F 1 / 1 = 1.00 (prime + secondary stimulus on 1 muscles / fatigue; anchor = 1.00)"
+   },
+   "dumbbell-lateral-raise": {
+    "id": "dumbbell-lateral-raise",
+    "sets": 1,
+    "rir": 2,
+    "stimulus_hard_set_eq_total": 1.0,
+    "stimulus_by_muscle": {
+     "side_delts": 1.0
+    },
+    "stimulus_anchor_eq": 1.0,
+    "fatigue_systemic_anchor_eq": 0.72,
+    "sf_ratio": 1.39,
+    "sf_dial": "green",
+    "display": "S:F 1 / 0.72 = 1.39 (prime + secondary stimulus on 1 muscles / fatigue; anchor = 1.00)"
+   },
+   "hip-thrust": {
+    "id": "hip-thrust",
+    "sets": 1,
+    "rir": 2,
+    "stimulus_hard_set_eq_total": 1.0,
+    "stimulus_by_muscle": {
+     "glutes": 1.0
+    },
+    "stimulus_anchor_eq": 1.0,
+    "fatigue_systemic_anchor_eq": 1.32,
+    "sf_ratio": 0.76,
+    "sf_dial": "amber",
+    "display": "S:F 1 / 1.32 = 0.76 (prime + secondary stimulus on 1 muscles / fatigue; anchor = 1.00)"
+   },
+   "dumbbell-lateral-raise-planned-1rir": {
+    "id": "dumbbell-lateral-raise",
+    "sets": 1,
+    "stimulus_hard_set_eq_total": 1.0,
+    "stimulus_by_muscle": {
+     "side_delts": 1.0
+    },
+    "stimulus_anchor_eq": 1.0,
+    "fatigue_systemic_anchor_eq": 0.79,
+    "sf_ratio": 1.27,
+    "sf_dial": "green",
+    "display": "S:F 1 / 0.79 = 1.27 (prime + secondary stimulus on 1 muscles / fatigue; anchor = 1.00)"
+   }
+  },
+  "heavy_compound_note": "Not added: no heavy axial compound reads below green at exercise level.",
+  "unchanged": [
+   "muscle-level fatigue and muscle S:F formula; glow cut multiples (0.75x / 1.5x limit)",
+   "efficient_trim tie-break definition (per muscle, local S:F)"
+  ],
+  "changed": [
+   "exercise/day S:F: prime+secondary stimulus / systemic fatigue",
+   "recovery: gate on effective sets only, half-up rounding of inputs and days",
+   "boundary >= 1.00 half-up everywhere",
+   "dial cuts per level from the Efficient distribution"
+  ],
+  "trim_diff_vs_vol11": [],
+  "reference_cases_changed": {
+   "workout-reference.json": [
+    "full-body-3x-mon-wed-fri",
+    "full-body-3x-mon-tue-wed",
+    "recovery-per-set-examples",
+    "vol10-chest-6-set-day-efficient",
+    "vol10-chest-6-set-day-max_growth",
+    "vol10-chest-10-set-day-efficient",
+    "vol10-chest-10-set-day-max_growth",
+    "vol10b-sf-real-full-body-day",
+    "vol11-anchor-set",
+    "vol11-squat-set",
+    "vol11-lateral-raise-set",
+    "vol11-chest-10-set-day",
+    "vol11-full-body-day"
+   ],
+   "volume-model-reference.json": [
+    "recovery-barbell-bench-press-4x-rir2",
+    "recovery-barbell-bench-press-8x-rir1",
+    "recovery-barbell-bench-press-8x-rir0",
+    "recovery-romanian-deadlift-4x-rir2",
+    "recovery-cable-lateral-raise-4x-rir1",
+    "recovery-ranges-by-level"
+   ]
+  },
+  "builder_paths": {
+   "levels": "volume-model.json day_metrics.levels (one sentence per level)",
+   "systemic_formula": "volume-model.json day_metrics.systemic",
+   "day_summary": "data/day-metrics-presets.json presets[goal][preset].days[i].day_summary {stimulus_hard_set_eq_total, stimulus_by_muscle, stimulus_anchor_eq, fatigue_systemic_anchor_eq, sf_ratio, sf_dial, recovery_days, display}",
+   "exercises": "data/day-metrics-presets.json presets[goal][preset].days[i].exercises[] {id, sets, same fields}",
+   "muscles": "...days[i].muscles[m] (S:F formula unchanged; vol11b adds recovery_hours, recovery_inputs; glow none on effective sets)",
+   "fatigue": "data/fatigue.json levels_vol11b (anchor_stimulus, sentences)",
+   "dial": "volume-model.json visuals.sf_dial.cuts {day, exercise, muscle} + reference_distribution",
+   "cases": "workout-reference.json vol11b-exercise-*-2rir; vol11-* day cases regenerated with history_vol11",
+   "verification": "volume-model.json vol11b.cos_read_verified",
+   "recovery_formula": "volume-model.json recovery.load_vol11b.formula (+ worked_example, mismatch_vol11); recovery.hours_formula points to it",
+   "recovery_inputs": "data/day-metrics-presets.json ...muscles[m].recovery_hours, recovery_days, recovery_inputs {effective_sets_r2, recovery_load_r2, stretch_share_r2, size, level_factor}; recovery_strip.bars[].ready_hours",
+   "boundary": "volume-model.json day_metrics.boundary_vol11b; rules session_efficiency.exemption.boundary; rules recovery_overlap.meaningful_session_boundary",
+   "trim_algorithm": "rules.json rules[id=efficient_trim].algorithm; trace workout-reference.json cases[id=efficient-trim-trace-ppl-advanced-6]",
+   "stimulus_roles": "volume-model.json vol11b.stimulus_roles"
+  },
+  "dial": {
+   "version": "vol11b",
+   "sanity_checks": {
+    "vol11-anchor-set": "S:F 1 / 1 = 1.00 (ready in ~1 days) -> green",
+    "vol11-squat-set": "S:F 1 / 1.56 = 0.64 (ready in ~1.3 days) -> amber",
+    "vol11-lateral-raise-set": "S:F 1 / 0.79 = 1.27 (ready in ~0.8 days) -> green",
+    "vol11-chest-10-set-day": "S:F 10 / 10.96 = 0.91 (ready in ~3 days) -> green",
+    "vol11-full-body-day": "S:F 29.18 / 21.31 = 1.37 (prime + secondary stimulus on 11 muscles / fatigue; anchor = 1.00) (slowest muscle ready in ~1.8 days) -> amber"
+   },
+   "cuts": {
+    "day": {
+     "green_from": 1.5,
+     "amber_from": 1.05
+    },
+    "exercise": {
+     "green_from": 1.25,
+     "amber_from": 0.55
+    },
+    "muscle": {
+     "green_from": 0.9,
+     "amber_from": 0.15
+    }
+   },
+   "reference_distribution": {
+    "day": {
+     "n": 176,
+     "min": 1.22,
+     "p5": 1.345,
+     "q1": 1.41,
+     "median": 1.495,
+     "q3": 1.662,
+     "max": 1.95,
+     "lower_fence": 1.031
+    },
+    "exercise": {
+     "n": 1167,
+     "min": 0.76,
+     "p5": 1.26,
+     "q1": 1.26,
+     "median": 1.27,
+     "q3": 1.73,
+     "max": 2.76,
+     "lower_fence": 0.555
+    },
+    "muscle": {
+     "n": 1629,
+     "min": 0.64,
+     "p5": 0.64,
+     "q1": 0.77,
+     "median": 0.91,
+     "q3": 1.17,
+     "max": 1.39,
+     "lower_fence": 0.17
+    }
+   },
+   "reference": "Efficient presets (data/splits-efficient.json), all levels; each level uses its own distribution (day = whole days, exercise = every tile, muscle = muscle-days with r2(effective sets) >= 1.00).",
+   "rule": "green >= median; amber from the lower Tukey fence (Q1 - 1.5 x IQR) up to the median; red below the fence. Cuts rounded to the nearest 0.05. Quartiles: Python statistics.quantiles(n=4, method=inclusive).",
+   "why_fence": "The Tukey fence is the standard definition of an outlier, so red only appears when a value is clearly out of line; P5 would force 5% red by construction.",
+   "why_own_distributions": "The three levels have different spreads: muscle S:F is fixed by exercise class (~1/fatigue_per_set), exercise S:F depends on how many prime/secondary muscles a lift has, and a day averages its exercises. One set of cuts would make days all-green and muscle-days mostly amber.",
+   "label": "Display choice",
+   "nurd": {
+    "short": "Lift Board display choice",
+    "year": 2026,
+    "type": "model / display choice",
+    "label": "Modeled",
+    "note": "Cut-offs set against the preset distribution; no study measures them."
+   },
+   "previous_vol11": {
+    "green_from": 0.75,
+    "amber_from": 0.6,
+    "all_levels": true
+   },
+   "heavy_compound_note": null
+  },
+  "stimulus_roles": {
+   "counted": [
+    "prime",
+    "secondary"
+   ],
+   "cutoff": "role from build_volume_model.role: prime = the exercise's top rating or rating >= 0.75; secondary = 0.5 <= rating < 0.75; minor (0.25 <= rating < 0.5) excluded",
+   "history": "first vol11b pass counted minor credits too (history in volume-model.pre-vol11b.json is vol11; first-pass readouts listed in the report)",
+   "retired": true,
+   "retired_note": "vol11c: only used for exercise/day S:F, which is retired."
+  },
+  "recovery": "volume-model.json recovery.load_vol11b",
+  "boundary": "volume-model.json day_metrics.boundary_vol11b",
+  "trim": {
+   "algorithm": "rules.json rules[id=efficient_trim].algorithm",
+   "trace_case": "workout-reference.json cases[id=efficient-trim-trace-ppl-advanced-6]",
+   "trace_matches_file": true,
+   "builder_mismatch_note": "splits-efficient.json changed in vol11 (per-set S:F tie-break moved from rating-share to credit / muscle fatigue; ppl/advanced/6 had 7 tile changes). A custom-board trim using the vol10c tie-break, or compared with the vol10c diff, will differ."
+  },
+  "heavy_compound_note_retired": "vol11c: the heavy-compound note depended on the exercise-level dial and is retired."
+ },
+ "vol11c": {
+  "version": "vol11c",
+  "date": "2026-11-01",
+  "option": "CoS option (c): S:F per muscle only",
+  "presets_file": "sf_ratio, sf_dial and stimulus_anchor_eq keys REMOVED from day_summary and exercises[] (not nulled); fatigue_systemic_anchor_eq renamed fatigue_fresh_set_eq; stimulus now counts all credited muscles (same credits as the muscle rows).",
+  "unchanged": [
+   "muscle-level stimulus, fatigue, S:F, dial cuts (green >= 0.90, amber 0.15-0.90, red < 0.15)",
+   "fatigue glow",
+   "recovery formula and boundary",
+   "trim and splits-efficient.json",
+   "rules.json",
+   "fatigue.json (its levels_vol11b sentences for exercise/day are superseded by day_metrics.levels)"
+  ],
+  "builder_paths": {
+   "body_map_efficiency": "volume-model.json visuals.body_map.efficiency (cuts, bands, field muscles[m].sf_ratio / sf_dial)",
+   "body_map_fatigue": "volume-model.json visuals.body_map.fatigue_bands (field muscles[m].fatigue_band)",
+   "day_row": "data/day-metrics-presets.json presets[goal][preset].days[i].day_summary {stimulus_hard_set_eq, fatigue_fresh_set_eq, recovery_days, display}",
+   "exercise_rows": "...days[i].exercises[] {id, sets, stimulus_hard_set_eq, stimulus_by_muscle, fatigue_fresh_set_eq}",
+   "muscle_rows": "...days[i].muscles[m] (unchanged)",
+   "retired": "volume-model.json visuals.sf_dial (levels, history_vol11b); visuals.distribution[goal].history_vol11b; day_metrics.levels_history_vol11b; vol11b.stimulus_roles.retired",
+   "recovery_formula": "volume-model.json recovery.load_vol11b (unchanged)",
+   "trim_algorithm": "rules.json rules[id=efficient_trim].algorithm (unchanged)"
+  },
+  "reference_cases_changed": [
+   "vol10-chest-6-set-day-efficient",
+   "vol10-chest-6-set-day-max_growth",
+   "vol10-chest-10-set-day-efficient",
+   "vol10-chest-10-set-day-max_growth",
+   "vol10b-sf-real-full-body-day",
+   "vol11-anchor-set",
+   "vol11-squat-set",
+   "vol11-lateral-raise-set",
+   "vol11-chest-10-set-day",
+   "vol11-full-body-day",
+   "vol11b-exercise-back-squat-2rir",
+   "vol11b-exercise-romanian-deadlift-2rir",
+   "vol11b-exercise-deadlift-2rir",
+   "vol11b-exercise-barbell-bench-press-2rir",
+   "vol11b-exercise-machine-chest-press-2rir",
+   "vol11b-exercise-dumbbell-lateral-raise-2rir",
+   "vol11b-exercise-hip-thrust-2rir",
+   "vol11b-exercise-dumbbell-lateral-raise-planned-1rir-2rir"
+  ]
  }
 }

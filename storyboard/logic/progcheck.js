@@ -67,7 +67,7 @@ const goalsCfg=dt=>(dt.rules&&dt.rules.goals)||null;
 // sets (rounded to 0.01) < weekly minimum for the level + near_margin. Show info session_efficiency_single_day instead (never add sets).
 const seExm=dt=>{const r=seRule(dt);return r&&r.exemption||null};
 const exMin=(dt,m,lv)=>{const T=goalTarget(dt,m,lv);if(T&&T.min!=null)return T.min;return zones(dt,m,lv).min};
-function exemptSet(dt,days,lv){const out=new Set(),E=seExm(dt);if(!E||!gOf()||!days)return out;const XW={},XN={};for(const d of days){const v=eff(dt,d.tiles);for(const m in v){XW[m]=(XW[m]||0)+v[m];if(v[m]>=E.single_day_min_eff)XN[m]=(XN[m]||0)+1}}for(const m in XW)if(exempt(dt,m,lv,XW,XN))out.add(m);return out}
+function exemptSet(dt,days,lv){const out=new Set(),E=seExm(dt);if(!E||!gOf()||!days)return out;const XW={},XN={};for(const d of days){const v=eff(dt,d.tiles);for(const m in v){XW[m]=(XW[m]||0)+v[m];if(r2u(v[m])>=E.single_day_min_eff)XN[m]=(XN[m]||0)+1}}for(const m in XW)if(exempt(dt,m,lv,XW,XN))out.add(m);return out}
 function exempt(dt,m,lv,XW,XN){const E=seExm(dt);if(!E||!gOf())return false;if(XN[m]!==1)return false;return Math.round((XW[m]||0)*100)/100<exMin(dt,m,lv)+(E.near_margin!=null?E.near_margin:1)}
 // vol10 wasted late sets (rules[id=wasted_late_sets]): walk the day's tiles in board order; the set that takes the muscle's running
 // effective sets past the limit, and every later set for that muscle, are late. Returns [[tile id, late sets, wasted effective sets], …].
@@ -94,9 +94,26 @@ function sessZone8(dt,m,s,lv){const z=sessZ(dt,m,lv);if(!z||z.dose_floor==null)r
 const effortOf=(dt,rir)=>{const E=dt.VM.recovery.params.effort;return E[String(Math.max(0,Math.min(4,Math.round(rir))))]};
 const axialOf=(dt,id)=>{const A=dt.VM.recovery.params.axial_by_exercise||{};return A[id]!=null?A[id]:1};
 function loadPoints(dt,tiles){const P=dt.VM.recovery.params;let s=0;for(const t of tiles){const e=dt.EX[t.id],rir=t.rir!=null?t.rir:plannedRir(dt,e);s+=t.sets*(P.type_base[e.type]||1)*axialOf(dt,t.id)*effortOf(dt,rir)}return s}
-function recHours(dt,tiles,level){const RC=dt.VM.recovery,P=RC.params,E=eff(dt,tiles),out={},mr=0.25;
-  for(const m of Object.keys(E)){if(!(E[m]>=(RC.min_effective_sets_for_hours||1)))continue;let F=0,tt=0,ss=0;const SB=dt.rules.stretch_biased[m];
-    for(const t of tiles){const e=dt.EX[t.id],r=e.muscles[m]||0;if(r<mr)continue;const rir=t.rir!=null?t.rir:plannedRir(dt,e);F+=t.sets*credit(dt,e,m,r,rir)*effortOf(dt,rir)*axialOf(dt,t.id);tt+=r*t.sets;if(SB&&SB.includes(t.id))ss+=r*t.sets}
+// vol11 (recovery.load_vol11, data/fatigue.json): muscle fatigue per set in fresh-set equivalents = rating[m] x fatigue_per_set(exercise)
+// x effort[planned RIR + role offset]; the same number is the recovery load F. Without fatigue.json: the vol8-vol10c load (credit x effort x axial).
+function fatSet(dt,e,m,r,rir,id){if(!(r>=0.25))return 0;const FE=dt.FAT&&dt.FAT.exercises&&dt.FAT.exercises[id||e.id];
+  if(FE)return r*FE.fatigue_per_set*effortOf(dt,rir+roleOff(dt,e,r));return credit(dt,e,m,r,rir)*effortOf(dt,rir)*axialOf(dt,id||e.id)}
+function fatMus(dt,tiles){const out={};for(const t of tiles){const e=dt.EX[t.id];if(!e)continue;const rir=t.rir!=null?t.rir:plannedRir(dt,e);for(const [m,r] of Object.entries(e.muscles||{})){const f=t.sets*fatSet(dt,e,m,r,rir,t.id);if(f>0)out[m]=(out[m]||0)+f}}return out}
+// vol11b recovery (volume-model.json recovery.load_vol11b.formula): per muscle ES = sum credit, ST = credit on stretch-biased tiles,
+// F = sum sets x rating x fatigue_per_set x effort[RIR + role offset]; r2 = half-up 0.01; gate r2(ES) >= 1.00 (F not gated);
+// h = (base + h_per_set x max(0, F2 - free)) x (1 + stretch_add x r2(ST/ES)) x size x level, clamp, 6 x floor(h/6 + .5); days half-up 0.1.
+const r2u=x=>Math.floor(x*100+0.5+1e-9)/100;
+function recInputs(dt,tiles,level){const P=dt.VM.recovery.params,out={};const A={};
+  for(const t of tiles){const e=dt.EX[t.id];if(!e)continue;const rir=t.rir!=null?t.rir:plannedRir(dt,e),SBl=dt.rules.stretch_biased||{};
+    for(const [m,r] of Object.entries(e.muscles||{})){if(!(r>=0.25))continue;const c=t.sets*credit(dt,e,m,r,rir),f=t.sets*fatSet(dt,e,m,r,rir,t.id);const a=A[m]=A[m]||{ES:0,ST:0,F:0};a.ES+=c;a.F+=f;if((SBl[m]||[]).includes(t.id))a.ST+=c}}
+  for(const [m,a] of Object.entries(A)){const ES2=r2u(a.ES),F2=r2u(a.F),sh=ES2>=(dt.VM.recovery.min_effective_sets_for_hours||1)&&a.ES>0?r2u(a.ST/a.ES):null,size=P.size[m]||1,lf=P.level[level]||1;let hours=0;
+    if(ES2>=(dt.VM.recovery.min_effective_sets_for_hours||1)){let h=(P.base_h+P.h_per_set*Math.max(0,F2-P.free_sets));h=h*(1+P.stretch_add*(sh||0));h=h*size;h=h*lf;h=Math.max(P.clamp[0],Math.min(P.clamp[1],h));hours=P.round_to_h*Math.floor(h/P.round_to_h+0.5)}
+    out[m]={hours,share:a.ES>0?r2u(a.ST/a.ES):0,days:Math.floor((hours*10+12)/24)/10,inputs:{effective_sets_r2:ES2,recovery_load_r2:F2,stretch_share_r2:sh,size,level_factor:lf}}}
+  return out}
+function recHours(dt,tiles,level){if(dt.FAT&&dt.VM.recovery.load_vol11b){const I=recInputs(dt,tiles,level),o={};for(const m in I)if(I[m].hours>0)o[m]=I[m].hours;return o}
+const RC=dt.VM.recovery,P=RC.params,E=eff(dt,tiles),out={},mr=0.25,FM=dt.FAT?fatMus(dt,tiles):null;
+  for(const m of Object.keys(E)){if(!(E[m]>=(RC.min_effective_sets_for_hours||1))||(FM&&!(pyR(FM[m]||0,2)>=(RC.min_effective_sets_for_hours||1))))continue;/* vol11: effective sets AND fatigue load F >= 1 */let F=0,tt=0,ss=0;const SB=dt.rules.stretch_biased[m];
+    for(const t of tiles){const e=dt.EX[t.id],r=e.muscles[m]||0;if(r<mr)continue;const rir=t.rir!=null?t.rir:plannedRir(dt,e);F+=t.sets*fatSet(dt,e,m,r,rir,t.id);tt+=r*t.sets;if(SB&&SB.includes(t.id))ss+=r*t.sets}
     let h=(P.base_h+P.h_per_set*Math.max(0,F-P.free_sets))*(1+P.stretch_add*(SB&&tt?ss/tt:0))*(P.size[m]||1)*(P.level[level]||1);h=Math.max(P.clamp[0],Math.min(P.clamp[1],h));
     out[m]=P.round_to_h*Math.floor(h/P.round_to_h+0.5)}return out}
 // vol8 flags (rules.json, all info): session_dose, recovery_gap_long, recovery_overlap
@@ -134,7 +151,7 @@ function col(dt,m,x,level){const {T,LF}=ctx(dt),a=pyR(T[m].min*LF[level]*2)/2,b=
 // days: [{day:'mon', tiles:[{id,sets}]}] (training days only, any order). Returns [flags, week]
 function check(dt,days,level){setLevel(level);const {R,RU,T,S,HEAVY}=ctx(dt),PAT=dt.PAT,f=[],week={},freq={},rawW={};for(const m in T){week[m]=0;freq[m]=0}
   let push=0,pull=0,spw=0;const byday={};days.forEach(d=>byday[d.day]=d);const HS=new Set(R.heavy_squats),HH=new Set(R.heavy_hinges);
-  const XW={},XN={};if(gOf()&&seExm(dt))for(const d of days){const v=eff(dt,d.tiles);for(const m in v){XW[m]=(XW[m]||0)+v[m];if(v[m]>=seExm(dt).single_day_min_eff)XN[m]=(XN[m]||0)+1}}   // vol10c exemption inputs
+  const XW={},XN={};if(gOf()&&seExm(dt))for(const d of days){const v=eff(dt,d.tiles);for(const m in v){XW[m]=(XW[m]||0)+v[m];if(r2u(v[m])>=seExm(dt).single_day_min_eff)XN[m]=(XN[m]||0)+1}}   // vol10c exemption inputs
   for(const d of days){const n=d.tiles.length,tot=total(d);
     if(n>RU.many_small_entries.min_tiles&&tot/n<RU.many_small_entries.max_avg_sets)f.push(['info','many_small_entries',d.day,n,pyR(tot/n,2)]);
     const hs=RU.session_hard_sets,w=hs.warn_above[level];if(tot>w)f.push(['warn','session_hard_sets',d.day,tot]);else if(tot>w-hs.info_band)f.push(['info','session_hard_sets',d.day,tot]);
@@ -333,8 +350,8 @@ function analytics(dt,days,level){setLevel(level);const TT=dt.targets,C=TT.curve
     spinal:{week:day.reduce((a,d)=>a+d.spinal,0),week_max:RU.spinal_load.week_warn_above[level],session_max:RU.spinal_load.session_warn_above[level]},disclaimer:VM?dt.VM.disclaimer:A.disclaimer,curveModel:VM?dt.VM.curve.reads_as:C.model}}
 function anchors(dt,m,level){const CV=dt.VM.curve||{},P=(CV.per_muscle||{})[m];if(!P)return null;const A=(P.anchors_by_level&&P.anchors_by_level[level])||P.anchors;if(!A)return null;const lm=P.anchors_by_level?A.min:((P.level_min_pct||{})[level]||A.min);return {min:lm,sweet_low:A.sweet_low,sweet_high:A.sweet_high,dim:A.dim,basis:P.basis,ev:(P.min_evidence||{}).tag||null,fallback:(P.concave_fallback||{})[level]||null}}
 const fmtN=v=>{const n=+(+v).toFixed(1);return String(n)};
-const API={setTone,setGoal,getGoal,goalTarget,goalsCfg,lateSets,face,anchors,heavyLim,seLim,seEff,seRule,ruleOff,setLevel,check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,perSet,gPS,xEquiv,sessZone8,capW,loadPoints,recHours,flags8,effortOf,axialOf,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
+const API={recInputs,r2u,exemptSet,fatSet,fatMus,roleOff,setTone,setGoal,getGoal,goalTarget,goalsCfg,lateSets,face,anchors,heavyLim,seLim,seEff,seRule,ruleOff,setLevel,check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,perSet,gPS,xEquiv,sessZone8,capW,loadPoints,recHours,flags8,effortOf,axialOf,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
   // internals reused by logic/analysis.js and logic/progress.js (same functions, so the ports cannot drift)
-  _x:{gAddSets,gAddExercise,gReduceSets,prev,nonin,_day,load,col,RULE_OF,total,ctx,clone,cmpT,sortBy,fmtPy,exemptSet}};
+  _x:{gAddSets,gAddExercise,gReduceSets,prev,nonin,_day,load,col,RULE_OF,total,ctx,clone,cmpT,sortBy,fmtPy}};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else root.PCHECK=API;
 })(typeof window!=='undefined'?window:this);
