@@ -1610,3 +1610,4 @@ html[data-theme=dark] .pmom.gold .pm-txt .eyebrow{color:#FFD88F}
 .rtl8 .rtl{fill:#9ec9ea;opacity:.45}.rtl8 .rtd{fill:#6aaedf;opacity:.6}.rtl8 .rtdot{fill:#1f3550}.rtl8 .rtgap{stroke:#aaa;stroke-width:3}.rtl8 .rtov{stroke:#d4483b;stroke-width:3.5}
 .rtleg8{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11px;color:var(--text-2);margin:4px 0 8px}.rtleg8 .k{display:inline-block;width:12px;height:8px;margin-right:4px;vertical-align:0;border-radius:2px}
 .rtleg8 .dot{width:8px;height:8px;border-radius:50%;background:#1f3550}.rtleg8 .dk{background:#6aaedf}.rtleg8 .k.lt8{background:#9ec9ea;opacity:.6;width:12px;height:8px;padding:0}.rtleg8 .ov{background:#d4483b;height:3px}.rtleg8 .gp{background:#aaa;height:3px}
+.pwleg .sub{font-size:11px;color:var(--text-2);flex-basis:100%}

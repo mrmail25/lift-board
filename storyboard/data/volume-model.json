@@ -720,7 +720,9 @@
    "x_equiv": "the raw weekly sets x such that 2 x g(x/2) = x_dec (g = session.credit for that muscle); solve by bisection (monotone)",
    "weekly_pct": "curve.formula(x_equiv, D) with D = zones diminishing",
    "why": "The log weekly curve was tuned by Mr Dude in raw weekly sets (chest 8 -> 70%, 12-18 -> 80-89%, 20 -> 91%). Feeding it decayed sets directly discounted twice. Mapping the decayed total back to its 2-sessions-a-week raw equivalent keeps his anchors exactly for an even 2x split; other layouts move relative to that (one heavy session lower, 3 light sessions slightly higher).",
-   "zones_and_colours": "stay on raw weekly effective sets (familiar set-count targets, unchanged checker); only the % uses x_equiv",
+   "zones_and_colours": "vol8c: the weekly value = min(x_equiv, raw weekly effective sets) drives the %, the colours and the warnings against the existing zones (x_equiv is already in 2x/week raw-set units, so the zones need no recalibration). The cap stops 3+ light days inflating the total. Compare at the boundaries after rounding to 0.01 (checker does; the app must do the same).",
+   "cap": "x_week = min(x_equiv(x_dec), raw)",
+   "boundary": "round to 0.01 before colouring",
    "tag": "modeled (calibration choice)"
   }
  },
@@ -1183,7 +1185,7 @@
    ],
    "personal_after_weeks": 4,
    "personal_window_weeks": 4,
-   "metric": "week_cost from logged working sets (done sets x exercises.fatigue)",
+   "metric": "week_cost from logged working sets: sum of per-set fatigue (type_base x axial x effort at the logged RIR), same points as the workout index (vol8c)",
    "exclude": [
     "deload-overlay weeks",
     "weeks with < 50% of planned working sets done"

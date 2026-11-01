@@ -945,7 +945,7 @@
    ],
    "personal_after_weeks": 4,
    "personal_window_weeks": 4,
-   "personal_metric": "week_cost from logged working sets (done sets x exercises.fatigue)",
+   "personal_metric": "week_cost from logged working sets: sum of per-set fatigue (type_base x axial x effort at the logged RIR), same points as the workout index (vol8c)",
    "personal_exclude": [
     "deload-overlay weeks",
     "weeks with < 50% of planned working sets done"
