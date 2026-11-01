@@ -1621,3 +1621,14 @@ html[data-theme=dark] .pmom.gold .pm-txt .eyebrow{color:#FFD88F}
 .ancl .anev{font-style:normal;font-size:10.5px;color:var(--text-3,#8a8a8a);margin-left:2px}
 .ancl .ansrc{flex-basis:100%;font-size:10.5px;color:var(--text-3,#8a8a8a);gap:6px}.ancl .ansrc .evl{margin-left:0}
 .pwtip{font-size:12.5px;color:var(--text-2);margin:4px 0 2px;line-height:1.35}
+/* vol9b: face-value per-workout bar chart with Coach's per-session limit band */
+svg.pwbars{display:block;width:100%;height:auto;overflow:visible}
+svg.pwbars text{font-size:11px;fill:var(--text-2);font-family:inherit}
+svg.pwbars .pwdl{font-size:12px;fill:var(--ink)}
+svg.pwbars .pwval{font-size:12px;font-weight:600;fill:var(--ink)}
+svg.pwbars .pwbar{fill:var(--vol-in-range)}
+svg.pwbars .pwbar.over{fill:var(--vol-red,#d93a2b)}
+svg.pwbars .pwband{fill:var(--vol-red,#d93a2b);opacity:.09}
+svg.pwbars .pwlim{stroke:var(--vol-red,#d93a2b);stroke-width:1;stroke-dasharray:3 3;opacity:.7}
+svg.pwbars .pwbl{font-size:10px;fill:var(--text-2)}
+.pweff{font-size:12px;color:var(--text-2);margin:6px 8px 0;line-height:1.35}

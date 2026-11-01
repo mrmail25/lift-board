@@ -703,7 +703,7 @@
    "normalisation": "modeled"
   },
   "session_discount": {
-   "active": "per_set",
+   "active": "none (vol9)",
    "per_set": {
     "formula": "per set n: 1/(1 + (n-1)/c); workout stimulus = sum over its effective sets (fractional last set pro rata); c per anchor group (vol8h, session.per_muscle[m].c; vol8d was 1.0 x heavy anchor, vol8 0.4 x)",
     "c_by_muscle": {
@@ -737,19 +737,17 @@
    "cap": 10,
    "factor": 0.5,
    "legacy": "cap/factor = the pre-vol5 hard cut (10 sets, then 50%); kept only so an unported client still runs.",
-   "tag": "modeled (smooth log shape; vol8h c per anchor group calibrated so one workout is 4-10% below 2 days on the vol8g weekly %, per Schoenfeld 2019 / Pelland 2025)"
+   "tag": "modeled (smooth log shape; vol8h c per anchor group calibrated so one workout is 4-10% below 2 days on the vol8g weekly %, per Schoenfeld 2019 / Pelland 2025)",
+   "active_vol8": "per_set",
+   "note": "vol9: no session discount on weekly volume. per_set kept for the session_efficiency display only."
   },
   "fit_vs_evidence": "Pelland et al. (Sports Medicine 2025) compared 7 functional forms for fractional weekly sets vs hypertrophy (linear, spline, linear-log, polynomial, square root, quadratic, reciprocal) with a BIC-approximated Bayes factor and picked square root as the best fit; the paper does not print the margin over linear-log in the main text, so we cannot say how close the log fit was, and the authors state the data remain compatible with multiple functional forms, with few studies above ~25 weekly sets. Their efficiency tiers (minimum effective dose 4 sets; 5-10 higher, 11-18 intermediate, 19-29 lower efficiency) describe per-set efficiency, not a share of a ceiling. Scaled so both read 91% at 20 sets, Pelland's square-root point estimate puts 8 sets at ~58% and 12-18 at ~70-86%; the active log curve puts 8 at 70% and 12-18 at ~79-89%, i.e. it front-loads low volumes more than Pelland's point estimate. That is a coaching choice (Mr Dude's anchors), not a better fit. The per-session preprint (Remmert 2025) did find linear-log best for per-session volume. No study measures \"% of plateau\", so the percentages are a display convention.",
   "input": {
-   "vol8b": true,
-   "x_dec": "sum over the week's workouts of the per-set-decayed workout stimulus (session.credit)",
-   "x_equiv": "the raw weekly sets x such that 2 x g(x/2) = x_dec (g = session.credit for that muscle); solve by bisection (monotone)",
-   "weekly_pct": "curve.formula(x_equiv, D) with D = zones diminishing",
-   "why": "Mapping the decayed total back to its 2-sessions-a-week raw equivalent means an even 2x split reads exactly its raw sets on the curve (so the anchors hold at the zone edges for that layout); one heavy session reads lower, 3 light sessions are capped at raw. vol8g: the curve is the per-muscle anchored curve (Mr Dude withdrew the earlier chest 70%-at-8 pick as speculation).",
-   "zones_and_colours": "vol8c: the weekly value = min(x_equiv, raw weekly effective sets) drives the %, the colours and the warnings against the existing zones (x_equiv is already in 2x/week raw-set units, so the zones need no recalibration). The cap stops 3+ light days inflating the total. Compare at the boundaries after rounding to 0.01 (checker does; the app must do the same).",
-   "cap": "x_week = min(x_equiv(x_dec), raw)",
-   "boundary": "round to 0.01 before colouring",
-   "tag": "modeled (calibration choice)"
+   "vol9": true,
+   "weekly_value": "sum over the week of effective sets (rating x proximity; secondary and minor roles), no per-set decay, no x_equiv mapping, no cap",
+   "weekly_pct": "curve per_muscle[m].params_by_level[user level] at weekly_value (vol8i anchors unchanged)",
+   "zones_and_colours": "weekly_value rounded to 0.01 against the level zones (unchanged).",
+   "superseded": "vol8b x_equiv (even-2x inverse mapping) and the vol8c min(x_equiv, raw) cap: kept under input_vol8 for history."
   },
   "vol5_log": {
    "formula": "c = D/45; x <= D: S = ln(1 + x/c) / ln(1 + D/c) / 1.1  (= 0.909 at D);  x > D: S = (1 + 0.1*(1 - exp(-(x-D)/tau))) / 1.1, tau = 0.1 * (c + D) * ln(1 + D/c) (slope-continuous);  D = zones diminishing point (targets.max)",
@@ -5147,7 +5145,18 @@
     }
    }
   },
-  "smooth": "C1 (value and slope continuous)"
+  "smooth": "C1 (value and slope continuous)",
+  "input_vol8": {
+   "vol8b": true,
+   "x_dec": "sum over the week's workouts of the per-set-decayed workout stimulus (session.credit)",
+   "x_equiv": "the raw weekly sets x such that 2 x g(x/2) = x_dec (g = session.credit for that muscle); solve by bisection (monotone)",
+   "weekly_pct": "curve.formula(x_equiv, D) with D = zones diminishing",
+   "why": "Mapping the decayed total back to its 2-sessions-a-week raw equivalent means an even 2x split reads exactly its raw sets on the curve (so the anchors hold at the zone edges for that layout); one heavy session reads lower, 3 light sessions are capped at raw. vol8g: the curve is the per-muscle anchored curve (Mr Dude withdrew the earlier chest 70%-at-8 pick as speculation).",
+   "zones_and_colours": "vol8c: the weekly value = min(x_equiv, raw weekly effective sets) drives the %, the colours and the warnings against the existing zones (x_equiv is already in 2x/week raw-set units, so the zones need no recalibration). The cap stops 3+ light days inflating the total. Compare at the boundaries after rounding to 0.01 (checker does; the app must do the same).",
+   "cap": "x_week = min(x_equiv(x_dec), raw)",
+   "boundary": "round to 0.01 before colouring",
+   "tag": "modeled (calibration choice)"
+  }
  },
  "credit": {
   "formula": "effective(set, muscle) = rating x prox(RIR_set + offset[role]); rating < 0.25 -> 0; then per-session discount",
@@ -5819,6 +5828,27 @@
      "13": 0.61,
      "14": 0.59,
      "15": 0.57
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 13.0,
+      "useful_up_to": 5.3,
+      "half_value_from": 14.0,
+      "session_efficiency_limit": 8
+     },
+     "intermediate": {
+      "c": 20.0,
+      "useful_up_to": 7.7,
+      "half_value_from": 21.0,
+      "session_efficiency_limit": 10
+     },
+     "advanced": {
+      "c": 30.0,
+      "useful_up_to": 11.0,
+      "half_value_from": 31.0,
+      "session_efficiency_limit": 10
+     }
     }
    },
    "front_delts": {
@@ -5881,6 +5911,27 @@
      "13": 0.26,
      "14": 0.24,
      "15": 0.23
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 4.0,
+      "useful_up_to": 2.3,
+      "half_value_from": 5.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 4.5,
+      "useful_up_to": 2.5,
+      "half_value_from": 5.5,
+      "session_efficiency_limit": 8
+     },
+     "advanced": {
+      "c": 9.0,
+      "useful_up_to": 4.0,
+      "half_value_from": 10.0,
+      "session_efficiency_limit": 8
+     }
     }
    },
    "side_delts": {
@@ -5943,6 +5994,27 @@
      "13": 0.46,
      "14": 0.44,
      "15": 0.42
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 8.5,
+      "useful_up_to": 3.8,
+      "half_value_from": 9.5,
+      "session_efficiency_limit": 8
+     },
+     "intermediate": {
+      "c": 11.0,
+      "useful_up_to": 4.7,
+      "half_value_from": 12.0,
+      "session_efficiency_limit": 10
+     },
+     "advanced": {
+      "c": 18.5,
+      "useful_up_to": 7.2,
+      "half_value_from": 19.5,
+      "session_efficiency_limit": 10
+     }
     }
    },
    "rear_delts": {
@@ -6005,6 +6077,27 @@
      "13": 0.43,
      "14": 0.42,
      "15": 0.4
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 6.0,
+      "useful_up_to": 3.0,
+      "half_value_from": 7.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 10.0,
+      "useful_up_to": 4.3,
+      "half_value_from": 11.0,
+      "session_efficiency_limit": 8
+     },
+     "advanced": {
+      "c": 21.0,
+      "useful_up_to": 8.0,
+      "half_value_from": 22.0,
+      "session_efficiency_limit": 8
+     }
     }
    },
    "lats": {
@@ -6067,6 +6160,27 @@
      "13": 0.61,
      "14": 0.59,
      "15": 0.57
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 13.0,
+      "useful_up_to": 5.3,
+      "half_value_from": 14.0,
+      "session_efficiency_limit": 8
+     },
+     "intermediate": {
+      "c": 20.0,
+      "useful_up_to": 7.7,
+      "half_value_from": 21.0,
+      "session_efficiency_limit": 10
+     },
+     "advanced": {
+      "c": 30.0,
+      "useful_up_to": 11.0,
+      "half_value_from": 31.0,
+      "session_efficiency_limit": 10
+     }
     }
    },
    "upper_back": {
@@ -6129,6 +6243,27 @@
      "13": 0.61,
      "14": 0.59,
      "15": 0.57
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 13.0,
+      "useful_up_to": 5.3,
+      "half_value_from": 14.0,
+      "session_efficiency_limit": 8
+     },
+     "intermediate": {
+      "c": 20.0,
+      "useful_up_to": 7.7,
+      "half_value_from": 21.0,
+      "session_efficiency_limit": 10
+     },
+     "advanced": {
+      "c": 30.0,
+      "useful_up_to": 11.0,
+      "half_value_from": 31.0,
+      "session_efficiency_limit": 10
+     }
     }
    },
    "traps": {
@@ -6191,6 +6326,27 @@
      "13": 0.26,
      "14": 0.24,
      "15": 0.23
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 4.0,
+      "useful_up_to": 2.3,
+      "half_value_from": 5.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 4.5,
+      "useful_up_to": 2.5,
+      "half_value_from": 5.5,
+      "session_efficiency_limit": 8
+     },
+     "advanced": {
+      "c": 9.0,
+      "useful_up_to": 4.0,
+      "half_value_from": 10.0,
+      "session_efficiency_limit": 8
+     }
     }
    },
    "biceps": {
@@ -6253,6 +6409,27 @@
      "13": 0.54,
      "14": 0.52,
      "15": 0.5
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 11.0,
+      "useful_up_to": 4.7,
+      "half_value_from": 12.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 15.0,
+      "useful_up_to": 6.0,
+      "half_value_from": 16.0,
+      "session_efficiency_limit": 8
+     },
+     "advanced": {
+      "c": 26.0,
+      "useful_up_to": 9.7,
+      "half_value_from": 27.0,
+      "session_efficiency_limit": 8
+     }
     }
    },
    "triceps": {
@@ -6315,6 +6492,27 @@
      "13": 0.54,
      "14": 0.52,
      "15": 0.5
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 11.0,
+      "useful_up_to": 4.7,
+      "half_value_from": 12.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 15.0,
+      "useful_up_to": 6.0,
+      "half_value_from": 16.0,
+      "session_efficiency_limit": 8
+     },
+     "advanced": {
+      "c": 26.0,
+      "useful_up_to": 9.7,
+      "half_value_from": 27.0,
+      "session_efficiency_limit": 8
+     }
     }
    },
    "forearms": {
@@ -6377,6 +6575,27 @@
      "13": 0.1,
      "14": 0.1,
      "15": 0.09
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 1.5,
+      "useful_up_to": 1.5,
+      "half_value_from": 2.5,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 1.5,
+      "useful_up_to": 1.5,
+      "half_value_from": 2.5,
+      "session_efficiency_limit": 6
+     },
+     "advanced": {
+      "c": 3.0,
+      "useful_up_to": 2.0,
+      "half_value_from": 4.0,
+      "session_efficiency_limit": 6
+     }
     }
    },
    "abs": {
@@ -6439,6 +6658,27 @@
      "13": 0.26,
      "14": 0.24,
      "15": 0.23
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 4.0,
+      "useful_up_to": 2.3,
+      "half_value_from": 5.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 4.5,
+      "useful_up_to": 2.5,
+      "half_value_from": 5.5,
+      "session_efficiency_limit": 8
+     },
+     "advanced": {
+      "c": 9.0,
+      "useful_up_to": 4.0,
+      "half_value_from": 10.0,
+      "session_efficiency_limit": 8
+     }
     }
    },
    "quads": {
@@ -6501,6 +6741,27 @@
      "13": 0.61,
      "14": 0.59,
      "15": 0.57
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 13.0,
+      "useful_up_to": 5.3,
+      "half_value_from": 14.0,
+      "session_efficiency_limit": 8
+     },
+     "intermediate": {
+      "c": 20.0,
+      "useful_up_to": 7.7,
+      "half_value_from": 21.0,
+      "session_efficiency_limit": 10
+     },
+     "advanced": {
+      "c": 30.0,
+      "useful_up_to": 11.0,
+      "half_value_from": 31.0,
+      "session_efficiency_limit": 10
+     }
     }
    },
    "hamstrings": {
@@ -6563,6 +6824,27 @@
      "13": 0.54,
      "14": 0.52,
      "15": 0.5
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 11.0,
+      "useful_up_to": 4.7,
+      "half_value_from": 12.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 15.0,
+      "useful_up_to": 6.0,
+      "half_value_from": 16.0,
+      "session_efficiency_limit": 8
+     },
+     "advanced": {
+      "c": 26.0,
+      "useful_up_to": 9.7,
+      "half_value_from": 27.0,
+      "session_efficiency_limit": 8
+     }
     }
    },
    "glutes": {
@@ -6625,6 +6907,27 @@
      "13": 0.54,
      "14": 0.52,
      "15": 0.5
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 11.0,
+      "useful_up_to": 4.7,
+      "half_value_from": 12.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 15.0,
+      "useful_up_to": 6.0,
+      "half_value_from": 16.0,
+      "session_efficiency_limit": 8
+     },
+     "advanced": {
+      "c": 26.0,
+      "useful_up_to": 9.7,
+      "half_value_from": 27.0,
+      "session_efficiency_limit": 8
+     }
     }
    },
    "calves": {
@@ -6687,6 +6990,27 @@
      "13": 0.43,
      "14": 0.42,
      "15": 0.4
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 6.0,
+      "useful_up_to": 3.0,
+      "half_value_from": 7.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 10.0,
+      "useful_up_to": 4.3,
+      "half_value_from": 11.0,
+      "session_efficiency_limit": 8
+     },
+     "advanced": {
+      "c": 21.0,
+      "useful_up_to": 8.0,
+      "half_value_from": 22.0,
+      "session_efficiency_limit": 8
+     }
     }
    },
    "adductors": {
@@ -6749,6 +7073,27 @@
      "13": 0.28,
      "14": 0.26,
      "15": 0.25
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 4.0,
+      "useful_up_to": 2.3,
+      "half_value_from": 5.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 5.0,
+      "useful_up_to": 2.7,
+      "half_value_from": 6.0,
+      "session_efficiency_limit": 6
+     },
+     "advanced": {
+      "c": 10.0,
+      "useful_up_to": 4.3,
+      "half_value_from": 11.0,
+      "session_efficiency_limit": 6
+     }
     }
    },
    "lower_back": {
@@ -6811,6 +7156,27 @@
      "13": 0.28,
      "14": 0.26,
      "15": 0.25
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 4.0,
+      "useful_up_to": 2.3,
+      "half_value_from": 5.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 5.0,
+      "useful_up_to": 2.7,
+      "half_value_from": 6.0,
+      "session_efficiency_limit": 6
+     },
+     "advanced": {
+      "c": 10.0,
+      "useful_up_to": 4.3,
+      "half_value_from": 11.0,
+      "session_efficiency_limit": 6
+     }
     }
    },
    "obliques": {
@@ -6873,6 +7239,27 @@
      "13": 0.1,
      "14": 0.1,
      "15": 0.09
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 1.5,
+      "useful_up_to": 1.5,
+      "half_value_from": 2.5,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 1.5,
+      "useful_up_to": 1.5,
+      "half_value_from": 2.5,
+      "session_efficiency_limit": 6
+     },
+     "advanced": {
+      "c": 3.0,
+      "useful_up_to": 2.0,
+      "half_value_from": 4.0,
+      "session_efficiency_limit": 6
+     }
     }
    },
    "abductors": {
@@ -6935,10 +7322,31 @@
      "13": 0.28,
      "14": 0.26,
      "15": 0.25
+    },
+    "superseded": "vol9: useful_up_to, half_value_from, diminishing_from and low_return_from no longer drive any flag; the warning is rules.json session_efficiency.limits_by_level. by_level kept for display only.",
+    "by_level": {
+     "beginner": {
+      "c": 4.0,
+      "useful_up_to": 2.3,
+      "half_value_from": 5.0,
+      "session_efficiency_limit": 6
+     },
+     "intermediate": {
+      "c": 5.0,
+      "useful_up_to": 2.7,
+      "half_value_from": 6.0,
+      "session_efficiency_limit": 6
+     },
+     "advanced": {
+      "c": 10.0,
+      "useful_up_to": 4.3,
+      "half_value_from": 11.0,
+      "session_efficiency_limit": 6
+     }
     }
    }
   },
-  "feeds_weekly": "vol8b: weekly % = curve.formula applied to x_equiv(sum over workouts of the workout stimulus): the raw sets that give the same decayed total when split evenly over 2 workouts (so Mr Dude's anchors hold for a 2x/week layout and one-heavy-session weeks read lower). vol8c/8d: the weekly value = min(x_equiv, raw) drives the %, colours and warnings (0.01 boundary)",
+  "feeds_weekly": "vol9: no. Weekly value = undiscounted effective sets.",
   "reset": "Rest of >= 20 h between workouts resets the count: each day starts again at set 1 (no carryover). Justification: with weekly sets equal, spreading them over more days does not reduce growth (Schoenfeld 2019) [E], and there is no data to size a partial carryover, so none is modeled [M]. Two workouts < 20 h apart (same-day doubles) continue the count.",
   "reset_after_gap_h": 20,
   "carryover": "none",
@@ -7070,7 +7478,427 @@
    "tag": "modeled",
    "summary": "Shape: smooth log (Remmert 2025 PREPRINT found a linear-log per-session fit). Rate c (vol8h, per anchor group): calibrated on the vol8g curve so one workout scores 4-10% (aim ~7%) below the same sets over two days, consistent with volume-equated frequency meta-analyses (Schoenfeld 2019 J Sports Sci; Pelland 2025 Sports Med) finding little or no frequency effect on hypertrophy. Not estimated from data."
   },
-  "checker_note": "junk_volume_session (warn at > 10 raw effective sets) unchanged; session_dose heavy fires past max(low_return_from = 1 + c, 6) (vol8h; 6-set floor = practitioner judgement): chest group 21, biceps/triceps/hams/glutes 16, side delts 12, rear delts/calves 11, all others 6."
+  "checker_note": "junk_volume_session (warn at > 10 raw effective sets) unchanged; session_dose heavy fires past max(low_return_from = 1 + c, 6) (vol8h; 6-set floor = practitioner judgement): chest group 21, biceps/triceps/hams/glutes 16, side delts 12, rear delts/calves 11, all others 6.",
+  "status": "vol9: the per-set decay no longer feeds weekly volume. It survives only as the efficiency display of rules.json session_efficiency.",
+  "feeds_weekly_vol8": "vol8b: weekly % = curve.formula applied to x_equiv(sum over workouts of the workout stimulus): the raw sets that give the same decayed total when split evenly over 2 workouts (so Mr Dude's anchors hold for a 2x/week layout and one-heavy-session weeks read lower). vol8c/8d: the weekly value = min(x_equiv, raw) drives the %, colours and warnings (0.01 boundary)",
+  "efficiency": {
+   "rule": "rules.json rules[id=session_efficiency]",
+   "limits_by_level": {
+    "beginner": {
+     "chest": 8,
+     "front_delts": 6,
+     "side_delts": 8,
+     "rear_delts": 6,
+     "lats": 8,
+     "upper_back": 8,
+     "traps": 6,
+     "biceps": 6,
+     "triceps": 6,
+     "forearms": 6,
+     "abs": 6,
+     "quads": 8,
+     "hamstrings": 6,
+     "glutes": 6,
+     "calves": 6,
+     "adductors": 6,
+     "lower_back": 6,
+     "obliques": 6,
+     "abductors": 6
+    },
+    "intermediate": {
+     "chest": 10,
+     "front_delts": 8,
+     "side_delts": 10,
+     "rear_delts": 8,
+     "lats": 10,
+     "upper_back": 10,
+     "traps": 8,
+     "biceps": 8,
+     "triceps": 8,
+     "forearms": 6,
+     "abs": 8,
+     "quads": 10,
+     "hamstrings": 8,
+     "glutes": 8,
+     "calves": 8,
+     "adductors": 6,
+     "lower_back": 6,
+     "obliques": 6,
+     "abductors": 6
+    },
+    "advanced": {
+     "chest": 10,
+     "front_delts": 8,
+     "side_delts": 10,
+     "rear_delts": 8,
+     "lats": 10,
+     "upper_back": 10,
+     "traps": 8,
+     "biceps": 8,
+     "triceps": 8,
+     "forearms": 6,
+     "abs": 8,
+     "quads": 10,
+     "hamstrings": 8,
+     "glutes": 8,
+     "calves": 8,
+     "adductors": 6,
+     "lower_back": 6,
+     "obliques": 6,
+     "abductors": 6
+    }
+   },
+   "efficiency_at_limit": {
+    "beginner": {
+     "chest": {
+      "limit": 8,
+      "c": 13.0,
+      "last_set_credit": 0.65,
+      "avg_credit": 0.8
+     },
+     "front_delts": {
+      "limit": 6,
+      "c": 4.0,
+      "last_set_credit": 0.44,
+      "avg_credit": 0.66
+     },
+     "side_delts": {
+      "limit": 8,
+      "c": 8.5,
+      "last_set_credit": 0.55,
+      "avg_credit": 0.74
+     },
+     "rear_delts": {
+      "limit": 6,
+      "c": 6.0,
+      "last_set_credit": 0.55,
+      "avg_credit": 0.74
+     },
+     "lats": {
+      "limit": 8,
+      "c": 13.0,
+      "last_set_credit": 0.65,
+      "avg_credit": 0.8
+     },
+     "upper_back": {
+      "limit": 8,
+      "c": 13.0,
+      "last_set_credit": 0.65,
+      "avg_credit": 0.8
+     },
+     "traps": {
+      "limit": 6,
+      "c": 4.0,
+      "last_set_credit": 0.44,
+      "avg_credit": 0.66
+     },
+     "biceps": {
+      "limit": 6,
+      "c": 11.0,
+      "last_set_credit": 0.69,
+      "avg_credit": 0.83
+     },
+     "triceps": {
+      "limit": 6,
+      "c": 11.0,
+      "last_set_credit": 0.69,
+      "avg_credit": 0.83
+     },
+     "forearms": {
+      "limit": 6,
+      "c": 1.5,
+      "last_set_credit": 0.23,
+      "avg_credit": 0.48
+     },
+     "abs": {
+      "limit": 6,
+      "c": 4.0,
+      "last_set_credit": 0.44,
+      "avg_credit": 0.66
+     },
+     "quads": {
+      "limit": 8,
+      "c": 13.0,
+      "last_set_credit": 0.65,
+      "avg_credit": 0.8
+     },
+     "hamstrings": {
+      "limit": 6,
+      "c": 11.0,
+      "last_set_credit": 0.69,
+      "avg_credit": 0.83
+     },
+     "glutes": {
+      "limit": 6,
+      "c": 11.0,
+      "last_set_credit": 0.69,
+      "avg_credit": 0.83
+     },
+     "calves": {
+      "limit": 6,
+      "c": 6.0,
+      "last_set_credit": 0.55,
+      "avg_credit": 0.74
+     },
+     "adductors": {
+      "limit": 6,
+      "c": 4.0,
+      "last_set_credit": 0.44,
+      "avg_credit": 0.66
+     },
+     "lower_back": {
+      "limit": 6,
+      "c": 4.0,
+      "last_set_credit": 0.44,
+      "avg_credit": 0.66
+     },
+     "obliques": {
+      "limit": 6,
+      "c": 1.5,
+      "last_set_credit": 0.23,
+      "avg_credit": 0.48
+     },
+     "abductors": {
+      "limit": 6,
+      "c": 4.0,
+      "last_set_credit": 0.44,
+      "avg_credit": 0.66
+     }
+    },
+    "intermediate": {
+     "chest": {
+      "limit": 10,
+      "c": 20.0,
+      "last_set_credit": 0.69,
+      "avg_credit": 0.83
+     },
+     "front_delts": {
+      "limit": 8,
+      "c": 4.5,
+      "last_set_credit": 0.39,
+      "avg_credit": 0.62
+     },
+     "side_delts": {
+      "limit": 10,
+      "c": 11.0,
+      "last_set_credit": 0.55,
+      "avg_credit": 0.74
+     },
+     "rear_delts": {
+      "limit": 8,
+      "c": 10.0,
+      "last_set_credit": 0.59,
+      "avg_credit": 0.76
+     },
+     "lats": {
+      "limit": 10,
+      "c": 20.0,
+      "last_set_credit": 0.69,
+      "avg_credit": 0.83
+     },
+     "upper_back": {
+      "limit": 10,
+      "c": 20.0,
+      "last_set_credit": 0.69,
+      "avg_credit": 0.83
+     },
+     "traps": {
+      "limit": 8,
+      "c": 4.5,
+      "last_set_credit": 0.39,
+      "avg_credit": 0.62
+     },
+     "biceps": {
+      "limit": 8,
+      "c": 15.0,
+      "last_set_credit": 0.68,
+      "avg_credit": 0.82
+     },
+     "triceps": {
+      "limit": 8,
+      "c": 15.0,
+      "last_set_credit": 0.68,
+      "avg_credit": 0.82
+     },
+     "forearms": {
+      "limit": 6,
+      "c": 1.5,
+      "last_set_credit": 0.23,
+      "avg_credit": 0.48
+     },
+     "abs": {
+      "limit": 8,
+      "c": 4.5,
+      "last_set_credit": 0.39,
+      "avg_credit": 0.62
+     },
+     "quads": {
+      "limit": 10,
+      "c": 20.0,
+      "last_set_credit": 0.69,
+      "avg_credit": 0.83
+     },
+     "hamstrings": {
+      "limit": 8,
+      "c": 15.0,
+      "last_set_credit": 0.68,
+      "avg_credit": 0.82
+     },
+     "glutes": {
+      "limit": 8,
+      "c": 15.0,
+      "last_set_credit": 0.68,
+      "avg_credit": 0.82
+     },
+     "calves": {
+      "limit": 8,
+      "c": 10.0,
+      "last_set_credit": 0.59,
+      "avg_credit": 0.76
+     },
+     "adductors": {
+      "limit": 6,
+      "c": 5.0,
+      "last_set_credit": 0.5,
+      "avg_credit": 0.7
+     },
+     "lower_back": {
+      "limit": 6,
+      "c": 5.0,
+      "last_set_credit": 0.5,
+      "avg_credit": 0.7
+     },
+     "obliques": {
+      "limit": 6,
+      "c": 1.5,
+      "last_set_credit": 0.23,
+      "avg_credit": 0.48
+     },
+     "abductors": {
+      "limit": 6,
+      "c": 5.0,
+      "last_set_credit": 0.5,
+      "avg_credit": 0.7
+     }
+    },
+    "advanced": {
+     "chest": {
+      "limit": 10,
+      "c": 30.0,
+      "last_set_credit": 0.77,
+      "avg_credit": 0.88
+     },
+     "front_delts": {
+      "limit": 8,
+      "c": 9.0,
+      "last_set_credit": 0.56,
+      "avg_credit": 0.75
+     },
+     "side_delts": {
+      "limit": 10,
+      "c": 18.5,
+      "last_set_credit": 0.67,
+      "avg_credit": 0.82
+     },
+     "rear_delts": {
+      "limit": 8,
+      "c": 21.0,
+      "last_set_credit": 0.75,
+      "avg_credit": 0.86
+     },
+     "lats": {
+      "limit": 10,
+      "c": 30.0,
+      "last_set_credit": 0.77,
+      "avg_credit": 0.88
+     },
+     "upper_back": {
+      "limit": 10,
+      "c": 30.0,
+      "last_set_credit": 0.77,
+      "avg_credit": 0.88
+     },
+     "traps": {
+      "limit": 8,
+      "c": 9.0,
+      "last_set_credit": 0.56,
+      "avg_credit": 0.75
+     },
+     "biceps": {
+      "limit": 8,
+      "c": 26.0,
+      "last_set_credit": 0.79,
+      "avg_credit": 0.89
+     },
+     "triceps": {
+      "limit": 8,
+      "c": 26.0,
+      "last_set_credit": 0.79,
+      "avg_credit": 0.89
+     },
+     "forearms": {
+      "limit": 6,
+      "c": 3.0,
+      "last_set_credit": 0.37,
+      "avg_credit": 0.61
+     },
+     "abs": {
+      "limit": 8,
+      "c": 9.0,
+      "last_set_credit": 0.56,
+      "avg_credit": 0.75
+     },
+     "quads": {
+      "limit": 10,
+      "c": 30.0,
+      "last_set_credit": 0.77,
+      "avg_credit": 0.88
+     },
+     "hamstrings": {
+      "limit": 8,
+      "c": 26.0,
+      "last_set_credit": 0.79,
+      "avg_credit": 0.89
+     },
+     "glutes": {
+      "limit": 8,
+      "c": 26.0,
+      "last_set_credit": 0.79,
+      "avg_credit": 0.89
+     },
+     "calves": {
+      "limit": 8,
+      "c": 21.0,
+      "last_set_credit": 0.75,
+      "avg_credit": 0.86
+     },
+     "adductors": {
+      "limit": 6,
+      "c": 10.0,
+      "last_set_credit": 0.67,
+      "avg_credit": 0.82
+     },
+     "lower_back": {
+      "limit": 6,
+      "c": 10.0,
+      "last_set_credit": 0.67,
+      "avg_credit": 0.82
+     },
+     "obliques": {
+      "limit": 6,
+      "c": 3.0,
+      "last_set_credit": 0.37,
+      "avg_credit": 0.61
+     },
+     "abductors": {
+      "limit": 6,
+      "c": 10.0,
+      "last_set_credit": 0.67,
+      "avg_credit": 0.82
+     }
+    }
+   }
+  }
  },
  "vol2": {
   "written": {
@@ -8101,14 +8929,14 @@
    "caveat": "A planning baseline. Sleep, nutrition, stress and age change real recovery."
   },
   "stimulus": {
-   "per_muscle": "workout stimulus g = sum of per-set credits 1/(1+(n-1)/c) over that day's effective sets (volume-model.json session); planned RIR for the proximity discount",
+   "per_muscle": "vol9: workout stimulus g = that day's undiscounted effective sets (planned RIR for the proximity discount).",
    "session_zone": {
     "below_dose": "effective sets < 2",
     "useful": "2 .. 1+c/3 (each set worth >= 0.75 of set 1)",
     "diminishing": "1+c/3 .. low_return_from (1+c)",
     "low_return": "> low_return_from (each set worth < 0.5)"
    },
-   "payout": "payout_pct_of_weekly_plateau = 100 x S_week(x_week) x g_day / x_week, where x_week = sum over days of g and S_week is the active weekly curve. Read: \"this workout delivers about N% of the weekly plateau for chest\".",
+   "payout": "payout_pct_of_weekly_plateau = 100 x S_week(x_week) x g_day / x_week, x_week = sum over days of g (undiscounted). Read: \"this workout delivers about N% of the weekly plateau for chest\".",
    "display": "Per muscle: small bar of length g, coloured by session_zone; label \"+N%\". Order by effective sets; show up to 6 muscles, the rest under \"more\".",
    "per_muscle_zones": {
     "chest": {
@@ -8245,7 +9073,9 @@
      "c": 5.0
     }
    },
-   "tag": "modeled (vol8h per-set decay calibrated to Schoenfeld 2019 / Pelland 2025 frequency findings; dose floor and payout split)"
+   "tag": "modeled (vol8h per-set decay calibrated to Schoenfeld 2019 / Pelland 2025 frequency findings; dose floor and payout split)",
+   "per_muscle_vol8": "workout stimulus g = sum of per-set credits 1/(1+(n-1)/c) over that day's effective sets (volume-model.json session); planned RIR for the proximity discount",
+   "session_zone_superseded": "vol9: session_zone and per_muscle_zones (useful_to, low_return_from) are display history only; colour a muscle red in a workout when rules session_efficiency fires."
   },
   "ready_in": {
    "formula": "vol8: h = (24 + 4 x max(0, F - 2)) x (1 + 0.15 x stretch share) x size[muscle] x level; clamp 12-96 h; round to 6 h. F = recovery load = sum over that muscle's sets in the workout of credit x effort[RIR of the set] x axial[exercise].",
@@ -8272,8 +9102,8 @@
   "flags": {
    "recovery_overlap": "info (variants streak, early)",
    "recovery_gap_long": "info",
-   "session_dose": "info (variants heavy, light)",
-   "dropped": "recovery_gap_short (vol7)"
+   "session_efficiency": "warn (vol9; replaces session_dose and junk_volume_session)",
+   "dropped": "recovery_gap_short (vol7); session_dose heavy/light and junk_volume_session (vol9)"
   },
   "never": "No medical claims; do not say \"fully recovered\" or show exact hours.",
   "invariant": {
@@ -8286,6 +9116,1091 @@
     "b": 0.5
    },
    "why_it_holds": "per-set credit only falls within a workout and resets after >= 20 h, so the first sets of a second day are always worth at least the last sets of a long single workout."
+  }
+ },
+ "vol9": {
+  "version": "vol9",
+  "date": "2026-11-01",
+  "decision": "Weekly volume = undiscounted effective sets. The within-workout decay is gone from weekly credit; it survives only as the session_efficiency warning.",
+  "unchanged": [
+   "vol8i per-level anchored curve and anchors",
+   "zones",
+   "proximity / secondary / minor credit",
+   "per-set fatigue and recovery",
+   "rest >= 20 h reset (fatigue)"
+  ],
+  "superseded": [
+   "vol8b x_equiv even-2x inverse mapping",
+   "vol8c min(x_equiv, raw) cap",
+   "vol8d-8i one-workout vs two-day 4-10% gap (now 0 by construction)",
+   "session_dose (heavy and light)",
+   "junk_volume_session"
+  ],
+  "builder_paths": {
+   "session_limits": "rules.json rules[id=session_efficiency].limits_by_level[level][muscle]",
+   "fix_order": "rules.json rules[id=session_efficiency].fix_order (also rules.json session_efficiency_fix_order)",
+   "never_suggest": "rules.json rules[id=session_efficiency].never_suggest",
+   "efficiency_display": "rules.json rules[id=session_efficiency].efficiency_at_limit[level][muscle]",
+   "weekly_input": "volume-model.json curve.input",
+   "curve": "volume-model.json curve.per_muscle[m].params_by_level[level] / anchors_by_level[level]",
+   "session_useful_half_by_level": "volume-model.json session.per_muscle[m].by_level[level] (superseded, display only)",
+   "retired": "rules.json rules[id=junk_volume_session].active = false; session_dose removed"
+  },
+  "preset_recheck": {
+   "presets": [
+    {
+     "preset": "full-body/beginner/2",
+     "non_info": []
+    },
+    {
+     "preset": "full-body/beginner/3",
+     "non_info": []
+    },
+    {
+     "preset": "full-body/beginner/4",
+     "non_info": []
+    },
+    {
+     "preset": "full-body/intermediate/2",
+     "non_info": []
+    },
+    {
+     "preset": "full-body/intermediate/3",
+     "non_info": []
+    },
+    {
+     "preset": "full-body/intermediate/4",
+     "non_info": []
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "non_info": []
+    },
+    {
+     "preset": "full-body/advanced/3",
+     "non_info": []
+    },
+    {
+     "preset": "full-body/advanced/4",
+     "non_info": []
+    },
+    {
+     "preset": "upper-lower/beginner/2",
+     "non_info": []
+    },
+    {
+     "preset": "upper-lower/beginner/4",
+     "non_info": []
+    },
+    {
+     "preset": "upper-lower/intermediate/2",
+     "non_info": []
+    },
+    {
+     "preset": "upper-lower/intermediate/4",
+     "non_info": []
+    },
+    {
+     "preset": "upper-lower/advanced/4",
+     "non_info": []
+    },
+    {
+     "preset": "ppl/beginner/3",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "ppl/beginner/6",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "ppl/intermediate/3",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "ppl/intermediate/6",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "ppl/advanced/3",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "ppl/advanced/6",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "bro-split/beginner/5",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "bro-split/intermediate/5",
+     "non_info": []
+    },
+    {
+     "preset": "bro-split/advanced/5",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "pplu/beginner/4",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "pplu/intermediate/4",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "pplu/advanced/4",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "pplul/beginner/5",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "pplul/intermediate/5",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "pplul/advanced/5",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "arnold/beginner/3",
+     "non_info": []
+    },
+    {
+     "preset": "arnold/beginner/6",
+     "non_info": []
+    },
+    {
+     "preset": "arnold/intermediate/3",
+     "non_info": []
+    },
+    {
+     "preset": "arnold/intermediate/6",
+     "non_info": []
+    },
+    {
+     "preset": "arnold/advanced/3",
+     "non_info": [
+      "session_efficiency"
+     ]
+    },
+    {
+     "preset": "arnold/advanced/6",
+     "non_info": []
+    },
+    {
+     "preset": "torso-limbs/beginner/2",
+     "non_info": []
+    },
+    {
+     "preset": "torso-limbs/beginner/4",
+     "non_info": []
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "non_info": []
+    },
+    {
+     "preset": "torso-limbs/intermediate/4",
+     "non_info": []
+    },
+    {
+     "preset": "torso-limbs/advanced/4",
+     "non_info": []
+    },
+    {
+     "preset": "phul/beginner/4",
+     "non_info": []
+    },
+    {
+     "preset": "phul/intermediate/4",
+     "non_info": []
+    },
+    {
+     "preset": "phul/advanced/4",
+     "non_info": []
+    },
+    {
+     "preset": "upper-lower-full/beginner/3",
+     "non_info": []
+    },
+    {
+     "preset": "upper-lower-full/intermediate/3",
+     "non_info": []
+    },
+    {
+     "preset": "upper-lower-full/advanced/3",
+     "non_info": []
+    }
+   ],
+   "over_diminishing": [
+    {
+     "preset": "arnold/advanced/6",
+     "muscle": "triceps",
+     "weekly": 18.22,
+     "diminishing": 18.0
+    }
+   ],
+   "under_min": [
+    {
+     "preset": "full-body/beginner/2",
+     "muscle": "upper_back",
+     "weekly": 5.56,
+     "min": 6.0
+    },
+    {
+     "preset": "full-body/beginner/2",
+     "muscle": "biceps",
+     "weekly": 4.7,
+     "min": 5.0
+    },
+    {
+     "preset": "full-body/beginner/2",
+     "muscle": "triceps",
+     "weekly": 3.92,
+     "min": 5.0
+    },
+    {
+     "preset": "full-body/beginner/2",
+     "muscle": "abs",
+     "weekly": 2.0,
+     "min": 2.5
+    },
+    {
+     "preset": "full-body/beginner/2",
+     "muscle": "abductors",
+     "weekly": 1.2,
+     "min": 2.0
+    },
+    {
+     "preset": "full-body/intermediate/2",
+     "muscle": "side_delts",
+     "weekly": 5.0,
+     "min": 6.5
+    },
+    {
+     "preset": "full-body/intermediate/2",
+     "muscle": "lats",
+     "weekly": 7.52,
+     "min": 8.0
+    },
+    {
+     "preset": "full-body/intermediate/2",
+     "muscle": "upper_back",
+     "weekly": 7.8,
+     "min": 8.0
+    },
+    {
+     "preset": "full-body/intermediate/2",
+     "muscle": "biceps",
+     "weekly": 5.44,
+     "min": 6.5
+    },
+    {
+     "preset": "full-body/intermediate/2",
+     "muscle": "triceps",
+     "weekly": 5.08,
+     "min": 6.5
+    },
+    {
+     "preset": "full-body/intermediate/2",
+     "muscle": "calves",
+     "weekly": 3.0,
+     "min": 5.0
+    },
+    {
+     "preset": "full-body/intermediate/3",
+     "muscle": "upper_back",
+     "weekly": 7.91,
+     "min": 8.0
+    },
+    {
+     "preset": "full-body/intermediate/3",
+     "muscle": "obliques",
+     "weekly": 1.44,
+     "min": 1.5
+    },
+    {
+     "preset": "full-body/intermediate/3",
+     "muscle": "abductors",
+     "weekly": 2.1,
+     "min": 2.5
+    },
+    {
+     "preset": "full-body/intermediate/4",
+     "muscle": "obliques",
+     "weekly": 1.44,
+     "min": 1.5
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "side_delts",
+     "weekly": 6.0,
+     "min": 8.0
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "rear_delts",
+     "weekly": 5.45,
+     "min": 6.0
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "lats",
+     "weekly": 9.8,
+     "min": 10.0
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "biceps",
+     "weekly": 6.3,
+     "min": 8.0
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "abs",
+     "weekly": 2.0,
+     "min": 4.0
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "quads",
+     "weekly": 8.0,
+     "min": 10.0
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "hamstrings",
+     "weekly": 6.0,
+     "min": 8.0
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "glutes",
+     "weekly": 7.52,
+     "min": 8.0
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "calves",
+     "weekly": 4.0,
+     "min": 6.0
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "obliques",
+     "weekly": 1.0,
+     "min": 2.0
+    },
+    {
+     "preset": "full-body/advanced/2",
+     "muscle": "abductors",
+     "weekly": 2.6,
+     "min": 3.0
+    },
+    {
+     "preset": "full-body/advanced/3",
+     "muscle": "abductors",
+     "weekly": 2.6,
+     "min": 3.0
+    },
+    {
+     "preset": "upper-lower/beginner/2",
+     "muscle": "side_delts",
+     "weekly": 3.9,
+     "min": 5.0
+    },
+    {
+     "preset": "upper-lower/beginner/2",
+     "muscle": "rear_delts",
+     "weekly": 2.0,
+     "min": 3.5
+    },
+    {
+     "preset": "upper-lower/beginner/2",
+     "muscle": "upper_back",
+     "weekly": 5.76,
+     "min": 6.0
+    },
+    {
+     "preset": "upper-lower/beginner/2",
+     "muscle": "triceps",
+     "weekly": 4.18,
+     "min": 5.0
+    },
+    {
+     "preset": "upper-lower/beginner/2",
+     "muscle": "calves",
+     "weekly": 3.0,
+     "min": 3.5
+    },
+    {
+     "preset": "upper-lower/beginner/2",
+     "muscle": "abductors",
+     "weekly": 1.6,
+     "min": 2.0
+    },
+    {
+     "preset": "upper-lower/intermediate/2",
+     "muscle": "side_delts",
+     "weekly": 4.9,
+     "min": 6.5
+    },
+    {
+     "preset": "upper-lower/intermediate/2",
+     "muscle": "rear_delts",
+     "weekly": 3.66,
+     "min": 5.0
+    },
+    {
+     "preset": "upper-lower/intermediate/2",
+     "muscle": "upper_back",
+     "weekly": 7.8,
+     "min": 8.0
+    },
+    {
+     "preset": "upper-lower/intermediate/2",
+     "muscle": "biceps",
+     "weekly": 5.76,
+     "min": 6.5
+    },
+    {
+     "preset": "upper-lower/intermediate/2",
+     "muscle": "triceps",
+     "weekly": 4.68,
+     "min": 6.5
+    },
+    {
+     "preset": "upper-lower/intermediate/2",
+     "muscle": "glutes",
+     "weekly": 6.3,
+     "min": 6.5
+    },
+    {
+     "preset": "upper-lower/intermediate/2",
+     "muscle": "calves",
+     "weekly": 3.0,
+     "min": 5.0
+    },
+    {
+     "preset": "upper-lower/intermediate/2",
+     "muscle": "obliques",
+     "weekly": 1.08,
+     "min": 1.5
+    },
+    {
+     "preset": "upper-lower/intermediate/2",
+     "muscle": "abductors",
+     "weekly": 2.0,
+     "min": 2.5
+    },
+    {
+     "preset": "ppl/beginner/3",
+     "muscle": "side_delts",
+     "weekly": 4.9,
+     "min": 5.0
+    },
+    {
+     "preset": "ppl/beginner/3",
+     "muscle": "abductors",
+     "weekly": 1.6,
+     "min": 2.0
+    },
+    {
+     "preset": "ppl/beginner/6",
+     "muscle": "abductors",
+     "weekly": 1.68,
+     "min": 2.0
+    },
+    {
+     "preset": "ppl/intermediate/3",
+     "muscle": "side_delts",
+     "weekly": 6.35,
+     "min": 6.5
+    },
+    {
+     "preset": "ppl/intermediate/3",
+     "muscle": "glutes",
+     "weekly": 5.85,
+     "min": 6.5
+    },
+    {
+     "preset": "ppl/advanced/3",
+     "muscle": "triceps",
+     "weekly": 7.88,
+     "min": 8.0
+    },
+    {
+     "preset": "ppl/advanced/3",
+     "muscle": "hamstrings",
+     "weekly": 7.96,
+     "min": 8.0
+    },
+    {
+     "preset": "ppl/advanced/3",
+     "muscle": "abductors",
+     "weekly": 2.52,
+     "min": 3.0
+    },
+    {
+     "preset": "pplu/beginner/4",
+     "muscle": "abductors",
+     "weekly": 1.6,
+     "min": 2.0
+    },
+    {
+     "preset": "pplu/intermediate/4",
+     "muscle": "glutes",
+     "weekly": 5.85,
+     "min": 6.5
+    },
+    {
+     "preset": "pplu/advanced/4",
+     "muscle": "side_delts",
+     "weekly": 7.9,
+     "min": 8.0
+    },
+    {
+     "preset": "pplu/advanced/4",
+     "muscle": "hamstrings",
+     "weekly": 7.96,
+     "min": 8.0
+    },
+    {
+     "preset": "pplu/advanced/4",
+     "muscle": "abductors",
+     "weekly": 2.52,
+     "min": 3.0
+    },
+    {
+     "preset": "pplul/advanced/5",
+     "muscle": "side_delts",
+     "weekly": 7.9,
+     "min": 8.0
+    },
+    {
+     "preset": "arnold/beginner/3",
+     "muscle": "abductors",
+     "weekly": 1.6,
+     "min": 2.0
+    },
+    {
+     "preset": "arnold/beginner/6",
+     "muscle": "abductors",
+     "weekly": 1.68,
+     "min": 2.0
+    },
+    {
+     "preset": "arnold/intermediate/3",
+     "muscle": "glutes",
+     "weekly": 5.85,
+     "min": 6.5
+    },
+    {
+     "preset": "arnold/advanced/3",
+     "muscle": "upper_back",
+     "weekly": 9.6,
+     "min": 10.0
+    },
+    {
+     "preset": "arnold/advanced/3",
+     "muscle": "biceps",
+     "weekly": 7.76,
+     "min": 8.0
+    },
+    {
+     "preset": "arnold/advanced/3",
+     "muscle": "triceps",
+     "weekly": 7.56,
+     "min": 8.0
+    },
+    {
+     "preset": "arnold/advanced/3",
+     "muscle": "hamstrings",
+     "weekly": 7.96,
+     "min": 8.0
+    },
+    {
+     "preset": "arnold/advanced/3",
+     "muscle": "abductors",
+     "weekly": 2.52,
+     "min": 3.0
+    },
+    {
+     "preset": "torso-limbs/beginner/2",
+     "muscle": "side_delts",
+     "weekly": 4.35,
+     "min": 5.0
+    },
+    {
+     "preset": "torso-limbs/beginner/2",
+     "muscle": "upper_back",
+     "weekly": 5.56,
+     "min": 6.0
+    },
+    {
+     "preset": "torso-limbs/beginner/2",
+     "muscle": "biceps",
+     "weekly": 4.7,
+     "min": 5.0
+    },
+    {
+     "preset": "torso-limbs/beginner/2",
+     "muscle": "triceps",
+     "weekly": 4.63,
+     "min": 5.0
+    },
+    {
+     "preset": "torso-limbs/beginner/2",
+     "muscle": "abs",
+     "weekly": 2.0,
+     "min": 2.5
+    },
+    {
+     "preset": "torso-limbs/beginner/2",
+     "muscle": "quads",
+     "weekly": 5.0,
+     "min": 6.0
+    },
+    {
+     "preset": "torso-limbs/beginner/2",
+     "muscle": "abductors",
+     "weekly": 1.6,
+     "min": 2.0
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "side_delts",
+     "weekly": 5.0,
+     "min": 6.5
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "lats",
+     "weekly": 7.52,
+     "min": 8.0
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "upper_back",
+     "weekly": 7.8,
+     "min": 8.0
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "biceps",
+     "weekly": 5.44,
+     "min": 6.5
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "triceps",
+     "weekly": 5.21,
+     "min": 6.5
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "abs",
+     "weekly": 2.0,
+     "min": 3.0
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "quads",
+     "weekly": 7.0,
+     "min": 8.0
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "glutes",
+     "weekly": 6.3,
+     "min": 6.5
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "calves",
+     "weekly": 3.0,
+     "min": 5.0
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "obliques",
+     "weekly": 1.0,
+     "min": 1.5
+    },
+    {
+     "preset": "torso-limbs/intermediate/2",
+     "muscle": "abductors",
+     "weekly": 2.0,
+     "min": 2.5
+    },
+    {
+     "preset": "phul/beginner/4",
+     "muscle": "side_delts",
+     "weekly": 4.9,
+     "min": 5.0
+    },
+    {
+     "preset": "phul/intermediate/4",
+     "muscle": "rear_delts",
+     "weekly": 4.41,
+     "min": 5.0
+    },
+    {
+     "preset": "phul/advanced/4",
+     "muscle": "side_delts",
+     "weekly": 7.8,
+     "min": 8.0
+    },
+    {
+     "preset": "phul/advanced/4",
+     "muscle": "rear_delts",
+     "weekly": 5.4,
+     "min": 6.0
+    },
+    {
+     "preset": "phul/advanced/4",
+     "muscle": "hamstrings",
+     "weekly": 7.89,
+     "min": 8.0
+    },
+    {
+     "preset": "upper-lower-full/beginner/3",
+     "muscle": "side_delts",
+     "weekly": 4.9,
+     "min": 5.0
+    },
+    {
+     "preset": "upper-lower-full/beginner/3",
+     "muscle": "triceps",
+     "weekly": 4.82,
+     "min": 5.0
+    },
+    {
+     "preset": "upper-lower-full/beginner/3",
+     "muscle": "abductors",
+     "weekly": 1.6,
+     "min": 2.0
+    },
+    {
+     "preset": "upper-lower-full/intermediate/3",
+     "muscle": "lats",
+     "weekly": 7.98,
+     "min": 8.0
+    },
+    {
+     "preset": "upper-lower-full/intermediate/3",
+     "muscle": "triceps",
+     "weekly": 6.18,
+     "min": 6.5
+    },
+    {
+     "preset": "upper-lower-full/intermediate/3",
+     "muscle": "obliques",
+     "weekly": 1.44,
+     "min": 1.5
+    },
+    {
+     "preset": "upper-lower-full/advanced/3",
+     "muscle": "lats",
+     "weekly": 9.49,
+     "min": 10.0
+    }
+   ],
+   "session_efficiency_by_preset": {
+    "ppl/beginner/3": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 7.3,
+      "limit": 6
+     },
+     {
+      "day": "wed",
+      "muscle": "biceps",
+      "sets": 6.3,
+      "limit": 6
+     }
+    ],
+    "ppl/beginner/6": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 6.9,
+      "limit": 6
+     },
+     {
+      "day": "tue",
+      "muscle": "biceps",
+      "sets": 6.3,
+      "limit": 6
+     }
+    ],
+    "ppl/intermediate/3": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 8.9,
+      "limit": 8
+     },
+     {
+      "day": "wed",
+      "muscle": "biceps",
+      "sets": 8.9,
+      "limit": 8
+     }
+    ],
+    "ppl/intermediate/6": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 8.9,
+      "limit": 8
+     },
+     {
+      "day": "tue",
+      "muscle": "biceps",
+      "sets": 8.5,
+      "limit": 8
+     }
+    ],
+    "ppl/advanced/3": [
+     {
+      "day": "mon",
+      "muscle": "front_delts",
+      "sets": 8.5,
+      "limit": 8
+     },
+     {
+      "day": "wed",
+      "muscle": "biceps",
+      "sets": 9.1,
+      "limit": 8
+     },
+     {
+      "day": "fri",
+      "muscle": "glutes",
+      "sets": 8.7,
+      "limit": 8
+     }
+    ],
+    "ppl/advanced/6": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 8.2,
+      "limit": 8
+     },
+     {
+      "day": "tue",
+      "muscle": "biceps",
+      "sets": 9.1,
+      "limit": 8
+     }
+    ],
+    "bro-split/beginner/5": [
+     {
+      "day": "mon",
+      "muscle": "chest",
+      "sets": 9.0,
+      "limit": 8
+     },
+     {
+      "day": "tue",
+      "muscle": "lats",
+      "sets": 9.4,
+      "limit": 8
+     },
+     {
+      "day": "wed",
+      "muscle": "glutes",
+      "sets": 6.0,
+      "limit": 6
+     }
+    ],
+    "bro-split/advanced/5": [
+     {
+      "day": "wed",
+      "muscle": "adductors",
+      "sets": 6.4,
+      "limit": 6
+     },
+     {
+      "day": "sat",
+      "muscle": "triceps",
+      "sets": 9.0,
+      "limit": 8
+     }
+    ],
+    "pplu/beginner/4": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 6.9,
+      "limit": 6
+     },
+     {
+      "day": "tue",
+      "muscle": "biceps",
+      "sets": 6.3,
+      "limit": 6
+     }
+    ],
+    "pplu/intermediate/4": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 8.9,
+      "limit": 8
+     },
+     {
+      "day": "tue",
+      "muscle": "biceps",
+      "sets": 8.5,
+      "limit": 8
+     }
+    ],
+    "pplu/advanced/4": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 8.2,
+      "limit": 8
+     },
+     {
+      "day": "tue",
+      "muscle": "biceps",
+      "sets": 9.1,
+      "limit": 8
+     },
+     {
+      "day": "thu",
+      "muscle": "glutes",
+      "sets": 8.7,
+      "limit": 8
+     }
+    ],
+    "pplul/beginner/5": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 6.9,
+      "limit": 6
+     },
+     {
+      "day": "tue",
+      "muscle": "biceps",
+      "sets": 6.3,
+      "limit": 6
+     }
+    ],
+    "pplul/intermediate/5": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 8.9,
+      "limit": 8
+     },
+     {
+      "day": "tue",
+      "muscle": "biceps",
+      "sets": 8.5,
+      "limit": 8
+     }
+    ],
+    "pplul/advanced/5": [
+     {
+      "day": "mon",
+      "muscle": "triceps",
+      "sets": 8.2,
+      "limit": 8
+     },
+     {
+      "day": "tue",
+      "muscle": "biceps",
+      "sets": 9.1,
+      "limit": 8
+     }
+    ],
+    "arnold/advanced/3": [
+     {
+      "day": "fri",
+      "muscle": "glutes",
+      "sets": 8.7,
+      "limit": 8
+     }
+    ]
+   },
+   "non_info_warnings_by_rule": {
+    "session_efficiency": 32
+   },
+   "n_presets": 46,
+   "presets_with_non_info_warnings": 15,
+   "presets_with_session_efficiency": 15,
+   "session_efficiency_flags": 32,
+   "session_efficiency_by_muscle": {
+    "triceps": 12,
+    "biceps": 12,
+    "glutes": 4,
+    "front_delts": 1,
+    "chest": 1,
+    "lats": 1,
+    "adductors": 1
+   },
+   "note": "vol9: weekly = undiscounted effective sets vs the level zones (0.01 rounding). Report only; splits.json unchanged."
+  },
+  "reference_cases_changed": {
+   "volume-model-reference.json": [
+    "board-machine-chest-press-8",
+    "board-barbell-bench-press-8",
+    "session-chest-12-vs-6plus6"
+   ],
+   "workout-reference.json": [
+    "reference-upper-day",
+    "full-body-3x-mon-wed-fri",
+    "full-body-3x-mon-tue-wed",
+    "bro-split-chest-day",
+    "chest-16-set-session",
+    "chest-10-in-one-workout",
+    "chest-5-plus-5-consecutive-days",
+    "invariant-5-plus-5-vs-10",
+    "weekly-pct-vol8b",
+    "chest-12-in-one-day-vol8c",
+    "chest-6-plus-6-vol8c",
+    "overlap-too-soon",
+    "overlap-streak",
+    "one-vs-two-vol8d"
+   ]
   }
  }
 }

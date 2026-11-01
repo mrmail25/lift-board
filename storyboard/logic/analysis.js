@@ -185,6 +185,7 @@ function flagDetails(dt,days,level,baseline=null){const R=dt.rules,RI={},{HEAVY}
     else if(rid==='spinal_load_week')Object.assign(o,{days:days.filter(d=>d.tiles.some(t=>HEAVY.has(t.id))).map(d=>d.day),exercises:uniqSorted(T.filter(x=>HEAVY.has(x[1])).map(x=>x[1])),detail:`${pyS(f[2])} heavy spine sets this week`});
     else if(rid==='sets_per_exercise')Object.assign(o,{days:[f[2]],exercises:[f[3]],detail:'more than 5 sets'});
     else if(rid==='redundant_pattern')Object.assign(o,{days:[f[2]],exercises:dayIds(days,f[2],i=>PAT[i]===f[3]),muscle:f[5],detail:`${pyS(f[4])} ${f[3]} exercises, ${pyS(f[6])} effective sets for ${f[5]}`});
+    else if(rid==='session_efficiency')Object.assign(o,{days:[f[2]],exercises:dayIds(days,f[2],tr(f[3])),muscle:f[3],detail:`${pyS(f[4])} effective sets for ${f[3]} in one workout (limit ${PC.seLim(dt,f[3],level)})`});
     else if(rid==='junk_volume_session')Object.assign(o,{days:[f[2]],exercises:dayIds(days,f[2],tr(f[3])),muscle:f[3],detail:`${pyS(f[4])} effective sets for ${f[3]}`});
     else if(rid==='beginner_squat_and_deadlift')Object.assign(o,{days:[f[2]],exercises:dayIds(days,f[2],i=>HEAVY.has(i)),detail:'heavy squats and heavy hinges on one day'});
     else if(rid==='hinge_before_squat'){const n=nxt(f[2]);Object.assign(o,{days:[f[2],n],exercises:[...dayIds(days,f[2],i=>R.heavy_hinges.includes(i)),...dayIds(days,n,i=>R.heavy_squats.includes(i))],detail:'heavy hinge, then heavy squats the next day'})}

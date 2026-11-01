@@ -17,14 +17,14 @@ function cfg(dt){if(dt._cp)return dt._cp;const w=W(dt),CW=w.importance.check_wei
   return dt._cp={w,CW,FAM,BAND:w.severity.state_band,FIX:w.fixability.rules,EXCL:new Set(Object.keys(w.excluded_sources||{})),MW:w.importance.muscle_weight,BOARD:w.importance.board_level_muscle_weight}}
 const band=(dt,m,level)=>{const T=dt.targets.targets[m],LF=dt.targets.levelMinFactor;return [pyR(T.min*LF[level]*2)/2,T.max]};
 function _muscle(src,tg){if(tg.muscle)return tg.muscle;const f=tg.flag;if(!f)return null;const r=f[1];
-  if(['missing_stretch','low_frequency','weekly_volume'].includes(r))return f[2];if(r==='junk_volume_session'||r==='consecutive_high_volume')return f[3];if(r==='redundant_pattern')return f[5];return null}
+  if(['missing_stretch','low_frequency','weekly_volume'].includes(r))return f[2];if(r==='junk_volume_session'||r==='consecutive_high_volume'||r==='session_efficiency')return f[3];if(r==='redundant_pattern')return f[5];return null}
 function _distance(dt,src,tg,level){const f=tg.flag,r=f?f[1]:src,cl=x=>Math.max(0,Math.min(1,x)),RU={};dt.rules.rules.forEach(q=>RU[q.id]=q);
   if(src==='weekly_band'||r==='weekly_volume'){const m=_muscle(src,tg),x='sets' in tg?tg.sets:(f?f[3]:0),[lo,hi]=band(dt,m,level);return x<lo?cl((lo-x)/lo):cl((x-hi)/hi)}
   if(src==='stretch_share')return cl((0.25-tg.share)/0.25);if(r==='missing_stretch')return 1.0;
   if(src==='effective_frequency')return cl((2-tg.days)/2);if(r==='low_frequency')return cl((2-f[3])/2);
   if(r==='session_length'){const sl=RU.session_length;return f[0]==='info'?cl((f[3]-sl.info_min)/(sl.warn_min-sl.info_min)):cl((f[3]-sl.warn_min)/30)}
   if(r==='session_hard_sets'){const hs=RU.session_hard_sets,w=hs.warn_above[level];return f[0]==='info'?cl((f[3]-(w-hs.info_band))/hs.info_band):cl((f[3]-w)/w)}
-  if(r==='junk_volume_session')return cl((f[4]-10)/10);if(r==='redundant_pattern')return cl((f[6]-10)/10);if(r==='pattern_gap')return cl((f[4]-f[3])/f[4]);
+  if(r==='junk_volume_session')return cl((f[4]-10)/10);if(r==='session_efficiency')return cl(f[5]/Math.max(1,f[4]-f[5]));if(r==='redundant_pattern')return cl((f[6]-10)/10);if(r==='pattern_gap')return cl((f[4]-f[3])/f[4]);
   if(r==='push_pull_imbalance'){const x=f[2];return cl((x<0.75?0.75-x:x-2.0)/0.75)}
   if(src==='recovery_vs_baseline')return cl(((tg.ratio!=null?tg.ratio:1.3)-1.15)/0.35);return 1.0}
 function _state(C,src,sev){const fam=C.FAM[src];if(fam==='frequency'||fam==='lower_back')return 'info';if(src==='weekly_band'||src==='stretch_share')return 'amber';return ({warn:'red',info:'info'})[sev]||'amber'}

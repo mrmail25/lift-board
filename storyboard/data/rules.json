@@ -655,7 +655,10 @@
         "requires": []
       },
       "category": "session",
-      "metric": "session_design"
+      "metric": "session_design",
+      "active": false,
+      "superseded_by": "session_efficiency",
+      "superseded_note": "vol9: per-muscle, per-level limits in session_efficiency (large muscles keep about 10). Do not show this rule."
     },
     {
       "id": "sets_per_exercise",
@@ -944,6 +947,486 @@
       }
     },
     {
+      "id": "session_efficiency",
+      "severity": "warn",
+      "scope": "session",
+      "version": "vol9",
+      "replaces": [
+        "session_dose (heavy and light variants)",
+        "junk_volume_session"
+      ],
+      "counts": "effective sets for the muscle in one workout (same fractional credit as weekly: rating x proximity, secondary and minor roles), no decay",
+      "fires_when": "round(effective sets in one workout, 2) > limits_by_level[user level][muscle]",
+      "limits_by_level": {
+        "beginner": {
+          "chest": 8,
+          "front_delts": 6,
+          "side_delts": 8,
+          "rear_delts": 6,
+          "lats": 8,
+          "upper_back": 8,
+          "traps": 6,
+          "biceps": 6,
+          "triceps": 6,
+          "forearms": 6,
+          "abs": 6,
+          "quads": 8,
+          "hamstrings": 6,
+          "glutes": 6,
+          "calves": 6,
+          "adductors": 6,
+          "lower_back": 6,
+          "obliques": 6,
+          "abductors": 6
+        },
+        "intermediate": {
+          "chest": 10,
+          "front_delts": 8,
+          "side_delts": 10,
+          "rear_delts": 8,
+          "lats": 10,
+          "upper_back": 10,
+          "traps": 8,
+          "biceps": 8,
+          "triceps": 8,
+          "forearms": 6,
+          "abs": 8,
+          "quads": 10,
+          "hamstrings": 8,
+          "glutes": 8,
+          "calves": 8,
+          "adductors": 6,
+          "lower_back": 6,
+          "obliques": 6,
+          "abductors": 6
+        },
+        "advanced": {
+          "chest": 10,
+          "front_delts": 8,
+          "side_delts": 10,
+          "rear_delts": 8,
+          "lats": 10,
+          "upper_back": 10,
+          "traps": 8,
+          "biceps": 8,
+          "triceps": 8,
+          "forearms": 6,
+          "abs": 8,
+          "quads": 10,
+          "hamstrings": 8,
+          "glutes": 8,
+          "calves": 8,
+          "adductors": 6,
+          "lower_back": 6,
+          "obliques": 6,
+          "abductors": 6
+        }
+      },
+      "limit_rule": "intermediate = clamp(targets.json session.muscles[m].heavy, 6, 10); beginner = max(6, intermediate - 2); advanced = intermediate",
+      "efficiency_at_limit": {
+        "beginner": {
+          "chest": {
+            "limit": 8,
+            "c": 13.0,
+            "last_set_credit": 0.65,
+            "avg_credit": 0.8
+          },
+          "front_delts": {
+            "limit": 6,
+            "c": 4.0,
+            "last_set_credit": 0.44,
+            "avg_credit": 0.66
+          },
+          "side_delts": {
+            "limit": 8,
+            "c": 8.5,
+            "last_set_credit": 0.55,
+            "avg_credit": 0.74
+          },
+          "rear_delts": {
+            "limit": 6,
+            "c": 6.0,
+            "last_set_credit": 0.55,
+            "avg_credit": 0.74
+          },
+          "lats": {
+            "limit": 8,
+            "c": 13.0,
+            "last_set_credit": 0.65,
+            "avg_credit": 0.8
+          },
+          "upper_back": {
+            "limit": 8,
+            "c": 13.0,
+            "last_set_credit": 0.65,
+            "avg_credit": 0.8
+          },
+          "traps": {
+            "limit": 6,
+            "c": 4.0,
+            "last_set_credit": 0.44,
+            "avg_credit": 0.66
+          },
+          "biceps": {
+            "limit": 6,
+            "c": 11.0,
+            "last_set_credit": 0.69,
+            "avg_credit": 0.83
+          },
+          "triceps": {
+            "limit": 6,
+            "c": 11.0,
+            "last_set_credit": 0.69,
+            "avg_credit": 0.83
+          },
+          "forearms": {
+            "limit": 6,
+            "c": 1.5,
+            "last_set_credit": 0.23,
+            "avg_credit": 0.48
+          },
+          "abs": {
+            "limit": 6,
+            "c": 4.0,
+            "last_set_credit": 0.44,
+            "avg_credit": 0.66
+          },
+          "quads": {
+            "limit": 8,
+            "c": 13.0,
+            "last_set_credit": 0.65,
+            "avg_credit": 0.8
+          },
+          "hamstrings": {
+            "limit": 6,
+            "c": 11.0,
+            "last_set_credit": 0.69,
+            "avg_credit": 0.83
+          },
+          "glutes": {
+            "limit": 6,
+            "c": 11.0,
+            "last_set_credit": 0.69,
+            "avg_credit": 0.83
+          },
+          "calves": {
+            "limit": 6,
+            "c": 6.0,
+            "last_set_credit": 0.55,
+            "avg_credit": 0.74
+          },
+          "adductors": {
+            "limit": 6,
+            "c": 4.0,
+            "last_set_credit": 0.44,
+            "avg_credit": 0.66
+          },
+          "lower_back": {
+            "limit": 6,
+            "c": 4.0,
+            "last_set_credit": 0.44,
+            "avg_credit": 0.66
+          },
+          "obliques": {
+            "limit": 6,
+            "c": 1.5,
+            "last_set_credit": 0.23,
+            "avg_credit": 0.48
+          },
+          "abductors": {
+            "limit": 6,
+            "c": 4.0,
+            "last_set_credit": 0.44,
+            "avg_credit": 0.66
+          }
+        },
+        "intermediate": {
+          "chest": {
+            "limit": 10,
+            "c": 20.0,
+            "last_set_credit": 0.69,
+            "avg_credit": 0.83
+          },
+          "front_delts": {
+            "limit": 8,
+            "c": 4.5,
+            "last_set_credit": 0.39,
+            "avg_credit": 0.62
+          },
+          "side_delts": {
+            "limit": 10,
+            "c": 11.0,
+            "last_set_credit": 0.55,
+            "avg_credit": 0.74
+          },
+          "rear_delts": {
+            "limit": 8,
+            "c": 10.0,
+            "last_set_credit": 0.59,
+            "avg_credit": 0.76
+          },
+          "lats": {
+            "limit": 10,
+            "c": 20.0,
+            "last_set_credit": 0.69,
+            "avg_credit": 0.83
+          },
+          "upper_back": {
+            "limit": 10,
+            "c": 20.0,
+            "last_set_credit": 0.69,
+            "avg_credit": 0.83
+          },
+          "traps": {
+            "limit": 8,
+            "c": 4.5,
+            "last_set_credit": 0.39,
+            "avg_credit": 0.62
+          },
+          "biceps": {
+            "limit": 8,
+            "c": 15.0,
+            "last_set_credit": 0.68,
+            "avg_credit": 0.82
+          },
+          "triceps": {
+            "limit": 8,
+            "c": 15.0,
+            "last_set_credit": 0.68,
+            "avg_credit": 0.82
+          },
+          "forearms": {
+            "limit": 6,
+            "c": 1.5,
+            "last_set_credit": 0.23,
+            "avg_credit": 0.48
+          },
+          "abs": {
+            "limit": 8,
+            "c": 4.5,
+            "last_set_credit": 0.39,
+            "avg_credit": 0.62
+          },
+          "quads": {
+            "limit": 10,
+            "c": 20.0,
+            "last_set_credit": 0.69,
+            "avg_credit": 0.83
+          },
+          "hamstrings": {
+            "limit": 8,
+            "c": 15.0,
+            "last_set_credit": 0.68,
+            "avg_credit": 0.82
+          },
+          "glutes": {
+            "limit": 8,
+            "c": 15.0,
+            "last_set_credit": 0.68,
+            "avg_credit": 0.82
+          },
+          "calves": {
+            "limit": 8,
+            "c": 10.0,
+            "last_set_credit": 0.59,
+            "avg_credit": 0.76
+          },
+          "adductors": {
+            "limit": 6,
+            "c": 5.0,
+            "last_set_credit": 0.5,
+            "avg_credit": 0.7
+          },
+          "lower_back": {
+            "limit": 6,
+            "c": 5.0,
+            "last_set_credit": 0.5,
+            "avg_credit": 0.7
+          },
+          "obliques": {
+            "limit": 6,
+            "c": 1.5,
+            "last_set_credit": 0.23,
+            "avg_credit": 0.48
+          },
+          "abductors": {
+            "limit": 6,
+            "c": 5.0,
+            "last_set_credit": 0.5,
+            "avg_credit": 0.7
+          }
+        },
+        "advanced": {
+          "chest": {
+            "limit": 10,
+            "c": 30.0,
+            "last_set_credit": 0.77,
+            "avg_credit": 0.88
+          },
+          "front_delts": {
+            "limit": 8,
+            "c": 9.0,
+            "last_set_credit": 0.56,
+            "avg_credit": 0.75
+          },
+          "side_delts": {
+            "limit": 10,
+            "c": 18.5,
+            "last_set_credit": 0.67,
+            "avg_credit": 0.82
+          },
+          "rear_delts": {
+            "limit": 8,
+            "c": 21.0,
+            "last_set_credit": 0.75,
+            "avg_credit": 0.86
+          },
+          "lats": {
+            "limit": 10,
+            "c": 30.0,
+            "last_set_credit": 0.77,
+            "avg_credit": 0.88
+          },
+          "upper_back": {
+            "limit": 10,
+            "c": 30.0,
+            "last_set_credit": 0.77,
+            "avg_credit": 0.88
+          },
+          "traps": {
+            "limit": 8,
+            "c": 9.0,
+            "last_set_credit": 0.56,
+            "avg_credit": 0.75
+          },
+          "biceps": {
+            "limit": 8,
+            "c": 26.0,
+            "last_set_credit": 0.79,
+            "avg_credit": 0.89
+          },
+          "triceps": {
+            "limit": 8,
+            "c": 26.0,
+            "last_set_credit": 0.79,
+            "avg_credit": 0.89
+          },
+          "forearms": {
+            "limit": 6,
+            "c": 3.0,
+            "last_set_credit": 0.37,
+            "avg_credit": 0.61
+          },
+          "abs": {
+            "limit": 8,
+            "c": 9.0,
+            "last_set_credit": 0.56,
+            "avg_credit": 0.75
+          },
+          "quads": {
+            "limit": 10,
+            "c": 30.0,
+            "last_set_credit": 0.77,
+            "avg_credit": 0.88
+          },
+          "hamstrings": {
+            "limit": 8,
+            "c": 26.0,
+            "last_set_credit": 0.79,
+            "avg_credit": 0.89
+          },
+          "glutes": {
+            "limit": 8,
+            "c": 26.0,
+            "last_set_credit": 0.79,
+            "avg_credit": 0.89
+          },
+          "calves": {
+            "limit": 8,
+            "c": 21.0,
+            "last_set_credit": 0.75,
+            "avg_credit": 0.86
+          },
+          "adductors": {
+            "limit": 6,
+            "c": 10.0,
+            "last_set_credit": 0.67,
+            "avg_credit": 0.82
+          },
+          "lower_back": {
+            "limit": 6,
+            "c": 10.0,
+            "last_set_credit": 0.67,
+            "avg_credit": 0.82
+          },
+          "obliques": {
+            "limit": 6,
+            "c": 3.0,
+            "last_set_credit": 0.37,
+            "avg_credit": 0.61
+          },
+          "abductors": {
+            "limit": 6,
+            "c": 10.0,
+            "last_set_credit": 0.67,
+            "avg_credit": 0.82
+          }
+        }
+      },
+      "efficiency_note": "Display only: per-set credit 1/(1+(n-1)/c) with c = volume-model.json session.c_by_level (the vol8i decay, kept only here). It no longer changes weekly volume.",
+      "why_not_c_derived": "The vol8i c values were fitted to a 4-10% frequency gap, not to a per-session ceiling. The point where the next set falls below half of set 1 (1 + c) ranges from 2.5 sets (forearms) to 31 (advanced chest), far from the mainstream 6-10, so c is not used for the limit.",
+      "message": "{muscle} gets {sets} effective sets on {day}, past about {limit} for one workout. Extra sets here mostly add fatigue. Split them across days, trim sets, or swap to a fresher exercise.",
+      "short_label": "Past the useful dose for one session",
+      "fixes": [
+        "move_sets_to_day",
+        "reduce_sets:highest_contributor",
+        "swap_exercise:fresher_same_muscle"
+      ],
+      "fix_order": [
+        {
+          "rank": 1,
+          "id": "split_across_days",
+          "action": "move_sets_to_day",
+          "fixes_key": "move_sets_to_day",
+          "label": "Split across days",
+          "detail": "Move some of this muscle's sets to another existing training day (best_valid_day rules). Weekly volume stays the same."
+        },
+        {
+          "rank": 2,
+          "id": "trim_sets",
+          "action": "reduce_sets",
+          "fixes_key": "reduce_sets:highest_contributor",
+          "label": "Trim sets",
+          "detail": "Drop sets from the exercise that gives this muscle the most effective sets that day (min 2 sets per exercise)."
+        },
+        {
+          "rank": 3,
+          "id": "swap_fresher_exercise",
+          "action": "swap_exercise",
+          "fixes_key": "swap_exercise:fresher_same_muscle",
+          "label": "Swap to a fresher exercise",
+          "detail": "Swap one exercise for another that still trains this muscle (rating >= 0.5), is not already on that day, and has a lower per-set fatigue rating. Often only improves the flag (resolves=false), so it is shown last."
+        }
+      ],
+      "never_suggest": [
+        "add_sets",
+        "add_exercise"
+      ],
+      "never_suggest_note": "The flag is about too many sets in one workout, so adding sets is never a fix.",
+      "too_light": "dropped (vol9). With no decay, a small dose counts in full toward the weekly total, and volume-equated frequency does not change growth (Schoenfeld 2019; Pelland 2025). Its only fix was \"add sets\", which this round bans. Low weekly volume is still caught by weekly_volume.",
+      "category": "session",
+      "metric": "session_design",
+      "evidence": "modeled. Per-session diminishing returns: Remmert et al. 2025 SportRxiv PREPRINT (not peer-reviewed; Pelland is a co-author): hypertrophy rises with per-session volume with diminishing returns, linear-log best fit, point of undetectable outcome superiority ~11 fractional sets per session, interpret cautiously (little data at very high per-session volume). The same preprint cites an unpublished Krieger analysis (diminishing returns above ~6-8 sets per session); unpublished, not verified by us. Weekly volume: Pelland et al. 2024 SportRxiv preprint / Sports Medicine 2025 (diminishing returns with weekly volume; frequency has little effect when volume is equated) and Schoenfeld, Grgic & Krieger 2019 (J Sports Sci; volume-equated frequency, no significant difference): the basis for no longer penalising one-session layouts in weekly volume. Pelland 2024/2025 analyse WEEKLY volume and frequency, not per-session volume. The 6-10 hard sets per muscle per session range is practitioner judgement (e.g. RP volume-landmark material), not a study result. Limits come from the existing per-muscle session anchors (targets.json session.muscles[m].heavy), kept inside 6-10 and below the ~11 PUOS; beginner = intermediate - 2 (floor 6) and advanced = intermediate are modeling choices.",
+      "applies": {
+        "levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ],
+        "requires": []
+      }
+    },
+    {
       "id": "recovery_overlap",
       "severity": "info",
       "scope": "week",
@@ -982,129 +1465,6 @@
         ]
       },
       "note": "vol8: replaces recovery_gap_short. Next-day training after a normal session is not flagged (rest resets most of the decline); only streaks and clearly early repeats are."
-    },
-    {
-      "id": "session_dose",
-      "severity": "info",
-      "scope": "session",
-      "uses": "volume-model.json session.per_muscle + workout.stimulus",
-      "heavy_from": "low_return_from",
-      "light_below": 2.0,
-      "light_requires": "a direct exercise for that muscle that day (it is the prime mover)",
-      "message_heavy": "{muscle} gets {sets} effective sets on {day}. Past about {limit}, each extra set is worth less than half the first. Move some to another day.",
-      "message_light": "{muscle} gets only {sets} effective sets on {day}, below a useful dose of about 2. Add a set, or move this exercise to a day that trains {muscle} more.",
-      "fixes": [
-        "move_sets_to_day",
-        "reduce_sets:highest_contributor",
-        "add_sets"
-      ],
-      "short_label": "Session too heavy or too light for a muscle",
-      "short_label_variants": {
-        "heavy": "Too much for one session",
-        "light": "Too little to count"
-      },
-      "category": "session",
-      "metric": "session_design",
-      "evidence": "modeled (vol8d per-set decay calibrated to volume-equated frequency meta-analyses: Schoenfeld 2019, Pelland 2025; dose floor 2)",
-      "applies": {
-        "levels": [
-          "beginner",
-          "intermediate",
-          "advanced"
-        ],
-        "requires": []
-      },
-      "note": "vol8i: heavy when effective sets in one workout > max(1 + c, heavy_floor_sets = 6); c = c_by_level[user level][m] (c_by_muscle = intermediate, kept for old clients); limits below are intermediate, 1 + c = where the next set earns < half of set 1. The 6-set floor is practitioner judgement, not research. Chest group 21 (junk_volume_session, warn at > 10 raw, comes first), biceps/triceps/hams/glutes 16, side delts 12, rear delts/calves 11, all others 6. vol8d was 1 + 1.0 x heavy anchor (chest 11).",
-      "c_by_muscle": {
-        "chest": 20.0,
-        "front_delts": 4.5,
-        "side_delts": 11.0,
-        "rear_delts": 10.0,
-        "lats": 20.0,
-        "upper_back": 20.0,
-        "traps": 4.5,
-        "biceps": 15.0,
-        "triceps": 15.0,
-        "forearms": 1.5,
-        "abs": 4.5,
-        "quads": 20.0,
-        "hamstrings": 15.0,
-        "glutes": 15.0,
-        "calves": 10.0,
-        "adductors": 5.0,
-        "lower_back": 5.0,
-        "obliques": 1.5,
-        "abductors": 5.0
-      },
-      "c_by_level": {
-        "beginner": {
-          "chest": 13.0,
-          "front_delts": 4.0,
-          "side_delts": 8.5,
-          "rear_delts": 6.0,
-          "lats": 13.0,
-          "upper_back": 13.0,
-          "traps": 4.0,
-          "biceps": 11.0,
-          "triceps": 11.0,
-          "forearms": 1.5,
-          "abs": 4.0,
-          "quads": 13.0,
-          "hamstrings": 11.0,
-          "glutes": 11.0,
-          "calves": 6.0,
-          "adductors": 4.0,
-          "lower_back": 4.0,
-          "obliques": 1.5,
-          "abductors": 4.0
-        },
-        "intermediate": {
-          "chest": 20.0,
-          "front_delts": 4.5,
-          "side_delts": 11.0,
-          "rear_delts": 10.0,
-          "lats": 20.0,
-          "upper_back": 20.0,
-          "traps": 4.5,
-          "biceps": 15.0,
-          "triceps": 15.0,
-          "forearms": 1.5,
-          "abs": 4.5,
-          "quads": 20.0,
-          "hamstrings": 15.0,
-          "glutes": 15.0,
-          "calves": 10.0,
-          "adductors": 5.0,
-          "lower_back": 5.0,
-          "obliques": 1.5,
-          "abductors": 5.0
-        },
-        "advanced": {
-          "chest": 30.0,
-          "front_delts": 9.0,
-          "side_delts": 18.5,
-          "rear_delts": 21.0,
-          "lats": 30.0,
-          "upper_back": 30.0,
-          "traps": 9.0,
-          "biceps": 26.0,
-          "triceps": 26.0,
-          "forearms": 3.0,
-          "abs": 9.0,
-          "quads": 30.0,
-          "hamstrings": 26.0,
-          "glutes": 26.0,
-          "calves": 21.0,
-          "adductors": 10.0,
-          "lower_back": 10.0,
-          "obliques": 3.0,
-          "abductors": 10.0
-        }
-      },
-      "heavy_when_set_credit_below": 0.5,
-      "heavy_floor_sets": 6,
-      "heavy_limit": "max(1 + c, heavy_floor_sets)",
-      "heavy_floor_basis": "practitioner judgement, not research: fewer than 6 sets of one muscle in a workout is never worth flagging as too heavy"
     },
     {
       "id": "recovery_gap_long",
@@ -1196,11 +1556,12 @@
     "swap_exercise": {
       "params": {
         "target": "tile id",
-        "criteria": "stretch_biased | lower_fatigue | same_pattern | lower_spinal",
+        "criteria": "stretch_biased | lower_fatigue | same_pattern | lower_spinal | fresher_same_muscle",
         "uses": "swap.json scoring, best score first"
       },
       "preview": "Swap {name} for {new_name} on {day_name}",
-      "note": "lower_spinal means the candidate is not in heavy_squats or heavy_hinges and rates lower_back lower than the current exercise."
+      "note": "lower_spinal means the candidate is not in heavy_squats or heavy_hinges and rates lower_back lower than the current exercise.",
+      "fresher_same_muscle": "vol9: candidate still rates the flagged muscle >= 0.5, is not already on that day, and has a lower fatigue rating than the current exercise; swap.json scoring, best first."
     },
     "add_exercise": {
       "params": {
@@ -6867,5 +7228,17 @@
         "action": "reschedule: move every tile of that day to the nearest empty weekday (earlier first on a tie) whose result adds no non-info flag -> {op: remove} x n + {op: add} x n; none -> info only."
       }
     }
+  },
+  "session_efficiency_fix_order": {
+    "rule": "session_efficiency",
+    "order": [
+      "split_across_days",
+      "trim_sets",
+      "swap_fresher_exercise"
+    ],
+    "never": [
+      "add_sets",
+      "add_exercise"
+    ]
   }
 }

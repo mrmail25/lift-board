@@ -11,7 +11,7 @@ const pyR=RANK.pyRound,_r=(x,n=4)=>pyR(x,n),ORDER=PC.ORDER,DEFAULT_GOALS=['muscl
 const band=(dt,m,level)=>{const T=dt.targets.targets[m],LF=dt.targets.levelMinFactor;return [pyR(T.min*LF[level]*2)/2,T.max]};
 const S=(x,k)=>1-Math.exp(-x/k);
 function dayEff(dt,days,m){const o={};for(const d of days)if(d.tiles.length)o[d.day]=_r(PC.eff(dt,d.tiles)[m],4);return o}
-function curveX(dt,days,m){const sd=dt.targets.curve.session_discount;let x=0;for(const d of days){const v=d.tiles.length?PC.eff(dt,d.tiles)[m]:0;if(dt.VM){x+=PC.FACE?v:PC.sessCredit(dt,m,v);continue}x+=v<=sd.cap?v:sd.cap+(v-sd.cap)*sd.factor}return x}
+function curveX(dt,days,m){const sd=dt.targets.curve.session_discount;let x=0;for(const d of days){const v=d.tiles.length?PC.eff(dt,d.tiles)[m]:0;if(dt.VM){x+=PC.face(dt)?v:PC.sessCredit(dt,m,v);continue}x+=v<=sd.cap?v:sd.cap+(v-sd.cap)*sd.factor}return x}
 function status(dt,m,x,level){const [lo]=band(dt,m,level),c=PC._x.col(dt,m,x,level);if(c==='G')return 'in_range';return c==='A'?(x<lo?'under':'over'):(x<lo?'far_under':'far_over')}
 // one muscle (or every muscle with m == null): {id, label, short_label, anchor, sets, curve, frequency, stretch, one_side_share,
 // recovery_cost, stimulus_per_fatigue, fatigue, contributors, suggestions:{apply, ranked_adds}}

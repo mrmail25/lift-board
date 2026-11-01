@@ -16,9 +16,9 @@ function notes(dt,days,level,templates){const T={};templates.forEach(t=>T[t.id]=
   for(const m of FM){const hit=train.filter(d=>eff[d.day][m]>=fmin).map(d=>d.day);
     if(train.length>=2&&hit.length===1)out.push(N('freq_one_day',[m],null,{day_name:DAYN[hit[0]]}));else if(!hit.length)out.push(N('freq_none',[m]));else if(hit.length>=2)out.push(N('freq_two_plus',[m],null,{n:hit.length}))}
   for(const f of fl){if(f[1]==='consecutive_high_volume'){const nx=ORDER[ORDER.indexOf(f[2])+1];out.push(N('back_to_back',[f[3]],null,{day1:DAYN[f[2]],day2:DAYN[nx]}))}
-    if(f[1]==='junk_volume_session')out.push(N('crowded_session',[f[3]],'session',{sets:fmtPy1(f[4]),day_name:DAYN[f[2]]}))}
+    if(f[1]==='junk_volume_session'||f[1]==='session_efficiency')out.push(N('crowded_session',[f[3]],'session',{sets:fmtPy1(f[4]),day_name:DAYN[f[2]]}))}
   if(train.length>=2&&FM.every(m=>Object.keys(eff).filter(d=>eff[d][m]>=fmin).length>=2)){out=out.filter(n=>n.id!=='freq_two_plus');out.push(N('freq_all_main_twice',[]))}
-  if(!fl.some(f=>f[1]==='junk_volume_session'))out.push(N('session_cap_ok',[]));
+  if(!fl.some(f=>f[1]==='junk_volume_session'||f[1]==='session_efficiency'))out.push(N('session_cap_ok',[]));
   const imp=((dt.rules.check_priority||{}).importance||{}).muscle_weight||{};
   const key=n=>[n.polarity!=='negative'?1:0,n.muscles.length===0?1:0,n.muscles.length?-(imp[n.muscles[0]]||0):0,n.muscles[0]||'',n.id];
   const cmp=(a,b)=>{for(let k=0;k<a.length;k++){if(a[k]<b[k])return -1;if(a[k]>b[k])return 1}return 0};
