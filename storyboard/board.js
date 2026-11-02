@@ -10,6 +10,7 @@ const RD=()=>{if(window.GOALS)GOALS.sync();return X.RD},RD0=()=>X.RD,LEVELS=['be
 const WB=window.WHITEBOARD;
 const shortName=id=>WB.shortName(RD(),id);
 const ex=id=>RD().EX[id];
+const nbh=x=>String(x).replace(/-/g,'\u2011'); // vol14e: non-breaking hyphen so 'EZ-Bar' / 'Pull-Up' never split at the hyphen
 const repRange=id=>{const g=(X.prefs().goals||[]).filter(x=>x in RD().rules.rep_ranges.by_goal);return WB.repRange(RD(),id,g.length?g:null)};
 const repsFor=id=>repRange(id).display;
 const REP_STEP={reps:1,seconds:5,meters:5};
@@ -83,7 +84,7 @@ function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bm
   const bs=$('#bstate');if(bs)bs.innerHTML=stateLine();return st}
 // ------------------------------------------------------------- view
 function chit(t){const e=ex(t.id),g=WB.primaryRegion(RD(),t.id),sel=B.sel.has(t.u)?' sel':'';
-  return `<div class="chit${sel}" data-u="${t.u}" data-id="${t.id}" data-region="${g}" style="--mc:var(--region-${g})" role="button" tabindex="0" aria-label="${X.exNameP(t.id)}, ${t.sets} sets"><span class="cg ${e.type}" aria-hidden="true">${X.GLY[e.type]}</span><span class="cn">${shortName(t.id)}</span><span class="cs num">${t.sets}</span><span class="cf" aria-hidden="true">${fracLine(t.id)}</span></div>`}
+  return `<div class="chit${sel}" data-u="${t.u}" data-id="${t.id}" data-region="${g}" style="--mc:var(--region-${g})" role="button" tabindex="0" aria-label="${X.exNameP(t.id)}, ${t.sets} sets"><span class="cg ${e.type}" aria-hidden="true">${X.GLY[e.type]}</span><span class="cn">${nbh(shortName(t.id))}</span><span class="cs num">${t.sets}</span><span class="cf" aria-hidden="true">${fracLine(t.id)}</span></div>`}
 // item 6: an open template slot is a dashed placeholder (label + set range); it is not a tile, so stats and checks ignore it.
 const slotHtml=(d,s)=>`<button class="slotc" data-b="slot" data-day="${d.day}" data-sid="${s.sid}" aria-label="Open slot: ${s.label}, ${s.min} to ${s.max} sets. Tap to pick an exercise"><span class="cg ${s.type}" aria-hidden="true">${X.GLY[s.type]}</span><span class="sl">${s.label}</span><span class="sr">${s.min}–${s.max} sets</span></button>`;
 // vol10 notes: one plain line + a 'Nurd Sh!t ›' chip (the explain-sheet pattern) that opens the deeper detail and its source.
@@ -1116,3 +1117,14 @@ Object.assign(X.ROUTES,{
 window.BOARD={removeExercise:id=>{B.days.forEach(d=>{d.tiles=d.tiles.filter(t=>t.id!==id)});B.hist=B.hist.filter(h=>!h.includes(`"${id}"`));B.sel.clear();if($('#board'))paint();else cxSavePlaced();refreshTray()},
   countExercise:id=>sum(B.days.map(d=>d.tiles.filter(t=>t.id===id).length)),repaint:()=>{if($('#board'))paint();refreshTray()},fmt:{bfmt:(...a)=>bfmt(...a),bpct:(...a)=>bpct(...a)},loadPreset:id=>{const [sp,lv,n]=id.split('/'),s=presetSplits().find(x=>x.id===sp);loadDays(s.levels[lv][n],`${s.name} · ${n} days`);B.level=lv;B.hist=[];PCAP=null;APPLIED=[];X.render()},applyOps:ops=>{applyOpsBoard(ops);paint()},get pcheck(){return PCI},get detail(){return BD.detail},fracLine,muscleShort,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,ensurePlan:(days,name,level)=>{if(B.days.length)return false;loadDays(days,name);B.level=level||'intermediate';B.hist=[];B.dirty=false;B.version=1;B.edited=Date.now();B.fromLog=true;return true},progApply:ops=>{const before=snap();B.hist.push(before);applyOpsBoard(ops);B.days.forEach(d=>{if(d.tiles.length)d.rest=false});B.dirty=true;B.edited=Date.now();if($('#board'))paint();return before},progUndo:before=>{restore(before);if($('#board'))paint()},loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
 })();
+// vol14e: tile names never break mid-word. If one word is wider than the tile, shrink that name's font (down to 70%) until it fits.
+(()=>{const SEL='.chit .cn,.en';
+  const fit=e=>{if(!(e.clientWidth>0))return;const pc=e.parentElement;if(pc){pc.classList.remove('cnw');pc.classList.remove('enw')}if(e.dataset.fitBase!=null){if(e.style.fontSize===e.dataset.fitSet)e.style.fontSize=e.dataset.fitBase;delete e.dataset.fitBase;delete e.dataset.fitSet}
+    if(!(e.clientWidth>0)||e.scrollWidth<=e.clientWidth+0.5)return;const base=e.style.fontSize,f0=parseFloat(getComputedStyle(e).fontSize);e.dataset.fitBase=base;
+    const shrink=()=>{for(let f=f0-0.5;f>=f0*0.8&&e.scrollWidth>e.clientWidth+0.5;f-=0.5)e.style.fontSize=f+'px'};shrink();
+    const ch=e.parentElement&&/(^| )(chit)( |$)/.test(e.parentElement.className)?e.parentElement:null,li=!ch&&e.parentElement&&e.parentElement.tagName==='LI'?e.parentElement:null;
+    if(li&&e.scrollWidth>e.clientWidth+0.5){e.style.fontSize=base;li.classList.add('enw');if(e.scrollWidth>e.clientWidth+0.5)shrink()}
+    if(ch&&e.scrollWidth>e.clientWidth+0.5){e.style.fontSize=base;ch.classList.add('cnw');if(e.scrollWidth>e.clientWidth+0.5)shrink()}   // still too wide: give the name its own full-width row
+    e.dataset.fitSet=e.style.fontSize};
+  const all=()=>document.querySelectorAll(SEL).forEach(fit);let q=0;const sch=()=>{if(q)return;q=requestAnimationFrame(()=>{q=0;all()})};
+  window.fitNames=all;new MutationObserver(sch).observe(document.documentElement,{childList:true,subtree:true});addEventListener('resize',sch);if(document.fonts)document.fonts.ready.then(sch)})();

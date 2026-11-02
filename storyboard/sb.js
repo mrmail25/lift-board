@@ -266,7 +266,7 @@ function dayCard(r,d,i){
   const next=r.active&&i===r.next;
   return `<article class="day ${next?'next':''}"><div class="dh"><div><div class="eyebrow">${d.d} · Day ${i+1}${next?' · <span class="nx">Next up</span>':''}</div><h3>${d.n}</h3></div>
    <div class="dm num">${d.ex.length} exercises · ${setsOf(d)} sets<br>≈ ${d.min} min</div></div>
-   <ul>${d.ex.slice(0,6).map(e=>`<li>${gl(e.id)}<span class="en">${exName(e.id)}</span><span class="sr num">${e.s} × ${e.r}</span></li>`).join('')}</ul></article>`;
+   <ul>${d.ex.slice(0,6).map(e=>`<li>${gl(e.id)}<span class="en">${String(exName(e.id)).replace(/-/g,'\u2011')}</span><span class="sr num">${e.s} × ${e.r}</span></li>`).join('')}</ul></article>`;
 }
 function routineCard(r,mode){
   const di=S.day[r.id]??(r.active?r.next:0);

@@ -28,31 +28,31 @@ function scoreOf(dt,tid,v){const T=FC(dt).templates[tid]||{},s=T.significance;if
   if(tid==='payoff_past_efficient')return 60+Math.min(20,10*(v.sets_past_peak||0));if(tid==='weekly_needs_sets')return 90+Math.min(10,2*(v.short||0));return parseFloat(s)||0}
 // vol14e: the one short line a Plan day card shows per flag ('<Muscle>: <n> sets, <reason>'), derived from the template id and its fields.
 // short_text is used when it fits one card line (<= CARD_MAX chars); otherwise the line is built here. Full what/why/fix stays everywhere else.
-const CARD_MAX=44;
+const CARD_MAX=48;
 function cardLine(dt,tid,o,shortT){const v=o.vals||{},M=o.muscle?fillStr(dt,'{Muscle}',o.muscle,{}):'',S=x=>{const n=parseFloat(x);return `${x} set${n===1?'':'s'}`};
   if(shortT&&shortT.length<=CARD_MAX)return shortT;
   const L={payoff_past_efficient:()=>`${M}: ${S(v.sets)}, past the peak`,
     payoff_negative:()=>`${M}: ${S(v.sets)}, Payoff below 0`,
-    session_hard_sets:()=>`${v.day_sets} hard sets, over the ${v.cap} cap`,
-    session_hard_sets_info:()=>`${v.day_sets} hard sets, near the ${v.cap} cap`,
-    session_length:()=>`About ${v.minutes} min, over ${v.warn_min} min`,
+    session_hard_sets:()=>`${v.day_sets} hard sets, over the ${v.cap}-set cap`,
+    session_hard_sets_info:()=>`${v.day_sets} hard sets, near the ${v.cap}-set cap`,
+    session_length:()=>`About ${v.minutes} min, over the ${v.warn_min}-min limit`,
     session_length_info:()=>`About ${v.minutes} min, a long session`,
-    spinal_load:()=>`Squat + deadlift: ${S(v.sets)}, above ${v.max}`,
+    spinal_load:()=>`Squat + deadlift: ${S(v.sets)}, over the ${v.max}-set limit`,
     beginner_squat_and_deadlift:()=>`Heavy squats and deadlifts, same day`,
-    sets_per_exercise:()=>`${v.exercise}: ${S(v.sets)}, above ${v.max}`,
-    redundant_pattern:()=>`${M}: ${S(v.sets)}, one movement pattern`,
-    session_efficiency:()=>`${M}: ${S(v.sets)}, above the ${v.limit} limit`,
-    session_efficiency_single_day:()=>`${M}: all ${S(v.week_sets)} on one day`,
-    many_small_entries:()=>`${v.n} exercises, about ${v.avg} sets each`,
-    weekly_needs_sets:()=>`${M}: ${v.sets} sets/wk, below minimum`,
-    weekly_optional_low:()=>`${M}: ${v.sets} sets/wk, optional`,
-    weekly_far_over:()=>`${M}: ${v.sets} sets/wk, past the max`,
-    spinal_load_week:()=>`Squat + deadlift: ${S(v.sets)}/wk, above ${v.max}`,
-    consecutive_high_volume:()=>`${M}: hard ${v.day1} and ${v.day2}`,
-    recovery_overlap:()=>`${M}: ${v.gap_h} h rest, needs ${v.ready_h}`,
+    sets_per_exercise:()=>`${v.exercise}: ${S(v.sets)}, over the ${v.max}-set limit`,
+    redundant_pattern:()=>`${M}: ${S(v.sets)} of one movement, over the ${v.cap}-set limit`,
+    session_efficiency:()=>`${M}: ${S(v.sets)}, over the ${v.limit}-set workout limit`,
+    session_efficiency_single_day:()=>`${M}: all ${v.week_sets} weekly sets on one day`,
+    many_small_entries:()=>`${v.n} exercises, about ${v.avg} sets each (many small)`,
+    weekly_needs_sets:()=>`${M}: ${v.sets} sets/wk, below the ${v.min}-set minimum`,
+    weekly_optional_low:()=>`${M}: ${v.sets} sets/wk, optional muscle`,
+    weekly_far_over:()=>`${M}: ${v.sets} sets/wk, past the ${v.max}-set max`,
+    spinal_load_week:()=>`Squat + deadlift: ${v.sets} sets/wk, over the ${v.max}-set limit`,
+    consecutive_high_volume:()=>`${M}: hard sessions ${v.day1} and ${v.day2}`,
+    recovery_overlap:()=>`${M}: ${v.gap_h} h rest, needs about ${v.ready_h} h`,
     recovery_overlap_streak:()=>`${M}: ${v.n} hard days in a row`,
-    low_frequency:()=>`${M}: only ${v.n_days} a week`,
-    recovery_gap_long:()=>`${M}: ${v.gap_days} days between sessions`,
+    low_frequency:()=>`${M}: trained only ${v.n_days} a week`,
+    recovery_gap_long:()=>`${M}: ${v.gap_days} days between hard sessions`,
     missing_stretch:()=>`${M}: no stretched-position work`}[tid];
   return L?L():null}
 function mk(dt,tid,o){const T=FC(dt).templates[tid]||{},score=o.score!=null?o.score:scoreOf(dt,tid,o.sv||{});

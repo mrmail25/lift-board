@@ -1804,3 +1804,12 @@ svg.pwbars .pwbl{font-size:10px;fill:var(--text-2)}
 .rt-acts{grid-template-columns:repeat(auto-fit,minmax(min(100%,9em),1fr))}
 .rt-acts .btn{min-width:0;white-space:normal;height:auto;min-height:44px}
 .fl1.flc .flt{overflow-wrap:break-word}.fl1.flc .chev{color:var(--text-3)}
+/* vol14e: exercise tile names wrap only at spaces; a single word too long for the tile shrinks its font (fitNames in board.js) rather than breaking */
+.chit .cn,.en,.chit .cn *{overflow-wrap:normal!important;word-break:normal!important;hyphens:manual}
+.chit .cn,.en{min-width:0}
+.chit.cnw{grid-template-columns:16px minmax(0,1fr) auto;grid-template-areas:"g . s" "n n n";row-gap:3px;align-items:start}
+.chit.cnw .cg{grid-area:g}.chit.cnw .cs{grid-area:s}.chit.cnw .cn{grid-area:n}
+/* vol14e: at large text the day columns widen (the board scrolls sideways) so tile names keep whole words */
+@media (max-width:699px){.col{flex-basis:max(calc((100% - 6px)/2.5),6.5em)}}
+.day li{flex-wrap:wrap}.day li .en{min-width:auto}  /* a name never narrower than its longest word; the sets x reps wrap below instead */
+.day li.enw .en{flex:1 1 calc(100% - 28px)}
