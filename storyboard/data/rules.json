@@ -744,7 +744,7 @@
       "scope": "week",
       "min_ratio": 0.75,
       "max_ratio": 2.0,
-      "message": "Pull-to-push sets are {ratio}:1 this week. A common programming guideline keeps pulling between about 75% of pushing and 2x pushing, so the upper body is trained evenly. The band is a coaching convention, not a tested threshold.",
+      "message": "You have {pull} pulling sets and {push} pressing sets this week. Keeping pulling between about three quarters and twice your pressing keeps the upper body even. Add {gap} sets of {side}.",
       "fixes": {
         "ratio": [
           "add_sets(lagging side)",
@@ -777,7 +777,8 @@
         "requires": []
       },
       "category": "balance",
-      "metric": "push_pull_ratio"
+      "metric": "push_pull_ratio",
+      "message_history_vol13": "Pull-to-push sets are {ratio}:1 this week. A common programming guideline keeps pulling between about 75% of pushing and 2x pushing, so the upper body is trained evenly. The band is a coaching convention, not a tested threshold."
     },
     {
       "id": "missing_stretch",
@@ -1507,7 +1508,9 @@
         "label": "Modeled",
         "url": "https://doi.org/10.1007/s40279-025-02344-w",
         "note": "Weekly volume: diminishing returns. Basis for the weekly curve these targets sit on."
-      }
+      },
+      "optional_muscles_vol14b": "no under-target flag for rules optional_muscles (abductors); over-target unchanged",
+      "two_day_vol14c": "on a board with days_per_week == 2, under-minimum is info (flag id weekly_min_two_day), never warn; minimum compared on r1 (displayed value)"
     },
     {
       "id": "recovery_vs_baseline",
@@ -2234,7 +2237,74 @@
           "efficient_trim (via the checker)"
         ],
         "unchanged": "single-day exemption conditions: exactly one day with r2(effective sets) >= 1.00 (trained gate, not the limit) and r2(weekly) < weekly min + near_margin"
-      }
+      },
+      "display_severity": "info",
+      "display_limits": {
+        "beginner": {
+          "chest": 8,
+          "front_delts": 8,
+          "side_delts": 8,
+          "rear_delts": 8,
+          "lats": 8,
+          "upper_back": 8,
+          "traps": 8,
+          "biceps": 8,
+          "triceps": 8,
+          "forearms": 6,
+          "abs": 8,
+          "quads": 8,
+          "hamstrings": 8,
+          "glutes": 8,
+          "calves": 8,
+          "adductors": 6,
+          "lower_back": 6,
+          "obliques": 6,
+          "abductors": 6
+        },
+        "intermediate": {
+          "chest": 10,
+          "front_delts": 10,
+          "side_delts": 10,
+          "rear_delts": 10,
+          "lats": 10,
+          "upper_back": 10,
+          "traps": 10,
+          "biceps": 10,
+          "triceps": 10,
+          "forearms": 6,
+          "abs": 10,
+          "quads": 10,
+          "hamstrings": 10,
+          "glutes": 10,
+          "calves": 10,
+          "adductors": 6,
+          "lower_back": 6,
+          "obliques": 6,
+          "abductors": 6
+        },
+        "advanced": {
+          "chest": 10,
+          "front_delts": 10,
+          "side_delts": 10,
+          "rear_delts": 10,
+          "lats": 10,
+          "upper_back": 10,
+          "traps": 10,
+          "biceps": 10,
+          "triceps": 10,
+          "forearms": 6,
+          "abs": 10,
+          "quads": 10,
+          "hamstrings": 10,
+          "glutes": 10,
+          "calves": 10,
+          "adductors": 6,
+          "lower_back": 6,
+          "obliques": 6,
+          "abductors": 6
+        }
+      },
+      "display_note_vol14": "vol14: shown as an info note at display_limits (10/10/6 by size class; beginner 8/8/6), the most one workout can usefully take; the past-efficient warning is rules[id=payoff]. severity stays warn internally (tools/check_program.py + the stored Efficient presets); do not show it as a warning."
     },
     {
       "id": "session_efficiency_single_day",
@@ -2313,7 +2383,8 @@
           "advanced"
         ],
         "requires": []
-      }
+      },
+      "display_status": "retired (vol14): folded into payoff_past_efficient"
     },
     {
       "id": "efficient_trim",
@@ -2494,6 +2565,111 @@
       },
       "category": "balance",
       "metric": "pattern_coverage"
+    },
+    {
+      "id": "payoff",
+      "version": "vol14",
+      "label": "Modeled",
+      "scope": "muscle-day",
+      "severity": "warn",
+      "constants": {
+        "stim_tau": 4.0,
+        "fat_lin": 6.39,
+        "fat_quad": 0.077,
+        "compression": 0.5,
+        "gate_effective_sets": 1.0,
+        "peak_reference": 5,
+        "zero_reference": 13
+      },
+      "inputs": {
+        "n": "r2(effective sets for the muscle that day) = day-metrics muscles[m].stimulus_hard_set_eq (face value)",
+        "F": "r2(the muscle's own fatigue that day, fresh-set eq) = muscles[m].fatigue_fresh_set_eq (sum sets x rating x fatigue_per_set x effort[RIR + role offset])"
+      },
+      "formula": [
+        "gate: n >= 1.00 and F > 0, else no Payoff (no colour, no dot)",
+        "k = sqrt(F / n); f = sqrt(n x F)  (= k x n)",
+        "stimulus_pct = r1(100 x (1 - exp(-n / 4)))",
+        "fatigue_pct = r1(6.39 x f + 0.077 x f^2)",
+        "payoff = r1(stimulus_pct - fatigue_pct)",
+        "marginal = r2(25 x exp(-n / 4) / (k x (6.39 + 0.154 x f)))  (hidden next-set check; = d stimulus% / d fatigue% along this muscle-day's mix)",
+        "peak_n = n where marginal = 1 (bisection on [0, 40], 60 steps; r1); zero_n = n > peak_n where 100(1 - e^(-n/4)) = 6.39 k n + 0.077 (k n)^2 (bisection to 60; r1)",
+        "r1(x) = floor(10x + 0.5 + 1e-9) / 10; r2(x) = floor(100x + 0.5 + 1e-9) / 100 (half-up, also for negatives)"
+      ],
+      "bands": {
+        "green": "marginal >= 1.00 and payoff > 0 (rising side or at the peak: the next set still pays)",
+        "amber": "marginal < 1.00 and payoff >= 0 (past the peak, still positive)",
+        "red": "payoff < 0",
+        "none": "n < 1.00"
+      },
+      "fatigue_classes": [
+        {
+          "type": "primary",
+          "axial_class": "high",
+          "fatigue_per_set": 1.56,
+          "own_fatigue_per_effective_set": 1.56,
+          "payoff_multiplier": 1.249,
+          "peak_n": 4.1,
+          "zero_n": 10.0
+        },
+        {
+          "type": "primary",
+          "axial_class": "free_compound",
+          "fatigue_per_set": 1.32,
+          "own_fatigue_per_effective_set": 1.32,
+          "payoff_multiplier": 1.149,
+          "peak_n": 4.4,
+          "zero_n": 11.1
+        },
+        {
+          "type": "primary",
+          "axial_class": "machine_compound",
+          "fatigue_per_set": 1.2,
+          "own_fatigue_per_effective_set": 1.2,
+          "payoff_multiplier": 1.095,
+          "peak_n": 4.6,
+          "zero_n": 11.7
+        },
+        {
+          "type": "accessory",
+          "axial_class": "free_compound",
+          "fatigue_per_set": 1.1,
+          "own_fatigue_per_effective_set": 1.1,
+          "payoff_multiplier": 1.049,
+          "peak_n": 4.8,
+          "zero_n": 12.3
+        },
+        {
+          "type": "accessory",
+          "axial_class": "machine_compound",
+          "fatigue_per_set": 1.0,
+          "own_fatigue_per_effective_set": 1.0,
+          "payoff_multiplier": 1.0,
+          "peak_n": 5.0,
+          "zero_n": 13.0
+        },
+        {
+          "type": "isolation",
+          "axial_class": "isolation",
+          "fatigue_per_set": 0.72,
+          "own_fatigue_per_effective_set": 0.792,
+          "payoff_multiplier": 0.89,
+          "peak_n": 5.5,
+          "zero_n": 14.8
+        }
+      ],
+      "note": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build.",
+      "flags": {
+        "past_efficient": "band amber -> flag payoff_past_efficient (Plan-significant only when sets_past_peak >= 1)",
+        "negative": "band red -> flag payoff_negative"
+      },
+      "evidence": "modeled",
+      "nurd": {
+        "short": "Lift Board model (Modeled)",
+        "year": 2026,
+        "type": "model",
+        "label": "Modeled",
+        "note": "Shape only: diminishing returns per workout (Remmert et al. SportRxiv preprint 2025 and the 2026 MSSE conference abstract, not peer-reviewed). The constants are planning choices, not measurements."
+      }
     }
   ],
   "fix_actions": {
@@ -6477,19 +6653,19 @@
       },
       {
         "id": "volume_in_reach",
-        "label": "Every muscle within reach of its weekly range",
+        "label": "Every muscle gets enough weekly sets",
         "kind": "check",
         "section": "volume",
         "tab": "build_analysis",
-        "description": "Passes while no muscle is red: more than 2 sets under its level minimum, or more than 25% over its weekly maximum. Amber (close) passes.",
+        "description": "Passes when no muscle is below its weekly minimum and none is far over its range (rules weekly_status).",
         "explain": {
-          "what": "Passes while no muscle is red: more than 2 sets under its level minimum, or more than 25% over its weekly maximum. Amber (close) passes.",
+          "what": "Passes when no muscle is below its weekly minimum and none is far over its range (rules weekly_status).",
           "how": "weekly_volume rule on effective weekly sets per muscle. The flag names the muscle, its sets, and the exercises and days that credit it (none when the muscle gets no sets).",
           "why": "Far under, the model expects little growth stimulus for that muscle; far over, little extra stimulus for the added recovery cost.",
           "learn_page": "set-crediting-targets#status",
           "so_what": "If this needs attention, at least one muscle is far under or far over its range. Fix that first; it is the biggest lever on the page."
         },
-        "formula": "weekly_volume rule on effective weekly sets per muscle. The flag names the muscle, its sets, and the exercises and days that credit it (none when the muscle gets no sets).",
+        "formula": "rules.json weekly_status.check",
         "evidence": "modeled",
         "status": "added",
         "rules": [
@@ -6515,7 +6691,11 @@
         "is_suggestion_source": false,
         "shown_in": [
           "round 2"
-        ]
+        ],
+        "history_vol13": {
+          "label": "Every muscle within reach of its weekly range",
+          "description": "Passes while no muscle is red: more than 2 sets under its level minimum, or more than 25% over its weekly maximum. Amber (close) passes."
+        }
       },
       {
         "id": "stimulus_curve",
@@ -6772,9 +6952,9 @@
         "kind": "check",
         "section": "balance",
         "tab": "build_analysis",
-        "description": "Passes while weekly pulling sets are between 0.75x and 2x the pressing sets; shows the ratio.",
+        "description": "Passes while weekly pulling sets are between three quarters of and twice your pressing sets.",
         "explain": {
-          "what": "Passes while weekly pulling sets are between 0.75x and 2x the pressing sets; shows the ratio.",
+          "what": "Passes while weekly pulling sets are between three quarters of and twice your pressing sets.",
           "how": "Sets of exercises in rules.json push_patterns vs pull_patterns (legacy pattern map); the flag lists the pressing and pulling exercises with their sets.",
           "why": "A coaching convention for an even upper body, not a tested outcome; most programs land inside the band.",
           "learn_page": "exercise-selection#putting-together",
@@ -6816,7 +6996,10 @@
         ],
         "merged_from": [
           "push_pull_ratio"
-        ]
+        ],
+        "history_vol13": {
+          "description": "Passes while weekly pulling sets are between 0.75x and 2x the pressing sets; shows the ratio."
+        }
       },
       {
         "id": "pattern_coverage",
@@ -7417,7 +7600,7 @@
       },
       {
         "id": "stimulus_per_fatigue",
-        "label": "Stimulus per fatigue",
+        "label": "Retired",
         "kind": "measure",
         "section": "recovery_fatigue",
         "tab": "build_analysis",
@@ -7452,7 +7635,7 @@
         "merged_from": [
           "stimulus_per_fatigue"
         ],
-        "display_status": "retired (vol13)",
+        "display_status": "retired (vol13); vol14: no S:F anywhere in the UI",
         "retired_vol13": {
           "retired": [
             "per-muscle weekly stimulus-per-fatigue list",
@@ -8123,7 +8306,8 @@
     "checks_pass": {
       "definition": "pass = applicable kind=check items in pass; total = applicable kind=check items. Applicable: level in item.applies.levels and every item.applies.requires met (baseline_saved, training_days>=2). Info items never count.",
       "expected": null,
-      "function": "tools/analysis.py checks_pass(days, level, baseline) and expected_counts()"
+      "function": "tools/analysis.py checks_pass(days, level, baseline) and expected_counts()",
+      "vol14": "volume_in_reach reads rules weekly_status (needs_sets_count == 0 and no far_over); the header count and the check share that rule."
     },
     "rule_applicability": "applies: when the rule counts toward checks_pass. levels = levels it is evaluated at; requires = inputs it needs: baseline_saved (a saved normal-week recovery baseline), training_days>=2 (at least 2 days with a filled tile). Unfilled template slots are not tiles and are never checked.",
     "rule_categories": "Every rules[] entry has category (the section of its item) and metric (the id of the analysis item that shows it). The owning item decides whether a flag counts toward checks_pass."
@@ -8227,12 +8411,7 @@
       "max_growth"
     ],
     "default": "efficient",
-    "labels": {
-      "efficient": "Efficient",
-      "max_growth": "Max volume"
-    },
     "efficient": {
-      "label": "Efficient",
       "summary": "Weekly target at the low end of the sweet spot; session limit ~6 sets for big muscles.",
       "weekly": "rules[id=weekly_volume].targets_by_goal.efficient",
       "session_limits": "rules[id=session_efficiency].limits_by_goal.efficient",
@@ -8245,7 +8424,6 @@
       }
     },
     "max_growth": {
-      "label": "Max volume",
       "summary": "Weekly target at the high end of the sweet spot; session limit 10 sets for big and medium muscles (8 for beginners).",
       "weekly": "rules[id=weekly_volume].targets_by_goal.max_growth",
       "session_limits": "rules[id=session_efficiency].limits_by_goal.max_growth",
@@ -8259,12 +8437,626 @@
       }
     },
     "same_curve": "Both goals use the same weekly curve, anchors and zones; only the target marker and the session limits change.",
-    "toggle_label": "Approach",
-    "toggle_display": "Approach: Efficient / Max volume",
     "labels_history_vol12": {
       "efficient": "Efficient",
       "max_growth": "Max growth"
     },
-    "ids_note": "vol13: display labels only; ids efficient / max_growth unchanged."
+    "ids_note": "vol13: display labels only; ids efficient / max_growth unchanged.",
+    "history_vol13_display": {
+      "labels": {
+        "efficient": "Efficient",
+        "max_growth": "Max volume"
+      },
+      "toggle_label": "Approach",
+      "toggle_display": "Approach: Efficient / Max volume",
+      "efficient.label": "Efficient",
+      "max_growth.label": "Max volume"
+    },
+    "legacy_vol14": "Approach toggle removed (vol14). ids efficient / max_growth stay internal only: efficient = the stored presets (splits-efficient.json) and the per-workout caps used by the stored trim; max_growth = the caps for Push for max growth. Never displayed."
+  },
+  "suggestion_buttons": {
+    "version": "vol14",
+    "label": "Modeled (planning rules)",
+    "never_auto_run": true,
+    "undo": "snapshot the board before applying; one Undo restores it exactly",
+    "make_more_efficient": {
+      "label": "Make it more efficient",
+      "shows_when": "any muscle-day has payoff band amber or red",
+      "goal": "bring every muscle-day back to its Payoff peak (marginal >= 1) without dropping any muscle below its weekly minimum",
+      "algorithm": [
+        "1. Collect muscle-days with band amber or red. Order: red first, then larger sets_past_peak, then day mon..sun, then muscle A-Z.",
+        "2. Take the first. Candidates = tiles that day crediting the muscle. Rank with rules efficient_trim.tie_breaks (pools A/B/C; A = tiles in board order whose sets fall past peak_n, the payoff analogue of wasted_late_sets; key = lowest credit / muscle_fatigue first, then latest tile, then id).",
+        "3. Cut 1 set from the first candidate that passes efficient_trim.constraints (weekly minimum for EVERY muscle the tile credits: r2(weekly) >= volume_zones[level][m].min; min 1 set per exercise; no empty day; no new non-info flag).",
+        "4. If no cut passes: try a swap of the highest fatigue-class candidate to a lower fatigue class of the same pattern (rules fix_actions swap_exercise criteria lower_fatigue, swap.json scoring) that keeps every weekly minimum and lowers that muscle-day's k; else mark blocked.",
+        "5. Recompute and repeat until no amber/red muscle-day is left or all are blocked. Show a preview list (one line per change) before applying."
+      ],
+      "never": [
+        "drop a muscle below its weekly minimum",
+        "add sets or exercises",
+        "move tiles between days (that is the per-flag fix, not this button)",
+        "change exercise ids"
+      ],
+      "reuses": "rules efficient_trim (tie_breaks, constraints) with the session-limit trigger replaced by the Payoff band"
+    },
+    "push_for_max_growth": {
+      "label": "Push for max growth",
+      "shows_when": "any muscle is below the top of its weekly sweet spot (volume_zones[level][m].sweet[1]) and one of its days is under its cap",
+      "goal": "add sets toward each muscle's weekly sweet-spot top, never past the per-workout cap",
+      "caps": "rules session_efficiency.limits_by_goal.max_growth[level][m] (10/10/6 big/medium/small; beginner 8/8/6), compared as r1(effective sets) <= cap after the add",
+      "algorithm": [
+        "1. Muscles with r2(weekly) < sweet_top, largest gap first (then muscle A-Z).",
+        "2. Candidates = existing tiles crediting the muscle as prime (then secondary), on days where adding 1 set keeps r1(day effective sets) <= cap for EVERY muscle the tile credits.",
+        "3. Pick the day with the lowest current effective sets for the muscle, then the tile with the highest credit for it, then the lowest fatigue_per_set, then board order, then id. Add 1 set.",
+        "4. Constraints: sets_per_exercise <= 5, no new non-info flag (session_hard_sets, session_length, spinal_load), weekly r2 <= sweet_top + 0.5.",
+        "5. Repeat until no muscle below sweet_top has a feasible add. Show a preview list before applying."
+      ],
+      "never": [
+        "add exercises or days",
+        "exceed the per-workout cap",
+        "run without a tap"
+      ],
+      "note": "Adding sets past the Payoff peak is allowed here (that is the trade: more weekly growth for more fatigue); those muscle-days will read amber."
+    }
+  },
+  "weekly_status": {
+    "version": "vol14",
+    "value": "x = r2(weekly effective sets, face value)",
+    "zones": "targets.json volume_zones[level][m] {min, sweet, diminishing}",
+    "min_anchor_pct": 60,
+    "min_anchor_note": "the weekly minimum sits at 60% of the modeled maximum stimulus (rule of thumb; volume-model.json curve).",
+    "status": {
+      "needs_sets": "x < min",
+      "in_range": "min <= x <= diminishing",
+      "over": "diminishing < x <= diminishing x 1.25",
+      "far_over": "x > diminishing x 1.25"
+    },
+    "needs_sets_count": "number of muscles with status needs_sets",
+    "header": {
+      "some": "{n} muscles need sets",
+      "one": "1 muscle needs sets",
+      "none": "Every muscle has enough weekly sets"
+    },
+    "check": "analysis_metrics volume_in_reach passes iff needs_sets_count == 0 and no far_over. So \"N of N checks pass\" is impossible while any muscle needs sets.",
+    "flags": {
+      "needs_sets": "flag_copy.weekly_needs_sets",
+      "far_over": "flag_copy.weekly_far_over"
+    },
+    "why": "vol13 had two definitions: the check passed amber-under muscles (within 2 sets of min) and the panel counted muscles below the goal target. Both now read this rule.",
+    "internal": "tools/check_program.py weekly_volume (red only) still drives the stored Efficient trim; it is not shown."
+  },
+  "flag_copy": {
+    "version": "vol14",
+    "style": "Plain English. Each line says what is wrong, why it matters and the fix, with the real numbers. No check titles.",
+    "muscle_names": {
+      "chest": {
+        "name": "Chest",
+        "pronoun": "it",
+        "get": "gets",
+        "are": "is",
+        "go": "goes"
+      },
+      "front_delts": {
+        "name": "Front delts",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "side_delts": {
+        "name": "Side delts",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "rear_delts": {
+        "name": "Rear delts",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "lats": {
+        "name": "Lats",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "upper_back": {
+        "name": "Upper back",
+        "pronoun": "it",
+        "get": "gets",
+        "are": "is",
+        "go": "goes"
+      },
+      "traps": {
+        "name": "Traps",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "biceps": {
+        "name": "Biceps",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "triceps": {
+        "name": "Triceps",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "forearms": {
+        "name": "Forearms",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "abs": {
+        "name": "Abs",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "quads": {
+        "name": "Quads",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "hamstrings": {
+        "name": "Hamstrings",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "glutes": {
+        "name": "Glutes",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "calves": {
+        "name": "Calves",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "adductors": {
+        "name": "Inner thighs",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "lower_back": {
+        "name": "Lower back",
+        "pronoun": "it",
+        "get": "gets",
+        "are": "is",
+        "go": "goes"
+      },
+      "obliques": {
+        "name": "Obliques",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      },
+      "abductors": {
+        "name": "Outer hips",
+        "pronoun": "them",
+        "get": "get",
+        "are": "are",
+        "go": "go"
+      }
+    },
+    "grammar": "{Muscle} = muscle_names[m].name; {get}/{are}/{go}/{them} from muscle_names[m] (chest, upper back, lower back are singular)",
+    "ranking": {
+      "score": "significance (number, or the formula given)",
+      "plan_daily": "top 2 per day among flags with plan_eligible true and score >= 50",
+      "plan_weekly": "top 2 for the week among flags with plan_eligible true and score >= 50",
+      "ties": "higher score, then warn before info, then day mon..sun, then muscle A-Z",
+      "rest": "everything else stays in Analysis"
+    },
+    "retired_check_titles": "rules[].short_label and short_label_variants are not displayed (vol14); kept for code ids only.",
+    "templates": {
+      "payoff_past_efficient": {
+        "scope": "day",
+        "severity": "warn",
+        "significance": "60 + min(20, 10 x sets_past_peak); Plan only when sets_past_peak >= 1",
+        "template": "{Muscle} {get} {sets} hard sets on {day}. After about {peak} sets in one workout, each extra set costs more recovery than it builds. Move {extra} sets to another day, or tap Make it more efficient.",
+        "what": "Past the most efficient dose for one workout.",
+        "why": "Extra sets still add a little growth but cost more recovery than they return.",
+        "fix": "move_sets_to_day, then reduce_sets, then swap to a lower-fatigue exercise (suggestion button Make it more efficient)",
+        "placeholders": {
+          "sets": "r1(effective sets)",
+          "peak": "r1(muscles[m].payoff.peak_n)",
+          "extra": "ceil(2 x (sets - peak)) / 2"
+        },
+        "plan_eligible": true
+      },
+      "payoff_negative": {
+        "scope": "day",
+        "severity": "warn",
+        "significance": 95,
+        "template": "{Muscle} {get} {sets} hard sets on {day}, past the point where they pay off. From about {zero} sets, extra sets cost more recovery than they build. Move at least {extra} sets to another day.",
+        "what": "Payoff is below zero for this muscle today.",
+        "why": "The last sets add more fatigue than growth, and slow recovery for the next session.",
+        "fix": "move_sets_to_day, then reduce_sets",
+        "placeholders": {
+          "sets": "r1(effective sets)",
+          "zero": "r1(payoff.zero_n)",
+          "extra": "ceil(2 x (sets - peak)) / 2"
+        },
+        "plan_eligible": true
+      },
+      "session_hard_sets": {
+        "scope": "day",
+        "severity": "warn",
+        "significance": 85,
+        "template": "{day} has {sets} hard sets, more than the {max} that fit one good workout at your level. Late sets get sloppy and recovery takes longer. Move a few sets to a lighter day.",
+        "what": "Too many total sets in one day.",
+        "why": "Quality drops late in a long session.",
+        "fix": "reduce_sets / move_tile",
+        "placeholders": {
+          "sets": "day hard sets",
+          "max": "warn_above[level]"
+        },
+        "plan_eligible": true
+      },
+      "session_hard_sets_info": {
+        "scope": "day",
+        "severity": "info",
+        "significance": 25,
+        "template": "{day} has {sets} hard sets, close to the {max} that fit one workout at your level.",
+        "what": "Near the daily cap.",
+        "why": "Leaves little room to add work.",
+        "fix": "none needed",
+        "placeholders": {
+          "sets": "",
+          "max": ""
+        },
+        "plan_eligible": false
+      },
+      "session_length": {
+        "scope": "day",
+        "severity": "warn",
+        "significance": 80,
+        "template": "{day} runs about {min} minutes, longer than the {warn_min} minutes most people can keep every set hard. Cut a few sets or split the day.",
+        "what": "The day is long.",
+        "why": "Effort and focus fade in long sessions.",
+        "fix": "reduce_sets / move_tile",
+        "placeholders": {
+          "min": "estimated minutes",
+          "warn_min": "warn_min"
+        },
+        "plan_eligible": true
+      },
+      "session_length_info": {
+        "scope": "day",
+        "severity": "info",
+        "significance": 25,
+        "template": "{day} runs about {min} minutes. Put the big lifts first so they get your best effort.",
+        "what": "Getting long.",
+        "why": "Big lifts suffer most when tired.",
+        "fix": "reorder",
+        "placeholders": {
+          "min": ""
+        },
+        "plan_eligible": false
+      },
+      "spinal_load": {
+        "scope": "day",
+        "severity": "warn",
+        "significance": 80,
+        "template": "{day} has {sets} heavy squat and deadlift sets, more than {max}. Your lower back takes the load from all of them. Move some to another day or swap one for a machine version.",
+        "what": "Heavy back loading in one day.",
+        "why": "The lower back recovers slowly and limits the next leg day.",
+        "fix": "swap_exercise:lower_spinal / move_tile",
+        "placeholders": {
+          "sets": "",
+          "max": "session_warn_above[level]"
+        },
+        "plan_eligible": true
+      },
+      "beginner_squat_and_deadlift": {
+        "scope": "day",
+        "severity": "info",
+        "significance": 75,
+        "template": "{day} has heavy squats and heavy deadlifts together. For a newer lifter that is a lot of lower-back work in one day. Put them on different days.",
+        "what": "Both heavy lower-body lifts on one day.",
+        "why": "Hard to keep good form on the second one.",
+        "fix": "move_tile",
+        "placeholders": {},
+        "plan_eligible": true
+      },
+      "sets_per_exercise": {
+        "scope": "day",
+        "severity": "warn",
+        "significance": 55,
+        "template": "{exercise} on {day} has {sets} sets. After about 5, more sets of the same exercise add little. Use 2 to 4 sets, or split them across two exercises.",
+        "what": "One exercise carries too many sets.",
+        "why": "Returns drop and joints take repeated stress.",
+        "fix": "split_pattern / reduce_sets",
+        "placeholders": {
+          "exercise": "",
+          "sets": ""
+        },
+        "plan_eligible": true
+      },
+      "redundant_pattern": {
+        "scope": "day",
+        "severity": "warn",
+        "significance": 50,
+        "template": "The {pattern} exercises on {day} give {muscle} {sets} hard sets in one workout. That much of the same movement mostly adds fatigue. Move one to another day.",
+        "what": "Same movement stacked on one day.",
+        "why": "Repeats the same stress without much extra growth.",
+        "fix": "move_tile / reduce_sets",
+        "placeholders": {
+          "pattern": "",
+          "sets": ""
+        },
+        "plan_eligible": true
+      },
+      "session_efficiency": {
+        "scope": "day",
+        "severity": "info",
+        "significance": 45,
+        "template": "{Muscle} {get} {sets} hard sets on {day}, above the {limit} one workout can usefully take. This is where the Push for max growth button stops adding sets.",
+        "what": "Above the most a single workout can usefully take.",
+        "why": "Research on sets per workout finds little extra growth past about this point (preprint).",
+        "fix": "move_sets_to_day",
+        "placeholders": {
+          "limit": "rules session_efficiency.display_limits[level][m] (10/10/6 by size class; beginner 8/8/6)"
+        },
+        "plan_eligible": false
+      },
+      "session_efficiency_single_day": {
+        "scope": "day",
+        "severity": "info",
+        "significance": 20,
+        "template": "{Muscle} {get} all {sets} weekly hard sets on {day}. A second day for {them} would spread the work out.",
+        "what": "All weekly work on one day.",
+        "why": "Two sessions are easier to keep hard.",
+        "fix": "move_sets_to_day",
+        "placeholders": {
+          "them": "muscle pronoun"
+        },
+        "plan_eligible": false
+      },
+      "wasted_late_sets": {
+        "scope": "day",
+        "severity": "info",
+        "significance": 0,
+        "template": "Retired in vol14: folded into payoff_past_efficient.",
+        "what": "",
+        "why": "",
+        "fix": "",
+        "placeholders": {},
+        "plan_eligible": false,
+        "retired": true
+      },
+      "many_small_entries": {
+        "scope": "day",
+        "severity": "info",
+        "significance": 30,
+        "template": "{day} has {n} exercises with under 2 sets each. That is a lot of setup for little work. Merge some into fewer exercises with 3 sets.",
+        "what": "Many tiny entries.",
+        "why": "Setup time adds up.",
+        "fix": "merge_tiles",
+        "placeholders": {},
+        "plan_eligible": false
+      },
+      "weekly_needs_sets": {
+        "scope": "week",
+        "severity": "warn",
+        "significance": "90 + min(10, 2 x (min - sets))",
+        "template": "{Muscle} {get} only {sets} hard sets a week. Most people need about {min} to grow {them}. Add {gap} sets, for example {exercise} on {day}.",
+        "what": "Below the weekly minimum.",
+        "why": "Under the minimum, growth for this muscle is likely slow.",
+        "fix": "add_sets / add_exercise (Push for max growth also fills toward the top of the sweet spot)",
+        "placeholders": {
+          "sets": "r1(weekly effective sets)",
+          "min": "volume_zones[level][m].min",
+          "gap": "ceil(2 x (min - sets)) / 2",
+          "exercise": "best add_sets candidate (existing tile) or staple",
+          "day": "its day"
+        },
+        "plan_eligible": true,
+        "replaces_message": "weekly_volume (under)"
+      },
+      "weekly_far_over": {
+        "scope": "week",
+        "severity": "warn",
+        "significance": 80,
+        "template": "{Muscle} {get} {sets} hard sets a week, well past the {max} where extra sets stop adding much. The extra work mainly slows recovery. Trim about {extra} sets.",
+        "what": "Far above the useful weekly range.",
+        "why": "Recovery cost keeps rising while growth flattens.",
+        "fix": "reduce_sets:highest_contributor",
+        "placeholders": {
+          "max": "volume_zones[level][m].diminishing",
+          "extra": "ceil(2 x (sets - max)) / 2"
+        },
+        "plan_eligible": true,
+        "replaces_message": "weekly_volume (over)"
+      },
+      "pattern_gap": {
+        "scope": "week",
+        "severity": "warn",
+        "significance": 75,
+        "template": "Your week has no {slot_lower}. Without it, the muscles it trains miss a whole direction of work. Add one, for example {examples}.",
+        "what": "A key movement is missing.",
+        "why": "Leaves muscles under-trained and the body unbalanced.",
+        "fix": "add_slot_exercise",
+        "placeholders": {},
+        "plan_eligible": true
+      },
+      "push_pull_imbalance": {
+        "scope": "week",
+        "severity": "warn",
+        "significance": 70,
+        "template": "You have {pull} pulling sets and {push} pressing sets this week. Keeping pulling between about three quarters and twice your pressing keeps the upper body even. Add {gap} sets of {side}.",
+        "what": "Pressing and pulling are out of balance.",
+        "why": "The weaker side falls behind and shoulders can feel it.",
+        "fix": "add_sets(lagging side)",
+        "placeholders": {
+          "pull": "",
+          "push": "",
+          "gap": "",
+          "side": "rows or pulldowns / presses"
+        },
+        "plan_eligible": true,
+        "replaces_message": "push_pull_imbalance.message (no ratio wording)"
+      },
+      "push_pull_no_pull": {
+        "scope": "week",
+        "severity": "warn",
+        "significance": 70,
+        "template": "Your week has pressing but no pulling. Add a row or pulldown so the back keeps up with the chest.",
+        "what": "No pulling.",
+        "why": "Back and rear shoulders get no direct work.",
+        "fix": "add_exercise",
+        "placeholders": {},
+        "plan_eligible": true
+      },
+      "push_pull_no_push": {
+        "scope": "week",
+        "severity": "warn",
+        "significance": 70,
+        "template": "Your week has pulling but no pressing. Add a press so the chest and shoulders keep up.",
+        "what": "No pressing.",
+        "why": "Chest and front shoulders get no direct work.",
+        "fix": "add_exercise",
+        "placeholders": {},
+        "plan_eligible": true
+      },
+      "spinal_load_week": {
+        "scope": "week",
+        "severity": "warn",
+        "significance": 70,
+        "template": "You have {sets} heavy squat and deadlift sets this week, more than {max}. That much back loading adds up across the week. Swap some for machine or supported versions.",
+        "what": "Heavy back loading across the week.",
+        "why": "Limits recovery between leg days.",
+        "fix": "swap_exercise:lower_spinal",
+        "placeholders": {},
+        "plan_eligible": true
+      },
+      "consecutive_high_volume": {
+        "scope": "week",
+        "severity": "warn",
+        "significance": 65,
+        "template": "{Muscle} {get} a hard session on both {day1} and {day2}. One day is not enough to recover. Move one of them later, or make it lighter.",
+        "what": "Back-to-back hard days.",
+        "why": "The second day starts tired.",
+        "fix": "move_sets_to_day",
+        "placeholders": {},
+        "plan_eligible": true
+      },
+      "recovery_vs_baseline": {
+        "scope": "week",
+        "severity": "info",
+        "significance": 60,
+        "template": "This week costs about {pct}% of your normal week in recovery. Expect to feel more tired than usual.",
+        "what": "Heavier week than normal.",
+        "why": "Fatigue builds across the week.",
+        "fix": "reduce_sets:highest_fatigue",
+        "placeholders": {},
+        "plan_eligible": true
+      },
+      "recovery_overlap": {
+        "scope": "week",
+        "severity": "info",
+        "significance": 55,
+        "template": "{Muscle} {are} trained again on {day2}, {gap} after a big {day1} session that needs about {ready}. Move it a day later, or trim {muscle} sets on {day2}.",
+        "what": "Not recovered yet.",
+        "why": "Sets on a tired muscle count for less.",
+        "fix": "move_sets_to_day",
+        "placeholders": {},
+        "plan_eligible": true
+      },
+      "recovery_overlap_streak": {
+        "scope": "week",
+        "severity": "info",
+        "significance": 55,
+        "template": "{Muscle} {are} trained hard {n} days in a row. Give {them} a day off in between, or make one of those days light.",
+        "what": "No rest day.",
+        "why": "Recovery never catches up.",
+        "fix": "move_sets_to_day",
+        "placeholders": {},
+        "plan_eligible": true
+      },
+      "hinge_before_squat": {
+        "scope": "week",
+        "severity": "info",
+        "significance": 50,
+        "template": "Heavy deadlifts on {day1} come right before heavy squats on {day2}. Your lower back and hips will still be tired. Put a day between them.",
+        "what": "Deadlift then squat.",
+        "why": "Second lift starts fatigued.",
+        "fix": "move_tile",
+        "placeholders": {},
+        "plan_eligible": true
+      },
+      "missing_stretch": {
+        "scope": "week",
+        "severity": "info",
+        "significance": 30,
+        "template": "No exercise trains {muscle} in a stretched position this week. Training long tends to build more muscle. Try {examples}.",
+        "what": "No stretch-focused work.",
+        "why": "Long-length training tends to grow more.",
+        "fix": "swap_exercise:stretch_biased",
+        "placeholders": {},
+        "plan_eligible": false
+      },
+      "low_frequency": {
+        "scope": "week",
+        "severity": "info",
+        "significance": 30,
+        "template": "{Muscle} {get} real work on only {n} day this week. Splitting the sets over two days makes them easier to keep hard; the weekly total still matters most.",
+        "what": "Trained once a week.",
+        "why": "Long sessions for one muscle are hard to keep productive.",
+        "fix": "move_sets_to_day",
+        "placeholders": {},
+        "plan_eligible": false
+      },
+      "recovery_gap_long": {
+        "scope": "week",
+        "severity": "info",
+        "significance": 25,
+        "template": "{Muscle} {go} {gap} between hard sessions. Training {them} every 2 to 4 days gives more growth signals; the weekly total still matters most.",
+        "what": "Long gap.",
+        "why": "Fewer growth signals per week.",
+        "fix": "move_sets_to_day",
+        "placeholders": {},
+        "plan_eligible": false
+      }
+    },
+    "payoff_note": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build."
+  },
+  "optional_muscles": {
+    "version": "vol14b",
+    "muscles": [
+      "abductors"
+    ],
+    "abductors": {
+      "status": "optional",
+      "severity": "info",
+      "weekly_minimum_flag": false,
+      "targets_kept_for_display": true,
+      "note": "Optional (info only): glute work covers most outer-hip work, so there is no weekly minimum flag. Targets stay for display. Practitioner judgement, not a study result.",
+      "evidence": "modeled",
+      "label": "practitioner judgement"
+    }
   }
 }

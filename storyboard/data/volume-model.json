@@ -5560,8 +5560,8 @@
     {
      "name": "Classic 3-day full body",
      "source": "splits.json full-body intermediate 3-day",
-     "week_cost": 61.684,
-     "hard_sets": 61
+     "week_cost": 63.476,
+     "hard_sets": 63
     },
     {
      "name": "4-day upper/lower",
@@ -11450,11 +11450,14 @@
    "label": "Modeled",
    "note": "Derived from existing model parameters; no study measures this number."
   },
-  "labels": {
-   "efficient": "Efficient",
-   "max_growth": "Max volume"
+  "history_vol13_display": {
+   "labels": {
+    "efficient": "Efficient",
+    "max_growth": "Max volume"
+   },
+   "toggle_display": "Approach: Efficient / Max volume"
   },
-  "toggle_display": "Approach: Efficient / Max volume"
+  "legacy_vol14": "Approach toggle removed; ids internal only."
  },
  "day_metrics": {
   "version": "vol11",
@@ -11513,7 +11516,7 @@
     "formula": "stimulus / minutes[m]; minutes[m] = sum over tiles crediting m of sets x (work_min_per_set + rest_min_by_type[type]) x rating share (rules session_length.by_level[level])",
     "unit": "effective sets per minute",
     "assumption": "Modeled minutes per set by type (star = primary, plus = accessory, circle = isolation): work 0.75 min + rest; intermediate rest 3.0 / 2.0 / 1.5 min (beginner 2.5/2.0/1.5, advanced 3.5/2.5/1.5). Warm-up minutes are excluded. Rest values follow rules session_length (Schoenfeld 2016; Singer 2024); work time and the plus rest are practitioner planning values.",
-    "reference": "per_min_vs_benchmark_pct: 100 = the median muscle-day across the 46 presets at intermediate (0.677 effective sets per minute; quartiles [0.578, 0.677, 0.817]); per_min_pct_of_preset_avg: 100 = the preset's week average",
+    "reference": "per_min_vs_benchmark_pct: 100 = the median muscle-day across the 46 presets at intermediate (0.677 effective sets per minute; quartiles [0.578, 0.677, 0.818]); per_min_pct_of_preset_avg: 100 = the preset's week average",
     "benchmark_per_min": 0.677,
     "nurd": {
      "short": "Schoenfeld et al. 2016, JSCR; Singer et al. 2024",
@@ -11541,7 +11544,7 @@
     "vol10_sfr": {
      "formula": "sfr = stimulus / fatigue",
      "unit": "effective sets per load point",
-     "index": "sfr_index = round(100 x sfr / 1.82); 100 = the median muscle-day across the 46 presets at intermediate (465 muscle-days with >= 2 effective sets; quartiles [1.64, 1.82, 2.15])",
+     "index": "sfr_index = round(100 x sfr / 1.82); 100 = the median muscle-day across the 46 presets at intermediate (469 muscle-days with >= 2 effective sets; quartiles [1.64, 1.82, 2.19])",
      "zones": [
       {
        "id": "low",
@@ -11626,16 +11629,16 @@
        "median": 42.22,
        "n": 10,
        "iqr": [
-        33.09,
-        44.04
+        34.21,
+        45.8
        ]
       },
       "fatigue_points": {
        "median": 20.57,
        "n": 10,
        "iqr": [
-        19.52,
-        21.26
+        20.06,
+        21.9
        ]
       }
      },
@@ -11681,15 +11684,15 @@
        "n": 7,
        "iqr": [
         27.57,
-        34.35
+        36.89
        ]
       },
       "fatigue_points": {
-       "median": 18.1,
+       "median": 18.86,
        "n": 7,
        "iqr": [
         17.82,
-        19.26
+        20.06
        ]
       }
      },
@@ -11699,7 +11702,7 @@
        "n": 5,
        "iqr": [
         37.36,
-        37.36
+        42.76
        ]
       },
       "fatigue_points": {
@@ -11707,7 +11710,7 @@
        "n": 5,
        "iqr": [
         18.56,
-        18.56
+        20.76
        ]
       }
      },
@@ -11789,7 +11792,7 @@
        "n": 8,
        "iqr": [
         34.48,
-        38.29
+        38.91
        ]
       },
       "fatigue_points": {
@@ -11797,7 +11800,7 @@
        "n": 8,
        "iqr": [
         18.11,
-        21.2
+        21.53
        ]
       }
      }
@@ -11816,7 +11819,7 @@
        "median": 2.77,
        "n": 32,
        "iqr": [
-        1.94,
+        1.81,
         4.85
        ]
       }
@@ -11826,7 +11829,7 @@
        "median": 3.0,
        "n": 34,
        "iqr": [
-        2.16,
+        1.89,
         4.19
        ]
       },
@@ -11860,15 +11863,15 @@
      "rear_delts": {
       "stimulus_eff_sets": {
        "median": 3.62,
-       "n": 31,
+       "n": 32,
        "iqr": [
-        2.84,
-        4.25
+        2.72,
+        4.21
        ]
       },
       "fatigue_points": {
-       "median": 1.35,
-       "n": 31,
+       "median": 1.44,
+       "n": 32,
        "iqr": [
         1.25,
         1.86
@@ -11877,7 +11880,7 @@
      },
      "lats": {
       "stimulus_eff_sets": {
-       "median": 4.89,
+       "median": 5.15,
        "n": 32,
        "iqr": [
         3.0,
@@ -11885,7 +11888,7 @@
        ]
       },
       "fatigue_points": {
-       "median": 2.12,
+       "median": 2.24,
        "n": 32,
        "iqr": [
         1.36,
@@ -11896,17 +11899,17 @@
      "upper_back": {
       "stimulus_eff_sets": {
        "median": 4.6,
-       "n": 36,
+       "n": 37,
        "iqr": [
         1.96,
-        5.59
+        5.6
        ]
       },
       "fatigue_points": {
-       "median": 1.71,
-       "n": 36,
+       "median": 1.91,
+       "n": 37,
        "iqr": [
-        0.97,
+        0.96,
         2.33
        ]
       }
@@ -11916,7 +11919,7 @@
        "median": 2.88,
        "n": 37,
        "iqr": [
-        2.07,
+        2.31,
         4.43
        ]
       },
@@ -11931,19 +11934,19 @@
      },
      "biceps": {
       "stimulus_eff_sets": {
-       "median": 4.16,
-       "n": 33,
+       "median": 4.02,
+       "n": 34,
        "iqr": [
         2.95,
-        5.58
+        5.43
        ]
       },
       "fatigue_points": {
-       "median": 2.16,
-       "n": 33,
+       "median": 2.13,
+       "n": 34,
        "iqr": [
         1.47,
-        3.02
+        2.92
        ]
       }
      },
@@ -11952,7 +11955,7 @@
        "median": 3.35,
        "n": 35,
        "iqr": [
-        2.36,
+        2.4,
         5.7
        ]
       },
@@ -12004,7 +12007,7 @@
      "quads": {
       "stimulus_eff_sets": {
        "median": 5.0,
-       "n": 30,
+       "n": 31,
        "iqr": [
         3.0,
         6.0
@@ -12012,17 +12015,17 @@
       },
       "fatigue_points": {
        "median": 2.68,
-       "n": 30,
+       "n": 31,
        "iqr": [
-        1.66,
+        1.59,
         3.96
        ]
       }
      },
      "hamstrings": {
       "stimulus_eff_sets": {
-       "median": 5.0,
-       "n": 29,
+       "median": 4.63,
+       "n": 30,
        "iqr": [
         3.0,
         6.0
@@ -12030,7 +12033,7 @@
       },
       "fatigue_points": {
        "median": 3.31,
-       "n": 29,
+       "n": 30,
        "iqr": [
         2.38,
         3.45
@@ -12040,7 +12043,7 @@
      "glutes": {
       "stimulus_eff_sets": {
        "median": 4.32,
-       "n": 29,
+       "n": 31,
        "iqr": [
         3.49,
         5.85
@@ -12048,7 +12051,7 @@
       },
       "fatigue_points": {
        "median": 2.23,
-       "n": 29,
+       "n": 31,
        "iqr": [
         1.38,
         3.03
@@ -12115,7 +12118,7 @@
        "n": 19,
        "iqr": [
         1.0,
-        1.47
+        1.5
        ]
       },
       "fatigue_points": {
@@ -12182,16 +12185,16 @@
          "median": 42.22,
          "n": 10,
          "iqr": [
-          33.09,
-          44.04
+          34.21,
+          45.8
          ]
         },
         "fatigue_points": {
          "median": 20.57,
          "n": 10,
          "iqr": [
-          19.52,
-          21.26
+          20.06,
+          21.9
          ]
         }
        },
@@ -12237,15 +12240,15 @@
          "n": 7,
          "iqr": [
           27.57,
-          34.35
+          36.89
          ]
         },
         "fatigue_points": {
-         "median": 18.1,
+         "median": 18.86,
          "n": 7,
          "iqr": [
           17.82,
-          19.26
+          20.06
          ]
         }
        },
@@ -12255,7 +12258,7 @@
          "n": 5,
          "iqr": [
           37.36,
-          37.36
+          42.76
          ]
         },
         "fatigue_points": {
@@ -12263,7 +12266,7 @@
          "n": 5,
          "iqr": [
           18.56,
-          18.56
+          20.76
          ]
         }
        },
@@ -12345,7 +12348,7 @@
          "n": 8,
          "iqr": [
           34.48,
-          38.29
+          38.91
          ]
         },
         "fatigue_points": {
@@ -12353,7 +12356,7 @@
          "n": 8,
          "iqr": [
           18.11,
-          21.2
+          21.53
          ]
         }
        }
@@ -12372,7 +12375,7 @@
          "median": 2.77,
          "n": 32,
          "iqr": [
-          1.94,
+          1.81,
           4.85
          ]
         }
@@ -12382,7 +12385,7 @@
          "median": 3.0,
          "n": 34,
          "iqr": [
-          2.16,
+          1.89,
           4.19
          ]
         },
@@ -12416,15 +12419,15 @@
        "rear_delts": {
         "stimulus_eff_sets": {
          "median": 3.62,
-         "n": 31,
+         "n": 32,
          "iqr": [
-          2.84,
-          4.25
+          2.72,
+          4.21
          ]
         },
         "fatigue_points": {
-         "median": 1.35,
-         "n": 31,
+         "median": 1.44,
+         "n": 32,
          "iqr": [
           1.25,
           1.86
@@ -12433,7 +12436,7 @@
        },
        "lats": {
         "stimulus_eff_sets": {
-         "median": 4.89,
+         "median": 5.15,
          "n": 32,
          "iqr": [
           3.0,
@@ -12441,7 +12444,7 @@
          ]
         },
         "fatigue_points": {
-         "median": 2.12,
+         "median": 2.24,
          "n": 32,
          "iqr": [
           1.36,
@@ -12452,17 +12455,17 @@
        "upper_back": {
         "stimulus_eff_sets": {
          "median": 4.6,
-         "n": 36,
+         "n": 37,
          "iqr": [
           1.96,
-          5.59
+          5.6
          ]
         },
         "fatigue_points": {
-         "median": 1.71,
-         "n": 36,
+         "median": 1.91,
+         "n": 37,
          "iqr": [
-          0.97,
+          0.96,
           2.33
          ]
         }
@@ -12472,7 +12475,7 @@
          "median": 2.88,
          "n": 37,
          "iqr": [
-          2.07,
+          2.31,
           4.43
          ]
         },
@@ -12487,19 +12490,19 @@
        },
        "biceps": {
         "stimulus_eff_sets": {
-         "median": 4.16,
-         "n": 33,
+         "median": 4.02,
+         "n": 34,
          "iqr": [
           2.95,
-          5.58
+          5.43
          ]
         },
         "fatigue_points": {
-         "median": 2.16,
-         "n": 33,
+         "median": 2.13,
+         "n": 34,
          "iqr": [
           1.47,
-          3.02
+          2.92
          ]
         }
        },
@@ -12508,7 +12511,7 @@
          "median": 3.35,
          "n": 35,
          "iqr": [
-          2.36,
+          2.4,
           5.7
          ]
         },
@@ -12560,7 +12563,7 @@
        "quads": {
         "stimulus_eff_sets": {
          "median": 5.0,
-         "n": 30,
+         "n": 31,
          "iqr": [
           3.0,
           6.0
@@ -12568,17 +12571,17 @@
         },
         "fatigue_points": {
          "median": 2.68,
-         "n": 30,
+         "n": 31,
          "iqr": [
-          1.66,
+          1.59,
           3.96
          ]
         }
        },
        "hamstrings": {
         "stimulus_eff_sets": {
-         "median": 5.0,
-         "n": 29,
+         "median": 4.63,
+         "n": 30,
          "iqr": [
           3.0,
           6.0
@@ -12586,7 +12589,7 @@
         },
         "fatigue_points": {
          "median": 3.31,
-         "n": 29,
+         "n": 30,
          "iqr": [
           2.38,
           3.45
@@ -12596,7 +12599,7 @@
        "glutes": {
         "stimulus_eff_sets": {
          "median": 4.32,
-         "n": 29,
+         "n": 31,
          "iqr": [
           3.49,
           5.85
@@ -12604,7 +12607,7 @@
         },
         "fatigue_points": {
          "median": 2.23,
-         "n": 29,
+         "n": 31,
          "iqr": [
           1.38,
           3.03
@@ -12671,7 +12674,7 @@
          "n": 19,
          "iqr": [
           1.0,
-          1.47
+          1.5
          ]
         },
         "fatigue_points": {
@@ -14507,13 +14510,13 @@
       "min": 1.22,
       "p5": 1.345,
       "q1": 1.41,
-      "median": 1.495,
+      "median": 1.51,
       "q3": 1.662,
-      "max": 1.95,
+      "max": 2.0,
       "lower_fence": 1.031
      },
      "exercise": {
-      "n": 1167,
+      "n": 1174,
       "min": 0.76,
       "p5": 1.26,
       "q1": 1.26,
@@ -14523,13 +14526,13 @@
       "lower_fence": 0.555
      },
      "muscle": {
-      "n": 1630,
+      "n": 1640,
       "min": 0.64,
       "p5": 0.64,
       "q1": 0.77,
       "median": 0.91,
       "q3": 1.17,
-      "max": 1.39,
+      "max": 1.4,
       "lower_fence": 0.17
      }
     },
@@ -14552,22 +14555,55 @@
     },
     "heavy_compound_note": null
    },
-   "superseded_vol13": "Cuts here (green >= 0.90, amber 0.15-0.90) are retired; see visuals.body_map.efficiency (vol13)."
+   "superseded_vol13": "Cuts here (green >= 0.90, amber 0.15-0.90) are retired; see visuals.body_map.efficiency (vol13).",
+   "retired_vol14": "No S:F in the UI (vol14)."
   },
   "distribution": {
    "efficient": {
     "muscle_dial": {
-     "amber": 712,
-     "green": 918
+     "amber": 711,
+     "green": 929
     },
     "fatigue_band": {
-     "cool": 971,
-     "hot": 62,
+     "cool": 976,
+     "hot": 59,
      "none": 247,
-     "warm": 597
+     "warm": 605
     },
-    "session_efficiency_warnings": 49,
+    "session_efficiency_warnings": 46,
     "muscle_ratio_median": 0.91,
+    "muscle_ratio_p10_p90": [
+     0.64,
+     1.27
+    ],
+    "history_vol11b": {
+     "day_dial": {
+      "amber": 88,
+      "green": 88
+     },
+     "exercise_dial": {
+      "amber": 53,
+      "green": 1121
+     },
+     "day_ratio_median": 1.51,
+     "day_ratio_p10_p90": [
+      1.37,
+      1.8
+     ]
+    }
+   },
+   "max_growth": {
+    "muscle_dial": {
+     "amber": 695,
+     "green": 957
+    },
+    "fatigue_band": {
+     "cool": 1402,
+     "none": 235,
+     "warm": 250
+    },
+    "session_efficiency_warnings": 3,
+    "muscle_ratio_median": 0.92,
     "muscle_ratio_p10_p90": [
      0.64,
      1.26
@@ -14579,44 +14615,12 @@
      },
      "exercise_dial": {
       "amber": 53,
-      "green": 1114
+      "green": 1125
      },
      "day_ratio_median": 1.5,
      "day_ratio_p10_p90": [
-      1.37,
-      1.79
-     ]
-    }
-   },
-   "max_growth": {
-    "muscle_dial": {
-     "amber": 696,
-     "green": 945
-    },
-    "fatigue_band": {
-     "cool": 1393,
-     "none": 236,
-     "warm": 248
-    },
-    "session_efficiency_warnings": 3,
-    "muscle_ratio_median": 0.92,
-    "muscle_ratio_p10_p90": [
-     0.64,
-     1.26
-    ],
-    "history_vol11b": {
-     "day_dial": {
-      "amber": 89,
-      "green": 87
-     },
-     "exercise_dial": {
-      "amber": 53,
-      "green": 1118
-     },
-     "day_ratio_median": 1.48,
-     "day_ratio_p10_p90": [
       1.36,
-      1.79
+      1.81
      ]
     }
    }
@@ -14827,32 +14831,32 @@
     },
     "distribution_vol13": {
      "efficient": {
-      "muscle_days_gated": 1630,
-      "green": 1359,
-      "amber": 263,
+      "muscle_days_gated": 1640,
+      "green": 1370,
+      "amber": 262,
       "red": 8,
       "by_class": {
-       "big/amber": 26,
-       "big/green": 512,
+       "big/amber": 25,
+       "big/green": 518,
        "big/red": 4,
        "medium/amber": 207,
-       "medium/green": 503,
+       "medium/green": 509,
        "medium/red": 4,
        "small/amber": 30,
-       "small/green": 344
+       "small/green": 343
       }
      },
      "max_growth": {
-      "muscle_days_gated": 1641,
-      "green": 1373,
+      "muscle_days_gated": 1652,
+      "green": 1384,
       "amber": 260,
       "red": 8,
       "by_class": {
        "big/amber": 26,
-       "big/green": 512,
+       "big/green": 517,
        "big/red": 4,
        "medium/amber": 205,
-       "medium/green": 509,
+       "medium/green": 515,
        "medium/red": 4,
        "small/amber": 29,
        "small/green": 352
@@ -14894,7 +14898,7 @@
       [
        0.61,
        "glutes",
-       "ppl/intermediate/3/fri",
+       "arnold/intermediate/3/fri",
        [
         "back-squat x4",
         "romanian-deadlift x4",
@@ -14985,13 +14989,13 @@
      ],
      "applies_to": "muscle-days with r2(effective sets) >= 1.00; below that no efficiency colour",
      "reference_distribution": {
-      "n": 1630,
+      "n": 1640,
       "min": 0.64,
       "p5": 0.64,
       "q1": 0.77,
       "median": 0.91,
       "q3": 1.17,
-      "max": 1.39,
+      "max": 1.4,
       "lower_fence": 0.17
      },
      "rule": "green >= median; amber from the lower Tukey fence (Q1 - 1.5 x IQR) up to the median; red below the fence. Cuts rounded to the nearest 0.05. Quartiles: Python statistics.quantiles(n=4, method=inclusive).",
@@ -15003,7 +15007,8 @@
       "label": "Modeled",
       "note": "Cut-offs set against the preset distribution; no study measures them."
      }
-    }
+    },
+    "superseded_vol14": "Not displayed from vol14: the Plan body map is shaded by visuals.body_map.payoff. sf_* fields are legacy."
    },
    "fatigue_bands": {
     "field": "...muscles[m].fatigue_band",
@@ -15031,6 +15036,13 @@
       "rule": "fatigue > 1.5 x limit"
      }
     ]
+   },
+   "payoff": {
+    "version": "vol14",
+    "label": "Modeled",
+    "field": "day-metrics-presets.json ...muscles[m].payoff_band (green | amber | red | null)",
+    "rule": "rules.json rules[id=payoff].bands",
+    "note": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build."
    }
   }
  },
@@ -17418,5 +17430,2038 @@
     "vol13-efficiency-red-romanian-deadlift-lats"
    ]
   }
+ },
+ "vol14": {
+  "version": "vol14",
+  "date": "2026-11-01",
+  "source": "CoS vol14 brief (approved by Mr Dude); Coach design decisions A-I",
+  "payoff": {
+   "label": "Modeled",
+   "constants": {
+    "stim_tau": 4.0,
+    "fat_lin": 6.39,
+    "fat_quad": 0.077,
+    "compression": 0.5,
+    "gate_effective_sets": 1.0
+   },
+   "note": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build.",
+   "formula": [
+    "gate: n >= 1.00 and F > 0, else no Payoff (no colour, no dot)",
+    "k = sqrt(F / n); f = sqrt(n x F)  (= k x n)",
+    "stimulus_pct = r1(100 x (1 - exp(-n / 4)))",
+    "fatigue_pct = r1(6.39 x f + 0.077 x f^2)",
+    "payoff = r1(stimulus_pct - fatigue_pct)",
+    "marginal = r2(25 x exp(-n / 4) / (k x (6.39 + 0.154 x f)))  (hidden next-set check; = d stimulus% / d fatigue% along this muscle-day's mix)",
+    "peak_n = n where marginal = 1 (bisection on [0, 40], 60 steps; r1); zero_n = n > peak_n where 100(1 - e^(-n/4)) = 6.39 k n + 0.077 (k n)^2 (bisection to 60; r1)",
+    "r1(x) = floor(10x + 0.5 + 1e-9) / 10; r2(x) = floor(100x + 0.5 + 1e-9) / 100 (half-up, also for negatives)"
+   ],
+   "fatigue_scaling": {
+    "choice": "f = sqrt(n x F) = n x sqrt(F / n): the muscle's own fatigue per effective set enters as its square root (compression 0.5)",
+    "rationale": "Simplest option that keeps the reference class at peak 5.0 / zero 13.0 and the heaviest class at peak 4.1 / zero 10.0; full factors put heavy axial at peak 3.2 / zero 7.4 and isolation at zero 16.8. Needs only the two numbers every muscle-day already has (effective sets, own fatigue), so live boards match the presets exactly.",
+    "design_A": "n for fatigue = the muscle's OWN rating-weighted fatigue (fatigue_fresh_set_eq), not the whole-set fatigue vol13 used. See vol14-payoff-* if_whole_set_fatigue_uncompressed: glutes on a squat day go negative with the whole set."
+   },
+   "fatigue_classes": [
+    {
+     "type": "primary",
+     "axial_class": "high",
+     "fatigue_per_set": 1.56,
+     "planned_rir": 2,
+     "effort": 1.0,
+     "prox": 1.0,
+     "own_fatigue_per_effective_set": 1.56,
+     "full_multiplier_vol13": 1.56,
+     "payoff_multiplier": 1.249,
+     "peak_n": 4.1,
+     "zero_n": 10.0,
+     "peak_payoff": 29.4,
+     "payoff_at_10": 0.0,
+     "uncompressed_peak_n": 3.2,
+     "uncompressed_zero_n": 7.4,
+     "examples": [
+      "back-squat",
+      "barbell-row",
+      "deadlift"
+     ]
+    },
+    {
+     "type": "primary",
+     "axial_class": "free_compound",
+     "fatigue_per_set": 1.32,
+     "planned_rir": 2,
+     "effort": 1.0,
+     "prox": 1.0,
+     "own_fatigue_per_effective_set": 1.32,
+     "full_multiplier_vol13": 1.32,
+     "payoff_multiplier": 1.149,
+     "peak_n": 4.4,
+     "zero_n": 11.1,
+     "peak_payoff": 32.4,
+     "payoff_at_10": 8.2,
+     "uncompressed_peak_n": 3.9,
+     "uncompressed_zero_n": 9.3,
+     "examples": [
+      "barbell-bench-press",
+      "barbell-glute-bridge",
+      "chin-up"
+     ]
+    },
+    {
+     "type": "primary",
+     "axial_class": "machine_compound",
+     "fatigue_per_set": 1.2,
+     "planned_rir": 2,
+     "effort": 1.0,
+     "prox": 1.0,
+     "own_fatigue_per_effective_set": 1.2,
+     "full_multiplier_vol13": 1.2,
+     "payoff_multiplier": 1.095,
+     "peak_n": 4.6,
+     "zero_n": 11.7,
+     "peak_payoff": 34.2,
+     "payoff_at_10": 12.6,
+     "uncompressed_peak_n": 4.3,
+     "uncompressed_zero_n": 10.5,
+     "examples": [
+      "belt-squat",
+      "converging-smith-bench-press",
+      "converging-smith-incline-press"
+     ]
+    },
+    {
+     "type": "accessory",
+     "axial_class": "free_compound",
+     "fatigue_per_set": 1.1,
+     "planned_rir": 2,
+     "effort": 1.0,
+     "prox": 1.0,
+     "own_fatigue_per_effective_set": 1.1,
+     "full_multiplier_vol13": 1.1,
+     "payoff_multiplier": 1.049,
+     "peak_n": 4.8,
+     "zero_n": 12.3,
+     "peak_payoff": 35.8,
+     "payoff_at_10": 16.3,
+     "uncompressed_peak_n": 4.6,
+     "uncompressed_zero_n": 11.7,
+     "examples": [
+      "archer-push-up",
+      "arnold-press",
+      "bounding"
+     ]
+    },
+    {
+     "type": "accessory",
+     "axial_class": "machine_compound",
+     "fatigue_per_set": 1.0,
+     "planned_rir": 2,
+     "effort": 1.0,
+     "prox": 1.0,
+     "own_fatigue_per_effective_set": 1.0,
+     "full_multiplier_vol13": 1.0,
+     "payoff_multiplier": 1.0,
+     "peak_n": 5.0,
+     "zero_n": 13.0,
+     "peak_payoff": 37.5,
+     "payoff_at_10": 20.2,
+     "uncompressed_peak_n": 5.0,
+     "uncompressed_zero_n": 13.0,
+     "examples": [
+      "arc-lat-pulldown",
+      "assisted-dip",
+      "assisted-pull-up"
+     ]
+    },
+    {
+     "type": "isolation",
+     "axial_class": "isolation",
+     "fatigue_per_set": 0.72,
+     "planned_rir": 1,
+     "effort": 1.1,
+     "prox": 1.0,
+     "own_fatigue_per_effective_set": 0.792,
+     "full_multiplier_vol13": 0.792,
+     "payoff_multiplier": 0.89,
+     "peak_n": 5.5,
+     "zero_n": 14.8,
+     "peak_payoff": 41.6,
+     "payoff_at_10": 28.8,
+     "uncompressed_peak_n": 6.0,
+     "uncompressed_zero_n": 16.8,
+     "examples": [
+      "45-degree-hyperextension",
+      "ab-crunch-machine",
+      "ab-wheel-rollout"
+     ]
+    }
+   ],
+   "curve_samples": {
+    "primary/high": {
+     "k": 1.249,
+     "n": [
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0,
+      5.5,
+      6.0,
+      6.5,
+      7.0,
+      7.5,
+      8.0,
+      8.5,
+      9.0,
+      9.5,
+      10.0,
+      10.5,
+      11.0,
+      11.5,
+      12.0,
+      12.5,
+      13.0,
+      13.5,
+      14.0,
+      14.5,
+      15.0,
+      15.5,
+      16.0
+     ],
+     "stimulus_pct": [
+      0.0,
+      11.8,
+      22.1,
+      31.3,
+      39.3,
+      46.5,
+      52.8,
+      58.3,
+      63.2,
+      67.5,
+      71.3,
+      74.7,
+      77.7,
+      80.3,
+      82.6,
+      84.7,
+      86.5,
+      88.1,
+      89.5,
+      90.7,
+      91.8,
+      92.8,
+      93.6,
+      94.4,
+      95.0,
+      95.6,
+      96.1,
+      96.6,
+      97.0,
+      97.3,
+      97.6,
+      97.9,
+      98.2
+     ],
+     "fatigue_pct": [
+      0.0,
+      4.0,
+      8.1,
+      12.2,
+      16.4,
+      20.7,
+      25.0,
+      29.4,
+      33.8,
+      38.3,
+      42.9,
+      47.5,
+      52.2,
+      57.0,
+      61.8,
+      66.6,
+      71.5,
+      76.5,
+      81.6,
+      86.7,
+      91.8,
+      97.0,
+      102.3,
+      107.7,
+      113.1,
+      118.5,
+      124.1,
+      129.6,
+      135.3,
+      141.0,
+      146.7,
+      152.6,
+      158.4
+     ],
+     "payoff": [
+      0.0,
+      7.8,
+      14.0,
+      19.1,
+      22.9,
+      25.8,
+      27.8,
+      28.9,
+      29.4,
+      29.2,
+      28.4,
+      27.2,
+      25.5,
+      23.3,
+      20.8,
+      18.1,
+      15.0,
+      11.6,
+      7.9,
+      4.0,
+      0.0,
+      -4.2,
+      -8.7,
+      -13.3,
+      -18.1,
+      -22.9,
+      -28.0,
+      -33.0,
+      -38.3,
+      -43.7,
+      -49.1,
+      -54.7,
+      -60.2
+     ]
+    },
+    "primary/free_compound": {
+     "k": 1.149,
+     "n": [
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0,
+      5.5,
+      6.0,
+      6.5,
+      7.0,
+      7.5,
+      8.0,
+      8.5,
+      9.0,
+      9.5,
+      10.0,
+      10.5,
+      11.0,
+      11.5,
+      12.0,
+      12.5,
+      13.0,
+      13.5,
+      14.0,
+      14.5,
+      15.0,
+      15.5,
+      16.0
+     ],
+     "stimulus_pct": [
+      0.0,
+      11.8,
+      22.1,
+      31.3,
+      39.3,
+      46.5,
+      52.8,
+      58.3,
+      63.2,
+      67.5,
+      71.3,
+      74.7,
+      77.7,
+      80.3,
+      82.6,
+      84.7,
+      86.5,
+      88.1,
+      89.5,
+      90.7,
+      91.8,
+      92.8,
+      93.6,
+      94.4,
+      95.0,
+      95.6,
+      96.1,
+      96.6,
+      97.0,
+      97.3,
+      97.6,
+      97.9,
+      98.2
+     ],
+     "fatigue_pct": [
+      0.0,
+      3.7,
+      7.4,
+      11.2,
+      15.1,
+      19.0,
+      22.9,
+      26.9,
+      31.0,
+      35.1,
+      39.3,
+      43.5,
+      47.7,
+      52.0,
+      56.4,
+      60.8,
+      65.2,
+      69.8,
+      74.3,
+      78.9,
+      83.6,
+      88.3,
+      93.1,
+      97.9,
+      102.7,
+      107.7,
+      112.6,
+      117.6,
+      122.7,
+      127.8,
+      133.0,
+      138.2,
+      143.5
+     ],
+     "payoff": [
+      0.0,
+      8.1,
+      14.7,
+      20.1,
+      24.2,
+      27.5,
+      29.9,
+      31.4,
+      32.2,
+      32.4,
+      32.0,
+      31.2,
+      30.0,
+      28.3,
+      26.2,
+      23.9,
+      21.3,
+      18.3,
+      15.2,
+      11.8,
+      8.2,
+      4.5,
+      0.5,
+      -3.5,
+      -7.7,
+      -12.1,
+      -16.5,
+      -21.0,
+      -25.7,
+      -30.5,
+      -35.4,
+      -40.3,
+      -45.3
+     ]
+    },
+    "primary/machine_compound": {
+     "k": 1.095,
+     "n": [
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0,
+      5.5,
+      6.0,
+      6.5,
+      7.0,
+      7.5,
+      8.0,
+      8.5,
+      9.0,
+      9.5,
+      10.0,
+      10.5,
+      11.0,
+      11.5,
+      12.0,
+      12.5,
+      13.0,
+      13.5,
+      14.0,
+      14.5,
+      15.0,
+      15.5,
+      16.0
+     ],
+     "stimulus_pct": [
+      0.0,
+      11.8,
+      22.1,
+      31.3,
+      39.3,
+      46.5,
+      52.8,
+      58.3,
+      63.2,
+      67.5,
+      71.3,
+      74.7,
+      77.7,
+      80.3,
+      82.6,
+      84.7,
+      86.5,
+      88.1,
+      89.5,
+      90.7,
+      91.8,
+      92.8,
+      93.6,
+      94.4,
+      95.0,
+      95.6,
+      96.1,
+      96.6,
+      97.0,
+      97.3,
+      97.6,
+      97.9,
+      98.2
+     ],
+     "fatigue_pct": [
+      0.0,
+      3.5,
+      7.1,
+      10.7,
+      14.4,
+      18.1,
+      21.8,
+      25.6,
+      29.5,
+      33.4,
+      37.3,
+      41.3,
+      45.3,
+      49.4,
+      53.5,
+      57.7,
+      61.9,
+      66.1,
+      70.5,
+      74.8,
+      79.2,
+      83.6,
+      88.1,
+      92.7,
+      97.3,
+      101.9,
+      106.6,
+      111.3,
+      116.1,
+      120.9,
+      125.7,
+      130.6,
+      135.6
+     ],
+     "payoff": [
+      0.0,
+      8.3,
+      15.0,
+      20.6,
+      24.9,
+      28.4,
+      31.0,
+      32.7,
+      33.7,
+      34.1,
+      34.0,
+      33.4,
+      32.4,
+      30.9,
+      29.1,
+      27.0,
+      24.6,
+      22.0,
+      19.0,
+      15.9,
+      12.6,
+      9.2,
+      5.5,
+      1.7,
+      -2.3,
+      -6.3,
+      -10.5,
+      -14.7,
+      -19.1,
+      -23.6,
+      -28.1,
+      -32.7,
+      -37.4
+     ]
+    },
+    "accessory/free_compound": {
+     "k": 1.049,
+     "n": [
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0,
+      5.5,
+      6.0,
+      6.5,
+      7.0,
+      7.5,
+      8.0,
+      8.5,
+      9.0,
+      9.5,
+      10.0,
+      10.5,
+      11.0,
+      11.5,
+      12.0,
+      12.5,
+      13.0,
+      13.5,
+      14.0,
+      14.5,
+      15.0,
+      15.5,
+      16.0
+     ],
+     "stimulus_pct": [
+      0.0,
+      11.8,
+      22.1,
+      31.3,
+      39.3,
+      46.5,
+      52.8,
+      58.3,
+      63.2,
+      67.5,
+      71.3,
+      74.7,
+      77.7,
+      80.3,
+      82.6,
+      84.7,
+      86.5,
+      88.1,
+      89.5,
+      90.7,
+      91.8,
+      92.8,
+      93.6,
+      94.4,
+      95.0,
+      95.6,
+      96.1,
+      96.6,
+      97.0,
+      97.3,
+      97.6,
+      97.9,
+      98.2
+     ],
+     "fatigue_pct": [
+      0.0,
+      3.4,
+      6.8,
+      10.2,
+      13.7,
+      17.3,
+      20.9,
+      24.5,
+      28.2,
+      31.9,
+      35.6,
+      39.4,
+      43.3,
+      47.2,
+      51.1,
+      55.0,
+      59.0,
+      63.1,
+      67.2,
+      71.3,
+      75.5,
+      79.7,
+      84.0,
+      88.3,
+      92.6,
+      97.0,
+      101.5,
+      105.9,
+      110.5,
+      115.0,
+      119.6,
+      124.3,
+      128.9
+     ],
+     "payoff": [
+      0.0,
+      8.4,
+      15.3,
+      21.1,
+      25.6,
+      29.2,
+      31.9,
+      33.8,
+      35.0,
+      35.6,
+      35.7,
+      35.3,
+      34.4,
+      33.1,
+      31.5,
+      29.7,
+      27.5,
+      25.0,
+      22.3,
+      19.4,
+      16.3,
+      13.1,
+      9.6,
+      6.1,
+      2.4,
+      -1.4,
+      -5.4,
+      -9.3,
+      -13.5,
+      -17.7,
+      -22.0,
+      -26.4,
+      -30.7
+     ]
+    },
+    "accessory/machine_compound": {
+     "k": 1.0,
+     "n": [
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0,
+      5.5,
+      6.0,
+      6.5,
+      7.0,
+      7.5,
+      8.0,
+      8.5,
+      9.0,
+      9.5,
+      10.0,
+      10.5,
+      11.0,
+      11.5,
+      12.0,
+      12.5,
+      13.0,
+      13.5,
+      14.0,
+      14.5,
+      15.0,
+      15.5,
+      16.0
+     ],
+     "stimulus_pct": [
+      0.0,
+      11.8,
+      22.1,
+      31.3,
+      39.3,
+      46.5,
+      52.8,
+      58.3,
+      63.2,
+      67.5,
+      71.3,
+      74.7,
+      77.7,
+      80.3,
+      82.6,
+      84.7,
+      86.5,
+      88.1,
+      89.5,
+      90.7,
+      91.8,
+      92.8,
+      93.6,
+      94.4,
+      95.0,
+      95.6,
+      96.1,
+      96.6,
+      97.0,
+      97.3,
+      97.6,
+      97.9,
+      98.2
+     ],
+     "fatigue_pct": [
+      0.0,
+      3.2,
+      6.5,
+      9.8,
+      13.1,
+      16.5,
+      19.9,
+      23.3,
+      26.8,
+      30.3,
+      33.9,
+      37.5,
+      41.1,
+      44.8,
+      48.5,
+      52.3,
+      56.0,
+      59.9,
+      63.7,
+      67.7,
+      71.6,
+      75.6,
+      79.6,
+      83.7,
+      87.8,
+      91.9,
+      96.1,
+      100.3,
+      104.6,
+      108.8,
+      113.2,
+      117.5,
+      122.0
+     ],
+     "payoff": [
+      0.0,
+      8.6,
+      15.6,
+      21.5,
+      26.2,
+      30.0,
+      32.9,
+      35.0,
+      36.4,
+      37.2,
+      37.4,
+      37.2,
+      36.6,
+      35.5,
+      34.1,
+      32.4,
+      30.5,
+      28.2,
+      25.8,
+      23.0,
+      20.2,
+      17.2,
+      14.0,
+      10.7,
+      7.2,
+      3.7,
+      0.0,
+      -3.7,
+      -7.6,
+      -11.5,
+      -15.6,
+      -19.6,
+      -23.8
+     ]
+    },
+    "isolation/isolation": {
+     "k": 0.89,
+     "n": [
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0,
+      4.5,
+      5.0,
+      5.5,
+      6.0,
+      6.5,
+      7.0,
+      7.5,
+      8.0,
+      8.5,
+      9.0,
+      9.5,
+      10.0,
+      10.5,
+      11.0,
+      11.5,
+      12.0,
+      12.5,
+      13.0,
+      13.5,
+      14.0,
+      14.5,
+      15.0,
+      15.5,
+      16.0
+     ],
+     "stimulus_pct": [
+      0.0,
+      11.8,
+      22.1,
+      31.3,
+      39.3,
+      46.5,
+      52.8,
+      58.3,
+      63.2,
+      67.5,
+      71.3,
+      74.7,
+      77.7,
+      80.3,
+      82.6,
+      84.7,
+      86.5,
+      88.1,
+      89.5,
+      90.7,
+      91.8,
+      92.8,
+      93.6,
+      94.4,
+      95.0,
+      95.6,
+      96.1,
+      96.6,
+      97.0,
+      97.3,
+      97.6,
+      97.9,
+      98.2
+     ],
+     "fatigue_pct": [
+      0.0,
+      2.9,
+      5.7,
+      8.7,
+      11.6,
+      14.6,
+      17.6,
+      20.7,
+      23.7,
+      26.8,
+      30.0,
+      33.1,
+      36.3,
+      39.5,
+      42.8,
+      46.1,
+      49.4,
+      52.7,
+      56.1,
+      59.5,
+      63.0,
+      66.4,
+      69.9,
+      73.5,
+      77.0,
+      80.6,
+      84.2,
+      87.9,
+      91.6,
+      95.3,
+      99.0,
+      102.8,
+      106.6
+     ],
+     "payoff": [
+      0.0,
+      8.9,
+      16.4,
+      22.6,
+      27.7,
+      31.9,
+      35.2,
+      37.6,
+      39.5,
+      40.7,
+      41.3,
+      41.6,
+      41.4,
+      40.8,
+      39.8,
+      38.6,
+      37.1,
+      35.4,
+      33.4,
+      31.2,
+      28.8,
+      26.4,
+      23.7,
+      20.9,
+      18.0,
+      15.0,
+      11.9,
+      8.7,
+      5.4,
+      2.0,
+      -1.4,
+      -4.9,
+      -8.4
+     ]
+    }
+   },
+   "next_set_check": "marginal = d stimulus% / d fatigue% along the muscle-day's own mix (k fixed). dPayoff/dn = 25 e^(-n/4) - k (6.39 + 0.154 k n) = 0 exactly where marginal = 1, so the hidden check and the Payoff peak agree by construction (verified on every vol14-payoff case and every preset muscle-day: band green <=> n <= peak_n).",
+   "gauges": "day_summary.gauges: stimulus_pct = r1(sum n x stimulus_pct / sum n), payoff_pct = r1(sum n x payoff / sum n) over muscles with n >= 1.00; fatigue_gap_pct = r1(stimulus_pct - payoff_pct). Effective-set-weighted, so a muscle with 6 sets counts 6x a muscle with 1."
+  },
+  "bands_distribution": {
+   "efficient": {
+    "muscle_days_gated": 1630,
+    "green": 1328,
+    "amber": 302,
+    "red": 0,
+    "amber_split": {
+     "1+ sets past peak": 160,
+     "under 1 set past peak": 142
+    },
+    "flags": {
+     "payoff_past_efficient (Plan-significant)": 160
+    }
+   },
+   "max_growth": {
+    "muscle_days_gated": 1641,
+    "green": 1253,
+    "amber": 388,
+    "red": 0,
+    "amber_split": {
+     "1+ sets past peak": 227,
+     "under 1 set past peak": 161
+    },
+    "flags": {
+     "payoff_past_efficient (Plan-significant)": 227
+    }
+   }
+  },
+  "preset_examples": {
+   "efficient/green": [
+    [
+     0.0,
+     "chest",
+     "bro-split/advanced/5/sat",
+     1.62,
+     2.14,
+     21.1
+    ],
+    [
+     0.0,
+     "chest",
+     "bro-split/intermediate/5/sat",
+     1.62,
+     2.14,
+     21.1
+    ],
+    [
+     0.0,
+     "chest",
+     "full-body/advanced/3/fri",
+     2.4,
+     3.17,
+     26.9
+    ]
+   ],
+   "efficient/amber": [
+    [
+     5.4,
+     "quads",
+     "bro-split/advanced/5/wed",
+     10.0,
+     12.22,
+     11.8
+    ],
+    [
+     5.3,
+     "quads",
+     "pplu/advanced/4/thu",
+     10.0,
+     11.76,
+     13.4
+    ],
+    [
+     5.3,
+     "quads",
+     "ppl/advanced/3/fri",
+     10.0,
+     11.76,
+     13.4
+    ]
+   ],
+   "max_growth/green": [
+    [
+     0.0,
+     "chest",
+     "bro-split/advanced/5/sat",
+     1.62,
+     2.14,
+     21.1
+    ],
+    [
+     0.0,
+     "chest",
+     "bro-split/intermediate/5/sat",
+     1.62,
+     2.14,
+     21.1
+    ],
+    [
+     0.0,
+     "chest",
+     "full-body/advanced/3/fri",
+     2.4,
+     3.17,
+     26.9
+    ]
+   ],
+   "max_growth/amber": [
+    [
+     5.4,
+     "quads",
+     "bro-split/intermediate/5/wed",
+     10.0,
+     12.22,
+     11.8
+    ],
+    [
+     5.4,
+     "quads",
+     "bro-split/advanced/5/wed",
+     10.0,
+     12.22,
+     11.8
+    ],
+    [
+     5.3,
+     "quads",
+     "pplu/advanced/4/thu",
+     10.0,
+     11.76,
+     13.4
+    ]
+   ]
+  },
+  "weekly_status_check": {
+   "efficient": {
+    "presets": 46,
+    "presets_failing_volume_check": 28,
+    "muscles_need_sets": 94,
+    "far_over": 0
+   },
+   "max_growth": {
+    "presets": 46,
+    "presets_failing_volume_check": 28,
+    "muscles_need_sets": 94,
+    "far_over": 0
+   }
+  },
+  "worked_cases": [
+   "vol14-payoff-squat-day",
+   "vol14-payoff-squat-only",
+   "vol14-payoff-bench",
+   "vol14-payoff-isolation-12",
+   "vol14-payoff-red"
+  ],
+  "learn_rewritten": [
+   "fundamentals/hypertrophy-stimulus.json",
+   "fundamentals/set-crediting-targets.json",
+   "fundamentals/volume-frequency.json",
+   "muscles/abductors.json",
+   "muscles/abs.json",
+   "muscles/adductors.json",
+   "muscles/biceps.json",
+   "muscles/calves.json",
+   "muscles/chest.json",
+   "muscles/forearms.json",
+   "muscles/front_delts.json",
+   "muscles/glutes.json",
+   "muscles/hamstrings.json",
+   "muscles/lats.json",
+   "muscles/lower_back.json",
+   "muscles/obliques.json",
+   "muscles/quads.json",
+   "muscles/rear_delts.json",
+   "muscles/side_delts.json",
+   "muscles/traps.json",
+   "muscles/triceps.json",
+   "muscles/upper_back.json",
+   "references.json"
+  ],
+  "builder_paths": {
+   "payoff_rule": "rules.json rules[id=payoff] {constants, inputs, formula, bands, fatigue_classes, note}",
+   "class_lookup": "rules.json rules[id=payoff].fatigue_classes and volume-model.json vol14.payoff.fatigue_classes (full: effort, prox, uncompressed peak/zero)",
+   "muscle_fields": "day-metrics-presets.json presets[goal][preset].days[i].muscles[m] {payoff {stimulus_pct, fatigue_pct, payoff, marginal, band, k, fatigue_n, peak_n, zero_n, sets_past_peak}, payoff_band, payoff_dot {n, stimulus_pct, fatigue_pct, payoff}, display}; legacy sf_* not displayed; vol13 display in history_vol13",
+   "day_gauges": "day-metrics-presets.json ...days[i].day_summary.gauges {stimulus_pct, payoff_pct, fatigue_gap_pct, muscles_counted, bands}; display rewritten",
+   "curve_samples": "volume-model.json vol14.payoff.curve_samples[\"type/axial_class\"] {k, n[0..16 step 0.5], stimulus_pct, fatigue_pct, payoff}; a muscle-day plots its own k: fatigue% = 6.39 k n + 0.077 (k n)^2",
+   "body_map": "volume-model.json visuals.body_map.payoff (rule rules[id=payoff].bands)",
+   "buttons": "rules.json suggestion_buttons {make_more_efficient, push_for_max_growth}",
+   "flag_copy": "rules.json flag_copy {templates[id] {template, what, why, fix, placeholders, significance, plan_eligible, severity, scope}, ranking, muscle_names, payoff_note}",
+   "weekly_status": "rules.json weekly_status (summary check + \"need sets\" count, one rule); analysis-display.json checks_pass_display_vol14",
+   "session_limit_display": "rules.json rules[id=session_efficiency] {display_severity info, display_limits}",
+   "legacy_ids": "rules.json goals (labels removed; history_vol13_display); ids efficient / max_growth internal only",
+   "reference_cases": "workout-reference.json cases vol14-payoff-*",
+   "learn": "data/education/fundamentals/{set-crediting-targets, volume-frequency}.json, references.json (+2 refs)"
+  },
+  "contradictions": [
+   "Weekly status: with one rule, 28 of 46 presets (both preset sets) have at least one muscle below its weekly minimum (94 muscle-weeks: abductors 17, side delts 13, triceps 10, upper back 8, ...). vol13 hid this because the check passed muscles within 2 sets of the minimum. Not re-swept (hold); a preset top-up is a separate decision.",
+   "Presets show 0 red muscle-days (Payoff needs about 10+ effective sets of heavy work on one muscle); red is reachable (vol14-payoff-red: quads 12 sets, Payoff -4.5).",
+   "Amber is common (efficient 302 of 1630, max_growth 388 of 1641) and about half sit under 1 set past the peak (Payoff within ~0.5 of its maximum). Colour kept exactly as specified (so it equals the next-set check); the Plan flag is significant only from 1 full set past the peak.",
+   "Next-set check uses the instantaneous marginal (derivative), which equals 1 exactly at the Payoff peak. A discrete one-whole-set check would flag about half a set earlier and would not match the peak.",
+   "Session limit: shown as info at the 10/10/6 caps, but rules severity stays warn internally because tools/check_program.py and the stored Efficient trim read it; changing it would change splits-efficient.json on the next rebuild."
+  ],
+  "history_frozen": []
+ },
+ "vol14b": {
+  "version": "vol14b",
+  "date": "2026-11-01",
+  "source": "CoS decision within the vol14 batch (approved by Mr Dude)",
+  "optional_muscles": {
+   "muscles": [
+    "abductors"
+   ],
+   "note": "Optional (info only): glute work covers most outer-hip work, so there is no weekly minimum flag. Targets stay for display. Practitioner judgement, not a study result.",
+   "rules": "rules.json optional_muscles; weekly_status.excluded_muscles; flag_copy.templates.weekly_optional_low"
+  },
+  "topup": {
+   "rule": "Preset top-up at the source (splits.json = Max-growth presets) so every preset meets the ONE weekly-minimum rule\n   (r2(face-value weekly effective sets) >= volume_zones[level][m].min for every non-optional muscle). The Efficient trim (vol10b,\n   unchanged: never cuts a muscle below its minimum, asserted) then regenerates splits-efficient.json in the normal rebuild.\n   Fix order per short muscle: (a) +1 set on an existing tile that credits it (main mover first, then the day with the most room,\n   Efficient-limit room preferred so the trim keeps it); (b) only if no (a) works: one new isolation/accessory tile (main mover = the muscle,\n   most-used in the presets) on an existing day. Constraints for every step: +2 sets per day max (vs the original preset), at most 1 new tile per day,\n   sets per exercise <= 5, r1(day effective sets) <= Max-growth cap (10/10/6; beginner 8/8/6) for every muscle the tile credits, no new flag of any\n   kind or severity (Max-growth checker, and the Efficient checker on the re-trimmed version), no red Payoff (vol14 constants unchanged).",
+   "per_preset": "data/splits-topup-vol14b.json",
+   "sets_added": 23,
+   "tiles_added": 10,
+   "max_day_increase": 2
+  },
+  "final_check": {
+   "max_growth": {
+    "flags_before": {
+     "info:low_frequency": 135,
+     "info:pattern_gap": 19,
+     "info:recovery_gap_long": 157,
+     "info:session_hard_sets": 56,
+     "info:session_length": 24,
+     "info:wasted_late_sets": 3,
+     "warn:session_efficiency": 3
+    },
+    "flags_after": {
+     "info:low_frequency": 134,
+     "info:pattern_gap": 17,
+     "info:recovery_gap_long": 157,
+     "info:session_hard_sets": 56,
+     "info:session_length": 24,
+     "info:wasted_late_sets": 3,
+     "warn:session_efficiency": 3
+    },
+    "weekly_min_before": 23,
+    "weekly_min_after": {
+     "presets_missing_min": 13,
+     "missing": [
+      {
+       "preset": "full-body/beginner/2",
+       "muscles": [
+        {
+         "muscle": "triceps",
+         "short_by": 1.08
+        },
+        {
+         "muscle": "abs",
+         "short_by": 0.5
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.44
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 0.3
+        }
+       ]
+      },
+      {
+       "preset": "full-body/intermediate/2",
+       "muscles": [
+        {
+         "muscle": "calves",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "side_delts",
+         "short_by": 1.5
+        },
+        {
+         "muscle": "triceps",
+         "short_by": 1.42
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 1.06
+        },
+        {
+         "muscle": "lats",
+         "short_by": 0.48
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.2
+        }
+       ]
+      },
+      {
+       "preset": "full-body/advanced/2",
+       "muscles": [
+        {
+         "muscle": "side_delts",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "quads",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "hamstrings",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "calves",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "abs",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 1.7
+        },
+        {
+         "muscle": "obliques",
+         "short_by": 1.0
+        },
+        {
+         "muscle": "rear_delts",
+         "short_by": 0.55
+        },
+        {
+         "muscle": "glutes",
+         "short_by": 0.48
+        },
+        {
+         "muscle": "lats",
+         "short_by": 0.2
+        }
+       ]
+      },
+      {
+       "preset": "upper-lower/beginner/2",
+       "muscles": [
+        {
+         "muscle": "rear_delts",
+         "short_by": 1.5
+        },
+        {
+         "muscle": "side_delts",
+         "short_by": 1.1
+        },
+        {
+         "muscle": "triceps",
+         "short_by": 0.82
+        },
+        {
+         "muscle": "calves",
+         "short_by": 0.5
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.24
+        }
+       ]
+      },
+      {
+       "preset": "upper-lower/intermediate/2",
+       "muscles": [
+        {
+         "muscle": "calves",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "triceps",
+         "short_by": 1.82
+        },
+        {
+         "muscle": "side_delts",
+         "short_by": 1.6
+        },
+        {
+         "muscle": "rear_delts",
+         "short_by": 1.34
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 0.74
+        },
+        {
+         "muscle": "obliques",
+         "short_by": 0.42
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.2
+        },
+        {
+         "muscle": "glutes",
+         "short_by": 0.2
+        }
+       ]
+      },
+      {
+       "preset": "ppl/advanced/3",
+       "muscles": [
+        {
+         "muscle": "triceps",
+         "short_by": 0.12
+        },
+        {
+         "muscle": "hamstrings",
+         "short_by": 0.04
+        }
+       ]
+      },
+      {
+       "preset": "pplu/advanced/4",
+       "muscles": [
+        {
+         "muscle": "hamstrings",
+         "short_by": 0.04
+        }
+       ]
+      },
+      {
+       "preset": "arnold/intermediate/3",
+       "muscles": [
+        {
+         "muscle": "glutes",
+         "short_by": 0.65
+        }
+       ]
+      },
+      {
+       "preset": "arnold/advanced/3",
+       "muscles": [
+        {
+         "muscle": "upper_back",
+         "short_by": 0.4
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 0.24
+        },
+        {
+         "muscle": "hamstrings",
+         "short_by": 0.04
+        }
+       ]
+      },
+      {
+       "preset": "torso-limbs/beginner/2",
+       "muscles": [
+        {
+         "muscle": "quads",
+         "short_by": 1.0
+        },
+        {
+         "muscle": "side_delts",
+         "short_by": 0.65
+        },
+        {
+         "muscle": "abs",
+         "short_by": 0.5
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.44
+        },
+        {
+         "muscle": "triceps",
+         "short_by": 0.37
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 0.3
+        }
+       ]
+      },
+      {
+       "preset": "torso-limbs/intermediate/2",
+       "muscles": [
+        {
+         "muscle": "calves",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "side_delts",
+         "short_by": 1.5
+        },
+        {
+         "muscle": "triceps",
+         "short_by": 1.29
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 1.06
+        },
+        {
+         "muscle": "quads",
+         "short_by": 1.0
+        },
+        {
+         "muscle": "abs",
+         "short_by": 1.0
+        },
+        {
+         "muscle": "obliques",
+         "short_by": 0.5
+        },
+        {
+         "muscle": "lats",
+         "short_by": 0.48
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.2
+        },
+        {
+         "muscle": "glutes",
+         "short_by": 0.2
+        }
+       ]
+      },
+      {
+       "preset": "upper-lower-full/intermediate/3",
+       "muscles": [
+        {
+         "muscle": "triceps",
+         "short_by": 0.32
+        }
+       ]
+      },
+      {
+       "preset": "upper-lower-full/advanced/3",
+       "muscles": [
+        {
+         "muscle": "lats",
+         "short_by": 0.51
+        }
+       ]
+      }
+     ]
+    },
+    "sets_before": 3391,
+    "sets_after": 3414
+   },
+   "efficient": {
+    "flags_before": {
+     "info:low_frequency": 137,
+     "info:pattern_gap": 19,
+     "info:recovery_gap_long": 162,
+     "info:session_efficiency_single_day": 52,
+     "info:session_hard_sets": 53,
+     "info:session_length": 23,
+     "info:wasted_late_sets": 49,
+     "warn:session_efficiency": 49
+    },
+    "flags_after": {
+     "info:low_frequency": 136,
+     "info:pattern_gap": 17,
+     "info:recovery_gap_long": 162,
+     "info:session_efficiency_single_day": 50,
+     "info:session_hard_sets": 53,
+     "info:session_length": 20,
+     "info:wasted_late_sets": 46,
+     "warn:session_efficiency": 46
+    },
+    "weekly_min_before": 23,
+    "weekly_min_after": {
+     "presets_missing_min": 13,
+     "missing": [
+      {
+       "preset": "full-body/beginner/2",
+       "muscles": [
+        {
+         "muscle": "triceps",
+         "short_by": 1.08
+        },
+        {
+         "muscle": "abs",
+         "short_by": 0.5
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.44
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 0.3
+        }
+       ]
+      },
+      {
+       "preset": "full-body/intermediate/2",
+       "muscles": [
+        {
+         "muscle": "calves",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "side_delts",
+         "short_by": 1.5
+        },
+        {
+         "muscle": "triceps",
+         "short_by": 1.42
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 1.06
+        },
+        {
+         "muscle": "lats",
+         "short_by": 0.48
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.2
+        }
+       ]
+      },
+      {
+       "preset": "full-body/advanced/2",
+       "muscles": [
+        {
+         "muscle": "side_delts",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "quads",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "hamstrings",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "calves",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "abs",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 1.7
+        },
+        {
+         "muscle": "obliques",
+         "short_by": 1.0
+        },
+        {
+         "muscle": "rear_delts",
+         "short_by": 0.55
+        },
+        {
+         "muscle": "glutes",
+         "short_by": 0.48
+        },
+        {
+         "muscle": "lats",
+         "short_by": 0.2
+        }
+       ]
+      },
+      {
+       "preset": "upper-lower/beginner/2",
+       "muscles": [
+        {
+         "muscle": "rear_delts",
+         "short_by": 1.5
+        },
+        {
+         "muscle": "side_delts",
+         "short_by": 1.1
+        },
+        {
+         "muscle": "triceps",
+         "short_by": 0.82
+        },
+        {
+         "muscle": "calves",
+         "short_by": 0.5
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.24
+        }
+       ]
+      },
+      {
+       "preset": "upper-lower/intermediate/2",
+       "muscles": [
+        {
+         "muscle": "calves",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "triceps",
+         "short_by": 1.82
+        },
+        {
+         "muscle": "side_delts",
+         "short_by": 1.6
+        },
+        {
+         "muscle": "rear_delts",
+         "short_by": 1.34
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 0.74
+        },
+        {
+         "muscle": "obliques",
+         "short_by": 0.42
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.2
+        },
+        {
+         "muscle": "glutes",
+         "short_by": 0.2
+        }
+       ]
+      },
+      {
+       "preset": "ppl/advanced/3",
+       "muscles": [
+        {
+         "muscle": "triceps",
+         "short_by": 0.12
+        },
+        {
+         "muscle": "hamstrings",
+         "short_by": 0.04
+        }
+       ]
+      },
+      {
+       "preset": "pplu/advanced/4",
+       "muscles": [
+        {
+         "muscle": "hamstrings",
+         "short_by": 0.04
+        }
+       ]
+      },
+      {
+       "preset": "arnold/intermediate/3",
+       "muscles": [
+        {
+         "muscle": "glutes",
+         "short_by": 0.65
+        }
+       ]
+      },
+      {
+       "preset": "arnold/advanced/3",
+       "muscles": [
+        {
+         "muscle": "upper_back",
+         "short_by": 0.4
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 0.24
+        },
+        {
+         "muscle": "hamstrings",
+         "short_by": 0.04
+        }
+       ]
+      },
+      {
+       "preset": "torso-limbs/beginner/2",
+       "muscles": [
+        {
+         "muscle": "quads",
+         "short_by": 1.0
+        },
+        {
+         "muscle": "side_delts",
+         "short_by": 0.65
+        },
+        {
+         "muscle": "abs",
+         "short_by": 0.5
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.44
+        },
+        {
+         "muscle": "triceps",
+         "short_by": 0.37
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 0.3
+        }
+       ]
+      },
+      {
+       "preset": "torso-limbs/intermediate/2",
+       "muscles": [
+        {
+         "muscle": "calves",
+         "short_by": 2.0
+        },
+        {
+         "muscle": "side_delts",
+         "short_by": 1.5
+        },
+        {
+         "muscle": "triceps",
+         "short_by": 1.29
+        },
+        {
+         "muscle": "biceps",
+         "short_by": 1.06
+        },
+        {
+         "muscle": "quads",
+         "short_by": 1.0
+        },
+        {
+         "muscle": "abs",
+         "short_by": 1.0
+        },
+        {
+         "muscle": "obliques",
+         "short_by": 0.5
+        },
+        {
+         "muscle": "lats",
+         "short_by": 0.48
+        },
+        {
+         "muscle": "upper_back",
+         "short_by": 0.2
+        },
+        {
+         "muscle": "glutes",
+         "short_by": 0.2
+        }
+       ]
+      },
+      {
+       "preset": "upper-lower-full/intermediate/3",
+       "muscles": [
+        {
+         "muscle": "triceps",
+         "short_by": 0.32
+        }
+       ]
+      },
+      {
+       "preset": "upper-lower-full/advanced/3",
+       "muscles": [
+        {
+         "muscle": "lats",
+         "short_by": 0.51
+        }
+       ]
+      }
+     ]
+    },
+    "sets_before": 3141,
+    "sets_after": 3155
+   }
+  },
+  "payoff_bands": {
+   "efficient": {
+    "green": 1336,
+    "amber": 305
+   },
+   "max_growth": {
+    "green": 1261,
+    "amber": 392
+   }
+  },
+  "builder_paths": {
+   "presets_max_growth": "data/splits.json (topped up)",
+   "presets_efficient": "data/splits-efficient.json (re-trimmed)",
+   "topup_log": "data/splits-topup-vol14b.json",
+   "optional": "rules.json optional_muscles + weekly_status.excluded_muscles; targets.json optional_muscles"
+  },
+  "history_frozen": [
+   "model:vol14"
+  ]
+ },
+ "vol14c": {
+  "version": "vol14c",
+  "date": "2026-11-01",
+  "source": "CoS decisions within the vol14 batch (approved by Mr Dude)",
+  "rule": "2-day boards (days-per-week = 2, presets and custom): weekly-minimum misses are 'below_by_design', info grey, one fixed line, not a failed check.\n(b) Weekly-minimum comparison on the DISPLAYED value: miss iff r1(weekly effective sets) < min (r1 = half-up 0.1). rules weekly_status + check_program col().\n    Hand fixes for the remaining non-2-day misses: +1 set on an existing tile (day with room, or made room by moving another muscle's set to a same-main-muscle tile on another day), move a set between days, or swap a tile for a same-slot\n    exercise (same movement_pattern, type and main muscle) that trains the short muscle more. Constraints: no new flag of any kind or severity (Max-growth checker and\n    the Efficient checker on the re-trimmed version; a new 'close to hard-set cap' or 'long session' info note is allowed; no new warning), session caps and hard-set cap via those flags, no other muscle pushed below its minimum, no red Payoff,\n    the re-trimmed Efficient version also meets every minimum, +2 sets/day and 1 new tile/day vs the original (pre-vol14b) preset.\n(c) vol14b 1-set add-on tiles: remove and put +1 on an existing tile for that muscle if that passes; else make it 2 sets if that passes; else drop it\n    (the minimum is then met another way by (b)).",
+  "two_day_line": "Two days can't cover every muscle. This plan prioritizes the big ones; add a day to fill the gaps.",
+  "final_check": {
+   "max_growth": {
+    "flags_before": {
+     "info:low_frequency": 134,
+     "info:pattern_gap": 17,
+     "info:recovery_gap_long": 157,
+     "info:session_hard_sets": 56,
+     "info:session_length": 24,
+     "info:wasted_late_sets": 3,
+     "warn:session_efficiency": 3
+    },
+    "flags_after": {
+     "info:low_frequency": 130,
+     "info:pattern_gap": 17,
+     "info:recovery_gap_long": 156,
+     "info:session_hard_sets": 63,
+     "info:session_length": 25,
+     "info:wasted_late_sets": 3,
+     "warn:session_efficiency": 3
+    },
+    "missing_min_non_two_day": [
+     {
+      "preset": "arnold/intermediate/3",
+      "muscles": [
+       "glutes"
+      ]
+     },
+     {
+      "preset": "upper-lower-full/advanced/3",
+      "muscles": [
+       "lats"
+      ]
+     }
+    ],
+    "two_day_label_presets": 7,
+    "one_set_addon_tiles": [],
+    "sets_vs_vol14b": 6,
+    "tiles_vs_vol14b": -3
+   },
+   "efficient": {
+    "flags_before": {
+     "info:low_frequency": 136,
+     "info:pattern_gap": 17,
+     "info:recovery_gap_long": 162,
+     "info:session_efficiency_single_day": 50,
+     "info:session_hard_sets": 53,
+     "info:session_length": 20,
+     "info:wasted_late_sets": 46,
+     "warn:session_efficiency": 46
+    },
+    "flags_after": {
+     "info:low_frequency": 133,
+     "info:pattern_gap": 17,
+     "info:recovery_gap_long": 161,
+     "info:session_efficiency_single_day": 50,
+     "info:session_hard_sets": 58,
+     "info:session_length": 19,
+     "info:wasted_late_sets": 46,
+     "warn:session_efficiency": 46
+    },
+    "missing_min_non_two_day": [
+     {
+      "preset": "arnold/intermediate/3",
+      "muscles": [
+       "glutes"
+      ]
+     },
+     {
+      "preset": "upper-lower-full/advanced/3",
+      "muscles": [
+       "lats"
+      ]
+     }
+    ],
+    "two_day_label_presets": 7,
+    "one_set_addon_tiles": [
+     "ppl/beginner/3/wed/dumbbell-lateral-raise"
+    ],
+    "sets_vs_vol14b": 4,
+    "tiles_vs_vol14b": -3
+   }
+  },
+  "payoff_bands": {
+   "efficient": {
+    "green": 1335,
+    "amber": 305
+   },
+   "max_growth": {
+    "green": 1259,
+    "amber": 393
+   }
+  },
+  "fix_log": "data/splits-fix-vol14c.json",
+  "builder_paths": {
+   "weekly_minimum_rule": "rules.json weekly_status {comparison (r1 displayed value), status.needs_sets / below_by_design / optional_low, needs_sets_count, check}",
+   "two_day": "rules.json weekly_status.two_day_rule {applies_when days_per_week == 2, effect, line}; flag_copy.templates.weekly_two_day_by_design (info, grey, once per board)",
+   "checker": "tools/check_program.py col() compares the minimum on r1; 2-day under-minimum -> info flag weekly_min_two_day",
+   "preset_weekly_status": "day-metrics-presets.json presets[goal][preset].weekly_status {days_per_week, displayed_sets[m] (r1), below_min[m] = needs_sets | below_by_design | optional_low, needs_sets_count, two_day_label (the line or null), severity}",
+   "presets": "data/splits.json (fixed), data/splits-efficient.json (re-trimmed), data/splits-fix-vol14c.json (log)"
+  },
+  "trim_note": "The Efficient trim keeps its stricter r2 >= min constraint (r2 >= min implies r1 >= min), so its output always passes the displayed-value rule.",
+  "history_frozen": [
+   "model:vol14b"
+  ]
  }
 }

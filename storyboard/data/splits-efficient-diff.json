@@ -1,20 +1,20 @@
 {
  "version": "vol10b",
- "source": "data/splits.json (unchanged)",
+ "source": "data/splits.json (vol14b: topped up to the weekly minimum; see splits-topup-vol14b.json)",
  "goal": "efficient",
  "rule": "rules.json rules[id=efficient_trim]",
  "summary": {
   "before": {
-   "flags": 187,
+   "flags": 190,
    "presets": 36
   },
   "after": {
-   "flags": 49,
-   "presets": 18
+   "flags": 46,
+   "presets": 17
   },
-  "sets_removed": 250,
+  "sets_removed": 261,
   "exercises_removed": 4,
-  "in_zone_to_below_target": 67,
+  "in_zone_to_below_target": 70,
   "fell_below_min": 0,
   "reduced_while_below_min": 0,
   "residual": [
@@ -168,14 +168,14 @@
     "preset": "ppl/intermediate/3",
     "day": "mon",
     "muscle": "front_delts",
-    "sets": 6.5,
+    "sets": 7.5,
     "limit": 5,
-    "excess": 1.5,
+    "excess": 2.5,
     "why": [
-     "barbell-bench-press: would put chest, triceps below the weekly minimum",
+     "barbell-bench-press: would put chest below the weekly minimum",
      "cable-fly: would put chest below the weekly minimum",
      "incline-dumbbell-press: would put chest below the weekly minimum",
-     "overhead-press: would put side_delts, triceps below the weekly minimum"
+     "overhead-press: would put side_delts below the weekly minimum"
     ]
    },
    {
@@ -206,30 +206,17 @@
     ]
    },
    {
-    "preset": "ppl/intermediate/3",
-    "day": "fri",
-    "muscle": "abductors",
-    "sets": 4.6,
-    "limit": 4,
-    "excess": 0.6,
-    "why": [
-     "back-squat: would put quads, glutes below the weekly minimum",
-     "hip-abduction-machine: would put glutes below the weekly minimum",
-     "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
-    ]
-   },
-   {
     "preset": "ppl/advanced/3",
     "day": "mon",
     "muscle": "front_delts",
-    "sets": 8.5,
+    "sets": 7.5,
     "limit": 5,
-    "excess": 3.5,
+    "excess": 2.5,
     "why": [
      "cable-fly: would put chest below the weekly minimum",
-     "dumbbell-bench-press: would put chest, triceps below the weekly minimum",
      "incline-barbell-bench-press: would put chest, triceps below the weekly minimum",
-     "seated-dumbbell-shoulder-press: would put triceps below the weekly minimum"
+     "plate-loaded-chest-press: would put chest, triceps below the weekly minimum",
+     "seated-dumbbell-shoulder-press: would put side_delts, triceps below the weekly minimum"
     ]
    },
    {
@@ -365,19 +352,6 @@
     ]
    },
    {
-    "preset": "pplu/intermediate/4",
-    "day": "thu",
-    "muscle": "abductors",
-    "sets": 4.6,
-    "limit": 4,
-    "excess": 0.6,
-    "why": [
-     "back-squat: would put quads, glutes below the weekly minimum",
-     "hip-abduction-machine: would put glutes below the weekly minimum",
-     "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
-    ]
-   },
-   {
     "preset": "pplu/advanced/4",
     "day": "tue",
     "muscle": "lats",
@@ -492,9 +466,9 @@
     "limit": 6,
     "excess": 0.8,
     "why": [
-     "chest-supported-row: would put lats, upper_back, biceps below the weekly minimum",
-     "pull-up: would put lats, upper_back, biceps below the weekly minimum",
-     "t-bar-row: would put lats, upper_back, biceps below the weekly minimum"
+     "chest-supported-row: would put lats, upper_back below the weekly minimum",
+     "pull-up: would put lats, upper_back below the weekly minimum",
+     "t-bar-row: would put lats, upper_back below the weekly minimum"
     ]
    },
    {
@@ -562,9 +536,9 @@
     "preset": "phul/advanced/4",
     "day": "mon",
     "muscle": "front_delts",
-    "sets": 6.4,
+    "sets": 5.4,
     "limit": 5,
-    "excess": 1.4,
+    "excess": 0.4,
     "why": [
      "barbell-bench-press: would put chest below the weekly minimum",
      "close-grip-bench-press: would put chest below the weekly minimum",
@@ -575,25 +549,13 @@
     "preset": "phul/advanced/4",
     "day": "mon",
     "muscle": "triceps",
-    "sets": 6.0,
+    "sets": 5.4,
     "limit": 5,
-    "excess": 1.0,
+    "excess": 0.4,
     "why": [
      "barbell-bench-press: would put chest below the weekly minimum",
      "close-grip-bench-press: would put chest below the weekly minimum",
      "overhead-press: would put side_delts below the weekly minimum"
-    ]
-   },
-   {
-    "preset": "phul/advanced/4",
-    "day": "mon",
-    "muscle": "lats",
-    "sets": 6.2,
-    "limit": 6,
-    "excess": 0.2,
-    "why": [
-     "barbell-row: would put rear_delts below the weekly minimum",
-     "pull-up: would put rear_delts below the weekly minimum"
     ]
    },
    {
@@ -939,7 +901,7 @@
    ]
   },
   "ppl/beginner/3": {
-   "sets_removed": 3,
+   "sets_removed": 5,
    "changes": [
     {
      "day": "mon",
@@ -961,9 +923,23 @@
      "from": 2,
      "to": 1,
      "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "dumbbell-shrug",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
+    },
+    {
+     "day": "wed",
+     "id": "dumbbell-lateral-raise",
+     "from": 2,
+     "to": 1,
+     "removed_exercise": false
     }
    ],
-   "flags_before": 2,
+   "flags_before": 3,
    "flags_after": 0,
    "residual": []
   },
@@ -1004,7 +980,7 @@
    "residual": []
   },
   "ppl/intermediate/3": {
-   "sets_removed": 4,
+   "sets_removed": 6,
    "changes": [
     {
      "day": "mon",
@@ -1033,22 +1009,36 @@
      "from": 2,
      "to": 1,
      "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "seated-leg-curl",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "fri",
+     "id": "hip-abduction-machine",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
     }
    ],
-   "flags_before": 6,
-   "flags_after": 4,
+   "flags_before": 7,
+   "flags_after": 3,
    "residual": [
     {
      "day": "mon",
      "muscle": "front_delts",
-     "sets": 6.5,
+     "sets": 7.5,
      "limit": 5,
-     "excess": 1.5,
+     "excess": 2.5,
      "why": [
-      "barbell-bench-press: would put chest, triceps below the weekly minimum",
+      "barbell-bench-press: would put chest below the weekly minimum",
       "cable-fly: would put chest below the weekly minimum",
       "incline-dumbbell-press: would put chest below the weekly minimum",
-      "overhead-press: would put side_delts, triceps below the weekly minimum"
+      "overhead-press: would put side_delts below the weekly minimum"
      ]
     },
     {
@@ -1074,18 +1064,6 @@
       "lat-pulldown: would put upper_back below the weekly minimum",
       "pull-up: would put upper_back below the weekly minimum",
       "reverse-pec-deck: would put upper_back below the weekly minimum"
-     ]
-    },
-    {
-     "day": "fri",
-     "muscle": "abductors",
-     "sets": 4.6,
-     "limit": 4,
-     "excess": 0.6,
-     "why": [
-      "back-squat: would put quads, glutes below the weekly minimum",
-      "hip-abduction-machine: would put glutes below the weekly minimum",
-      "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
      ]
     }
    ]
@@ -1197,8 +1175,15 @@
    "residual": []
   },
   "ppl/advanced/3": {
-   "sets_removed": 5,
+   "sets_removed": 6,
    "changes": [
+    {
+     "day": "mon",
+     "id": "seated-dumbbell-shoulder-press",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
     {
      "day": "wed",
      "id": "reverse-pec-deck",
@@ -1227,14 +1212,14 @@
     {
      "day": "mon",
      "muscle": "front_delts",
-     "sets": 8.5,
+     "sets": 7.5,
      "limit": 5,
-     "excess": 3.5,
+     "excess": 2.5,
      "why": [
       "cable-fly: would put chest below the weekly minimum",
-      "dumbbell-bench-press: would put chest, triceps below the weekly minimum",
       "incline-barbell-bench-press: would put chest, triceps below the weekly minimum",
-      "seated-dumbbell-shoulder-press: would put triceps below the weekly minimum"
+      "plate-loaded-chest-press: would put chest, triceps below the weekly minimum",
+      "seated-dumbbell-shoulder-press: would put side_delts, triceps below the weekly minimum"
      ]
     },
     {
@@ -1776,7 +1761,7 @@
    "residual": []
   },
   "pplu/intermediate/4": {
-   "sets_removed": 12,
+   "sets_removed": 15,
    "changes": [
     {
      "day": "mon",
@@ -1840,24 +1825,25 @@
      "from": 2,
      "to": 1,
      "removed_exercise": false
-    }
-   ],
-   "flags_before": 8,
-   "flags_after": 1,
-   "residual": [
+    },
     {
      "day": "thu",
-     "muscle": "abductors",
-     "sets": 4.6,
-     "limit": 4,
-     "excess": 0.6,
-     "why": [
-      "back-squat: would put quads, glutes below the weekly minimum",
-      "hip-abduction-machine: would put glutes below the weekly minimum",
-      "romanian-deadlift: would put hamstrings, glutes below the weekly minimum"
-     ]
+     "id": "leg-extension",
+     "from": 4,
+     "to": 2,
+     "removed_exercise": false
+    },
+    {
+     "day": "thu",
+     "id": "hip-abduction-machine",
+     "from": 3,
+     "to": 2,
+     "removed_exercise": false
     }
-   ]
+   ],
+   "flags_before": 9,
+   "flags_after": 0,
+   "residual": []
   },
   "pplu/advanced/4": {
    "sets_removed": 13,
@@ -2438,9 +2424,9 @@
      "limit": 6,
      "excess": 0.8,
      "why": [
-      "chest-supported-row: would put lats, upper_back, biceps below the weekly minimum",
-      "pull-up: would put lats, upper_back, biceps below the weekly minimum",
-      "t-bar-row: would put lats, upper_back, biceps below the weekly minimum"
+      "chest-supported-row: would put lats, upper_back below the weekly minimum",
+      "pull-up: would put lats, upper_back below the weekly minimum",
+      "t-bar-row: would put lats, upper_back below the weekly minimum"
      ]
     },
     {
@@ -2768,8 +2754,22 @@
    "residual": []
   },
   "phul/advanced/4": {
-   "sets_removed": 8,
+   "sets_removed": 11,
    "changes": [
+    {
+     "day": "mon",
+     "id": "overhead-press",
+     "from": 4,
+     "to": 3,
+     "removed_exercise": false
+    },
+    {
+     "day": "mon",
+     "id": "pull-up",
+     "from": 4,
+     "to": 2,
+     "removed_exercise": false
+    },
     {
      "day": "mon",
      "id": "barbell-curl",
@@ -2779,9 +2779,9 @@
     },
     {
      "day": "tue",
-     "id": "back-squat",
-     "from": 4,
-     "to": 3,
+     "id": "deadlift",
+     "from": 3,
+     "to": 2,
      "removed_exercise": false
     },
     {
@@ -2814,14 +2814,14 @@
     }
    ],
    "flags_before": 9,
-   "flags_after": 3,
+   "flags_after": 2,
    "residual": [
     {
      "day": "mon",
      "muscle": "front_delts",
-     "sets": 6.4,
+     "sets": 5.4,
      "limit": 5,
-     "excess": 1.4,
+     "excess": 0.4,
      "why": [
       "barbell-bench-press: would put chest below the weekly minimum",
       "close-grip-bench-press: would put chest below the weekly minimum",
@@ -2831,24 +2831,13 @@
     {
      "day": "mon",
      "muscle": "triceps",
-     "sets": 6.0,
+     "sets": 5.4,
      "limit": 5,
-     "excess": 1.0,
+     "excess": 0.4,
      "why": [
       "barbell-bench-press: would put chest below the weekly minimum",
       "close-grip-bench-press: would put chest below the weekly minimum",
       "overhead-press: would put side_delts below the weekly minimum"
-     ]
-    },
-    {
-     "day": "mon",
-     "muscle": "lats",
-     "sets": 6.2,
-     "limit": 6,
-     "excess": 0.2,
-     "why": [
-      "barbell-row: would put rear_delts below the weekly minimum",
-      "pull-up: would put rear_delts below the weekly minimum"
      ]
     }
    ]

@@ -19,7 +19,7 @@
    "state_icon": false
   },
   "volume_in_reach": {
-   "display_label": "Every muscle within reach of its weekly range",
+   "display_label": "Every muscle gets enough weekly sets",
    "kind": "check",
    "state_icon": true
   },
@@ -129,10 +129,10 @@
    "state_icon": true
   },
   "stimulus_per_fatigue": {
-   "display_label": "Stimulus per fatigue",
+   "display_label": "Retired",
    "kind": "measure",
    "state_icon": false,
-   "display_status": "retired (vol13)",
+   "display_status": "retired",
    "note_vol13": "Not shown: S:F lives only on the per-muscle day map. Exercise spf still ranks lower-fatigue swaps."
   },
   "spinal_load": {
@@ -216,5 +216,10 @@
    "state_icon": false
   }
  },
- "checks_pass_display": "Passing: {pass} of {total}"
+ "checks_pass_display": "Passing: {pass} of {total}",
+ "checks_pass_display_vol14": {
+  "line": "Passing: {pass} of {total}",
+  "attention": "{n} muscles need sets",
+  "rule": "rules.json weekly_status (same rule for both)"
+ }
 }

@@ -1508,7 +1508,7 @@ const XBANDL={main:'Main mover',helper:'Helper',minor:'Minor',nc:'Not counted'};
 async function eduLoad(){
   if(EDU.idx)return EDU.idx;
   {const b=DATA+'education/',j=await getJ(b+'index.json');if(j){EDU.idx=j;EDU.base=b}} // the storyboard's synced copy (sync-education.sh) only
-  if(!EDU.idx)EDU.idx={pages:[]};
+  if(!EDU.idx){EDU.idx={pages:[]};return EDU.idx}   // vol14: no index (e.g. an aborted load) -> no follow-up fetches from a null base
   try{const r=await fetch(EDU.base+(EDU.idx.references||'references.json'),{cache:'no-store'});if(r.ok)EDU.refs=(await r.json()).references||{}}catch(e){}
   // exercise pages cite from a second file; merge so every [n] resolves the same way
   for(const f of ['references-exercises.json'])try{const r=await fetch(EDU.base+f,{cache:'no-store'});if(r.ok)Object.assign(EDU.refs,(await r.json()).references||{})}catch(e){}
@@ -1517,7 +1517,7 @@ async function eduLoad(){
 async function eduPage(id){const idx=await eduLoad(),p=idx.pages.find(x=>x.id===id);if(!p)return {entry:null,page:null};
   if(p.status!=='final')return {entry:p,page:null};
   if(!(p.path in EDU.cache)){try{const r=await fetch(EDU.base+p.path,{cache:'no-store'});EDU.cache[p.path]=r.ok?await r.json():null}catch(e){EDU.cache[p.path]=null}}
-  const pg=EDU.cache[p.path];return {entry:p,page:window.LEARNFIX&&pg?LEARNFIX.page(p.id,pg,(window.SBX||{}).RD||(typeof RD!=='undefined'?RD:null)):pg};   // vol13: current-model text (logic/learnfix.js)
+  const pg=EDU.cache[p.path];return {entry:p,page:pg}   /* vol14: Coach rewrote the Learn articles; the vol13 LEARNFIX.page render patch is dropped (srcHtml only) */;   // vol13: current-model text (logic/learnfix.js)
 }
 // Learn evidence labels: quiet inline text (same .evl rule as Analysis' Modeled / Thin evidence); tapping one opens the Evidence sheet
 const EVXT={supported:'a training study measured it',biomechanics:'follows from anatomy and mechanics',modeled:'coach consensus or app model'};
@@ -1642,7 +1642,6 @@ const SO_WHAT={
   fatigue_rating:'Heavy compound lifts cost more recovery per set than isolation work.',
   recovery_cost:'Use it to compare two versions of a plan, then adjust to how you actually recover.',
   recovery_vs_baseline:'A big jump over your normal week is worth a second look.',
-  stimulus_per_fatigue:'Higher means more growth work for the recovery you spend. Low muscles get swap ideas.',
   spinal_load:'Heavy back-loading lifts cost the most recovery. Keep them spread out.',
   lower_back_fatigue:'A note to consider, not a check. The evidence is thin and it never blocks a plan.',
   session_design:'Past a point, extra sets in one session add little. Move them to another day.',
@@ -1673,7 +1672,6 @@ function exDetailBody(id,d){const e=EX[id]||{},f=d.fatigue||{},st=d.stretch||{},
    <div class="group inset0 xmet">${row('Stretch',st.stretch_focused?'Stretch-focused':`Emphasis ${st.stretch_emphasis??'–'} of 3`,sfor.length?`Counts as stretch work for ${sfor.join(', ')}`:'Not on a stretch-check list')}
     ${row('Fatigue rating',`${f.rating??'–'}`,f.tier?f.tier[0].toUpperCase()+f.tier.slice(1):'')}
     ${row('Recovery cost per set',`${f.recovery_cost_per_set??'–'}`,'Modeled points; adds up to the week’s recovery cost')}
-    ${row('Stimulus per fatigue',`${sp.main??'–'}`,'Top rating ÷ fatigue')}
     ${row('Systemic fatigue',`${f.systemic_fatigue_tag??'–'} of 3`)}
     ${row('Heavy spine load',yn(f.heavy_spine),f.heavy_spine?'Counts toward the spinal-load check':'')}
     ${row('One side at a time',yn(d.one_side))}
@@ -1768,7 +1766,7 @@ const RWHY={ul:'Goal: size · fits 4 days',ppl:'Bias: side delts · 6 days',fb:'
 // EXERCISE PAGE (Learn): data/education/exercises/<id>.json; placeholders until Coach's files land
 // Exercise pages (Coach's exercise-pages-spec.md): exercises/index.json plans the authored pages; a final entry -> exercises/<path>,
 // anything else -> exercises/auto/<id>.json (generated for every exercise, labelled source:"auto"). No per-exercise code.
-async function exIndex(){await eduLoad();if(EDU.xidx)return EDU.xidx;try{const r=await fetch(EDU.base+'exercises/index.json',{cache:'no-store'});EDU.xidx=r.ok?await r.json():{pages:[]}}catch(e){EDU.xidx={pages:[]}}return EDU.xidx}
+async function exIndex(){await eduLoad();if(EDU.xidx)return EDU.xidx;if(!EDU.base)return {pages:[]};try{const r=await fetch(EDU.base+'exercises/index.json',{cache:'no-store'});EDU.xidx=r.ok?await r.json():{pages:[]}}catch(e){EDU.xidx={pages:[]}}return EDU.xidx}
 async function exPage(id){
   const xi=await exIndex(),p=(xi.pages||[]).find(x=>x.id===id),tries=[];
   if(p&&p.status==='final')tries.push(EDU.base+'exercises/'+p.path);

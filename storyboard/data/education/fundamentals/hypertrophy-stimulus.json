@@ -4,7 +4,7 @@
  "kind": "fundamental",
  "title": "What makes a muscle grow",
  "status": "final",
- "updated": "2026-10-21",
+ "updated": "2026-11-01",
  "summary": "Muscles grow from hard sets that put them under high tension. Sets near failure count, failure itself adds little, loading the stretch looks promising, and the pump and soreness are not required.",
  "app_link": {
   "features": [
@@ -193,8 +193,8 @@
    "id": "putting-together",
    "heading": "How the app puts it together",
    "body": [
-    "Each hard set adds its exercise's muscle rating to that muscle's weekly total (1.0 for a main mover, about 0.5 for a helper, ratings under 0.25 count as 0). More hard sets per week tend to give more growth, with diminishing returns, which the weekly targets and the stimulus curve try to reflect.",
-    "The details of set counting, targets and the curve are on the 'Set crediting and weekly targets' and 'Volume and frequency' pages."
+    "Each hard set counts toward the muscles an exercise works: a full set for the main mover and part of a set for helpers. More hard sets per week tend to give more growth, with diminishing returns, which the weekly targets and the weekly curve reflect.",
+    "Within one workout, Payoff shows where extra sets for a muscle stop paying off. The details are on the 'Set crediting and weekly targets' and 'Volume and frequency' pages."
    ],
    "points": [
     {
@@ -214,9 +214,9 @@
      "app_key": "targets.json:counting.min_rating_to_count"
     },
     {
-     "text": "In the stimulus curve, effective sets past 10 for one muscle in one session count at 50%. This is a heuristic, not a measured limit.",
+     "text": "Within one workout, each extra set for a muscle adds less; Payoff (stimulus minus fatigue) marks where it stops paying off. This is a model, not a measured limit.",
      "evidence": "modeled",
-     "app_key": "targets.json:curve.session_discount"
+     "app_key": "rules.json:rules.#payoff.note"
     }
    ]
   }

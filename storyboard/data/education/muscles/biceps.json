@@ -414,13 +414,13 @@
   "targets.json:targets.biceps.min": 8,
   "targets.json:targets.biceps.max": 18,
   "targets.json:counting.min_rating_to_count": 0.25,
-  "targets.json:counting.round_to": 0.5,
   "targets.json:levelMinFactor.beginner": 0.6,
   "targets.json:levelMinFactor.intermediate": 0.8,
   "exercises.json:@chin-up.muscles.biceps": 0.8,
   "exercises.json:@hammer-curl.muscles.forearms": 0.8,
   "exercises.json:@reverse-curl.muscles.forearms": 1,
-  "exercises.json:@reverse-curl.muscles.biceps": 0.6
+  "exercises.json:@reverse-curl.muscles.biceps": 0.6,
+  "targets.json:counting.display_round_to": 0.5
  },
  "notes": [
   "Weekly target in the app: 8 to 18 biceps sets at Advanced. Intermediate and Beginner scale the minimum by 0.8 and 0.6; the maximum stays the same. Render the numbers from targets.json, not from this text.",
