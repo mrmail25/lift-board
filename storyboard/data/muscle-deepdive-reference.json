@@ -271,7 +271,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Dumbbell Bench Press for Archer Push-Up on Monday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Dumbbell Bench Press for Archer Push-Up on Monday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        },
@@ -289,7 +289,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Incline Dumbbell Press for Incline Chest Press Machine on Thursday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Incline Dumbbell Press for Incline Chest Press Machine on Thursday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        }
@@ -486,7 +486,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Overhead Press for Smith Machine Overhead Press on Monday (front delts: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Overhead Press for Smith Machine Overhead Press on Monday: a lower-fatigue swap that trains the same muscle (front delts)",
          "resolves": true
         }
        }
@@ -1043,7 +1043,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Lat Pulldown for Single-Arm Lat Pulldown on Thursday (lats: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Lat Pulldown for Single-Arm Lat Pulldown on Thursday: a lower-fatigue swap that trains the same muscle (lats)",
          "resolves": true
         }
        },
@@ -1061,7 +1061,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Pull-Up for Ring Pull-Up on Monday (lats: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Pull-Up for Ring Pull-Up on Monday: a lower-fatigue swap that trains the same muscle (lats)",
          "resolves": true
         }
        }
@@ -1288,7 +1288,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Barbell Row for Chest-Supported Dumbbell Row on Thursday (upper back: 0.67→1.00 stimulus per fatigue)",
+         "preview": "Swap Barbell Row for Chest-Supported Dumbbell Row on Thursday: a lower-fatigue swap that trains the same muscle (upper back)",
          "resolves": true
         }
        },
@@ -1306,7 +1306,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Chest-Supported Row for Seated Row Machine (Selectorized) on Monday (upper back: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Chest-Supported Row for Seated Row Machine (Selectorized) on Monday: a lower-fatigue swap that trains the same muscle (upper back)",
          "resolves": true
         }
        }
@@ -2454,7 +2454,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Back Squat for Belt Squat on Tuesday (quads: 0.67→1.00 stimulus per fatigue)",
+         "preview": "Swap Back Squat for Belt Squat on Tuesday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        },
@@ -2472,7 +2472,7 @@
            "sets": 2
           }
          ],
-         "preview": "Swap Bulgarian Split Squat for Suspension Pistol Squat (Assisted) on Friday (quads: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Bulgarian Split Squat for Suspension Pistol Squat (Assisted) on Friday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        },
@@ -2490,7 +2490,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Hack Squat for Horizontal Leg Press on Friday (quads: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Hack Squat for Horizontal Leg Press on Friday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        }
@@ -2687,7 +2687,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Romanian Deadlift for Smith Machine Romanian Deadlift on Tuesday (hamstrings: 0.67→0.83 stimulus per fatigue)",
+         "preview": "Swap Romanian Deadlift for Smith Machine Romanian Deadlift on Tuesday: a lower-fatigue swap that trains the same muscle (hamstrings)",
          "resolves": true
         }
        }
@@ -2914,7 +2914,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Hip Thrust for Barbell Glute Bridge on Friday (glutes: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Hip Thrust for Barbell Glute Bridge on Friday: a lower-fatigue swap that trains the same muscle (glutes)",
          "resolves": true
         }
        }
@@ -4187,7 +4187,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Dumbbell Bench Press for Archer Push-Up on Monday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Dumbbell Bench Press for Archer Push-Up on Monday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        },
@@ -4205,7 +4205,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Incline Dumbbell Press for Incline Chest Press Machine on Wednesday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Incline Dumbbell Press for Incline Chest Press Machine on Wednesday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        },
@@ -4223,7 +4223,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Machine Chest Press for Decline Chest Press Machine on Friday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Machine Chest Press for Decline Chest Press Machine on Friday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        }
@@ -4882,7 +4882,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Lat Pulldown for Single-Arm Lat Pulldown on Monday (lats: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Lat Pulldown for Single-Arm Lat Pulldown on Monday: a lower-fatigue swap that trains the same muscle (lats)",
          "resolves": true
         }
        }
@@ -5093,7 +5093,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Chest-Supported Row for Seated Row Machine (Selectorized) on Friday (upper back: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Chest-Supported Row for Seated Row Machine (Selectorized) on Friday: a lower-fatigue swap that trains the same muscle (upper back)",
          "resolves": true
         }
        },
@@ -5111,7 +5111,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Seated Cable Row for Wide-Grip Cable Row on Wednesday (upper back: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Seated Cable Row for Wide-Grip Cable Row on Wednesday: a lower-fatigue swap that trains the same muscle (upper back)",
          "resolves": true
         }
        }
@@ -6150,7 +6150,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Back Squat for Belt Squat on Monday (quads: 0.67→1.00 stimulus per fatigue)",
+         "preview": "Swap Back Squat for Belt Squat on Monday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        },
@@ -6168,7 +6168,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Hack Squat for Horizontal Leg Press on Friday (quads: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Hack Squat for Horizontal Leg Press on Friday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        },
@@ -6186,7 +6186,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Leg Press for Horizontal Leg Press on Wednesday (quads: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Leg Press for Horizontal Leg Press on Wednesday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        }
@@ -6368,7 +6368,7 @@
            "sets": 2
           }
          ],
-         "preview": "Swap Romanian Deadlift for Smith Machine Romanian Deadlift on Wednesday (hamstrings: 0.67→0.83 stimulus per fatigue)",
+         "preview": "Swap Romanian Deadlift for Smith Machine Romanian Deadlift on Wednesday: a lower-fatigue swap that trains the same muscle (hamstrings)",
          "resolves": true
         }
        }
@@ -7922,7 +7922,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Dumbbell Bench Press for Archer Push-Up on Monday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Dumbbell Bench Press for Archer Push-Up on Monday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        },
@@ -7940,7 +7940,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Incline Barbell Bench Press for Smith Machine Incline Press on Monday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Incline Barbell Bench Press for Smith Machine Incline Press on Monday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        },
@@ -7958,7 +7958,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Incline Dumbbell Press for Incline Chest Press Machine on Thursday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Incline Dumbbell Press for Incline Chest Press Machine on Thursday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        },
@@ -7976,7 +7976,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Machine Chest Press for Decline Chest Press Machine on Thursday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Machine Chest Press for Decline Chest Press Machine on Thursday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        }
@@ -8220,7 +8220,7 @@
            "sets": 2
           }
          ],
-         "preview": "Swap Machine Shoulder Press for Iso-Lateral Shoulder Press on Thursday (front delts: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Machine Shoulder Press for Iso-Lateral Shoulder Press on Thursday: a lower-fatigue swap that trains the same muscle (front delts)",
          "resolves": true
         }
        },
@@ -8238,7 +8238,7 @@
            "sets": 2
           }
          ],
-         "preview": "Swap Seated Dumbbell Shoulder Press for Iso-Lateral Shoulder Press on Monday (front delts: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Seated Dumbbell Shoulder Press for Iso-Lateral Shoulder Press on Monday: a lower-fatigue swap that trains the same muscle (front delts)",
          "resolves": true
         }
        }
@@ -8861,7 +8861,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Close-Grip Pulldown for Single-Arm Lat Pulldown on Friday (lats: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Close-Grip Pulldown for Single-Arm Lat Pulldown on Friday: a lower-fatigue swap that trains the same muscle (lats)",
          "resolves": true
         }
        },
@@ -8879,7 +8879,7 @@
            "sets": 4
           }
          ],
-         "preview": "Swap Pull-Up for Ring Pull-Up on Tuesday (lats: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Pull-Up for Ring Pull-Up on Tuesday: a lower-fatigue swap that trains the same muscle (lats)",
          "resolves": true
         }
        }
@@ -9138,7 +9138,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Chest-Supported Row for Seated Row Machine (Selectorized) on Tuesday (upper back: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Chest-Supported Row for Seated Row Machine (Selectorized) on Tuesday: a lower-fatigue swap that trains the same muscle (upper back)",
          "resolves": true
         }
        },
@@ -9156,7 +9156,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Pendlay Row for Chest-Supported Dumbbell Row on Tuesday (upper back: 0.67→1.00 stimulus per fatigue)",
+         "preview": "Swap Pendlay Row for Chest-Supported Dumbbell Row on Tuesday: a lower-fatigue swap that trains the same muscle (upper back)",
          "resolves": true
         }
        },
@@ -9174,7 +9174,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap T-Bar Row for Chest-Supported Dumbbell Row on Friday (upper back: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap T-Bar Row for Chest-Supported Dumbbell Row on Friday: a lower-fatigue swap that trains the same muscle (upper back)",
          "resolves": true
         }
        }
@@ -10604,7 +10604,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Back Squat for Belt Squat on Wednesday (quads: 0.67→1.00 stimulus per fatigue)",
+         "preview": "Swap Back Squat for Belt Squat on Wednesday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        },
@@ -10622,7 +10622,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Bulgarian Split Squat for Suspension Pistol Squat (Assisted) on Saturday (quads: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Bulgarian Split Squat for Suspension Pistol Squat (Assisted) on Saturday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        },
@@ -10640,7 +10640,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Hack Squat for Horizontal Leg Press on Saturday (quads: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Hack Squat for Horizontal Leg Press on Saturday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        }
@@ -10854,7 +10854,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Romanian Deadlift for Smith Machine Romanian Deadlift on Wednesday (hamstrings: 0.67→0.83 stimulus per fatigue)",
+         "preview": "Swap Romanian Deadlift for Smith Machine Romanian Deadlift on Wednesday: a lower-fatigue swap that trains the same muscle (hamstrings)",
          "resolves": true
         }
        }
@@ -11098,7 +11098,7 @@
            "sets": 2
           }
          ],
-         "preview": "Swap Hip Thrust for Barbell Glute Bridge on Wednesday (glutes: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Hip Thrust for Barbell Glute Bridge on Wednesday: a lower-fatigue swap that trains the same muscle (glutes)",
          "resolves": true
         }
        }
@@ -12596,7 +12596,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Barbell Bench Press for Smith Machine Bench Press on Monday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Barbell Bench Press for Smith Machine Bench Press on Monday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        },
@@ -12614,7 +12614,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Incline Dumbbell Press for Incline Chest Press Machine on Monday (chest: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Incline Dumbbell Press for Incline Chest Press Machine on Monday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        },
@@ -12632,7 +12632,7 @@
            "sets": 2
           }
          ],
-         "preview": "Swap Weighted Dip for Ring Dip on Monday (chest: 0.67→1.00 stimulus per fatigue)",
+         "preview": "Swap Weighted Dip for Ring Dip on Monday: a lower-fatigue swap that trains the same muscle (chest)",
          "resolves": true
         }
        },
@@ -12877,7 +12877,7 @@
            "sets": 4
           }
          ],
-         "preview": "Swap Overhead Press for Smith Machine Overhead Press on Friday (front delts: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Overhead Press for Smith Machine Overhead Press on Friday: a lower-fatigue swap that trains the same muscle (front delts)",
          "resolves": true
         }
        }
@@ -13495,7 +13495,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Lat Pulldown for Single-Arm Lat Pulldown on Tuesday (lats: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Lat Pulldown for Single-Arm Lat Pulldown on Tuesday: a lower-fatigue swap that trains the same muscle (lats)",
          "resolves": true
         }
        },
@@ -13513,7 +13513,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Pull-Up for Ring Pull-Up on Tuesday (lats: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Pull-Up for Ring Pull-Up on Tuesday: a lower-fatigue swap that trains the same muscle (lats)",
          "resolves": true
         }
        },
@@ -13773,7 +13773,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Barbell Row for Chest-Supported Dumbbell Row on Tuesday (upper back: 0.67→1.00 stimulus per fatigue)",
+         "preview": "Swap Barbell Row for Chest-Supported Dumbbell Row on Tuesday: a lower-fatigue swap that trains the same muscle (upper back)",
          "resolves": true
         }
        },
@@ -13791,7 +13791,7 @@
            "sets": 2
           }
          ],
-         "preview": "Swap Chest-Supported Row for Seated Row Machine (Selectorized) on Tuesday (upper back: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Chest-Supported Row for Seated Row Machine (Selectorized) on Tuesday: a lower-fatigue swap that trains the same muscle (upper back)",
          "resolves": true
         }
        }
@@ -15051,7 +15051,7 @@
            "sets": 4
           }
          ],
-         "preview": "Swap Back Squat for Belt Squat on Wednesday (quads: 0.67→1.00 stimulus per fatigue)",
+         "preview": "Swap Back Squat for Belt Squat on Wednesday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        },
@@ -15069,7 +15069,7 @@
            "sets": 3
           }
          ],
-         "preview": "Swap Leg Press for Horizontal Leg Press on Wednesday (quads: 0.83→1.00 stimulus per fatigue)",
+         "preview": "Swap Leg Press for Horizontal Leg Press on Wednesday: a lower-fatigue swap that trains the same muscle (quads)",
          "resolves": true
         }
        },
@@ -15281,7 +15281,7 @@
            "sets": 4
           }
          ],
-         "preview": "Swap Romanian Deadlift for Smith Machine Romanian Deadlift on Wednesday (hamstrings: 0.67→0.83 stimulus per fatigue)",
+         "preview": "Swap Romanian Deadlift for Smith Machine Romanian Deadlift on Wednesday: a lower-fatigue swap that trains the same muscle (hamstrings)",
          "resolves": true
         }
        },

@@ -1864,3 +1864,5 @@ svg.pwbars .pwbl{font-size:10px;fill:var(--text-2)}
 .bmfl .flmore,.wk14 .flmore{font-size:14px;min-height:44px;padding-left:13px}
 .bstick.nostick{position:relative;top:auto}
 .col header .cm{white-space:normal}
+.bmmu{grid-column:1/-1;font-size:14px;line-height:1.35;padding:2px 0 6px}.bmmu .lnk{font-weight:600;color:var(--accent-text);background:none;border:0;padding:0;font:inherit;font-weight:600}
+.mrleg{max-width:100%}.mrleg .lg1{white-space:normal;max-width:100%;min-width:0}.mrleg i{flex:none}

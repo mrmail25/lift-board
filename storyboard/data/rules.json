@@ -2745,7 +2745,9 @@
         "past_peak_is_warning": false,
         "red_flag": "payoff_negative (Payoff < 0)",
         "peak_range": "n with Payoff >= 0.975 x max (fatigue_classes[].peak_range)"
-      }
+      },
+      "note_display": false,
+      "note_display_why": "vol15b: Payoff is not named in the app outside the Learn article illustration."
     }
   ],
   "fix_actions": {
@@ -3281,8 +3283,10 @@
       "action": "swap_exercise:lower_fatigue",
       "scope": "every tile of that exercise, on every day, except a day that already has the candidate",
       "candidate_rule": "main muscle m = cur's highest rating. Candidate: not custom; same rules.json pattern as cur (cosine >= 0.6 if cur has no pattern); never compound->isolation; rating[m] >= cur rating[m] - 0.1; rating[m]/fatigue strictly higher. Order: rating/fatigue desc, swap.json score desc, id. Take the first that validates (try up to 8).",
-      "preview": "Swap {name} for {new_name} on {day_list} ({muscle}: {spf_from}→{spf_to} stimulus per fatigue)",
-      "success_metric": "week recovery cost (sum sets x fatigue) strictly lower; always resolves=true when valid"
+      "preview": "Swap {name} for {new_name} on {day_list}: a lower-fatigue swap that trains the same muscle ({muscle})",
+      "success_metric": "week recovery cost (sum sets x fatigue) strictly lower; always resolves=true when valid",
+      "preview_history_vol15": "Swap {name} for {new_name} on {day_list} ({muscle}: {spf_from}→{spf_to} stimulus per fatigue)",
+      "preview_note": "spf_from / spf_to stay available to the ranking but are not shown."
     },
     "stretch_share": {
       "kind": "analytics",
@@ -3429,16 +3433,16 @@
           "sources": [
             "lower_fatigue_swap"
           ],
-          "trigger": "an exercise on the board has a same-pattern candidate with higher stimulus per fatigue",
+          "trigger": "an exercise on the board has a same-pattern swap that is less tiring and trains the same muscle as well",
           "edits": [
             "swap (every tile of that exercise)"
           ],
-          "success": "week recovery cost strictly lower",
+          "success": "week fatigue strictly lower",
           "section": "recovery_fatigue"
         },
         {
           "id": "trim_recovery_cost",
-          "label": "Bring recovery cost back to normal",
+          "label": "Bring the week back to your normal load",
           "sources": [
             "recovery_vs_baseline"
           ],
@@ -3448,7 +3452,9 @@
             "swap (lower_fatigue)"
           ],
           "success": "resolves at <= 115%",
-          "section": "recovery_fatigue"
+          "section": "recovery_fatigue",
+          "shown": false,
+          "shown_note": "vol15b: tied to recovery-cost numbers, which are not shown."
         },
         {
           "id": "fill_pattern_gap",
@@ -6832,7 +6838,7 @@
         "id": "recovery_fatigue",
         "label": "Recovery & fatigue",
         "tab": "build_analysis",
-        "description": "Modeled fatigue, recovery cost and heavy spine sets."
+        "description": "Modeled fatigue and heavy spine sets."
       },
       {
         "id": "session",
@@ -6983,7 +6989,7 @@
         "explain": {
           "what": "Passes when no muscle is below its weekly minimum and none is far over its range (rules weekly_status).",
           "how": "weekly_volume rule on effective weekly sets per muscle. The flag names the muscle, its sets, and the exercises and days that credit it (none when the muscle gets no sets).",
-          "why": "Far under, the model expects little growth stimulus for that muscle; far over, little extra stimulus for the added recovery cost.",
+          "why": "Far under, the model expects little growth stimulus for that muscle; far over, little extra stimulus for the extra recovery it needs.",
           "learn_page": "set-crediting-targets#status",
           "so_what": "If this needs attention, at least one muscle is far under or far over its range. Fix that first; it is the biggest lever on the page."
         },
@@ -7817,7 +7823,7 @@
         "explain": {
           "what": "The average modeled fatigue per working set this week, with every component that makes it up.",
           "how": "Each exercise has a fatigue rating (1.5 heavy axial compound, 1.1-1.2 other compound, 1.0 lighter compound, 0.8 isolation). Rating = sum(sets x fatigue) / sets. Breakdown: sets and cost per fatigue tier, per day, per exercise, per muscle (cost split by rating share among the muscles it counts for) and per pattern; plus heavy spine sets, the mean systemic-fatigue swap tag and any recovery modifiers (off by default).",
-          "why": "Explains where the recovery cost comes from; heavier compounds cost more per set than isolation work. A rough model, not a measurement.",
+          "why": "Explains where the fatigue comes from; heavier compounds cost more per set than isolation work. A rough model, not a measurement.",
           "learn_page": "exercise-selection#fatigue",
           "so_what": "Heavy compound lifts tire you out more per set than machines or isolation work. A higher rating means the same number of sets will feel harder to recover from."
         },
@@ -7876,7 +7882,9 @@
         ],
         "merged_from": [
           "recovery_cost"
-        ]
+        ],
+        "shown": false,
+        "shown_note": "vol15b: recovery-cost numbers are not shown anywhere; item kept as data."
       },
       {
         "id": "recovery_vs_baseline",
@@ -7918,7 +7926,9 @@
         "is_suggestion_source": false,
         "shown_in": [
           "round 2"
-        ]
+        ],
+        "shown": false,
+        "shown_note": "vol15b: recovery-cost numbers are not shown anywhere; item kept as data."
       },
       {
         "id": "stimulus_per_fatigue",
@@ -8817,7 +8827,7 @@
         "exceed the per-workout cap",
         "run without a tap"
       ],
-      "note": "Adding sets past the Payoff peak is allowed here (that is the trade: more weekly growth for more fatigue); those muscle-days will read amber.",
+      "note": "Adding sets past a muscle's best range in one workout is allowed here (more weekly growth for more fatigue); those muscle-days turn yellow on the map.",
       "optional_muscles": "skipped unless the user taps the muscle"
     }
   },
@@ -9154,9 +9164,9 @@
         "scope": "day",
         "severity": "warn",
         "significance": 95,
-        "template": "{Muscle} {get} {sets} hard sets on {day}, past the {zero} where they stop paying off. The last sets cost more recovery than they build. Move {excess} to another {muscle} day or trim them.",
-        "what": "{Muscle} {get} {sets} hard sets on {day}, past the {zero} where they stop paying off.",
-        "why": "The last sets cost more recovery than they build.",
+        "template": "{Muscle} {get} {sets} hard sets on {day}. Past about {zero} sets in one workout, extra sets cost more recovery than they build. Move {excess} to another {muscle} day or trim them.",
+        "what": "{Muscle} {get} {sets} hard sets on {day}.",
+        "why": "Past about {zero} sets in one workout, extra sets cost more recovery than they build.",
         "fix": "Move {excess} to another {muscle} day or trim them.",
         "placeholders": {
           "Muscle": {
@@ -9259,15 +9269,15 @@
             "example": 13.0
           }
         },
-        "example": "Chest gets 14.0 hard sets on Monday, past the 13.0 where they stop paying off. The last sets cost more recovery than they build. Move 9 sets to another chest day or trim them.",
-        "example_chars": 175,
-        "short_text": "{Muscle} {get} {sets} hard sets on {day}, past the {zero} where they stop paying off. Move {excess} to another {muscle} day or trim them.",
-        "short_example": "Chest gets 14.0 hard sets on Monday, past the 13.0 where they stop paying off. Move 9 sets to another chest day or trim them.",
-        "short_example_chars": 125,
+        "example": "Chest gets 14.0 hard sets on Monday. Past about 13.0 sets in one workout, extra sets cost more recovery than they build. Move 9 sets to another chest day or trim them.",
+        "example_chars": 167,
         "role_vol15": "the red overtraining flag: the muscle is past its zero point that day (red on the map)",
-        "short_line": "{Muscle}: {sets} sets, past the {zero}-set payoff point ›",
-        "short_line_example": "Chest: 14.0 sets, past the 13.0-set payoff point ›",
-        "named_by": "muscle"
+        "short_line": "{Muscle}: {sets} sets, too many for one workout ›",
+        "short_line_example": "Chest: 14.0 sets, too many for one workout ›",
+        "named_by": "muscle",
+        "short_text": "{Muscle} {get} {sets} hard sets on {day}. Move {excess} to another {muscle} day or trim them.",
+        "short_example": "Chest gets 14.0 hard sets on Monday. Move 9 sets to another chest day or trim them.",
+        "short_example_chars": 83
       },
       "session_hard_sets": {
         "scope": "day",
@@ -10038,7 +10048,7 @@
         "scope": "day",
         "severity": "info",
         "significance": 0,
-        "template": "Retired in vol14: folded into payoff_past_efficient.",
+        "template": "Retired (not shown).",
         "what": "",
         "why": "",
         "fix": "",
@@ -10054,7 +10064,7 @@
         },
         "version": "vol14d",
         "fields": {},
-        "example": "Retired in vol14: folded into payoff_past_efficient.",
+        "example": "Retired (not shown).",
         "example_chars": 52,
         "shown": false,
         "display_note": "retired vol14"
@@ -11261,7 +11271,8 @@
         "recovery_vs_baseline",
         "wasted_late_sets"
       ]
-    }
+    },
+    "payoff_note_display": false
   },
   "optional_muscles": {
     "version": "vol14b",

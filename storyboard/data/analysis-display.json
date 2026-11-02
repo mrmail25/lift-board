@@ -121,12 +121,16 @@
   "recovery_cost": {
    "display_label": "Recovery cost",
    "kind": "measure",
-   "state_icon": false
+   "state_icon": false,
+   "shown": false,
+   "shown_note": "vol15b: recovery-cost numbers are not shown anywhere."
   },
   "recovery_vs_baseline": {
    "display_label": "Recovery cost near your normal week",
    "kind": "check",
-   "state_icon": true
+   "state_icon": true,
+   "shown": false,
+   "shown_note": "vol15b: recovery-cost numbers are not shown anywhere."
   },
   "stimulus_per_fatigue": {
    "display_label": "Retired",

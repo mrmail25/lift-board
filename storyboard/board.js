@@ -247,12 +247,12 @@ function paintImpact(){const el=$('#impc');if(el)el.innerHTML=impHtml()}
 // tapping the same day again, or the 'Week' chip, goes back to the week.
 const wkFills=A=>{const o={};for(const [m,v] of Object.entries(A.muscles)){const x=v.x!=null?v.x:v.raw;o[m]=MAPRAMP.weekly(RD(),B.level,m,Math.floor(x*100+0.5+1e-9)/100)}return MAPRAMP.fills(o)};   // x = r1(r2(weekly ES)), the displayed value
 const dayFills=d=>d&&d.tiles.length?MAPRAMP.fills(MAPRAMP.daily(RD(),tiles0(d))):{};
-let MFL='';   // vol15 polish: the day's flags render full width under the map card row (#bmflw)
+let MFL='',MSEL=null;   // MSEL: the muscle tapped on the day map (its day wording shows under the caption)   // vol15 polish: the day's flags render full width under the map card row (#bmflw)
 function mapHtml(st,days){const day=MAPV.mode==='day',i=MAPV.day,d=days[i];const vm=day?dayFills(d):wkFills(st.A);
   const cap=day?`<b>${WDL[i]}</b> · ${isRest(d)?'Rest':dayLabel(d)} <button class="chip wkchip" data-b="mapweek" aria-label="Back to the week">Week</button>`:'<b>This week</b>';MLEG=MAPRAMP.legend(day?'day':'week');
-  const SD=day&&d&&d.tiles.length&&FG()?sigOf('day',d.day):{top:[],more:0},F=SD.top;
-  const h=`<div class="bmaps" data-mode="${day?'day':'week'}" data-day="${d?d.day:''}">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="bmcap" id="bmcap">${cap}</div>`;MFL=day?`<div class="bmfl">${F.length?F.map(flagCard).join('')+moreLine(SD.more):'<p class="sub">Nothing to fix on this day.</p>'}</div>`:'';return h}
-function toggleDay(i){if(MAPV.mode==='day'&&MAPV.day===i){MAPV.mode='week'}else{MAPV.mode='day';MAPV.day=i}$$('#dstrip button').forEach((b,k)=>{const on=MAPV.mode==='day'&&k===MAPV.day;b.classList.toggle('sel',on);b.setAttribute('aria-pressed',String(on))});$$('.col').forEach((c,k)=>c.classList.toggle('dsel',MAPV.mode==='day'&&k===MAPV.day));paintStats()}
+  const SD=day&&d&&d.tiles.length&&FG()?sigOf('day',d.day):{top:[],more:0},F=SD.top;const MW=day&&d&&MSEL?`<div class="bmmu"><b>${MLB(MSEL)}</b> · ${X.esc((MAPRAMP.dayWords(RD(),tiles0(d))[MSEL])||'Under 1 hard set')} <button class="lnk" data-b="learnm" data-m="${MSEL}">About ${MLB(MSEL).toLowerCase()} ›</button></div>`:'';
+  const h=`<div class="bmaps" data-mode="${day?'day':'week'}" data-day="${d?d.day:''}">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="bmcap" id="bmcap">${cap}</div>`;MFL=day?MW+`<div class="bmfl">${F.length?F.map(flagCard).join('')+moreLine(SD.more):'<p class="sub">Nothing to fix on this day.</p>'}</div>`:'';return h}
+function toggleDay(i){MSEL=null;if(MAPV.mode==='day'&&MAPV.day===i){MAPV.mode='week'}else{MAPV.mode='day';MAPV.day=i}$$('#dstrip button').forEach((b,k)=>{const on=MAPV.mode==='day'&&k===MAPV.day;b.classList.toggle('sel',on);b.setAttribute('aria-pressed',String(on))});$$('.col').forEach((c,k)=>c.classList.toggle('dsel',MAPV.mode==='day'&&k===MAPV.day));paintStats()}
 // one flag, tap for the fix
 let FLS=null;function flagSheet(id){const f=flagById(id);if(!f)return;if(FLS&&!FLS.closed)FLS.close();
   FLS=X.sheet({title:f.scope==='day'?WDL[DAYS.indexOf(f.day)]:'This week',cls:'grouped flsheet',right:'<button class="btn plain" data-x="close">Done</button>',onClose(){FLS=null}});
@@ -262,7 +262,7 @@ let FLS=null;function flagSheet(id){const f=flagById(id);if(!f)return;if(FLS&&!F
 function applyFlagFix(id){const f=flagById(id);if(!f||!f.fix)return;const txt=`Applied: ${f.fix.label}`;
   commit(()=>{if(f.fix.ops)applyOpsBoard(f.fix.ops);else if(f.fix.days)applyDays(f.fix.days)},txt);if(FLS&&!FLS.closed)FLS.close();if(AN&&!AN.closed)renderAnalysis()}
 function applyPlan(kind){const P=kind==='eff'?effPlan():pushPlan();if(!P.ops.length)return;
-  const txt=kind==='eff'?`Trimmed ${P.removed} set${P.removed===1?'':'s'} past the peak`:`Added ${P.added} set${P.added===1?'':'s'} for max growth`;
+  const txt=kind==='eff'?`Trimmed ${P.removed} set${P.removed===1?'':'s'} past the best range`:`Added ${P.added} set${P.added===1?'':'s'} for max growth`;
   commit(()=>applyOpsBoard(P.ops),txt);if(AN&&!AN.closed)renderAnalysis()}
 // vol15: the stimulus / fatigue curve is no longer an app screen. The chart component stays for Coach's Learn ('Nurd Sh!t') article:
 // X.curveChart(dt, n, F, label) -> SVG string, or '' when the data can't draw it (embed only if the article's data provides n and F).
@@ -548,7 +548,8 @@ const weekLeg=()=>`<span class="mleg">${['under','in','amber','red'].map(k=>`<i 
 function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules,lv=B.level;FIX=[];const sc0=AN.body.scrollTop;
   const cur=sigD();APPLIED=APPLIED.filter(a=>a.bsig!==cur); // undone (here or with the Undo bar): drop it
   const SH=ANL.sheet(dt,d,lv,null);
-  const EV=R.analysis_metrics,AMI={};EV.items.forEach(i=>AMI[i.id]=i);const RETI=id=>/^retired/.test(((((dt.DISP||{}).items||{})[id])||{}).display_status||''),IT=ANL.items(dt,d,lv,null).filter(i=>!RETI(i.id)),IB={};   // vol13: retired displays (analysis-display.json display_status) never render
+  const EV=R.analysis_metrics,AMI={};EV.items.forEach(i=>AMI[i.id]=i);const RETI=id=>/^retired/.test(((((dt.DISP||{}).items||{})[id])||{}).display_status||'')||((((dt.DISP||{}).items||{})[id])||{}).shown===false||(AMI[id]||{}).shown===false,   /* vol15b: shown:false items never render */
+  IT=ANL.items(dt,d,lv,null).filter(i=>!RETI(i.id)),IB={};   // vol13: retired displays (analysis-display.json display_status) never render
   IT.forEach(i=>IB[i.id]=i);AN.items=IB;
   const LB=id=>DLAB(id)||(IB[id]||AMI[id]||{}).label||id;
   const VCOL=((IB.weekly_sets_per_muscle||{}).value||{}).muscles||{};
@@ -1009,7 +1010,7 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   const ns=e.target.closest('[data-ns]');if(ns&&NW){NS[ns.dataset.ns]=ns.dataset.v;nwView(NW.v==='slots'?'slots':'tpl');return}
   const j=e.target.closest('[data-jump]');if(j){toggleDay(+j.dataset.jump);return jump(+j.dataset.jump)}
   const amp=e.target.closest('.anmap .mp');if(amp&&amp.dataset.mu&&AN){e.preventDefault();return contribSheet('mus',amp.dataset.mu)}
-  const mp=e.target.closest('#bmap .mp');if(mp&&mp.dataset.mu){e.preventDefault();return X.go('#learn-'+mp.dataset.mu)}
+  const mp=e.target.closest('#bmap .mp');if(mp&&mp.dataset.mu){e.preventDefault();if(MAPV.mode==='day'){MSEL=MSEL===mp.dataset.mu?null:mp.dataset.mu;return paintStats()}return X.go('#learn-'+mp.dataset.mu)}   // day map: show that muscle's day wording; week map: Learn
   const a14=e.target.closest('.anmap14 .mp');if(a14&&a14.dataset.mu&&AN){e.preventDefault();return contribSheet('mus',a14.dataset.mu,'sets')}
   if(!b)return;const k=b.dataset.b;e.stopPropagation();
   if(k==='mapm')return setMap(b.dataset.mm,b.dataset.mm==='day'&&MAPV.mode!=='day'?Math.max(0,$$('#dstrip button').findIndex(x=>x.classList.contains('on'))):null);

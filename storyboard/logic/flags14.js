@@ -30,7 +30,7 @@ function scoreOf(dt,tid,v){const T=FC(dt).templates[tid]||{},s=T.significance;if
 // short_text is used when it fits one card line (<= CARD_MAX chars); otherwise the line is built here. Full what/why/fix stays everywhere else.
 const CARD_MAX=48;
 // vol15: Coach's short_line, except where it says 'payoff' (no Payoff wording on screen): a plain-English line instead
-const PLAIN={payoff_negative:'{Muscle}: {sets} sets, too many for one workout'};
+const PLAIN={};   // vol15b: Coach's short_line now says it ('{Muscle}: {sets} sets, too many for one workout ›'); override dropped
 function cardLine(dt,tid,o,shortT){const v=o.vals||{},M=o.muscle?fillStr(dt,'{Muscle}',o.muscle,{}):'',S=x=>{const n=parseFloat(x);return `${x} set${n===1?'':'s'}`};
   const T=((FC(dt).templates||{})[tid])||{},CL=PLAIN[tid]||T.card_line||T.short_line;if(CL)return fillStr(dt,CL,o.muscle,o.vals).replace(/\s*›\s*$/,'');   // vol15 adapter: Coach's short flag line wins when the template has one
   if(shortT&&shortT.length<=CARD_MAX)return shortT;

@@ -114,7 +114,7 @@ function suggest(dt,days,level,baseline=null){const out=new Map(),add=(k,v)=>{if
   for(const f of PC.check(dt,days,level)[0]){const rid=RULE_OF(f[1]);add(rid,[{target:{flag:f.slice()},fixes:PC.fixes(dt,days,level,f).map(x=>Object.assign({},x,{diff:diff(days,x.days)}))}])}
   for(const [sid,fn] of ANALYTIC){const r=fn(dt,days,level,baseline);if(r.length)add(sid,r)}return out}
 // ---------- analysis.py sheet ----------
-const types=dt=>((dt.rules.suggestions||{}).analysis_sheet||{}).types||[];
+const types=dt=>(((dt.rules.suggestions||{}).analysis_sheet||{}).types||[]).filter(t=>t.shown!==false);   // vol15b: shown:false types (trim_recovery_cost) are hidden
 function typeOf(dt,source,item,level){const {T,LF}=ctx(dt),tg=item.target||{},flag=tg.flag;
   for(const ty of types(dt)){if(!ty.sources.includes(source))continue;
     if(ty.id==='add_sets_under_target'||ty.id==='trim_sets_over_target'){const under=flag?flag[3]<pyR(T[flag[2]].min*LF[level]*2)/2:tg.side==='under';if((ty.id==='add_sets_under_target')!==under)continue}

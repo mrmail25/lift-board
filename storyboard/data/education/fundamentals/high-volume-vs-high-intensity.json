@@ -336,7 +336,7 @@
   "rules.json:rules.#payoff.fatigue_classes.4.zero_n": 13.0
  },
  "notes": [
-  "vol15: the only Learn page that shows Payoff, as a labelled Modeled illustration.",
+  "The only Learn page with the stimulus-minus-fatigue curve, shown as a labelled Modeled illustration.",
   "Citations verified against Crossref (and PubMed for the two older papers) on 2026-11-01.",
   "No medical claims; individual response varies."
  ]

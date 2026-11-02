@@ -11437,7 +11437,7 @@
    ]
   },
   "size_class_nurd": {
-   "short": "Practitioner judgement (Lift Board)",
+   "short": "Practitioner judgement (ApeChit)",
    "year": 2026,
    "type": "practitioner judgement",
    "label": "Modeled"
@@ -15063,7 +15063,7 @@
      "yellow",
      "red"
     ],
-    "interpolation": "x < grey_below: grey (no colour blend from grey). From light_green at x = 1.0 to dark_green at the start of the dark-green range: linear in sRGB per channel (round half up). Dark green held across the range. Dark green -> yellow -> red linear in sRGB between the stops. Past red: red. Same function for both modes; only the breakpoints differ.",
+    "interpolation": "x < grey_below: grey (no colour blend from grey). From light_green at x = 1.0 to dark_green at the start of the dark-green range: linear in sRGB per channel (round half up). Dark green held across the range. Dark green -> yellow linear in sRGB up to the yellow breakpoint. vol15b: yellow held flat (#F2C230) from the yellow breakpoint up to the red breakpoint (no yellow -> red blend); red (#D7263D) from the red breakpoint and above. zone = the colour band shown: flat segments take their colour; in a blend segment the nearer stop (t < 0.5 lower stop, else upper). Same function for both modes; only the breakpoints differ.",
     "weekly": {
      "x": "weekly effective sets (face value, the displayed r1 value)",
      "stops": "light_green @ 1.0; dark_green @ sweet[0] .. sweet[1]; yellow @ diminishing; red @ red_point",
@@ -21728,6 +21728,263 @@
   },
   "history_frozen": [
    "model:vol14d"
+  ]
+ },
+ "vol15b": {
+  "version": "vol15b",
+  "date": "2026-11-01",
+  "source": "Builder QC after vol15 (commit 940d051) + CoS ramp decision",
+  "ramp": {
+   "rule": "no yellow -> red blend: yellow #F2C230 flat from the yellow breakpoint up to red; red #D7263D from the red breakpoint and above; grey -> light green -> dark green unchanged; zone = the colour band shown (nearer stop inside a blend)",
+   "hex_changed_vs_vol15": {
+    "daily": 87,
+    "weekly": 1,
+    "daily_zone": 1374,
+    "weekly_zone": 886,
+    "total_daily": 3774,
+    "total_weekly": 1748
+   },
+   "zone_hex_mismatches": 16,
+   "zone_check": "zone == the nearest of the 5 stop colours to the hex (RGB distance); the few misses sit at a blend midpoint (t ~ 0.5), where the zone follows the ramp position rule",
+   "yellow_or_red_zone_in_dark_green_to_yellow_blend": 85,
+   "example_arnold_advanced_6_efficient_chest_x6": [
+    [
+     "mon",
+     {
+      "x": 6.0,
+      "hex": "#438738",
+      "zone": "dark_green"
+     }
+    ],
+    [
+     "thu",
+     {
+      "x": 6.0,
+      "hex": "#438738",
+      "zone": "dark_green"
+     }
+    ]
+   ]
+  },
+  "wording": {
+   "payoff_negative_short_line": "{Muscle}: {sets} sets, too many for one workout ›",
+   "swap_preview": "Swap {name} for {new_name} on {day_list}: a lower-fatigue swap that trains the same muscle ({muscle})",
+   "learn_blurb": "Why both camps grow muscle, and where extra sets stop paying off (Modeled curve).",
+   "muscle_display": "day-metrics-presets ...muscles[m].display = \"<n> hard sets: building | around the best range for one workout | past the best range for one workout | too many for one workout\" or \"Under 1 hard set\""
+  },
+  "leftover_scan": {
+   "analysis-display.json .items.recovery_cost.display_label": {
+    "count": 1,
+    "sample": "Recovery cost"
+   },
+   "analysis-display.json .items.recovery_vs_baseline.display_label": {
+    "count": 1,
+    "sample": "Recovery cost near your normal week"
+   },
+   "analysis-items-reference.json .presets.*": {
+    "count": 138,
+    "sample": "Recovery cost"
+   },
+   "analysis-items-reference.json .synthetic.deadlift_then_squat_beginner.items[].label": {
+    "count": 3,
+    "sample": "Recovery cost"
+   },
+   "analysis-items-reference.json .synthetic.long_push_day.items[].label": {
+    "count": 3,
+    "sample": "Recovery cost"
+   },
+   "analysis-items-reference.json .synthetic.no_stretch_work.items[].label": {
+    "count": 3,
+    "sample": "Recovery cost"
+   },
+   "day-metrics-presets.json .note": {
+    "count": 1,
+    "sample": "x_growth uses data/splits.json. vol11c: S:F is per muscle only (muscles[m].sf_ratio"
+   },
+   "education/fundamentals/high-volume-vs-high-intensity.json .illustration.title": {
+    "count": 1,
+    "sample": "Stimulus, fatigue and Payoff for one muscle in one workout (machine "
+   },
+   "education/fundamentals/high-volume-vs-high-intensity.json .sections[].body[]": {
+    "count": 2,
+    "sample": "d curve: stimulus minus fatigue, called Payoff."
+   },
+   "rules.json .analysis_metrics.items[].description": {
+    "count": 1,
+    "sample": "Passes while this week's recovery cost is at most 115% of your average week (l"
+   },
+   "rules.json .analysis_metrics.items[].display_status": {
+    "count": 1,
+    "sample": "retired (vol13); vol14: no S:F anywhere in the UI"
+   },
+   "rules.json .analysis_metrics.items[].explain.what": {
+    "count": 1,
+    "sample": "Passes while this week's recovery cost is at most 115% of your average week (l"
+   },
+   "rules.json .analysis_metrics.items[].label": {
+    "count": 2,
+    "sample": "Recovery cost"
+   },
+   "rules.json .analysis_metrics.items[].retired_vol13.why": {
+    "count": 1,
+    "sample": "S:F lives only on the per-muscle day map (v"
+   },
+   "rules.json .analysis_metrics.note": {
+    "count": 1,
+    "sample": "tern for stretch share, one-side share, recovery cost, stimulus per fatigue and fatigue (tool"
+   },
+   "rules.json .flag_copy.templates.recovery_vs_baseline.display_note": {
+    "count": 1,
+    "sample": "display false vol15: recovery-cost numbers are not shown"
+   },
+   "rules.json .rules[].display_note": {
+    "count": 1,
+    "sample": "vol15: recovery-cost numbers are not shown anywhere; data an"
+   },
+   "rules.json .rules[].display_note_vol14": {
+    "count": 1,
+    "sample": " the past-efficient warning is rules[id=payoff]. severity stays warn internally (tools"
+   },
+   "rules.json .rules[].display_status": {
+    "count": 1,
+    "sample": "retired (vol14): folded into payoff_past_efficient"
+   },
+   "rules.json .rules[].message": {
+    "count": 1,
+    "sample": "This week's recovery cost is {pct}% of {baseline_label}. Expect m"
+   },
+   "rules.json .rules[].note": {
+    "count": 1,
+    "sample": "Payoff = stimulus minus fatigue. Highest in th"
+   },
+   "targets.json .recovery.reference.text": {
+    "count": 1,
+    "sample": "Recovery cost adds up every set, weighted by how tiri"
+   },
+   "workout-reference.json .cases[].chest_day.display": {
+    "count": 4,
+    "sample": "Efficiency 1.48 x big-muscle reference (S:F 6 / 6.34 = 0.95) (ready in ~2 days)"
+   },
+   "workout-reference.json .cases[].day_card.muscles.abs.display": {
+    "count": 1,
+    "sample": "iciency 1.67 x medium-muscle reference (S:F 2 / 1.58 = 1.26) (ready in ~1 days)"
+   },
+   "workout-reference.json .cases[].day_card.muscles.adductors.display": {
+    "count": 1,
+    "sample": "ficiency 1.02 x small-muscle reference (S:F 1.62 / 4.68 = 0.35) (ready in ~1.5 days"
+   },
+   "workout-reference.json .cases[].day_card.muscles.biceps.display": {
+    "count": 1,
+    "sample": "iciency 0.59 x medium-muscle reference (S:F 1.35 / 3 = 0.45) (ready in ~1.3 days)"
+   },
+   "workout-reference.json .cases[].day_card.muscles.chest.display": {
+    "count": 5,
+    "sample": "Efficiency 1.48 x big-muscle reference (S:F 6 / 6.34 = 0.95) (ready in ~2 days)"
+   },
+   "workout-reference.json .cases[].day_card.muscles.front_delts.display": {
+    "count": 5,
+    "sample": "iciency 0.45 x medium-muscle reference (S:F 2.16 / 6.34 = 0.34) (ready in ~1 days)"
+   },
+   "workout-reference.json .cases[].day_card.muscles.glutes.display": {
+    "count": 1,
+    "sample": "Efficiency 0.63 x big-muscle reference (S:F 1.89 / 4.68 = 0.40) (ready in ~1.8 days"
+   },
+   "workout-reference.json .cases[].day_card.muscles.hamstrings.display": {
+    "count": 1,
+    "sample": "Efficiency 1.97 x big-muscle reference (S:F 2 / 1.58 = 1.26) (ready in ~1.5 days)"
+   },
+   "workout-reference.json .cases[].day_card.muscles.lats.display": {
+    "count": 1,
+    "sample": "Efficiency 1.56 x big-muscle reference (S:F 3 / 3 = 1.00) (ready in ~1.8 days)"
+   },
+   "workout-reference.json .cases[].day_card.muscles.obliques.display": {
+    "count": 1,
+    "sample": "ficiency 1.85 x small-muscle reference (S:F 1 / 1.58 = 0.63) (ready in ~1 days)"
+   },
+   "workout-reference.json .cases[].day_card.muscles.quads.display": {
+    "count": 1,
+    "sample": "Efficiency 1.00 x big-muscle reference (S:F 3 / 4.68 = 0.64) (ready in ~2 days)"
+   },
+   "workout-reference.json .cases[].day_card.muscles.side_delts.display": {
+    "count": 1,
+    "sample": "iciency 1.67 x medium-muscle reference (S:F 5 / 3.96 = 1.26) (ready in ~1.3 days)"
+   },
+   "workout-reference.json .cases[].day_card.muscles.traps.display": {
+    "count": 1,
+    "sample": "iciency 0.45 x medium-muscle reference (S:F 1.35 / 3.96 = 0.34) (ready in ~1.3 days"
+   },
+   "workout-reference.json .cases[].day_card.muscles.triceps.display": {
+    "count": 5,
+    "sample": "iciency 0.45 x medium-muscle reference (S:F 1.35 / 3.96 = 0.34) (ready in ~1 days)"
+   },
+   "workout-reference.json .cases[].exercise_readout.note": {
+    "count": 8,
+    "sample": "vol11c: exercise-level S:F retired; see history_vol11b"
+   },
+   "workout-reference.json .cases[].focus_readout.display": {
+    "count": 4,
+    "sample": "Efficiency 1.56 x big-muscle reference (S:F 1 / 1 = 1.00) (ready in ~1 days)"
+   },
+   "workout-reference.json .cases[].muscles.adductors.display": {
+    "count": 1,
+    "sample": "ficiency 1.02 x small-muscle reference (S:F 1.62 / 4.68 = 0.35) (ready in ~1.3 days"
+   },
+   "workout-reference.json .cases[].muscles.biceps.display": {
+    "count": 1,
+    "sample": "iciency 0.86 x medium-muscle reference (S:F 3.62 / 5.54 = 0.65) (ready in ~1.5 days"
+   },
+   "workout-reference.json .cases[].muscles.chest.display": {
+    "count": 3,
+    "sample": "Efficiency 1.56 x big-muscle reference (S:F 1 / 1 = 1.00) (ready in ~1 days)"
+   },
+   "workout-reference.json .cases[].muscles.forearms.display": {
+    "count": 1,
+    "sample": "ficiency 0.67 x small-muscle reference (S:F 1.26 / 5.54 = 0.23) (ready in ~0.8 days"
+   },
+   "workout-reference.json .cases[].muscles.front_delts.display": {
+    "count": 2,
+    "sample": "iciency 0.51 x medium-muscle reference (S:F 4.23 / 10.96 = 0.39) (ready in ~1.5 day"
+   },
+   "workout-reference.json .cases[].muscles.glutes.display": {
+    "count": 1,
+    "sample": "Efficiency 0.63 x big-muscle reference (S:F 1.89 / 4.68 = 0.40) (ready in ~1.5 days"
+   },
+   "workout-reference.json .cases[].muscles.hamstrings.display": {
+    "count": 1,
+    "sample": "Efficiency 1.97 x big-muscle reference (S:F 3 / 2.38 = 1.26) (ready in ~1.3 days)"
+   },
+   "workout-reference.json .cases[].muscles.lats.display": {
+    "count": 1,
+    "sample": "Efficiency 1.18 x big-muscle reference (S:F 3 / 3.96 = 0.76) (ready in ~1.8 days)"
+   },
+   "workout-reference.json .cases[].muscles.quads.display": {
+    "count": 2,
+    "sample": "Efficiency 1.00 x big-muscle reference (S:F 1 / 1.56 = 0.64) (ready in ~1.3 days)"
+   },
+   "workout-reference.json .cases[].muscles.side_delts.display": {
+    "count": 2,
+    "sample": "iciency 1.67 x medium-muscle reference (S:F 1 / 0.79 = 1.26) (ready in ~0.8 days)"
+   },
+   "workout-reference.json .cases[].muscles.traps.display": {
+    "count": 1,
+    "sample": "iciency 0.45 x medium-muscle reference (S:F 1.08 / 3.17 = 0.34) (ready in ~1 days)"
+   },
+   "workout-reference.json .cases[].muscles.triceps.display": {
+    "count": 2,
+    "sample": "iciency 0.42 x medium-muscle reference (S:F 2.76 / 8.58 = 0.32) (ready in ~1.3 days"
+   },
+   "workout-reference.json .cases[].muscles.upper_back.display": {
+    "count": 1,
+    "sample": "Efficiency 0.53 x big-muscle reference (S:F 1.35 / 3.96 = 0.34) (ready in ~1 days)"
+   }
+  },
+  "builder_paths": {
+   "hidden_items": "rules.json analysis_metrics.items[id=recovery_cost|recovery_vs_baseline].shown = false; analysis-display.json items.<id>.shown = false; rules.json suggestions.analysis_sheet.types[].shown",
+   "payoff_note_hidden": "rules.json rules[id=payoff].note_display = false; flag_copy.payoff_note_display = false",
+   "blurb": "education/index.json pages[id=high-volume-vs-high-intensity].blurb"
+  },
+  "history_frozen": [
+   "model:vol15"
   ]
  }
 }
