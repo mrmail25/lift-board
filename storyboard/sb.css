@@ -2049,3 +2049,4 @@ details.fa-x .bd{padding-bottom:14px}
 .vrz.z-below_min{color:var(--warn-ink)}
 html[data-theme=dark] .vrz.z-sweet_spot{color:#4CC285}html[data-theme=dark] .vrz.z-diminishing{color:#FF7A6E}
 @media (prefers-color-scheme:dark){html:not([data-theme=light]) .vrz.z-sweet_spot{color:#4CC285}html:not([data-theme=light]) .vrz.z-diminishing{color:#FF7A6E}}
+.fa-sheet .barw{padding-top:22px;margin-top:6px}.fa-sheet .barw .bar{margin-top:0}.fa-sheet .barw .mt{z-index:1}   /* vol16a: the "This week" label sat under the bar (margin collapse) */

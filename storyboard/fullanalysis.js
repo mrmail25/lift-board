@@ -150,9 +150,15 @@ const curveSvg=(dt,lv,m,C,S,XMAX)=>{const W=326,H=178,pl=30,pr=6,pt=10,pb=24,cx=
   [0,10,20,30].filter(v=>v<XMAX-2).forEach(v=>g+=`<text x="${cx(v)}" y="${H-8}" font-size="10.5" text-anchor="middle" fill="var(--text-2)">${v}</text>`);
   return g+`<text x="${W-pr}" y="${H-8}" font-size="10.5" text-anchor="end" fill="var(--text-2)">sets/wk</text></svg>`};
 function realLogs(){try{const L=X.logApi.load();if(!L||(L.meta||{}).kind==='sample'||!(L.sessions||[]).length)return null;return L}catch(e){return null}}
-function loggedProgress(dt,m){const L=realLogs();if(!L)return '';   // hidden until logs exist
-  try{const byS={};for(const s of L.sets){const e=L.entries.find(x=>x.id===s.entry)||{};const ss=L.sessions.find(x=>x.id===e.session)||{};const ex=dt.EX[e.ex||e.exercise];if(!ex||!(ex.muscles[m]>=0.25)||!ss.date)continue;const wk=ss.date.slice(0,10);byS[wk]=(byS[wk]||0)+ex.muscles[m]}
-    const k=Object.keys(byS).sort().slice(-4);if(!k.length)return '';return `<div class="card fa-c" id="fa-logs"><div class="ch"><h2>Logged progress</h2></div><div class="lg"><span>Credited sets, last ${k.length} sessions</span><b>${k.map(x=>f1(byS[x])).join(' → ')}</b></div></div>`}catch(e){return ''}}
+// logged credited sets per week (Mon-start) per muscle: done working sets x rating (ratings under the counting minimum count 0). Real logs only.
+function loggedByWeek(dt){const L=realLogs();if(!L)return {};const minR=dt.targets.counting.min_rating_to_count||0.25,S={},E={},W={};
+  for(const s of L.sessions)if(s.date)S[s.id]=s.date.slice(0,10);for(const e of L.entries)if(!e.skipped)E[e.id]=e;
+  for(const t of L.sets){if(t.kind==='warmup'||t.done===false)continue;const e=E[t.entryId];if(!e)continue;const ex=dt.EX[e.exerciseId],d=S[e.sessionId];if(!ex||!d)continue;
+    const dd=new Date(d+'T12:00:00');dd.setDate(dd.getDate()-((dd.getDay()+6)%7));const wk=dd.toISOString().slice(0,10);const w=W[wk]=W[wk]||{};
+    for(const [m,r] of Object.entries(ex.muscles))if(r>=minR)w[m]=(w[m]||0)+r}
+  return W}
+function loggedProgress(dt,m){const W=loggedByWeek(dt),k=Object.keys(W).sort().slice(-4);if(!k.length)return '';   // hidden until logs exist
+  return `<div class="card fa-c" id="fa-logs"><div class="ch"><h2>Logged progress</h2></div><div class="lg"><span>Credited ${mlow(m)} sets, last ${k.length} week${k.length===1?'':'s'}</span><b>${k.map(x=>f1((W[x]||{})[m]||0)).join(' → ')}</b></div></div>`}
 function deepHtml(m){const dt=RD(),d=DAYS(),lv=LV(),SH=sheetOf(dt,d,lv),P=diveOf(dt,d,lv,m,SH),S=P.sets,C=P.curve,F=P.frequency,A=PC().analytics(dt,d,lv);
   const x=S.effective,wk=zoneW(dt,lv,m,x),bp=MR().weeklyBp(dt,lv,m)||{grey_below:1,light_green:1,min:S.level_min,dark_green:[S.level_min,S.max],yellow:S.max,red:S.red_over_above};
   const XMAX=Math.max(30,Math.ceil((bp.red||S.max*1.25)*1.12));const ev=dt.targets.targets[m].evidence||{},evT=(dt.targets.curve.evidence_tags||{})[S.evidence_tag]||{label:'Evidence',description:''};
@@ -161,7 +167,7 @@ function deepHtml(m){const dt=RD(),d=DAYS(),lv=LV(),SH=sheetOf(dt,d,lv),P=diveOf
   const direct=contrib.filter(c=>c.role==='prime').reduce((a,c)=>a+c.sets,0);
   let h=`${appliedBar()}<div class="fa-dd" data-m="${m}"><p class="fa-scope">This week · ${esc(window.BOARD.state.name||'your plan')} · ${esc(lv)}</p><div class="card fa-c fa-hero"><div class="hero"><div><div class="n num">${f1(x)}</div><div class="l">effective sets</div></div><div class="dv"><div class="n num">${direct}</div><div class="l">direct sets</div></div></div>
    <div class="hrow"><span>Target <b>${S.level_min}–${S.max}</b></span>${pill(wk.zone)}<button class="evb" data-fa="evb" aria-expanded="false">${esc(evT.label)} evidence ⓘ</button></div><div class="evn" id="fa-evn">${esc(ev.note||'')} ${esc(evT.description||'')}</div>
-   <div class="kv"><span>Ideal band</span><b>${pc(C.ideal_band[0])}–${pc(C.ideal_band[1])} of plateau</b></div><div class="kv"><span>Far under / far over</span><b>below ${S.red_under_below} · above ${S.red_over_above}</b></div>`;
+   <div class="kv"><span>Ideal band</span><b>${pc(C.ideal_band[0])}–${pc(C.ideal_band[1])} of plateau</b></div><div class="kv"><span>Far under / No payoff</span><b>below ${S.red_under_below} · above ${S.red_over_above}</b></div>`;
   const XP=v=>Math.min(100,v/XMAX*100),grad='linear-gradient(90deg,'+(()=>{const o=[];for(let v=0;v<=XMAX+1e-9;v+=0.25)o.push(`${zoneW(dt,lv,m,v).hex} ${XP(v).toFixed(2)}%`);return o.join(',')})()+')';
   const mid=(a,b)=>XP((a+b)/2);
   h+=`<div class="barw"><span class="mt" style="left:${Math.max(14,Math.min(86,XP(x)))}%">This week ${f1(x)}</span><div class="bar" style="background:${grad}" role="img" aria-label="This week ${f1(x)} sets on the colour bar"><span class="mk" style="left:${XP(x)}%"></span></div></div>
@@ -222,7 +228,9 @@ const goalKey=()=>{try{return GOALS.mode==='efficient'?'efficient':'max_growth'}
 // typical range = p25–p75 of this muscle's weekly credited sets across Coach's preset routines at your level (day-metrics-presets.json)
 function typical(dt,lv,m){const P=((dt.DMP||{}).presets||{})[goalKey()]||{},v=[];for(const k in P){if(k.split('/')[1]!==lv)continue;let s=0;for(const D of P[k].days||[])for(const e of D.exercises||[])s+=((e.stimulus_by_muscle||{})[m]||0);v.push(s)}
   if(v.length<4)return null;v.sort((a,b)=>a-b);const q=p=>{const i=(v.length-1)*p,lo=Math.floor(i);return v[lo]+(v[Math.min(lo+1,v.length-1)]-v[lo])*(i-lo)};return [q(.25),q(.75)]}
-const loggedWeeks=()=>{const L=realLogs();if(!L)return 0;return new Set(L.sessions.map(s=>String(s.date||'').slice(0,10)).filter(Boolean).map(d=>{const t=new Date(d);return Math.floor((t-new Date('2020-01-06'))/6048e5)})).size};
+const loggedWeeks=()=>Object.keys(loggedByWeek(RD())).length;
+// after 4 logged weeks the band is the user's own: p25–p75 of their last (up to) 8 logged weeks for the muscle
+function ownBand(dt,m){const W=loggedByWeek(dt),k=Object.keys(W).sort().slice(-8);if(k.length<4)return null;const v=k.map(x=>(W[x]||{})[m]||0).sort((a,b)=>a-b);const q=p=>{const i=(v.length-1)*p,lo=Math.floor(i);return v[lo]+(v[Math.min(lo+1,v.length-1)]-v[lo])*(i-lo)};return [q(.25),q(.75)]}
 function faHtml(){const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,lv),MU=Object.keys(A.muscles),x=m=>weekX(A,m);
   if(!ST.sel&&window.BOARD.MSEL&&A.muscles[window.BOARD.MSEL])ST.sel=window.BOARD.MSEL;if(!ST.sel||!A.muscles[ST.sel])ST.sel=MU.slice().sort((a,b)=>(A.muscles[b].min||0)-(A.muscles[a].min||0)||x(b)-x(a))[0]||'chest';const m=ST.sel,wk=zoneW(dt,lv,m,x(m));
   let h=appliedBar()+`<div class="fa">`;
@@ -245,11 +253,11 @@ function faHtml(){const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,lv),MU=Ob
   h+=`<div class="card fa-c" id="fa-fatigue"><div class="ch"><h2>Fatigue by day</h2><small>per workout</small></div><div class="fa-fat">`+LD.map((D,i)=>{const L=dayLevel(dt,D,lv),c=FDAY[L]||FDAY.Normal;
      return `<button class="fb" data-fa="pfat" data-day="${D.day}" aria-label="${WDL[D.day]} fatigue ${L}"><span class="lv">${L}</span><span class="bw"><i style="height:${Math.max(6,fv[i]/fmax*100)}%;background:${c[0]}"></i></span><span class="dy">${WD[D.day]}</span><span class="mn">~${mins(dt,D,lv)} min est.</span></button>`}).join('')+`</div></div>`;
   // this week vs normal (not tappable until 4 weeks are logged)
-  const VM=MU.filter(k=>(A.muscles[k].min||0)>0).map(k=>({k,t:typical(dt,lv,k)})).filter(o=>o.t);const tapV=loggedWeeks()>=4;
+  const OWN=loggedWeeks()>=4,VM=MU.filter(k=>(A.muscles[k].min||0)>0).map(k=>({k,t:OWN?ownBand(dt,k):typical(dt,lv,k)})).filter(o=>o.t);const tapV=OWN,BANDL=OWN?'your usual (last weeks logged)':'typical for preset plans';
   if(VM.length){const vx=Math.max(...VM.map(o=>Math.max(o.t[1],x(o.k))))*1.1;
-   h+=`<div class="card fa-c" id="fa-vsn"><div class="ch"><h2>This week vs normal</h2><small>vs typical routines</small></div>`+VM.map(({k,t})=>{const v=x(k),dl=v<t[0]?v-t[0]:v>t[1]?v-t[1]:0;
+   h+=`<div class="card fa-c" id="fa-vsn"><div class="ch"><h2>This week vs normal</h2><small>${OWN?'vs your usual':'vs preset plans'}</small></div>`+VM.map(({k,t})=>{const v=x(k),dl=v<t[0]?v-t[0]:v>t[1]?v-t[1]:0;
      return `<div class="vr${tapV?' tap':''}"${tapV?` data-fa="pvsn" data-m="${k}" role="button"`:''}><span class="nm">${esc(ML(k))}</span><span class="vb"><i class="tb" style="left:${t[0]/vx*100}%;width:${Math.max(1,(t[1]-t[0])/vx*100)}%"></i><i class="tk" style="left:${v/vx*100}%"></i></span><span class="dl num">${f1(Math.abs(dl))==='0'?'typical':(dl>0?'+':'−')+f1(Math.abs(dl))}</span></div>`}).join('')+
-     `<div class="k"><span><i class="tbk"></i>typical range</span><span><i class="tkk"></i>this week</span></div>${tapV?'':`<p class="src">Typical = middle half of Coach's ${lv} routines. Taps open once 4 weeks are logged.</p>`}</div>`}
+     `<div class="k"><span><i class="tbk"></i>${BANDL}</span><span><i class="tkk"></i>this week</span></div><p class="src">${OWN?`Band = middle half of your last ${Math.min(8,loggedWeeks())} logged weeks.`:`Band = middle half of Coach's ${lv} preset plans. After 4 logged weeks it switches to your own usual weeks and the rows open.`}</p></div>`}
   // collapsed rows: sources, balance, flags
   const det=(id,t,sub,body)=>`<details class="fa-x" data-x="${id}"${ST.open[id]?' open':''}><summary><span class="g"><b>${t}</b><small>${sub}</small></span><span class="cv" aria-hidden="true">›</span></summary><div class="bd">${body}</div></details>`;
   const src=MU.filter(k=>x(k)>0&&(A.muscles[k].min||0)>0).map(k=>{const P=diveOf(dt,d,lv,k);let dir=0,hel=0;for(const c of P.contributors){const e=dt.EX[c.id],r=e.muscles[k]||0,mx=Math.max(...Object.values(e.muscles));if(r>=0.75||r===mx)dir+=c.effective_sets;else hel+=c.effective_sets}const t=dir+hel||1;
@@ -303,7 +311,7 @@ function panelData(kind,a){const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,
       else if(fm)fixes=fixes.concat(mfList(muscleFixes(dt,d,lv,fm)))}
     fixes=fixes.slice(0,2);const t=list.map(f=>f.text).join(' ');
     return {title:kind==='pflag'?'Flag':`${ML(m)} · to fix`,insight:(t||'This flag is fixed.')+(list.length&&!fixes.length?' No change passes every check yet.':''),fixes}}
-  if(kind==='pvsn'){const t=typical(dt,lv,m),x=weekX(A,m);return {title:`${ML(m)} vs normal`,insight:`${f1(x)} sets this week; typical routines at your level give ${f1(t[0])}–${f1(t[1])}.`,fixes:[]}}
+  if(kind==='pvsn'){const t=ownBand(dt,m)||typical(dt,lv,m),x=weekX(A,m);return {title:`${ML(m)} vs normal`,insight:`${f1(x)} sets this week; your usual weeks give ${f1(t[0])}–${f1(t[1])}.`,fixes:[]}}
   return {title:'',insight:'',fixes:[]}}
 function panelHtml(kind,a){const P=panelData(kind,a);return {title:P.title,body:appliedBar()+`<div class="fa-pn"><p class="ins">${esc(P.insight)}</p>`+P.fixes.map(f=>`<div class="row"><div class="grow"><div class="t1">${esc(f.label)}</div>${f.sub?`<div class="t2">${esc(f.sub)}</div>`:''}</div>${fxBtn(f,'acc')}</div>`).join('')+`</div>`}}
 // ---------- sheets ----------
