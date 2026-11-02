@@ -167,7 +167,7 @@ function deepHtml(m){const dt=RD(),d=DAYS(),lv=LV(),SH=sheetOf(dt,d,lv),P=diveOf
   const direct=contrib.filter(c=>c.role==='prime').reduce((a,c)=>a+c.sets,0);
   let h=`${appliedBar()}<div class="fa-dd" data-m="${m}"><p class="fa-scope">This week · ${esc(window.BOARD.state.name||'your plan')} · ${esc(lv)}</p><div class="card fa-c fa-hero"><div class="hero"><div><div class="n num">${f1(x)}</div><div class="l">effective sets</div></div><div class="dv"><div class="n num">${direct}</div><div class="l">direct sets</div></div></div>
    <div class="hrow"><span>Target <b>${S.level_min}–${S.max}</b></span>${pill(wk.zone)}<button class="evb" data-fa="evb" aria-expanded="false">${esc(evT.label)} evidence ⓘ</button></div><div class="evn" id="fa-evn">${esc(ev.note||'')} ${esc(evT.description||'')}</div>
-   <div class="kv"><span>Ideal band</span><b>${pc(C.ideal_band[0])}–${pc(C.ideal_band[1])} of plateau</b></div><div class="kv"><span>Far under / No payoff</span><b>below ${S.red_under_below} · above ${S.red_over_above}</b></div>`;
+   <div class="kv"><span>Far under / No payoff</span><b>${S.red_under_below>0?`below ${S.red_under_below}`:'none'} · above ${(MR().weeklyBp(dt,lv,m)||{}).red!=null?MR().weeklyBp(dt,lv,m).red:S.red_over_above}</b></div>`;
   const XP=v=>Math.min(100,v/XMAX*100),grad='linear-gradient(90deg,'+(()=>{const o=[];for(let v=0;v<=XMAX+1e-9;v+=0.25)o.push(`${zoneW(dt,lv,m,v).hex} ${XP(v).toFixed(2)}%`);return o.join(',')})()+')';
   const mid=(a,b)=>XP((a+b)/2);
   h+=`<div class="barw"><span class="mt" style="left:${Math.max(14,Math.min(86,XP(x)))}%">This week ${f1(x)}</span><div class="bar" style="background:${grad}" role="img" aria-label="This week ${f1(x)} sets on the colour bar"><span class="mk" style="left:${XP(x)}%"></span></div></div>
@@ -175,7 +175,6 @@ function deepHtml(m){const dt=RD(),d=DAYS(),lv=LV(),SH=sheetOf(dt,d,lv),P=diveOf
   const Z=C.zones||{};const rd=C.zone==='below_min'?`under the ${S.level_min}-set minimum`:C.zone==='sweet_spot'?`in the sweet spot (${Z.sweet[0]}–${Z.sweet[1]})`:C.zone==='growth'?`between the ${S.level_min}-set minimum and the sweet spot`:C.zone==='upper'?`above the sweet spot`:C.zone==='none'?'not trained':`past the diminishing point (${Z.diminishing})`;
   h+=`<div class="card fa-c"><div class="ch"><h2>Growth curve<span class="mod">Modeled</span></h2><small>% of plateau</small></div>${curveSvg(dt,lv,m,C,S,XMAX)}
    <p class="read">${f1(x)} sets, ${rd}. The next set adds about <b>${pc(C.next_set)}</b> (Modeled).</p>
-   <div class="kv"><span>Zone</span><b>${esc({below_min:'Under the minimum',growth:'Growing',sweet_spot:'Sweet spot',upper:'Upper',plateau:'Plateau',none:'Not trained'}[C.zone]||C.zone)}</b></div>${Z.sweet?`<div class="kv"><span>Sweet spot</span><b>${Z.sweet[0]}–${Z.sweet[1]} sets</b></div>`:''}<div class="kv"><span>Of plateau</span><b>${pc(C.stimulus)}</b></div><div class="kv"><span>Next set</span><b>+${pc(C.next_set)}</b></div>
    <p class="src">Modeled from research averages; it is not a measurement of your growth.</p>
    ${Z.sweet?`<p class="src">① minimum ${Z.min} · ② sweet spot ${Z.sweet[0]}–${Z.sweet[1]} · ③ diminishing ${Z.diminishing}. Schoenfeld 2017; Pelland 2026</p>`:''}</div>`;
   // per workout + spacing (days only)

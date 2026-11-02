@@ -42,14 +42,14 @@
    "polarity": "negative",
    "scope": "muscle",
    "text": "{Muscle}: {sets} sets on {day_name}, past about {limit} for one workout; extra sets add little.",
-   "when": "junk_volume_session"
+   "when": "session_efficiency: r1(effective sets in one workout) > rules session_efficiency.limits_by_level[level][muscle]; {limit} = that same value (intermediate chest 10). Not the Efficient-goal trim target."
   },
   {
    "id": "session_cap_ok",
    "polarity": "positive",
    "scope": "board",
    "text": "No muscle goes past its one-workout limit.",
-   "when": "no junk_volume_session and 1+ training day"
+   "when": "no session_efficiency flag and 1+ training day"
   }
  ],
  "fields": {

@@ -15,13 +15,13 @@ function notes(dt,days,level,templates){const T={};templates.forEach(t=>T[t.id]=
   const fmin=2,eff={};train.forEach(d=>eff[d.day]=PC.eff(dt,d.tiles));const FM=dt.rules.frequency_muscles,ORDER=PC.ORDER;
   for(const m of FM){const hit=train.filter(d=>eff[d.day][m]>=fmin).map(d=>d.day);
     if(train.length>=2&&hit.length===1)out.push(N('freq_one_day',[m],null,{day_name:DAYN[hit[0]]}));else if(!hit.length)out.push(N('freq_none',[m]));else if(hit.length>=2)out.push(N('freq_two_plus',[m],null,{n:hit.length}))}
-  for(const f of fl){if(f[1]==='consecutive_high_volume'){const nx=ORDER[ORDER.indexOf(f[2])+1];out.push(N('back_to_back',[f[3]],null,{day1:DAYN[f[2]],day2:DAYN[nx]}))}
-    /* vol16a: {limit} = the engine's one-workout limit for that muscle (rules session_efficiency limits for the goal + level,
-       PCHECK.seLim; falls back to sets - over from the flag). The note only fires when the day really is past that limit. */
-    if(f[1]==='junk_volume_session'||f[1]==='session_efficiency'){let lim=PC.seLim?PC.seLim(dt,f[3],level):null;if(lim==null&&f[1]==='session_efficiency'&&f[5]!=null)lim=RANK.pyRound(f[4]-f[5],1);
-      if(lim==null||f[4]>lim+1e-9)out.push(N('crowded_session',[f[3]],'session',{sets:fmtPy1(f[4]),day_name:DAYN[f[2]],limit:lim==null?'':(Number.isInteger(lim)?String(lim):fmtPy1(lim))}))}}
+  for(const f of fl){if(f[1]==='consecutive_high_volume'){const nx=ORDER[ORDER.indexOf(f[2])+1];out.push(N('back_to_back',[f[3]],null,{day1:DAYN[f[2]],day2:DAYN[nx]}))}}
+  /* vol16a (Coach ruling): the per-workout note fires when r1(effective sets for a muscle in one workout) > rules
+     session_efficiency.limits_by_level[level][muscle], and {limit} is that same value (intermediate chest 10); not the Efficient trim target. */
+  const LBL=((((dt.rules.rules||[]).find(r=>r.id==='session_efficiency')||{}).limits_by_level)||{})[level]||{};let crowded=0;
+  for(const d of train)for(const m of Object.keys(eff[d.day])){const lim=LBL[m];if(lim==null)continue;const x=RANK.pyRound(eff[d.day][m],1);if(x>lim+1e-9){crowded++;out.push(N('crowded_session',[m],'session',{sets:fmtPy1(eff[d.day][m]),day_name:DAYN[d.day],limit:String(lim)}))}}
   if(train.length>=2&&FM.every(m=>Object.keys(eff).filter(d=>eff[d][m]>=fmin).length>=2)){out=out.filter(n=>n.id!=='freq_two_plus');out.push(N('freq_all_main_twice',[]))}
-  if(!fl.some(f=>f[1]==='junk_volume_session'||f[1]==='session_efficiency'))out.push(N('session_cap_ok',[]));
+  if(!crowded)out.push(N('session_cap_ok',[]));
   const imp=((dt.rules.check_priority||{}).importance||{}).muscle_weight||{};
   const key=n=>[n.polarity!=='negative'?1:0,n.muscles.length===0?1:0,n.muscles.length?-(imp[n.muscles[0]]||0):0,n.muscles[0]||'',n.id];
   const cmp=(a,b)=>{for(let k=0;k<a.length;k++){if(a[k]<b[k])return -1;if(a[k]>b[k])return 1}return 0};
