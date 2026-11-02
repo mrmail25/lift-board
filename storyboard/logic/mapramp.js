@@ -1,6 +1,6 @@
 /* vol15: ONE body-map colour ramp for the Plan, Analysis and Log maps (Coach: volume-model.json visuals.body_map.ramp).
    Stops grey #C8CDD2 | light green #C7E9B4 | dark green #1E7B3A | yellow #F2C230 | red #D7263D, blended linearly in sRGB (round half up).
-   x < grey_below: grey. light_green @ light_green .. dark_green @ dark_green[0]; dark green held to dark_green[1]; then -> yellow @ yellow, held FLAT yellow up to the red breakpoint, then red (vol15b, no orange).
+   x < grey_below: grey. light_green @ light_green .. dark_green @ dark_green[0]; dark green held up to the yellow breakpoint (no dark green -> yellow blend, no olive); then FLAT yellow up to the red breakpoint, then red (no orange).
    Zone = the band shown; inside a blend the nearer stop (t < 0.5 lower). Exact hex + zone match with Coach's vol15b precomputed values (test/ramp15.js).
    Weekly: x = displayed r1 weekly effective sets; breakpoints = ramp.weekly.breakpoints[level][muscle].
    Daily: x = that muscle's effective sets n (r2); k = sqrt(own fatigue / n); breakpoints from the payoff curve for that k (ramp.daily.live_formula):
@@ -18,8 +18,7 @@ function colour(dt,x,bp){const S=STOPS(dt);if(!bp||!(x>=bp.grey_below))return {h
   // vol15b (Coach §26): zone = the colour band shown; inside a blend the nearer stop (t < 0.5 lower stop, else upper)
   const bl=(a,b,za,zb,t)=>({hex:mix(S[a],S[b],t),zone:t<0.5?za:zb});
   if(x<lo)return bl('light_green','dark_green','light_green','dark_green',(x-bp.light_green)/(lo-bp.light_green));
-  if(x<=hi)return {hex:S.dark_green,zone:'dark_green'};
-  if(x<bp.yellow)return bl('dark_green','yellow','dark_green','yellow',(x-hi)/(bp.yellow-hi));   // dark green -> yellow still blends (olive)
+  if(x<bp.yellow)return {hex:S.dark_green,zone:'dark_green'};   // CoS (post vol15b): no olive - dark green held up to the yellow breakpoint, then straight to flat yellow
   if(x<bp.red)return {hex:S.yellow,zone:'yellow'};   // yellow held FLAT up to the red breakpoint (no orange)
   return {hex:S.red,zone:'red'}}
 function weeklyBp(dt,lv,m){const W=(RAMP(dt)||{}).weekly||{};return ((W.breakpoints||{})[lv]||{})[m]||null}
