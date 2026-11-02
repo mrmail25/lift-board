@@ -15063,7 +15063,7 @@
      "yellow",
      "red"
     ],
-    "interpolation": "x < grey_below: grey (no colour blend from grey). From light_green at x = 1.0 to dark_green at the start of the dark-green range: linear in sRGB per channel (round half up). Dark green held across the range. Dark green -> yellow linear in sRGB up to the yellow breakpoint. vol15b: yellow held flat (#F2C230) from the yellow breakpoint up to the red breakpoint (no yellow -> red blend); red (#D7263D) from the red breakpoint and above. zone = the colour band shown: flat segments take their colour; in a blend segment the nearer stop (t < 0.5 lower stop, else upper). Same function for both modes; only the breakpoints differ.",
+    "interpolation": "x < grey_below: grey (no colour blend from grey). From light_green at x = 1.0 to dark_green at the start of the dark-green range: linear in sRGB per channel (round half up). vol15c: from the dark-green stop, dark green (#1E7B3A) held flat up to the yellow breakpoint (no dark green -> yellow blend); yellow (#F2C230) flat from the yellow breakpoint up to the red breakpoint; red (#D7263D) from the red breakpoint and above. The only blend left is light_green -> dark_green. zone = the colour band shown: flat segments take their colour exactly; inside the light -> dark green blend the nearer stop (t < 0.5 light_green, else dark_green). Same function for both modes; only the breakpoints differ.",
     "weekly": {
      "x": "weekly effective sets (face value, the displayed r1 value)",
      "stops": "light_green @ 1.0; dark_green @ sweet[0] .. sweet[1]; yellow @ diminishing; red @ red_point",
@@ -15796,6 +15796,17 @@
     "precomputed": {
      "daily": "day-metrics-presets.json ...days[i].muscles[m].ramp {x, hex, zone}",
      "weekly": "day-metrics-presets.json ...weekly_status.ramp[m] {x, hex, zone}"
+    },
+    "day_text": {
+     "source": "day-metrics-presets ...days[].muscles[m].display",
+     "rule": "follows muscles[m].ramp.zone (the colour band shown)",
+     "format": "\"<x rounded half-up to 0.1> hard sets: <words[zone]>\"; zone grey -> \"Under 1 hard set\"",
+     "words": {
+      "light_green": "building",
+      "dark_green": "around the best range",
+      "yellow": "past the best range",
+      "red": "too many for one workout"
+     }
     }
    }
   },
@@ -21985,6 +21996,47 @@
   },
   "history_frozen": [
    "model:vol15"
+  ]
+ },
+ "vol15c": {
+  "version": "vol15c",
+  "date": "2026-11-01",
+  "source": "CoS decision after vol15b",
+  "ramp_rule": "grey -> light green -> dark green unchanged; dark green #1E7B3A flat from the dark-green stop up to the yellow breakpoint; yellow #F2C230 flat up to the red breakpoint; red #D7263D from there. Daily and weekly.",
+  "counts_vs_vol15b": {
+   "daily_hex_changed": 309,
+   "weekly_hex_changed": 20,
+   "daily_zone_changed": 80,
+   "weekly_zone_changed": 5,
+   "old_olive_daily": 309,
+   "old_olive_weekly": 20,
+   "old_olive_now_dark_green": 329,
+   "old_olive_now_other": 0,
+   "day_text_past_to_around": 80,
+   "day_text_changed": 2327,
+   "total_daily": 3774,
+   "total_weekly": 1748
+  },
+  "checks": {
+   "hex_between_dark_green_and_yellow": 0,
+   "flat_zone_hex_mismatch": 0,
+   "dark_green_label_in_upper_half_of_light_to_dark_blend": 2016,
+   "yellow_red_hex_with_other_zone": 0
+  },
+  "day_text": {
+   "source": "day-metrics-presets ...days[].muscles[m].display",
+   "rule": "follows muscles[m].ramp.zone (the colour band shown)",
+   "format": "\"<x rounded half-up to 0.1> hard sets: <words[zone]>\"; zone grey -> \"Under 1 hard set\"",
+   "words": {
+    "light_green": "building",
+    "dark_green": "around the best range",
+    "yellow": "past the best range",
+    "red": "too many for one workout"
+   }
+  },
+  "article": "high-volume-vs-high-intensity, section one-workout: 'called Payoff, ApeChit's own modeled score (Modeled, not a measurement).' Nothing else changed.",
+  "history_frozen": [
+   "model:vol15b"
   ]
  }
 }

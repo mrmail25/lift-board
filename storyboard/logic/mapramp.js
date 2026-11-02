@@ -38,9 +38,9 @@ function daily(dt,tiles){const PC=typeof window!=='undefined'&&window.PCHECK||(t
 const fills=o=>{const r={};for(const [m,c] of Object.entries(o||{}))if(c&&c.zone!=='grey')r[m]=c.hex;else if(c)r[m]=c.hex;return r};
 const legend=mode=>{const S=STOPS(null);return `<span class="mleg mrleg" aria-label="Map colours"><span class="lg1"><i style="background:${S.grey}" aria-hidden="true"></i>Under 1 set</span><span class="lg1"><i class="mrbar" style="background:linear-gradient(90deg,${S.light_green},${S.dark_green})" aria-hidden="true"></i>${mode==='day'?'Building to the best range':'Toward the sweet spot'}</span><span class="lg1"><i style="background:${S.yellow}" aria-hidden="true"></i>${mode==='day'?'Past the best range':'Past the sweet spot'}</span><span class="lg1"><i style="background:${S.red}" aria-hidden="true"></i>${mode==='day'?'Too many for one workout':'Too much'}</span></span>`};
 // vol15b: per-muscle day wording (day-metrics-presets muscles[m].display): '<n> hard sets: <band>' or 'Under 1 hard set'
-const DAYW={light_green:'building',dark_green:'around the best range for one workout',yellow:'past the best range for one workout',red:'too many for one workout'};
-const dayText=(n,zone)=>{n=r2(+n||0);return !(n>=1)||zone==='grey'?'Under 1 hard set':`${(Math.floor(n*10+0.5+1e-9)/10).toFixed(1)} hard sets: ${DAYW[zone]||''}`};
+const DAYW={light_green:'building',dark_green:'around the best range',yellow:'past the best range',red:'too many for one workout'};   // fallback only; Coach's words: visuals.body_map.ramp.day_text.words
+const dayText=(dt,n,zone)=>{const DT=(RAMP(dt)||{}).day_text||{},W=Object.assign({},DAYW,DT.words||{});n=r2(+n||0);return !(n>=1)||zone==='grey'||!zone?'Under 1 hard set':`${(Math.floor(n*10+0.5+1e-9)/10).toFixed(1)} hard sets: ${W[zone]||''}`};
 const dayWords=(dt,tiles)=>{const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null),o={};if(!PC||!tiles||!tiles.length)return o;
-  const E=PC.eff(dt,tiles),F=PC.fatMus(dt,tiles);for(const [m,v] of Object.entries(E)){if(!(v>0))continue;o[m]=dayText(v,dayMuscle(dt,v,F[m]||0).zone)}return o};
+  const E=PC.eff(dt,tiles),F=PC.fatMus(dt,tiles);for(const [m,v] of Object.entries(E)){if(!(v>0))continue;o[m]=dayText(dt,v,dayMuscle(dt,v,F[m]||0).zone)}return o};
 const API={dayText,dayWords,DAYW,colour,weekly,weeklyBp,daily,dayMuscle,dailyBp,fills,legend,STOPS,mix};if(typeof module!=='undefined')module.exports=API;if(typeof window!=='undefined')window.MAPRAMP=API;
 })();
