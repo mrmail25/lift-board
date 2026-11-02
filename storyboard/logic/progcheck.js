@@ -61,7 +61,12 @@ const seRule=dt=>((dt.rules&&dt.rules.rules)||[]).find(r=>r.id==='session_effici
 // vol10 (vol10.builder_paths): the analysis goal. GOAL=null = no goal (vol9 fallback: limits_by_level, no goal targets).
 // session limits = rules[id=session_efficiency].limits_by_goal[goal][level][muscle] when a goal is set, else limits_by_level.
 let GOAL=null,TONE=null;const setGoal=g=>{GOAL=g||null};const setTone=t=>{TONE=t||null};const getGoal=()=>GOAL;const gOf=g=>g===undefined?GOAL:g;
-const seLim=(dt,m,lv,g)=>{const r=seRule(dt),L=lv||CUR,G=gOf(g),bg=G&&r&&r.limits_by_goal&&r.limits_by_goal[G],t=bg?bg[L]:r&&r.limits_by_level&&r.limits_by_level[L];return t&&t[m]!=null?t[m]:null};
+// vol16a(3) (Coach ruling): every user-facing session warning uses limits_by_level[level][muscle]. limits_by_goal[goal] is ONLY the
+// Make-more-efficient trim target (trimLim), used by logic/trim.js while TRIMMODE is on; it never drives a warning.
+let TRIMMODE=false;const setTrimMode=v=>{TRIMMODE=!!v};
+const lvLim=(dt,m,lv)=>{const r=seRule(dt),t=r&&r.limits_by_level&&r.limits_by_level[lv||CUR];return t&&t[m]!=null?t[m]:null};
+const trimLim=(dt,m,lv,g)=>{const r=seRule(dt),L=lv||CUR,G=gOf(g),bg=G&&r&&r.limits_by_goal&&r.limits_by_goal[G],t=bg&&bg[L];return t&&t[m]!=null?t[m]:lvLim(dt,m,L)};
+const seLim=(dt,m,lv,g)=>TRIMMODE?trimLim(dt,m,lv,g):lvLim(dt,m,lv);
 // weekly targets by goal: rules[id=weekly_volume].targets_by_goal[goal][level][muscle] {min,target,upper}; curve % from volume-model goals[goal].weekly
 const goalTarget=(dt,m,lv,g)=>{const G=gOf(g);if(!G)return null;const w=((dt.rules&&dt.rules.rules)||[]).find(r=>r.id==='weekly_volume'),t=w&&w.targets_by_goal&&w.targets_by_goal[G]&&w.targets_by_goal[G][lv||CUR];const o=t&&t[m];if(!o)return null;
   const P=(((((dt.VM||{}).goals||{})[G]||{}).weekly||{})[lv||CUR]||{})[m]||{};return Object.assign({},o,{min_pct:P.min_pct,target_pct:P.target_pct,upper_pct:P.upper_pct})};
@@ -359,7 +364,7 @@ function analytics(dt,days,level){setLevel(level);const TT=dt.targets,C=TT.curve
     spinal:{week:day.reduce((a,d)=>a+d.spinal,0),week_max:RU.spinal_load.week_warn_above[level],session_max:RU.spinal_load.session_warn_above[level]},disclaimer:VM?dt.VM.disclaimer:A.disclaimer,curveModel:VM?dt.VM.curve.reads_as:C.model}}
 function anchors(dt,m,level){const CV=dt.VM.curve||{},P=(CV.per_muscle||{})[m];if(!P)return null;const A=(P.anchors_by_level&&P.anchors_by_level[level])||P.anchors;if(!A)return null;const lm=P.anchors_by_level?A.min:((P.level_min_pct||{})[level]||A.min);return {min:lm,sweet_low:A.sweet_low,sweet_high:A.sweet_high,dim:A.dim,basis:P.basis,ev:(P.min_evidence||{}).tag||null,fallback:(P.concave_fallback||{})[level]||null}}
 const fmtN=v=>{const n=+(+v).toFixed(1);return String(n)};
-const API={seOver,recInputs,r2u,exemptSet,fatSet,fatMus,roleOff,setTone,setGoal,getGoal,goalTarget,goalsCfg,lateSets,face,anchors,heavyLim,seLim,seEff,seRule,ruleOff,setLevel,check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,perSet,gPS,xEquiv,sessZone8,capW,loadPoints,recHours,flags8,effortOf,axialOf,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
+const API={trimLim,lvLim,setTrimMode,seOver,recInputs,r2u,exemptSet,fatSet,fatMus,roleOff,setTone,setGoal,getGoal,goalTarget,goalsCfg,lateSets,face,anchors,heavyLim,seLim,seEff,seRule,ruleOff,setLevel,check,fixes,evaluate,message,checks,analytics,sessionMinutes,eff,credit,sessCredit,sessZones,perSet,gPS,xEquiv,sessZone8,capW,loadPoints,recHours,flags8,effortOf,axialOf,zones,stim,zoneOf,sessP,r05,r1,dRound,shown,flagKey,ORDER,shortLabel,ruleLabel,
   // internals reused by logic/analysis.js and logic/progress.js (same functions, so the ports cannot drift)
   _x:{gAddSets,gAddExercise,gReduceSets,prev,nonin,_day,load,col,RULE_OF,total,ctx,clone,cmpT,sortBy,fmtPy}};
 if(typeof module!=='undefined'&&module.exports)module.exports=API;else root.PCHECK=API;

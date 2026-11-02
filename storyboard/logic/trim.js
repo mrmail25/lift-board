@@ -17,7 +17,8 @@ function weekly(PC,dt,days){const W={};for(const d of days){const e=PC.eff(dt,d.
 const keyF=f=>JSON.stringify(f);
 // vol11b: rules.json rules[id=efficient_trim].algorithm (Coach), step for step; returns a trace like the reference case
 function trim(dt,days0,lv,o={}){const PC=PCm(),goal=o.goal===undefined?'efficient':o.goal,allowRemove=!!o.allowRemove,g0=PC.getGoal();const r2=PC.r2u;
-  PC.setGoal(goal);if(PC.setTone)PC.setTone(null);const trace=[],blocked=new Map();
+  PC.setGoal(goal);if(PC.setTone)PC.setTone(null);if(PC.setTrimMode)PC.setTrimMode(true);   // vol16a(3): trim against limits_by_goal
+  const trace=[],blocked=new Map();
   try{let days=clone(days0).filter(d=>d.tiles.length);const base=()=>PC.check(dt,days,lv)[0];
     for(let guard=0;guard<500;guard++){const F=base(),se=F.filter(f=>f[1]==='session_efficiency'&&!blocked.has(f[2]+'|'+f[3])).map(f=>{const D=days.find(d=>d.day===f[2]),lim=PC.seLim(dt,f[3],lv),x=PC.eff(dt,D.tiles)[f[3]]||0;return {day:f[2],m:f[3],lim,x,ex:Math.round((x-lim)*10)/10}})
         .sort((a,b)=>DO.indexOf(a.day)-DO.indexOf(b.day)||b.ex-a.ex||(a.m<b.m?-1:a.m>b.m?1:0));
@@ -40,6 +41,6 @@ function trim(dt,days0,lv,o={}){const PC=PCm(),goal=o.goal===undefined?'efficien
       d0.tiles.forEach((t,i)=>{const u=dn.tiles[j];if(u&&u.id===t.id){if(u.sets!==t.sets){ops.push({day:d0.day,i,id:t.id,from:t.sets,to:u.sets});removed+=t.sets-u.sets}j++}else{ops.push({day:d0.day,i,id:t.id,from:t.sets,to:0});removed+=t.sets}})}
     const full=days0.map(d=>d.tiles.length?days.find(x=>x.day===d.day):{day:d.day,tiles:[]});
     return {days:full,ops,removed,residual:R,trace,blocked:[...blocked].map(([k,why])=>({day:k.split('|')[0],muscle:k.split('|')[1],why}))}}
-  finally{PC.setGoal(g0)}}
+  finally{PC.setGoal(g0);if(PC.setTrimMode)PC.setTrimMode(false)}}
 const API={trim};if(isNode)module.exports=API;else root.TRIM=API;
 })(typeof window!=='undefined'?window:globalThis);
