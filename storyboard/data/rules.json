@@ -1547,8 +1547,47 @@
           "saved_week": "your saved normal week",
           "my_average": "your average week",
           "typical_routines": "a typical {benchmark} week"
+        },
+        "general_by_level": {
+          "version": "vol15",
+          "source": "median week_cost (build_volume_model.week_cost) of the stored presets (splits-efficient.json) at that level",
+          "values": {
+            "beginner": {
+              "week_cost": 60.49,
+              "presets": 16,
+              "range": [
+                40.61,
+                80.14
+              ]
+            },
+            "intermediate": {
+              "week_cost": 71.52,
+              "presets": 16,
+              "range": [
+                51.41,
+                92.7
+              ]
+            },
+            "advanced": {
+              "week_cost": 80.43,
+              "presets": 14,
+              "range": [
+                61.6,
+                96.93
+              ]
+            }
+          },
+          "label": "Modeled"
+        },
+        "switch_rule": {
+          "use": "general_by_level[user level] until the user has >= 4 qualifying logged weeks, then my_average (rolling mean of the last 4 qualifying weeks); a saved normal week still overrides both",
+          "min_logged_weeks": 4,
+          "why_4": "Four weeks is one typical training block: it averages out a light or missed week and a deload is excluded by personal_exclude; it matches targets.json recovery.personal_after_weeks. Practitioner judgement.",
+          "display": false
         }
-      }
+      },
+      "display": false,
+      "display_note": "vol15: recovery-cost numbers are not shown anywhere; data and rule kept for later."
     },
     {
       "id": "session_efficiency",
@@ -2218,7 +2257,7 @@
         "goals": "efficient and max_growth (not the vol9 history limits)",
         "label": "Modeled",
         "nurd": {
-          "short": "Lift Board model; Schoenfeld, Grgic & Krieger 2019 (frequency, volume-equated)",
+          "short": "ApeChit model; Schoenfeld, Grgic & Krieger 2019 (frequency, volume-equated)",
           "year": 2026,
           "type": "model",
           "label": "Modeled",
@@ -2327,7 +2366,7 @@
       "metric": "session_design",
       "evidence": "modeled",
       "nurd": {
-        "short": "Lift Board model; Schoenfeld, Grgic & Krieger 2019 (frequency, volume-equated)",
+        "short": "ApeChit model; Schoenfeld, Grgic & Krieger 2019 (frequency, volume-equated)",
         "year": 2026,
         "type": "model",
         "label": "Modeled",
@@ -2436,7 +2475,7 @@
       },
       "evidence": "modeled",
       "nurd": {
-        "short": "Lift Board model; limits per Remmert et al. 2025 SportRxiv (preprint) and practitioner/HIT judgement",
+        "short": "ApeChit model; limits per Remmert et al. 2025 SportRxiv (preprint) and practitioner/HIT judgement",
         "year": 2026,
         "type": "model",
         "label": "Modeled",
@@ -2609,7 +2648,12 @@
           "own_fatigue_per_effective_set": 1.56,
           "payoff_multiplier": 1.249,
           "peak_n": 4.1,
-          "zero_n": 10.0
+          "zero_n": 10.0,
+          "peak_range": [
+            3.4,
+            4.9
+          ],
+          "yellow_n": 6.8
         },
         {
           "type": "primary",
@@ -2618,7 +2662,12 @@
           "own_fatigue_per_effective_set": 1.32,
           "payoff_multiplier": 1.149,
           "peak_n": 4.4,
-          "zero_n": 11.1
+          "zero_n": 11.1,
+          "peak_range": [
+            3.6,
+            5.3
+          ],
+          "yellow_n": 7.4
         },
         {
           "type": "primary",
@@ -2627,7 +2676,12 @@
           "own_fatigue_per_effective_set": 1.2,
           "payoff_multiplier": 1.095,
           "peak_n": 4.6,
-          "zero_n": 11.7
+          "zero_n": 11.7,
+          "peak_range": [
+            3.8,
+            5.6
+          ],
+          "yellow_n": 7.8
         },
         {
           "type": "accessory",
@@ -2636,7 +2690,12 @@
           "own_fatigue_per_effective_set": 1.1,
           "payoff_multiplier": 1.049,
           "peak_n": 4.8,
-          "zero_n": 12.3
+          "zero_n": 12.3,
+          "peak_range": [
+            3.9,
+            5.8
+          ],
+          "yellow_n": 8.1
         },
         {
           "type": "accessory",
@@ -2645,7 +2704,12 @@
           "own_fatigue_per_effective_set": 1.0,
           "payoff_multiplier": 1.0,
           "peak_n": 5.0,
-          "zero_n": 13.0
+          "zero_n": 13.0,
+          "peak_range": [
+            4.1,
+            6.0
+          ],
+          "yellow_n": 8.5
         },
         {
           "type": "isolation",
@@ -2654,7 +2718,12 @@
           "own_fatigue_per_effective_set": 0.792,
           "payoff_multiplier": 0.89,
           "peak_n": 5.5,
-          "zero_n": 14.8
+          "zero_n": 14.8,
+          "peak_range": [
+            4.4,
+            6.6
+          ],
+          "yellow_n": 9.5
         }
       ],
       "note": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build.",
@@ -2664,11 +2733,18 @@
       },
       "evidence": "modeled",
       "nurd": {
-        "short": "Lift Board model (Modeled)",
+        "short": "ApeChit model (Modeled)",
         "year": 2026,
         "type": "model",
         "label": "Modeled",
         "note": "Shape only: diminishing returns per workout (Remmert et al. SportRxiv preprint 2025 and the 2026 MSSE conference abstract, not peer-reviewed). The constants are planning choices, not measurements."
+      },
+      "colour_vol15": {
+        "ramp": "volume-model.json visuals.body_map.ramp (daily mode)",
+        "bands_status": "bands (green/amber/red) kept as data; the map uses the ramp",
+        "past_peak_is_warning": false,
+        "red_flag": "payoff_negative (Payoff < 0)",
+        "peak_range": "n with Payoff >= 0.975 x max (fatigue_classes[].peak_range)"
       }
     }
   ],
@@ -2767,64 +2843,310 @@
     }
   },
   "fix_validation": "Every fix candidate has to pass validation before it's shown. Apply it to a copy of the board and run every rule again. Drop the candidate if it creates any non-info flag that wasn't there before, including a new red weekly_volume. Drop it too if it doesn't move the targeted flag toward compliance (fewer sets, fewer minutes, a ratio or volume closer to range, or more training days for the muscle). A candidate that clears the flag is marked resolves=true. One that only improves it is marked resolves=false and shown after the ones that clear it. Try each rule's fixes in the order listed, prefer a resolving candidate within each action, keep one per action, and show at most 3. If none are valid, show none, and never show an unvalidated fix.",
-  "staples": [
-    "ab-wheel-rollout",
-    "back-squat",
-    "barbell-bench-press",
-    "barbell-curl",
-    "barbell-row",
-    "barbell-shrug",
-    "bulgarian-split-squat",
-    "cable-crunch",
-    "cable-curl",
-    "cable-fly",
-    "cable-lateral-raise",
-    "chest-supported-row",
-    "close-grip-bench-press",
-    "close-grip-pulldown",
-    "deadlift",
-    "dumbbell-bench-press",
-    "dumbbell-lateral-raise",
-    "dumbbell-shrug",
-    "face-pull",
-    "front-squat",
-    "hack-squat",
-    "hammer-curl",
-    "hanging-leg-raise",
-    "hip-abduction-machine",
-    "hip-adduction-machine",
-    "hip-thrust",
-    "incline-barbell-bench-press",
-    "incline-dumbbell-curl",
-    "incline-dumbbell-press",
-    "lat-pulldown",
-    "leg-extension",
-    "leg-press",
-    "lying-leg-curl",
-    "machine-chest-press",
-    "machine-shoulder-press",
-    "one-arm-dumbbell-row",
-    "overhead-cable-triceps-extension",
-    "overhead-press",
-    "pec-deck",
-    "pendlay-row",
-    "preacher-curl",
-    "pull-up",
-    "reverse-pec-deck",
-    "romanian-deadlift",
-    "seated-cable-row",
-    "seated-calf-raise",
-    "seated-dumbbell-shoulder-press",
-    "seated-leg-curl",
-    "skull-crusher",
-    "standing-calf-raise",
-    "stiff-leg-dumbbell-deadlift",
-    "straight-arm-pulldown",
-    "t-bar-row",
-    "triceps-pushdown",
-    "weighted-dip",
-    "wrist-curl"
-  ],
+  "staples": {
+    "chest": [
+      "incline-dumbbell-press",
+      "cable-fly",
+      "barbell-bench-press",
+      "machine-chest-press",
+      "weighted-dip",
+      "plate-loaded-chest-press",
+      "ring-dip",
+      "converging-smith-bench-press",
+      "trx-push-up",
+      "dumbbell-bench-press",
+      "cable-crossover-high-to-low",
+      "incline-barbell-bench-press",
+      "pec-deck",
+      "archer-push-up",
+      "iso-lateral-chest-press",
+      "ring-fly",
+      "converging-smith-incline-press",
+      "dumbbell-fly",
+      "cable-crossover-low-to-high",
+      "decline-bench-press",
+      "assisted-dip",
+      "deficit-push-up",
+      "ring-push-up",
+      "smith-bench-press",
+      "incline-dumbbell-fly",
+      "decline-machine-press",
+      "push-up",
+      "smith-incline-press",
+      "incline-machine-press",
+      "pseudo-planche-push-up"
+    ],
+    "front_delts": [
+      "seated-dumbbell-shoulder-press",
+      "overhead-press",
+      "machine-shoulder-press",
+      "pike-push-up",
+      "kettlebell-press",
+      "landmine-press-one-arm",
+      "iso-lateral-shoulder-press",
+      "converging-smith-shoulder-press",
+      "arnold-press",
+      "wall-handstand-push-up",
+      "kettlebell-push-press",
+      "landmine-press-two-arm",
+      "smith-overhead-press",
+      "front-raise",
+      "pseudo-planche-push-up",
+      "viking-press"
+    ],
+    "side_delts": [
+      "dumbbell-lateral-raise",
+      "cable-lateral-raise",
+      "lateral-raise-machine",
+      "upright-row",
+      "seated-dumbbell-lateral-raise",
+      "cable-y-raise",
+      "standing-lateral-raise-machine"
+    ],
+    "rear_delts": [
+      "reverse-pec-deck",
+      "face-pull",
+      "dumbbell-rear-delt-fly",
+      "ring-face-pull",
+      "trx-y-t-raise",
+      "cable-rear-delt-fly"
+    ],
+    "lats": [
+      "lat-pulldown",
+      "pull-up",
+      "barbell-row",
+      "one-arm-dumbbell-row",
+      "meadows-row",
+      "assisted-pull-up",
+      "arc-lat-pulldown",
+      "ring-pull-up",
+      "kettlebell-row",
+      "smith-row",
+      "seated-cable-row",
+      "chin-up",
+      "pendlay-row",
+      "dumbbell-pullover",
+      "landmine-t-bar-row",
+      "pullover-machine",
+      "high-row-machine",
+      "close-grip-pulldown",
+      "front-lever-row",
+      "t-bar-row",
+      "selectorized-pulldown-machine",
+      "high-to-low-row-machine",
+      "straight-arm-pulldown",
+      "muscle-up",
+      "yates-row",
+      "seated-row-machine",
+      "iso-lateral-row",
+      "incline-cable-pullover",
+      "tuck-front-lever",
+      "seal-row",
+      "low-row-machine",
+      "neutral-grip-lat-pulldown",
+      "single-arm-cable-row",
+      "single-arm-lat-pulldown",
+      "wide-grip-lat-pulldown"
+    ],
+    "upper_back": [
+      "chest-supported-row",
+      "seated-cable-row",
+      "barbell-row",
+      "one-arm-dumbbell-row",
+      "inverted-row",
+      "landmine-t-bar-row",
+      "iso-lateral-row",
+      "ring-row",
+      "smith-row",
+      "trx-row",
+      "kettlebell-row",
+      "seated-row-machine",
+      "wide-grip-cable-row",
+      "pendlay-row",
+      "chest-supported-dumbbell-row",
+      "front-lever-row",
+      "meadows-row",
+      "low-row-machine",
+      "t-bar-row",
+      "plate-loaded-chest-supported-row",
+      "seal-row",
+      "high-to-low-row-machine",
+      "yates-row"
+    ],
+    "traps": [
+      "barbell-shrug",
+      "dumbbell-shrug",
+      "shrug-machine",
+      "smith-shrug",
+      "trx-y-t-raise",
+      "rack-pull",
+      "dumbbell-incline-y-raise",
+      "upright-row",
+      "farmer-carry"
+    ],
+    "biceps": [
+      "incline-dumbbell-curl",
+      "barbell-curl",
+      "cable-curl",
+      "preacher-curl",
+      "ring-biceps-curl",
+      "trx-biceps-curl",
+      "chin-up",
+      "hammer-curl",
+      "ez-bar-curl",
+      "bayesian-cable-curl",
+      "machine-preacher-curl",
+      "concentration-curl",
+      "cable-preacher-curl",
+      "seated-machine-curl",
+      "dumbbell-curl",
+      "high-cable-curl",
+      "spider-curl",
+      "cable-rope-hammer-curl"
+    ],
+    "triceps": [
+      "overhead-cable-triceps-extension",
+      "skull-crusher",
+      "weighted-dip",
+      "ring-dip",
+      "dumbbell-kickback",
+      "dip-machine",
+      "trx-triceps-extension",
+      "triceps-pushdown",
+      "close-grip-bench-press",
+      "ring-triceps-extension",
+      "machine-triceps-extension",
+      "cable-overhead-rope-extension",
+      "jm-press",
+      "overhead-triceps-machine",
+      "assisted-dip"
+    ],
+    "forearms": [
+      "hammer-curl",
+      "reverse-curl",
+      "suitcase-carry",
+      "wrist-curl",
+      "farmer-carry",
+      "reverse-wrist-curl"
+    ],
+    "abs": [
+      "hanging-leg-raise",
+      "cable-crunch",
+      "barbell-rollout",
+      "ab-crunch-machine",
+      "trx-fallout",
+      "stability-ball-rollout",
+      "ab-wheel-rollout",
+      "standing-cable-crunch",
+      "trx-pike",
+      "dragon-flag",
+      "standing-ab-wheel-rollout",
+      "weighted-decline-crunch",
+      "captains-chair-knee-raise"
+    ],
+    "quads": [
+      "back-squat",
+      "leg-extension",
+      "bulgarian-split-squat",
+      "pistol-squat",
+      "kettlebell-front-squat",
+      "pendulum-squat",
+      "smith-split-squat",
+      "trx-assisted-pistol",
+      "landmine-squat",
+      "front-squat",
+      "leg-press",
+      "goblet-squat",
+      "shrimp-squat",
+      "v-squat",
+      "smith-squat",
+      "hack-squat",
+      "dumbbell-step-up",
+      "sissy-squat",
+      "reverse-hack-squat",
+      "smith-squat-feet-forward",
+      "belt-squat",
+      "walking-lunge",
+      "horizontal-leg-press",
+      "dumbbell-reverse-lunge",
+      "single-leg-press"
+    ],
+    "hamstrings": [
+      "romanian-deadlift",
+      "seated-leg-curl",
+      "stiff-leg-dumbbell-deadlift",
+      "nordic-curl",
+      "smith-rdl",
+      "trx-hamstring-curl",
+      "kettlebell-single-leg-rdl",
+      "landmine-rdl",
+      "good-morning",
+      "lying-leg-curl",
+      "dumbbell-rdl",
+      "glute-ham-raise",
+      "kneeling-leg-curl",
+      "standing-leg-curl"
+    ],
+    "glutes": [
+      "bulgarian-split-squat",
+      "hip-thrust",
+      "45-degree-hyperextension",
+      "cable-kickback",
+      "glute-kickback-machine",
+      "smith-hip-thrust",
+      "kettlebell-single-leg-rdl",
+      "reverse-hack-squat",
+      "landmine-rdl",
+      "trap-bar-deadlift",
+      "dumbbell-rdl",
+      "deadlift",
+      "hip-thrust-machine",
+      "smith-split-squat",
+      "kettlebell-swing",
+      "dumbbell-reverse-lunge",
+      "barbell-glute-bridge",
+      "high-foot-leg-press",
+      "smith-squat-feet-forward",
+      "dumbbell-step-up",
+      "reverse-hyper",
+      "walking-lunge"
+    ],
+    "calves": [
+      "standing-calf-raise",
+      "single-leg-dumbbell-calf-raise",
+      "smith-calf-raise",
+      "seated-calf-raise",
+      "donkey-calf-raise",
+      "hack-squat-calf-raise",
+      "leg-press-calf-raise"
+    ],
+    "adductors": [
+      "hip-adduction-machine",
+      "standing-cable-adduction",
+      "copenhagen-plank"
+    ],
+    "lower_back": [
+      "deadlift",
+      "back-extension-machine",
+      "back-extension",
+      "rack-pull"
+    ],
+    "obliques": [
+      "cable-woodchop",
+      "dumbbell-side-bend",
+      "landmine-rotation",
+      "rotary-torso-machine",
+      "kettlebell-windmill",
+      "suitcase-carry"
+    ],
+    "abductors": [
+      "hip-abduction-machine",
+      "cable-hip-abduction",
+      "seated-band-hip-abduction",
+      "side-lying-hip-abduction",
+      "banded-lateral-walk"
+    ]
+  },
   "partial_label": "Helps, but won't fully clear this",
   "day_names": {
     "mon": "Monday",
@@ -8714,7 +9036,7 @@
     "templates": {
       "payoff_past_efficient": {
         "scope": "day",
-        "severity": "warn",
+        "severity": "info",
         "significance": "60 + min(20, 10 x sets_past_peak); Plan only when sets_past_peak >= 1",
         "template": "{Muscle} {get} {sets} hard sets on {day}. Sets past about {peak} cost more recovery than they add. Move {excess} to another {muscle} day or trim them.",
         "what": "{Muscle} {get} {sets} hard sets on {day}.",
@@ -8764,7 +9086,7 @@
             "example": 7.5
           }
         },
-        "plan_eligible": true,
+        "plan_eligible": false,
         "history_vol14": {
           "template": "{Muscle} {get} {sets} hard sets on {day}. After about {peak} sets in one workout, each extra set costs more recovery than it builds. Move {extra} sets to another day, or tap Make it more efficient.",
           "what": "Past the most efficient dose for one workout.",
@@ -8822,7 +9144,11 @@
           }
         },
         "example": "Chest gets 7.5 hard sets on Monday. Sets past about 5.0 cost more recovery than they add. Move 2.5 sets to another chest day or trim them.",
-        "example_chars": 138
+        "example_chars": 138,
+        "retired": true,
+        "retired_note": "retired vol15: past the peak is not a warning (map turns yellow)",
+        "shown": false,
+        "display_note": "retired vol15: past the peak is not a warning (map turns yellow)"
       },
       "payoff_negative": {
         "scope": "day",
@@ -8937,7 +9263,11 @@
         "example_chars": 175,
         "short_text": "{Muscle} {get} {sets} hard sets on {day}, past the {zero} where they stop paying off. Move {excess} to another {muscle} day or trim them.",
         "short_example": "Chest gets 14.0 hard sets on Monday, past the 13.0 where they stop paying off. Move 9 sets to another chest day or trim them.",
-        "short_example_chars": 125
+        "short_example_chars": 125,
+        "role_vol15": "the red overtraining flag: the muscle is past its zero point that day (red on the map)",
+        "short_line": "{Muscle}: {sets} sets, past the {zero}-set payoff point ›",
+        "short_line_example": "Chest: 14.0 sets, past the 13.0-set payoff point ›",
+        "named_by": "muscle"
       },
       "session_hard_sets": {
         "scope": "day",
@@ -9012,7 +9342,10 @@
           }
         },
         "example": "Monday has 27 hard sets, 3 over the 24 cap for your level. Late sets get sloppy and recovery takes longer. Move 3 sets to a lighter day.",
-        "example_chars": 136
+        "example_chars": 136,
+        "short_line": "{day}: {day_sets} hard sets, max {cap} ›",
+        "short_line_example": "Monday: 27 hard sets, max 24 ›",
+        "named_by": "day"
       },
       "session_hard_sets_info": {
         "scope": "day",
@@ -9075,7 +9408,10 @@
           }
         },
         "example": "Monday has 23 hard sets, close to the 24 cap. There is little room to add more that day. Put new work on a lighter day.",
-        "example_chars": 119
+        "example_chars": 119,
+        "short_line": "{day}: {day_sets} hard sets, near the {cap} max ›",
+        "short_line_example": "Monday: 23 hard sets, near the 24 max ›",
+        "named_by": "day"
       },
       "session_length": {
         "scope": "day",
@@ -9150,7 +9486,10 @@
           }
         },
         "example": "Monday runs about 82 minutes, past 75. Effort fades in long sessions, so late sets count for less. Move 4 sets to another day.",
-        "example_chars": 126
+        "example_chars": 126,
+        "short_line": "{day}: about {minutes} min, max {warn_min} ›",
+        "short_line_example": "Monday: about 82 min, max 75 ›",
+        "named_by": "day"
       },
       "session_length_info": {
         "scope": "day",
@@ -9200,7 +9539,10 @@
           }
         },
         "example": "Monday runs about 68 minutes. The big lifts suffer most when you are tired. Put them first in the day.",
-        "example_chars": 102
+        "example_chars": 102,
+        "short_line": "{day}: about {minutes} min ›",
+        "short_line_example": "Monday: about 68 min ›",
+        "named_by": "day"
       },
       "spinal_load": {
         "scope": "day",
@@ -9278,7 +9620,10 @@
         "example_chars": 155,
         "flag_ids": [
           "spinal_load_session"
-        ]
+        ],
+        "short_line": "{day}: {sets} heavy squat/deadlift sets, max {max} ›",
+        "short_line_example": "Monday: 10 heavy squat/deadlift sets, max 8 ›",
+        "named_by": "day"
       },
       "beginner_squat_and_deadlift": {
         "scope": "day",
@@ -9314,7 +9659,10 @@
           }
         },
         "example": "Monday has heavy squats and heavy deadlifts. For a newer lifter that is a lot of lower-back work at once. Put them on different days.",
-        "example_chars": 133
+        "example_chars": 133,
+        "short_line": "{day}: heavy squats and deadlifts together ›",
+        "short_line_example": "Monday: heavy squats and deadlifts together ›",
+        "named_by": "day"
       },
       "sets_per_exercise": {
         "scope": "day",
@@ -9389,7 +9737,10 @@
           }
         },
         "example": "Leg Press on Monday has 6 sets. Past about 5 sets, the same exercise adds little. Use 2 to 4 sets, or split them across two exercises.",
-        "example_chars": 134
+        "example_chars": 134,
+        "short_line": "{exercise}: {sets} sets in one exercise, max {max} ›",
+        "short_line_example": "Leg Press: 6 sets in one exercise, max 5 ›",
+        "named_by": "lift"
       },
       "redundant_pattern": {
         "scope": "day",
@@ -9429,6 +9780,12 @@
             "units": "effective sets",
             "rounding": "r1 = half-up to 0.1",
             "example": 10.5
+          },
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
           }
         },
         "plan_eligible": true,
@@ -9473,10 +9830,19 @@
             "units": "effective sets",
             "rounding": "r1 = half-up to 0.1",
             "example": 10.5
+          },
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
           }
         },
         "example": "The horizontal push exercises on Monday give chest 10.5 hard sets. Past 10 in one workout, the same movement mostly adds fatigue. Move one to another day.",
-        "example_chars": 154
+        "example_chars": 154,
+        "short_line": "{Muscle}: {sets} sets from one movement on {day} ›",
+        "short_line_example": "Chest: 10.5 sets from one movement on Monday ›",
+        "named_by": "muscle"
       },
       "session_efficiency": {
         "scope": "day",
@@ -9586,7 +9952,10 @@
           }
         },
         "example": "Chest gets 11.0 hard sets on Monday, above the 10 one workout can use. Past that, extra sets add little growth. Move 1 set to another chest day.",
-        "example_chars": 144
+        "example_chars": 144,
+        "short_line": "{Muscle}: {sets} sets, over the {limit}-set limit ›",
+        "short_line_example": "Chest: 11.0 sets, over the 10-set limit ›",
+        "named_by": "muscle"
       },
       "session_efficiency_single_day": {
         "scope": "day",
@@ -9660,7 +10029,10 @@
           }
         },
         "example": "Chest gets all 7.0 weekly sets on Monday. One long session is harder to keep every set hard. Move some to a second day.",
-        "example_chars": 119
+        "example_chars": 119,
+        "short_line": "{Muscle}: all {week_sets} weekly sets on {day} ›",
+        "short_line_example": "Chest: all 7.0 weekly sets on Monday ›",
+        "named_by": "muscle"
       },
       "wasted_late_sets": {
         "scope": "day",
@@ -9683,7 +10055,9 @@
         "version": "vol14d",
         "fields": {},
         "example": "Retired in vol14: folded into payoff_past_efficient.",
-        "example_chars": 52
+        "example_chars": 52,
+        "shown": false,
+        "display_note": "retired vol14"
       },
       "many_small_entries": {
         "scope": "day",
@@ -9743,7 +10117,10 @@
           }
         },
         "example": "Monday has 11 exercises averaging 1.8 sets. That is a lot of setup for little work. Merge some into fewer exercises with 3 sets.",
-        "example_chars": 128
+        "example_chars": 128,
+        "short_line": "{day}: {n} exercises, about {avg} sets each ›",
+        "short_line_example": "Monday: 11 exercises, about 1.8 sets each ›",
+        "named_by": "day"
       },
       "weekly_needs_sets": {
         "scope": "week",
@@ -9862,7 +10239,10 @@
         "excludes": [
           "abductors"
         ],
-        "excludes_boards": "days_per_week == 2 (see weekly_two_day_by_design)"
+        "excludes_boards": "days_per_week == 2 (see weekly_two_day_by_design)",
+        "short_line": "{Muscle}: {sets} sets a week, below {min} ›",
+        "short_line_example": "Chest: 4.0 sets a week, below 8 ›",
+        "named_by": "muscle"
       },
       "weekly_two_day_by_design": {
         "scope": "week",
@@ -9882,7 +10262,10 @@
           "weekly_min_two_day"
         ],
         "display": "grey",
-        "once_per_board": true
+        "once_per_board": true,
+        "short_line": "Two days: some muscles below minimum by design ›",
+        "short_line_example": "Two days: some muscles below minimum by design ›",
+        "named_by": "week"
       },
       "weekly_optional_low": {
         "scope": "week",
@@ -9939,7 +10322,10 @@
         "display": "grey",
         "muscles": [
           "abductors"
-        ]
+        ],
+        "short_line": "{Muscle}: {sets} sets a week (optional) ›",
+        "short_line_example": "Outer hips: 3.5 sets a week (optional) ›",
+        "named_by": "muscle"
       },
       "weekly_far_over": {
         "scope": "week",
@@ -10027,7 +10413,10 @@
           }
         },
         "example": "Chest gets 28.5 hard sets a week, past the 22 where extra sets add little. The extra mainly slows recovery. Trim about 6.5 sets.",
-        "example_chars": 128
+        "example_chars": 128,
+        "short_line": "{Muscle}: {sets} sets a week, past {max} ›",
+        "short_line_example": "Chest: 28.5 sets a week, past 22 ›",
+        "named_by": "muscle"
       },
       "pattern_gap": {
         "scope": "week",
@@ -10039,7 +10428,7 @@
         "fix": "Add one, e.g. {examples}.",
         "placeholders": {
           "examples": {
-            "source": "names of the top 2 rules pattern_gap_fix / slot_recommendations for the slot, joined with \" or \"",
+            "source": "names of rules.json slot_recommendations.by_slot[slot][level][0:2] (exercises.json name), joined with ' or '",
             "units": "text",
             "rounding": "none",
             "example": "Lat Pulldown or Pull-Up"
@@ -10062,7 +10451,7 @@
         "version": "vol14d",
         "fields": {
           "examples": {
-            "source": "names of the top 2 rules pattern_gap_fix / slot_recommendations for the slot, joined with \" or \"",
+            "source": "names of rules.json slot_recommendations.by_slot[slot][level][0:2] (exercises.json name), joined with ' or '",
             "units": "text",
             "rounding": "none",
             "example": "Lat Pulldown or Pull-Up"
@@ -10075,7 +10464,10 @@
           }
         },
         "example": "Your week has no vertical pull. The muscles it trains miss a whole direction of work. Add one, e.g. Lat Pulldown or Pull-Up.",
-        "example_chars": 124
+        "example_chars": 124,
+        "short_line": "Week: no {slot_lower} ›",
+        "short_line_example": "Week: no vertical pull ›",
+        "named_by": "week"
       },
       "push_pull_imbalance": {
         "scope": "week",
@@ -10153,7 +10545,10 @@
           }
         },
         "example": "You have 9 pulling and 16 pressing sets this week. Pulling between 3/4 and 2x your pressing keeps the upper body even. Add 3 sets of rows or pulldowns.",
-        "example_chars": 151
+        "example_chars": 151,
+        "short_line": "Week: {pull} pulling vs {push} pressing sets ›",
+        "short_line_example": "Week: 9 pulling vs 16 pressing sets ›",
+        "named_by": "week"
       },
       "push_pull_no_pull": {
         "scope": "week",
@@ -10175,7 +10570,10 @@
         "version": "vol14d",
         "fields": {},
         "example": "Your week has pressing but no pulling. Your back and rear delts get no direct work. Add a row or pulldown.",
-        "example_chars": 106
+        "example_chars": 106,
+        "short_line": "Week: pressing but no pulling ›",
+        "short_line_example": "Week: pressing but no pulling ›",
+        "named_by": "week"
       },
       "push_pull_no_push": {
         "scope": "week",
@@ -10197,7 +10595,10 @@
         "version": "vol14d",
         "fields": {},
         "example": "Your week has pulling but no pressing. Your chest and front delts get no direct work. Add a press.",
-        "example_chars": 98
+        "example_chars": 98,
+        "short_line": "Week: pulling but no pressing ›",
+        "short_line_example": "Week: pulling but no pressing ›",
+        "named_by": "week"
       },
       "spinal_load_week": {
         "scope": "week",
@@ -10260,7 +10661,10 @@
         "example_chars": 165,
         "short_text": "You have {sets} heavy squat and deadlift sets this week, above {max}. Swap {over} for machine or supported versions.",
         "short_example": "You have 16 heavy squat and deadlift sets this week, above 14. Swap 2 sets for machine or supported versions.",
-        "short_example_chars": 109
+        "short_example_chars": 109,
+        "short_line": "Week: {sets} heavy squat/deadlift sets, max {max} ›",
+        "short_line_example": "Week: 16 heavy squat/deadlift sets, max 14 ›",
+        "named_by": "week"
       },
       "consecutive_high_volume": {
         "scope": "week",
@@ -10332,7 +10736,10 @@
           }
         },
         "example": "Chest gets a hard session on both Monday and Tuesday. One day is not enough to recover. Move one later, or make it lighter.",
-        "example_chars": 123
+        "example_chars": 123,
+        "short_line": "{Muscle}: hard on {day1} and {day2} ›",
+        "short_line_example": "Chest: hard on Monday and Tuesday ›",
+        "named_by": "muscle"
       },
       "recovery_vs_baseline": {
         "scope": "week",
@@ -10350,7 +10757,7 @@
             "example": 123
           }
         },
-        "plan_eligible": true,
+        "plan_eligible": false,
         "history_vol14": {
           "template": "This week costs about {pct}% of your normal week in recovery. Expect to feel more tired than usual.",
           "what": "Heavier week than normal.",
@@ -10368,7 +10775,9 @@
           }
         },
         "example": "This week costs about 123% of your normal week in recovery. Expect to feel more tired than usual. Trim a few sets from the hardest day.",
-        "example_chars": 135
+        "example_chars": 135,
+        "shown": false,
+        "display_note": "display false vol15: recovery-cost numbers are not shown"
       },
       "recovery_overlap": {
         "scope": "week",
@@ -10464,7 +10873,10 @@
           }
         },
         "example": "Chest is trained on Tuesday, 24 h after a big Monday session. It needs about 42 h, so those sets count for less. Move it a day later or trim it on Tuesday.",
-        "example_chars": 155
+        "example_chars": 155,
+        "short_line": "{Muscle}: back on {day2}, {gap_h} h after {day1} ›",
+        "short_line_example": "Chest: back on Tuesday, 24 h after Monday ›",
+        "named_by": "muscle"
       },
       "recovery_overlap_streak": {
         "scope": "week",
@@ -10548,7 +10960,10 @@
           }
         },
         "example": "Chest is trained hard 3 days in a row, Monday to Wednesday. Recovery never catches up. Make one of those days light, or skip it.",
-        "example_chars": 128
+        "example_chars": 128,
+        "short_line": "{Muscle}: {n} hard days in a row ›",
+        "short_line_example": "Chest: 3 hard days in a row ›",
+        "named_by": "muscle"
       },
       "hinge_before_squat": {
         "scope": "week",
@@ -10596,7 +11011,10 @@
           }
         },
         "example": "Heavy deadlifts on Monday come right before heavy squats on Tuesday. Your lower back and hips will still be tired. Put a day between them.",
-        "example_chars": 138
+        "example_chars": 138,
+        "short_line": "{day1}: heavy deadlifts the day before squats ›",
+        "short_line_example": "Monday: heavy deadlifts the day before squats ›",
+        "named_by": "day"
       },
       "missing_stretch": {
         "scope": "week",
@@ -10618,6 +11036,12 @@
             "units": "text",
             "rounding": "none",
             "example": "hamstrings"
+          },
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
           }
         },
         "plan_eligible": false,
@@ -10641,10 +11065,19 @@
             "units": "text",
             "rounding": "none",
             "example": "hamstrings"
+          },
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
           }
         },
         "example": "Nothing trains hamstrings in a stretched position this week. Training at long lengths tends to build more muscle. Try Romanian Deadlift or Seated Leg Curl.",
-        "example_chars": 155
+        "example_chars": 155,
+        "short_line": "{Muscle}: no stretched-position exercise ›",
+        "short_line_example": "Chest: no stretched-position exercise ›",
+        "named_by": "muscle"
       },
       "low_frequency": {
         "scope": "week",
@@ -10704,7 +11137,10 @@
           }
         },
         "example": "Chest gets real work on only 1 day this week. Two days make the sets easier to keep hard. Move some to a second day.",
-        "example_chars": 116
+        "example_chars": 116,
+        "short_line": "{Muscle}: trained on only {n_days} ›",
+        "short_line_example": "Chest: trained on only 1 day ›",
+        "named_by": "muscle"
       },
       "recovery_gap_long": {
         "scope": "week",
@@ -10764,7 +11200,10 @@
           }
         },
         "example": "Chest goes 6 days between hard sessions. Training every 2 to 4 days gives more growth signals. Move some sets to a day in between.",
-        "example_chars": 130
+        "example_chars": 130,
+        "short_line": "{Muscle}: {gap_days} days between sessions ›",
+        "short_line_example": "Chest: 6 days between sessions ›",
+        "named_by": "muscle"
       }
     },
     "payoff_note": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build.",
@@ -10774,6 +11213,54 @@
       "fit": "card width 320px: example rendered with the field examples; when over 160 characters, short_text (what + fix) is provided and used on narrow cards",
       "grammar": "Muscle/muscle/get/are/go from muscle_names[m]; day/day1/day2 from rules.day_names",
       "no_medical_claims": true
+    },
+    "short_line_rule": {
+      "version": "vol15",
+      "shape": "<subject>: <numbers> ›  (one line on the day card; tap for the full template)",
+      "subject": "per-muscle flags name the muscle ({Muscle}); the per-exercise flag names the lift ({exercise}); per-day flags name the day ({day}); week flags start with Week",
+      "named_by": {
+        "muscle": [
+          "payoff_negative",
+          "session_efficiency",
+          "session_efficiency_single_day",
+          "redundant_pattern",
+          "weekly_needs_sets",
+          "weekly_optional_low",
+          "weekly_far_over",
+          "consecutive_high_volume",
+          "recovery_overlap",
+          "recovery_overlap_streak",
+          "missing_stretch",
+          "low_frequency",
+          "recovery_gap_long"
+        ],
+        "lift": [
+          "sets_per_exercise"
+        ],
+        "day": [
+          "spinal_load",
+          "session_hard_sets",
+          "session_hard_sets_info",
+          "session_length",
+          "session_length_info",
+          "beginner_squat_and_deadlift",
+          "many_small_entries",
+          "hinge_before_squat"
+        ],
+        "week": [
+          "spinal_load_week",
+          "weekly_two_day_by_design",
+          "pattern_gap",
+          "push_pull_imbalance",
+          "push_pull_no_pull",
+          "push_pull_no_push"
+        ]
+      },
+      "hidden": [
+        "payoff_past_efficient",
+        "recovery_vs_baseline",
+        "wasted_late_sets"
+      ]
     }
   },
   "optional_muscles": {
@@ -10789,6 +11276,597 @@
       "note": "Optional (info only): glute work covers most outer-hip work, so there is no weekly minimum flag. Targets stay for display. Practitioner judgement, not a study result.",
       "evidence": "modeled",
       "label": "practitioner judgement"
+    }
+  },
+  "fatigue_level": {
+    "version": "vol15",
+    "label": "Modeled",
+    "value": "day_summary.fatigue_fresh_set_eq = sum over the day of sets x set_fatigue (fatigue_per_set x effort at planned RIR; whole body, charged once per set, fresh-set equivalents)",
+    "levels": [
+      "Low",
+      "Normal",
+      "Extra",
+      "High",
+      "Extreme"
+    ],
+    "cutoffs": {
+      "Low": "< 13",
+      "Normal": "13 to < 20",
+      "Extra": "20 to < 22",
+      "High": "22 to < 27",
+      "Extreme": ">= 27"
+    },
+    "cutoff_values": [
+      13,
+      20,
+      22,
+      27
+    ],
+    "from_quantiles": [
+      0.1,
+      0.6,
+      0.78,
+      0.95
+    ],
+    "raw_quantiles": [
+      12.84,
+      19.8,
+      21.98,
+      26.89
+    ],
+    "days": 352,
+    "rounding": "nearest whole number",
+    "why": "Quantiles of all preset training days (both stored versions): Low = lightest tenth, Normal up to the 60th percentile (so a typical day reads Normal), Extra to the 78th, High to the 95th (a heavy squat day with squats plus hinges lands here), Extreme the top 5%.",
+    "display": "word only (no number); the day card shows the word under the day",
+    "custom_boards": "same value and cut-offs live"
+  },
+  "staples_flat": [
+    "ab-wheel-rollout",
+    "back-squat",
+    "barbell-bench-press",
+    "barbell-curl",
+    "barbell-row",
+    "barbell-shrug",
+    "bulgarian-split-squat",
+    "cable-crunch",
+    "cable-curl",
+    "cable-fly",
+    "cable-lateral-raise",
+    "chest-supported-row",
+    "close-grip-bench-press",
+    "close-grip-pulldown",
+    "deadlift",
+    "dumbbell-bench-press",
+    "dumbbell-lateral-raise",
+    "dumbbell-shrug",
+    "face-pull",
+    "front-squat",
+    "hack-squat",
+    "hammer-curl",
+    "hanging-leg-raise",
+    "hip-abduction-machine",
+    "hip-adduction-machine",
+    "hip-thrust",
+    "incline-barbell-bench-press",
+    "incline-dumbbell-curl",
+    "incline-dumbbell-press",
+    "lat-pulldown",
+    "leg-extension",
+    "leg-press",
+    "lying-leg-curl",
+    "machine-chest-press",
+    "machine-shoulder-press",
+    "one-arm-dumbbell-row",
+    "overhead-cable-triceps-extension",
+    "overhead-press",
+    "pec-deck",
+    "pendlay-row",
+    "preacher-curl",
+    "pull-up",
+    "reverse-pec-deck",
+    "romanian-deadlift",
+    "seated-cable-row",
+    "seated-calf-raise",
+    "seated-dumbbell-shoulder-press",
+    "seated-leg-curl",
+    "skull-crusher",
+    "standing-calf-raise",
+    "stiff-leg-dumbbell-deadlift",
+    "straight-arm-pulldown",
+    "t-bar-row",
+    "triceps-pushdown",
+    "weighted-dip",
+    "wrist-curl"
+  ],
+  "staples_meta": {
+    "version": "vol15",
+    "rule": "staples[m] = every library exercise with rating >= 0.75 for m (main mover), ordered to span equipment: round-robin over equipment types (type order by best preset use), within a type by preset use, then rating, then id",
+    "legacy": "staples_flat = the old flat list (56 ids); tools/check_program.py, patterns.py and rank.py read staples_flat so their results are unchanged"
+  },
+  "slot_recommendations": {
+    "version": "vol15",
+    "source": "tools/patterns.py slot_recommendations(slot, level, n=4) with no board (same ranking as the swap/preset neutral order)",
+    "by_slot": {
+      "horizontal_push": {
+        "beginner": [
+          "incline-dumbbell-press",
+          "incline-barbell-bench-press",
+          "incline-machine-press",
+          "converging-smith-incline-press"
+        ],
+        "intermediate": [
+          "incline-dumbbell-press",
+          "incline-barbell-bench-press",
+          "dumbbell-bench-press",
+          "barbell-bench-press"
+        ],
+        "advanced": [
+          "incline-dumbbell-press",
+          "incline-barbell-bench-press",
+          "dumbbell-bench-press",
+          "barbell-bench-press"
+        ]
+      },
+      "vertical_push": {
+        "beginner": [
+          "seated-dumbbell-shoulder-press",
+          "machine-shoulder-press",
+          "overhead-press",
+          "iso-lateral-shoulder-press"
+        ],
+        "intermediate": [
+          "seated-dumbbell-shoulder-press",
+          "overhead-press",
+          "machine-shoulder-press",
+          "iso-lateral-shoulder-press"
+        ],
+        "advanced": [
+          "seated-dumbbell-shoulder-press",
+          "overhead-press",
+          "machine-shoulder-press",
+          "arnold-press"
+        ]
+      },
+      "horizontal_pull": {
+        "beginner": [
+          "chest-supported-row",
+          "seated-cable-row",
+          "seated-row-machine",
+          "iso-lateral-row"
+        ],
+        "intermediate": [
+          "chest-supported-row",
+          "seated-cable-row",
+          "barbell-row",
+          "pendlay-row"
+        ],
+        "advanced": [
+          "chest-supported-row",
+          "seated-cable-row",
+          "barbell-row",
+          "pendlay-row"
+        ]
+      },
+      "vertical_pull": {
+        "beginner": [
+          "close-grip-pulldown",
+          "lat-pulldown",
+          "pull-up",
+          "single-arm-lat-pulldown"
+        ],
+        "intermediate": [
+          "close-grip-pulldown",
+          "lat-pulldown",
+          "pull-up",
+          "single-arm-lat-pulldown"
+        ],
+        "advanced": [
+          "close-grip-pulldown",
+          "lat-pulldown",
+          "pull-up",
+          "single-arm-lat-pulldown"
+        ]
+      },
+      "squat": {
+        "beginner": [
+          "leg-press",
+          "hack-squat",
+          "back-squat",
+          "belt-squat"
+        ],
+        "intermediate": [
+          "back-squat",
+          "leg-press",
+          "hack-squat",
+          "front-squat"
+        ],
+        "advanced": [
+          "back-squat",
+          "leg-press",
+          "hack-squat",
+          "front-squat"
+        ]
+      },
+      "hinge": {
+        "beginner": [
+          "romanian-deadlift",
+          "stiff-leg-dumbbell-deadlift",
+          "smith-rdl",
+          "deadlift"
+        ],
+        "intermediate": [
+          "romanian-deadlift",
+          "stiff-leg-dumbbell-deadlift",
+          "deadlift",
+          "smith-rdl"
+        ],
+        "advanced": [
+          "romanian-deadlift",
+          "stiff-leg-dumbbell-deadlift",
+          "deadlift",
+          "good-morning"
+        ]
+      },
+      "lunge": {
+        "beginner": [
+          "bulgarian-split-squat",
+          "smith-split-squat",
+          "walking-lunge",
+          "dumbbell-step-up"
+        ],
+        "intermediate": [
+          "bulgarian-split-squat",
+          "smith-split-squat",
+          "pistol-squat",
+          "shrimp-squat"
+        ],
+        "advanced": [
+          "bulgarian-split-squat",
+          "smith-split-squat",
+          "trx-assisted-pistol",
+          "pistol-squat"
+        ]
+      },
+      "carry_core": {
+        "beginner": [
+          "suitcase-carry",
+          "farmer-carry",
+          "side-plank",
+          "pallof-press"
+        ],
+        "intermediate": [
+          "suitcase-carry",
+          "farmer-carry",
+          "side-plank",
+          "turkish-get-up"
+        ],
+        "advanced": [
+          "suitcase-carry",
+          "farmer-carry",
+          "side-plank",
+          "turkish-get-up"
+        ]
+      },
+      "power": {
+        "beginner": [
+          "box-jump",
+          "jump-squat",
+          "broad-jump",
+          "plyo-push-up"
+        ],
+        "intermediate": [
+          "box-jump",
+          "depth-jump",
+          "jump-squat",
+          "broad-jump"
+        ],
+        "advanced": [
+          "depth-jump",
+          "box-jump",
+          "jump-squat",
+          "broad-jump"
+        ]
+      },
+      "chest_fly": {
+        "beginner": [
+          "cable-fly",
+          "pec-deck",
+          "cable-crossover-high-to-low",
+          "cable-crossover-low-to-high"
+        ],
+        "intermediate": [
+          "cable-fly",
+          "pec-deck",
+          "cable-crossover-high-to-low",
+          "cable-crossover-low-to-high"
+        ],
+        "advanced": [
+          "cable-fly",
+          "pec-deck",
+          "cable-crossover-high-to-low",
+          "cable-crossover-low-to-high"
+        ]
+      },
+      "front_delts": {
+        "beginner": [
+          "front-raise",
+          "arnold-press",
+          "landmine-press-one-arm",
+          "landmine-press-two-arm"
+        ],
+        "intermediate": [
+          "front-raise",
+          "arnold-press",
+          "landmine-press-one-arm",
+          "landmine-press-two-arm"
+        ],
+        "advanced": [
+          "front-raise",
+          "arnold-press",
+          "landmine-press-one-arm",
+          "landmine-press-two-arm"
+        ]
+      },
+      "side_delts": {
+        "beginner": [
+          "cable-lateral-raise",
+          "dumbbell-lateral-raise",
+          "lateral-raise-machine",
+          "standing-lateral-raise-machine"
+        ],
+        "intermediate": [
+          "dumbbell-lateral-raise",
+          "cable-lateral-raise",
+          "seated-dumbbell-lateral-raise",
+          "lateral-raise-machine"
+        ],
+        "advanced": [
+          "dumbbell-lateral-raise",
+          "cable-lateral-raise",
+          "seated-dumbbell-lateral-raise",
+          "lateral-raise-machine"
+        ]
+      },
+      "rear_delts": {
+        "beginner": [
+          "reverse-pec-deck",
+          "face-pull",
+          "cable-rear-delt-fly",
+          "dumbbell-rear-delt-fly"
+        ],
+        "intermediate": [
+          "reverse-pec-deck",
+          "face-pull",
+          "cable-rear-delt-fly",
+          "dumbbell-rear-delt-fly"
+        ],
+        "advanced": [
+          "reverse-pec-deck",
+          "face-pull",
+          "cable-rear-delt-fly",
+          "dumbbell-rear-delt-fly"
+        ]
+      },
+      "lat_iso": {
+        "beginner": [
+          "straight-arm-pulldown",
+          "incline-cable-pullover",
+          "pullover-machine",
+          "dumbbell-pullover"
+        ],
+        "intermediate": [
+          "straight-arm-pulldown",
+          "incline-cable-pullover",
+          "pullover-machine",
+          "tuck-front-lever"
+        ],
+        "advanced": [
+          "straight-arm-pulldown",
+          "incline-cable-pullover",
+          "pullover-machine",
+          "tuck-front-lever"
+        ]
+      },
+      "traps": {
+        "beginner": [
+          "barbell-shrug",
+          "dumbbell-shrug",
+          "shrug-machine",
+          "smith-shrug"
+        ],
+        "intermediate": [
+          "barbell-shrug",
+          "dumbbell-shrug",
+          "shrug-machine",
+          "smith-shrug"
+        ],
+        "advanced": [
+          "barbell-shrug",
+          "dumbbell-shrug",
+          "shrug-machine",
+          "smith-shrug"
+        ]
+      },
+      "biceps": {
+        "beginner": [
+          "cable-curl",
+          "incline-dumbbell-curl",
+          "preacher-curl",
+          "barbell-curl"
+        ],
+        "intermediate": [
+          "incline-dumbbell-curl",
+          "barbell-curl",
+          "cable-curl",
+          "preacher-curl"
+        ],
+        "advanced": [
+          "incline-dumbbell-curl",
+          "barbell-curl",
+          "cable-curl",
+          "preacher-curl"
+        ]
+      },
+      "triceps": {
+        "beginner": [
+          "overhead-cable-triceps-extension",
+          "triceps-pushdown",
+          "skull-crusher",
+          "cable-overhead-rope-extension"
+        ],
+        "intermediate": [
+          "overhead-cable-triceps-extension",
+          "triceps-pushdown",
+          "skull-crusher",
+          "cable-overhead-rope-extension"
+        ],
+        "advanced": [
+          "overhead-cable-triceps-extension",
+          "triceps-pushdown",
+          "skull-crusher",
+          "cable-overhead-rope-extension"
+        ]
+      },
+      "forearms": {
+        "beginner": [
+          "wrist-curl",
+          "reverse-wrist-curl",
+          "reverse-curl",
+          "dead-hang"
+        ],
+        "intermediate": [
+          "wrist-curl",
+          "reverse-wrist-curl",
+          "reverse-curl",
+          "dead-hang"
+        ],
+        "advanced": [
+          "wrist-curl",
+          "reverse-wrist-curl",
+          "reverse-curl",
+          "dead-hang"
+        ]
+      },
+      "quads_iso": {
+        "beginner": [
+          "leg-extension",
+          "sissy-squat",
+          "single-leg-press",
+          "goblet-squat"
+        ],
+        "intermediate": [
+          "leg-extension",
+          "sissy-squat",
+          "single-leg-press",
+          "goblet-squat"
+        ],
+        "advanced": [
+          "leg-extension",
+          "sissy-squat",
+          "single-leg-press",
+          "goblet-squat"
+        ]
+      },
+      "hamstring_curl": {
+        "beginner": [
+          "seated-leg-curl",
+          "lying-leg-curl",
+          "kneeling-leg-curl",
+          "standing-leg-curl"
+        ],
+        "intermediate": [
+          "seated-leg-curl",
+          "lying-leg-curl",
+          "kneeling-leg-curl",
+          "standing-leg-curl"
+        ],
+        "advanced": [
+          "seated-leg-curl",
+          "lying-leg-curl",
+          "kneeling-leg-curl",
+          "standing-leg-curl"
+        ]
+      },
+      "glute_iso": {
+        "beginner": [
+          "hip-thrust",
+          "cable-kickback",
+          "glute-kickback-machine",
+          "smith-hip-thrust"
+        ],
+        "intermediate": [
+          "hip-thrust",
+          "barbell-glute-bridge",
+          "45-degree-hyperextension",
+          "cable-kickback"
+        ],
+        "advanced": [
+          "hip-thrust",
+          "barbell-glute-bridge",
+          "smith-hip-thrust",
+          "45-degree-hyperextension"
+        ]
+      },
+      "hip_iso": {
+        "beginner": [
+          "hip-abduction-machine",
+          "hip-adduction-machine",
+          "standing-cable-adduction",
+          "cable-hip-abduction"
+        ],
+        "intermediate": [
+          "hip-abduction-machine",
+          "hip-adduction-machine",
+          "standing-cable-adduction",
+          "cable-hip-abduction"
+        ],
+        "advanced": [
+          "hip-abduction-machine",
+          "hip-adduction-machine",
+          "standing-cable-adduction",
+          "cable-hip-abduction"
+        ]
+      },
+      "calves": {
+        "beginner": [
+          "seated-calf-raise",
+          "standing-calf-raise",
+          "donkey-calf-raise",
+          "hack-squat-calf-raise"
+        ],
+        "intermediate": [
+          "seated-calf-raise",
+          "standing-calf-raise",
+          "donkey-calf-raise",
+          "hack-squat-calf-raise"
+        ],
+        "advanced": [
+          "seated-calf-raise",
+          "standing-calf-raise",
+          "donkey-calf-raise",
+          "hack-squat-calf-raise"
+        ]
+      },
+      "abs": {
+        "beginner": [
+          "cable-crunch",
+          "hanging-leg-raise",
+          "ab-wheel-rollout",
+          "ab-crunch-machine"
+        ],
+        "intermediate": [
+          "hanging-leg-raise",
+          "ab-wheel-rollout",
+          "cable-crunch",
+          "weighted-decline-crunch"
+        ],
+        "advanced": [
+          "hanging-leg-raise",
+          "ab-wheel-rollout",
+          "cable-crunch",
+          "weighted-decline-crunch"
+        ]
+      }
     }
   }
 }

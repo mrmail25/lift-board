@@ -113,6 +113,11 @@ const VOL=[['chest',16,10,20],['lats',14,10,18],['upper_back',12,10,18],['front_
 const VB={amber_above:'max',red_factor:null,src:null};
 // storyboard data loading: only the storyboard's own data/ folder; a fetch aborted by navigation (pagehide) is not an error
 const DATA='data/';let UNLOADING=false,RDP=null;addEventListener('pagehide',()=>{UNLOADING=true});addEventListener('pageshow',()=>{UNLOADING=false});
+// vol15: the app is ApeChit (one word). Coach's data still says 'Lift Board' in source lines and authors; rename on display only (his files stay as they are).
+const BRAND=v=>typeof v==='string'?v.replace(/\bLift ?Board\b/g,'ApeChit').replace(/\bApe[- ]Chit\b/g,'ApeChit'):Array.isArray(v)?v.map(BRAND):v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,BRAND(x)])):v;
+(()=>{const j0=Response.prototype.json;Response.prototype.json=function(){return j0.call(this).then(BRAND)}})();
+// vol15: Learn shows Coach's citations as written (the vol13 LEARNFIX citation patch is dropped)
+const srcLine=n=>!n||!n.short?'':`<p class="ptsrc">Source: ${n.url?`<a href="${n.url}" target="_blank" rel="noopener">${n.short}</a>`:n.short}${n.type?` · ${n.type}`:''}</p>`;
 const getJ=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
 async function loadVB(){const u=DATA+'rules.json',j=await getJ(u),b=j&&(j.volume_bands||(j.rules||{}).volume_bands);if(b&&typeof b.red_factor==='number'){Object.assign(VB,b,{src:u});return VB}if(!UNLOADING)console.warn('rules.json volume_bands missing: over-volume red disabled');return VB}
 const vStat=(n,min,max)=>n<min?'under':VB.red_factor!=null&&n>max*VB.red_factor?'red':n>max?'amber':'in';
@@ -214,8 +219,8 @@ function bindSwipes(root){
     row.addEventListener('pointerdown',e=>{if(e.target.closest('.del')||(e.target.closest('.fld')&&!row.dataset.del))return;if(e.target.closest('.swipe')!==row)return;x0=e.clientX;y0=e.clientY;dx=0;lock=null});
     row.addEventListener('pointermove',e=>{if(x0==null)return;const mx=e.clientX-x0,my=e.clientY-y0;
       if(!lock&&(Math.abs(mx)>8||Math.abs(my)>8))lock=Math.abs(mx)>Math.abs(my)?'x':'y';
-      if(lock!=='x')return;if(!row.classList.contains('drag')){try{row.setPointerCapture(e.pointerId)}catch(_){}}dx=mx+(row.classList.contains('open')?-88:0);row.classList.add('drag');
-      inner.style.transform=`translateX(${Math.min(0,Math.max(-140,dx))}px)`});
+      if(lock!=='x')return;if(!row.classList.contains('drag')){try{row.setPointerCapture(e.pointerId)}catch(_){}}const dw=($(':scope > .del',row)||{}).offsetWidth||88;row.style.setProperty('--dw',dw+'px');dx=mx+(row.classList.contains('open')?-dw:0);row.classList.add('drag');
+      inner.style.transform=`translateX(${Math.min(0,Math.max(-Math.max(140,(($(':scope > .del',row)||{}).offsetWidth||88)+52),dx))}px)`});
     const end=()=>{if(x0==null)return;x0=null;row.classList.remove('drag');inner.style.transform='';
       if(lock==='x'){row.classList.toggle('open',dx<-44);if(dx<-44)$$('.swipe.open').forEach(o=>o!==row&&o.classList.remove('open'));row._justSwiped=Date.now()}};
     row.addEventListener('pointerup',end);row.addEventListener('pointercancel',end);
@@ -621,6 +626,9 @@ function sesMus(sid){if(!RD||!window.PCHECK)return {};const tiles=entsOf(sid).ma
 function sesRole(sid){if(!RD)return {};const o={},rk={main:3,helper:2,minor:1};for(const e of entsOf(sid)){const x=RD.EX[e.exerciseId];if(!x||!setsOfE(e.id).some(s=>s.kind==='working'&&s.done&&s.reps>0))continue;
   for(const [m,r] of Object.entries(x.muscles||{})){const k=hlLevel(r);if(k&&(!o[m]||rk[k]>rk[o[m]]))o[m]=k}}return o}
 const RAMPL=r=>!(r>0)?0:r>=5?4:r>=3?3:r>=1.5?2:1,rampFill=r=>{const l=RAMPL(r);return l?`var(--ramp-${l})`:null};
+// vol15: the Log maps use the one shared ramp (logic/mapramp.js, daily = this workout vs each muscle's per-workout peak)
+const sesTiles=sid=>!RD?[]:entsOf(sid).map(e=>({id:e.exerciseId,sets:setsOfE(e.id).filter(x=>x.kind==='working'&&x.done&&x.reps>0).length})).filter(t=>t.sets&&RD.EX[t.id]);
+const sesRamp=sid=>window.MAPRAMP&&RD?MAPRAMP.fills(MAPRAMP.daily(RD,sesTiles(sid))):{};
 const rampVol=m=>{const o={};for(const [k,v] of Object.entries(m)){const f=rampFill(v);if(f)o[k]=f}return o};
 const rampLegend=(t='sets')=>`<span class="mleg mlday"><i style="background:var(--ramp-1)"></i>&lt;1.5<i style="background:var(--ramp-2)"></i>1.5<i style="background:var(--ramp-3)"></i>3<i style="background:var(--ramp-4)"></i>5+ ${t}</span>`;
 // mini body map for Log rows: two shared <symbol>s (front/back); each row only sets CSS variables --mm-<muscle>, so 12 rows stay light
@@ -633,7 +641,7 @@ function miniMap(vol){mmSyms();const st=Object.entries(vol).map(([m,v])=>`--mm-$
 const calFoot=oct=>{if(!oct)return '0 workouts';const W=Object.values(LOGS),m=W.reduce((a,w)=>a+w.min,0);return `${W.length} workout${W.length===1?'':'s'} · ${Math.floor(m/60)} h ${String(m%60).padStart(2,'0')} m`};
 const logRow=d=>{const w=LOGS[d],dt=new Date(2026,9,d),s=sesOf(w.sid),nt=(s&&s.notes)||'';return `<div class="swipe" data-d="${d}"><button class="del">Delete</button><div class="in">
   <button class="row lrow" data-go="#log-d${d}" data-d="${d}"><div class="ld"><span>${WD[(dt.getDay()+6)%7]}</span><b>${d}</b></div>
-   <div class="grow"><div class="t1">${esc(w.n)}${w.pr?` <span class="badge">${w.pr} PR</span>`:''}</div><div class="t2 num">${w.min} min · ${w.sets} sets · ${volTxt(w)}</div>${nt?`<div class="t3 lnote">${esc(nt)}</div>`:''}</div>${miniMap(rampVol(sesMus(w.sid)))}${CHEV}</button></div></div>`};
+   <div class="grow"><div class="t1">${esc(w.n)}${w.pr?` <span class="badge">${w.pr} PR</span>`:''}</div><div class="t2 num">${w.min} min · ${w.sets} sets · ${volTxt(w)}</div>${nt?`<div class="t3 lnote">${esc(nt)}</div>`:''}</div>${miniMap(sesRamp(w.sid))}${CHEV}</button></div></div>`};
 // ---- Log detail (#log-d<day>): PR badges, body map, e1RM overlay chart, Edit
 const PRL={weight:'Weight PR',set_volume:'Volume PR',e1rm:'Estimated 1RM PR',reps_at_load:'Rep PR'};
 const hm=iso=>{let h=+iso.slice(11,13);const m=iso.slice(14,16),ap=h>=12?'PM':'AM';h=h%12||12;return `${h}:${m} ${ap}`};
@@ -660,14 +668,14 @@ function e1Chart(sid){if(!RD||!window.PRS||!window.PROGRESS)return '<p class="fo
    <p class="foot">Estimated 1RM as % of that exercise's best before this workout. Tap a point for the value. An estimate, not a tested max.</p></div>`}
 V.logDay=()=>{logLoad();const d=S.logDay,w=LOGS[d],nav=t=>`<div class="nav"><div class="l"><button class="back" data-go="#log">${I('chevL',2.4)}Log</button></div><div class="t">${t}</div><div class="r">${w?`<button class="btn plain strong" data-act="ledit" data-d="${d}">Edit</button>`:''}</div></div>`;
   if(!w)return nav('')+'<p class="foot">No workout on this day.</p>';
-  const s=sesOf(w.sid),dt=new Date(2026,9,d),P=LPR[s.id]||{},vm=rampVol(sesMus(s.id)),npr=Object.values(P).reduce((a,t)=>a+Object.keys(t).length,0);
+  const s=sesOf(w.sid),dt=new Date(2026,9,d),P=LPR[s.id]||{},vm=sesRamp(s.id),npr=Object.values(P).reduce((a,t)=>a+Object.keys(t).length,0);
   const exHtml=e=>{const id=e.exerciseId,rec=P[id]||{},badgeSet={};for(const [k,r] of Object.entries(rec))(badgeSet[r.set_id]=badgeSet[r.set_id]||[]).push(k);let n=0;
     return `<div class="ghead gx ldx" data-ex="${id}">${gl(id)}<span class="grow">${exName(id)}</span>${Object.keys(rec).map(k=>`<span class="badge prb" data-pr="${k}">${PRL[k]}</span>`).join('')}</div>
      <div class="group lsets">${setsOfE(e.id).map(x=>`<div class="row lset${badgeSet[x.id]?' haspr':''}"><span class="sn ${x.kind==='warmup'?'w':''}">${x.kind==='warmup'?'W':++n}</span><span class="grow num">${showLoad(x.load,s.unit,id)} ${S.unit} × ${x.reps}</span>${EFF().clampRir(x.rir)!=null?`<span class="lrir num">${EFF().label(EFF().clampRir(x.rir),effMode())}</span>`:''}${badgeSet[x.id]?`<span class="badge">PR</span>`:''}</div>`).join('')}</div>`};
   return nav(`${WD[(dt.getDay()+6)%7]}, Oct ${d}`)+`<div class="ldh"><h1>${esc(s.label)}</h1><p class="sub">${hm(s.startedAt)} – ${hm(s.endedAt)} · ${w.min} min</p>
     <div class="ldstats"><div><b class="num">${w.sets}</b><span>sets</span></div><div><b class="num">${volTxt(w).split(' ')[0]}</b><span>${S.unit} volume</span></div><div><b class="num acc" title="${npr} PR badges">${w.pr}</b><span>lifts with a PR</span></div></div></div>
    <div class="ghead">Session notes</div><div class="card lnotes" data-raw>${s.notes?esc(s.notes):`<span class="sub">No notes.</span> <button class="btn plain" data-act="ledit" data-d="${d}">Add</button>`}</div>
-   <div class="ghead">Muscles trained</div><div class="card mapcard ldmap"><div class="maps">${map('front',vm)}${map('back',vm)}</div><div class="legend">${rampLegend('sets this workout')}</div></div>
+   <div class="ghead">Muscles trained</div><div class="card mapcard ldmap"><div class="maps">${map('front',vm)}${map('back',vm)}</div><div class="legend">${window.MAPRAMP?MAPRAMP.legend('day'):''}</div></div>
    <div class="ghead">Strength trend</div><div class="card" id="e1card">${e1Chart(s.id)}</div>
    ${entsOf(s.id).map(exHtml).join('')}<p class="foot">Your first workout with a lift sets its baseline. Editing a workout recalculates PRs.</p>`};
 function afterLogDay(){}
@@ -1103,7 +1111,7 @@ V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#b
   <div class="ghead">Data</div>
   <div class="group"><button class="row"><div class="grow t1 acc">Back up to file</div></button><button class="row"><div class="grow t1 acc">Restore from file</div></button></div>
   <p class="foot">Backups include routines, logs, gyms and settings. Your data stays on this device until you back it up.</p>
-  <div class="group" style="margin-top:22px"><button class="row" data-go="#style"><span class="ico logo-tile"></span><div class="grow"><div class="t1">Ape-Chit style guide</div><div class="t2">Storyboard · logo v3, pending approval</div></div>${CHEV}</button></div>`;
+  <div class="group" style="margin-top:22px"><button class="row" data-go="#style"><span class="ico logo-tile"></span><div class="grow"><div class="t1">ApeChit style guide</div><div class="t2">Storyboard · logo v3, pending approval</div></div>${CHEV}</button></div>`;
 
 // PROGRESS + muscle map (10. ape-head placeholder slot)
 const REG2M=r=>!r?null:r.startsWith('g:')?r.slice(2):((window.REGION_GROUP||{})[r]||r); // map region -> muscle group (exercises.json regionGroup)
@@ -1475,8 +1483,8 @@ function afterMap(){$$('.mmap .mp').forEach(p=>p.addEventListener('click',()=>{i
 // STYLE GUIDE
 const SW=[['--ink','#000000','Ink'],['--paper','#FFFFFF','Paper'],['--accent','#E8430C','Ember (accent)'],['--accent-press','#C2380A','Ember pressed / small text'],['--accent-tint','#FDECE6','Ember tint'],['--bg','#F2F2F4','Background'],['--fill','#E9E9EC','Fill'],['--text-2','#6B6B70','Secondary text'],['--danger','#E5242B','Delete only (functional)']];
 V.style=()=>`<div class="nav"><div class="l"><button class="back" data-go="#settings">${I('chevL',2.4)}Settings</button></div><div class="t">Style guide</div><div class="r"></div></div>
-  ${header('Ape-Chit')}
-  <div class="card brand"><div class="lockup" role="img" aria-label="Ape-Chit lockup"></div><div class="icons"><div class="logo-tile big"></div><div class="logo-tile mid"></div><div class="logo-tile sm"></div>
+  ${header('ApeChit')}
+  <div class="card brand"><div class="lockup" role="img" aria-label="ApeChit lockup"></div><div class="icons"><div class="logo-tile big"></div><div class="logo-tile mid"></div><div class="logo-tile sm"></div>
    <p class="sub">Logo v3, pending approval. Defined once, as a design token.</p></div></div>
   <div class="ghead">Palette · black, white, one accent</div>
   <div class="group">${SW.map(([t,h,n])=>`<div class="row"><span class="sw" style="background:var(${t})"></span><div class="grow"><div class="t1">${n}</div><div class="t2"><code>${t}</code></div></div><span class="val num">${h}</span></div>`).join('')}</div>
@@ -1587,6 +1595,19 @@ async function afterLearnMuscle(id){
    <p class="foot">${(EDU.idx||{}).disclaimer||''} Updated ${j.updated||''}.</p>`;
   afterMap();
 }
+// vol15: the stimulus / fatigue curve chart (moved off the app screens). Learn articles embed it when their data carries the samples
+// (illustration {n[], stimulus_pct[], fatigue_pct[], payoff[], peak_range, zero_n, caption, does_not_prove}).
+function curveSvg(S){const N=S.n,W=320,H=226,x0=30,y0=10,yb=196,nx=N[N.length-1]||20,all=[...S.s,...S.f,...S.p],lo=Math.min(-40,Math.floor(Math.min(...all)/20)*20),hi=Math.max(100,Math.ceil(Math.max(...all)/20)*20),
+  px=n=>x0+n/nx*(W-x0-8),py=v=>y0+(hi-v)/(hi-lo)*(yb-y0),path=a=>a.map((v,i)=>`${i?'L':'M'}${px(N[i]).toFixed(1)} ${py(v).toFixed(1)}`).join(''),ys=(hi-lo)>200?40:20,yt=[],xt=[];
+  for(let v=Math.ceil(lo/ys)*ys;v<=hi;v+=ys)yt.push(v);for(let n=0;n<=nx;n+=(nx>16?4:2))xt.push(n);
+  return `<svg class="pcv" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(S.label||'Curve')}">${S.peak?`<rect x="${px(S.peak[0]).toFixed(1)}" y="${y0}" width="${(px(S.peak[1])-px(S.peak[0])).toFixed(1)}" height="${yb-y0}" class="ppr"/>`:''}
+    ${yt.map(v=>`<line x1="${x0}" x2="${W-8}" y1="${py(v)}" y2="${py(v)}" class="${v===0?'pz':'pg'}"/><text x="${x0-4}" y="${py(v)+3}" text-anchor="end">${v}</text>`).join('')}
+    ${xt.map(n=>`<text x="${px(n)}" y="${yb+14}" text-anchor="middle">${n}</text>`).join('')}<text x="${(x0+W)/2}" y="${H-2}" text-anchor="middle" class="pax">${esc(S.xlabel||'hard sets in one workout')}</text>
+    <path d="${path(S.s)}" class="cs"/><path d="${path(S.f)}" class="cf"/><path d="${path(S.p)}" class="cp"/></svg>`}
+const illusHtml=I=>`<div class="card illus"><p class="illh"><b>${esc(I.title||'')}</b>${I.label?` <span class="evl" data-ev="modeled">${esc(I.label)}</span>`:''}</p>
+  ${curveSvg({n:I.n,s:I.stimulus_pct,f:I.fatigue_pct,p:I.payoff,peak:I.peak_range,label:I.title})}
+  <p class="pleg2"><span><i class="ks"></i>Stimulus</span><span><i class="kf"></i>Fatigue</span><span><i class="kp"></i>Stimulus minus fatigue</span></p>
+  ${I.caption?`<p class="foot">${esc(I.caption)}</p>`:''}${(I.does_not_prove||[]).length?`<p class="foot"><b>What this does not prove:</b> ${I.does_not_prove.map(esc).join('; ')}.</p>`:''}</div>`;
 V.learnFund=()=>`<div class="nav"><div class="l">${backBtn('Nurd Sh!t')}</div><div class="t"></div><div class="r"></div></div><div id="lf"><p class="foot">Loading…</p></div>`;
 async function afterLearnFund(id){
   const sx=String(id||'').split('~')[1]||null;id=id&&String(id).split('~')[0];
@@ -1595,9 +1616,10 @@ async function afterLearnFund(id){
   if(!j){$('#lf').innerHTML=`${header((entry||{}).title||'Fundamentals')}<div class="soonbox"><span class="soon">Coming soon</span></div>`;return}
   const al=j.app_link||{};
   $('#lf').innerHTML=`<div class="fund-hero"><div class="eyebrow">Fundamentals</div><h1>${j.title}</h1><p>${j.summary||''}</p></div>
-   ${al.explains?`<div class="card inapp"><div class="eyebrow">In Ape-Chit</div><p>${al.explains}</p><ul>${(al.features||[]).map(f=>`<li>${f.replace(/\s*\([^)]*\)/,'')}</li>`).join('')}</ul></div>`:''}
+   ${al.explains?`<div class="card inapp"><div class="eyebrow">In ApeChit</div><p>${al.explains}</p><ul>${(al.features||[]).map(f=>`<li>${f.replace(/\s*\([^)]*\)/,'')}</li>`).join('')}</ul></div>`:''}
    <div class="lsx">${(j.sections||[]).map((s,i)=>sect(s.heading,`${(s.body||[]).map(p=>`<p>${p}</p>`).join('')}
-      ${(s.points||[]).length?`<div class="pts">${s.points.map(p=>`<div class="pt"><p>${p.text}</p><div class="ptm">${ev(p)}${tagL(p.swap_tags)}</div>${p.nurd&&window.LEARNFIX?LEARNFIX.srcHtml(p.nurd,'ptsrc'):''}</div>`).join('')}</div>`:''}`,i===0,(s.points||[]).length?s.points.length+' points':'')).join('')}
+      ${(s.points||[]).length?`<div class="pts">${s.points.map(p=>`<div class="pt"><p>${p.text}</p><div class="ptm">${ev(p)}${tagL(p.swap_tags)}</div>${p.nurd?srcLine(p.nurd):''}</div>`).join('')}</div>`:''}`,i===0,(s.points||[]).length?s.points.length+' points':'')).join('')}
+   ${j.illustration&&Array.isArray(j.illustration.n)?illusHtml(j.illustration):''}
    ${(j.notes||[]).length?sect('Honest limits',`<ul class="bul">${j.notes.map(n=>`<li>${n}</li>`).join('')}</ul>`):''}
    ${refList()}</div><p class="foot">${(EDU.idx||{}).disclaimer||''}</p>`;
   // page#section from an analysis item's Learn link: open that section and scroll to it
@@ -2322,7 +2344,7 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={progHist,openPSheet,cmGet,cmSet,cmShown,progressData,apeFig,APE_FIG,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={curveSvg,progHist,openPSheet,cmGet,cmSet,cmShown,progressData,apeFig,APE_FIG,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

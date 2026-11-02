@@ -6,12 +6,12 @@
  "status": "final",
  "updated": "2026-11-01",
  "strict_numbers": true,
- "summary": "How the app turns your sets into weekly totals per muscle, which sets count as hard, what the weekly targets and statuses mean, how the weekly curve works, and how Payoff shows where sets stop paying off in one workout. Every number on this page is quoted from the app's data files.",
+ "summary": "How the app turns your sets into weekly totals per muscle, which sets count as hard, what the weekly targets and statuses mean, how the weekly curve works, and what the day body map colours mean. Every number on this page is quoted from the app's data files.",
  "app_link": {
   "features": [
    "Weekly volume panel and body map (targets.json counting, volume_zones; rules.json weekly_status)",
    "Hard-set rule and set tags in the logger (rules.json logger)",
-   "Payoff body map, gauges and per-muscle sheet (rules.json rules[id=payoff])",
+   "Body map colours (volume-model.json visuals.body_map.ramp)",
    "Suggestion buttons (rules.json suggestion_buttons)",
    "On-plan check in the weekly review (rules.json review)",
    "Program checks (rules.json rules, flag_copy)"
@@ -316,31 +316,20 @@
      "app_key": "rules.json:weekly_status.min_anchor_pct"
     },
     {
-     "text": "Weekly sets count at face value: there is no discount for doing many sets in one workout. How sets land within a workout is shown by Payoff instead.",
+     "text": "Weekly sets count at face value: there is no discount for doing many sets in one workout. How sets land within a workout is shown by the day body map colour instead.",
      "evidence": "modeled",
      "quotes": []
     }
    ]
   },
   {
-   "id": "payoff",
-   "heading": "Payoff in one workout",
+   "id": "one-workout",
+   "heading": "Sets in one workout",
    "body": [
-    "Within one workout, each extra set for a muscle adds less growth signal and a bit more fatigue. Payoff puts both on one percentage scale for each muscle on each day.",
-    "It is a model for spotting where sets stop paying off in a single workout, not a measurement. Weekly volume is still what drives growth."
+    "Within one workout, each extra set for a muscle adds less growth signal and a bit more fatigue. The day body map shows this as a colour for each muscle on each day.",
+    "It is a model for spotting where sets stop adding much in a single workout, not a measurement. Weekly volume is still what drives growth."
    ],
    "points": [
-    {
-     "text": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build.",
-     "evidence": "modeled",
-     "quotes": [
-      {
-       "key": "rules.json:rules.#payoff.note",
-       "text": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build."
-      }
-     ],
-     "app_key": "rules.json:rules.#payoff.note"
-    },
     {
      "text": "Stimulus rises fast and then flattens: about 63% at 4 hard sets, 78% at 6 and 92% at 10.",
      "evidence": "modeled",
@@ -384,7 +373,7 @@
      "quotes": []
     },
     {
-     "text": "For a machine chest press, Payoff peaks near 5 sets and drops to zero near 13.",
+     "text": "For a machine chest press, one workout is at its best near 5 sets, and extra sets cost more than they build from about 13.",
      "evidence": "modeled",
      "quotes": [
       {
@@ -416,7 +405,7 @@
      ]
     },
     {
-     "text": "On the plan body map a muscle is green while its next set still pays, amber once it is past the peak, and red when Payoff drops below zero. Muscles with under 1 hard set that day get no colour.",
+     "text": "On the day body map a muscle is light green for a little work, dark green across its best range, yellow past it and red where extra sets cost more than they build. Muscles with under 1 hard set that day stay grey.",
      "evidence": "modeled",
      "quotes": [
       {
@@ -424,7 +413,7 @@
        "text": "1 hard set"
       }
      ],
-     "app_key": "rules.json:rules.#payoff.bands"
+     "app_key": "rules.json:rules.#payoff.colour_vol15"
     },
     {
      "text": "A large per-workout analysis found growth kept rising with more sets in one session, with diminishing returns, and could not detect extra benefit past about eleven fractional sets. It is a preprint and a conference abstract, not a peer-reviewed paper.",
@@ -442,7 +431,7 @@
    "heading": "Per-workout cap and the suggestion buttons",
    "body": [
     "Nothing changes your plan unless you tap a button, and Undo puts it back exactly.",
-    "Make it more efficient trims sets that sit past a muscle's Payoff peak, or swaps to a less tiring exercise, and never takes a muscle below its weekly minimum. Push for max growth adds sets toward the top of each muscle's sweet spot."
+    "Make it more efficient trims sets that sit past a muscle's best range in one workout, or swaps to a less tiring exercise, and never takes a muscle below its weekly minimum. Push for max growth adds sets toward the top of each muscle's sweet spot."
    ],
    "points": [
     {
@@ -607,7 +596,7 @@
  },
  "notes": [
   "Every number in this page's points is quoted from a data file or computed from one; check_education validates each quote against the live files.",
-  "vol14 rewrite: face-value weekly volume, 60% at the minimum, one weekly status rule, Payoff per muscle per workout, per-workout cap as an info note plus the two suggestion buttons. Payoff constants are Modeled.",
+  "vol15 rewrite: face-value weekly volume, 60% at the minimum, one weekly status rule, the day body map colour for sets in one workout, per-workout cap as an info note plus the two suggestion buttons. Curve constants are Modeled.",
   "Worked-example inputs are marked as examples; the results are recomputed from the files."
  ]
 }

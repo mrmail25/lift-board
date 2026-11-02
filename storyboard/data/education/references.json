@@ -420,6 +420,32 @@
    "label": "ABSTRACT, NOT PEER-REVIEWED AS A FULL PAPER",
    "finding": "Conference abstract of the same per-session analysis (same ~11 fractional sets point).",
    "verified": "Crossref works API, 2026-11-01 (journal-article record, MSSE 58(10S), issued 2026-09-14; authors, title)"
+  },
+  "krieger2010": {
+   "authors": "Krieger JW",
+   "year": 2010,
+   "title": "Single vs. Multiple Sets of Resistance Exercise for Muscle Hypertrophy: A Meta-Analysis",
+   "journal": "Journal of Strength and Conditioning Research",
+   "volume": "24(4)",
+   "pages": "1150-1159",
+   "doi": "10.1519/JSC.0b013e3181d4d436",
+   "url": "https://doi.org/10.1519/JSC.0b013e3181d4d436",
+   "study_type": "meta_analysis",
+   "finding": "Multilevel meta-regression (8 studies): multiple sets per exercise were associated with about 40% larger hypertrophy effect sizes than one set, in trained and untrained people; 2-3 and 4-6 sets did not differ significantly.",
+   "verified": "Crossref works API and PubMed 20300012, 2026-11-01 (authors, year, journal, volume, pages); finding checked against the abstract"
+  },
+  "carpinelli1998": {
+   "authors": "Carpinelli RN, Otto RM",
+   "year": 1998,
+   "title": "Strength training. Single versus multiple sets",
+   "journal": "Sports Medicine",
+   "volume": "26(2)",
+   "pages": "73-84",
+   "doi": "10.2165/00007256-199826020-00002",
+   "url": "https://doi.org/10.2165/00007256-199826020-00002",
+   "study_type": "narrative_review",
+   "finding": "Narrative review: most single- vs multiple-set studies of 4 to 25 weeks found no significant difference in strength or size; the authors argued for time-efficient low-volume training and noted design limits.",
+   "verified": "Crossref works API and PubMed 9777681, 2026-11-01 (authors, year, journal, volume, pages); finding checked against the abstract"
   }
  }
 }

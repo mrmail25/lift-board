@@ -6,6 +6,8 @@
    Works in the browser (window.RANK) and in node (module.exports). */
 (function(root){
 'use strict';
+// vol15 adapter: rules.staples is now per muscle {m:[ids]}; the whole-library list is rules.staples_flat (Coach keeps it)
+const stFlat=R=>Array.isArray(R.staples)?R.staples:(R.staples_flat||[]);
 const CONTEXTS=['swap','tray','empty_workout','preset'];
 const TERMS=['fit','priority','goal_attr','bias','gap','theme','prefatigue','systemic','spinal','coverage','favorite','conflict'];
 const PLATE_EQ=['barbell','trap bar','smith machine','landmine','plate-loaded machine'];          // rank.py PLATE_EQ
@@ -57,14 +59,14 @@ function canCount(dt,i,slot){const e=dt.EX[i],S=dt.patterns.slots;return (e.patt
 function candidates(dt,slot,level){const R=dt.rules,ADV=new Set(dt.patterns.scoring.advanced_only),out=[];
   for(const [i,e] of Object.entries(dt.EX)){if(e.custom||!canCount(dt,i,slot))continue;
     if(level==='beginner'&&(ADV.has(i)||RARE_EQ.has(e.equipment)))continue;
-    if(level==='intermediate'&&RARE_EQ.has(e.equipment)&&!R.staples.includes(i))continue;out.push(i)}return out}
+    if(level==='intermediate'&&RARE_EQ.has(e.equipment)&&!stFlat(R).includes(i))continue;out.push(i)}return out}
 function pfit(dt,i,slot){const w=dt.patterns.scoring.muscle_weights,pm=dt.patterns.slots[slot].primary_muscles;let s=0,d=0;
   pm.slice(0,w.length).forEach((m,k)=>{s+=w[k]*(dt.EX[i].muscles[m]||0)});w.slice(0,pm.length).forEach(x=>d+=x);return s/d}
 function anchor(dt,slot){if(dt._anchor[slot])return dt._anchor[slot];const c=Object.keys(dt.EX).filter(i=>canCount(dt,i,slot));
   c.sort((a,b)=>cmpT([-(dt.USE[a]||0),-pfit(dt,a,slot),a],[-(dt.USE[b]||0),-pfit(dt,b,slot),b]));return dt._anchor[slot]=c[0]}
 function slotScore(dt,i,slot,level,boardIds,boardEq){const sc=dt.patterns.scoring,e=dt.EX[i],a=anchor(dt,slot),R=dt.rules;
   const sim=i===a?100.0:swapScore(dt,a,i)[0];
-  let s=sc.w_fit*pfit(dt,i,slot)+sc.w_similarity*sim/100+sc.w_main_slot*(e.patterns[0]===slot)+sc.w_staple*(R.staples.includes(i))+sc.w_use*Math.min(dt.USE[i]||0,12)-sc.fatigue_penalty_by_level[level]*e.fatigue;
+  let s=sc.w_fit*pfit(dt,i,slot)+sc.w_similarity*sim/100+sc.w_main_slot*(e.patterns[0]===slot)+sc.w_staple*(stFlat(R).includes(i))+sc.w_use*Math.min(dt.USE[i]||0,12)-sc.fatigue_penalty_by_level[level]*e.fatigue;
   if(level==='beginner'&&['machine','cable'].includes(fam(e)))s+=sc.beginner_machine_bonus;
   if(boardEq.size&&boardEq.has(e.equipment))s+=sc.board_equipment_bonus;
   if(boardIds.has(i))s-=sc.already_on_board_penalty;return pyRound(s,2)}
@@ -184,7 +186,7 @@ function rank(dt,context,cands,state,prefs,n){
   let ids;
   if(cands!=null)ids=cands.filter(i=>i in pool);
   else if(context==='preset')ids=candidates(dt,state.slot,level);
-  else if(context==='empty_workout'){const ADV=new Set(PJ.scoring.advanced_only);ids=Object.keys(dt.EX).filter(i=>!dt.EX[i].custom).filter(i=>!(level==='beginner'&&(ADV.has(i)||RARE_EQ.has(dt.EX[i].equipment)))&&!(level==='intermediate'&&RARE_EQ.has(dt.EX[i].equipment)&&!R.staples.includes(i)))}
+  else if(context==='empty_workout'){const ADV=new Set(PJ.scoring.advanced_only);ids=Object.keys(dt.EX).filter(i=>!dt.EX[i].custom).filter(i=>!(level==='beginner'&&(ADV.has(i)||RARE_EQ.has(dt.EX[i].equipment)))&&!(level==='intermediate'&&RARE_EQ.has(dt.EX[i].equipment)&&!stFlat(R).includes(i)))}
   else ids=Object.keys(pool);
   const boardIds=new Set(wboard.flatMap(d=>d.tiles.map(t=>t.id))),boardEq=new Set([...boardIds].filter(i=>pool[i]).map(i=>pool[i].equipment));
   const MUS=dt.exl.muscles,REG=dt.exl.regions,out=[];

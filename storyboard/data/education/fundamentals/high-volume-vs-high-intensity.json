@@ -1,0 +1,343 @@
+{
+ "schema": "lift-board.education.fundamental/1",
+ "id": "high-volume-vs-high-intensity",
+ "kind": "fundamental",
+ "title": "High volume vs high intensity",
+ "collection": "Nurd Sh!t",
+ "status": "final",
+ "updated": "2026-11-01",
+ "summary": "Two camps argue about how to build muscle: a few all-out sets, or more sets a little short of failure. The research says both work, more weekly sets tend to help with diminishing returns, and effort matters for every set you count. You can take the best of each.",
+ "app_link": {
+  "features": [
+   "Weekly sets per muscle (targets.json volume_zones)",
+   "Hard sets and RIR (rules.json logger.hardRIR)",
+   "Body map colours (volume-model.json visuals.body_map.ramp)"
+  ],
+  "explains": "Why ApeChit counts hard sets per week, why it asks how close to failure you went, and what the per-workout colours on the body map do and do not mean."
+ },
+ "sections": [
+  {
+   "id": "camps",
+   "heading": "Two camps",
+   "body": [
+    "The high-intensity camp says one or two sets taken to true failure are enough; more sets only add fatigue. Workouts are short, rare and brutal.",
+    "The volume camp says growth tracks how many hard sets a muscle gets each week, so it spreads more sets over the week, usually stopping a rep or two before failure.",
+    "Both camps have people who grew a lot. The useful question is not who is right, but what each one gets right and where each one stops being supported by the evidence."
+   ],
+   "points": [
+    {
+     "text": "An influential review of single- versus multiple-set studies found that most short studies could not detect a difference, and argued for time-efficient low-volume training. The authors also noted the studies had design limits.",
+     "evidence": "supported",
+     "citations": [
+      "carpinelli1998"
+     ]
+    },
+    {
+     "text": "A later meta-analysis that pooled the hypertrophy studies found multiple sets per exercise went with about 40% larger growth effects than a single set, in both trained and untrained people.",
+     "evidence": "supported",
+     "citations": [
+      "krieger2010"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "volume",
+   "heading": "What the volume research says",
+   "body": [
+    "Across many studies, more weekly sets per muscle went with more growth. The gain from each extra set gets smaller as the weekly total climbs, so the curve bends rather than climbing in a straight line.",
+    "That is why ApeChit gives every muscle a weekly minimum and a sweet spot instead of one magic number. A few sets a week still work, especially for beginners; more tends to work a bit better, up to a point."
+   ],
+   "points": [
+    {
+     "text": "A dose-response meta-analysis found a graded relationship between weekly sets and growth, with the highest category (ten or more weekly sets per muscle) growing most.",
+     "evidence": "supported",
+     "citations": [
+      "schoenfeld2017dose"
+     ]
+    },
+    {
+     "text": "A newer, larger set of meta-regressions found growth kept rising with weekly volume, with diminishing returns at higher volumes.",
+     "evidence": "supported",
+     "citations": [
+      "pelland2026"
+     ]
+    },
+    {
+     "text": "The app's minimums and sweet spots are coaching choices built on these pooled results, not measured limits for you.",
+     "evidence": "modeled",
+     "citations": [
+      "schoenfeld2017dose",
+      "pelland2026"
+     ],
+     "app_key": "targets.json:volume_zones"
+    }
+   ]
+  },
+  {
+   "id": "intensity",
+   "heading": "What the effort research says",
+   "body": [
+    "Here the high-intensity camp has a point: a set only does much for growth if it is hard. Sets that stop far from failure count for less.",
+    "But the gap between stopping a rep or two short and going to total failure is small for growth, while all-out sets cost more fatigue. That is why ApeChit counts a set as hard when you stop within a few reps of failure, rather than demanding failure on every set."
+   ],
+   "points": [
+    {
+     "text": "A meta-analysis found growth was similar whether sets went to failure or stopped short, as long as volume was similar; strength did not need failure either.",
+     "evidence": "supported",
+     "citations": [
+      "refalo2023"
+     ]
+    },
+    {
+     "text": "Meta-regressions of proximity to failure found growth tended to improve as sets got closer to failure, while strength gains were much less sensitive to it.",
+     "evidence": "supported",
+     "citations": [
+      "robinson2024"
+     ]
+    },
+    {
+     "text": "ApeChit counts a set as hard at 3 reps in reserve or closer. That cut-off is a coaching choice based on this research.",
+     "evidence": "modeled",
+     "citations": [
+      "robinson2024",
+      "refalo2023"
+     ],
+     "app_key": "rules.json:logger.hardRIR"
+    }
+   ]
+  },
+  {
+   "id": "one-workout",
+   "heading": "One workout: an illustration (Modeled)",
+   "body": [
+    "Within a single workout, the first hard sets for a muscle do most of the work and each extra set adds less, while fatigue keeps building a little faster with every set. ApeChit illustrates this with a modeled curve: stimulus minus fatigue, called Payoff.",
+    "For a typical machine exercise, Payoff is near its top from about 4.1 to 6 hard sets for one muscle in one workout, turns down after that, and falls below zero near 13 sets. Very tiring barbell lifts top out a little earlier (about 3.4 to 4.9 sets) and isolation work a little later (about 4.4 to 6.6).",
+    "On the day body map this is the colour: light green for a little work, dark green across that range, yellow past it, and red past the point where extra sets cost more than they build."
+   ],
+   "points": [
+    {
+     "text": "The shape (each extra set in one session adds less) is loosely based on a per-session meta-regression that could not detect extra growth past about eleven fractional sets in one session. It is a preprint and a conference abstract, not a peer-reviewed paper.",
+     "evidence": "modeled",
+     "citations": [
+      "remmert2025preprint",
+      "joachim2026abstract"
+     ],
+     "app_key": "rules.json:rules.#payoff.constants"
+    },
+    {
+     "text": "The curve does NOT prove that 5 sets is optimal for you, that set 7 is wasted, or that fatigue can be measured in percent. Its constants are planning choices for comparing days, not measurements.",
+     "evidence": "modeled",
+     "citations": []
+    },
+    {
+     "text": "It also does not override the weekly picture: more weekly sets still tend to give more growth, so splitting sets across two days is usually better than cutting them.",
+     "evidence": "modeled",
+     "citations": [
+      "pelland2026"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "together",
+   "heading": "Putting the camps together",
+   "body": [
+    "Take effort from the high-intensity camp: make the sets you count genuinely hard, within a few reps of failure, and save true failure for safer exercises and the last set.",
+    "Take volume from the volume camp: get each muscle to its weekly minimum, then add sets toward the sweet spot if you recover well and have the time.",
+    "Spread the work: when one workout piles too many sets on one muscle, move some to another day instead of grinding them out tired. If time is short, fewer hard sets still work; you trade some growth for time, not all of it."
+   ],
+   "points": [
+    {
+     "text": "Both low-volume, high-effort training and higher-volume training build muscle; the evidence favors more weekly hard sets, with diminishing returns, rather than one all-out set.",
+     "evidence": "supported",
+     "citations": [
+      "krieger2010",
+      "schoenfeld2017dose",
+      "pelland2026"
+     ]
+    },
+    {
+     "text": "Individual response varies a lot. Use the targets as a starting point and adjust to your progress and recovery.",
+     "evidence": "modeled",
+     "citations": []
+    }
+   ]
+  }
+ ],
+ "illustration": {
+  "label": "Modeled",
+  "title": "Stimulus, fatigue and Payoff for one muscle in one workout (machine exercise)",
+  "source": "volume-model.json vol14d.curve_samples[\"accessory/machine_compound\"]",
+  "n": [
+   0.0,
+   1.0,
+   2.0,
+   3.0,
+   4.0,
+   5.0,
+   6.0,
+   7.0,
+   8.0,
+   9.0,
+   10.0,
+   11.0,
+   12.0,
+   13.0,
+   14.0,
+   15.0,
+   16.0,
+   17.0,
+   18.0,
+   19.0,
+   20.0
+  ],
+  "stimulus_pct": [
+   0.0,
+   22.1,
+   39.3,
+   52.8,
+   63.2,
+   71.3,
+   77.7,
+   82.6,
+   86.5,
+   89.5,
+   91.8,
+   93.6,
+   95.0,
+   96.1,
+   97.0,
+   97.6,
+   98.2,
+   98.6,
+   98.9,
+   99.1,
+   99.3
+  ],
+  "fatigue_pct": [
+   0.0,
+   6.5,
+   13.1,
+   19.9,
+   26.8,
+   33.9,
+   41.1,
+   48.5,
+   56.0,
+   63.7,
+   71.6,
+   79.6,
+   87.8,
+   96.1,
+   104.6,
+   113.2,
+   122.0,
+   130.9,
+   140.0,
+   149.2,
+   158.6
+  ],
+  "payoff": [
+   0.0,
+   15.6,
+   26.2,
+   32.9,
+   36.4,
+   37.4,
+   36.6,
+   34.1,
+   30.5,
+   25.8,
+   20.2,
+   14.0,
+   7.2,
+   0.0,
+   -7.6,
+   -15.6,
+   -23.8,
+   -32.3,
+   -41.1,
+   -50.1,
+   -59.3
+  ],
+  "peak_range": [
+   4.1,
+   6.0
+  ],
+  "zero_n": 13.0,
+  "per_class": {
+   "primary/high": {
+    "peak_range": [
+     3.4,
+     4.9
+    ],
+    "zero_n": 10.0
+   },
+   "primary/free_compound": {
+    "peak_range": [
+     3.6,
+     5.3
+    ],
+    "zero_n": 11.1
+   },
+   "primary/machine_compound": {
+    "peak_range": [
+     3.8,
+     5.6
+    ],
+    "zero_n": 11.7
+   },
+   "accessory/free_compound": {
+    "peak_range": [
+     3.9,
+     5.8
+    ],
+    "zero_n": 12.3
+   },
+   "accessory/machine_compound": {
+    "peak_range": [
+     4.1,
+     6.0
+    ],
+    "zero_n": 13.0
+   },
+   "isolation/isolation": {
+    "peak_range": [
+     4.4,
+     6.6
+    ],
+    "zero_n": 14.8
+   }
+  },
+  "caption": "Modeled. The peak is a range, not a point. This curve compares days; it does not measure growth or fatigue.",
+  "does_not_prove": [
+   "an exact best number of sets for you",
+   "that sets past the peak are wasted (they still add a little)",
+   "that fatigue is measured in percent",
+   "anything about weekly volume, which still drives growth"
+  ]
+ },
+ "app_values": {
+  "rules.json:logger.hardRIR": 3,
+  "rules.json:rules.#payoff.constants.stim_tau": 4.0,
+  "rules.json:rules.#payoff.fatigue_classes.4.peak_range": [
+   4.1,
+   6.0
+  ],
+  "rules.json:rules.#payoff.fatigue_classes.0.peak_range": [
+   3.4,
+   4.9
+  ],
+  "rules.json:rules.#payoff.fatigue_classes.5.peak_range": [
+   4.4,
+   6.6
+  ],
+  "rules.json:rules.#payoff.fatigue_classes.4.zero_n": 13.0
+ },
+ "notes": [
+  "vol15: the only Learn page that shows Payoff, as a labelled Modeled illustration.",
+  "Citations verified against Crossref (and PubMed for the two older papers) on 2026-11-01.",
+  "No medical claims; individual response varies."
+ ]
+}

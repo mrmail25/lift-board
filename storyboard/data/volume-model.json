@@ -11444,7 +11444,7 @@
   },
   "pct_note": "target_pct etc. = the weekly curve % at those sets for that level (curve unchanged).",
   "nurd": {
-   "short": "Lift Board model (this spec)",
+   "short": "ApeChit model (this spec)",
    "year": 2026,
    "type": "model",
    "label": "Modeled",
@@ -11470,7 +11470,7 @@
     "decay": "none. The session-efficiency decay 1/(1+(n-1)/c) is NOT applied to stimulus, so the days add up exactly to the weekly value. Poor value late in a session is shown separately as over_limit / wasted_late_sets, which are a portion of the same stimulus, not a deduction.",
     "reference": "the goal's session limit (rules session_efficiency.limits_by_goal) and the weekly target (goals.<goal>.weekly)",
     "nurd": {
-     "short": "Lift Board model (this spec)",
+     "short": "ApeChit model (this spec)",
      "year": 2026,
      "type": "model",
      "label": "Modeled",
@@ -11482,7 +11482,7 @@
     "unit": "load points (the workout fatigue index points; 100 index = workout.fatigue.reference.points 19.33)",
     "reference": "the muscle's points add up to the workout load points, so a day card can show each muscle's share of the workout index",
     "nurd": {
-     "short": "Lift Board model (this spec)",
+     "short": "ApeChit model (this spec)",
      "year": 2026,
      "type": "model",
      "label": "Modeled",
@@ -11505,7 +11505,7 @@
     "unit": "effective sets per set",
     "reference": "1.0 = a direct (prime) set at <= 2 RIR; 0.5 = typical secondary credit",
     "nurd": {
-     "short": "Lift Board model (this spec)",
+     "short": "ApeChit model (this spec)",
      "year": 2026,
      "type": "model",
      "label": "Modeled",
@@ -11564,7 +11564,7 @@
      "also": "sfr_pct_of_preset_avg = 100 x sfr / (preset week stimulus / preset week fatigue)",
      "benchmark_sfr": 1.82,
      "nurd": {
-      "short": "Lift Board model (this spec)",
+      "short": "ApeChit model (this spec)",
       "year": 2026,
       "type": "model",
       "label": "Modeled",
@@ -12790,7 +12790,7 @@
     "day_stimulus": "sum over muscles of that day's effective sets (face value)",
     "unit_shown": "effective sets",
     "nurd": {
-     "short": "Lift Board model (this spec)",
+     "short": "ApeChit model (this spec)",
      "year": 2026,
      "type": "model",
      "label": "Modeled",
@@ -12803,7 +12803,7 @@
     "muscle_fatigue": "rating-share split of the same points (day_metrics.fatigue)",
     "unit_shown": "recovery days = recovery_h / 24 (existing recovery formula; day = the slowest muscle), rounded to 0.1",
     "nurd": {
-     "short": "Lift Board model (this spec)",
+     "short": "ApeChit model (this spec)",
      "year": 2026,
      "type": "model",
      "label": "Modeled",
@@ -12834,7 +12834,7 @@
     "bands_note": "Display choice, not research: < 0.8x, 0.8-1.2x, > 1.2x of the typical day/muscle-day.",
     "label": "Modeled",
     "nurd": {
-     "short": "Lift Board model (this spec)",
+     "short": "ApeChit model (this spec)",
      "year": 2026,
      "type": "model",
      "label": "Modeled",
@@ -12847,7 +12847,7 @@
    "formula": "stimulus_hard_set_eq[m, day] = sum over tiles of sets x credit(exercise, m) (face value, no decay); day = sum over muscles",
    "unit": "hard-set equivalents (effective sets)",
    "nurd": {
-    "short": "Lift Board model (this spec)",
+    "short": "ApeChit model (this spec)",
     "year": 2026,
     "type": "model",
     "label": "Modeled",
@@ -12860,7 +12860,7 @@
    "why_rating_not_share": "Charged by the muscle's rating (like stimulus credit), not split by rating share: a share split gives the anchor's target muscle only half its set (S:F 2.0 on the anchor). With rating weighting the anchor's first set on chest reads 1.0 / 1.0 = 1.00, and S:F depends only on how fatiguing the exercise and effort are.",
    "one_number": "The same number drives S:F, the fatigue glow and recovery hours (recovery.hours_formula uses it as F; the per-set growth h_per_set beyond free_sets is unchanged).",
    "nurd": {
-    "short": "Lift Board model; effort factors anchored to Moran-Navarro 2017 and Refalo 2024",
+    "short": "ApeChit model; effort factors anchored to Moran-Navarro 2017 and Refalo 2024",
     "year": 2026,
     "type": "model",
     "label": "Modeled",
@@ -12872,7 +12872,7 @@
    "display": "S:F {stim} / {fatigue} = {ratio} (ready in ~{days} days)",
    "unit": "plain ratio",
    "nurd": {
-    "short": "Lift Board model (this spec)",
+    "short": "ApeChit model (this spec)",
     "year": 2026,
     "type": "model",
     "label": "Modeled",
@@ -12907,7 +12907,7 @@
    "per_set_growth": "Systemic fatigue is linear per set. The within-session per-set growth stays in the muscle-level recovery hours (h_per_set beyond free_sets), unchanged.",
    "caveat": "Minor credits are excluded so lifts with many small synergist credits (deadlift) are not over-rewarded.",
    "nurd": {
-    "short": "Lift Board model; effort factors anchored to Moran-Navarro 2017 and Refalo 2024",
+    "short": "ApeChit model; effort factors anchored to Moran-Navarro 2017 and Refalo 2024",
     "year": 2026,
     "type": "model",
     "label": "Modeled",
@@ -14460,7 +14460,7 @@
    "why_1_5": "Hot = more fatigue than the goal's per-session limit even if every set were the heaviest class (back squat 1.56 fresh-set eq per set), so it marks genuine overload, not ordinary compound work. At 1.5x the Efficient presets show about as many hot muscle-days as remaining session warnings; 1.0x would mark ~7x more.",
    "label": "Display choice / Modeled",
    "nurd": {
-    "short": "Lift Board display choice",
+    "short": "ApeChit display choice",
     "year": 2026,
     "type": "model / display choice",
     "label": "Modeled",
@@ -15042,8 +15042,767 @@
     "label": "Modeled",
     "field": "day-metrics-presets.json ...muscles[m].payoff_band (green | amber | red | null)",
     "rule": "rules.json rules[id=payoff].bands",
-    "note": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build."
+    "note": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build.",
+    "superseded_vol15": "Bands kept as data; every body map uses visuals.body_map.ramp."
+   },
+   "ramp": {
+    "version": "vol15",
+    "label": "Modeled (colour breakpoints are display choices on the modeled curves)",
+    "applies_to": "every body map (Plan day map, week map, Analysis big map)",
+    "stops_hex": {
+     "grey": "#C8CDD2",
+     "light_green": "#C7E9B4",
+     "dark_green": "#1E7B3A",
+     "yellow": "#F2C230",
+     "red": "#D7263D"
+    },
+    "order": [
+     "grey",
+     "light_green",
+     "dark_green",
+     "yellow",
+     "red"
+    ],
+    "interpolation": "x < grey_below: grey (no colour blend from grey). From light_green at x = 1.0 to dark_green at the start of the dark-green range: linear in sRGB per channel (round half up). Dark green held across the range. Dark green -> yellow -> red linear in sRGB between the stops. Past red: red. Same function for both modes; only the breakpoints differ.",
+    "weekly": {
+     "x": "weekly effective sets (face value, the displayed r1 value)",
+     "stops": "light_green @ 1.0; dark_green @ sweet[0] .. sweet[1]; yellow @ diminishing; red @ red_point",
+     "red_point": "diminishing x 1.25 (rounded to 0.1)",
+     "red_point_why": "Equals the weekly_status far_over threshold, so a red muscle on the map is exactly a muscle the weekly status calls far over. Past diminishing, extra sets add little modeled stimulus (curve within ~11% of its plateau) while recovery cost keeps rising linearly; 25% past that point is where the extra load is large relative to the gain. Practitioner judgement, Modeled.",
+     "min_note": "min is shown for reference (light green below it, still short of the weekly minimum); the weekly minimum status is unchanged.",
+     "breakpoints": {
+      "beginner": {
+       "chest": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.0,
+        "dark_green": [
+         9.0,
+         15.5
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "front_delts": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.5,
+        "dark_green": [
+         4.5,
+         10.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "side_delts": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 5.0,
+        "dark_green": [
+         9.0,
+         15.5
+        ],
+        "yellow": 22.0,
+        "red": 27.5
+       },
+       "rear_delts": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 3.5,
+        "dark_green": [
+         6.0,
+         12.0
+        ],
+        "yellow": 18.0,
+        "red": 22.5
+       },
+       "lats": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.0,
+        "dark_green": [
+         9.0,
+         15.5
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "upper_back": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.0,
+        "dark_green": [
+         9.0,
+         15.5
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "traps": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.5,
+        "dark_green": [
+         4.5,
+         10.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "biceps": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 5.0,
+        "dark_green": [
+         7.5,
+         13.5
+        ],
+        "yellow": 18.0,
+        "red": 22.5
+       },
+       "triceps": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 5.0,
+        "dark_green": [
+         7.5,
+         13.5
+        ],
+        "yellow": 18.0,
+        "red": 22.5
+       },
+       "forearms": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 1.0,
+        "dark_green": [
+         3.0,
+         7.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       },
+       "abs": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.5,
+        "dark_green": [
+         4.5,
+         10.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "quads": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.0,
+        "dark_green": [
+         9.0,
+         15.5
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "hamstrings": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 5.0,
+        "dark_green": [
+         7.5,
+         12.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "glutes": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 5.0,
+        "dark_green": [
+         7.5,
+         12.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "calves": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 3.5,
+        "dark_green": [
+         6.0,
+         12.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "adductors": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.0,
+        "dark_green": [
+         3.0,
+         7.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       },
+       "lower_back": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.0,
+        "dark_green": [
+         3.0,
+         7.0
+        ],
+        "yellow": 10.0,
+        "red": 12.5
+       },
+       "obliques": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 1.0,
+        "dark_green": [
+         3.0,
+         7.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       },
+       "abductors": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.0,
+        "dark_green": [
+         3.0,
+         7.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       }
+      },
+      "intermediate": {
+       "chest": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 8.0,
+        "dark_green": [
+         12.0,
+         18.0
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "front_delts": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 3.0,
+        "dark_green": [
+         6.0,
+         12.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "side_delts": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.5,
+        "dark_green": [
+         12.0,
+         18.0
+        ],
+        "yellow": 22.0,
+        "red": 27.5
+       },
+       "rear_delts": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 5.0,
+        "dark_green": [
+         8.0,
+         14.0
+        ],
+        "yellow": 18.0,
+        "red": 22.5
+       },
+       "lats": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 8.0,
+        "dark_green": [
+         12.0,
+         18.0
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "upper_back": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 8.0,
+        "dark_green": [
+         12.0,
+         18.0
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "traps": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 3.0,
+        "dark_green": [
+         6.0,
+         12.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "biceps": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.5,
+        "dark_green": [
+         10.0,
+         16.0
+        ],
+        "yellow": 18.0,
+        "red": 22.5
+       },
+       "triceps": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.5,
+        "dark_green": [
+         10.0,
+         16.0
+        ],
+        "yellow": 18.0,
+        "red": 22.5
+       },
+       "forearms": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 1.5,
+        "dark_green": [
+         4.0,
+         8.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       },
+       "abs": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 3.0,
+        "dark_green": [
+         6.0,
+         12.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "quads": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 8.0,
+        "dark_green": [
+         12.0,
+         18.0
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "hamstrings": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.5,
+        "dark_green": [
+         10.0,
+         14.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "glutes": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.5,
+        "dark_green": [
+         10.0,
+         14.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "calves": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 5.0,
+        "dark_green": [
+         8.0,
+         14.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "adductors": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.5,
+        "dark_green": [
+         4.0,
+         8.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       },
+       "lower_back": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.5,
+        "dark_green": [
+         4.0,
+         8.0
+        ],
+        "yellow": 10.0,
+        "red": 12.5
+       },
+       "obliques": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 1.5,
+        "dark_green": [
+         4.0,
+         8.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       },
+       "abductors": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.5,
+        "dark_green": [
+         4.0,
+         8.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       }
+      },
+      "advanced": {
+       "chest": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 10.0,
+        "dark_green": [
+         12.0,
+         18.0
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "front_delts": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 4.0,
+        "dark_green": [
+         6.0,
+         12.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "side_delts": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 8.0,
+        "dark_green": [
+         12.0,
+         18.0
+        ],
+        "yellow": 22.0,
+        "red": 27.5
+       },
+       "rear_delts": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.0,
+        "dark_green": [
+         8.0,
+         14.0
+        ],
+        "yellow": 18.0,
+        "red": 22.5
+       },
+       "lats": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 10.0,
+        "dark_green": [
+         12.0,
+         18.0
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "upper_back": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 10.0,
+        "dark_green": [
+         12.0,
+         18.0
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "traps": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 4.0,
+        "dark_green": [
+         6.0,
+         12.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "biceps": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 8.0,
+        "dark_green": [
+         10.0,
+         16.0
+        ],
+        "yellow": 18.0,
+        "red": 22.5
+       },
+       "triceps": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 8.0,
+        "dark_green": [
+         10.0,
+         16.0
+        ],
+        "yellow": 18.0,
+        "red": 22.5
+       },
+       "forearms": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.0,
+        "dark_green": [
+         4.0,
+         8.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       },
+       "abs": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 4.0,
+        "dark_green": [
+         6.0,
+         12.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "quads": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 10.0,
+        "dark_green": [
+         12.0,
+         18.0
+        ],
+        "yellow": 20.0,
+        "red": 25.0
+       },
+       "hamstrings": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 8.0,
+        "dark_green": [
+         10.0,
+         14.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "glutes": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 8.0,
+        "dark_green": [
+         10.0,
+         14.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "calves": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 6.0,
+        "dark_green": [
+         8.0,
+         14.0
+        ],
+        "yellow": 16.0,
+        "red": 20.0
+       },
+       "adductors": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 3.0,
+        "dark_green": [
+         4.0,
+         8.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       },
+       "lower_back": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 3.0,
+        "dark_green": [
+         4.0,
+         8.0
+        ],
+        "yellow": 10.0,
+        "red": 12.5
+       },
+       "obliques": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 2.0,
+        "dark_green": [
+         4.0,
+         8.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       },
+       "abductors": {
+        "grey_below": 1.0,
+        "light_green": 1.0,
+        "min": 3.0,
+        "dark_green": [
+         4.0,
+         8.0
+        ],
+        "yellow": 12.0,
+        "red": 15.0
+       }
+      }
+     }
+    },
+    "daily": {
+     "x": "that muscle's effective sets that day (n); fatigue class k = sqrt(own fatigue / n) per rules payoff (live boards compute k the same way)",
+     "stops": "light_green @ 1.0; dark_green across the peak range (Payoff >= 97.5% of its maximum); yellow @ past the peak where Payoff = 75% of its maximum; red @ zero_n (Payoff = 0)",
+     "peak_range_why": "The Payoff curve is flat near its top, so a range is honest: within 2.5% of the maximum the difference is too small to matter. This gives about 4 to 6 sets for the reference class (machine compound) and 3.4 to 4.9 for heavy barbell lifts.",
+     "by_fatigue_class": {
+      "primary/high": {
+       "k": 1.249,
+       "grey_below": 1.0,
+       "light_green": 1.0,
+       "dark_green": [
+        3.4,
+        4.9
+       ],
+       "peak_n": 4.1,
+       "yellow": 6.8,
+       "red": 10.0,
+       "max_payoff": 29.4
+      },
+      "primary/free_compound": {
+       "k": 1.149,
+       "grey_below": 1.0,
+       "light_green": 1.0,
+       "dark_green": [
+        3.6,
+        5.3
+       ],
+       "peak_n": 4.4,
+       "yellow": 7.4,
+       "red": 11.1,
+       "max_payoff": 32.4
+      },
+      "primary/machine_compound": {
+       "k": 1.095,
+       "grey_below": 1.0,
+       "light_green": 1.0,
+       "dark_green": [
+        3.8,
+        5.6
+       ],
+       "peak_n": 4.6,
+       "yellow": 7.8,
+       "red": 11.7,
+       "max_payoff": 34.2
+      },
+      "accessory/free_compound": {
+       "k": 1.049,
+       "grey_below": 1.0,
+       "light_green": 1.0,
+       "dark_green": [
+        3.9,
+        5.8
+       ],
+       "peak_n": 4.8,
+       "yellow": 8.1,
+       "red": 12.3,
+       "max_payoff": 35.8
+      },
+      "accessory/machine_compound": {
+       "k": 1.0,
+       "grey_below": 1.0,
+       "light_green": 1.0,
+       "dark_green": [
+        4.1,
+        6.0
+       ],
+       "peak_n": 5.0,
+       "yellow": 8.5,
+       "red": 13.0,
+       "max_payoff": 37.5
+      },
+      "isolation/isolation": {
+       "k": 0.89,
+       "grey_below": 1.0,
+       "light_green": 1.0,
+       "dark_green": [
+        4.4,
+        6.6
+       ],
+       "peak_n": 5.5,
+       "yellow": 9.5,
+       "red": 14.8,
+       "max_payoff": 41.6
+      }
+     },
+     "live_formula": "For any k: peak range = n where stim%(n) - fat%(k n) >= 0.975 x max; yellow = n past the peak where it equals 0.75 x max; red = zero_n (bisection; rules payoff formula)."
+    },
+    "past_peak": "Past the peak is not a warning (vol15). The map turns yellow; only red (Payoff below zero) raises the flag payoff_negative.",
+    "precomputed": {
+     "daily": "day-metrics-presets.json ...days[i].muscles[m].ramp {x, hex, zone}",
+     "weekly": "day-metrics-presets.json ...weekly_status.ramp[m] {x, hex, zone}"
+    }
    }
+  },
+  "recovery_strip_vol15": {
+   "display": false,
+   "status": "legacy",
+   "note": "Recovery-cost numbers are not shown anywhere (vol15); data kept."
   }
  },
  "vol11": {
@@ -20550,5 +21309,425 @@
    "curves": "volume-model.json vol14d.curve_samples[\"type/axial_class\"] {k, n[0..20 step 0.5], stimulus_pct, fatigue_pct, payoff}"
   },
   "history_frozen": []
+ },
+ "vol15": {
+  "version": "vol15",
+  "date": "2026-11-01",
+  "source": "vol15 batched round approved by Mr Dude (relayed by CoS)",
+  "app_name": "ApeChit",
+  "ramp_summary": {
+   "stops_hex": {
+    "grey": "#C8CDD2",
+    "light_green": "#C7E9B4",
+    "dark_green": "#1E7B3A",
+    "yellow": "#F2C230",
+    "red": "#D7263D"
+   },
+   "weekly": "light green 1.0 -> dark green sweet[0]..sweet[1] -> yellow diminishing -> red diminishing x 1.25",
+   "daily_by_class": {
+    "primary/high": {
+     "dark_green": [
+      3.4,
+      4.9
+     ],
+     "yellow": 6.8,
+     "red": 10.0
+    },
+    "primary/free_compound": {
+     "dark_green": [
+      3.6,
+      5.3
+     ],
+     "yellow": 7.4,
+     "red": 11.1
+    },
+    "primary/machine_compound": {
+     "dark_green": [
+      3.8,
+      5.6
+     ],
+     "yellow": 7.8,
+     "red": 11.7
+    },
+    "accessory/free_compound": {
+     "dark_green": [
+      3.9,
+      5.8
+     ],
+     "yellow": 8.1,
+     "red": 12.3
+    },
+    "accessory/machine_compound": {
+     "dark_green": [
+      4.1,
+      6.0
+     ],
+     "yellow": 8.5,
+     "red": 13.0
+    },
+    "isolation/isolation": {
+     "dark_green": [
+      4.4,
+      6.6
+     ],
+     "yellow": 9.5,
+     "red": 14.8
+    }
+   },
+   "preset_daily_zones": {
+    "efficient": {
+     "light_green": 1078,
+     "dark_green": 393,
+     "grey": 247,
+     "yellow": 169
+    },
+    "max_growth": {
+     "light_green": 1032,
+     "dark_green": 388,
+     "grey": 235,
+     "yellow": 232
+    }
+   },
+   "preset_weekly_zones": {
+    "efficient": {
+     "light_green": 554,
+     "dark_green": 317,
+     "yellow": 3
+    },
+    "max_growth": {
+     "light_green": 481,
+     "dark_green": 374,
+     "yellow": 19
+    }
+   }
+  },
+  "fatigue_level": {
+   "cutoffs": {
+    "Low": "< 13",
+    "Normal": "13 to < 20",
+    "Extra": "20 to < 22",
+    "High": "22 to < 27",
+    "Extreme": ">= 27"
+   },
+   "raw_quantiles": [
+    12.84,
+    19.8,
+    21.98,
+    26.89
+   ],
+   "distribution": {
+    "efficient": {
+     "Low": 27,
+     "Normal": 88,
+     "Extra": 28,
+     "High": 26,
+     "Extreme": 7
+    },
+    "max_growth": {
+     "Low": 9,
+     "Normal": 90,
+     "Extra": 35,
+     "High": 34,
+     "Extreme": 8
+    }
+   },
+   "examples": {
+    "typical_Normal": {
+     "goal": "efficient",
+     "preset": "arnold/advanced/6",
+     "day": "sat",
+     "label": "Legs B",
+     "value": 18.91,
+     "exercises": [
+      "hack-squat",
+      "stiff-leg-dumbbell-deadlift",
+      "bulgarian-split-squat",
+      "lying-leg-curl",
+      "hip-abduction-machine",
+      "seated-calf-raise",
+      "ab-wheel-rollout"
+     ]
+    },
+    "heavy_squat_High": {
+     "goal": "max_growth",
+     "preset": "arnold/advanced/6",
+     "day": "wed",
+     "label": "Legs",
+     "value": 22.3,
+     "exercises": [
+      "back-squat",
+      "romanian-deadlift",
+      "hip-thrust",
+      "leg-extension",
+      "seated-leg-curl",
+      "standing-calf-raise",
+      "hanging-leg-raise"
+     ]
+    },
+    "Low": {
+     "goal": "efficient",
+     "preset": "bro-split/beginner/5",
+     "day": "tue",
+     "label": "Back",
+     "value": 8.27,
+     "exercises": [
+      "lat-pulldown",
+      "seated-cable-row",
+      "one-arm-dumbbell-row",
+      "straight-arm-pulldown",
+      "dumbbell-shrug"
+     ]
+    }
+   }
+  },
+  "flags": {
+   "retired": [
+    "payoff_past_efficient"
+   ],
+   "red_flag": "payoff_negative",
+   "hidden": [
+    "payoff_past_efficient",
+    "recovery_vs_baseline",
+    "wasted_late_sets"
+   ],
+   "named_by": {
+    "muscle": [
+     "payoff_negative",
+     "session_efficiency",
+     "session_efficiency_single_day",
+     "redundant_pattern",
+     "weekly_needs_sets",
+     "weekly_optional_low",
+     "weekly_far_over",
+     "consecutive_high_volume",
+     "recovery_overlap",
+     "recovery_overlap_streak",
+     "missing_stretch",
+     "low_frequency",
+     "recovery_gap_long"
+    ],
+    "lift": [
+     "sets_per_exercise"
+    ],
+    "day": [
+     "spinal_load",
+     "session_hard_sets",
+     "session_hard_sets_info",
+     "session_length",
+     "session_length_info",
+     "beginner_squat_and_deadlift",
+     "many_small_entries",
+     "hinge_before_squat"
+    ],
+    "week": [
+     "spinal_load_week",
+     "weekly_two_day_by_design",
+     "pattern_gap",
+     "push_pull_imbalance",
+     "push_pull_no_pull",
+     "push_pull_no_push"
+    ]
+   },
+   "short_lines": {
+    "payoff_negative": "Chest: 14.0 sets, past the 13.0-set payoff point ›",
+    "session_efficiency": "Chest: 11.0 sets, over the 10-set limit ›",
+    "session_efficiency_single_day": "Chest: all 7.0 weekly sets on Monday ›",
+    "redundant_pattern": "Chest: 10.5 sets from one movement on Monday ›",
+    "weekly_needs_sets": "Chest: 4.0 sets a week, below 8 ›",
+    "weekly_optional_low": "Outer hips: 3.5 sets a week (optional) ›",
+    "weekly_far_over": "Chest: 28.5 sets a week, past 22 ›",
+    "consecutive_high_volume": "Chest: hard on Monday and Tuesday ›",
+    "recovery_overlap": "Chest: back on Tuesday, 24 h after Monday ›",
+    "recovery_overlap_streak": "Chest: 3 hard days in a row ›",
+    "missing_stretch": "Chest: no stretched-position exercise ›",
+    "low_frequency": "Chest: trained on only 1 day ›",
+    "recovery_gap_long": "Chest: 6 days between sessions ›",
+    "sets_per_exercise": "Leg Press: 6 sets in one exercise, max 5 ›",
+    "spinal_load": "Monday: 10 heavy squat/deadlift sets, max 8 ›",
+    "session_hard_sets": "Monday: 27 hard sets, max 24 ›",
+    "session_hard_sets_info": "Monday: 23 hard sets, near the 24 max ›",
+    "session_length": "Monday: about 82 min, max 75 ›",
+    "session_length_info": "Monday: about 68 min ›",
+    "beginner_squat_and_deadlift": "Monday: heavy squats and deadlifts together ›",
+    "many_small_entries": "Monday: 11 exercises, about 1.8 sets each ›",
+    "hinge_before_squat": "Monday: heavy deadlifts the day before squats ›",
+    "spinal_load_week": "Week: 16 heavy squat/deadlift sets, max 14 ›",
+    "weekly_two_day_by_design": "Two days: some muscles below minimum by design ›",
+    "pattern_gap": "Week: no vertical pull ›",
+    "push_pull_imbalance": "Week: 9 pulling vs 16 pressing sets ›",
+    "push_pull_no_pull": "Week: pressing but no pulling ›",
+    "push_pull_no_push": "Week: pulling but no pressing ›"
+   }
+  },
+  "staples": {
+   "chest": 30,
+   "front_delts": 16,
+   "side_delts": 7,
+   "rear_delts": 6,
+   "lats": 35,
+   "upper_back": 23,
+   "traps": 9,
+   "biceps": 18,
+   "triceps": 15,
+   "forearms": 6,
+   "abs": 13,
+   "quads": 25,
+   "hamstrings": 14,
+   "glutes": 22,
+   "calves": 7,
+   "adductors": 3,
+   "lower_back": 4,
+   "obliques": 6,
+   "abductors": 5
+  },
+  "slot_recommendations": {
+   "horizontal_push": [
+    "incline-dumbbell-press",
+    "incline-barbell-bench-press"
+   ],
+   "vertical_push": [
+    "seated-dumbbell-shoulder-press",
+    "overhead-press"
+   ],
+   "horizontal_pull": [
+    "chest-supported-row",
+    "seated-cable-row"
+   ],
+   "vertical_pull": [
+    "close-grip-pulldown",
+    "lat-pulldown"
+   ],
+   "squat": [
+    "back-squat",
+    "leg-press"
+   ],
+   "hinge": [
+    "romanian-deadlift",
+    "stiff-leg-dumbbell-deadlift"
+   ],
+   "lunge": [
+    "bulgarian-split-squat",
+    "smith-split-squat"
+   ],
+   "carry_core": [
+    "suitcase-carry",
+    "farmer-carry"
+   ],
+   "power": [
+    "box-jump",
+    "depth-jump"
+   ],
+   "chest_fly": [
+    "cable-fly",
+    "pec-deck"
+   ],
+   "front_delts": [
+    "front-raise",
+    "arnold-press"
+   ],
+   "side_delts": [
+    "dumbbell-lateral-raise",
+    "cable-lateral-raise"
+   ],
+   "rear_delts": [
+    "reverse-pec-deck",
+    "face-pull"
+   ],
+   "lat_iso": [
+    "straight-arm-pulldown",
+    "incline-cable-pullover"
+   ],
+   "traps": [
+    "barbell-shrug",
+    "dumbbell-shrug"
+   ],
+   "biceps": [
+    "incline-dumbbell-curl",
+    "barbell-curl"
+   ],
+   "triceps": [
+    "overhead-cable-triceps-extension",
+    "triceps-pushdown"
+   ],
+   "forearms": [
+    "wrist-curl",
+    "reverse-wrist-curl"
+   ],
+   "quads_iso": [
+    "leg-extension",
+    "sissy-squat"
+   ],
+   "hamstring_curl": [
+    "seated-leg-curl",
+    "lying-leg-curl"
+   ],
+   "glute_iso": [
+    "hip-thrust",
+    "barbell-glute-bridge"
+   ],
+   "hip_iso": [
+    "hip-abduction-machine",
+    "hip-adduction-machine"
+   ],
+   "calves": [
+    "seated-calf-raise",
+    "standing-calf-raise"
+   ],
+   "abs": [
+    "hanging-leg-raise",
+    "ab-wheel-rollout"
+   ]
+  },
+  "baseline": {
+   "beginner": {
+    "week_cost": 60.49,
+    "presets": 16,
+    "range": [
+     40.61,
+     80.14
+    ]
+   },
+   "intermediate": {
+    "week_cost": 71.52,
+    "presets": 16,
+    "range": [
+     51.41,
+     92.7
+    ]
+   },
+   "advanced": {
+    "week_cost": 80.43,
+    "presets": 14,
+    "range": [
+     61.6,
+     96.93
+    ]
+   }
+  },
+  "learn": {
+   "changed": {
+    "fundamentals/set-crediting-targets.json": 6,
+    "fundamentals/hypertrophy-stimulus.json": 2,
+    "fundamentals/volume-frequency.json": 7
+   },
+   "article": "education/fundamentals/high-volume-vs-high-intensity.json",
+   "leftover_terms": []
+  },
+  "exercise_pages": "item 7 on standby (Mr Dude): nothing generated",
+  "builder_paths": {
+   "ramp": "volume-model.json visuals.body_map.ramp {stops_hex, order, interpolation, weekly{breakpoints[level][m]{grey_below, light_green, min, dark_green[lo,hi], yellow, red}, red_point}, daily{by_fatigue_class[type/axial]{k, dark_green[lo,hi], peak_n, yellow, red}, live_formula}}",
+   "ramp_precomputed": "day-metrics-presets.json presets[goal][preset].days[i].muscles[m].ramp {x, hex, zone}; presets[goal][preset].weekly_status.ramp[m] {x, hex, zone}",
+   "peak_range_rules": "rules.json rules[id=payoff].fatigue_classes[].peak_range, .yellow_n; rules[id=payoff].colour_vol15",
+   "fatigue_level": "rules.json fatigue_level {levels, cutoff_values, cutoffs}; day-metrics-presets.json ...days[i].day_summary.fatigue_level {level, value}; day_summary.display = \"Fatigue: <level>\"",
+   "hidden_fields": "day-metrics-presets.json display_policy_vol15 and days[i].day_summary.display_fields; rules.json rules[id=recovery_vs_baseline].display = false; flag_copy.templates[id].shown = false (payoff_past_efficient, wasted_late_sets, recovery_vs_baseline)",
+   "short_lines": "rules.json flag_copy.templates[id].short_line (+ short_line_example, named_by); flag_copy.short_line_rule",
+   "staples": "rules.json staples[m] (ordered ids); staples_flat (legacy list); staples_meta",
+   "slot_recommendations": "rules.json slot_recommendations.by_slot[slot][level] (ids, best first)",
+   "baseline": "rules.json rules[id=recovery_vs_baseline].baseline.general_by_level.values[level].week_cost; baseline.switch_rule",
+   "article": "education/fundamentals/high-volume-vs-high-intensity.json (index.json pages[id=high-volume-vs-high-intensity]; illustration {n, stimulus_pct, fatigue_pct, payoff, peak_range, zero_n, per_class, caption, does_not_prove})"
+  },
+  "history_frozen": [
+   "model:vol14d"
+  ]
  }
 }

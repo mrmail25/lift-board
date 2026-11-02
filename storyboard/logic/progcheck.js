@@ -5,6 +5,8 @@
    analytics.frequency_min_effective, rules.json session_length + spinal_load). Every threshold comes from the data.
    Parity: node test/progcheck.diff.js (vs check_program.py). Browser: window.PCHECK; node: module.exports. */
 (function(root){'use strict';
+// vol15 adapter: rules.staples is now per muscle {m:[ids]}; the whole-library list is rules.staples_flat (Coach keeps it)
+const stFlat=R=>Array.isArray(R.staples)?R.staples:(R.staples_flat||[]);
 const RANK=typeof module!=='undefined'&&module.exports?require('./rank.js'):root.RANK;
 const pyR=RANK.pyRound,ORDER=['mon','tue','wed','thu','fri','sat','sun'];
 const cmpT=(a,b)=>{for(let k=0;k<a.length;k++){if(a[k]<b[k])return -1;if(a[k]>b[k])return 1}return 0};
@@ -231,7 +233,7 @@ function bestFor(dt,days,muscle,stretch=false,patterns=null){const {R}=ctx(dt),P
   let ref=null;for(const d of days)for(const t of d.tiles){const c=[t.sets*dt.EX[t.id].muscles[muscle],t.id];if(ref===null||cmpT(c,ref)>0)ref=c}if(ref===null)ref=[0,null]; // python max(..., default=(0,None))
   const ok=i=>{const e=dt.EX[i];return !e.custom&&(e.muscles[muscle]||0)>=0.75&&['isolation','accessory'].includes(e.type)&&PAT[i]!=='plyometric'&&(!RARE_EQ.has(e.equipment)||used.has(e.equipment))
     &&(!stretch||(R.stretch_biased[muscle]||[]).includes(i))&&(!patterns||patterns.includes(PAT[i]))};
-  let c=(R.staples||[]).filter(i=>i in dt.EX&&ok(i));if(!c.length)c=Object.keys(dt.EX).filter(ok);
+  let c=stFlat(R).filter(i=>i in dt.EX&&ok(i));if(!c.length)c=Object.keys(dt.EX).filter(ok);
   const sc=i=>ref[0]>0?RANK.swapScore(dt,ref[1],i)[0]+20*dt.EX[i].muscles[muscle]:100*dt.EX[i].muscles[muscle]-10*dt.EX[i].fatigue;
   const po=i=>patterns?patterns.indexOf(PAT[i]):0;
   return sortBy(c,i=>[po(i),-pyR(sc(i),1),-(dt.USE[i]||0),i])}

@@ -29,25 +29,28 @@ function scoreOf(dt,tid,v){const T=FC(dt).templates[tid]||{},s=T.significance;if
 // vol14e: the one short line a Plan day card shows per flag ('<Muscle>: <n> sets, <reason>'), derived from the template id and its fields.
 // short_text is used when it fits one card line (<= CARD_MAX chars); otherwise the line is built here. Full what/why/fix stays everywhere else.
 const CARD_MAX=48;
+// vol15: Coach's short_line, except where it says 'payoff' (no Payoff wording on screen): a plain-English line instead
+const PLAIN={payoff_negative:'{Muscle}: {sets} sets, too many for one workout'};
 function cardLine(dt,tid,o,shortT){const v=o.vals||{},M=o.muscle?fillStr(dt,'{Muscle}',o.muscle,{}):'',S=x=>{const n=parseFloat(x);return `${x} set${n===1?'':'s'}`};
+  const T=((FC(dt).templates||{})[tid])||{},CL=PLAIN[tid]||T.card_line||T.short_line;if(CL)return fillStr(dt,CL,o.muscle,o.vals).replace(/\s*›\s*$/,'');   // vol15 adapter: Coach's short flag line wins when the template has one
   if(shortT&&shortT.length<=CARD_MAX)return shortT;
   const L={payoff_past_efficient:()=>`${M}: ${S(v.sets)}, past the peak`,
-    payoff_negative:()=>`${M}: ${S(v.sets)}, Payoff below 0`,
-    session_hard_sets:()=>`${v.day_sets} hard sets, over the ${v.cap}-set cap`,
-    session_hard_sets_info:()=>`${v.day_sets} hard sets, near the ${v.cap}-set cap`,
-    session_length:()=>`About ${v.minutes} min, over the ${v.warn_min}-min limit`,
-    session_length_info:()=>`About ${v.minutes} min, a long session`,
-    spinal_load:()=>`Squat + deadlift: ${S(v.sets)}, over the ${v.max}-set limit`,
-    beginner_squat_and_deadlift:()=>`Heavy squats and deadlifts, same day`,
-    sets_per_exercise:()=>`${v.exercise}: ${S(v.sets)}, over the ${v.max}-set limit`,
+    payoff_negative:()=>`${M}: ${S(v.sets)}, too many for one workout`,
+    session_hard_sets:()=>`${v.day}: ${v.day_sets} hard sets, over the ${v.cap}-set cap`,
+    session_hard_sets_info:()=>`${v.day}: ${v.day_sets} hard sets, near the ${v.cap}-set cap`,
+    session_length:()=>`${v.day}: about ${v.minutes} min, over the ${v.warn_min}-min limit`,
+    session_length_info:()=>`${v.day}: about ${v.minutes} min, a long session`,
+    spinal_load:()=>`${v.day}: ${v.sets} heavy squat/deadlift sets, max ${v.max}`,
+    beginner_squat_and_deadlift:()=>`${v.day}: heavy squats and heavy deadlifts`,
+    sets_per_exercise:()=>`${v.exercise}: ${S(v.sets)} in one exercise, max ${v.max}`,
     redundant_pattern:()=>`${M}: ${S(v.sets)} of one movement, over the ${v.cap}-set limit`,
     session_efficiency:()=>`${M}: ${S(v.sets)}, over the ${v.limit}-set workout limit`,
     session_efficiency_single_day:()=>`${M}: all ${v.week_sets} weekly sets on one day`,
-    many_small_entries:()=>`${v.n} exercises, about ${v.avg} sets each (many small)`,
+    many_small_entries:()=>`${v.day}: ${v.n} exercises, about ${v.avg} sets each`,
     weekly_needs_sets:()=>`${M}: ${v.sets} sets/wk, below the ${v.min}-set minimum`,
     weekly_optional_low:()=>`${M}: ${v.sets} sets/wk, optional muscle`,
     weekly_far_over:()=>`${M}: ${v.sets} sets/wk, past the ${v.max}-set max`,
-    spinal_load_week:()=>`Squat + deadlift: ${v.sets} sets/wk, over the ${v.max}-set limit`,
+    spinal_load_week:()=>`This week: ${v.sets} heavy squat/deadlift sets, max ${v.max}`,
     consecutive_high_volume:()=>`${M}: hard sessions ${v.day1} and ${v.day2}`,
     recovery_overlap:()=>`${M}: ${v.gap_h} h rest, needs about ${v.ready_h} h`,
     recovery_overlap_streak:()=>`${M}: ${v.n} hard days in a row`,
@@ -55,7 +58,8 @@ function cardLine(dt,tid,o,shortT){const v=o.vals||{},M=o.muscle?fillStr(dt,'{Mu
     recovery_gap_long:()=>`${M}: ${v.gap_days} days between hard sessions`,
     missing_stretch:()=>`${M}: no stretched-position work`}[tid];
   return L?L():null}
-function mk(dt,tid,o){const T=FC(dt).templates[tid]||{},score=o.score!=null?o.score:scoreOf(dt,tid,o.sv||{});
+function mk(dt,tid,o){const T=FC(dt).templates[tid]||{};if(T.shown===false)return null;/* vol15: retired templates (payoff_past_efficient, wasted_late_sets, recovery_vs_baseline) */
+  const score=o.score!=null?o.score:scoreOf(dt,tid,o.sv||{});
   let plan=!!T.plan_eligible&&score>=50;if(tid==='payoff_past_efficient'&&!((o.sv||{}).sets_past_peak>=1))plan=false;if(o.optional)plan=false;
   const text=fill(dt,tid,o.muscle,o.vals);if(!text)return null;const P=k=>fillStr(dt,T[k],o.muscle,o.vals);
   const grey=T.display==='grey'||!!o.optional,sev=plan&&!grey?(score>=90?3:2):1;
@@ -83,11 +87,17 @@ function weeklyStatus(dt,A,lv,opts){const TT=(dt.TG||dt.targets||{}),Z=(TT.volum
   return {muscles:out,need,byDesign,optLow,far,pass:need.length===0&&far.length===0,header,needs_sets_count:need.length,calm,line,severity:need.length?'warn':calm?(TD.severity||'info'):null}}
 // first Push-for-max-growth add candidate for m (existing tile; pushOps order: day with the lowest current ES for m, then highest credit,
 // lowest fatigue, board order), else the first rules staple that trains m as a main mover; the day = that tile's day / the lowest-ES training day.
+// vol15 adapters (Coach's data pending): staples per muscle and slot_recommendations.
+// staples: {muscle:[ids]} (new) -> staples[m][0]; a flat list (current) -> first id with credit >= 0.75 for m.
+function stapleFor(dt,m){const S=(dt.rules||{}).staples||((dt.VM||{}).vol15||{}).staples;if(!S)return null;if(!Array.isArray(S)){const L=S[m]||(S.by_muscle||{})[m];return L&&L.length?(typeof L[0]==='string'?L[0]:L[0].id):null}
+  return S.find(id=>((dt.EX[id]||{}).muscles||{})[m]>=0.75)||null}
+// slot_recommendations: {slot:[ids] | {examples:[ids]}} -> the first two short names; '' until Coach's data lands.
+function slotRecs(dt,sl,XS,lv){const R0=(dt.rules||{}).slot_recommendations||((dt.VM||{}).vol15||{}).slot_recommendations,R=R0&&(R0.by_slot||R0);let L=R&&R[sl];if(L&&!Array.isArray(L)&&lv&&L[lv])L=L[lv];const ids=Array.isArray(L)?L:L&&(L.examples||L.exercises)||[];return ids.slice(0,2).map(x=>XS(typeof x==='string'?x:x.id)).filter(Boolean).join(' or ')}
 function addCand(dt,D,lv,m){const PC=PCm();const CAP=(RU(dt,'session_efficiency').display_limits||{})[lv]||{},c=[];
   for(const d of D){const E=PC.eff(dt,d.tiles);d.tiles.forEach((t,i)=>{if(t.sets>=5)return;const E1=PC.eff(dt,[{id:t.id,sets:1,rir:t.rir}]);if(!((E1[m]||0)>0))return;
     if(Object.entries(E1).some(([mm,v])=>v>0&&CAP[mm]!=null&&r1((E[mm]||0)+v)>CAP[mm]+1e-9))return;c.push({id:t.id,day:d.day,dayN:E[m]||0,c:E1[m],f:(PC.fatMus(dt,[{id:t.id,sets:1}])[m]||0),i})})}
   c.sort((a,b)=>(b.c>=0.75)-(a.c>=0.75)||a.dayN-b.dayN||b.c-a.c||a.f-b.f||a.i-b.i||a.id.localeCompare(b.id));if(c[0])return Object.assign(c[0],{src:'push'});
-  const st=((dt.rules||{}).staples||[]).find(id=>((dt.EX[id]||{}).muscles||{})[m]>=0.75);if(!st)return null;
+  const st=stapleFor(dt,m);if(!st)return null;
   const day=D.map(d=>({day:d.day,n:PC.eff(dt,d.tiles)[m]||0})).sort((a,b)=>a.n-b.n)[0];return day?{id:st,day:day.day,src:'staple'}:null}
 function build(ctx){const {dt,days,lv,A}=ctx,PC=PCm(),PO=POm(),C=PO.CONSTS(dt),out=[],push=f=>{if(f)out.push(f)};
   const DN=Object.assign({},DAYL,(dt.rules||{}).day_names||{}),XS=id=>{const e=dt.EX[id]||{};return e.short_name||e.name||ctx.exName(id)};
@@ -101,7 +111,7 @@ function build(ctx){const {dt,days,lv,A}=ctx,PC=PCm(),PO=POm(),C=PO.CONSTS(dt),o
     if(top&&dest&&dest.room>=0.5){const k2=top.from-top.to,has=D.find(x=>x.day===dest.day).tiles.find(t=>t.id===top.id);
       fix={label:`Move ${k2} set${k2===1?'':'s'} to ${DN[dest.day]}`,ops:[{op:'sets',day:d.day,id:top.id,to:top.to},has?{op:'sets',day:dest.day,id:top.id,to:has.sets+k2}:{op:'add',day:dest.day,id:top.id,sets:k2}]};fixT=`Move ${k2} set${k2===1?'':'s'} of ${XS(top.id)} to ${DN[dest.day]}. The weekly total stays the same.`}
     else if(c.k&&r1(wk(m)-(o.n-c.n))>=mn(m)-1e-9){const after=wk(m)-(o.n-c.n);fix={label:`Cut ${c.k} set${c.k===1?'':'s'} on ${DN[d.day]}`,ops:c.cuts.map(x=>({op:'sets',day:d.day,id:x.id,to:x.to}))};fixT=`Cut ${c.k} set${c.k===1?'':'s'} (${c.cuts.map(x=>`${XS(x.id)} ${x.from}→${x.to}`).join(', ')}). Your week stays at ${n1(after)} sets, at or above the ${n1(mn(m))} minimum.`}
-    push(mk(dt,red?'payoff_negative':'payoff_past_efficient',{id:`payoff:${d.day}:${m}`,day:d.day,muscle:m,vals:{sets:n1(o.n),day:DN[d.day],peak:n1(o.peak),zero:n1(o.zero),excess:ss(excess)},sv:{sets_past_peak:o.sets_past_peak},fix,fixText:fixT,section:'daily',payoff:o}))}
+    if(red)push(mk(dt,'payoff_negative',{id:`payoff:${d.day}:${m}`,day:d.day,muscle:m,vals:{sets:n1(o.n),day:DN[d.day],peak:n1(o.peak),zero:n1(o.zero),excess:ss(excess)},sv:{sets_past_peak:o.sets_past_peak},fix,fixText:fixT,section:'daily',payoff:o}))}
   // ---- checker rules (fields from the check_program flag tuples, per flag_copy fields[].source)
   let fl=[];try{fl=PC.check(dt,D.map(d=>({day:d.day,tiles:d.tiles})),lv)[0]}catch(e){}
   const SH=RU(dt,'session_hard_sets'),SL=RU(dt,'session_length'),SLv=(SL.by_level||{})[lv]||SL,SPR=RU(dt,'spinal_load'),SE=RU(dt,'session_efficiency'),SPE=RU(dt,'sets_per_exercise').threshold||5,RP=RU(dt,'redundant_pattern'),MPL=((dt.rules||{}).movement_patterns||{}).labels||{};
@@ -125,7 +135,7 @@ function build(ctx){const {dt,days,lv,A}=ctx,PC=PCm(),PO=POm(),C=PO.CONSTS(dt),o
     else if(id==='low_frequency'){const m=f[2];push(mk(dt,'low_frequency',{id:`lowf:${m}`,muscle:m,vals:{n_days:`${f[3]} day${f[3]===1?'':'s'}`},section:'frequency'}))}
     else if(id==='recovery_gap_long'){const m=f[2];push(mk(dt,'recovery_gap_long',{id:`gap:${m}`,muscle:m,vals:{gap_days:Math.round(f[5]/24)},section:'frequency'}))}
     else if(id==='missing_stretch'){const m=f[2];if(typeof m!=='string')continue;push(mk(dt,'missing_stretch',{id:`str:${m}`,muscle:m,vals:{examples:(SB[m]||[]).slice(0,2).map(XS).join(' or ')},section:'balance'}))}
-    else if(id==='pattern_gap'&&f[0]==='warn'){const sl=f[2];push(mk(dt,'pattern_gap',{id:`pg:${sl}`,vals:{slot_lower:String((SLOT[sl]||{}).name||sl.replace(/_/g,' ')).toLowerCase(),examples:''},section:'balance'}))}}
+    else if(id==='pattern_gap'&&f[0]==='warn'){const sl=f[2];push(mk(dt,'pattern_gap',{id:`pg:${sl}`,vals:{slot_lower:String((SLOT[sl]||{}).name||sl.replace(/_/g,' ')).toLowerCase(),examples:slotRecs(dt,sl,XS,lv)},section:'balance'}))}}
   // ---- week: weekly_status (needs sets / optional low / 2-day by design / far over)
   for(const [m,w] of Object.entries(WS.muscles)){
     if(w.below==='needs_sets'){const short=w.min-w.x,p=addCand(dt,D,lv,m),c=p?(PC.eff(dt,[{id:p.id,sets:1}])[m]||0):0,k=p&&c>0?Math.max(1,Math.min(4,Math.ceil(short/c))):0,inB=p&&D.find(d=>d.day===p.day).tiles.find(t=>t.id===p.id);
@@ -140,7 +150,7 @@ function build(ctx){const {dt,days,lv,A}=ctx,PC=PCm(),PO=POm(),C=PO.CONSTS(dt),o
     else{const R=RU(dt,'push_pull_imbalance'),lo=R.min_ratio||0.75,hi=R.max_ratio||2,low=pu<ps*lo,gap=low?Math.ceil(ps*lo-pu-1e-9):Math.ceil(pu/hi-ps-1e-9);push(mk(dt,'push_pull_imbalance',{id:'pushpull',vals:{pull:pu,push:ps,gap,side:low?'rows or pulldowns':'presses'},section:'balance'}))}}
   const exOf=f=>{const m=/^(?:Add|Swap in|Swap to|Swap \S.*? for) (.+?)(?: on | to | \(|$)/.exec(f.preview||'');return m?m[1].replace(/\.$/,''):null};
   for(const s of (ctx.sugs||[])){const t=s.target||{},m=t.muscle,F=(s.fixes||[]),f0=F[0];if(!f0)continue;
-    if(s.source==='pattern_gap'&&t.flag){const sl=t.flag[2],ex=F.slice(0,2).map(exOf).filter(Boolean).join(' or ');const old=out.find(x=>x.id===`pg:${sl}`);const o={id:`pg:${sl}`,vals:{slot_lower:String((SLOT[sl]||{}).name||String(sl).replace(/_/g,' ')).toLowerCase(),examples:ex},fix:{label:'Apply',days:f0.days},fixText:f0.preview+'.',section:'balance'};
+    if(s.source==='pattern_gap'&&t.flag){const sl=t.flag[2],ex=slotRecs(dt,sl,XS,lv)||F.slice(0,2).map(exOf).filter(Boolean).join(' or ');const old=out.find(x=>x.id===`pg:${sl}`);const o={id:`pg:${sl}`,vals:{slot_lower:String((SLOT[sl]||{}).name||String(sl).replace(/_/g,' ')).toLowerCase(),examples:ex},fix:{label:'Apply',days:f0.days},fixText:f0.preview+'.',section:'balance'};
       if(old)out.splice(out.indexOf(old),1);push(mk(dt,'pattern_gap',o))}
     else if(s.source==='stretch_share'&&m){const old=out.find(x=>x.id===`str:${m}`);if(old){old.fix={label:'Apply',days:f0.days};old.fixText=f0.preview+'.'}}}
   const seen=new Set();return out.filter(f=>f&&(seen.has(f.id)?false:(seen.add(f.id),true)))}
@@ -176,5 +186,5 @@ function pushOps(dt,days,lv,A,maxSets=5){const PC=PCm(),W=clone(days.filter(d=>d
       if(did)break}
     if(!did)break}
   return {ops:Object.values(ops),added}}
-const API={build,significant,cutToPeak,efficientOps,pushOps,ord,weeklyStatus,fill,fillStr,addCand,cardLine};
+const API={build,significant,cutToPeak,efficientOps,pushOps,ord,weeklyStatus,fill,fillStr,addCand,cardLine,stapleFor,slotRecs};
 if(isNode)module.exports=API;else root.FLAGS14=API})(typeof window!=='undefined'?window:globalThis);

@@ -9,7 +9,7 @@
  "app_link": {
   "features": [
    "Weekly volume per muscle (targets.json volume_zones)",
-   "Payoff per muscle per workout (rules.json rules[id=payoff])",
+   "Body map colours per muscle per workout (volume-model.json visuals.body_map.ramp)",
    "Frequency notes and suggestion buttons (rules.json rules: low_frequency; suggestion_buttons)"
   ],
   "explains": "Why the board counts weekly sets per muscle, why each muscle has a minimum and a sweet spot, and how to think about one workout versus the whole week."
@@ -47,7 +47,7 @@
      "app_key": "targets.json:curve.evidence_tags"
     },
     {
-     "text": "Past the maximum, extra sets add recovery cost faster than they add growth for most people. The exact turning point is individual and not measured.",
+     "text": "Past the maximum, extra sets add fatigue faster than they add growth for most people. The exact turning point is individual and not measured.",
      "evidence": "modeled"
     },
     {
@@ -129,8 +129,8 @@
    "id": "sessions",
    "heading": "How much to do in one workout",
    "body": [
-    "Within one workout, each extra set for the same muscle adds less, while fatigue keeps building. The app shows this as Payoff: stimulus minus fatigue for each muscle on each day.",
-    "Payoff is highest in the sweet spot of a workout, a handful of hard sets for most muscles, and a little earlier for very tiring lifts. Below zero, extra sets cost more recovery than they build.",
+    "Within one workout, each extra set for the same muscle adds less, while fatigue keeps building. The day body map shows this as a colour for each muscle.",
+    "Dark green covers the best range in one workout, a handful of hard sets for most muscles and a little fewer for very tiring lifts. Yellow means past it; red means extra sets now cost more than they build.",
     "Weekly sets still count in full wherever they land, so going past the per-workout cap is only an info note. Two buttons offer fixes: Make it more efficient trims or swaps past the peak, and Push for max growth adds sets up to the cap. Neither runs unless you tap it."
    ],
    "points": [
@@ -143,7 +143,7 @@
      ]
     },
     {
-     "text": "The Payoff constants and the per-workout cap are coaching choices for comparing plans, not measured limits.",
+     "text": "The colour breakpoints and the per-workout cap are coaching choices for comparing plans, not measured limits.",
      "evidence": "modeled",
      "app_key": "rules.json:rules.#payoff.constants"
     },
@@ -172,7 +172,7 @@
      "app_key": "rules.json:rules.#low_frequency.message"
     },
     {
-     "text": "Moving some sets to a second day is still a sensible fix when one workout is long or a muscle is past its Payoff peak.",
+     "text": "Moving some sets to a second day is still a sensible fix when one workout is long or a muscle turns yellow or red on the day map.",
      "evidence": "modeled",
      "app_key": "rules.json:rules.#low_frequency.fixes"
     }
@@ -185,7 +185,7 @@
   "rules.json:rules.#payoff.constants.stim_tau": 4.0
  },
  "notes": [
-  "vol14 rewrite: face-value weekly volume, Payoff per muscle per workout, per-workout cap info-only, suggestion buttons.",
+  "vol15 rewrite: face-value weekly volume, the day body map colour per muscle per workout, per-workout cap info-only, suggestion buttons.",
   "Pelland 2026 is a meta-regression; its frequency result is about growth with volume matched, not about any one schedule.",
   "The per-session evidence is a preprint plus a conference abstract (not peer-reviewed) and is labelled as such."
  ]

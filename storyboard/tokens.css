@@ -11,13 +11,15 @@
   --accent:#E8430C;      /* Ember: primary action, active state, PRs, rest line. 4.0:1 on white, 5.2:1 on black */
   --accent-press:#C2380A;/* pressed accent + small accent text on white (5.4:1) */
   --accent-tint:#FDECE6; /* accent wash behind chips / selected rows */
+  --accent-text:#C2380A; /* vol15: accent-coloured TEXT on light surfaces (>= 4.5:1); fills keep --accent */
+  --accent-strong:#C2380A; /* vol15: fill behind small white labels (badges, small accent buttons) >= 4.5:1 */
 
   /* Neutrals (greys of ink) */
   --bg:#F2F2F4;          /* grouped background */
   --fill:#E9E9EC;        /* inputs, segmented track, keypad keys */
   --line:rgba(0,0,0,.09);/* hairlines */
-  --text-2:#6B6B70;      /* secondary text */
-  --text-3:#A1A1A6;      /* tertiary, placeholders, auto-filled values */
+  --text-2:#5E5E63;      /* secondary text (vol15: >= 4.5:1 on paper, bg and fill) */
+  --text-3:#68686D;      /* tertiary, placeholders, auto-filled values (vol15: >= 4.5:1 on paper, bg and fill) */
   --chrome:rgba(249,249,250,.82); /* translucent bars (tab bar, nav) */
 
   /* Functional only (never brand): destructive actions */
@@ -46,7 +48,7 @@
   --ink-press:#333;
   --glyph-bg:#000; --glyph-fg:#fff; --glyph-ring:transparent; /* exercise-type icon: white symbol on a black disc, all types */
   --fill-press:#DCDCE0; --row-press:#ECECEF; --row-hi:#F6F6F8;
-  --line-strong:#C4C4C9; --grab:#C7C7CC; --tab-off:#999A9F;
+  --line-strong:#C4C4C9; --grab:#C7C7CC; --tab-off:#5E5E63;
   --kp-bg:#D6D7DC; --kp-press:#B9BAC0;
   --map-base:#ECECEF; --map-line:#D6D6DA; --map-empty:#DCDCE0; --map-off:#D9D9DD;
   /* muscle role on a map (batch C, Mr Dude: no greyscale on maps): exercise popup, Finish, Learn. main = primary (rating >= 0.75),
@@ -87,8 +89,8 @@
    (localStorage apechit.sb.theme: system | light | dark). The two blocks below carry the SAME values (test darkTokensSame). */
 html[data-theme=dark]{
   --ink:#F2F2F4; --paper:#1C1C1E; --bg:#000; --fill:#2C2C2E; --line:rgba(255,255,255,.12);
-  --text-2:#A1A1A8; --text-3:#6C6C72; --chrome:rgba(24,24,26,.82);
-  --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10;
+  --text-2:#A1A1A8; --text-3:#8E8E93; --chrome:rgba(24,24,26,.82);
+  --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10; --accent-text:#FF6A33; --accent-strong:#C2380A;
   --danger:#FF453A;
   --vol-under:#5D7189; --vol-amber:#F2B23F; --vol-red:#FF5A4E; --vol-in-range:#4CC285;
   --ramp-1:#1F3A63; --ramp-2:#2F5D9E; --ramp-3:#4F86D6; --ramp-4:#A9C9F5; --ramp-fg-hi:#000;
@@ -100,7 +102,7 @@ html[data-theme=dark]{
   --surface-ink:#2C2C2E; --on-surface-ink:#F2F2F4; --vol-mix:#000;
   --glyph-bg:#000; --glyph-fg:#fff; --glyph-ring:rgba(255,255,255,.38);
   --fill-press:#3A3A3C; --row-press:#2C2C2E; --row-hi:#232325;
-  --line-strong:#48484A; --grab:#545458; --tab-off:#7C7C82;
+  --line-strong:#48484A; --grab:#545458; --tab-off:#8E8E93;
   --kp-bg:#1C1C1E; --kp-press:#4A4A4D;
   --map-base:#2A2A2D; --map-line:#3C3C40; --map-empty:#3A3A3E; --map-off:#3A3A3E;
   --vol-in-range-ink:#4CC285;
@@ -117,8 +119,8 @@ html[data-theme=dark]{
 }
 @media (prefers-color-scheme:dark){html:not([data-theme=light]){
   --ink:#F2F2F4; --paper:#1C1C1E; --bg:#000; --fill:#2C2C2E; --line:rgba(255,255,255,.12);
-  --text-2:#A1A1A8; --text-3:#6C6C72; --chrome:rgba(24,24,26,.82);
-  --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10;
+  --text-2:#A1A1A8; --text-3:#8E8E93; --chrome:rgba(24,24,26,.82);
+  --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10; --accent-text:#FF6A33; --accent-strong:#C2380A;
   --danger:#FF453A;
   --vol-under:#5D7189; --vol-amber:#F2B23F; --vol-red:#FF5A4E; --vol-in-range:#4CC285;
   --ramp-1:#1F3A63; --ramp-2:#2F5D9E; --ramp-3:#4F86D6; --ramp-4:#A9C9F5; --ramp-fg-hi:#000;
@@ -130,7 +132,7 @@ html[data-theme=dark]{
   --surface-ink:#2C2C2E; --on-surface-ink:#F2F2F4; --vol-mix:#000;
   --glyph-bg:#000; --glyph-fg:#fff; --glyph-ring:rgba(255,255,255,.38);
   --fill-press:#3A3A3C; --row-press:#2C2C2E; --row-hi:#232325;
-  --line-strong:#48484A; --grab:#545458; --tab-off:#7C7C82;
+  --line-strong:#48484A; --grab:#545458; --tab-off:#8E8E93;
   --kp-bg:#1C1C1E; --kp-press:#4A4A4D;
   --map-base:#2A2A2D; --map-line:#3C3C40; --map-empty:#3A3A3E; --map-off:#3A3A3E;
   --vol-in-range-ink:#4CC285;

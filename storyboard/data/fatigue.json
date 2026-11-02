@@ -9,7 +9,7 @@
  "manual_adjustments_note": "None. Every value comes from type x axial; no lift was hand-tuned.",
  "basis": "Heavy axial compounds (heavy squat/hinge lists, fatigue rating 1.5, good mornings) > 1, isolation < 1. Classes come from existing exercises.json data (type, equipment, fatigue).",
  "nurd": {
-  "short": "Lift Board model; effort factors anchored to Moran-Navarro 2017 and Refalo 2024",
+  "short": "ApeChit model; effort factors anchored to Moran-Navarro 2017 and Refalo 2024",
   "year": 2026,
   "type": "model",
   "label": "Modeled",

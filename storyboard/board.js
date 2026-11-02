@@ -26,7 +26,7 @@ const muscleShort=m=>{const L=MSL(),mu=L.muscles||{},hd=L.heads||{};if(mu[m])ret
 // all-zero muscle map (tibialis-raise): the untracked_target tag stands where the fractions would go
 const utOf=id=>(ex(id)||{}).untracked_target||null;
 const fracLine=id=>{const f=fracs(id);if(!f.length&&utOf(id))return utOf(id).tag;return f.slice(0,3).map(([m,v])=>`${muscleShort(m)} ${fr(v)}`).join(' · ')};
-const BD={detail:(()=>{try{return localStorage.getItem('apechit.sb.boardDetail')==='1'}catch(e){return false}})()};
+const BD={detail:false};   // vol15: the Clean / Detail toggle is gone (the board is always clean)
 // ------------------------------------------------------------- state
 const B={name:'',level:'intermediate',version:0,dirty:false,edited:0,days:[],sel:new Set(),hist:[],tpl:null};
 function blankDays(){return DAYS.map(d=>({day:d,label:'',rest:true,tiles:[]}))}
@@ -75,9 +75,9 @@ function setMap(mode,i){MAPV.mode=mode;if(i!=null)MAPV.day=i;$$('#mapseg button'
 function stripHtml(st){const {A,C,d}=st,avg=avgMins(d),fail=C.total-C.pass;
   return `<span class="ast"><b class="num" data-s="sets">${A.weekSets}</b><small>sets / wk</small></span>
    <span class="ast"><b class="num" data-s="min">${d.length?'≈ '+avg:'–'}</b><small>min / session</small></span>
-   ${openSlots()?`<span class="ast chk pend"><b class="num" data-s="checks">–</b><small>Fill slots to check</small></span>`:(()=>{const F=flags14(),n=F.filter(f=>f.sev>=2).length;return `<span class="ast chk"><b class="num" data-s="checks">${n}</b><small>${n?`<em class="chkbad">to fix</em>`:'to fix'}${F.length-n?` · ${F.length-n} smaller`:''}</small></span>`})()}<span class="ago">Analysis ›</span>`}
+   ${openSlots()?`<span class="ast chk pend"><b class="num" data-s="checks">–</b><small>Fill slots to check</small></span>`:(()=>{const F=flags14(),n=F.filter(f=>f.sev>=2).length;return `<span class="ast chk"><b class="num" data-s="checks">${n}</b><small>${n?`<em class="chkbad">to fix</em>`:'to fix'}${F.length-n?` · ${F.length-n} smaller`:''}</small></span>`})()}`}
 function dayMeta(day){const n=sum(day.tiles.map(t=>t.sets));return day.tiles.length?`${n} sets · ≈ ${MINS(day.tiles)} min`:''}
-function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bmap');if(mp)mp.innerHTML=mapHtml(st,days);const lg=$('#bmleg');if(lg)lg.innerHTML=MLEG||'';const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);s.setAttribute('aria-label',`Analysis: ${st.A.weekSets} sets a week, ${flags14().filter(f=>f.sev>=2).length} things to fix`)}
+function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bmap');if(mp)mp.innerHTML=mapHtml(st,days);const lg=$('#bmleg');if(lg)lg.innerHTML=MLEG||'';const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);}
   days.forEach((d,i)=>{const n=sum(d.tiles.map(t=>t.sets));const b=$(`#dstrip [data-jump="${i}"] .dn`);if(b){b.textContent=stripTxt(d);b.parentNode.classList.toggle('rd',isRest(d))}
     const h=$(`.col[data-day="${d.day}"] .cm`);if(h)h.textContent=dayMeta(d);const w=$(`.col[data-day="${d.day}"] .dmxw`);if(w)w.outerHTML=dmxHtml(d)});
   $$('.col').forEach((c,i)=>{const d=days[i];if(!d)return;c.classList.toggle('restday',isRest(d));const l=$('.cl',c);if(l)l.textContent=dayLabel(d)}); // preview days mid-drag
@@ -214,13 +214,7 @@ function flags14(){if(!FG())return [];const k=sigD()+'|'+B.level+'|'+sessLimit()
 const flagById=id=>flags14().find(f=>f.id===id);
 function effPlan(){const k=sigD()+'|'+B.level;if(EPC.k===k)return EPC.v;const d=checkDays();const v=FG()?FG().efficientOps(RD(),d,B.level,PC.analytics(RD(),d,B.level)):{ops:[],removed:0};EPC={k,v};return v}
 function pushPlan(){const k=sigD()+'|'+B.level;if(PPC.k===k)return PPC.v;const d=checkDays();const v=FG()?FG().pushOps(RD(),d,B.level,PC.analytics(RD(),d,B.level)):{ops:[],added:0};PPC={k,v};return v}
-const payFills=P=>{const o={};if(!P)return o;for(const [m,q] of Object.entries(P.muscles))o[m]=q.tone?`var(--pay-${q.tone})`:null;return o};
-const payLeg=()=>`<span class="mleg pleg"><span class="lg1"><i style="background:var(--pay-green)"></i>Paying off</span><span class="lg1"><i style="background:var(--pay-amber)"></i>Past the peak</span><span class="lg1"><i style="background:var(--pay-red)"></i>Below 0</span></span>`;
-function gauge(v,lab,o={}){const W=64,H=38,cx=32,cy=33,r=26,cl=x=>Math.max(0,Math.min(100,x)),ang=x=>Math.PI*(1-cl(x)/100),pt=x=>[cx+r*Math.cos(ang(x)),cy-r*Math.sin(ang(x))],
-    arc=(a,b)=>{const [x1,y1]=pt(a),[x2,y2]=pt(b);return `M${x1.toFixed(1)} ${y1.toFixed(1)} A${r} ${r} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`},[nx,ny]=pt(v);
-  return `<span class="g14 ${o.cls||''}"><svg viewBox="0 0 ${W} ${H}" aria-hidden="true"><path d="${arc(0,100)}" class="gtr"/>${o.gap!=null&&o.gap>cl(v)?`<path d="${arc(cl(v),o.gap)}" class="ggap"/>`:''}${cl(v)>0.5?`<path d="${arc(0,v)}" class="gfl"/>`:''}<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" class="gnd"/><circle cx="${cx}" cy="${cy}" r="2.6" class="gnc"/></svg><b class="num">${Math.round(v)}</b><small>${lab}</small></span>`}
-const gauges=(P,cls='')=>`<span class="g2 ${cls}">${gauge(P.stimulus,'Stimulus',{cls:'gs'})}${gauge(P.payoff,'Payoff',{cls:'gp',gap:P.stimulus})}</span>`;
-const gaugeAria=(D,P)=>`${WDL[DAYS.indexOf(D.day)]}: stimulus ${Math.round(P.stimulus)} percent, Payoff ${Math.round(P.payoff)}, fatigue ${Math.round(P.stimulus-P.payoff)}. Open the daily analysis`;
+// vol15: the Stimulus / Payoff gauges and the Payoff map are gone (Coach's Learn article explains the curve)
 // vol14d: flags carry Coach's what / why / fix (flag_copy templates); a template's short_text replaces the full text under 360px
 const ftxt=(f,t)=>f.short_text?`<span class="stl">${t}</span><span class="sts">${f.short_text}</span>`:t;
 const fwfS=f=>f.short_text?`<div class="stl">${fwf(f)}</div>`:fwf(f);
@@ -228,11 +222,11 @@ const fwfS=f=>f.short_text?`<div class="stl">${fwf(f)}</div>`:fwf(f);
 const flagCard=f=>f.card?`<button class="fl1 flc s${f.sev}${f.grey?' calm':''}" data-b="flag" data-id="${escA(f.id)}" aria-label="${escA(f.what||f.text)}"><span class="fdot" aria-hidden="true"></span><span class="flt">${f.card}<span class="chev" aria-hidden="true">&nbsp;›</span></span></button>`:flagLine(f);
 const flagLine=(f,full)=>`<button class="fl1 s${f.sev}${f.grey?' calm':''}" data-b="flag" data-id="${escA(f.id)}"><span class="fdot" aria-hidden="true"></span><span class="flt">${ftxt(f,f.what||f.short||f.text)}</span></button>`;
 const fwf=f=>`${f.whyT?`<p class="flwhy"><b>Why:</b> ${f.whyT}</p>`:''}${f.fixT||f.fixText?`<p class="flfx"><b>Fix:</b> ${[f.fixT,f.fixText].filter(Boolean).join(' ')}</p>`:''}`;
-const flagRow=f=>`<details class="fl14 s${f.sev}${f.grey?' calm':''}" data-id="${escA(f.id)}"><summary><span class="fdot" aria-hidden="true"></span><span class="flt">${ftxt(f,f.what||f.text)}</span></summary>${fwfS(f)}${f.fix?`<button class="btn xs accent" data-b="flfix" data-id="${escA(f.id)}">${f.fix.label}</button>`:''}${f.scope==='day'&&f.muscle&&f.payoff?`<button class="btn xs grey" data-b="pcurve" data-day="${f.day}" data-m="${f.muscle}">See the curve</button>`:''}</details>`;
+const flagRow=f=>`<details class="fl14 s${f.sev}${f.grey?' calm':''}" data-id="${escA(f.id)}"><summary><span class="fdot" aria-hidden="true"></span><span class="flt">${ftxt(f,f.what||f.text)}</span></summary>${fwfS(f)}${f.fix?`<button class="btn xs accent" data-b="flfix" data-id="${escA(f.id)}">${f.fix.label}</button>`:''}</details>`;
 // Plan: under each day = gauges + at most 2 significant flags (severity >= 2)
-function dmxHtml(d){const P=d.tiles.length?payDays()[d.day]:null;if(!P||!P.trained)return `<div class="dmxw" data-day="${d.day}"></div>`;const F=FG()?FG().significant(flags14(),'day',d.day,2):[];
-  return `<div class="dmxw" data-day="${d.day}"><button class="gbtn" data-b="pday" data-day="${d.day}" aria-label="${gaugeAria(d,P)}">${gauges(P)}</button>${F.map(f=>flagCard(f)).join('')}</div>`}
-const sugBtns=()=>{const E=effPlan(),P=pushPlan();return `<div class="sug14"><button class="btn sm grey s14" data-b="mkeff"${E.ops.length?'':' disabled'}><span>${(SBT().make_more_efficient||{}).label||'Make it more efficient'}</span>${E.ops.length?`<small class="num">−${E.removed} set${E.removed===1?'':'s'}</small>`:'<small>nothing past the peak</small>'}</button><button class="btn sm grey s14" data-b="mkpush"${P.ops.length?'':' disabled'}><span>${(SBT().push_for_max_growth||{}).label||'Push for max growth'}</span>${P.ops.length?`<small class="num">+${P.added} set${P.added===1?'':'s'}</small>`:'<small>at the limits</small>'}</button></div>`};
+function dmxHtml(d){if(!d.tiles.length)return `<div class="dmxw" data-day="${d.day}"></div>`;const F=FG()?FG().significant(flags14(),'day',d.day,2):[],L=window.WFATIGUE?WFATIGUE.level(RD(),tiles0(d),B.level):null;
+  return `<div class="dmxw" data-day="${d.day}">${L?`<button class="wfl wfl-${L.id}" data-b="dayview" data-day="${d.day}" aria-label="${WDL[DAYS.indexOf(d.day)]}: ${L.label} fatigue. Show this day on the map"><span class="wfk">Fatigue:</span> <b>${L.label}</b></button>`:''}${F.map(f=>flagCard(f)).join('')}</div>`}
+const sugBtns=()=>{const E=effPlan(),P=pushPlan();return `<div class="sug14"><button class="btn sm grey s14" data-b="mkeff"${E.ops.length?'':' disabled'}><span>${(SBT().make_more_efficient||{}).label||'Make it more efficient'}</span>${E.ops.length?`<small class="num">−${E.removed} set${E.removed===1?'':'s'}</small>`:'<small>nothing to trim</small>'}</button><button class="btn sm grey s14" data-b="mkpush"${P.ops.length?'':' disabled'}><span>${(SBT().push_for_max_growth||{}).label||'Push for max growth'}</span>${P.ops.length?`<small class="num">+${P.added} set${P.added===1?'':'s'}</small>`:'<small>at the limits</small>'}</button></div>`};
 // session limit as INFO (rules session_efficiency display_severity 'info', display_limits): the most one workout can usefully take
 function limInfo(){const R=((RD().rules||{}).rules||[]).find(r=>r.id==='session_efficiency')||{},L=(R.display_limits||{})[B.level];if(!L)return '';const g={};for(const [m,v] of Object.entries(L))(g[v]=g[v]||[]).push(MLB(m).toLowerCase());
   const ks=Object.keys(g).map(Number).sort((a,b)=>b-a),big=ks[0];return `<p class="foot lim14"><b>Info:</b> one workout can usefully take about ${big} hard sets for most muscles${ks.slice(1).map(k=>`, ${k} for ${g[k].join(', ')}`).join('')}. Push for max growth stops there.</p>`}
@@ -242,39 +236,31 @@ function impHtml(){if(!FG())return '';const W=FG().significant(flags14(),'week',
    <div class="wk14">${W.length?W.map(f=>flagLine(f,1)).join(''):`<p class="sub">${(()=>{const n=flags14().filter(f=>f.scope==='day'&&f.sev>=2).length;return n?`Nothing big for the week as a whole. ${n} fix${n===1?' is':'es are'} under the days above.`:'Nothing significant this week.'})()}</p>`}</div>${sugBtns()}
    <p class="foot wkfoot">Smaller items stay in <button class="lnk" data-b="analysis">Analysis ›</button></p>`}
 function paintImpact(){const el=$('#impc');if(el)el.innerHTML=impHtml()}
-// Plan: ONE body map, that day's Payoff per muscle
-function mapHtml(st,days){const i=MAPV.day,d=days[i]||days[0],P=d&&payDays()[d.day],vm=payFills(P);
-  const cap=`<b>${WD[i]}</b> · ${isRest(d)?'Rest':`${dayLabel(d)} · Payoff by muscle`}`;MLEG=payLeg();
-  return `<div class="bmaps" data-mode="day" data-day="${d?d.day:''}">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="bmcap" id="bmcap">${cap}</div>`}
+// vol15: Plan map. Weekly by default (MAPRAMP weekly ramp). Tapping a day shows that day (daily ramp) with its flags underneath;
+// tapping the same day again, or the 'Week' chip, goes back to the week.
+const wkFills=A=>{const o={};for(const [m,v] of Object.entries(A.muscles)){const x=v.x!=null?v.x:v.raw;o[m]=MAPRAMP.weekly(RD(),B.level,m,Math.floor(x*100+0.5+1e-9)/100)}return MAPRAMP.fills(o)};   // x = r1(r2(weekly ES)), the displayed value
+const dayFills=d=>d&&d.tiles.length?MAPRAMP.fills(MAPRAMP.daily(RD(),tiles0(d))):{};
+function mapHtml(st,days){const day=MAPV.mode==='day',i=MAPV.day,d=days[i];const vm=day?dayFills(d):wkFills(st.A);
+  const cap=day?`<b>${WDL[i]}</b> · ${isRest(d)?'Rest':dayLabel(d)} <button class="chip wkchip" data-b="mapweek" aria-label="Back to the week">Week</button>`:'<b>This week</b>';MLEG=MAPRAMP.legend(day?'day':'week');
+  const F=day&&d&&d.tiles.length&&FG()?flags14().filter(f=>f.scope==='day'&&f.day===d.day&&f.sev>=2).sort(FG().ord):[];
+  return `<div class="bmaps" data-mode="${day?'day':'week'}" data-day="${d?d.day:''}">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="bmcap" id="bmcap">${cap}</div>${day?`<div class="bmfl">${F.length?F.map(flagCard).join(''):'<p class="sub">Nothing to fix on this day.</p>'}</div>`:''}`}
+function toggleDay(i){if(MAPV.mode==='day'&&MAPV.day===i){MAPV.mode='week'}else{MAPV.mode='day';MAPV.day=i}$$('#dstrip button').forEach((b,k)=>{const on=MAPV.mode==='day'&&k===MAPV.day;b.classList.toggle('sel',on);b.setAttribute('aria-pressed',String(on))});$$('.col').forEach((c,k)=>c.classList.toggle('dsel',MAPV.mode==='day'&&k===MAPV.day));paintStats()}
 // one flag, tap for the fix
 let FLS=null;function flagSheet(id){const f=flagById(id);if(!f)return;if(FLS&&!FLS.closed)FLS.close();
   FLS=X.sheet({title:f.scope==='day'?WDL[DAYS.indexOf(f.day)]:'This week',cls:'grouped flsheet',right:'<button class="btn plain" data-x="close">Done</button>',onClose(){FLS=null}});
   FLS.body.innerHTML=`<div class="group flb"><p class="flw"><b>${ftxt(f,f.what||f.text)}</b></p>${fwfS(f)}
-    <div class="flbt">${f.fix?`<button class="btn accent" data-b="flfix" data-id="${escA(f.id)}">${f.fix.label}</button>`:''}${f.scope==='day'&&f.muscle&&f.payoff?`<button class="btn grey" data-b="pcurve" data-day="${f.day}" data-m="${f.muscle}">See the curve</button>`:''}</div></div>
-    <p class="foot"><span class="evl" data-ev="modeled">Modeled</span> Payoff and the weekly minimums are planning estimates.</p>`}
+    <div class="flbt">${f.fix?`<button class="btn accent" data-b="flfix" data-id="${escA(f.id)}">${f.fix.label}</button>`:''}</div></div>
+    <p class="foot"><span class="evl" data-ev="modeled">Modeled</span> The limits and weekly minimums are planning estimates.</p>`}
 function applyFlagFix(id){const f=flagById(id);if(!f||!f.fix)return;const txt=`Applied: ${f.fix.label}`;
   commit(()=>{if(f.fix.ops)applyOpsBoard(f.fix.ops);else if(f.fix.days)applyDays(f.fix.days)},txt);if(FLS&&!FLS.closed)FLS.close();if(AN&&!AN.closed)renderAnalysis()}
 function applyPlan(kind){const P=kind==='eff'?effPlan():pushPlan();if(!P.ops.length)return;
-  const txt=kind==='eff'?`Trimmed ${P.removed} set${P.removed===1?'':'s'} past the Payoff peak`:`Added ${P.added} set${P.added===1?'':'s'} for max growth`;
+  const txt=kind==='eff'?`Trimmed ${P.removed} set${P.removed===1?'':'s'} past the peak`:`Added ${P.added} set${P.added===1?'':'s'} for max growth`;
   commit(()=>applyOpsBoard(P.ops),txt);if(AN&&!AN.closed)renderAnalysis()}
-// per-muscle, per-day sheet: stimulus, fatigue and Payoff vs sets, a dot where that day's sets land
-let PCS=null;function curveSheet(day,m){const dt=RD(),D=B.days.find(x=>x.day===day);if(!D||!PO())return;const C0=PO().CONSTS(dt),o=PO().muscle(dt,tiles0(D),m);if(!o.gated){X.toast&&X.toast(`${MLB(m)}: under 1 effective set on that day, so no Payoff.`);return}
-  const G=(C0.grid||[]).slice(),N=Math.max(20,Math.ceil(o.n+1));for(let n=(G.length?G[G.length-1]:0)+0.5;n<=N+1e-9;n+=0.5)G.push(n);const W=320,H=226,x0=30,y0=10,yb=196,CV=PO().curve(C0,o.k,G),lo=Math.min(-40,Math.floor(Math.min(...CV.map(q=>q.p))/20)*20),hi=Math.max(100,Math.ceil(Math.max(...CV.map(q=>Math.max(q.s,q.f)))/20)*20),   /* vol14d: y-axis fits the uncapped fatigue line and negative Payoff */px=n=>x0+n/N*(W-x0-8),py=v=>y0+(hi-Math.max(lo,Math.min(hi,v)))/(hi-lo)*(yb-y0);
-  const C=CV,path=k=>C.map((q,i)=>`${i?'L':'M'}${px(q.n).toFixed(1)} ${py(q[k]).toFixed(1)}`).join('');
-  const ys=(hi-lo)>200?40:20,yt=[];for(let v=Math.ceil(lo/ys)*ys;v<=hi;v+=ys)yt.push(v);const xt=[];for(let n=0;n<=N;n+=(N>16?4:2))xt.push(n);
-  const svg=`<svg class="pcv" viewBox="0 0 ${W} ${H}" role="img" aria-label="${MLB(m)} on ${WDL[DAYS.indexOf(day)]}: ${nfmt(o.n)} sets, stimulus ${Math.round(o.stimulus)} percent, fatigue ${Math.round(o.fatigue)} percent, Payoff ${Math.round(o.payoff)}">
-    ${yt.map(v=>`<line x1="${x0}" x2="${W-8}" y1="${py(v)}" y2="${py(v)}" class="${v===0?'pz':'pg'}"/><text x="${x0-4}" y="${py(v)+3}" text-anchor="end">${v}</text>`).join('')}
-    ${xt.map(n=>`<text x="${px(n)}" y="${yb+14}" text-anchor="middle">${n}</text>`).join('')}<text x="${(x0+W)/2}" y="${H-2}" text-anchor="middle" class="pax">hard sets for ${MLB(m).toLowerCase()} in one workout</text>
-    <line x1="${px(o.peak)}" x2="${px(o.peak)}" y1="${y0}" y2="${yb}" class="ppk"/>
-    <path d="${path('s')}" class="cs"/><path d="${path('f')}" class="cf"/><path d="${path('p')}" class="cp"/>
-    ${['s','f','p'].map(k=>`<circle cx="${px(o.n).toFixed(1)}" cy="${py(k==='s'?o.stimulus:k==='f'?o.fatigue:o.payoff).toFixed(1)}" r="4.5" class="dot d${k}"/>`).join('')}</svg>`;
-  if(PCS&&!PCS.closed)PCS.close();
-  PCS=X.sheet({title:`${WD[DAYS.indexOf(day)]} · ${MLB(m)}`,cls:'grouped pcsheet',right:'<button class="btn plain" data-x="close">Done</button>',onClose(){PCS=null}});
-  PCS.body.innerHTML=`<div class="group pcg"><div class="ash"><span>${nfmt(o.n)} hard sets</span><span class="evl" data-ev="modeled">Modeled</span></div>${svg}
-    <p class="pleg2"><span><i class="ks"></i>Stimulus ${Math.round(o.stimulus)}%</span><span><i class="kf"></i>Fatigue ${Math.round(o.fatigue)}%</span><span><i class="kp"></i>Payoff ${Math.round(o.payoff)}</span></p>
-    <p class="pcnote">Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build.</p>
-    <p class="sub">Peak: about ${nfmt(o.peak)} sets (Payoff ${Math.round(o.peak_payoff)}). Zero at about ${nfmt(o.zero)} sets.${o.source==='draft'?' Draft curve until Coach\'s numbers land.':''} ${o.band==='green'?'The next set still pays.':o.band==='amber'?'Past the peak: the next set costs more than it builds.':'Below 0: extra sets cost more recovery than they build.'}</p>
-    <button class="btn plain sm" data-b="learnm" data-m="${m}">Learn about ${MLB(m).toLowerCase()} ›</button></div>`}
+// vol15: the stimulus / fatigue curve is no longer an app screen. The chart component stays for Coach's Learn ('Nurd Sh!t') article:
+// X.curveChart(dt, n, F, label) -> SVG string, or '' when the data can't draw it (embed only if the article's data provides n and F).
+function curveChart(dt,n,F,label){if(!PO()||!X.curveSvg)return '';const C0=PO().CONSTS(dt),o=PO().calc(C0,n,F);if(!o||!o.gated)return '';const G=[];for(let x=0;x<=20+1e-9;x+=0.5)G.push(x);const CV=PO().curve(C0,o.k,G);
+  return X.curveSvg({n:G,s:CV.map(q=>q.s),f:CV.map(q=>q.f),p:CV.map(q=>q.p),label:label||'Curve'})}
+X.curveChart=curveChart;
 // ===================== end vol14 block =====================
 function colHtml(d,i){return `<section class="col${isRest(d)?' restday':''}" data-day="${d.day}" data-i="${i}"><header data-b="dayh" data-day="${d.day}" role="button" tabindex="0" aria-label="${WDL[i]}: ${dayLabel(d)}. Rename or set Rest"><b>${WD[i]}</b><span class="cl">${dayLabel(d)}</span><span class="cm num">${dayMeta(d)}</span></header>${dmxHtml(d)}
   <div class="chits" data-day="${d.day}">${d.tiles.map(chit).join('')}${(d.slots||[]).map(s=>slotHtml(d,s)).join('')}</div><button class="cadd" data-b="add" data-day="${d.day}" aria-label="Add exercise to ${WDL[i]}">${X.I('plus',2.2)}</button></section>`}
@@ -284,8 +270,7 @@ X.V.build=()=>{if(!B.days.length){initBoard();cxRestorePlaced()}
   <div class="bname"><div class="bn">${nbName(B.name||'New routine')}</div>
    <div class="bacts"><button class="btn ink" data-b="push" aria-label="Push to Library">${X.I('up',2.2)}<span class="bl-l">Push to Library</span><span class="bl-s">Push</span></button><button class="btn accent" data-b="start" aria-label="Start training">${X.I('play')}<span class="bl-l">Start training</span><span class="bl-s">Start</span></button></div>
    <div class="bstate" id="bstate">${stateLine()}</div></div>
-  <div class="bsum"><div class="bsegs"><div class="seg xs bdseg" id="bdseg" role="group" aria-label="Board: clean or detail">${bdsegHtml()}</div></div>
-   <div class="bsmap" id="bmap"></div><div class="bsr"><button class="astrip" id="astrip" data-b="analysis"></button><div class="bmleg" id="bmleg"></div></div></div>
+  <div class="bsum"><div class="bsmap" id="bmap"></div><div class="bsr"><div class="astrip" id="astrip"></div><button class="btn accent anbtn" data-b="analysis">Analysis</button><div class="bmleg" id="bmleg"></div></div></div>
   <div class="bstick">
    <div class="dstrip" id="dstrip">${WD.map((w,i)=>`<button data-jump="${i}" aria-label="Jump to ${WDL[i]}"><span>${w}</span><small class="dn"></small></button>`).join('')}</div>
    <div class="selbar" id="selbar"><span id="selt"></span><button class="btn plain" data-b="seldone">Done</button></div></div>
@@ -294,14 +279,14 @@ X.V.build=()=>{if(!B.days.length){initBoard();cxRestorePlaced()}
   <div class="pcheck" id="pcheck"></div>
   <section class="impc wk14c" id="impc" aria-label="This week"></section>
   <div class="glegend" aria-label="Chit shapes">${['primary','accessory','isolation'].map(t=>`<span><span class="cg ${t}">${X.GLY[t]}</span>${t[0].toUpperCase()+t.slice(1)}</span>`).join('')}</div>
-  <p class="foot bhint">Tap a muscle on the map for its Payoff curve. Tap a day's gauges for the daily analysis. Hold a chit to lift it. Drag it to another day, or off the board to remove it. Tap a day's name to rename it or make it a Rest day.</p></div>`};
+  <p class="foot bhint">Tap a day to see it on the map; tap it again for the week. Tap a muscle on the map for its Learn page. Hold a chit to lift it. Drag it to another day, or off the board to remove it. Tap a day's name to rename it or make it a Rest day.</p></div>`};
 X.AFTER.build=()=>{paint(true);const bd=$('#board');bd.addEventListener('scroll',markDay,{passive:true});markDay()};
-const bdsegHtml=()=>`<button data-b="bmode" data-v="clean" class="${BD.detail?'':'on'}">Clean</button><button data-b="bmode" data-v="detail" class="${BD.detail?'on':''}">Detail</button>`;
+
 function toolsHtml(){const n=openSlots();return (n?`<div class="slotbar" id="slotbar"><span>${n} open slot${n>1?'s':''}</span><button class="btn grey" data-b="slotfill">Fill with defaults</button></div>`:'')}
 function cxSavePlaced(){try{const P=[];B.days.forEach(d=>d.tiles.forEach((t,i)=>{if(ex(t.id)&&ex(t.id).custom)P.push({day:d.day,i,id:t.id,sets:t.sets,reps:t.reps||null})}));localStorage.setItem(X.cxPlacedKey,JSON.stringify(P))}catch(e){}}
 function cxRestorePlaced(){let P=[];try{P=JSON.parse(localStorage.getItem(X.cxPlacedKey)||'[]')||[]}catch(e){}
   for(const p of P){const D=B.days.find(d=>d.day===p.day);if(!D||!ex(p.id))continue;D.tiles.splice(Math.min(p.i,D.tiles.length),0,T(p.id,p.sets,p.reps));D.rest=false}}
-function paint(full){const bd=$('#board');if(!bd)return;cxSavePlaced();const sl=bd.scrollLeft;if(!full)bd.innerHTML=boardHtml();bd.classList.toggle('b-detail',BD.detail);const bt=$('#btools');if(bt)bt.innerHTML=toolsHtml();$$('.bdseg').forEach(x=>x.innerHTML=bdsegHtml());bd.scrollLeft=sl;const bn=$('.bname .bn');if(bn)bn.innerHTML=nbName(B.name||'New routine');
+function paint(full){const bd=$('#board');if(!bd)return;cxSavePlaced();const sl=bd.scrollLeft;if(!full)bd.innerHTML=boardHtml();bd.classList.toggle('b-detail',BD.detail);const bt=$('#btools');if(bt)bt.innerHTML=toolsHtml();bd.scrollLeft=sl;const bn=$('.bname .bn');if(bn)bn.innerHTML=nbName(B.name||'New routine');
   paintStats();paintSel();paintPcheck();paintImpact();if(AN&&!AN.closed)renderAnalysis();cbRe();if(DMS&&!DMS.closed)DMS.body.innerHTML=dmxBody(DMS.day)}
 let JMP=-1;function markDay(){const bd=$('#board');if(!bd)return;const cols=$$('.col',bd),o=cols[0].offsetLeft,x=bd.scrollLeft+8;let k=0;cols.forEach((c,i)=>{if(c.offsetLeft-o<=x)k=i});
   if(JMP>k&&bd.scrollLeft>=bd.scrollWidth-bd.clientWidth-2)k=JMP;$$('#dstrip button').forEach((b,i)=>b.classList.toggle('on',i===k))}
@@ -493,7 +478,7 @@ const BMK='apechit.sb.benchMode',benchMode=()=>{try{return localStorage.getItem(
 const recRef=()=>((RD().targets||{}).recovery||{}).reference||null;
 // Logged-progress values for the Analysis sheet and the Progress tab: the local log (logLoad) through PROGRESS with progress-rules.json (RD.PR2).
 function progressNow(){try{return X.progressData?X.progressData():null}catch(e){console.warn(e);return null}}
-const DATA_ASKS=['Recovery shows a modeled range in days per muscle (never exact hours) and the week next to common routines; % of your normal week needs a saved baseline week, so Bring recovery cost back to normal cannot fire yet.','The starting board and the library routines are mock routines.','Logged-progress values come from a synthetic six-week log.'];
+const DATA_ASKS=['The starting board and the library routines are mock routines.','Logged-progress values come from a synthetic six-week log.'];
 function curve(m,A){const v=A.muscles[m],x=v.x,z=v.zones&&v.zones.sweet?v.zones:null,Sx=z?q=>PC.stim(RD(),m,B.level,q):q=>1-Math.exp(-q/v.k),D=z?z.diminishing:v.max,Xm=Math.max(30,Math.ceil((Math.max(x,D*1.25)+4)/5)*5),W=320,H=168,px=q=>30+Math.min(q,Xm)/Xm*(W-40),py=q=>H-30-q*(H-44);
   let d='';for(let i=0;i<=60;i++){const q=i/60*Xm;d+=(i?'L':'M')+px(q).toFixed(1)+','+py(Sx(q)).toFixed(1)}const nx=Sx(x+1)-Sx(x),tk=[];for(let q=0;q<=Xm;q+=Xm>30?10:5)tk.push(`<text x="${px(q)}" y="${H-14}" text-anchor="middle">${q}</text>`);
   // vol2 zone bands: below min, growing, sweet spot, upper range, diminishing returns
@@ -802,42 +787,29 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   const aplc=([a,i])=>`<div class="aplr aplc" data-k="${i}"><div class="grow"><p><b>Applied</b> · ${a.preview}</p>${a.asig===cur?'':'<p class="sub">The board changed after this. Undo puts the whole board back as it was just before Apply, so later edits are lost.</p>'}</div><button class="btn xs ink" data-b="unapply" data-k="${i}">Undo</button></div>`;
   // ===== vol14 layout: big map, summary (one count from flags14), Daily / Weekly =====
   const F14=flags14(),SIG=F14.filter(f=>f.sev>=2).sort(FG().ord),MIN=F14.filter(f=>f.sev<2),PD=payDays();
-  AN.view=AN.view==='weekly'?'weekly':'daily';const tr=B.days.map((D,i)=>D.tiles.length?i:-1).filter(i=>i>=0);const di=tr.includes(AN.day)?AN.day:(tr.includes(MAPV.day)?MAPV.day:(tr[0]!=null?tr[0]:0));AN.day=di;
-  const Dd=B.days[di],P=Dd&&PD[Dd.day],daily=AN.view==='daily';
-  const bmv=daily?payFills(P):volMap(A);
-  const mapSec=`<section class="asec anmap14" data-view="${AN.view}"><div class="anm14">${X.map('front',bmv,{crop:1})}${X.map('back',bmv,{crop:1})}</div>
-    <p class="anmcap">${daily?`<b>${WDL[di]}</b> · Payoff by muscle <span class="evl" data-ev="modeled">Modeled</span>`:'<b>This week</b> · weekly sets vs the targets'}</p>${daily?payLeg():weekLeg()}</section>`;
+  AN.view='weekly';const bmv=wkFills(A);   // vol15: Analysis is weekly only; Daily lives on Plan (tap a day)
+  const mapSec=`<section class="asec anmap14" data-view="weekly"><div class="anm14">${X.map('front',bmv,{crop:1})}${X.map('back',bmv,{crop:1})}</div>
+    <p class="anmcap"><b>This week</b> · weekly sets vs the targets</p>${MAPRAMP.legend('week')}</section>`;
   const nS=SIG.length;
   const summary=`<section class="asec acat ansum" data-cat="summary" data-open="1"><div class="asech static"><span class="asl">Summary</span><span class="ass gsub">${openSlots()?'Fill slots to check':`${nS?`<em class="chkbad">${nS} to fix</em>`:'Nothing big to fix'}${MIN.length?` · ${MIN.length} smaller`:''}`}</span></div><div class="asecb">
     ${(()=>{const W=WST();return W?`${W.calm?`<p class="wst14 calm"><b>Weekly volume:</b> ${W.line}</p>`:`<p class="wst14${W.need.length?' bad':''}"><b>Weekly volume:</b> ${W.header}${W.far.length?` · ${W.far.length} well over the maximum`:''}.</p>`}`:''})()}${sugBtns()}${APPLIED.map((a,i)=>[a,i]).map(aplc).join('')}
     ${SIG.length?`<div class="fll">${SIG.slice(0,3).map(flagRow).join('')}</div>${SIG.length>3?`<p class="sub">${SIG.length-3} more below.</p>`:''}`:'<p class="sub nosug">Nothing significant on this board. Smaller suggestions are in each section.</p>'}</div></section>`;
-  const seg=`<div class="seg sm2 anv14" role="group" aria-label="Daily or weekly"><button type="button" class="${daily?'on':''}" data-b="anv" data-v="daily" aria-pressed="${daily}">Daily</button><button type="button" class="${daily?'':'on'}" data-b="anv" data-v="weekly" aria-pressed="${!daily}">Weekly</button></div>`;
   const sect=(id,title,body,res)=>`<section class="asec acat a14" data-cat="${id}" data-open="1"><div class="asech static"><span class="asl">${title}${res?`: <span class="asr${/^all|^none|^nothing|^in bal|^every|\(info\)/i.test(res)?'':' bad'}">${res}</span>`:''}</span></div><div class="asecb">${body}</div></section>`;
   const fl=L=>L.length?`<div class="fll">${L.slice().sort(FG().ord).map(flagRow).join('')}</div>`:'';
   let main='';
-  if(daily){const dayF=F14.filter(f=>f.scope==='day'&&f.day===(Dd&&Dd.day));
-    const chips=`<div class="impd an14d" role="group" aria-label="Day">${B.days.map((D,k)=>{const n=F14.filter(f=>f.scope==='day'&&f.day===D.day&&f.sev>=2).length;return `<button class="${k===di?'on':''}" data-b="anday" data-i="${k}"${D.tiles.length?'':' disabled'} aria-label="${WDL[k]}${n?`, ${n} to fix`:''}">${WD[k]}${n?'<i class="fdn"></i>':''}</button>`}).join('')}</div>`;
-    let body='<p class="sub">Rest day.</p>';
-    if(P&&P.trained){const LD=window.IMPACT?IMPACT.liveDay(dt,tiles0(Dd),lv,'max_growth'):null,fse=LD?LD.day_summary.fatigue_fresh_set_eq:0,mn=MINS(Dd.tiles),lim=sessLimit();
-      const rows=Object.entries(P.muscles).filter(([,o])=>o.n>=1).sort((a,b)=>b[1].n-a[1].n).map(([m,o])=>`<button class="pr14 t-${o.tone||'none'}" data-b="pcurve" data-day="${Dd.day}" data-m="${m}" aria-label="${MLB(m)}: ${nfmt(o.n)} sets, Payoff ${Math.round(o.payoff)}, peak about ${nfmt(o.peak)} sets. Show the curve"><i class="pdot" aria-hidden="true"></i><span class="prn">${MLB(m)}</span><span class="prs num">${nfmt(o.n)} sets</span><span class="prp num">${Math.round(o.payoff)}</span><span class="prk num">peak ~${Math.round(o.peak)}</span></button>`).join('');
-      body=`<div class="d14top">${gauges(P,'big')}<dl class="d14n"><div><dt>Fatigue</dt><dd class="num">${nfmt(fse)}</dd><small>fresh-set eq</small></div><div><dt>Ready in</dt><dd class="num">${LD?dayRange(LD):'–'}</dd><small>slowest muscle</small></div><div><dt>Length</dt><dd class="num">≈ ${mn} min</dd><small>${lim?`target ${lim}`:''}</small></div></dl></div>
-        <p class="foot">Stimulus and Payoff are averages over the muscles trained (1+ effective set). The gap between them is fatigue.</p>
-        <div class="pr14h"><span></span><span>Muscle</span><span>Sets</span><span>Payoff</span><span>Peak</span></div><div class="pr14l">${rows}</div>
-        <p class="foot">Tap a muscle for its stimulus, fatigue and Payoff curves. Payoff = stimulus minus fatigue.</p>${limInfo()}`}
-    main=chips+sect('daypay',`${WDL[di]}`,body,dayF.filter(f=>f.sev>=2).length?`${dayF.filter(f=>f.sev>=2).length} to fix`:'nothing big to fix')+(dayF.length?sect('dayflags','On this day',fl(dayF)):'');}
-  else{const wf=sec=>F14.filter(f=>f.scope==='week'&&f.section===sec);
+  {const wf=sec=>F14.filter(f=>f.scope==='week'&&f.section===sec);
     const vol=B13.volume().replace(/<div class="ckl">[\s\S]*?<\/div>\s*$/,'');const vf=wf('volume'),WSx=WST(),calmL=WSx&&WSx.calm?`<p class="wst14 calm">${WSx.line}</p>`:'';
     const ppL=pp?`Pulling ${pp.pull_sets} sets · pressing ${pp.push_sets} sets`:'',ssL=ss.overall!=null?`${pct(ss.overall)} of sets train the stretched position`:'';
     const fqG=`<div class="group freq"><div class="row fqh"><span class="vm"></span><span class="fq">${WD.map(w=>`<i>${w[0]}</i>`).join('')}</span></div>${FM.map(m=>`<button class="row" data-b="mus" data-m="${m}" data-anchor="frequency"><span class="vm">${X.ML[m]}</span><span class="fq">${fq(m)}</span></button>`).join('')}<div class="row fqleg">${rampLeg()}</div></div>`;
-    const wkF=window.IMPACT?B.days.filter(D=>D.tiles.length).reduce((a,D)=>a+IMPACT.liveDay(dt,tiles0(D),lv,'max_growth').day_summary.fatigue_fresh_set_eq,0):0,BL=((recRef()||{}).benchmarks||[]).map(b=>({name:b.name.replace(/^Classic /,''),v:b.week_cost})),near=BL.slice().sort((a,b)=>Math.abs(a.v-wkF)-Math.abs(b.v-wkF))[0],soon=wf('recovery').filter(f=>f.kind==='back_too_soon').length;
-    const recL=`<p class="rec1">Weekly fatigue: <b class="num">${nfmt(wkF)}</b> fresh-set eq${near?`, close to a ${near.name.toLowerCase()} (${nfmt(near.v)})`:''}.${soon?` ${soon} muscle${soon===1?' comes':'s come'} back before ${soon===1?'it has':'they have'} recovered.`:' Every muscle recovers before its next session.'}</p>`;
+    const soon=wf('recovery').filter(f=>f.kind==='back_too_soon').length;   // vol15: no recovery-cost numbers anywhere
+    const recL=`<p class="rec1">${soon?`${soon} muscle${soon===1?' comes':'s come'} back before ${soon===1?'it has':'they have'} recovered.`:'Every muscle recovers before its next session.'}</p>`;
     main=sect('volume','Weekly volume',calmL+fl(vf)+vol,WSx?(WSx.calm&&!WSx.need.length?`${WSx.byDesign.length} short by design (info)`:WSx.header.toLowerCase()):'')
       +sect('balance','Balance',`${ppL||ssL?`<p class="bal1">${[ppL,ssL].filter(Boolean).join(' · ')}</p>`:''}${fl(wf('balance'))}`,wf('balance').length?`${wf('balance').length} suggestion${wf('balance').length===1?'':'s'}`:'in balance')
       +sect('frequency','Frequency',fl(wf('frequency'))+fqG,wf('frequency').length?`${wf('frequency').length} on 1 day or back to back`:'all on 2+ days')
       +sect('recovery','Recovery',recL+(wf('recovery').length?`<details class="sgnofix"><summary>${wf('recovery').length} detail${wf('recovery').length===1?'':'s'}</summary>${fl(wf('recovery'))}</details>`:''));}
   if(!AN.body.onclick)AN.body.onclick=()=>{}; // WebKit: taps on the map paths need a listener below body
-  AN.body.innerHTML=`${seg}${mapSec}${summary}${main}   ${''/* vol14d: the Daily / Weekly switch sits at the top; the map below follows it */}
-    <p class="foot asks" id="anasks"><span class="evl" data-ev="modeled">Modeled</span> Payoff uses ${PO()&&PO().CONSTS(dt).source==='coach'?"Coach's curve constants":"draft curve constants until Coach's numbers land"}. Still sample data: ${DATA_ASKS.join(' ')}</p>
+  AN.body.innerHTML=`${mapSec}${summary}${main}   ${''/* vol14d: the Daily / Weekly switch sits at the top; the map below follows it */}
+    <p class="foot asks" id="anasks"><span class="evl" data-ev="modeled">Modeled</span> Still sample data: ${DATA_ASKS.join(' ')}</p>
     <div style="height:24px"></div>`;AN.body.scrollTop=sc0}
 // explain sheet for an item; the fatigue rating adds its breakdown
 function explainItem(id){const it=(AN&&AN.items||{})[id];const ex=id==='fatigue_rating'&&it?fatigueHtml(it.value):id==='checks_pass'?(()=>{const c=stats().C;return `<div class="group"><div class="row"><div class="grow t1">This board</div><span class="val num">${c.pass} of ${c.total}</span></div></div>`})():'';return X.explainSheet(id,ex)}
@@ -868,14 +840,14 @@ function ddBody(){const m=CB.key,dt=RD(),d=checkDays(),lv=B.level,GM=G()?G().mod
   return `<div class="cbh dd" data-st="${stk}"><div class="big num">${nfmt(s.effective)}</div><div class="sub">effective sets a week · target ${s.level_min}–${s.max} · <b class="vst ${stk==='in'?'':stk==='over'||stk==='under'?'red':'amb'}">${stl}</b></div></div>
    ${CB.last?`<div class="aplc cbu"><div class="grow"><p>${CB.last}</p></div><button class="btn sm ink" data-b="cbundo">Undo</button></div>`:''}
    ${sec('sets','Sets vs target',`<div class="hbar ddsets"><span class="vm hbs">This week</span><span class="hbt"><s class="bnd" style="left:${X0(s.level_min)}%;width:${X0(s.max)-X0(s.level_min)}%"></s><i class="${stk==='in'?'ok':stk==='over'||stk==='under'?'bad':'amb'}" style="--w:${X0(s.effective)}%"></i></span><span class="vn num">${bfmt(s.effective,s.level_min,s.max)}</span></div>${kv('Ideal band',`${s.level_min}–${s.max} sets`)}${kv('Far under / far over',`below ${s.red_under_below} · above ${s.red_over_above}`)}${kv('Target evidence',s.evidence_tag)}`)}
-   ${sec('curve','Stimulus curve',A.muscles[m]?`<div class="curvec">${curve(m,A)}</div>${P.curve.zone?`${kv('Zone',ZL(P.curve.zone))}${kv('Sweet spot',`${P.curve.zones.sweet[0]}–${P.curve.zones.sweet[1]} sets · min ${P.curve.zones.min} · diminishing past ${P.curve.zones.diminishing}`)}${kv('Plateau',`${Math.round(P.curve.stimulus*100)}% of this muscle's modeled plateau`)}`:kv('Position',({below:'Below the ideal band',in_band:'In the ideal band',above:'Above the ideal band'})[P.curve.position])}${kv('Next set',`+${(P.curve.next_set*100).toFixed(1)}%`)}`:'',{mod:1,v:P.curve.zone?ZL(P.curve.zone):`${Math.round(P.curve.stimulus*100)}% of max`})}
+   ${''/* vol15: the weekly stimulus-curve section is removed (one map ramp; no stimulus/payoff gauges) */}
    ${sec('frequency','Frequency',`<div class="ddfq">${Object.entries(P.frequency.effective_by_day).map(([k,v])=>`<span><i data-r="${RAMP(v)}"></i>${WD[DAYS.indexOf(k)]} ${nfmt(v)}</span>`).join('')}</div>${FN.map(n=>`<div class="nrow" data-note="${n.id}" data-pol="${n.polarity}">${n.polarity==='positive'?ICO.pass:ICO.close}<span>${n.text}</span></div>`).join('')}`,{v:`${P.frequency.days_hit} day${P.frequency.days_hit===1?'':'s'} with ${P.frequency.min_effective_per_day}+ sets`})}
    ${sec('stretch','Stretch',P.stretch.share==null?'<p class="foot">No stretch list for this muscle, or no sets.</p>':`<div class="hbar"><span class="vm hbs">Share${P.stretch.checked?(P.stretch.check_pass?ICO.pass:ICO.attention):''}</span><span class="hbt"><i class="${P.stretch.share<dt.targets.analytics.stretch_share_flag_below?'amb':'ok'}" style="--w:${P.stretch.share*100}%"></i><b style="--x:${dt.targets.analytics.stretch_share_flag_below*100}%"></b></span><span class="vn num">${pct(P.stretch.share)}</span></div>${P.stretch.checked?kv('Stretch check',P.stretch.check_pass?'Passes':'Needs stretch-focused work'):''}`)}
    ${''/* vol14: Approach targets section removed (no Approach in the UI) */}
-    ${sec('fatigue','Recovery',`${(h=>kv('Ready again',h?`${rr(IMPACT.range(h.hours))} after ${WDL[DAYS.indexOf(h.day)]}`:'–'))(RD().VM?ANL.weekHours(RD(),checkDays(),B.level).per_muscle[m]:null)}${RD().VM?`<p class="rcav">${RD().VM.recovery.caveat}</p>`:''}${kv('One-side share',P.one_side_share!=null?pct(P.one_side_share):'–')}`,{mod:1})}
+    ${sec('fatigue','Recovery',`${kv('One-side share',P.one_side_share!=null?pct(P.one_side_share):'–')}`,{mod:1})}
    ${sec('session','Contributing exercises',rows.length?`<div class="group cbl">${rows.map(r=>`<div class="row cbr" data-u="${r.t.u}" data-id="${r.t.id}">${X.gl(r.t.id)}<div class="grow"><div class="t1">${X.exNameP(r.t.id)}${X.cxL(r.t.id)}</div><div class="t2 num">${WD[r.di]} · ${r.sets} sets → ${nfmt(r.eff)} effective</div></div><button class="btn sm grey" data-b="cbrm" data-u="${r.t.u}">Remove</button></div>`).join('')}</div>`:'<p class="foot">Nothing on the board trains this yet.</p>',{v:rows.length?`${P.contributors.length} exercise${P.contributors.length===1?'':'s'}`:''})}
    ${sec('suggest','Suggestions',`${sgs||'<p class="foot">No suggestions for this muscle.</p>'}${pk?`<div class="pad0"><button class="btn accent block cbadd" data-b="cbadd" data-id="${pk.id}" data-day="${ra.day}"><span>${X.I('plus',2)} Add suggested</span><small>${X.exNameP(pk.id)} · ${WD[DAYS.indexOf(ra.day)]}</small></button></div><p class="foot">Top pick of the shared ranker for ${MLB(m).toLowerCase()} on ${WDL[DAYS.indexOf(ra.day)]}${ra.items.length>1?`; then ${ra.items.slice(1,3).map(x=>X.exNameP(x.id)).join(', ')}`:''}; ${setsFor(pk.id)} sets.</p>`:''}`)}
-   <p class="foot">Effective sets = sets × the exercise's counted credit for this muscle (the Volume model). Curve, recovery and fatigue values are models, not measurements.</p>`}
+   <p class="foot">Effective sets = sets × the exercise's counted credit for this muscle (the Volume model). Fatigue values are models, not measurements.</p>`}
 function cbRows(kind,key){const dt=RD(),out=[];B.days.forEach((D,di)=>D.tiles.forEach(t=>{let e=0;
     if(kind==='mus'){const b=ANL.breakdowns(dt,[{day:D.day,tiles:[{id:t.id,sets:t.sets}]}]).muscle[key];e=b?b.effective_sets:0}else e=(dt.EX[t.id].movement_pattern||'other')===key?t.sets:0;
     if(e>0)out.push({t,day:D.day,di,eff:e})}));return out}
@@ -1027,24 +999,22 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   const tf=e.target.closest('[data-tf]');if(tf&&TRAY){const k=tf.dataset.tf;TFB[k]=TFB[k]===tf.dataset.v?null:tf.dataset.v;$$(`[data-tf=${k}]`,TRAY.el).forEach(c=>c.classList.toggle('on',TFB[k]===c.dataset.v));refreshTray();return}
   const am=e.target.closest('[data-anm]');if(am&&AN){AN.mus=am.closest('.vr13')&&AN.mus===am.dataset.anm?null:am.dataset.anm;const sc=AN.body.scrollTop;renderAnalysis();AN.body.scrollTop=sc;return}
   const ns=e.target.closest('[data-ns]');if(ns&&NW){NS[ns.dataset.ns]=ns.dataset.v;nwView(NW.v==='slots'?'slots':'tpl');return}
-  const j=e.target.closest('[data-jump]');if(j){setMap('day',+j.dataset.jump);return jump(+j.dataset.jump)}
+  const j=e.target.closest('[data-jump]');if(j){toggleDay(+j.dataset.jump);return jump(+j.dataset.jump)}
   const amp=e.target.closest('.anmap .mp');if(amp&&amp.dataset.mu&&AN){e.preventDefault();return contribSheet('mus',amp.dataset.mu)}
-  const mp=e.target.closest('#bmap .mp');if(mp&&mp.dataset.mu){e.preventDefault();const D=B.days[MAPV.day],P=D&&payDays()[D.day];if(P&&P.muscles[mp.dataset.mu])return curveSheet(D.day,mp.dataset.mu);return X.go('#learn-'+mp.dataset.mu)}
-  const a14=e.target.closest('.anmap14 .mp');if(a14&&a14.dataset.mu&&AN){e.preventDefault();const D=B.days[AN.day],P=AN.view!=='weekly'&&D&&payDays()[D.day];if(P&&P.muscles[a14.dataset.mu])return curveSheet(D.day,a14.dataset.mu);return contribSheet('mus',a14.dataset.mu,'sets')}
+  const mp=e.target.closest('#bmap .mp');if(mp&&mp.dataset.mu){e.preventDefault();return X.go('#learn-'+mp.dataset.mu)}
+  const a14=e.target.closest('.anmap14 .mp');if(a14&&a14.dataset.mu&&AN){e.preventDefault();return contribSheet('mus',a14.dataset.mu,'sets')}
   if(!b)return;const k=b.dataset.b;e.stopPropagation();
   if(k==='mapm')return setMap(b.dataset.mm,b.dataset.mm==='day'&&MAPV.mode!=='day'?Math.max(0,$$('#dstrip button').findIndex(x=>x.classList.contains('on'))):null);
   if(k==='newex'){const day=TFB.day;X.newExSheet({q:b.dataset.q,onSave:id=>{commit(()=>{const D=B.days.find(d=>d.day===day);D.tiles.push(T(id,setsFor(id)))},`Added ${X.exNameP(id)} to ${WD[DAYS.indexOf(day)]}`);refreshTray()}});return}
   if(k==='tclr'){TFB.q='';const q=TRAY&&$('#tqb',TRAY.el);if(q){q.value='';q.focus()}refreshTray();return}
   if(k==='treset'){Object.assign(TFB,{q:'',mus:null,pat:null,eq:null});if(TRAY)$('#tqb',TRAY.el).value='';if(TRAY)$('#tfbb',TRAY.el).innerHTML=X.filterHtml(TFB,'tf');refreshTray();return}
-  if(k==='dayh'){setMap('day',DAYS.indexOf(b.dataset.day));return daySheet(b.dataset.day)}if(k==='dsclose')return DS&&DS.close();if(k==='dsrename'||k==='dsrest'||k==='dstrain')return dayAct(k);
+  if(k==='dayh')return daySheet(b.dataset.day);if(k==='dayview')return toggleDay(DAYS.indexOf(b.dataset.day));if(k==='mapweek'){MAPV.mode='day';return toggleDay(MAPV.day)}if(k==='dsclose')return DS&&DS.close();if(k==='dsrename'||k==='dsrest'||k==='dstrain')return dayAct(k);
   if(k==='tabs')return tabsSheet();if(k==='tabgo'){X.closeAll();return X.go('#'+b.dataset.to)}
   if(k==='nurd')return nurdSheet(b.dataset.k,b.dataset.m);
   if(k==='trim')return applyTrim();
   if(k==='dmx')return dmxSheet(b.dataset.day);
   if(k==='flag')return flagSheet(b.dataset.id);if(k==='flfix')return applyFlagFix(b.dataset.id);if(k==='mkeff')return applyPlan('eff');if(k==='mkpush')return applyPlan('push');
-  if(k==='pcurve')return curveSheet(b.dataset.day,b.dataset.m);if(k==='learnm'){if(PCS)PCS.close();if(AN&&!AN.closed)AN.close();return X.go('#learn-'+b.dataset.m)}
-  if(k==='pday'){const i=DAYS.indexOf(b.dataset.day);MAPV.day=i;paintStats();const S=AN&&!AN.closed?AN:analysisSheet();AN.view='daily';AN.day=i;renderAnalysis();S.body.scrollTop=0;return}
-  if(k==='anv'){AN.view=b.dataset.v;renderAnalysis();return}if(k==='anday'){AN.day=+b.dataset.i;renderAnalysis();return}
+  if(k==='learnm'){if(AN&&!AN.closed)AN.close();return X.go('#learn-'+b.dataset.m)}
   if(k==='dmclose'){if(DMS)DMS.close();return}
   if(k==='goal'){if(G()){G().set(b.dataset.goal);paint()}return}
   if(k==='impday'){IMPV.day=+b.dataset.i;paintImpact();return}
@@ -1069,7 +1039,6 @@ document.addEventListener('click',e=>{if(X.S.scr!=='build')return;
   if(k==='unapply'){const a=APPLIED[+b.dataset.k];if(!a)return;B.hist.push(snap());restore(a.before);APPLIED.splice(+b.dataset.k,1);paint();hideUndo();X.toast('Suggestion undone');return}
   if(k==='undo')return undo();
   if(k==='add'){if(TRAY){TFB.day=b.dataset.day;refreshTray();return}return traySheet(b.dataset.day)}
-  if(k==='bmode'){BD.detail=b.dataset.v==='detail';try{localStorage.setItem('apechit.sb.boardDetail',BD.detail?'1':'0')}catch(x){}return paint()}
   if(k==='slot')return slotTray(b.dataset.day,b.dataset.sid);
   if(k==='slotfill')return fillDefaults();
   if(k==='tadd')return trayAdd(b.dataset.id);
@@ -1092,8 +1061,8 @@ Object.assign(X.ROUTES,{
  'build-new-tpl':['build','build',0,0,()=>{},()=>newSheet('tpl')],
  'build-day':['build','build',0,0,()=>{},()=>daySheet('mon')],
  'build-map-day':['build','build',0,0,()=>{MAPV.mode='day';MAPV.day=0},()=>{}],
- 'build-detail':['build','build',0,0,()=>{BD.detail=true},()=>{}],
- 'build-detail-chit':['build','build',0,0,()=>{BD.detail=true},()=>{const c=$('.chit');if(c)chitSheet(c.dataset.u)}],
+ 'build-detail':['build','build',0,0,()=>{},()=>{}],
+ 'build-detail-chit':['build','build',0,0,()=>{},()=>{const c=$('.chit');if(c)chitSheet(c.dataset.u)}],
  'build-new-slots':['build','build',0,0,()=>{Object.assign(NS,{split:'upper-lower',level:'intermediate',n:'4'})},()=>newSheet('slots')],
  'build-template':['build','build',0,0,()=>{BD.detail=false;loadTemplate(TP().find(RD().TJ,'upper-lower/intermediate/4'));B.hist=[];
    const D=B.days[0];fillSlot(D,D.slots[0],D.slots[0].def);fillSlot(D,D.slots[0],'chin-up')},()=>{}],
@@ -1118,7 +1087,7 @@ window.BOARD={removeExercise:id=>{B.days.forEach(d=>{d.tiles=d.tiles.filter(t=>t
   countExercise:id=>sum(B.days.map(d=>d.tiles.filter(t=>t.id===id).length)),repaint:()=>{if($('#board'))paint();refreshTray()},fmt:{bfmt:(...a)=>bfmt(...a),bpct:(...a)=>bpct(...a)},loadPreset:id=>{const [sp,lv,n]=id.split('/'),s=presetSplits().find(x=>x.id===sp);loadDays(s.levels[lv][n],`${s.name} · ${n} days`);B.level=lv;B.hist=[];PCAP=null;APPLIED=[];X.render()},applyOps:ops=>{applyOpsBoard(ops);paint()},get pcheck(){return PCI},get detail(){return BD.detail},fracLine,muscleShort,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,ensurePlan:(days,name,level)=>{if(B.days.length)return false;loadDays(days,name);B.level=level||'intermediate';B.hist=[];B.dirty=false;B.version=1;B.edited=Date.now();B.fromLog=true;return true},progApply:ops=>{const before=snap();B.hist.push(before);applyOpsBoard(ops);B.days.forEach(d=>{if(d.tiles.length)d.rest=false});B.dirty=true;B.edited=Date.now();if($('#board'))paint();return before},progUndo:before=>{restore(before);if($('#board'))paint()},loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
 })();
 // vol14e: tile names never break mid-word. If one word is wider than the tile, shrink that name's font (down to 70%) until it fits.
-(()=>{const SEL='.chit .cn,.en';
+(()=>{const SEL='.chit .cn,.en,.cd span';   // vol15: calendar day numbers too (large text at 320)
   const fit=e=>{if(!(e.clientWidth>0))return;const pc=e.parentElement;if(pc){pc.classList.remove('cnw');pc.classList.remove('enw')}if(e.dataset.fitBase!=null){if(e.style.fontSize===e.dataset.fitSet)e.style.fontSize=e.dataset.fitBase;delete e.dataset.fitBase;delete e.dataset.fitSet}
     if(!(e.clientWidth>0)||e.scrollWidth<=e.clientWidth+0.5)return;const base=e.style.fontSize,f0=parseFloat(getComputedStyle(e).fontSize);e.dataset.fitBase=base;
     const shrink=()=>{for(let f=f0-0.5;f>=f0*0.8&&e.scrollWidth>e.clientWidth+0.5;f-=0.5)e.style.fontSize=f+'px'};shrink();

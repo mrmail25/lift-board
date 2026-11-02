@@ -194,7 +194,7 @@
    "heading": "How the app puts it together",
    "body": [
     "Each hard set counts toward the muscles an exercise works: a full set for the main mover and part of a set for helpers. More hard sets per week tend to give more growth, with diminishing returns, which the weekly targets and the weekly curve reflect.",
-    "Within one workout, Payoff shows where extra sets for a muscle stop paying off. The details are on the 'Set crediting and weekly targets' and 'Volume and frequency' pages."
+    "Within one workout, the day body map colour shows where extra sets for a muscle stop adding much. The details are on the 'Set crediting and weekly targets', 'Volume and frequency' and 'High volume vs high intensity' pages."
    ],
    "points": [
     {
@@ -214,9 +214,9 @@
      "app_key": "targets.json:counting.min_rating_to_count"
     },
     {
-     "text": "Within one workout, each extra set for a muscle adds less; Payoff (stimulus minus fatigue) marks where it stops paying off. This is a model, not a measured limit.",
+     "text": "Within one workout, each extra set for a muscle adds less, and the day body map colour marks where it stops adding much. This is a model, not a measured limit.",
      "evidence": "modeled",
-     "app_key": "rules.json:rules.#payoff.note"
+     "app_key": "rules.json:rules.#payoff.colour_vol15"
     }
    ]
   }
