@@ -20,7 +20,7 @@
   --line:rgba(0,0,0,.09);/* hairlines */
   --text-2:#5E5E63;      /* secondary text (vol15: >= 4.5:1 on paper, bg and fill) */
   --text-3:#68686D;      /* tertiary, placeholders, auto-filled values (vol15: >= 4.5:1 on paper, bg and fill) */
-  --chrome:rgba(249,249,250,.82); /* translucent bars (tab bar, nav) */
+  --chrome:#F9F9FA; /* vol15: bars (tab bar, nav) are opaque so content scrolls UNDER them, never shows through */
 
   /* Functional only (never brand): destructive actions */
   --danger:#E5242B;
@@ -89,7 +89,7 @@
    (localStorage apechit.sb.theme: system | light | dark). The two blocks below carry the SAME values (test darkTokensSame). */
 html[data-theme=dark]{
   --ink:#F2F2F4; --paper:#1C1C1E; --bg:#000; --fill:#2C2C2E; --line:rgba(255,255,255,.12);
-  --text-2:#A1A1A8; --text-3:#8E8E93; --chrome:rgba(24,24,26,.82);
+  --text-2:#A1A1A8; --text-3:#8E8E93; --chrome:#18181A;
   --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10; --accent-text:#FF6A33; --accent-strong:#C2380A;
   --danger:#FF453A;
   --vol-under:#5D7189; --vol-amber:#F2B23F; --vol-red:#FF5A4E; --vol-in-range:#4CC285;
@@ -119,7 +119,7 @@ html[data-theme=dark]{
 }
 @media (prefers-color-scheme:dark){html:not([data-theme=light]){
   --ink:#F2F2F4; --paper:#1C1C1E; --bg:#000; --fill:#2C2C2E; --line:rgba(255,255,255,.12);
-  --text-2:#A1A1A8; --text-3:#8E8E93; --chrome:rgba(24,24,26,.82);
+  --text-2:#A1A1A8; --text-3:#8E8E93; --chrome:#18181A;
   --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10; --accent-text:#FF6A33; --accent-strong:#C2380A;
   --danger:#FF453A;
   --vol-under:#5D7189; --vol-amber:#F2B23F; --vol-red:#FF5A4E; --vol-in-range:#4CC285;

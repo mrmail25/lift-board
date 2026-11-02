@@ -77,7 +77,11 @@ function stripHtml(st){const {A,C,d}=st,avg=avgMins(d),fail=C.total-C.pass;
    <span class="ast"><b class="num" data-s="min">${d.length?'≈ '+avg:'–'}</b><small>min / session</small></span>
    ${openSlots()?`<span class="ast chk pend"><b class="num" data-s="checks">–</b><small>Fill slots to check</small></span>`:(()=>{const F=flags14(),n=F.filter(f=>f.sev>=2).length;return `<span class="ast chk ${n?'bad':'zero'}"><b class="num" data-s="checks">${n}</b><small>${n?`<em class="chkbad">to fix</em>`:'to fix'}${F.length-n?` · ${F.length-n} smaller`:''}</small></span>`})()}`}
 function dayMeta(day){const n=sum(day.tiles.map(t=>t.sets));return day.tiles.length?`${n} sets · ≈ ${MINS(day.tiles)} min`:''}
-function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bmap');if(mp)mp.innerHTML=mapHtml(st,days);const lg=$('#bmleg');if(lg)lg.innerHTML=MLEG||'';const fw=$('#bmflw');if(fw)fw.innerHTML=MFL;const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);}
+// vol15: the Plan header (map card + day strip) is sticky only while it fits comfortably above the tab bar; when it is taller
+// (large text, a day's flags) it scrolls with the page, so the day strip never sits under the tab bar.
+function fitStick(){const st=$('.bstick'),sc=st&&st.closest('.scroller');if(!st||!sc)return;const tb=$('.tabs'),th=tb&&getComputedStyle(tb).display!=='none'?tb.getBoundingClientRect().height:0;
+  const avail=sc.clientHeight-th;st.classList.toggle('nostick',st.offsetHeight>avail*0.6)}
+function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bmap');if(mp)mp.innerHTML=mapHtml(st,days);const lg=$('#bmleg');if(lg)lg.innerHTML=MLEG||'';const fw=$('#bmflw');if(fw)fw.innerHTML=MFL;{const st=$('.bstick');if(st&&!st._ro&&window.ResizeObserver){st._ro=new ResizeObserver(()=>fitStick());st._ro.observe(st)}fitStick()}const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);}
   days.forEach((d,i)=>{const n=sum(d.tiles.map(t=>t.sets));const b=$(`#dstrip [data-jump="${i}"] .dn`);if(b){b.textContent=stripTxt(d);b.parentNode.classList.toggle('rd',isRest(d))}
     const h=$(`.col[data-day="${d.day}"] .cm`);if(h)h.textContent=dayMeta(d);const w=$(`.col[data-day="${d.day}"] .dmxw`);if(w)w.outerHTML=dmxHtml(d)});
   $$('.col').forEach((c,i)=>{const d=days[i];if(!d)return;c.classList.toggle('restday',isRest(d));const l=$('.cl',c);if(l)l.textContent=dayLabel(d)}); // preview days mid-drag
@@ -224,16 +228,19 @@ const flagLine=(f,full)=>`<button class="fl1 s${f.sev}${f.grey?' calm':''}" data
 const fwf=f=>`${f.whyT?`<p class="flwhy"><b>Why:</b> ${f.whyT}</p>`:''}${f.fixT||f.fixText?`<p class="flfx"><b>Fix:</b> ${[f.fixT,f.fixText].filter(Boolean).join(' ')}</p>`:''}`;
 const flagRow=f=>`<details class="fl14 s${f.sev}${f.grey?' calm':''}" data-id="${escA(f.id)}"><summary><span class="fdot" aria-hidden="true"></span><span class="flt">${ftxt(f,f.what||f.text)}</span></summary>${fwfS(f)}${f.fix?`<button class="btn xs accent" data-b="flfix" data-id="${escA(f.id)}">${f.fix.label}</button>`:''}</details>`;
 // Plan: under each day = gauges + at most 2 significant flags (severity >= 2)
-function dmxHtml(d){if(!d.tiles.length)return `<div class="dmxw" data-day="${d.day}"></div>`;const F=FG()?FG().significant(flags14(),'day',d.day,2):[],L=window.WFATIGUE?WFATIGUE.level(RD(),tiles0(d),B.level):null;
-  return `<div class="dmxw" data-day="${d.day}">${L?`<button class="wfl wfl-${L.id}" data-b="dayview" data-day="${d.day}" aria-label="${WDL[DAYS.indexOf(d.day)]}: ${L.label} fatigue. Show this day on the map"><span class="wfk">Fatigue:</span> <b>${L.label}</b></button>`:''}${F.map(f=>flagCard(f)).join('')}</div>`}
+// vol14 rule (restated vol15): Plan shows at most 2 significant flags per day / for the week (FLAGS14.significant ranking), then one '+N more in Analysis ›' line
+const sigOf=(scope,day)=>{const A=flags14().filter(f=>f.plan&&f.scope===scope&&(day==null||f.day===day));return {top:FG().significant(flags14(),scope,day,2),more:Math.max(0,A.length-2)}};
+const moreLine=n=>n>0?`<button class="flmore" data-b="analysis">+${n} more in Analysis<span class="chev" aria-hidden="true"> ›</span></button>`:'';
+function dmxHtml(d){if(!d.tiles.length)return `<div class="dmxw" data-day="${d.day}"></div>`;const SG=FG()?sigOf('day',d.day):{top:[],more:0},F=SG.top,L=window.WFATIGUE?WFATIGUE.level(RD(),tiles0(d),B.level):null;
+  return `<div class="dmxw" data-day="${d.day}">${L?`<button class="wfl wfl-${L.id}" data-b="dayview" data-day="${d.day}" aria-label="${WDL[DAYS.indexOf(d.day)]}: ${L.label} fatigue. Show this day on the map"><span class="wfk">Fatigue:</span> <b>${L.label}</b></button>`:''}${F.map(f=>flagCard(f)).join('')}${moreLine(SG.more)}</div>`}
 const sugBtns=()=>{const E=effPlan(),P=pushPlan();return `<div class="sug14"><button class="btn sm grey s14" data-b="mkeff"${E.ops.length?'':' disabled'}><span>${(SBT().make_more_efficient||{}).label||'Make it more efficient'}</span>${E.ops.length?`<small class="num">−${E.removed} set${E.removed===1?'':'s'}</small>`:'<small>nothing to trim</small>'}</button><button class="btn sm grey s14" data-b="mkpush"${P.ops.length?'':' disabled'}><span>${(SBT().push_for_max_growth||{}).label||'Push for max growth'}</span>${P.ops.length?`<small class="num">+${P.added} set${P.added===1?'':'s'}</small>`:'<small>at the limits</small>'}</button></div>`};
 // session limit as INFO (rules session_efficiency display_severity 'info', display_limits): the most one workout can usefully take
 function limInfo(){const R=((RD().rules||{}).rules||[]).find(r=>r.id==='session_efficiency')||{},L=(R.display_limits||{})[B.level];if(!L)return '';const g={};for(const [m,v] of Object.entries(L))(g[v]=g[v]||[]).push(MLB(m).toLowerCase());
   const ks=Object.keys(g).map(Number).sort((a,b)=>b-a),big=ks[0];return `<p class="foot lim14"><b>Info:</b> one workout can usefully take about ${big} hard sets for most muscles${ks.slice(1).map(k=>`, ${k} for ${g[k].join(', ')}`).join('')}. Push for max growth stops there.</p>`}
 // Plan: the week card (replaces the vol11-13 Impact card): at most 2 significant weekly flags + the two suggestion buttons
-function impHtml(){if(!FG())return '';const W=FG().significant(flags14(),'week',null,2);
+function impHtml(){if(!FG())return '';const SW=sigOf('week',null),W=SW.top;
   return `<div class="imph"><b>This week</b><span class="evl" data-ev="modeled">Modeled</span></div>
-   <div class="wk14">${W.length?W.map(f=>flagLine(f,1)).join(''):`<p class="sub">${(()=>{const n=flags14().filter(f=>f.scope==='day'&&f.sev>=2).length;return n?`Nothing big for the week as a whole. ${n} fix${n===1?' is':'es are'} under the days above.`:'Nothing significant this week.'})()}</p>`}</div>${sugBtns()}
+   <div class="wk14">${W.length?W.map(f=>flagLine(f,1)).join('')+moreLine(SW.more):`<p class="sub">${(()=>{const n=flags14().filter(f=>f.scope==='day'&&f.sev>=2).length;return n?`Nothing big for the week as a whole. ${n} fix${n===1?' is':'es are'} under the days above.`:'Nothing significant this week.'})()}</p>`}</div>${sugBtns()}
    <p class="foot wkfoot">Smaller items stay in <button class="lnk" data-b="analysis">Analysis ›</button></p>`}
 function paintImpact(){const el=$('#impc');if(el)el.innerHTML=impHtml()}
 // vol15: Plan map. Weekly by default (MAPRAMP weekly ramp). Tapping a day shows that day (daily ramp) with its flags underneath;
@@ -243,8 +250,8 @@ const dayFills=d=>d&&d.tiles.length?MAPRAMP.fills(MAPRAMP.daily(RD(),tiles0(d)))
 let MFL='';   // vol15 polish: the day's flags render full width under the map card row (#bmflw)
 function mapHtml(st,days){const day=MAPV.mode==='day',i=MAPV.day,d=days[i];const vm=day?dayFills(d):wkFills(st.A);
   const cap=day?`<b>${WDL[i]}</b> · ${isRest(d)?'Rest':dayLabel(d)} <button class="chip wkchip" data-b="mapweek" aria-label="Back to the week">Week</button>`:'<b>This week</b>';MLEG=MAPRAMP.legend(day?'day':'week');
-  const F=day&&d&&d.tiles.length&&FG()?flags14().filter(f=>f.scope==='day'&&f.day===d.day&&f.sev>=2).sort(FG().ord):[];
-  const h=`<div class="bmaps" data-mode="${day?'day':'week'}" data-day="${d?d.day:''}">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="bmcap" id="bmcap">${cap}</div>`;MFL=day?`<div class="bmfl">${F.length?F.map(flagCard).join(''):'<p class="sub">Nothing to fix on this day.</p>'}</div>`:'';return h}
+  const SD=day&&d&&d.tiles.length&&FG()?sigOf('day',d.day):{top:[],more:0},F=SD.top;
+  const h=`<div class="bmaps" data-mode="${day?'day':'week'}" data-day="${d?d.day:''}">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="bmcap" id="bmcap">${cap}</div>`;MFL=day?`<div class="bmfl">${F.length?F.map(flagCard).join('')+moreLine(SD.more):'<p class="sub">Nothing to fix on this day.</p>'}</div>`:'';return h}
 function toggleDay(i){if(MAPV.mode==='day'&&MAPV.day===i){MAPV.mode='week'}else{MAPV.mode='day';MAPV.day=i}$$('#dstrip button').forEach((b,k)=>{const on=MAPV.mode==='day'&&k===MAPV.day;b.classList.toggle('sel',on);b.setAttribute('aria-pressed',String(on))});$$('.col').forEach((c,k)=>c.classList.toggle('dsel',MAPV.mode==='day'&&k===MAPV.day));paintStats()}
 // one flag, tap for the fix
 let FLS=null;function flagSheet(id){const f=flagById(id);if(!f)return;if(FLS&&!FLS.closed)FLS.close();

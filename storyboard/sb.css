@@ -1860,3 +1860,7 @@ svg.pwbars .pwbl{font-size:10px;fill:var(--text-2)}
 .ast.chk{color:var(--ink)}.ast.chk.bad b{color:var(--accent-text)}.ast.chk.zero b{color:var(--ink)}
 .bsum .bmflw{grid-column:1/-1;min-width:0}.bsum .bmflw:empty{display:none}.bsum .bmflw .bmfl{margin-top:0}
 .bsum .anbtn{grid-column:1/-1;width:100%}
+.flmore{display:block;width:100%;text-align:left;border:0;background:none;padding:3px 0 3px 13px;font:inherit;font-size:11.5px;font-weight:600;line-height:1.25;color:var(--accent-text);cursor:pointer;min-height:24px}
+.bmfl .flmore,.wk14 .flmore{font-size:14px;min-height:44px;padding-left:13px}
+.bstick.nostick{position:relative;top:auto}
+.col header .cm{white-space:normal}
