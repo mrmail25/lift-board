@@ -26,12 +26,41 @@ function fill(dt,tid,m,vals){const T=FC(dt).templates[tid];return T?fillStr(dt,T
 const ss=x=>{const v=r1(x);return `${n1(v)} set${v===1?'':'s'}`};
 function scoreOf(dt,tid,v){const T=FC(dt).templates[tid]||{},s=T.significance;if(typeof s==='number')return s;
   if(tid==='payoff_past_efficient')return 60+Math.min(20,10*(v.sets_past_peak||0));if(tid==='weekly_needs_sets')return 90+Math.min(10,2*(v.short||0));return parseFloat(s)||0}
+// vol14e: the one short line a Plan day card shows per flag ('<Muscle>: <n> sets, <reason>'), derived from the template id and its fields.
+// short_text is used when it fits one card line (<= CARD_MAX chars); otherwise the line is built here. Full what/why/fix stays everywhere else.
+const CARD_MAX=44;
+function cardLine(dt,tid,o,shortT){const v=o.vals||{},M=o.muscle?fillStr(dt,'{Muscle}',o.muscle,{}):'',S=x=>{const n=parseFloat(x);return `${x} set${n===1?'':'s'}`};
+  if(shortT&&shortT.length<=CARD_MAX)return shortT;
+  const L={payoff_past_efficient:()=>`${M}: ${S(v.sets)}, past the peak`,
+    payoff_negative:()=>`${M}: ${S(v.sets)}, Payoff below 0`,
+    session_hard_sets:()=>`${v.day_sets} hard sets, over the ${v.cap} cap`,
+    session_hard_sets_info:()=>`${v.day_sets} hard sets, near the ${v.cap} cap`,
+    session_length:()=>`About ${v.minutes} min, over ${v.warn_min} min`,
+    session_length_info:()=>`About ${v.minutes} min, a long session`,
+    spinal_load:()=>`Squat + deadlift: ${S(v.sets)}, above ${v.max}`,
+    beginner_squat_and_deadlift:()=>`Heavy squats and deadlifts, same day`,
+    sets_per_exercise:()=>`${v.exercise}: ${S(v.sets)}, above ${v.max}`,
+    redundant_pattern:()=>`${M}: ${S(v.sets)}, one movement pattern`,
+    session_efficiency:()=>`${M}: ${S(v.sets)}, above the ${v.limit} limit`,
+    session_efficiency_single_day:()=>`${M}: all ${S(v.week_sets)} on one day`,
+    many_small_entries:()=>`${v.n} exercises, about ${v.avg} sets each`,
+    weekly_needs_sets:()=>`${M}: ${v.sets} sets/wk, below minimum`,
+    weekly_optional_low:()=>`${M}: ${v.sets} sets/wk, optional`,
+    weekly_far_over:()=>`${M}: ${v.sets} sets/wk, past the max`,
+    spinal_load_week:()=>`Squat + deadlift: ${S(v.sets)}/wk, above ${v.max}`,
+    consecutive_high_volume:()=>`${M}: hard ${v.day1} and ${v.day2}`,
+    recovery_overlap:()=>`${M}: ${v.gap_h} h rest, needs ${v.ready_h}`,
+    recovery_overlap_streak:()=>`${M}: ${v.n} hard days in a row`,
+    low_frequency:()=>`${M}: only ${v.n_days} a week`,
+    recovery_gap_long:()=>`${M}: ${v.gap_days} days between sessions`,
+    missing_stretch:()=>`${M}: no stretched-position work`}[tid];
+  return L?L():null}
 function mk(dt,tid,o){const T=FC(dt).templates[tid]||{},score=o.score!=null?o.score:scoreOf(dt,tid,o.sv||{});
   let plan=!!T.plan_eligible&&score>=50;if(tid==='payoff_past_efficient'&&!((o.sv||{}).sets_past_peak>=1))plan=false;if(o.optional)plan=false;
   const text=fill(dt,tid,o.muscle,o.vals);if(!text)return null;const P=k=>fillStr(dt,T[k],o.muscle,o.vals);
   const grey=T.display==='grey'||!!o.optional,sev=plan&&!grey?(score>=90?3:2):1;
   return Object.assign({id:o.id,kind:tid,tid,scope:T.scope||o.scope||'week',fixText:'',fix:null},o,{text,what:P('what'),whyT:P('why'),fixT:P('fix'),short_text:T.short_text?P('short_text'):null,
-    short:P('what')||text,why:P('why'),severity:grey?'info':(T.severity||'info'),grey,score,plan,sev,size:score})}
+    short:P('what')||text,card:cardLine(dt,tid,o,T.short_text?P('short_text'):null),why:P('why'),severity:grey?'info':(T.severity||'info'),grey,score,plan,sev,size:score})}
 // sets to cut on one day so the muscle is back at its Payoff peak (marginal >= 1); 1 set per tile minimum
 function cutToPeak(dt,tiles,m){const PC=PCm(),PO=POm(),T=tiles.map(t=>Object.assign({},t)),cuts={};let o=PO.muscle(dt,T,m),k=0;
   for(let g=0;g<40&&o.past_peak;g++){const cand=T.map(t=>({t,c:PC.eff(dt,[{id:t.id,sets:1}])[m]||0})).filter(x=>x.c>0&&x.t.sets>1).sort((a,b)=>b.c-a.c||b.t.sets-a.t.sets)[0];if(!cand)break;
@@ -147,5 +176,5 @@ function pushOps(dt,days,lv,A,maxSets=5){const PC=PCm(),W=clone(days.filter(d=>d
       if(did)break}
     if(!did)break}
   return {ops:Object.values(ops),added}}
-const API={build,significant,cutToPeak,efficientOps,pushOps,ord,weeklyStatus,fill,fillStr,addCand};
+const API={build,significant,cutToPeak,efficientOps,pushOps,ord,weeklyStatus,fill,fillStr,addCand,cardLine};
 if(isNode)module.exports=API;else root.FLAGS14=API})(typeof window!=='undefined'?window:globalThis);

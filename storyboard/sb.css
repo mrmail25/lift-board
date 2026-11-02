@@ -1803,3 +1803,4 @@ svg.pwbars .pwbl{font-size:10px;fill:var(--text-2)}
 .pseg.sm{width:auto;min-width:132px;max-width:100%;flex:0 1 auto}
 .rt-acts{grid-template-columns:repeat(auto-fit,minmax(min(100%,9em),1fr))}
 .rt-acts .btn{min-width:0;white-space:normal;height:auto;min-height:44px}
+.fl1.flc .flt{overflow-wrap:break-word}.fl1.flc .chev{color:var(--text-3)}
