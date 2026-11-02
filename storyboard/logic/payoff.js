@@ -16,8 +16,8 @@ const isNode=typeof module!=='undefined'&&module.exports;
 const PCm=()=>isNode?require('./progcheck.js'):root.PCHECK;
 const r1=x=>Math.floor(x*10+0.5+1e-7)/10,r2=x=>Math.floor(x*100+0.5+1e-7)/100;   // half-up; 1e-7 absorbs float error (2.295*100 = 229.4999…)
 const DRAFT={source:'draft',tau:4,a:6.39,b:0.077,gate:1,classes:[],grid:null};
-function CONSTS(dt){const R=dt&&(dt.RULES||dt.rules),rl=R&&(R.rules||[]).find(x=>x.id==='payoff');const V=(dt&&dt.VM&&dt.VM.vol14||{}).payoff||{};
-  if(!rl||!rl.constants)return DRAFT;const c=rl.constants,cs=V.curve_samples||{},g=Object.values(cs)[0];
+function CONSTS(dt){const R=dt&&(dt.RULES||dt.rules),rl=R&&(R.rules||[]).find(x=>x.id==='payoff');const V=(dt&&dt.VM&&dt.VM.vol14||{}).payoff||{},V4d=(dt&&dt.VM&&dt.VM.vol14d)||{};
+  if(!rl||!rl.constants)return DRAFT;const c=rl.constants,cs=V4d.curve_samples||V.curve_samples||{}   /* vol14d: 0–20 sets, no clamp */,g=Object.values(cs)[0];
   return {source:'coach',tau:+c.stim_tau,a:+c.fat_lin,b:+c.fat_quad,gate:+(c.gate_effective_sets||1),classes:rl.fatigue_classes||[],samples:cs,grid:g&&g.n||null,note:rl.note,label:rl.label||'Modeled'}}
 const stimK=(C,n)=>100*(1-Math.exp(-n/C.tau)),fatK=(C,k,n)=>{const f=k*n;return C.a*f+C.b*f*f},payK=(C,k,n)=>stimK(C,n)-fatK(C,k,n);
 const margK=(C,k,n)=>(100/C.tau)*Math.exp(-n/C.tau)/(k*(C.a+2*C.b*k*n));
@@ -37,7 +37,7 @@ function day(dt,tiles,C){C=C||CONSTS(dt);const PC=PCm(),E=PC.eff(dt,tiles),F=PC.
     if(o.gated){W+=o.n;S+=o.n*o.stimulus;Y+=o.n*o.payoff;bands[o.band]=(bands[o.band]||0)+1}}
   const s=W?r1(S/W):0,p=W?r1(Y/W):0;
   return {muscles:mus,stimulus:s,payoff:p,fatigue:r1(s-p),muscles_counted:Object.values(mus).filter(o=>o.gated).length,bands,trained:W>0,label:'Modeled',source:C.source}}
-// curve for the sheet: Coach's curve_samples grid (n 0..16 step 0.5), evaluated at this muscle-day's own k
+// curve for the sheet: Coach's vol14d.curve_samples grid (n 0..20 step 0.5), evaluated at this muscle-day's own k
 function curve(C,k,grid){const g=grid||C.grid||Array.from({length:33},(_,i)=>i/2);return g.map(n=>({n,s:stimK(C,n),f:fatK(C,k,n),p:payK(C,k,n)}))}
 const API={CONSTS,DRAFT,calc,muscle,day,curve,band,stimK,fatK,payK,margK,peakK,zeroK,r1,r2};
 if(isNode)module.exports=API;else root.PAYOFF=API})(typeof window!=='undefined'?window:globalThis);

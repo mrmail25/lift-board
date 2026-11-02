@@ -915,7 +915,7 @@
    "benchmarks": [
     {
      "name": "Classic 3-day full body",
-     "week_cost": 61.684
+     "week_cost": 63.476
     },
     {
      "name": "4-day upper/lower",
@@ -964,15 +964,15 @@
     "typical_by_days": {
      "1": {
       "benchmark": "Classic 3-day full body",
-      "week_cost": 61.684
+      "week_cost": 63.476
      },
      "2": {
       "benchmark": "Classic 3-day full body",
-      "week_cost": 61.684
+      "week_cost": 63.476
      },
      "3": {
       "benchmark": "Classic 3-day full body",
-      "week_cost": 61.684
+      "week_cost": 63.476
      },
      "4": {
       "benchmark": "4-day upper/lower",
@@ -1730,5 +1730,13 @@
    "aesthetic_lower_emphasis": "Glutes 1.3, abductors 1.2, hamstrings and side delts 1.15, quads 1.1; chest, arms, forearms 0.9-0.95, traps 0.8. Puts glutes and legs first when filling sets.",
    "conditioning": "All 1: conditioning work changes session design, not muscle priority."
   }
+ },
+ "optional_muscles": {
+  "muscles": [
+   "abductors"
+  ],
+  "note": "Optional (info only): glute work covers most outer-hip work, so there is no weekly minimum flag. Targets stay for display. Practitioner judgement, not a study result.",
+  "version": "vol14b",
+  "display": "show targets; status info only; no weekly-minimum flag"
  }
 }

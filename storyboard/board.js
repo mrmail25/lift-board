@@ -193,6 +193,8 @@ function dmxBody(day){const D=B.days.find(x=>x.day===day),M=dmxOf(D),I=impOf(D);
    <p class="dmxk">Fatigue: 1 = one hard set of machine chest press. Effic. = this muscle\'s S:F ÷ its size-class reference (1.00 = a heavy compound with the muscle as prime mover); – = under 1 effective set. ${nurdChip('daymx')}</p>`}
 function dmxSheet(day){if(DMS&&!DMS.closed)DMS.close();const i=DAYS.indexOf(day),D=B.days.find(x=>x.day===day);
   DMS=X.sheet({title:`${WDL[i]}${D?` · ${dayLabel(D)}`:''}`,cls:'tall grouped dmsheet',right:'<button class="btn plain" data-b="dmclose">Done</button>',onClose(){DMS=null}});DMS.day=day;DMS.body.innerHTML=dmxBody(day);return DMS}
+// vol14d: keep '6 days' (and '· 6 days') together in titles: escape, then non-breaking spaces inside '· N days'
+const nbName=t=>X.esc(String(t)).replace(/(\d+)\s+(days?)\b/g,'<span class="nw">$1\u00a0$2</span>');
 // ===================== vol14: Payoff (logic/payoff.js adapter, Modeled) + one flag list (logic/flags14.js) =====================
 const PO=()=>window.PAYOFF,FG=()=>window.FLAGS14;
 let PDC={k:null,v:null},F14C={k:null,v:null},EPC={k:null,v:null},PPC={k:null,v:null};
@@ -218,8 +220,12 @@ function gauge(v,lab,o={}){const W=64,H=38,cx=32,cy=33,r=26,cl=x=>Math.max(0,Mat
   return `<span class="g14 ${o.cls||''}"><svg viewBox="0 0 ${W} ${H}" aria-hidden="true"><path d="${arc(0,100)}" class="gtr"/>${o.gap!=null&&o.gap>cl(v)?`<path d="${arc(cl(v),o.gap)}" class="ggap"/>`:''}${cl(v)>0.5?`<path d="${arc(0,v)}" class="gfl"/>`:''}<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" class="gnd"/><circle cx="${cx}" cy="${cy}" r="2.6" class="gnc"/></svg><b class="num">${Math.round(v)}</b><small>${lab}</small></span>`}
 const gauges=(P,cls='')=>`<span class="g2 ${cls}">${gauge(P.stimulus,'Stimulus',{cls:'gs'})}${gauge(P.payoff,'Payoff',{cls:'gp',gap:P.stimulus})}</span>`;
 const gaugeAria=(D,P)=>`${WDL[DAYS.indexOf(D.day)]}: stimulus ${Math.round(P.stimulus)} percent, Payoff ${Math.round(P.payoff)}, fatigue ${Math.round(P.stimulus-P.payoff)}. Open the daily analysis`;
-const flagLine=(f,full)=>`<button class="fl1 s${f.sev}" data-b="flag" data-id="${escA(f.id)}"><span class="fdot" aria-hidden="true"></span><span class="flt">${full?f.text.split('. ')[0].replace(/\.$/,'')+'.':f.short||f.text}</span></button>`;
-const flagRow=f=>`<details class="fl14 s${f.sev}" data-id="${escA(f.id)}"><summary><span class="fdot" aria-hidden="true"></span><span class="flt">${f.text}</span></summary><p class="flwhy">${f.why}</p>${f.fixText?`<p class="flfx"><b>Fix:</b> ${f.fixText}</p>`:''}${f.fix?`<button class="btn xs accent" data-b="flfix" data-id="${escA(f.id)}">${f.fix.label}</button>`:''}${f.scope==='day'&&f.muscle?`<button class="btn xs grey" data-b="pcurve" data-day="${f.day}" data-m="${f.muscle}">See the curve</button>`:''}</details>`;
+// vol14d: flags carry Coach's what / why / fix (flag_copy templates); a template's short_text replaces the full text under 360px
+const ftxt=(f,t)=>f.short_text?`<span class="stl">${t}</span><span class="sts">${f.short_text}</span>`:t;
+const fwfS=f=>f.short_text?`<div class="stl">${fwf(f)}</div>`:fwf(f);
+const flagLine=(f,full)=>`<button class="fl1 s${f.sev}${f.grey?' calm':''}" data-b="flag" data-id="${escA(f.id)}"><span class="fdot" aria-hidden="true"></span><span class="flt">${ftxt(f,f.what||f.short||f.text)}</span></button>`;
+const fwf=f=>`${f.whyT?`<p class="flwhy"><b>Why:</b> ${f.whyT}</p>`:''}${f.fixT||f.fixText?`<p class="flfx"><b>Fix:</b> ${[f.fixT,f.fixText].filter(Boolean).join(' ')}</p>`:''}`;
+const flagRow=f=>`<details class="fl14 s${f.sev}${f.grey?' calm':''}" data-id="${escA(f.id)}"><summary><span class="fdot" aria-hidden="true"></span><span class="flt">${ftxt(f,f.what||f.text)}</span></summary>${fwfS(f)}${f.fix?`<button class="btn xs accent" data-b="flfix" data-id="${escA(f.id)}">${f.fix.label}</button>`:''}${f.scope==='day'&&f.muscle&&f.payoff?`<button class="btn xs grey" data-b="pcurve" data-day="${f.day}" data-m="${f.muscle}">See the curve</button>`:''}</details>`;
 // Plan: under each day = gauges + at most 2 significant flags (severity >= 2)
 function dmxHtml(d){const P=d.tiles.length?payDays()[d.day]:null;if(!P||!P.trained)return `<div class="dmxw" data-day="${d.day}"></div>`;const F=FG()?FG().significant(flags14(),'day',d.day,2):[];
   return `<div class="dmxw" data-day="${d.day}"><button class="gbtn" data-b="pday" data-day="${d.day}" aria-label="${gaugeAria(d,P)}">${gauges(P)}</button>${F.map(f=>flagLine(f)).join('')}</div>`}
@@ -240,8 +246,8 @@ function mapHtml(st,days){const i=MAPV.day,d=days[i]||days[0],P=d&&payDays()[d.d
 // one flag, tap for the fix
 let FLS=null;function flagSheet(id){const f=flagById(id);if(!f)return;if(FLS&&!FLS.closed)FLS.close();
   FLS=X.sheet({title:f.scope==='day'?WDL[DAYS.indexOf(f.day)]:'This week',cls:'grouped flsheet',right:'<button class="btn plain" data-x="close">Done</button>',onClose(){FLS=null}});
-  FLS.body.innerHTML=`<div class="group flb"><p class="flw"><b>${f.text}</b></p><p class="flwhy">${f.why}</p>${f.fixText?`<p class="flfx"><b>Fix:</b> ${f.fixText}</p>`:''}
-    <div class="flbt">${f.fix?`<button class="btn accent" data-b="flfix" data-id="${escA(f.id)}">${f.fix.label}</button>`:''}${f.scope==='day'&&f.muscle?`<button class="btn grey" data-b="pcurve" data-day="${f.day}" data-m="${f.muscle}">See the curve</button>`:''}</div></div>
+  FLS.body.innerHTML=`<div class="group flb"><p class="flw"><b>${ftxt(f,f.what||f.text)}</b></p>${fwfS(f)}
+    <div class="flbt">${f.fix?`<button class="btn accent" data-b="flfix" data-id="${escA(f.id)}">${f.fix.label}</button>`:''}${f.scope==='day'&&f.muscle&&f.payoff?`<button class="btn grey" data-b="pcurve" data-day="${f.day}" data-m="${f.muscle}">See the curve</button>`:''}</div></div>
     <p class="foot"><span class="evl" data-ev="modeled">Modeled</span> Payoff and the weekly minimums are planning estimates.</p>`}
 function applyFlagFix(id){const f=flagById(id);if(!f||!f.fix)return;const txt=`Applied: ${f.fix.label}`;
   commit(()=>{if(f.fix.ops)applyOpsBoard(f.fix.ops);else if(f.fix.days)applyDays(f.fix.days)},txt);if(FLS&&!FLS.closed)FLS.close();if(AN&&!AN.closed)renderAnalysis()}
@@ -250,9 +256,9 @@ function applyPlan(kind){const P=kind==='eff'?effPlan():pushPlan();if(!P.ops.len
   commit(()=>applyOpsBoard(P.ops),txt);if(AN&&!AN.closed)renderAnalysis()}
 // per-muscle, per-day sheet: stimulus, fatigue and Payoff vs sets, a dot where that day's sets land
 let PCS=null;function curveSheet(day,m){const dt=RD(),D=B.days.find(x=>x.day===day);if(!D||!PO())return;const C0=PO().CONSTS(dt),o=PO().muscle(dt,tiles0(D),m);if(!o.gated){X.toast&&X.toast(`${MLB(m)}: under 1 effective set on that day, so no Payoff.`);return}
-  const G=(C0.grid||[]).slice(),N=Math.max(16,Math.ceil(o.n+1));for(let n=(G.length?G[G.length-1]:0)+0.5;n<=N+1e-9;n+=0.5)G.push(n);const W=320,H=206,x0=30,y0=10,yb=176,lo=Math.min(-40,Math.floor(PO().payK(C0,o.k,N)/20)*20),hi=100,px=n=>x0+n/N*(W-x0-8),py=v=>y0+(hi-Math.max(lo,Math.min(hi,v)))/(hi-lo)*(yb-y0);
-  const C=PO().curve(C0,o.k,G),path=k=>C.map((q,i)=>`${i?'L':'M'}${px(q.n).toFixed(1)} ${py(q[k]).toFixed(1)}`).join('');
-  const yt=[];for(let v=lo;v<=hi;v+=20)yt.push(v);const xt=[];for(let n=0;n<=N;n+=2)xt.push(n);
+  const G=(C0.grid||[]).slice(),N=Math.max(20,Math.ceil(o.n+1));for(let n=(G.length?G[G.length-1]:0)+0.5;n<=N+1e-9;n+=0.5)G.push(n);const W=320,H=226,x0=30,y0=10,yb=196,CV=PO().curve(C0,o.k,G),lo=Math.min(-40,Math.floor(Math.min(...CV.map(q=>q.p))/20)*20),hi=Math.max(100,Math.ceil(Math.max(...CV.map(q=>Math.max(q.s,q.f)))/20)*20),   /* vol14d: y-axis fits the uncapped fatigue line and negative Payoff */px=n=>x0+n/N*(W-x0-8),py=v=>y0+(hi-Math.max(lo,Math.min(hi,v)))/(hi-lo)*(yb-y0);
+  const C=CV,path=k=>C.map((q,i)=>`${i?'L':'M'}${px(q.n).toFixed(1)} ${py(q[k]).toFixed(1)}`).join('');
+  const ys=(hi-lo)>200?40:20,yt=[];for(let v=Math.ceil(lo/ys)*ys;v<=hi;v+=ys)yt.push(v);const xt=[];for(let n=0;n<=N;n+=(N>16?4:2))xt.push(n);
   const svg=`<svg class="pcv" viewBox="0 0 ${W} ${H}" role="img" aria-label="${MLB(m)} on ${WDL[DAYS.indexOf(day)]}: ${nfmt(o.n)} sets, stimulus ${Math.round(o.stimulus)} percent, fatigue ${Math.round(o.fatigue)} percent, Payoff ${Math.round(o.payoff)}">
     ${yt.map(v=>`<line x1="${x0}" x2="${W-8}" y1="${py(v)}" y2="${py(v)}" class="${v===0?'pz':'pg'}"/><text x="${x0-4}" y="${py(v)+3}" text-anchor="end">${v}</text>`).join('')}
     ${xt.map(n=>`<text x="${px(n)}" y="${yb+14}" text-anchor="middle">${n}</text>`).join('')}<text x="${(x0+W)/2}" y="${H-2}" text-anchor="middle" class="pax">hard sets for ${MLB(m).toLowerCase()} in one workout</text>
@@ -272,7 +278,7 @@ function colHtml(d,i){return `<section class="col${isRest(d)?' restday':''}" dat
 function boardHtml(){return `<div class="cols">${B.days.map(colHtml).join('')}</div>`}
 X.V.build=()=>{if(!B.days.length){initBoard();cxRestorePlaced()}
   return `<div class="bw">${X.header('Plan',`<button class="ibtn tabsbtn" data-b="tabs" aria-label="Other tabs">${X.I('tabs',1.8)}</button><button class="ibtn" data-b="new" aria-label="New routine">${X.I('plus',2.2)}</button>`+X.bookBtn+X.gearBtn)}
-  <div class="bname"><div class="bn">${B.name||'New routine'}</div>
+  <div class="bname"><div class="bn">${nbName(B.name||'New routine')}</div>
    <div class="bacts"><button class="btn ink" data-b="push" aria-label="Push to Library">${X.I('up',2.2)}<span class="bl-l">Push to Library</span><span class="bl-s">Push</span></button><button class="btn accent" data-b="start" aria-label="Start training">${X.I('play')}<span class="bl-l">Start training</span><span class="bl-s">Start</span></button></div>
    <div class="bstate" id="bstate">${stateLine()}</div></div>
   <div class="bsum"><div class="bsegs"><div class="seg xs bdseg" id="bdseg" role="group" aria-label="Board: clean or detail">${bdsegHtml()}</div></div>
@@ -292,7 +298,7 @@ function toolsHtml(){const n=openSlots();return (n?`<div class="slotbar" id="slo
 function cxSavePlaced(){try{const P=[];B.days.forEach(d=>d.tiles.forEach((t,i)=>{if(ex(t.id)&&ex(t.id).custom)P.push({day:d.day,i,id:t.id,sets:t.sets,reps:t.reps||null})}));localStorage.setItem(X.cxPlacedKey,JSON.stringify(P))}catch(e){}}
 function cxRestorePlaced(){let P=[];try{P=JSON.parse(localStorage.getItem(X.cxPlacedKey)||'[]')||[]}catch(e){}
   for(const p of P){const D=B.days.find(d=>d.day===p.day);if(!D||!ex(p.id))continue;D.tiles.splice(Math.min(p.i,D.tiles.length),0,T(p.id,p.sets,p.reps));D.rest=false}}
-function paint(full){const bd=$('#board');if(!bd)return;cxSavePlaced();const sl=bd.scrollLeft;if(!full)bd.innerHTML=boardHtml();bd.classList.toggle('b-detail',BD.detail);const bt=$('#btools');if(bt)bt.innerHTML=toolsHtml();$$('.bdseg').forEach(x=>x.innerHTML=bdsegHtml());bd.scrollLeft=sl;const bn=$('.bname .bn');if(bn)bn.textContent=B.name||'New routine';
+function paint(full){const bd=$('#board');if(!bd)return;cxSavePlaced();const sl=bd.scrollLeft;if(!full)bd.innerHTML=boardHtml();bd.classList.toggle('b-detail',BD.detail);const bt=$('#btools');if(bt)bt.innerHTML=toolsHtml();$$('.bdseg').forEach(x=>x.innerHTML=bdsegHtml());bd.scrollLeft=sl;const bn=$('.bname .bn');if(bn)bn.innerHTML=nbName(B.name||'New routine');
   paintStats();paintSel();paintPcheck();paintImpact();if(AN&&!AN.closed)renderAnalysis();cbRe();if(DMS&&!DMS.closed)DMS.body.innerHTML=dmxBody(DMS.day)}
 let JMP=-1;function markDay(){const bd=$('#board');if(!bd)return;const cols=$$('.col',bd),o=cols[0].offsetLeft,x=bd.scrollLeft+8;let k=0;cols.forEach((c,i)=>{if(c.offsetLeft-o<=x)k=i});
   if(JMP>k&&bd.scrollLeft>=bd.scrollWidth-bd.clientWidth-2)k=JMP;$$('#dstrip button').forEach((b,i)=>b.classList.toggle('on',i===k))}
@@ -827,7 +833,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
       +sect('frequency','Frequency',fl(wf('frequency'))+fqG,wf('frequency').length?`${wf('frequency').length} on 1 day or back to back`:'all on 2+ days')
       +sect('recovery','Recovery',recL+(wf('recovery').length?`<details class="sgnofix"><summary>${wf('recovery').length} detail${wf('recovery').length===1?'':'s'}</summary>${fl(wf('recovery'))}</details>`:''));}
   if(!AN.body.onclick)AN.body.onclick=()=>{}; // WebKit: taps on the map paths need a listener below body
-  AN.body.innerHTML=`${mapSec}${summary}${seg}${main}
+  AN.body.innerHTML=`${seg}${mapSec}${summary}${main}   ${''/* vol14d: the Daily / Weekly switch sits at the top; the map below follows it */}
     <p class="foot asks" id="anasks"><span class="evl" data-ev="modeled">Modeled</span> Payoff uses ${PO()&&PO().CONSTS(dt).source==='coach'?"Coach's curve constants":"draft curve constants until Coach's numbers land"}. Still sample data: ${DATA_ASKS.join(' ')}</p>
     <div style="height:24px"></div>`;AN.body.scrollTop=sc0}
 // explain sheet for an item; the fatigue rating adds its breakdown

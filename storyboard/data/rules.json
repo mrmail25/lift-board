@@ -744,7 +744,7 @@
       "scope": "week",
       "min_ratio": 0.75,
       "max_ratio": 2.0,
-      "message": "You have {pull} pulling sets and {push} pressing sets this week. Keeping pulling between about three quarters and twice your pressing keeps the upper body even. Add {gap} sets of {side}.",
+      "message": "You have {pull} pulling and {push} pressing sets this week. Pulling between 3/4 and 2x your pressing keeps the upper body even. Add {gap} sets of {side}.",
       "fixes": {
         "ratio": [
           "add_sets(lagging side)",
@@ -8495,37 +8495,77 @@
         "exceed the per-workout cap",
         "run without a tap"
       ],
-      "note": "Adding sets past the Payoff peak is allowed here (that is the trade: more weekly growth for more fatigue); those muscle-days will read amber."
+      "note": "Adding sets past the Payoff peak is allowed here (that is the trade: more weekly growth for more fatigue); those muscle-days will read amber.",
+      "optional_muscles": "skipped unless the user taps the muscle"
     }
   },
   "weekly_status": {
-    "version": "vol14",
-    "value": "x = r2(weekly effective sets, face value)",
+    "version": "vol14d",
+    "value": "x = weekly effective sets (face value); d = r1(x) = half-up to 0.1, the value the app shows",
     "zones": "targets.json volume_zones[level][m] {min, sweet, diminishing}",
     "min_anchor_pct": 60,
     "min_anchor_note": "the weekly minimum sits at 60% of the modeled maximum stimulus (rule of thumb; volume-model.json curve).",
     "status": {
       "needs_sets": "x < min",
+      "needs_sets_rule": "r1(x) < min, muscle not optional, days_per_week != 2",
       "in_range": "min <= x <= diminishing",
+      "in_range_min_side": "min <= r1(x) (see comparison)",
       "over": "diminishing < x <= diminishing x 1.25",
-      "far_over": "x > diminishing x 1.25"
+      "far_over": "x > diminishing x 1.25",
+      "optional_low": "optional muscle with r1(x) < min: info grey, not counted, not a failed check",
+      "below_by_design": "r1(x) < min on a board with days_per_week == 2 (not optional): info grey, not counted, not a failed check"
     },
-    "needs_sets_count": "number of muscles with status needs_sets",
+    "needs_sets_count": "number of muscles with status needs_sets (optional_low and below_by_design never count)",
     "header": {
       "some": "{n} muscles need sets",
       "one": "1 muscle needs sets",
-      "none": "Every muscle has enough weekly sets"
+      "none": "Every muscle has enough weekly sets",
+      "two_day": "Two days can't cover every muscle. This plan prioritizes the big ones; add a day to fill the gaps."
     },
-    "check": "analysis_metrics volume_in_reach passes iff needs_sets_count == 0 and no far_over. So \"N of N checks pass\" is impossible while any muscle needs sets.",
+    "check": "analysis_metrics volume_in_reach passes iff needs_sets_count == 0 and no far_over. optional_low and below_by_design never fail it, so Summary and Weekly agree.",
     "flags": {
-      "needs_sets": "flag_copy.weekly_needs_sets",
-      "far_over": "flag_copy.weekly_far_over"
+      "needs_sets": "flag_copy.templates.weekly_needs_sets",
+      "far_over": "flag_copy.templates.weekly_far_over",
+      "below_by_design": "flag_copy.templates.weekly_two_day_by_design (once per board)",
+      "optional_low": "flag_copy.templates.weekly_optional_low"
     },
     "why": "vol13 had two definitions: the check passed amber-under muscles (within 2 sets of min) and the panel counted muscles below the goal target. Both now read this rule.",
-    "internal": "tools/check_program.py weekly_volume (red only) still drives the stored Efficient trim; it is not shown."
+    "internal": "tools/check_program.py weekly_volume (red only) still drives the stored Efficient trim; it is not shown.",
+    "comparison": "minimum: miss iff r1(x) < min (displayed value). Over / far over on x. r1(x) = floor(10x + 0.5 + 1e-9) / 10",
+    "optional_muscles": {
+      "muscles": [
+        "abductors"
+      ],
+      "status": "optional_low",
+      "severity": "info",
+      "color": "grey",
+      "counts_as_fail": false,
+      "flag_copy": "weekly_optional_low",
+      "same_as": [
+        "rules.json optional_muscles.muscles",
+        "targets.json optional_muscles.muscles"
+      ]
+    },
+    "excluded_muscles": [
+      "abductors"
+    ],
+    "two_day_rule": {
+      "version": "vol14c",
+      "applies_when": "days_per_week == 2",
+      "days_per_week": "number of days with at least one tile (presets and custom boards alike)",
+      "status": "below_by_design",
+      "severity": "info",
+      "color": "grey",
+      "counts_as_fail": false,
+      "flag_id": "weekly_min_two_day",
+      "flag_copy": "weekly_two_day_by_design",
+      "once_per_board": true,
+      "line": "Two days can't cover every muscle. This plan prioritizes the big ones; add a day to fill the gaps.",
+      "why": "A 2-day plan sits at the per-day hard-set cap; it covers the big muscles first by design."
+    }
   },
   "flag_copy": {
-    "version": "vol14",
+    "version": "vol14d",
     "style": "Plain English. Each line says what is wrong, why it matters and the fix, with the real numbers. No check titles.",
     "muscle_names": {
       "chest": {
@@ -8676,165 +8716,951 @@
         "scope": "day",
         "severity": "warn",
         "significance": "60 + min(20, 10 x sets_past_peak); Plan only when sets_past_peak >= 1",
-        "template": "{Muscle} {get} {sets} hard sets on {day}. After about {peak} sets in one workout, each extra set costs more recovery than it builds. Move {extra} sets to another day, or tap Make it more efficient.",
-        "what": "Past the most efficient dose for one workout.",
-        "why": "Extra sets still add a little growth but cost more recovery than they return.",
-        "fix": "move_sets_to_day, then reduce_sets, then swap to a lower-fatigue exercise (suggestion button Make it more efficient)",
+        "template": "{Muscle} {get} {sets} hard sets on {day}. Sets past about {peak} cost more recovery than they add. Move {excess} to another {muscle} day or trim them.",
+        "what": "{Muscle} {get} {sets} hard sets on {day}.",
+        "why": "Sets past about {peak} cost more recovery than they add.",
+        "fix": "Move {excess} to another {muscle} day or trim them.",
         "placeholders": {
-          "sets": "r1(effective sets)",
-          "peak": "r1(muscles[m].payoff.peak_n)",
-          "extra": "ceil(2 x (sets - peak)) / 2"
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "excess": {
+            "source": "ceil(2 x (sets - peak)) / 2, minimum 0.5; shown with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "up to the next 0.5",
+            "example": "2.5 sets"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "muscle": {
+            "source": "lowercase of flag_copy.muscle_names[m].name",
+            "units": "text",
+            "rounding": "none",
+            "example": "chest"
+          },
+          "peak": {
+            "source": "day-metrics-presets.json ...days[i].muscles[m].payoff (live: rules payoff.formula).peak_n",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 5.0
+          },
+          "sets": {
+            "source": "day-metrics-presets.json ...days[i].muscles[m].payoff (live: rules payoff.formula).n (effective sets that day)",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 7.5
+          }
         },
-        "plan_eligible": true
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "{Muscle} {get} {sets} hard sets on {day}. After about {peak} sets in one workout, each extra set costs more recovery than it builds. Move {extra} sets to another day, or tap Make it more efficient.",
+          "what": "Past the most efficient dose for one workout.",
+          "why": "Extra sets still add a little growth but cost more recovery than they return.",
+          "fix": "move_sets_to_day, then reduce_sets, then swap to a lower-fatigue exercise (suggestion button Make it more efficient)",
+          "placeholders": {
+            "sets": "r1(effective sets)",
+            "peak": "r1(muscles[m].payoff.peak_n)",
+            "extra": "ceil(2 x (sets - peak)) / 2"
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "excess": {
+            "source": "ceil(2 x (sets - peak)) / 2, minimum 0.5; shown with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "up to the next 0.5",
+            "example": "2.5 sets"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "muscle": {
+            "source": "lowercase of flag_copy.muscle_names[m].name",
+            "units": "text",
+            "rounding": "none",
+            "example": "chest"
+          },
+          "peak": {
+            "source": "day-metrics-presets.json ...days[i].muscles[m].payoff (live: rules payoff.formula).peak_n",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 5.0
+          },
+          "sets": {
+            "source": "day-metrics-presets.json ...days[i].muscles[m].payoff (live: rules payoff.formula).n (effective sets that day)",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 7.5
+          }
+        },
+        "example": "Chest gets 7.5 hard sets on Monday. Sets past about 5.0 cost more recovery than they add. Move 2.5 sets to another chest day or trim them.",
+        "example_chars": 138
       },
       "payoff_negative": {
         "scope": "day",
         "severity": "warn",
         "significance": 95,
-        "template": "{Muscle} {get} {sets} hard sets on {day}, past the point where they pay off. From about {zero} sets, extra sets cost more recovery than they build. Move at least {extra} sets to another day.",
-        "what": "Payoff is below zero for this muscle today.",
-        "why": "The last sets add more fatigue than growth, and slow recovery for the next session.",
-        "fix": "move_sets_to_day, then reduce_sets",
+        "template": "{Muscle} {get} {sets} hard sets on {day}, past the {zero} where they stop paying off. The last sets cost more recovery than they build. Move {excess} to another {muscle} day or trim them.",
+        "what": "{Muscle} {get} {sets} hard sets on {day}, past the {zero} where they stop paying off.",
+        "why": "The last sets cost more recovery than they build.",
+        "fix": "Move {excess} to another {muscle} day or trim them.",
         "placeholders": {
-          "sets": "r1(effective sets)",
-          "zero": "r1(payoff.zero_n)",
-          "extra": "ceil(2 x (sets - peak)) / 2"
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "excess": {
+            "source": "ceil(2 x (sets - peak_n)) / 2 (back to the peak), with \"sets\"",
+            "units": "sets",
+            "rounding": "up to the next 0.5",
+            "example": "9 sets"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "muscle": {
+            "source": "lowercase of flag_copy.muscle_names[m].name",
+            "units": "text",
+            "rounding": "none",
+            "example": "chest"
+          },
+          "sets": {
+            "source": "day-metrics-presets.json ...days[i].muscles[m].payoff (live: rules payoff.formula).n",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 14.0
+          },
+          "zero": {
+            "source": "day-metrics-presets.json ...days[i].muscles[m].payoff (live: rules payoff.formula).zero_n",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 13.0
+          }
         },
-        "plan_eligible": true
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "{Muscle} {get} {sets} hard sets on {day}, past the point where they pay off. From about {zero} sets, extra sets cost more recovery than they build. Move at least {extra} sets to another day.",
+          "what": "Payoff is below zero for this muscle today.",
+          "why": "The last sets add more fatigue than growth, and slow recovery for the next session.",
+          "fix": "move_sets_to_day, then reduce_sets",
+          "placeholders": {
+            "sets": "r1(effective sets)",
+            "zero": "r1(payoff.zero_n)",
+            "extra": "ceil(2 x (sets - peak)) / 2"
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "excess": {
+            "source": "ceil(2 x (sets - peak_n)) / 2 (back to the peak), with \"sets\"",
+            "units": "sets",
+            "rounding": "up to the next 0.5",
+            "example": "9 sets"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "muscle": {
+            "source": "lowercase of flag_copy.muscle_names[m].name",
+            "units": "text",
+            "rounding": "none",
+            "example": "chest"
+          },
+          "sets": {
+            "source": "day-metrics-presets.json ...days[i].muscles[m].payoff (live: rules payoff.formula).n",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 14.0
+          },
+          "zero": {
+            "source": "day-metrics-presets.json ...days[i].muscles[m].payoff (live: rules payoff.formula).zero_n",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 13.0
+          }
+        },
+        "example": "Chest gets 14.0 hard sets on Monday, past the 13.0 where they stop paying off. The last sets cost more recovery than they build. Move 9 sets to another chest day or trim them.",
+        "example_chars": 175,
+        "short_text": "{Muscle} {get} {sets} hard sets on {day}, past the {zero} where they stop paying off. Move {excess} to another {muscle} day or trim them.",
+        "short_example": "Chest gets 14.0 hard sets on Monday, past the 13.0 where they stop paying off. Move 9 sets to another chest day or trim them.",
+        "short_example_chars": 125
       },
       "session_hard_sets": {
         "scope": "day",
         "severity": "warn",
         "significance": 85,
-        "template": "{day} has {sets} hard sets, more than the {max} that fit one good workout at your level. Late sets get sloppy and recovery takes longer. Move a few sets to a lighter day.",
-        "what": "Too many total sets in one day.",
-        "why": "Quality drops late in a long session.",
-        "fix": "reduce_sets / move_tile",
+        "template": "{day} has {day_sets} hard sets, {over} over the {cap} cap for your level. Late sets get sloppy and recovery takes longer. Move {over} sets to a lighter day.",
+        "what": "{day} has {day_sets} hard sets, {over} over the {cap} cap for your level.",
+        "why": "Late sets get sloppy and recovery takes longer.",
+        "fix": "Move {over} sets to a lighter day.",
         "placeholders": {
-          "sets": "day hard sets",
-          "max": "warn_above[level]"
+          "cap": {
+            "source": "rules[id=session_hard_sets].warn_above[level]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 24
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day_sets": {
+            "source": "tools/check_program.py flag tuple ('warn','session_hard_sets',day,tot)[3] = sum of tile sets that day",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 27
+          },
+          "over": {
+            "source": "day_sets - cap",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 3
+          }
         },
-        "plan_eligible": true
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "{day} has {sets} hard sets, more than the {max} that fit one good workout at your level. Late sets get sloppy and recovery takes longer. Move a few sets to a lighter day.",
+          "what": "Too many total sets in one day.",
+          "why": "Quality drops late in a long session.",
+          "fix": "reduce_sets / move_tile",
+          "placeholders": {
+            "sets": "day hard sets",
+            "max": "warn_above[level]"
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "cap": {
+            "source": "rules[id=session_hard_sets].warn_above[level]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 24
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day_sets": {
+            "source": "tools/check_program.py flag tuple ('warn','session_hard_sets',day,tot)[3] = sum of tile sets that day",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 27
+          },
+          "over": {
+            "source": "day_sets - cap",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 3
+          }
+        },
+        "example": "Monday has 27 hard sets, 3 over the 24 cap for your level. Late sets get sloppy and recovery takes longer. Move 3 sets to a lighter day.",
+        "example_chars": 136
       },
       "session_hard_sets_info": {
         "scope": "day",
         "severity": "info",
         "significance": 25,
-        "template": "{day} has {sets} hard sets, close to the {max} that fit one workout at your level.",
-        "what": "Near the daily cap.",
-        "why": "Leaves little room to add work.",
-        "fix": "none needed",
+        "template": "{day} has {day_sets} hard sets, close to the {cap} cap. There is little room to add more that day. Put new work on a lighter day.",
+        "what": "{day} has {day_sets} hard sets, close to the {cap} cap.",
+        "why": "There is little room to add more that day.",
+        "fix": "Put new work on a lighter day.",
         "placeholders": {
-          "sets": "",
-          "max": ""
+          "cap": {
+            "source": "rules[id=session_hard_sets].warn_above[level]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 24
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day_sets": {
+            "source": "tools/check_program.py flag tuple ('info','session_hard_sets',day,tot)[3]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 23
+          }
         },
-        "plan_eligible": false
+        "plan_eligible": false,
+        "history_vol14": {
+          "template": "{day} has {sets} hard sets, close to the {max} that fit one workout at your level.",
+          "what": "Near the daily cap.",
+          "why": "Leaves little room to add work.",
+          "fix": "none needed",
+          "placeholders": {
+            "sets": "",
+            "max": ""
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "cap": {
+            "source": "rules[id=session_hard_sets].warn_above[level]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 24
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day_sets": {
+            "source": "tools/check_program.py flag tuple ('info','session_hard_sets',day,tot)[3]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 23
+          }
+        },
+        "example": "Monday has 23 hard sets, close to the 24 cap. There is little room to add more that day. Put new work on a lighter day.",
+        "example_chars": 119
       },
       "session_length": {
         "scope": "day",
         "severity": "warn",
         "significance": 80,
-        "template": "{day} runs about {min} minutes, longer than the {warn_min} minutes most people can keep every set hard. Cut a few sets or split the day.",
-        "what": "The day is long.",
-        "why": "Effort and focus fade in long sessions.",
-        "fix": "reduce_sets / move_tile",
+        "template": "{day} runs about {minutes} minutes, past {warn_min}. Effort fades in long sessions, so late sets count for less. Move {cut_sets} sets to another day.",
+        "what": "{day} runs about {minutes} minutes, past {warn_min}.",
+        "why": "Effort fades in long sessions, so late sets count for less.",
+        "fix": "Move {cut_sets} sets to another day.",
         "placeholders": {
-          "min": "estimated minutes",
-          "warn_min": "warn_min"
+          "cut_sets": {
+            "source": "ceil((minutes - warn_min + 0.01) / 2.25) (check_program fix_for session_length)",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 4
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "minutes": {
+            "source": "tools/check_program.py flag tuple ('warn','session_length',day,minutes)[3] (rules session_length.by_level formula)",
+            "units": "minutes",
+            "rounding": "round to integer",
+            "example": 82
+          },
+          "warn_min": {
+            "source": "rules[id=session_length].by_level[level].warn_min",
+            "units": "minutes",
+            "rounding": "integer",
+            "example": 75
+          }
         },
-        "plan_eligible": true
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "{day} runs about {min} minutes, longer than the {warn_min} minutes most people can keep every set hard. Cut a few sets or split the day.",
+          "what": "The day is long.",
+          "why": "Effort and focus fade in long sessions.",
+          "fix": "reduce_sets / move_tile",
+          "placeholders": {
+            "min": "estimated minutes",
+            "warn_min": "warn_min"
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "cut_sets": {
+            "source": "ceil((minutes - warn_min + 0.01) / 2.25) (check_program fix_for session_length)",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 4
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "minutes": {
+            "source": "tools/check_program.py flag tuple ('warn','session_length',day,minutes)[3] (rules session_length.by_level formula)",
+            "units": "minutes",
+            "rounding": "round to integer",
+            "example": 82
+          },
+          "warn_min": {
+            "source": "rules[id=session_length].by_level[level].warn_min",
+            "units": "minutes",
+            "rounding": "integer",
+            "example": 75
+          }
+        },
+        "example": "Monday runs about 82 minutes, past 75. Effort fades in long sessions, so late sets count for less. Move 4 sets to another day.",
+        "example_chars": 126
       },
       "session_length_info": {
         "scope": "day",
         "severity": "info",
         "significance": 25,
-        "template": "{day} runs about {min} minutes. Put the big lifts first so they get your best effort.",
-        "what": "Getting long.",
-        "why": "Big lifts suffer most when tired.",
-        "fix": "reorder",
+        "template": "{day} runs about {minutes} minutes. The big lifts suffer most when you are tired. Put them first in the day.",
+        "what": "{day} runs about {minutes} minutes.",
+        "why": "The big lifts suffer most when you are tired.",
+        "fix": "Put them first in the day.",
         "placeholders": {
-          "min": ""
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "minutes": {
+            "source": "tools/check_program.py flag tuple ('info','session_length',day,minutes)[3]",
+            "units": "minutes",
+            "rounding": "round to integer",
+            "example": 68
+          }
         },
-        "plan_eligible": false
+        "plan_eligible": false,
+        "history_vol14": {
+          "template": "{day} runs about {min} minutes. Put the big lifts first so they get your best effort.",
+          "what": "Getting long.",
+          "why": "Big lifts suffer most when tired.",
+          "fix": "reorder",
+          "placeholders": {
+            "min": ""
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "minutes": {
+            "source": "tools/check_program.py flag tuple ('info','session_length',day,minutes)[3]",
+            "units": "minutes",
+            "rounding": "round to integer",
+            "example": 68
+          }
+        },
+        "example": "Monday runs about 68 minutes. The big lifts suffer most when you are tired. Put them first in the day.",
+        "example_chars": 102
       },
       "spinal_load": {
         "scope": "day",
         "severity": "warn",
         "significance": 80,
-        "template": "{day} has {sets} heavy squat and deadlift sets, more than {max}. Your lower back takes the load from all of them. Move some to another day or swap one for a machine version.",
-        "what": "Heavy back loading in one day.",
-        "why": "The lower back recovers slowly and limits the next leg day.",
-        "fix": "swap_exercise:lower_spinal / move_tile",
+        "template": "{day} has {sets} heavy squat and deadlift sets, above {max}. Your lower back takes the load from all of them. Move {over} to another day or use a machine version.",
+        "what": "{day} has {sets} heavy squat and deadlift sets, above {max}.",
+        "why": "Your lower back takes the load from all of them.",
+        "fix": "Move {over} to another day or use a machine version.",
         "placeholders": {
-          "sets": "",
-          "max": "session_warn_above[level]"
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "max": {
+            "source": "rules[id=spinal_load].session_warn_above[level]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 8
+          },
+          "over": {
+            "source": "sets - max, with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "integer",
+            "example": "2 sets"
+          },
+          "sets": {
+            "source": "tools/check_program.py flag tuple ('warn','spinal_load_session',day,sets)[3] = sets of rules heavy_squats + heavy_hinges that day",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 10
+          }
         },
-        "plan_eligible": true
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "{day} has {sets} heavy squat and deadlift sets, more than {max}. Your lower back takes the load from all of them. Move some to another day or swap one for a machine version.",
+          "what": "Heavy back loading in one day.",
+          "why": "The lower back recovers slowly and limits the next leg day.",
+          "fix": "swap_exercise:lower_spinal / move_tile",
+          "placeholders": {
+            "sets": "",
+            "max": "session_warn_above[level]"
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "max": {
+            "source": "rules[id=spinal_load].session_warn_above[level]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 8
+          },
+          "over": {
+            "source": "sets - max, with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "integer",
+            "example": "2 sets"
+          },
+          "sets": {
+            "source": "tools/check_program.py flag tuple ('warn','spinal_load_session',day,sets)[3] = sets of rules heavy_squats + heavy_hinges that day",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 10
+          }
+        },
+        "example": "Monday has 10 heavy squat and deadlift sets, above 8. Your lower back takes the load from all of them. Move 2 sets to another day or use a machine version.",
+        "example_chars": 155,
+        "flag_ids": [
+          "spinal_load_session"
+        ]
       },
       "beginner_squat_and_deadlift": {
         "scope": "day",
         "severity": "info",
         "significance": 75,
-        "template": "{day} has heavy squats and heavy deadlifts together. For a newer lifter that is a lot of lower-back work in one day. Put them on different days.",
-        "what": "Both heavy lower-body lifts on one day.",
-        "why": "Hard to keep good form on the second one.",
-        "fix": "move_tile",
-        "placeholders": {},
-        "plan_eligible": true
+        "template": "{day} has heavy squats and heavy deadlifts. For a newer lifter that is a lot of lower-back work at once. Put them on different days.",
+        "what": "{day} has heavy squats and heavy deadlifts.",
+        "why": "For a newer lifter that is a lot of lower-back work at once.",
+        "fix": "Put them on different days.",
+        "placeholders": {
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          }
+        },
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "{day} has heavy squats and heavy deadlifts together. For a newer lifter that is a lot of lower-back work in one day. Put them on different days.",
+          "what": "Both heavy lower-body lifts on one day.",
+          "why": "Hard to keep good form on the second one.",
+          "fix": "move_tile",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          }
+        },
+        "example": "Monday has heavy squats and heavy deadlifts. For a newer lifter that is a lot of lower-back work at once. Put them on different days.",
+        "example_chars": 133
       },
       "sets_per_exercise": {
         "scope": "day",
         "severity": "warn",
         "significance": 55,
-        "template": "{exercise} on {day} has {sets} sets. After about 5, more sets of the same exercise add little. Use 2 to 4 sets, or split them across two exercises.",
-        "what": "One exercise carries too many sets.",
-        "why": "Returns drop and joints take repeated stress.",
-        "fix": "split_pattern / reduce_sets",
+        "template": "{exercise} on {day} has {sets} sets. Past about {max} sets, the same exercise adds little. Use 2 to 4 sets, or split them across two exercises.",
+        "what": "{exercise} on {day} has {sets} sets.",
+        "why": "Past about {max} sets, the same exercise adds little.",
+        "fix": "Use 2 to 4 sets, or split them across two exercises.",
         "placeholders": {
-          "exercise": "",
-          "sets": ""
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "exercise": {
+            "source": "exercises.json[id = flag tuple[3]].short_name (name if absent)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Leg Press"
+          },
+          "max": {
+            "source": "check_program sets_per_exercise threshold (t.sets > 5)",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 5
+          },
+          "sets": {
+            "source": "that tile.sets",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 6
+          }
         },
-        "plan_eligible": true
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "{exercise} on {day} has {sets} sets. After about 5, more sets of the same exercise add little. Use 2 to 4 sets, or split them across two exercises.",
+          "what": "One exercise carries too many sets.",
+          "why": "Returns drop and joints take repeated stress.",
+          "fix": "split_pattern / reduce_sets",
+          "placeholders": {
+            "exercise": "",
+            "sets": ""
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "exercise": {
+            "source": "exercises.json[id = flag tuple[3]].short_name (name if absent)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Leg Press"
+          },
+          "max": {
+            "source": "check_program sets_per_exercise threshold (t.sets > 5)",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 5
+          },
+          "sets": {
+            "source": "that tile.sets",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 6
+          }
+        },
+        "example": "Leg Press on Monday has 6 sets. Past about 5 sets, the same exercise adds little. Use 2 to 4 sets, or split them across two exercises.",
+        "example_chars": 134
       },
       "redundant_pattern": {
         "scope": "day",
         "severity": "warn",
         "significance": 50,
-        "template": "The {pattern} exercises on {day} give {muscle} {sets} hard sets in one workout. That much of the same movement mostly adds fatigue. Move one to another day.",
-        "what": "Same movement stacked on one day.",
-        "why": "Repeats the same stress without much extra growth.",
-        "fix": "move_tile / reduce_sets",
+        "template": "The {pattern} exercises on {day} give {muscle} {sets} hard sets. Past {cap} in one workout, the same movement mostly adds fatigue. Move one to another day.",
+        "what": "The {pattern} exercises on {day} give {muscle} {sets} hard sets.",
+        "why": "Past {cap} in one workout, the same movement mostly adds fatigue.",
+        "fix": "Move one to another day.",
         "placeholders": {
-          "pattern": "",
-          "sets": ""
+          "cap": {
+            "source": "rules[id=redundant_pattern].threshold",
+            "units": "effective sets",
+            "rounding": "integer",
+            "example": 10
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "muscle": {
+            "source": "lowercase muscle_names[flag tuple[5]].name",
+            "units": "text",
+            "rounding": "none",
+            "example": "chest"
+          },
+          "pattern": {
+            "source": "rules.json movement_patterns.labels[flag tuple[3]] lowercased (pattern id with _ -> space if absent)",
+            "units": "text",
+            "rounding": "none",
+            "example": "horizontal push"
+          },
+          "sets": {
+            "source": "flag tuple[6] (pattern effective sets for that muscle)",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 10.5
+          }
         },
-        "plan_eligible": true
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "The {pattern} exercises on {day} give {muscle} {sets} hard sets in one workout. That much of the same movement mostly adds fatigue. Move one to another day.",
+          "what": "Same movement stacked on one day.",
+          "why": "Repeats the same stress without much extra growth.",
+          "fix": "move_tile / reduce_sets",
+          "placeholders": {
+            "pattern": "",
+            "sets": ""
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "cap": {
+            "source": "rules[id=redundant_pattern].threshold",
+            "units": "effective sets",
+            "rounding": "integer",
+            "example": 10
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "muscle": {
+            "source": "lowercase muscle_names[flag tuple[5]].name",
+            "units": "text",
+            "rounding": "none",
+            "example": "chest"
+          },
+          "pattern": {
+            "source": "rules.json movement_patterns.labels[flag tuple[3]] lowercased (pattern id with _ -> space if absent)",
+            "units": "text",
+            "rounding": "none",
+            "example": "horizontal push"
+          },
+          "sets": {
+            "source": "flag tuple[6] (pattern effective sets for that muscle)",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 10.5
+          }
+        },
+        "example": "The horizontal push exercises on Monday give chest 10.5 hard sets. Past 10 in one workout, the same movement mostly adds fatigue. Move one to another day.",
+        "example_chars": 154
       },
       "session_efficiency": {
         "scope": "day",
         "severity": "info",
         "significance": 45,
-        "template": "{Muscle} {get} {sets} hard sets on {day}, above the {limit} one workout can usefully take. This is where the Push for max growth button stops adding sets.",
-        "what": "Above the most a single workout can usefully take.",
-        "why": "Research on sets per workout finds little extra growth past about this point (preprint).",
-        "fix": "move_sets_to_day",
+        "template": "{Muscle} {get} {sets} hard sets on {day}, above the {limit} one workout can use. Past that, extra sets add little growth. Move {excess} to another {muscle} day.",
+        "what": "{Muscle} {get} {sets} hard sets on {day}, above the {limit} one workout can use.",
+        "why": "Past that, extra sets add little growth.",
+        "fix": "Move {excess} to another {muscle} day.",
         "placeholders": {
-          "limit": "rules session_efficiency.display_limits[level][m] (10/10/6 by size class; beginner 8/8/6)"
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "excess": {
+            "source": "ceil(2 x (sets - limit)) / 2, with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "up to the next 0.5",
+            "example": "1 set"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "limit": {
+            "source": "rules[id=session_efficiency].display_limits[level][m]",
+            "units": "effective sets",
+            "rounding": "integer",
+            "example": 10
+          },
+          "muscle": {
+            "source": "lowercase of flag_copy.muscle_names[m].name",
+            "units": "text",
+            "rounding": "none",
+            "example": "chest"
+          },
+          "sets": {
+            "source": "tools/check_program.py flag tuple ('…','session_efficiency',day,m,x,over)[4]",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 11.0
+          }
         },
-        "plan_eligible": false
+        "plan_eligible": false,
+        "history_vol14": {
+          "template": "{Muscle} {get} {sets} hard sets on {day}, above the {limit} one workout can usefully take. This is where the Push for max growth button stops adding sets.",
+          "what": "Above the most a single workout can usefully take.",
+          "why": "Research on sets per workout finds little extra growth past about this point (preprint).",
+          "fix": "move_sets_to_day",
+          "placeholders": {
+            "limit": "rules session_efficiency.display_limits[level][m] (10/10/6 by size class; beginner 8/8/6)"
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "excess": {
+            "source": "ceil(2 x (sets - limit)) / 2, with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "up to the next 0.5",
+            "example": "1 set"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "limit": {
+            "source": "rules[id=session_efficiency].display_limits[level][m]",
+            "units": "effective sets",
+            "rounding": "integer",
+            "example": 10
+          },
+          "muscle": {
+            "source": "lowercase of flag_copy.muscle_names[m].name",
+            "units": "text",
+            "rounding": "none",
+            "example": "chest"
+          },
+          "sets": {
+            "source": "tools/check_program.py flag tuple ('…','session_efficiency',day,m,x,over)[4]",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 11.0
+          }
+        },
+        "example": "Chest gets 11.0 hard sets on Monday, above the 10 one workout can use. Past that, extra sets add little growth. Move 1 set to another chest day.",
+        "example_chars": 144
       },
       "session_efficiency_single_day": {
         "scope": "day",
         "severity": "info",
         "significance": 20,
-        "template": "{Muscle} {get} all {sets} weekly hard sets on {day}. A second day for {them} would spread the work out.",
-        "what": "All weekly work on one day.",
-        "why": "Two sessions are easier to keep hard.",
-        "fix": "move_sets_to_day",
+        "template": "{Muscle} {get} all {week_sets} weekly sets on {day}. One long session is harder to keep every set hard. Move some to a second day.",
+        "what": "{Muscle} {get} all {week_sets} weekly sets on {day}.",
+        "why": "One long session is harder to keep every set hard.",
+        "fix": "Move some to a second day.",
         "placeholders": {
-          "them": "muscle pronoun"
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "week_sets": {
+            "source": "tools/check_program.py flag tuple ('info','session_efficiency_single_day',day,m,x,week)[5]",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 7.0
+          }
         },
-        "plan_eligible": false
+        "plan_eligible": false,
+        "history_vol14": {
+          "template": "{Muscle} {get} all {sets} weekly hard sets on {day}. A second day for {them} would spread the work out.",
+          "what": "All weekly work on one day.",
+          "why": "Two sessions are easier to keep hard.",
+          "fix": "move_sets_to_day",
+          "placeholders": {
+            "them": "muscle pronoun"
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "week_sets": {
+            "source": "tools/check_program.py flag tuple ('info','session_efficiency_single_day',day,m,x,week)[5]",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 7.0
+          }
+        },
+        "example": "Chest gets all 7.0 weekly sets on Monday. One long session is harder to keep every set hard. Move some to a second day.",
+        "example_chars": 119
       },
       "wasted_late_sets": {
         "scope": "day",
@@ -8846,203 +9672,1109 @@
         "fix": "",
         "placeholders": {},
         "plan_eligible": false,
-        "retired": true
+        "retired": true,
+        "history_vol14": {
+          "template": "Retired in vol14: folded into payoff_past_efficient.",
+          "what": "",
+          "why": "",
+          "fix": "",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {},
+        "example": "Retired in vol14: folded into payoff_past_efficient.",
+        "example_chars": 52
       },
       "many_small_entries": {
         "scope": "day",
         "severity": "info",
         "significance": 30,
-        "template": "{day} has {n} exercises with under 2 sets each. That is a lot of setup for little work. Merge some into fewer exercises with 3 sets.",
-        "what": "Many tiny entries.",
-        "why": "Setup time adds up.",
-        "fix": "merge_tiles",
-        "placeholders": {},
-        "plan_eligible": false
+        "template": "{day} has {n} exercises averaging {avg} sets. That is a lot of setup for little work. Merge some into fewer exercises with 3 sets.",
+        "what": "{day} has {n} exercises averaging {avg} sets.",
+        "why": "That is a lot of setup for little work.",
+        "fix": "Merge some into fewer exercises with 3 sets.",
+        "placeholders": {
+          "avg": {
+            "source": "flag tuple[4] = day sets / tiles",
+            "units": "sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 1.8
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "n": {
+            "source": "tools/check_program.py flag tuple ('info','many_small_entries',day,n,avg)[3] (tiles that day)",
+            "units": "exercises",
+            "rounding": "integer",
+            "example": 11
+          }
+        },
+        "plan_eligible": false,
+        "history_vol14": {
+          "template": "{day} has {n} exercises with under 2 sets each. That is a lot of setup for little work. Merge some into fewer exercises with 3 sets.",
+          "what": "Many tiny entries.",
+          "why": "Setup time adds up.",
+          "fix": "merge_tiles",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "avg": {
+            "source": "flag tuple[4] = day sets / tiles",
+            "units": "sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 1.8
+          },
+          "day": {
+            "source": "rules.json day_names[flag day id] (the day the flag is on)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "n": {
+            "source": "tools/check_program.py flag tuple ('info','many_small_entries',day,n,avg)[3] (tiles that day)",
+            "units": "exercises",
+            "rounding": "integer",
+            "example": 11
+          }
+        },
+        "example": "Monday has 11 exercises averaging 1.8 sets. That is a lot of setup for little work. Merge some into fewer exercises with 3 sets.",
+        "example_chars": 128
       },
       "weekly_needs_sets": {
         "scope": "week",
         "severity": "warn",
         "significance": "90 + min(10, 2 x (min - sets))",
-        "template": "{Muscle} {get} only {sets} hard sets a week. Most people need about {min} to grow {them}. Add {gap} sets, for example {exercise} on {day}.",
-        "what": "Below the weekly minimum.",
-        "why": "Under the minimum, growth for this muscle is likely slow.",
-        "fix": "add_sets / add_exercise (Push for max growth also fills toward the top of the sweet spot)",
+        "template": "{Muscle} {get} {sets} hard sets a week; most people need about {min}. Below that, growth is likely slow. Add {gap}, e.g. {exercise} on {day}.",
+        "what": "{Muscle} {get} {sets} hard sets a week; most people need about {min}.",
+        "why": "Below that, growth is likely slow.",
+        "fix": "Add {gap}, e.g. {exercise} on {day}.",
         "placeholders": {
-          "sets": "r1(weekly effective sets)",
-          "min": "volume_zones[level][m].min",
-          "gap": "ceil(2 x (min - sets)) / 2",
-          "exercise": "best add_sets candidate (existing tile) or staple",
-          "day": "its day"
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day": {
+            "source": "day_names[that candidate tile day]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Thursday"
+          },
+          "exercise": {
+            "source": "first suggestion_buttons.push_for_max_growth add candidate for m (existing tile), else rules staples[m][0]; exercises.json short_name",
+            "units": "text",
+            "rounding": "none",
+            "example": "DB Lat Raise"
+          },
+          "gap": {
+            "source": "ceil(2 x (min - sets)) / 2, with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "up to the next 0.5",
+            "example": "4 sets"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "min": {
+            "source": "targets.json volume_zones[level][m].min",
+            "units": "effective sets",
+            "rounding": "as stored (0.5 steps)",
+            "example": 8
+          },
+          "sets": {
+            "source": "day-metrics-presets ...weekly_status.displayed_sets[m] (live: r1(weekly effective sets))",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 4.0
+          }
         },
         "plan_eligible": true,
-        "replaces_message": "weekly_volume (under)"
+        "replaces_message": "weekly_volume (under)",
+        "history_vol14": {
+          "template": "{Muscle} {get} only {sets} hard sets a week. Most people need about {min} to grow {them}. Add {gap} sets, for example {exercise} on {day}.",
+          "what": "Below the weekly minimum.",
+          "why": "Under the minimum, growth for this muscle is likely slow.",
+          "fix": "add_sets / add_exercise (Push for max growth also fills toward the top of the sweet spot)",
+          "placeholders": {
+            "sets": "r1(weekly effective sets)",
+            "min": "volume_zones[level][m].min",
+            "gap": "ceil(2 x (min - sets)) / 2",
+            "exercise": "best add_sets candidate (existing tile) or staple",
+            "day": "its day"
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day": {
+            "source": "day_names[that candidate tile day]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Thursday"
+          },
+          "exercise": {
+            "source": "first suggestion_buttons.push_for_max_growth add candidate for m (existing tile), else rules staples[m][0]; exercises.json short_name",
+            "units": "text",
+            "rounding": "none",
+            "example": "DB Lat Raise"
+          },
+          "gap": {
+            "source": "ceil(2 x (min - sets)) / 2, with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "up to the next 0.5",
+            "example": "4 sets"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "min": {
+            "source": "targets.json volume_zones[level][m].min",
+            "units": "effective sets",
+            "rounding": "as stored (0.5 steps)",
+            "example": 8
+          },
+          "sets": {
+            "source": "day-metrics-presets ...weekly_status.displayed_sets[m] (live: r1(weekly effective sets))",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 4.0
+          }
+        },
+        "example": "Chest gets 4.0 hard sets a week; most people need about 8. Below that, growth is likely slow. Add 4 sets, e.g. DB Lat Raise on Thursday.",
+        "example_chars": 136,
+        "excludes": [
+          "abductors"
+        ],
+        "excludes_boards": "days_per_week == 2 (see weekly_two_day_by_design)"
+      },
+      "weekly_two_day_by_design": {
+        "scope": "week",
+        "severity": "info",
+        "significance": 40,
+        "plan_eligible": true,
+        "version": "vol14d",
+        "template": "Two days can't cover every muscle. This plan prioritizes the big ones; add a day to fill the gaps.",
+        "what": "Two days can't cover every muscle.",
+        "why": "This plan prioritizes the big ones;",
+        "fix": "add a day to fill the gaps.",
+        "fields": {},
+        "placeholders": {},
+        "example": "Two days can't cover every muscle. This plan prioritizes the big ones; add a day to fill the gaps.",
+        "example_chars": 98,
+        "flag_ids": [
+          "weekly_min_two_day"
+        ],
+        "display": "grey",
+        "once_per_board": true
+      },
+      "weekly_optional_low": {
+        "scope": "week",
+        "severity": "info",
+        "significance": 10,
+        "plan_eligible": false,
+        "version": "vol14d",
+        "template": "{Muscle} {get} {sets} hard sets a week. That's optional; your glute work covers most of it. Add a hip abduction only if you want more.",
+        "what": "{Muscle} {get} {sets} hard sets a week.",
+        "why": "That's optional; your glute work covers most of it.",
+        "fix": "Add a hip abduction only if you want more.",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Outer hips"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "get"
+          },
+          "sets": {
+            "source": "weekly_status.displayed_sets[m] (r1(weekly effective sets)) for an optional muscle",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 3.5
+          }
+        },
+        "placeholders": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Outer hips"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "get"
+          },
+          "sets": {
+            "source": "weekly_status.displayed_sets[m] (r1(weekly effective sets)) for an optional muscle",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 3.5
+          }
+        },
+        "example": "Outer hips get 3.5 hard sets a week. That's optional; your glute work covers most of it. Add a hip abduction only if you want more.",
+        "example_chars": 131,
+        "display": "grey",
+        "muscles": [
+          "abductors"
+        ]
       },
       "weekly_far_over": {
         "scope": "week",
         "severity": "warn",
         "significance": 80,
-        "template": "{Muscle} {get} {sets} hard sets a week, well past the {max} where extra sets stop adding much. The extra work mainly slows recovery. Trim about {extra} sets.",
-        "what": "Far above the useful weekly range.",
-        "why": "Recovery cost keeps rising while growth flattens.",
-        "fix": "reduce_sets:highest_contributor",
+        "template": "{Muscle} {get} {sets} hard sets a week, past the {max} where extra sets add little. The extra mainly slows recovery. Trim about {extra}.",
+        "what": "{Muscle} {get} {sets} hard sets a week, past the {max} where extra sets add little.",
+        "why": "The extra mainly slows recovery.",
+        "fix": "Trim about {extra}.",
         "placeholders": {
-          "max": "volume_zones[level][m].diminishing",
-          "extra": "ceil(2 x (sets - max)) / 2"
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "extra": {
+            "source": "ceil(2 x (sets - max)) / 2, with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "up to the next 0.5",
+            "example": "6.5 sets"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "max": {
+            "source": "targets.json volume_zones[level][m].diminishing",
+            "units": "effective sets",
+            "rounding": "as stored",
+            "example": 22
+          },
+          "sets": {
+            "source": "weekly_status.displayed_sets[m]",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 28.5
+          }
         },
         "plan_eligible": true,
-        "replaces_message": "weekly_volume (over)"
+        "replaces_message": "weekly_volume (over)",
+        "history_vol14": {
+          "template": "{Muscle} {get} {sets} hard sets a week, well past the {max} where extra sets stop adding much. The extra work mainly slows recovery. Trim about {extra} sets.",
+          "what": "Far above the useful weekly range.",
+          "why": "Recovery cost keeps rising while growth flattens.",
+          "fix": "reduce_sets:highest_contributor",
+          "placeholders": {
+            "max": "volume_zones[level][m].diminishing",
+            "extra": "ceil(2 x (sets - max)) / 2"
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "extra": {
+            "source": "ceil(2 x (sets - max)) / 2, with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "up to the next 0.5",
+            "example": "6.5 sets"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "max": {
+            "source": "targets.json volume_zones[level][m].diminishing",
+            "units": "effective sets",
+            "rounding": "as stored",
+            "example": 22
+          },
+          "sets": {
+            "source": "weekly_status.displayed_sets[m]",
+            "units": "effective sets",
+            "rounding": "r1 = half-up to 0.1",
+            "example": 28.5
+          }
+        },
+        "example": "Chest gets 28.5 hard sets a week, past the 22 where extra sets add little. The extra mainly slows recovery. Trim about 6.5 sets.",
+        "example_chars": 128
       },
       "pattern_gap": {
         "scope": "week",
         "severity": "warn",
         "significance": 75,
-        "template": "Your week has no {slot_lower}. Without it, the muscles it trains miss a whole direction of work. Add one, for example {examples}.",
-        "what": "A key movement is missing.",
-        "why": "Leaves muscles under-trained and the body unbalanced.",
-        "fix": "add_slot_exercise",
-        "placeholders": {},
-        "plan_eligible": true
+        "template": "Your week has no {slot_lower}. The muscles it trains miss a whole direction of work. Add one, e.g. {examples}.",
+        "what": "Your week has no {slot_lower}.",
+        "why": "The muscles it trains miss a whole direction of work.",
+        "fix": "Add one, e.g. {examples}.",
+        "placeholders": {
+          "examples": {
+            "source": "names of the top 2 rules pattern_gap_fix / slot_recommendations for the slot, joined with \" or \"",
+            "units": "text",
+            "rounding": "none",
+            "example": "Lat Pulldown or Pull-Up"
+          },
+          "slot_lower": {
+            "source": "patterns.json slots[slot].name lowercased (rules[id=pattern_gap].message_note)",
+            "units": "text",
+            "rounding": "none",
+            "example": "vertical pull"
+          }
+        },
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "Your week has no {slot_lower}. Without it, the muscles it trains miss a whole direction of work. Add one, for example {examples}.",
+          "what": "A key movement is missing.",
+          "why": "Leaves muscles under-trained and the body unbalanced.",
+          "fix": "add_slot_exercise",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "examples": {
+            "source": "names of the top 2 rules pattern_gap_fix / slot_recommendations for the slot, joined with \" or \"",
+            "units": "text",
+            "rounding": "none",
+            "example": "Lat Pulldown or Pull-Up"
+          },
+          "slot_lower": {
+            "source": "patterns.json slots[slot].name lowercased (rules[id=pattern_gap].message_note)",
+            "units": "text",
+            "rounding": "none",
+            "example": "vertical pull"
+          }
+        },
+        "example": "Your week has no vertical pull. The muscles it trains miss a whole direction of work. Add one, e.g. Lat Pulldown or Pull-Up.",
+        "example_chars": 124
       },
       "push_pull_imbalance": {
         "scope": "week",
         "severity": "warn",
         "significance": 70,
-        "template": "You have {pull} pulling sets and {push} pressing sets this week. Keeping pulling between about three quarters and twice your pressing keeps the upper body even. Add {gap} sets of {side}.",
-        "what": "Pressing and pulling are out of balance.",
-        "why": "The weaker side falls behind and shoulders can feel it.",
-        "fix": "add_sets(lagging side)",
+        "template": "You have {pull} pulling and {push} pressing sets this week. Pulling between 3/4 and 2x your pressing keeps the upper body even. Add {gap} sets of {side}.",
+        "what": "You have {pull} pulling and {push} pressing sets this week.",
+        "why": "Pulling between 3/4 and 2x your pressing keeps the upper body even.",
+        "fix": "Add {gap} sets of {side}.",
         "placeholders": {
-          "pull": "",
-          "push": "",
-          "gap": "",
-          "side": "rows or pulldowns / presses"
+          "gap": {
+            "source": "pull < 0.75 x push: ceil(0.75 x push - pull); pull > 2 x push: ceil(pull / 2 - push)",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 3
+          },
+          "pull": {
+            "source": "sum of tile sets whose movement pattern is in rules pull_patterns (check_program push/pull loop)",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 9
+          },
+          "push": {
+            "source": "sum of tile sets whose movement pattern is in rules push_patterns",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 16
+          },
+          "side": {
+            "source": "\"rows or pulldowns\" when pulling is low, \"presses\" when pressing is low",
+            "units": "text",
+            "rounding": "none",
+            "example": "rows or pulldowns"
+          }
         },
         "plan_eligible": true,
-        "replaces_message": "push_pull_imbalance.message (no ratio wording)"
+        "replaces_message": "push_pull_imbalance.message (no ratio wording)",
+        "history_vol14": {
+          "template": "You have {pull} pulling sets and {push} pressing sets this week. Keeping pulling between about three quarters and twice your pressing keeps the upper body even. Add {gap} sets of {side}.",
+          "what": "Pressing and pulling are out of balance.",
+          "why": "The weaker side falls behind and shoulders can feel it.",
+          "fix": "add_sets(lagging side)",
+          "placeholders": {
+            "pull": "",
+            "push": "",
+            "gap": "",
+            "side": "rows or pulldowns / presses"
+          }
+        },
+        "version": "vol14d",
+        "fields": {
+          "gap": {
+            "source": "pull < 0.75 x push: ceil(0.75 x push - pull); pull > 2 x push: ceil(pull / 2 - push)",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 3
+          },
+          "pull": {
+            "source": "sum of tile sets whose movement pattern is in rules pull_patterns (check_program push/pull loop)",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 9
+          },
+          "push": {
+            "source": "sum of tile sets whose movement pattern is in rules push_patterns",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 16
+          },
+          "side": {
+            "source": "\"rows or pulldowns\" when pulling is low, \"presses\" when pressing is low",
+            "units": "text",
+            "rounding": "none",
+            "example": "rows or pulldowns"
+          }
+        },
+        "example": "You have 9 pulling and 16 pressing sets this week. Pulling between 3/4 and 2x your pressing keeps the upper body even. Add 3 sets of rows or pulldowns.",
+        "example_chars": 151
       },
       "push_pull_no_pull": {
         "scope": "week",
         "severity": "warn",
         "significance": 70,
-        "template": "Your week has pressing but no pulling. Add a row or pulldown so the back keeps up with the chest.",
-        "what": "No pulling.",
-        "why": "Back and rear shoulders get no direct work.",
-        "fix": "add_exercise",
+        "template": "Your week has pressing but no pulling. Your back and rear delts get no direct work. Add a row or pulldown.",
+        "what": "Your week has pressing but no pulling.",
+        "why": "Your back and rear delts get no direct work.",
+        "fix": "Add a row or pulldown.",
         "placeholders": {},
-        "plan_eligible": true
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "Your week has pressing but no pulling. Add a row or pulldown so the back keeps up with the chest.",
+          "what": "No pulling.",
+          "why": "Back and rear shoulders get no direct work.",
+          "fix": "add_exercise",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {},
+        "example": "Your week has pressing but no pulling. Your back and rear delts get no direct work. Add a row or pulldown.",
+        "example_chars": 106
       },
       "push_pull_no_push": {
         "scope": "week",
         "severity": "warn",
         "significance": 70,
-        "template": "Your week has pulling but no pressing. Add a press so the chest and shoulders keep up.",
-        "what": "No pressing.",
-        "why": "Chest and front shoulders get no direct work.",
-        "fix": "add_exercise",
+        "template": "Your week has pulling but no pressing. Your chest and front delts get no direct work. Add a press.",
+        "what": "Your week has pulling but no pressing.",
+        "why": "Your chest and front delts get no direct work.",
+        "fix": "Add a press.",
         "placeholders": {},
-        "plan_eligible": true
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "Your week has pulling but no pressing. Add a press so the chest and shoulders keep up.",
+          "what": "No pressing.",
+          "why": "Chest and front shoulders get no direct work.",
+          "fix": "add_exercise",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {},
+        "example": "Your week has pulling but no pressing. Your chest and front delts get no direct work. Add a press.",
+        "example_chars": 98
       },
       "spinal_load_week": {
         "scope": "week",
         "severity": "warn",
         "significance": 70,
-        "template": "You have {sets} heavy squat and deadlift sets this week, more than {max}. That much back loading adds up across the week. Swap some for machine or supported versions.",
-        "what": "Heavy back loading across the week.",
-        "why": "Limits recovery between leg days.",
-        "fix": "swap_exercise:lower_spinal",
-        "placeholders": {},
-        "plan_eligible": true
+        "template": "You have {sets} heavy squat and deadlift sets this week, above {max}. That much back loading slows recovery between leg days. Swap {over} for machine or supported versions.",
+        "what": "You have {sets} heavy squat and deadlift sets this week, above {max}.",
+        "why": "That much back loading slows recovery between leg days.",
+        "fix": "Swap {over} for machine or supported versions.",
+        "placeholders": {
+          "max": {
+            "source": "rules[id=spinal_load].week_warn_above[level]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 14
+          },
+          "over": {
+            "source": "sets - max, with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "integer",
+            "example": "2 sets"
+          },
+          "sets": {
+            "source": "tools/check_program.py flag tuple ('warn','spinal_load_week',sets)[2]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 16
+          }
+        },
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "You have {sets} heavy squat and deadlift sets this week, more than {max}. That much back loading adds up across the week. Swap some for machine or supported versions.",
+          "what": "Heavy back loading across the week.",
+          "why": "Limits recovery between leg days.",
+          "fix": "swap_exercise:lower_spinal",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "max": {
+            "source": "rules[id=spinal_load].week_warn_above[level]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 14
+          },
+          "over": {
+            "source": "sets - max, with \"set\"/\"sets\"",
+            "units": "sets",
+            "rounding": "integer",
+            "example": "2 sets"
+          },
+          "sets": {
+            "source": "tools/check_program.py flag tuple ('warn','spinal_load_week',sets)[2]",
+            "units": "sets",
+            "rounding": "integer",
+            "example": 16
+          }
+        },
+        "example": "You have 16 heavy squat and deadlift sets this week, above 14. That much back loading slows recovery between leg days. Swap 2 sets for machine or supported versions.",
+        "example_chars": 165,
+        "short_text": "You have {sets} heavy squat and deadlift sets this week, above {max}. Swap {over} for machine or supported versions.",
+        "short_example": "You have 16 heavy squat and deadlift sets this week, above 14. Swap 2 sets for machine or supported versions.",
+        "short_example_chars": 109
       },
       "consecutive_high_volume": {
         "scope": "week",
         "severity": "warn",
         "significance": 65,
-        "template": "{Muscle} {get} a hard session on both {day1} and {day2}. One day is not enough to recover. Move one of them later, or make it lighter.",
-        "what": "Back-to-back hard days.",
-        "why": "The second day starts tired.",
-        "fix": "move_sets_to_day",
-        "placeholders": {},
-        "plan_eligible": true
+        "template": "{Muscle} {get} a hard session on both {day1} and {day2}. One day is not enough to recover. Move one later, or make it lighter.",
+        "what": "{Muscle} {get} a hard session on both {day1} and {day2}.",
+        "why": "One day is not enough to recover.",
+        "fix": "Move one later, or make it lighter.",
+        "placeholders": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day1": {
+            "source": "tools/check_program.py flag tuple ('warn','consecutive_high_volume',day,m)[2] -> day_names",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day2": {
+            "source": "day_names[the next day in mon..sun]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Tuesday"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          }
+        },
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "{Muscle} {get} a hard session on both {day1} and {day2}. One day is not enough to recover. Move one of them later, or make it lighter.",
+          "what": "Back-to-back hard days.",
+          "why": "The second day starts tired.",
+          "fix": "move_sets_to_day",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "day1": {
+            "source": "tools/check_program.py flag tuple ('warn','consecutive_high_volume',day,m)[2] -> day_names",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day2": {
+            "source": "day_names[the next day in mon..sun]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Tuesday"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          }
+        },
+        "example": "Chest gets a hard session on both Monday and Tuesday. One day is not enough to recover. Move one later, or make it lighter.",
+        "example_chars": 123
       },
       "recovery_vs_baseline": {
         "scope": "week",
         "severity": "info",
         "significance": 60,
-        "template": "This week costs about {pct}% of your normal week in recovery. Expect to feel more tired than usual.",
-        "what": "Heavier week than normal.",
-        "why": "Fatigue builds across the week.",
-        "fix": "reduce_sets:highest_fatigue",
-        "placeholders": {},
-        "plan_eligible": true
+        "template": "This week costs about {pct}% of your normal week in recovery. Expect to feel more tired than usual. Trim a few sets from the hardest day.",
+        "what": "This week costs about {pct}% of your normal week in recovery.",
+        "why": "Expect to feel more tired than usual.",
+        "fix": "Trim a few sets from the hardest day.",
+        "placeholders": {
+          "pct": {
+            "source": "round(100 x week recovery cost / baseline) (rules[id=recovery_vs_baseline].baseline order)",
+            "units": "percent",
+            "rounding": "round to integer",
+            "example": 123
+          }
+        },
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "This week costs about {pct}% of your normal week in recovery. Expect to feel more tired than usual.",
+          "what": "Heavier week than normal.",
+          "why": "Fatigue builds across the week.",
+          "fix": "reduce_sets:highest_fatigue",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "pct": {
+            "source": "round(100 x week recovery cost / baseline) (rules[id=recovery_vs_baseline].baseline order)",
+            "units": "percent",
+            "rounding": "round to integer",
+            "example": 123
+          }
+        },
+        "example": "This week costs about 123% of your normal week in recovery. Expect to feel more tired than usual. Trim a few sets from the hardest day.",
+        "example_chars": 135
       },
       "recovery_overlap": {
         "scope": "week",
         "severity": "info",
         "significance": 55,
-        "template": "{Muscle} {are} trained again on {day2}, {gap} after a big {day1} session that needs about {ready}. Move it a day later, or trim {muscle} sets on {day2}.",
-        "what": "Not recovered yet.",
-        "why": "Sets on a tired muscle count for less.",
-        "fix": "move_sets_to_day",
-        "placeholders": {},
-        "plan_eligible": true
+        "template": "{Muscle} {are} trained on {day2}, {gap_h} h after a big {day1} session. It needs about {ready_h} h, so those sets count for less. Move it a day later or trim it on {day2}.",
+        "what": "{Muscle} {are} trained on {day2}, {gap_h} h after a big {day1} session.",
+        "why": "It needs about {ready_h} h, so those sets count for less.",
+        "fix": "Move it a day later or trim it on {day2}.",
+        "placeholders": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "are": {
+            "source": "flag_copy.muscle_names[m].are (is / are)",
+            "units": "text",
+            "rounding": "none",
+            "example": "is"
+          },
+          "day1": {
+            "source": "tools/check_program.py flag tuple ('info','recovery_overlap',m,'early',day1,day2,gap_h,need_h,short_h)[4]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day2": {
+            "source": "flag tuple[5]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Tuesday"
+          },
+          "gap_h": {
+            "source": "flag tuple[6] (hours between sessions, volume-model workout.gaps)",
+            "units": "hours",
+            "rounding": "integer",
+            "example": 24
+          },
+          "ready_h": {
+            "source": "flag tuple[7] (hours needed)",
+            "units": "hours",
+            "rounding": "round to integer",
+            "example": 42
+          }
+        },
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "{Muscle} {are} trained again on {day2}, {gap} after a big {day1} session that needs about {ready}. Move it a day later, or trim {muscle} sets on {day2}.",
+          "what": "Not recovered yet.",
+          "why": "Sets on a tired muscle count for less.",
+          "fix": "move_sets_to_day",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "are": {
+            "source": "flag_copy.muscle_names[m].are (is / are)",
+            "units": "text",
+            "rounding": "none",
+            "example": "is"
+          },
+          "day1": {
+            "source": "tools/check_program.py flag tuple ('info','recovery_overlap',m,'early',day1,day2,gap_h,need_h,short_h)[4]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day2": {
+            "source": "flag tuple[5]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Tuesday"
+          },
+          "gap_h": {
+            "source": "flag tuple[6] (hours between sessions, volume-model workout.gaps)",
+            "units": "hours",
+            "rounding": "integer",
+            "example": 24
+          },
+          "ready_h": {
+            "source": "flag tuple[7] (hours needed)",
+            "units": "hours",
+            "rounding": "round to integer",
+            "example": 42
+          }
+        },
+        "example": "Chest is trained on Tuesday, 24 h after a big Monday session. It needs about 42 h, so those sets count for less. Move it a day later or trim it on Tuesday.",
+        "example_chars": 155
       },
       "recovery_overlap_streak": {
         "scope": "week",
         "severity": "info",
         "significance": 55,
-        "template": "{Muscle} {are} trained hard {n} days in a row. Give {them} a day off in between, or make one of those days light.",
-        "what": "No rest day.",
+        "template": "{Muscle} {are} trained hard {n} days in a row, {day1} to {day2}. Recovery never catches up. Make one of those days light, or skip it.",
+        "what": "{Muscle} {are} trained hard {n} days in a row, {day1} to {day2}.",
         "why": "Recovery never catches up.",
-        "fix": "move_sets_to_day",
-        "placeholders": {},
-        "plan_eligible": true
+        "fix": "Make one of those days light, or skip it.",
+        "placeholders": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "are": {
+            "source": "flag_copy.muscle_names[m].are (is / are)",
+            "units": "text",
+            "rounding": "none",
+            "example": "is"
+          },
+          "day1": {
+            "source": "flag tuple[4]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day2": {
+            "source": "flag tuple[5]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Wednesday"
+          },
+          "n": {
+            "source": "tools/check_program.py flag tuple ('info','recovery_overlap',m,'streak',day1,day2,n)[6]",
+            "units": "days",
+            "rounding": "integer",
+            "example": 3
+          }
+        },
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "{Muscle} {are} trained hard {n} days in a row. Give {them} a day off in between, or make one of those days light.",
+          "what": "No rest day.",
+          "why": "Recovery never catches up.",
+          "fix": "move_sets_to_day",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "are": {
+            "source": "flag_copy.muscle_names[m].are (is / are)",
+            "units": "text",
+            "rounding": "none",
+            "example": "is"
+          },
+          "day1": {
+            "source": "flag tuple[4]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day2": {
+            "source": "flag tuple[5]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Wednesday"
+          },
+          "n": {
+            "source": "tools/check_program.py flag tuple ('info','recovery_overlap',m,'streak',day1,day2,n)[6]",
+            "units": "days",
+            "rounding": "integer",
+            "example": 3
+          }
+        },
+        "example": "Chest is trained hard 3 days in a row, Monday to Wednesday. Recovery never catches up. Make one of those days light, or skip it.",
+        "example_chars": 128
       },
       "hinge_before_squat": {
         "scope": "week",
         "severity": "info",
         "significance": 50,
         "template": "Heavy deadlifts on {day1} come right before heavy squats on {day2}. Your lower back and hips will still be tired. Put a day between them.",
-        "what": "Deadlift then squat.",
-        "why": "Second lift starts fatigued.",
-        "fix": "move_tile",
-        "placeholders": {},
-        "plan_eligible": true
+        "what": "Heavy deadlifts on {day1} come right before heavy squats on {day2}.",
+        "why": "Your lower back and hips will still be tired.",
+        "fix": "Put a day between them.",
+        "placeholders": {
+          "day1": {
+            "source": "tools/check_program.py flag tuple ('…','hinge_before_squat',day)[2]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day2": {
+            "source": "day_names[the next day]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Tuesday"
+          }
+        },
+        "plan_eligible": true,
+        "history_vol14": {
+          "template": "Heavy deadlifts on {day1} come right before heavy squats on {day2}. Your lower back and hips will still be tired. Put a day between them.",
+          "what": "Deadlift then squat.",
+          "why": "Second lift starts fatigued.",
+          "fix": "move_tile",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "day1": {
+            "source": "tools/check_program.py flag tuple ('…','hinge_before_squat',day)[2]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Monday"
+          },
+          "day2": {
+            "source": "day_names[the next day]",
+            "units": "text",
+            "rounding": "none",
+            "example": "Tuesday"
+          }
+        },
+        "example": "Heavy deadlifts on Monday come right before heavy squats on Tuesday. Your lower back and hips will still be tired. Put a day between them.",
+        "example_chars": 138
       },
       "missing_stretch": {
         "scope": "week",
         "severity": "info",
         "significance": 30,
-        "template": "No exercise trains {muscle} in a stretched position this week. Training long tends to build more muscle. Try {examples}.",
-        "what": "No stretch-focused work.",
-        "why": "Long-length training tends to grow more.",
-        "fix": "swap_exercise:stretch_biased",
-        "placeholders": {},
-        "plan_eligible": false
+        "template": "Nothing trains {muscle} in a stretched position this week. Training at long lengths tends to build more muscle. Try {examples}.",
+        "what": "Nothing trains {muscle} in a stretched position this week.",
+        "why": "Training at long lengths tends to build more muscle.",
+        "fix": "Try {examples}.",
+        "placeholders": {
+          "examples": {
+            "source": "names of the first 2 rules stretch_biased[m] exercises, joined with \" or \"",
+            "units": "text",
+            "rounding": "none",
+            "example": "Romanian Deadlift or Seated Leg Curl"
+          },
+          "muscle": {
+            "source": "lowercase muscle_names[flag tuple[2]].name",
+            "units": "text",
+            "rounding": "none",
+            "example": "hamstrings"
+          }
+        },
+        "plan_eligible": false,
+        "history_vol14": {
+          "template": "No exercise trains {muscle} in a stretched position this week. Training long tends to build more muscle. Try {examples}.",
+          "what": "No stretch-focused work.",
+          "why": "Long-length training tends to grow more.",
+          "fix": "swap_exercise:stretch_biased",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "examples": {
+            "source": "names of the first 2 rules stretch_biased[m] exercises, joined with \" or \"",
+            "units": "text",
+            "rounding": "none",
+            "example": "Romanian Deadlift or Seated Leg Curl"
+          },
+          "muscle": {
+            "source": "lowercase muscle_names[flag tuple[2]].name",
+            "units": "text",
+            "rounding": "none",
+            "example": "hamstrings"
+          }
+        },
+        "example": "Nothing trains hamstrings in a stretched position this week. Training at long lengths tends to build more muscle. Try Romanian Deadlift or Seated Leg Curl.",
+        "example_chars": 155
       },
       "low_frequency": {
         "scope": "week",
         "severity": "info",
         "significance": 30,
-        "template": "{Muscle} {get} real work on only {n} day this week. Splitting the sets over two days makes them easier to keep hard; the weekly total still matters most.",
-        "what": "Trained once a week.",
-        "why": "Long sessions for one muscle are hard to keep productive.",
-        "fix": "move_sets_to_day",
-        "placeholders": {},
-        "plan_eligible": false
+        "template": "{Muscle} {get} real work on only {n_days} this week. Two days make the sets easier to keep hard. Move some to a second day.",
+        "what": "{Muscle} {get} real work on only {n_days} this week.",
+        "why": "Two days make the sets easier to keep hard.",
+        "fix": "Move some to a second day.",
+        "placeholders": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "n_days": {
+            "source": "tools/check_program.py flag tuple ('info','low_frequency',m,freq)[3] + ' day'/' days' (days with >= 2 effective sets)",
+            "units": "days",
+            "rounding": "integer",
+            "example": "1 day"
+          }
+        },
+        "plan_eligible": false,
+        "history_vol14": {
+          "template": "{Muscle} {get} real work on only {n} day this week. Splitting the sets over two days makes them easier to keep hard; the weekly total still matters most.",
+          "what": "Trained once a week.",
+          "why": "Long sessions for one muscle are hard to keep productive.",
+          "fix": "move_sets_to_day",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "get": {
+            "source": "flag_copy.muscle_names[m].get (gets / get)",
+            "units": "text",
+            "rounding": "none",
+            "example": "gets"
+          },
+          "n_days": {
+            "source": "tools/check_program.py flag tuple ('info','low_frequency',m,freq)[3] + ' day'/' days' (days with >= 2 effective sets)",
+            "units": "days",
+            "rounding": "integer",
+            "example": "1 day"
+          }
+        },
+        "example": "Chest gets real work on only 1 day this week. Two days make the sets easier to keep hard. Move some to a second day.",
+        "example_chars": 116
       },
       "recovery_gap_long": {
         "scope": "week",
         "severity": "info",
         "significance": 25,
-        "template": "{Muscle} {go} {gap} between hard sessions. Training {them} every 2 to 4 days gives more growth signals; the weekly total still matters most.",
-        "what": "Long gap.",
-        "why": "Fewer growth signals per week.",
-        "fix": "move_sets_to_day",
-        "placeholders": {},
-        "plan_eligible": false
+        "template": "{Muscle} {go} {gap_days} days between hard sessions. Training every 2 to 4 days gives more growth signals. Move some sets to a day in between.",
+        "what": "{Muscle} {go} {gap_days} days between hard sessions.",
+        "why": "Training every 2 to 4 days gives more growth signals.",
+        "fix": "Move some sets to a day in between.",
+        "placeholders": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "gap_days": {
+            "source": "tools/check_program.py flag tuple ('info','recovery_gap_long',m,day1,day2,gap_h,over_h)[5] / 24",
+            "units": "days",
+            "rounding": "round to integer",
+            "example": 6
+          },
+          "go": {
+            "source": "flag_copy.muscle_names[m].go (goes / go)",
+            "units": "text",
+            "rounding": "none",
+            "example": "goes"
+          }
+        },
+        "plan_eligible": false,
+        "history_vol14": {
+          "template": "{Muscle} {go} {gap} between hard sessions. Training {them} every 2 to 4 days gives more growth signals; the weekly total still matters most.",
+          "what": "Long gap.",
+          "why": "Fewer growth signals per week.",
+          "fix": "move_sets_to_day",
+          "placeholders": {}
+        },
+        "version": "vol14d",
+        "fields": {
+          "Muscle": {
+            "source": "rules.json flag_copy.muscle_names[m].name (m = the flag muscle)",
+            "units": "text",
+            "rounding": "none",
+            "example": "Chest"
+          },
+          "gap_days": {
+            "source": "tools/check_program.py flag tuple ('info','recovery_gap_long',m,day1,day2,gap_h,over_h)[5] / 24",
+            "units": "days",
+            "rounding": "round to integer",
+            "example": 6
+          },
+          "go": {
+            "source": "flag_copy.muscle_names[m].go (goes / go)",
+            "units": "text",
+            "rounding": "none",
+            "example": "goes"
+          }
+        },
+        "example": "Chest goes 6 days between hard sessions. Training every 2 to 4 days gives more growth signals. Move some sets to a day in between.",
+        "example_chars": 130
       }
     },
-    "payoff_note": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build."
+    "payoff_note": "Payoff = stimulus minus fatigue. Highest in the sweet spot; below zero means extra sets cost more recovery than they build.",
+    "shape_vol14d": {
+      "parts": "what (what is happening, real numbers) + why (plain English) + fix (concrete step); template = the three joined with a space",
+      "fields": "every {placeholder} in template / short_text is defined in fields[name] {source, units, rounding, example}; placeholders is the same map",
+      "fit": "card width 320px: example rendered with the field examples; when over 160 characters, short_text (what + fix) is provided and used on narrow cards",
+      "grammar": "Muscle/muscle/get/are/go from muscle_names[m]; day/day1/day2 from rules.day_names",
+      "no_medical_claims": true
+    }
   },
   "optional_muscles": {
     "version": "vol14b",
