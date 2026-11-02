@@ -6928,9 +6928,9 @@
         "kind": "measure",
         "section": "volume",
         "tab": "build_analysis",
-        "description": "Effective weekly sets for each muscle against its target band, with the colour key (under / in range / over / far over), the evidence tag behind each target and the total sets in the week.",
+        "description": "Effective weekly sets for each muscle against its target band, with the colour key (under / in range / Diminishing returns / No payoff), the evidence tag behind each target and the total sets in the week.",
         "explain": {
-          "what": "Effective weekly sets for each muscle against its target band, with the colour key (under / in range / over / far over), the evidence tag behind each target and the total sets in the week.",
+          "what": "Effective weekly sets for each muscle against its target band, with the colour key (under / in range / Diminishing returns / No payoff), the evidence tag behind each target and the total sets in the week.",
           "how": "Each exercise credits sets x its rating for a muscle, discounted for synergists further from failure (volume-model.json credit); ratings below 0.25 are ignored. Totals may be shown rounded to 0.5, but colours and warnings use the exact total. The band runs from the target minimum x the level factor to the target maximum; amber up to 25% over, red beyond (red_factor). The total line counts every planned set once.",
           "why": "Weekly sets per muscle are the main volume lever in the cited dose-response meta-analyses; the band is a planning range, not a prescription.",
           "learn_page": "set-crediting-targets#targets",
@@ -6985,13 +6985,13 @@
         "kind": "check",
         "section": "volume",
         "tab": "build_analysis",
-        "description": "Passes when no muscle is below its weekly minimum and none is far over its range (rules weekly_status).",
+        "description": "Passes when no muscle is below its weekly minimum and none is at No payoff (rules weekly_status).",
         "explain": {
-          "what": "Passes when no muscle is below its weekly minimum and none is far over its range (rules weekly_status).",
+          "what": "Passes when no muscle is below its weekly minimum and none is at No payoff (rules weekly_status).",
           "how": "weekly_volume rule on effective weekly sets per muscle. The flag names the muscle, its sets, and the exercises and days that credit it (none when the muscle gets no sets).",
-          "why": "Far under, the model expects little growth stimulus for that muscle; far over, little extra stimulus for the extra recovery it needs.",
+          "why": "Far under, the model expects little growth stimulus for that muscle; at No payoff, little extra stimulus for the extra recovery it needs.",
           "learn_page": "set-crediting-targets#status",
-          "so_what": "If this needs attention, at least one muscle is far under or far over its range. Fix that first; it is the biggest lever on the page."
+          "so_what": "If this needs attention, at least one muscle is far under its range or at No payoff. Fix that first; it is the biggest lever on the page."
         },
         "formula": "rules.json weekly_status.check",
         "evidence": "modeled",
@@ -8863,7 +8863,7 @@
     },
     "why": "vol13 had two definitions: the check passed amber-under muscles (within 2 sets of min) and the panel counted muscles below the goal target. Both now read this rule.",
     "internal": "tools/check_program.py weekly_volume (red only) still drives the stored Efficient trim; it is not shown.",
-    "comparison": "minimum: miss iff r1(x) < min (displayed value). Over / far over on x. r1(x) = floor(10x + 0.5 + 1e-9) / 10",
+    "comparison": "minimum: miss iff r1(x) < min (displayed value). Diminishing returns / No payoff on x. r1(x) = floor(10x + 0.5 + 1e-9) / 10",
     "optional_muscles": {
       "muscles": [
         "abductors"
@@ -9272,8 +9272,8 @@
         "example": "Chest gets 14.0 hard sets on Monday. Past about 13.0 sets in one workout, extra sets cost more recovery than they build. Move 9 sets to another chest day or trim them.",
         "example_chars": 167,
         "role_vol15": "the red overtraining flag: the muscle is past its zero point that day (red on the map)",
-        "short_line": "{Muscle}: {sets} sets, too many for one workout ›",
-        "short_line_example": "Chest: 14.0 sets, too many for one workout ›",
+        "short_line": "{Muscle}: {sets} sets, No payoff ›",
+        "short_line_example": "Chest: 14.0 sets, No payoff ›",
         "named_by": "muscle",
         "short_text": "{Muscle} {get} {sets} hard sets on {day}. Move {excess} to another {muscle} day or trim them.",
         "short_example": "Chest gets 14.0 hard sets on Monday. Move 9 sets to another chest day or trim them.",

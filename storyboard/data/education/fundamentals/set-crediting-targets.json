@@ -235,10 +235,10 @@
   },
   {
    "id": "status",
-   "heading": "Needs sets, in range and over",
+   "heading": "Needs sets, in range, Diminishing returns and No payoff",
    "body": [
     "One rule decides each muscle's weekly status, and the summary, the check and the count of muscles that need sets all read it, so they always agree.",
-    "Needing sets is the only status that fails the weekly volume check, together with being far over."
+    "Needing sets is the only status that fails the weekly volume check, together with No payoff."
    ],
    "points": [
     {
@@ -263,7 +263,7 @@
      ]
     },
     {
-     "text": "Over: diminishing < x <= diminishing x 1.25. Far over: x > diminishing x 1.25.",
+     "text": "Diminishing returns: diminishing < x <= diminishing x 1.25. No payoff: x > diminishing x 1.25.",
      "evidence": "modeled",
      "quotes": [
       {
@@ -405,7 +405,7 @@
      ]
     },
     {
-     "text": "On the day body map a muscle is light green for a little work, dark green across its best range, yellow past it and red where extra sets cost more than they build. Muscles with under 1 hard set that day stay grey.",
+     "text": "On the day body map a muscle is light green for a little work, dark green across its best range, yellow (Diminishing returns) past it and red (No payoff) where extra sets cost more than they build. Muscles with under 1 hard set that day stay grey.",
      "evidence": "modeled",
      "quotes": [
       {

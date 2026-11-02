@@ -301,6 +301,7 @@ function fixes(dt,days,level,f,maxn=3,budget=400){const out=[];
     if(out.length>=maxn)break}
   return sortBy(out,x=>[x.resolves?0:1])}
 // ---------------- messages (rules.json wording, as the old app's check.js fmsg) ----------------
+const LEVELS_OK=l=>['beginner','intermediate','advanced'].includes(l)?l:'intermediate';
 function message(dt,f,days,level){const {R,RU,PJ}=ctx(dt),DN=R.day_names,id=f[1],rid=id.startsWith('spinal_load')?'spinal_load':id,r=RU[rid],L=m=>{const s=dt.rules.ranking.labels.regions[m]||m.replace(/_/g,' ');return s[0].toUpperCase()+s.slice(1)};
   const P={},put=(ks)=>ks.forEach((k,j)=>P[k]=f[2+j]);
   ({many_small_entries:['day','n'],session_hard_sets:['day','sets'],session_length:['day','min'],spinal_load_session:['day','sets'],sets_per_exercise:['day','exercise'],
@@ -310,7 +311,7 @@ function message(dt,f,days,level){const {R,RU,PJ}=ctx(dt),DN=R.day_names,id=f[1]
   if(id==='sets_per_exercise'){const dd=days.find(x=>x.day===f[2]),t=dd&&dd.tiles.find(x=>x.id===f[3]);P.sets=t?t.sets:''}
   if(P.muscle)P.muscle=L(P.muscle);if(P.pattern)P.pattern=P.pattern.replace(/_/g,' ');if(P.exercise)P.exercise=nm(dt,P.exercise);
   if(id==='session_hard_sets')P.max=RU.session_hard_sets.warn_above[level];if(id==='spinal_load_session')P.max=RU.spinal_load.session_warn_above[level];if(id==='spinal_load_week')P.max=RU.spinal_load.week_warn_above[level];
-  if(id==='weekly_volume'){const T=ctx(dt).T,m=f[2];P.min=pyR(T[m].min*ctx(dt).LF[level]*2)/2;P.max=T[m].max}
+  if(id==='weekly_volume'){const T=ctx(dt).T,m=f[2];P.min=pyR(T[m].min*ctx(dt).LF[LEVELS_OK(level)]*2)/2;P.max=T[m].max}   /* vol16: {min} = sets.level_min (the level's weekly minimum); never NaN when a caller omits the level */
   if(id==='missing_stretch')P.examples=R.stretch_biased[f[2]].slice(0,2).map(i=>nm(dt,i)).join(' or ').toLowerCase();
   if(id==='push_pull_imbalance'&&(f[2]===0||f[2]===99))return f[2]?r.message_no_push:r.message_no_pull;
   if(id==='pattern_gap'){const S=PJ.slots[f[2]];return fmtPy(f[0]==='warn'?r.message:r.message_info,{slot_lower:S.name.toLowerCase(),slot_name:S.name,n:f[3],min:f[4],examples:RANK.slotRecommendations(dt,f[2],level,days,2).map(x=>nm(dt,x.id)).join(', ')})}

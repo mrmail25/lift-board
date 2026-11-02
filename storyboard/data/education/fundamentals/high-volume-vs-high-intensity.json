@@ -113,7 +113,8 @@
    "body": [
     "Within a single workout, the first hard sets for a muscle do most of the work and each extra set adds less, while fatigue keeps building a little faster with every set. ApeChit illustrates this with a modeled curve: stimulus minus fatigue, called Payoff, ApeChit's own modeled score (Modeled, not a measurement).",
     "For a typical machine exercise, Payoff is near its top from about 4.1 to 6 hard sets for one muscle in one workout, turns down after that, and falls below zero near 13 sets. Very tiring barbell lifts top out a little earlier (about 3.4 to 4.9 sets) and isolation work a little later (about 4.4 to 6.6).",
-    "On the day body map this is the colour: light green for a little work, dark green across that range, yellow past it, and red past the point where extra sets cost more than they build."
+    "On the day body map this is the colour: light green for a little work, dark green across that range, yellow (Diminishing returns) past it, and red (No payoff) past the point where extra sets cost more than they build.",
+    "Diminishing returns: each extra set still helps, but adds less growth for more recovery. No payoff: in ApeChit's model, extra sets cost more recovery than the growth they add. Studies still show small gains at high volumes, so this is a cost warning, not zero growth."
    ],
    "points": [
     {
