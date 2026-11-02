@@ -130,6 +130,13 @@ const fxBtn=(f,cls)=>{const i=++FXN;FX.set(i,f);return `<button class="btn ${cls
 const appliedBar=()=>{const t=APPL[APPL.length-1];return t?`<div class="fa-done" role="status"><span>✓ Applied: ${esc(t.label)}</span><button class="btn grey" data-fa="undo" data-i="${APPL.length-1}">Undo</button></div>`:''};
 function doApply(i){const f=FX.get(+i);if(!f)return;const before=window.BOARD.progApply(clone(f.ops));APPL.push({before,label:f.label||'change'});rerender()}
 function doUndo(i){const t=APPL[i];if(!t)return;APPL.length=i;window.BOARD.progUndo(t.before);rerender()}
+// checked swap reasons (Coach vol16): stretch = candidate on this muscle's stretch list and the current lift is not; lower fatigue =
+// engine lower-fatigue candidate AND the per-set class actually drops; more direct = rating >= current + 0.25. Max 2 lines, stretch first.
+function swapReasons(dt,m,cur,ci){const STRB=(dt.rules.stretch_biased||{})[m]||null,a=fcls(dt,cur),b=fcls(dt,ci),LVI=['Low','Normal','High'],r=[];
+  if(STRB&&STRB.includes(ci)&&!STRB.includes(cur))r.push('stretch');
+  if(new Set(AN().lowerFatigueCandidates(dt,cur)[0]).has(ci)&&a&&b&&LVI.indexOf(b.cls)<LVI.indexOf(a.cls))r.push('lower_fatigue');
+  if(((dt.EX[ci]||{}).muscles||{})[m]>=(((dt.EX[cur]||{}).muscles||{})[m]||0)+0.25-1e-9)r.push('direct');
+  return {reasons:r,lines:r.slice(0,2),from:a,to:b}}
 // ---------- deep dive ----------
 const curveSvg=(dt,lv,m,C,S,XMAX)=>{const W=326,H=178,pl=30,pr=6,pt=10,pb=24,cx=v=>pl+v/XMAX*(W-pl-pr),cy=s=>pt+(1-s)*(H-pt-pb);
   const samp=[];for(let v=0;v<=XMAX+1e-9;v+=0.25)samp.push([+v.toFixed(2),PC().stim(dt,m,lv,v)]);
@@ -187,8 +194,10 @@ function deepHtml(m){const dt=RD(),d=DAYS(),lv=LV(),SH=sheetOf(dt,d,lv),P=diveOf
   const SI=swapIdeas(dt,d,lv,m,contrib);const mu=mlow(m);
   const swRow=s=>{s.label=`Swap ${EXN(SI.main.id)} → ${EXN(s.id)}`;const rs=s.lines.map(k=>fill(SWAP_REASONS[k],{muscle:mu,from:SI.main.fatigue?SI.main.fatigue.cls:'',to:s.cf?s.cf.cls:''})).join(' ');
     return `<div class="row"><span class="gl ${s.e.type}" aria-hidden="true">${GLY[s.e.type]}</span><div class="grow"><div class="t1">${esc(EXN(s.id))} ${s.cf?ftag(s.cf.cls):''}</div><div class="rs">${rs}</div><div class="rr">${fill(SWAP_RESULT,{sets:f1(s.r.eff),zone:ZL[s.r.zone],day:WD[SI.main.days[0]],level:s.dayF||'–'})}</div></div>${fxBtn(s)}</div>`};
-  const sugSw=MF.swaps.map(f=>{const o=f.ops.find(q=>q.op==='swap');f.label=`Swap ${EXN(o.from_id)} → ${EXN(o.to_id)}`;const a=fcls(dt,o.from_id),b=fcls(dt,o.to_id);const stp=P.stretch.share!=null&&f.r.stretch!=null&&Math.abs(f.r.stretch-P.stretch.share)>1e-9?` · stretch share ${pc(P.stretch.share)} → ${pc(f.r.stretch)}`:'';
-    const rs=a&&b&&a.cls!==b.cls?fill(SWAP_REASONS.lower_fatigue,{muscle:mu,from:a.cls,to:b.cls}):`Same ${mu} work, less fatigue.`;
+  // vol16a: the engine's own swap suggestions get the SAME checked reasons as the main-lift ideas; a row with no passing reason is dropped
+  const sugSw=MF.swaps.map(f=>{const o=f.ops.find(q=>q.op==='swap');const R=swapReasons(dt,m,o.from_id,o.to_id);if(!R.lines.length)return '';f.label=`Swap ${EXN(o.from_id)} → ${EXN(o.to_id)}`;const b=fcls(dt,o.to_id);
+    const stp=P.stretch.share!=null&&f.r.stretch!=null&&Math.abs(f.r.stretch-P.stretch.share)>1e-9?` · stretch share ${pc(P.stretch.share)} → ${pc(f.r.stretch)}`:'';
+    const rs=R.lines.map(k=>fill(SWAP_REASONS[k],{muscle:mu,from:R.from?R.from.cls:'',to:R.to?R.to.cls:''})).join(' ');
     return `<p class="sub fa-swfor">For ${esc(EXN(o.from_id))}</p><div class="row"><span class="gl ${dt.EX[o.to_id].type}" aria-hidden="true">${GLY[dt.EX[o.to_id].type]}</span><div class="grow"><div class="t1">${esc(EXN(o.to_id))} ${b?ftag(b.cls):''}</div><div class="rs">${rs}</div><div class="rr">→ ${f1(f.r.eff)} sets, ${ZL[f.r.zone]} · ${WD[o.day]} fatigue ${dayLevel(dt,applyL(d,f.ops).find(D=>D.day===o.day),lv)||'–'}${stp}</div></div>${fxBtn(f)}</div>`}).join('');
   if((SI&&SI.shown.length)||sugSw){h+=`<div class="card fa-c" id="deepdive-${m}-swaps"><div class="ch"><h2>Swap ideas</h2></div>`+(SI&&SI.shown.length?`<p class="sub">For ${esc(SI.main.name)}, your main ${mu} lift</p>`+SI.shown.map(swRow).join('')+(SI.carried?`<p class="note">${esc(SI.carried)}</p>`:''):'')+sugSw+`</div>`}
   // stretch share (only the 8 stretch-list muscles)

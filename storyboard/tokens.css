@@ -90,7 +90,7 @@
 /* Dark theme (round 2). Follows the system (prefers-color-scheme) unless html[data-theme] is set by Settings › Appearance
    (localStorage apechit.sb.theme: system | light | dark). The two blocks below carry the SAME values (test darkTokensSame). */
 html[data-theme=dark]{
-  --ink:#F2F2F4; --text-1:#F2F2F4; --paper:#1C1C1E; --bg:#000; --fill:#2C2C2E; --line:rgba(255,255,255,.12);
+  --ink:#F2F2F4; --text-1:#F2F2F4; --sel-outline:#fff; --paper:#1C1C1E; --bg:#000; --fill:#2C2C2E; --line:rgba(255,255,255,.12);
   --text-2:#A1A1A8; --text-3:#8E8E93; --chrome:#18181A;
   --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10; --accent-text:#FF6A33; --accent-strong:#C2380A;
   --danger:#FF453A;
@@ -120,7 +120,7 @@ html[data-theme=dark]{
   color-scheme:dark;
 }
 @media (prefers-color-scheme:dark){html:not([data-theme=light]){
-  --ink:#F2F2F4; --text-1:#F2F2F4; --paper:#1C1C1E; --bg:#000; --fill:#2C2C2E; --line:rgba(255,255,255,.12);
+  --ink:#F2F2F4; --text-1:#F2F2F4; --sel-outline:#fff; --paper:#1C1C1E; --bg:#000; --fill:#2C2C2E; --line:rgba(255,255,255,.12);
   --text-2:#A1A1A8; --text-3:#8E8E93; --chrome:#18181A;
   --accent:#F0541A; --accent-press:#FF8257; --accent-tint:#3A1C10; --accent-text:#FF6A33; --accent-strong:#C2380A;
   --danger:#FF453A;

@@ -2045,3 +2045,7 @@ details.fa-x .bd{padding-bottom:14px}
 .fa-sheet .barw{position:relative}.fa-sheet .barw .mt{position:absolute;top:0;transform:translateX(-50%);font-size:12px;font-weight:700;white-space:nowrap;color:var(--ink)}
 .col.restday header .cl{color:var(--text-2)}
 .wk14c .wkfoot{padding-left:0!important;padding-right:0!important;margin-left:14px!important;text-align:left}.wk14c .sug14{margin-left:0;margin-right:0}   /* vol16: buttons, their labels and the foot line share the flag-text edge */
+/* vol16a: zone labels in the Analysis rows (Below minimum / Sweet spot) were fixed light-theme colours: 2.9:1 and 3.2:1 on dark paper */
+.vrz.z-below_min{color:var(--warn-ink)}
+html[data-theme=dark] .vrz.z-sweet_spot{color:#4CC285}html[data-theme=dark] .vrz.z-diminishing{color:#FF7A6E}
+@media (prefers-color-scheme:dark){html:not([data-theme=light]) .vrz.z-sweet_spot{color:#4CC285}html:not([data-theme=light]) .vrz.z-diminishing{color:#FF7A6E}}

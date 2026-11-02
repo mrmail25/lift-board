@@ -314,6 +314,10 @@ function message(dt,f,days,level){const {R,RU,PJ}=ctx(dt),DN=R.day_names,id=f[1]
   if(id==='weekly_volume'){const T=ctx(dt).T,m=f[2];P.min=pyR(T[m].min*ctx(dt).LF[LEVELS_OK(level)]*2)/2;P.max=T[m].max}   /* vol16: {min} = sets.level_min (the level's weekly minimum); never NaN when a caller omits the level */
   if(id==='missing_stretch')P.examples=R.stretch_biased[f[2]].slice(0,2).map(i=>nm(dt,i)).join(' or ').toLowerCase();
   if(id==='push_pull_imbalance'&&(f[2]===0||f[2]===99))return f[2]?r.message_no_push:r.message_no_pull;
+  /* vol16a: {pull}/{push}/{gap}/{side} are counted from the days (same rule as flags14); without days the numbers are left out, never 'undefined' */
+  if(id==='push_pull_imbalance'){const PAT=dt.PAT||{};let ps=0,pu=0;for(const d of (days||[]))for(const t of d.tiles){if(R.push_patterns.includes(PAT[t.id]))ps+=t.sets;if(R.pull_patterns.includes(PAT[t.id]))pu+=t.sets}
+    if(!days||!(ps+pu)){const fb=r.message_history_vol13?r.message_history_vol13.replace(/^Pull-to-push sets are \{ratio\}:1 this week\. /,''):'';return f[2]!=null&&isFinite(f[2])?`Pull-to-push sets are ${f[2]}:1 this week. ${fb}`.trim():fb||'Pulling and pressing are out of balance this week.'}
+    const lo=r.min_ratio||0.75,hi=r.max_ratio||2,low=pu<ps*lo,gap=low?Math.ceil(ps*lo-pu-1e-9):Math.ceil(pu/hi-ps-1e-9);return fmtPy(r.message,{pull:pu,push:ps,gap,side:low?'rows or pulldowns':'presses'})}
   if(id==='pattern_gap'){const S=PJ.slots[f[2]];return fmtPy(f[0]==='warn'?r.message:r.message_info,{slot_lower:S.name.toLowerCase(),slot_name:S.name,n:f[3],min:f[4],examples:RANK.slotRecommendations(dt,f[2],level,days,2).map(x=>nm(dt,x.id)).join(', ')})}
   if(id==='session_length'){const sp=sessP(dt,level);P.warn_min=sp.warn_min;P.info_min=sp.info_min;P.level=level} // vol3: messages carry {warn_min}/{info_min} from by_level[level]
   // vol8 flags: variants, {gap} in days, {ready} as a range, {limit} from the per-set curve (never exact hours)
