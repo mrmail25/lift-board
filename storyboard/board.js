@@ -75,9 +75,9 @@ function setMap(mode,i){MAPV.mode=mode;if(i!=null)MAPV.day=i;$$('#mapseg button'
 function stripHtml(st){const {A,C,d}=st,avg=avgMins(d),fail=C.total-C.pass;
   return `<span class="ast"><b class="num" data-s="sets">${A.weekSets}</b><small>sets / wk</small></span>
    <span class="ast"><b class="num" data-s="min">${d.length?'≈ '+avg:'–'}</b><small>min / session</small></span>
-   ${openSlots()?`<span class="ast chk pend"><b class="num" data-s="checks">–</b><small>Fill slots to check</small></span>`:(()=>{const F=flags14(),n=F.filter(f=>f.sev>=2).length;return `<span class="ast chk"><b class="num" data-s="checks">${n}</b><small>${n?`<em class="chkbad">to fix</em>`:'to fix'}${F.length-n?` · ${F.length-n} smaller`:''}</small></span>`})()}`}
+   ${openSlots()?`<span class="ast chk pend"><b class="num" data-s="checks">–</b><small>Fill slots to check</small></span>`:(()=>{const F=flags14(),n=F.filter(f=>f.sev>=2).length;return `<span class="ast chk ${n?'bad':'zero'}"><b class="num" data-s="checks">${n}</b><small>${n?`<em class="chkbad">to fix</em>`:'to fix'}${F.length-n?` · ${F.length-n} smaller`:''}</small></span>`})()}`}
 function dayMeta(day){const n=sum(day.tiles.map(t=>t.sets));return day.tiles.length?`${n} sets · ≈ ${MINS(day.tiles)} min`:''}
-function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bmap');if(mp)mp.innerHTML=mapHtml(st,days);const lg=$('#bmleg');if(lg)lg.innerHTML=MLEG||'';const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);}
+function paintStats(days){days=days||B.days;const st=stats(days);const mp=$('#bmap');if(mp)mp.innerHTML=mapHtml(st,days);const lg=$('#bmleg');if(lg)lg.innerHTML=MLEG||'';const fw=$('#bmflw');if(fw)fw.innerHTML=MFL;const s=$('#astrip');if(s){s.innerHTML=stripHtml(st);}
   days.forEach((d,i)=>{const n=sum(d.tiles.map(t=>t.sets));const b=$(`#dstrip [data-jump="${i}"] .dn`);if(b){b.textContent=stripTxt(d);b.parentNode.classList.toggle('rd',isRest(d))}
     const h=$(`.col[data-day="${d.day}"] .cm`);if(h)h.textContent=dayMeta(d);const w=$(`.col[data-day="${d.day}"] .dmxw`);if(w)w.outerHTML=dmxHtml(d)});
   $$('.col').forEach((c,i)=>{const d=days[i];if(!d)return;c.classList.toggle('restday',isRest(d));const l=$('.cl',c);if(l)l.textContent=dayLabel(d)}); // preview days mid-drag
@@ -240,10 +240,11 @@ function paintImpact(){const el=$('#impc');if(el)el.innerHTML=impHtml()}
 // tapping the same day again, or the 'Week' chip, goes back to the week.
 const wkFills=A=>{const o={};for(const [m,v] of Object.entries(A.muscles)){const x=v.x!=null?v.x:v.raw;o[m]=MAPRAMP.weekly(RD(),B.level,m,Math.floor(x*100+0.5+1e-9)/100)}return MAPRAMP.fills(o)};   // x = r1(r2(weekly ES)), the displayed value
 const dayFills=d=>d&&d.tiles.length?MAPRAMP.fills(MAPRAMP.daily(RD(),tiles0(d))):{};
+let MFL='';   // vol15 polish: the day's flags render full width under the map card row (#bmflw)
 function mapHtml(st,days){const day=MAPV.mode==='day',i=MAPV.day,d=days[i];const vm=day?dayFills(d):wkFills(st.A);
   const cap=day?`<b>${WDL[i]}</b> · ${isRest(d)?'Rest':dayLabel(d)} <button class="chip wkchip" data-b="mapweek" aria-label="Back to the week">Week</button>`:'<b>This week</b>';MLEG=MAPRAMP.legend(day?'day':'week');
   const F=day&&d&&d.tiles.length&&FG()?flags14().filter(f=>f.scope==='day'&&f.day===d.day&&f.sev>=2).sort(FG().ord):[];
-  return `<div class="bmaps" data-mode="${day?'day':'week'}" data-day="${d?d.day:''}">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="bmcap" id="bmcap">${cap}</div>${day?`<div class="bmfl">${F.length?F.map(flagCard).join(''):'<p class="sub">Nothing to fix on this day.</p>'}</div>`:''}`}
+  const h=`<div class="bmaps" data-mode="${day?'day':'week'}" data-day="${d?d.day:''}">${X.map('front',vm,{crop:1})}${X.map('back',vm,{crop:1})}</div><div class="bmcap" id="bmcap">${cap}</div>`;MFL=day?`<div class="bmfl">${F.length?F.map(flagCard).join(''):'<p class="sub">Nothing to fix on this day.</p>'}</div>`:'';return h}
 function toggleDay(i){if(MAPV.mode==='day'&&MAPV.day===i){MAPV.mode='week'}else{MAPV.mode='day';MAPV.day=i}$$('#dstrip button').forEach((b,k)=>{const on=MAPV.mode==='day'&&k===MAPV.day;b.classList.toggle('sel',on);b.setAttribute('aria-pressed',String(on))});$$('.col').forEach((c,k)=>c.classList.toggle('dsel',MAPV.mode==='day'&&k===MAPV.day));paintStats()}
 // one flag, tap for the fix
 let FLS=null;function flagSheet(id){const f=flagById(id);if(!f)return;if(FLS&&!FLS.closed)FLS.close();
@@ -270,7 +271,7 @@ X.V.build=()=>{if(!B.days.length){initBoard();cxRestorePlaced()}
   <div class="bname"><div class="bn">${nbName(B.name||'New routine')}</div>
    <div class="bacts"><button class="btn ink" data-b="push" aria-label="Push to Library">${X.I('up',2.2)}<span class="bl-l">Push to Library</span><span class="bl-s">Push</span></button><button class="btn accent" data-b="start" aria-label="Start training">${X.I('play')}<span class="bl-l">Start training</span><span class="bl-s">Start</span></button></div>
    <div class="bstate" id="bstate">${stateLine()}</div></div>
-  <div class="bsum"><div class="bsmap" id="bmap"></div><div class="bsr"><div class="astrip" id="astrip"></div><button class="btn accent anbtn" data-b="analysis">Analysis</button><div class="bmleg" id="bmleg"></div></div></div>
+  <div class="bsum"><div class="bsmap" id="bmap"></div><div class="bsr"><div class="astrip" id="astrip"></div><div class="bmleg" id="bmleg"></div></div><div class="bmflw" id="bmflw"></div><button class="btn accent anbtn" data-b="analysis">Analysis</button></div>
   <div class="bstick">
    <div class="dstrip" id="dstrip">${WD.map((w,i)=>`<button data-jump="${i}" aria-label="Jump to ${WDL[i]}"><span>${w}</span><small class="dn"></small></button>`).join('')}</div>
    <div class="selbar" id="selbar"><span id="selt"></span><button class="btn plain" data-b="seldone">Done</button></div></div>

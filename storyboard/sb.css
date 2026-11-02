@@ -1856,3 +1856,7 @@ svg.pwbars .pwbl{font-size:10px;fill:var(--text-2)}
 .cal-f{flex-wrap:wrap;row-gap:4px}
 .bh{flex-wrap:wrap;row-gap:4px}.bh .evw{max-width:100%}
 .illh{margin:0 0 4px;font-size:var(--t-sub);line-height:1.3}.illh b{font-weight:600}.illh .evl{white-space:normal}
+/* vol15 polish: a zero count is neutral (only a real count is red); the day's flags and the Analysis button each get a full-width row */
+.ast.chk{color:var(--ink)}.ast.chk.bad b{color:var(--accent-text)}.ast.chk.zero b{color:var(--ink)}
+.bsum .bmflw{grid-column:1/-1;min-width:0}.bsum .bmflw:empty{display:none}.bsum .bmflw .bmfl{margin-top:0}
+.bsum .anbtn{grid-column:1/-1;width:100%}
