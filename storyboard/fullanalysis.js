@@ -370,35 +370,31 @@ const sheetOfEl=el=>{const s=el.closest('.sheet');return s&&[OPEN.ex,OPEN.pn,OPE
 // header (name, type icon + word, equipment); muscles worked (rating > 0, highest first, Main mover >= 0.75 / Helper 0.4-0.74 / Minor < 0.4,
 // Modeled, each opens that muscle's deep dive); fatigue tag (deep-dive colours, never red, Modeled); stretch row only for muscles whose
 // stretch.stretch_biased_for lists it ('Extra stretch for <Muscle>', never stretch_emphasis); on your board (days + sets, or Add).
-// Data: data/exercise-details.json (targets[].rating, fatigue.rating, stretch, equipment), loaded once through exdLoad with a 'Checking…'
-// placeholder. Fatigue band from fatigue.rating with Coach's bands; values outside them take the nearest band (0.8 -> Low, 114 exercises).
+// Data: only what the app already has in memory, so it opens at once with no fetch: exercises.json muscles / type / equipment (all in
+// Coach's first-screen slim too), rules.json stretch_biased (in the rules slim), and the deep dive's own fatigue tag fcls() on
+// fatigue.json fatigue_per_set (Coach's 0.72 / 1.0-1.2 / 1.32-1.56 bands are exactly its values). Parity with exercise-details.json
+// (targets[].rating, stretch.stretch_biased_for) checked for all 247 exercises on Nov 3, 2026: 0 differences.
 // Hidden on purpose: Learn links, swap tags/scores, share-of-stimulus numbers, YouTube, description/setup/tip text.
 // Back closes it and shows the deep dive it was opened from. Custom exercises keep cxDetail.
-const FBANDS=[['Low',0.72,0.72],['Normal',1.0,1.2],['High',1.32,1.56]];
-const fband=v=>{if(v==null)return null;for(const [n,a,b] of FBANDS)if(v>=a-1e-9&&v<=b+1e-9)return n;return FBANDS.map(([n,a,b])=>[n,Math.min(Math.abs(v-a),Math.abs(v-b))]).sort((x,y)=>x[1]-y[1])[0][0]};
 const leanLvl=r=>r>=0.75?'Main mover':r>=0.4?'Helper':'Minor';
 const cap1=t=>t?String(t)[0].toUpperCase()+String(t).slice(1):'';
-function leanHtml(id,x){const dt=RD(),e=dt.EX[id]||{},d=DAYS();x=x||null;
-  const mus=x?(x.targets||[]).filter(t=>t.rating>0).map(t=>[t.muscle,t.rating]).sort((a,b)=>b[1]-a[1]||ML(a[0]).localeCompare(ML(b[0]))):null;
-  const fb=x?fband((x.fatigue||{}).rating):null,str=x?((x.stretch||{}).stretch_biased_for||[]):[];
+function leanHtml(id){const dt=RD(),e=dt.EX[id]||{},d=DAYS();
+  const mus=Object.entries(e.muscles||{}).filter(([,r])=>r>0).sort((a,b)=>b[1]-a[1]||ML(a[0]).localeCompare(ML(b[0])));
+  const fc=fcls(dt,id),fb=fc?fc.cls:null;   // the deep-dive tag's own value (fatigue.json fatigue_per_set) and function, so the two always agree
+  const SB=(dt.rules||{}).stretch_biased||{},str=Object.keys(SB).filter(m=>(SB[m]||[]).includes(id));
   const on=d.map(D=>({day:D.day,sets:(D.tiles||[]).filter(t=>t.id===id).reduce((a,t)=>a+(+t.sets||0),0)})).filter(x=>x.sets>0);
   const tw=cap1(e.type);   // same word as the app's other exercise headers (Primary · Accessory · Isolation)
-  let h=`<div class="fa-exh"><span class="gl ${e.type}" aria-hidden="true">${GLY[e.type]||''}</span><div><h3>${esc(EXN(id))}</h3><p class="sub">${esc(tw)} · ${esc(cap1((x&&x.equipment)||e.equipment||e.eq||''))}</p></div></div>`;
-  if(!x)h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>Muscles worked</h2></div><p class="sub">Checking…</p></div><div class="card fa-c fa-exc"><div class="ch"><h2>Fatigue</h2></div><p class="sub">Checking…</p></div>`;
-  else{
+  let h=`<div class="fa-exh"><span class="gl ${e.type}" aria-hidden="true">${GLY[e.type]||''}</span><div><h3>${esc(EXN(id))}</h3><p class="sub">${esc(tw)} · ${esc(cap1(e.equipment||e.eq||''))}</p></div></div>`;
   h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>Muscles worked</h2></div>`+mus.map(([m,r])=>`<button type="button" class="fa-exm" data-fa="exm" data-m="${esc(m)}"><span class="t">${esc(ML(m))}</span><span class="lv lv${r>=0.75?3:r>=0.4?2:1}">${leanLvl(r)}<small class="md">Modeled</small></span><span class="cv" aria-hidden="true">›</span></button>`).join('')+`</div>`;
   h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>Fatigue</h2><small>Modeled</small></div><p class="fa-exf">${fb?ftag(fb):'–'}<span>${fb==='High'?'Costs more recovery per set':fb==='Low'?'Costs little recovery per set':'Typical recovery cost per set'}</span></p>`+`</div>`+
-     (str.length?`<div class="card fa-c fa-exc"><div class="ch"><h2>Stretch</h2></div><p class="fa-exs">Extra stretch for ${str.map(m=>esc(ML(m))).join(', ')}</p></div>`:'')}
+     (str.length?`<div class="card fa-c fa-exc"><div class="ch"><h2>Stretch</h2></div><p class="fa-exs">Extra stretch for ${str.map(m=>esc(ML(m))).join(', ')}</p></div>`:'');
   h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>On your board</h2></div>`+(on.length?`<p class="fa-exb"><b>${on.reduce((a,x)=>a+x.sets,0)} sets this week</b> · ${on.map(x=>`${WD[x.day]} ${x.sets} set${x.sets===1?'':'s'}`).join(', ')}</p>`:
      `<div class="fa-exb0"><span>Not on your board</span><button type="button" class="btn accent fa-exadd" data-fa="exadd" data-id="${esc(id)}">Add</button></div>`)+`</div>`;
   return h}
 function exLean(id){if(X.isCx&&X.isCx(id))return X.cxDetail(id);if(!RD().EX[id])return null;if(OPEN.ex&&!OPEN.ex.closed)OPEN.ex.close();
-  const D0=X.exdCache&&X.exdCache();   // already loaded: fill at once; else 'Checking…' until exercise-details.json (590 KB) lands
-  OPEN.ex=X.sheet({title:'',cls:'tall grouped fa-sheet fa-exsheet',left:BACK,right:'',body:leanHtml(id,D0&&D0[id]),onClose(){OPEN.ex=null}});const o=OPEN.ex;o.id=id;o.el.dataset.fa='ex';o.x=D0&&D0[id]||null;
-  requestAnimationFrame(()=>OPEN.ex&&OPEN.ex.wrap.classList.add('open'));
-  if(!o.x){const t0=performance.now();X.exdLoad().then(D=>{LEAN_T.push(Math.round(performance.now()-t0));if(o.closed)return;o.x=D[id]||{};o.body.innerHTML=leanHtml(id,o.x)})}return o}
-const LEAN_T=[];window.__leanT=LEAN_T;   // first-open load times (ms), read by the QC timing script
-function renderEX(){const o=OPEN.ex;if(!o||o.closed)return;o.body.innerHTML=leanHtml(o.id,o.x)}
+  OPEN.ex=X.sheet({title:'',cls:'tall grouped fa-sheet fa-exsheet',left:BACK,right:'',body:leanHtml(id),onClose(){OPEN.ex=null}});const o=OPEN.ex;o.id=id;o.el.dataset.fa='ex';
+  requestAnimationFrame(()=>OPEN.ex&&OPEN.ex.wrap.classList.add('open'));return o}
+function renderEX(){const o=OPEN.ex;if(!o||o.closed)return;o.body.innerHTML=leanHtml(o.id)}
 // Add from the lean page: the exercise's usual sets (rules pattern_gap_fix sets_by_kind) on the training day with the fewest sets; undo stays in the deep dive's list
 function leanAdd(id){const dt=RD(),e=dt.EX[id]||{},d=DAYS().filter(D=>!D.rest&&(D.tiles||[]).length);if(!d.length)return;const sk=((dt.rules||{}).pattern_gap_fix||{}).sets_by_kind||{};
   const n=(e.type==='isolation'?sk.isolation:sk.compound)||3,tot=D=>(D.tiles||[]).reduce((a,t)=>a+(+t.sets||0),0),day=d.slice().sort((a,b)=>tot(a)-tot(b)||ORD.indexOf(a.day)-ORD.indexOf(b.day))[0].day;
