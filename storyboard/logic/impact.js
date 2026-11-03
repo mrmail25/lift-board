@@ -77,7 +77,8 @@ function liveStrip(dt,days,lv,goal){const PC=PCm(),SM=((dt.targets.session||{}).
 function presetFor(dt,goal,pid){const P=dt.DMP&&dt.DMP.presets&&dt.DMP.presets[goal];return P&&pid?P[pid]||null:null}
 // one entry point: {days:{mon:{day_summary,muscles}}, strip:{bars,overlaps}, source:'preset'|'live'}
 function week(dt,days,lv,goal,pid){const P=presetFor(dt,goal,pid);
-  if(P){const out={};for(const d of P.days)out[d.day]={day_summary:d.day_summary,exercises:d.exercises,muscles:d.muscles,label:d.label};return {days:out,strip:P.recovery_strip,source:'preset',pid}}
+  if(P){const out={};for(const d of P.days)out[d.day]={day_summary:d.day_summary,exercises:d.exercises,muscles:d.muscles,label:d.label};const RS=P.recovery_strip||{},strip={bars:RS.bars||[],overlaps:(RS.overlaps||[]).map(o=>Object.assign({},o,{day:o.day||o.from_day,next_day:o.next_day||o.to_day}))};   // vol16b: slim presets name overlaps from_day/to_day, live uses day/next_day
+    return {days:out,strip,source:'preset',pid}}
   const out={};for(const d of days)if(d.tiles&&d.tiles.length)out[d.day]=liveDay(dt,d.tiles,lv,goal);return {days:out,strip:liveStrip(dt,days,lv,goal),source:'live'}}
 const API={effScale,effTone,effClass,effRef,week,liveDay,liveStrip,dial,fband,display,ratio,range,presetFor};
 if(isNode)module.exports=API;else root.IMPACT=API})(typeof window!=='undefined'?window:globalThis);

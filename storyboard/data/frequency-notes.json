@@ -1718,6 +1718,18 @@
   ],
   "bro-split/beginner/5": [
    {
+    "id": "crowded_session",
+    "polarity": "negative",
+    "muscles": [
+     "chest"
+    ],
+    "text": "Chest: 9.0 sets on Monday, past about 8 for one workout; extra sets add little.",
+    "link": {
+     "muscle": "chest",
+     "anchor": "deepdive-chest-session"
+    }
+   },
+   {
     "id": "freq_one_day",
     "polarity": "negative",
     "muscles": [
@@ -1751,6 +1763,18 @@
     "link": {
      "muscle": "hamstrings",
      "anchor": "deepdive-hamstrings-frequency"
+    }
+   },
+   {
+    "id": "crowded_session",
+    "polarity": "negative",
+    "muscles": [
+     "lats"
+    ],
+    "text": "Lats: 9.4 sets on Tuesday, past about 8 for one workout; extra sets add little.",
+    "link": {
+     "muscle": "lats",
+     "anchor": "deepdive-lats-session"
     }
    },
    {
@@ -1835,16 +1859,6 @@
     "link": {
      "muscle": "calves",
      "anchor": "deepdive-calves-frequency"
-    }
-   },
-   {
-    "id": "session_cap_ok",
-    "polarity": "positive",
-    "muscles": [],
-    "text": "No muscle goes past its one-workout limit.",
-    "link": {
-     "muscle": null,
-     "anchor": null
     }
    }
   ],
@@ -2042,6 +2056,18 @@
     }
    },
    {
+    "id": "crowded_session",
+    "polarity": "negative",
+    "muscles": [
+     "adductors"
+    ],
+    "text": "Adductors: 6.4 sets on Wednesday, past about 6 for one workout; extra sets add little.",
+    "link": {
+     "muscle": "adductors",
+     "anchor": "deepdive-adductors-session"
+    }
+   },
+   {
     "id": "freq_two_plus",
     "polarity": "positive",
     "muscles": [
@@ -2099,16 +2125,6 @@
     "link": {
      "muscle": "calves",
      "anchor": "deepdive-calves-frequency"
-    }
-   },
-   {
-    "id": "session_cap_ok",
-    "polarity": "positive",
-    "muscles": [],
-    "text": "No muscle goes past its one-workout limit.",
-    "link": {
-     "muscle": null,
-     "anchor": null
     }
    }
   ],

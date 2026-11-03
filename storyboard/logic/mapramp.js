@@ -31,10 +31,16 @@ function dailyBp(dt,k){const C=payC(dt),P=n=>100*(1-Math.exp(-n/C.tau))-(C.a*k*n
   const lo=bis(n=>P(n)-0.975*mx,0,pk),hi=bis(n=>P(n)-0.975*mx,pk,60),ye=bis(n=>P(n)-0.75*mx,pk,60),ze=bis(n=>P(n),pk,80);
   return {grey_below:1,light_green:1,dark_green:[r1(lo),r1(hi)],yellow:r1(ye),red:r1(ze),peak_n:r1(pk),max_payoff:r1(mx)}}
 const BPC={};
-function dayMuscle(dt,n,F){n=r2(+n||0);F=r2(+F||0);if(!(n>=1)||!(F>0))return colour(dt,n,null);const k=Math.floor(Math.sqrt(F/n)*1000+0.5)/1000,key=k.toFixed(3);/* k to 3 decimals, as Coach's class table */const bp=BPC[key]||(BPC[key]=dailyBp(dt,k));return colour(dt,n,bp)}
+function dayMuscle(dt,n,F,m,lv){n=r2(+n||0);F=r2(+F||0);if(!(n>=1)||!(F>0))return colour(dt,n,null);const k=Math.floor(Math.sqrt(F/n)*1000+0.5)/1000,key=k.toFixed(3);/* k to 3 decimals, as Coach's class table */const bp=BPC[key]||(BPC[key]=dailyBp(dt,k));
+  const c=colour(dt,n,bp);return m?capZone(dt,c,n,m,lv):c}
+// vol16b (Coach + CoS): day cells keep the frozen vol15c daily ramp (yellow = diminishing returns stays). One rule on top: a cell may be red
+// ONLY where the one-workout warning fires (PCHECK count = check_program.eff per session_efficiency.counts, no decay, r1 > PCHECK.seLim = the
+// Max growth cap); a red cell at or under the limit is capped at yellow.
+function capZone(dt,c,n,m,lv){if(c.zone!=='red')return c;const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null);const L=PC&&PC.seLim?PC.seLim(dt,m,lv):null;if(L==null)return c;
+  const over=PC.seOver?PC.seOver(n,L):Math.floor(n*10+0.5+1e-9)/10>L;if(over)return c;return {hex:STOPS(dt).yellow,zone:'yellow',capped:true}}
 // one workout's tiles [{id,sets,rir}] -> {muscle:{hex,zone}}
-function daily(dt,tiles){const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null),o={};if(!PC||!tiles||!tiles.length)return o;
-  const E=PC.eff(dt,tiles),F=PC.fatMus(dt,tiles);for(const [m,v] of Object.entries(E)){if(!(v>0))continue;o[m]=dayMuscle(dt,v,F[m]||0)}return o}
+function daily(dt,tiles,lv){const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null),o={};if(!PC||!tiles||!tiles.length)return o;
+  const E=PC.eff(dt,tiles),F=PC.fatMus(dt,tiles);for(const [m,v] of Object.entries(E)){if(!(v>0))continue;o[m]=dayMuscle(dt,v,F[m]||0,m,lv)}return o}
 const fills=o=>{const r={};for(const [m,c] of Object.entries(o||{}))if(c&&c.zone!=='grey')r[m]=c.hex;else if(c)r[m]=c.hex;return r};
 const LABELS=['Under','Building','Best','Diminishing returns','No payoff'];   // vol16 (Coach/CoS): the ONE set of colour-bar labels
 // vol16: the legend is a labelled gradient bar (grey | light -> dark green | flat yellow | red), the same stops as the map
@@ -42,7 +48,7 @@ const legend=mode=>{const S=STOPS(null);return `<div class="mrbar2" role="img" a
 // vol15b: per-muscle day wording (day-metrics-presets muscles[m].display): '<n> hard sets: <band>' or 'Under 1 hard set'
 const DAYW={light_green:'building',dark_green:'around the best range',yellow:'past the best range',red:'too many for one workout'};   // fallback only; Coach's words: visuals.body_map.ramp.day_text.words
 const dayText=(dt,n,zone)=>{const DT=(RAMP(dt)||{}).day_text||{},W=Object.assign({},DAYW,DT.words||{});n=r2(+n||0);return !(n>=1)||zone==='grey'||!zone?'Under 1 hard set':`${(Math.floor(n*10+0.5+1e-9)/10).toFixed(1)} hard sets: ${W[zone]||''}`};
-const dayWords=(dt,tiles)=>{const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null),o={};if(!PC||!tiles||!tiles.length)return o;
-  const E=PC.eff(dt,tiles),F=PC.fatMus(dt,tiles);for(const [m,v] of Object.entries(E)){if(!(v>0))continue;o[m]=dayText(dt,v,dayMuscle(dt,v,F[m]||0).zone)}return o};
-const API={dayText,dayWords,DAYW,colour,weekly,weeklyBp,daily,dayMuscle,dailyBp,fills,legend,LABELS,STOPS,mix};if(typeof module!=='undefined')module.exports=API;if(typeof window!=='undefined')window.MAPRAMP=API;
+const dayWords=(dt,tiles,lv)=>{const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null),o={};if(!PC||!tiles||!tiles.length)return o;
+  const E=PC.eff(dt,tiles),F=PC.fatMus(dt,tiles);for(const [m,v] of Object.entries(E)){if(!(v>0))continue;o[m]=dayText(dt,v,dayMuscle(dt,v,F[m]||0,m,lv).zone)}return o};
+const API={capZone,dayText,dayWords,DAYW,colour,weekly,weeklyBp,daily,dayMuscle,dailyBp,fills,legend,LABELS,STOPS,mix};if(typeof module!=='undefined')module.exports=API;if(typeof window!=='undefined')window.MAPRAMP=API;
 })();

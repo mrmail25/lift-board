@@ -630,7 +630,7 @@ function sesRole(sid){if(!RD)return {};const o={},rk={main:3,helper:2,minor:1};f
 const RAMPL=r=>!(r>0)?0:r>=5?4:r>=3?3:r>=1.5?2:1,rampFill=r=>{const l=RAMPL(r);return l?`var(--ramp-${l})`:null};
 // vol15: the Log maps use the one shared ramp (logic/mapramp.js, daily = this workout vs each muscle's per-workout peak)
 const sesTiles=sid=>!RD?[]:entsOf(sid).map(e=>({id:e.exerciseId,sets:setsOfE(e.id).filter(x=>x.kind==='working'&&x.done&&x.reps>0).length})).filter(t=>t.sets&&RD.EX[t.id]);
-const sesRamp=sid=>window.MAPRAMP&&RD?MAPRAMP.fills(MAPRAMP.daily(RD,sesTiles(sid))):{};
+const sesRamp=sid=>window.MAPRAMP&&RD?MAPRAMP.fills(MAPRAMP.daily(RD,sesTiles(sid),window.BOARD&&BOARD.state&&BOARD.state.level)):{};
 const rampVol=m=>{const o={};for(const [k,v] of Object.entries(m)){const f=rampFill(v);if(f)o[k]=f}return o};
 const rampLegend=(t='sets')=>`<span class="mleg mlday"><i style="background:var(--ramp-1)"></i>&lt;1.5<i style="background:var(--ramp-2)"></i>1.5<i style="background:var(--ramp-3)"></i>3<i style="background:var(--ramp-4)"></i>5+ ${t}</span>`;
 // mini body map for Log rows: two shared <symbol>s (front/back); each row only sets CSS variables --mm-<muscle>, so 12 rows stay light
@@ -1759,18 +1759,26 @@ let RD=null;
 async function loadRank(){if(RD)return RD;if(RDP)return RDP;
   // Every file comes from the storyboard's own synced data/ (sync-ranking-data.sh); the live app's ../data is never needed.
   // getJ never throws: a 404, a parse error or a fetch aborted by navigation all give null, and nothing falls through to another folder.
-  RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-rules.json','analysis-display.json','frequency-notes.json','custom-exercise-defaults.json','sample-log.json','evolution-rules.json'].map(n=>getJ(DATA+n));
+  // vol16b latency: data the first screen (Plan) never reads loads after ready, in this order (smallest/most-tapped first):
+  // templates-slim.json (Coach's slot eligibility, 151 KB; replaces templates-reference.json 1.7 MB, identical eligible lists), frequency-notes,
+  // progress-rules, evolution-rules, then day-metrics-slim.json (Coach's 2.46 MB slim preset visuals; replaces day-metrics-presets.json 4.8 MB).
+  // Each arrival fires 'sb:late' (and 'sb:dmp' for the presets) so whatever is on screen repaints; every reader is null-guarded until then.
+  async function lateLoad(R){const fire=n=>{try{window.dispatchEvent(new CustomEvent(n))}catch(e){}};
+    const L=[['templates-slim.json','TREF'],['frequency-notes.json','FN'],['progress-rules.json','PR2'],['evolution-rules.json','EVO']];
+    await Promise.all(L.map(([f,k])=>getJ(DATA+f).then(j=>{if(j)R[k]=j})));fire('sb:late');
+    const j=await getJ(DATA+'day-metrics-slim.json');if(j){R.DMP=j;fire('sb:dmp')}}
+  RDP=(async()=>{const opt=['templates.json','analysis-display.json','custom-exercise-defaults.json','sample-log.json'].map(n=>getJ(DATA+n));   // vol16b: only what the first screen (Plan) needs; the rest loads after ready (LATE below)
     const late=['volume-model.json','splits-efficient-diff.json','splits-efficient.json','fatigue.json'].map(n=>getJ(DATA+n));   // vol16b: fetched in parallel with the rest (were 4 sequential round trips)
     const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(n=>n==='rules.json'?getJ1(DATA+n):getJ(DATA+n)));
-    const [tj,tref,pr2,disp,fnotes,cxd,slog,evo]=await Promise.all(opt);   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
+    const [tj,disp,cxd,slog]=await Promise.all(opt);   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
     if(!(exercises&&rules&&targets&&patterns&&splits)){if(!UNLOADING)console.warn('ranking data missing: suggestions fall back to library order');return null}
     const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
     const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
-    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PR2=pr2;R.SLOG=slog;R.EVO=evo;R.DISP=disp;R.FN=fnotes;
+    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=null;R.PR2=null;R.SLOG=slog;R.EVO=null;R.DISP=disp;R.FN=null;
     const [vm,tdiff,seff,fat]=await Promise.all(late);R.VM=vm;R.TRIMDIFF=tdiff;R.SPLITS_EFF=seff;R.FAT=fat;   // vol10b: Efficient presets
-    // vol16b latency: day-metrics-presets.json (4.8 MB, Coach's precomputed preset visuals) no longer blocks start-up: the app is ready without it
-    // (Impact computes live, the 'typical' band waits) and it is fetched once in the background, then 'sb:dmp' re-renders. Coach: a slim copy would help.
-    R.DMP=null;setTimeout(()=>getJ(DATA+'day-metrics-presets.json').then(j=>{if(j){R.DMP=j;try{window.dispatchEvent(new Event('sb:dmp'))}catch(e){}}}),0); // vol11: per-exercise fatigue; precomputed preset visuals   // vol10b: Coach's per-preset Efficient trims   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
+    // vol16b latency: preset visuals (day-metrics-slim.json, Coach's 2.46 MB slim copy) never block start-up: lateLoad fetches them after ready
+    // Impact computes live until then and the 'typical' band waits; 'sb:dmp' re-renders on arrival.
+    R.DMP=null;setTimeout(()=>lateLoad(R),0); // vol11: per-exercise fatigue; precomputed preset visuals   // vol10b: Coach's per-preset Efficient trims   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
     try{await cxLoad(R,exercises,rules,cxd)}catch(x){console.warn('custom exercises not loaded',x)}   // custom exercises: defaults loader + registration (before anything reads RD)
     RD=R;return RD})();
   const r=await RDP;RDP=null;return r}
@@ -2352,5 +2360,7 @@ window.SBX={eduPrefetch:id=>eduPage(id).catch(()=>null),eduWarm:()=>eduLoad().ca
 curveSvg,progHist,openPSheet,cmGet,cmSet,cmShown,progressData,apeFig,APE_FIG,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,gymProfile:()=>gymProfile(),logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
+// vol16b: late data (progress-rules / evolution-rules) arrived: repaint the screens that read it, keeping scroll; open sheets are left alone
+window.addEventListener('sb:late',()=>{try{if(['train','progress','ladder'].includes(S.scr)&&!SHEETS.length)rerenderProgress()}catch(e){}});
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in
 })();
