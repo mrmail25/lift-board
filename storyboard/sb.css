@@ -2050,3 +2050,42 @@ details.fa-x .bd{padding-bottom:14px}
 html[data-theme=dark] .vrz.z-sweet_spot{color:#4CC285}html[data-theme=dark] .vrz.z-diminishing{color:#FF7A6E}
 @media (prefers-color-scheme:dark){html:not([data-theme=light]) .vrz.z-sweet_spot{color:#4CC285}html:not([data-theme=light]) .vrz.z-diminishing{color:#FF7A6E}}
 .fa-sheet .barw{padding-top:22px;margin-top:6px}.fa-sheet .barw .bar{margin-top:0}.fa-sheet .barw .mt{z-index:1}   /* vol16a: the "This week" label sat under the bar (margin collapse) */
+/* ---- vol16b: compact lists, 7-day grid + fatigue, direct vs helper, collapsible sections ---- */
+.fa-sheet .card,.fa-sheet .card.fa-c{padding:10px 12px;margin-top:8px}
+.fa-sheet .card.fa-c>.ch{margin-bottom:6px;min-height:32px;align-items:center;gap:8px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fa-sheet .card.fa-c>.ch small{margin-left:auto}
+.fa-sheet .card.fa-c>.ch .scv{flex:none;color:var(--text-2);font-size:20px;line-height:1;transform:rotate(90deg);transition:transform .2s}
+.fa-sheet .card.fa-c.collapsed>.ch{margin-bottom:0}.fa-sheet .card.fa-c.collapsed>.ch .scv{transform:none}
+.fa-sheet .card.fa-c.collapsed>:not(.ch){display:none!important}
+.fa-sheet .card.fa-c>.ch:focus-visible{outline:2px solid var(--accent-strong);outline-offset:2px;border-radius:6px}
+.fa-maps .mmap{height:200px}
+.fa-sheet .mapsel{margin-top:6px}
+.fa-grp{margin-top:8px}.fa-grp .chip{min-height:32px}
+.fa-sheet .tip{margin:6px 0 2px}
+.fa-mr,.fa-mr:first-child{border-top:0}
+.fa-ms{padding:0 4px;min-height:32px}
+.fa-go{width:32px;height:32px}
+.fa-sheet .row,.fa-panel .row,.fa-sheet .row:first-of-type{border-top:0;padding:5px 0}
+.fa-sheet .fr,.fa-sheet .fr:first-child{border-top:0;padding:6px 0;min-height:32px}
+.fa-sheet .nla,.fa-sheet .nla:first-child,.fa-sheet .nl a{border-top:0;padding:5px 0;min-height:32px}
+.fa-sheet .kv{border-top:0;padding:3px 0}
+.fa-sheet .sr,.fa-sheet button.mpr{padding:0;min-height:32px}.fa-sheet div.mpr{padding:3px 0}
+.fa-sheet .vr{padding:3px 0}.fa-sheet .vr.tap{min-height:32px}
+details.fa-x{margin-top:8px;padding:0 12px}details.fa-x summary{padding:6px 0;min-height:32px}details.fa-x .bd{padding-bottom:10px}
+.fa-sheet details{margin-top:8px}
+.fa-gt{border-spacing:2px;font-size:12px;table-layout:auto}.fa-gt tbody th{font-size:12px;padding-right:2px}
+.fa-gt th.fa-rest{color:var(--text-2);font-weight:500}.fa-gt td.fa-rest{background:none}
+.fa-cell{min-height:32px;font-size:12px;padding:0 1px}
+.fa-fat{gap:4px}.fa-fat .bw{width:78%;height:80px}.fa-fat .lv{font-size:11px}.fa-fat .dy{font-size:12px}.fa-fat .mn{font-size:11px}
+.fa-fat .fb{min-height:32px}.fa-fat .fb.fa-rest{cursor:default}.fa-fat .fb.fa-rest .lv{color:var(--text-2);font-weight:600}.fa-fat .fb.fa-rest .bw{background:none;box-shadow:inset 0 0 0 1px var(--line)}
+/* direct vs helper: one hue (Coach's 'Best' green), helper = lighter hatched tint; 2px gap between the two */
+.fa-sheet .sr .sb .d,.fa-sheet .k .dk{background:#1E7B3A}
+.fa-sheet .sr .sb .h,.fa-sheet .k .hk{background:repeating-linear-gradient(135deg,#1E7B3A 0 2px,#A9D8B6 2px 5px)}
+.fa-sheet .sr .sb .d+.h{border-left:2px solid var(--paper)}
+.fa-sheet details.fa-x summary:after,.fa-sheet details.fa-x[open] summary:after{content:none}   /* one chevron (the generic ▾/▴ was stacking on the › in open rows) */
+.fa-sheet .k.fa-srck{flex-wrap:wrap;gap:4px 14px;margin:0 0 4px}.fa-sheet .k.fa-srck i{width:18px;height:10px;vertical-align:-1px}
+html[data-theme=dark] .fa-sheet .sr .sb .d,html[data-theme=dark] .fa-sheet .k .dk{background:#4CB572}
+html[data-theme=dark] .fa-sheet .sr .sb .h,html[data-theme=dark] .fa-sheet .k .hk{background:repeating-linear-gradient(135deg,#4CB572 0 2px,#24452F 2px 5px)}
+@media (prefers-color-scheme:dark){html:not([data-theme=light]) .fa-sheet .sr .sb .d,html:not([data-theme=light]) .fa-sheet .k .dk{background:#4CB572}
+ html:not([data-theme=light]) .fa-sheet .sr .sb .h,html:not([data-theme=light]) .fa-sheet .k .hk{background:repeating-linear-gradient(135deg,#4CB572 0 2px,#24452F 2px 5px)}}
+details.fa-x>summary .cv,.fa-sheet .card.fa-c>.ch .scv{display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;flex:none}   /* rotation stays inside the header box */

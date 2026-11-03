@@ -119,7 +119,9 @@ const BRAND=v=>typeof v==='string'?v.replace(/\bLift ?Board\b/g,'ApeChit').repla
 // vol15: Learn shows Coach's citations as written (the vol13 LEARNFIX citation patch is dropped)
 const srcLine=n=>!n||!n.short?'':`<p class="ptsrc">Source: ${n.url?`<a href="${n.url}" target="_blank" rel="noopener">${n.short}</a>`:n.short}${n.type?` · ${n.type}`:''}</p>`;
 const getJ=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
-async function loadVB(){const u=DATA+'rules.json',j=await getJ(u),b=j&&(j.volume_bands||(j.rules||{}).volume_bands);if(b&&typeof b.red_factor==='number'){Object.assign(VB,b,{src:u});return VB}if(!UNLOADING)console.warn('rules.json volume_bands missing: over-volume red disabled');return VB}
+// vol16b: rules.json (463 KB) was fetched twice at start-up (loadVB + the ranking data); one shared request now (readers only copy from it)
+const RULESJ=new Map();const getJ1=u=>{if(!RULESJ.has(u))RULESJ.set(u,getJ(u));return RULESJ.get(u)};
+async function loadVB(){const u=DATA+'rules.json',j=await getJ1(u),b=j&&(j.volume_bands||(j.rules||{}).volume_bands);if(b&&typeof b.red_factor==='number'){Object.assign(VB,b,{src:u});return VB}if(!UNLOADING)console.warn('rules.json volume_bands missing: over-volume red disabled');return VB}
 const vStat=(n,min,max)=>n<min?'under':VB.red_factor!=null&&n>max*VB.red_factor?'red':n>max?'amber':'in';
 // volume status names = the Weekly sets row labels. Coach's colours (progcheck col): in range G; up to 2 sets under the minimum or
 // up to 25% over the maximum A ("Close, under" / "Close, over"); beyond that R. Maps keep close-under grey (under is a range colour).
@@ -1517,9 +1519,9 @@ async function eduLoad(){
   if(EDU.idx)return EDU.idx;
   {const b=DATA+'education/',j=await getJ(b+'index.json');if(j){EDU.idx=j;EDU.base=b}} // the storyboard's synced copy (sync-education.sh) only
   if(!EDU.idx){EDU.idx={pages:[]};return EDU.idx}   // vol14: no index (e.g. an aborted load) -> no follow-up fetches from a null base
-  try{const r=await fetch(EDU.base+(EDU.idx.references||'references.json'),{cache:'no-store'});if(r.ok)EDU.refs=(await r.json()).references||{}}catch(e){}
-  // exercise pages cite from a second file; merge so every [n] resolves the same way
-  for(const f of ['references-exercises.json'])try{const r=await fetch(EDU.base+f,{cache:'no-store'});if(r.ok)Object.assign(EDU.refs,(await r.json()).references||{})}catch(e){}
+  // exercise pages cite from a second file; merge so every [n] resolves the same way. vol16b: both fetched in parallel (one round trip, was two)
+  const rj=f=>fetch(EDU.base+f,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+  const [r1,r2]=await Promise.all([rj(EDU.idx.references||'references.json'),rj('references-exercises.json')]);EDU.refs=Object.assign({},(r1&&r1.references)||{},(r2&&r2.references)||{});
   return EDU.idx;
 }
 async function eduPage(id){const idx=await eduLoad(),p=idx.pages.find(x=>x.id===id);if(!p)return {entry:null,page:null};
@@ -1758,15 +1760,17 @@ async function loadRank(){if(RD)return RD;if(RDP)return RDP;
   // Every file comes from the storyboard's own synced data/ (sync-ranking-data.sh); the live app's ../data is never needed.
   // getJ never throws: a 404, a parse error or a fetch aborted by navigation all give null, and nothing falls through to another folder.
   RDP=(async()=>{const opt=['templates.json','templates-reference.json','progress-rules.json','analysis-display.json','frequency-notes.json','custom-exercise-defaults.json','sample-log.json','evolution-rules.json'].map(n=>getJ(DATA+n));
-    const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(n=>getJ(DATA+n)));
+    const late=['volume-model.json','splits-efficient-diff.json','splits-efficient.json','fatigue.json'].map(n=>getJ(DATA+n));   // vol16b: fetched in parallel with the rest (were 4 sequential round trips)
+    const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(n=>n==='rules.json'?getJ1(DATA+n):getJ(DATA+n)));
     const [tj,tref,pr2,disp,fnotes,cxd,slog,evo]=await Promise.all(opt);   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
     if(!(exercises&&rules&&targets&&patterns&&splits)){if(!UNLOADING)console.warn('ranking data missing: suggestions fall back to library order');return null}
     const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
     const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
     R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=tref;R.PR2=pr2;R.SLOG=slog;R.EVO=evo;R.DISP=disp;R.FN=fnotes;
-    R.VM=await getJ(DATA+'volume-model.json');
-    try{R.TRIMDIFF=await getJ(DATA+'splits-efficient-diff.json')}catch(x){R.TRIMDIFF=null}try{R.SPLITS_EFF=await getJ(DATA+'splits-efficient.json')}catch(x){R.SPLITS_EFF=null} // vol10b: Efficient presets
-    try{R.FAT=await getJ(DATA+'fatigue.json')}catch(x){R.FAT=null}try{R.DMP=await getJ(DATA+'day-metrics-presets.json')}catch(x){R.DMP=null} // vol11: per-exercise fatigue; precomputed preset visuals   // vol10b: Coach's per-preset Efficient trims   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
+    const [vm,tdiff,seff,fat]=await Promise.all(late);R.VM=vm;R.TRIMDIFF=tdiff;R.SPLITS_EFF=seff;R.FAT=fat;   // vol10b: Efficient presets
+    // vol16b latency: day-metrics-presets.json (4.8 MB, Coach's precomputed preset visuals) no longer blocks start-up: the app is ready without it
+    // (Impact computes live, the 'typical' band waits) and it is fetched once in the background, then 'sb:dmp' re-renders. Coach: a slim copy would help.
+    R.DMP=null;setTimeout(()=>getJ(DATA+'day-metrics-presets.json').then(j=>{if(j){R.DMP=j;try{window.dispatchEvent(new Event('sb:dmp'))}catch(e){}}}),0); // vol11: per-exercise fatigue; precomputed preset visuals   // vol10b: Coach's per-preset Efficient trims   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
     try{await cxLoad(R,exercises,rules,cxd)}catch(x){console.warn('custom exercises not loaded',x)}   // custom exercises: defaults loader + registration (before anything reads RD)
     RD=R;return RD})();
   const r=await RDP;RDP=null;return r}
@@ -2344,7 +2348,8 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={curveSvg,progHist,openPSheet,cmGet,cmSet,cmShown,progressData,apeFig,APE_FIG,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,gymProfile:()=>gymProfile(),logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
+window.SBX={eduPrefetch:id=>eduPage(id).catch(()=>null),eduWarm:()=>eduLoad().catch(()=>null),   // vol16b: FA warms the deep dive's Nurd Sh!t article while idle
+curveSvg,progHist,openPSheet,cmGet,cmSet,cmShown,progressData,apeFig,APE_FIG,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,gymProfile:()=>gymProfile(),logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

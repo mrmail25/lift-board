@@ -133,7 +133,7 @@ function applyTrim(){const T=trimPlan();if(!T)return;IMPV.prev=false;const befor
 const IMPV={day:-1,prev:false};let IMPC={k:null,v:null};
 const presetOf=(days,src)=>src?presetId(days,src):null;
 const APR=()=>G()&&G().mode==='efficient'?'efficient':'max_growth';
-function impBoard(){const g=APR(),k=sigD()+'|'+B.level+'|'+g;if(IMPC.k===k)return IMPC.v;const dt=RD(),d=checkDays();
+function impBoard(){const g=APR(),k=sigD()+'|'+B.level+'|'+g+'|'+(RD().DMP?1:0);if(IMPC.k===k)return IMPC.v;const dt=RD(),d=checkDays();
   const W=IMPACT.week(dt,d,B.level,g,presetOf(d,g==='efficient'?dt.SPLITS_EFF:dt.splits));IMPC={k,v:W};return W}
 const impCur=()=>window.IMPACT?{g:APR(),W:impBoard()}:null;
 const BMAP=()=>(RD().VM.visuals||{}).body_map||{};
@@ -1096,6 +1096,7 @@ Object.assign(X.ROUTES,{
  'build-tray-detail-nophoto':['build','build',0,0,()=>{Object.assign(TFB,{mus:null,pat:null,eq:null,mode:'sug'})},()=>{traySheet('wed');setTimeout(()=>X.exDetail('cable-fly',{addLabel:'Add to Wed',onAdd:trayAdd}),60)}],
  'build-tray-filter':['build','build',0,0,()=>{Object.assign(TFB,{mus:null,pat:'vertical_pull',eq:null})},()=>traySheet('thu')],
 });
+window.addEventListener('sb:dmp',()=>{try{if($('#board'))paint()}catch(e){}});   // vol16b: precomputed preset visuals arrived after start-up
 window.BOARD={removeExercise:id=>{B.days.forEach(d=>{d.tiles=d.tiles.filter(t=>t.id!==id)});B.hist=B.hist.filter(h=>!h.includes(`"${id}"`));B.sel.clear();if($('#board'))paint();else cxSavePlaced();refreshTray()},
   countExercise:id=>sum(B.days.map(d=>d.tiles.filter(t=>t.id===id).length)),repaint:()=>{if($('#board'))paint();refreshTray()},fmt:{bfmt:(...a)=>bfmt(...a),bpct:(...a)=>bpct(...a)},loadPreset:id=>{const [sp,lv,n]=id.split('/'),s=presetSplits().find(x=>x.id===sp);loadDays(s.levels[lv][n],`${s.name} · ${n} days`);B.level=lv;B.hist=[];PCAP=null;APPLIED=[];X.render()},applyOps:ops=>{applyOpsBoard(ops);paint()},get pcheck(){return PCI},get detail(){return BD.detail},fracLine,muscleShort,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,ensurePlan:(days,name,level)=>{if(B.days.length)return false;loadDays(days,name);B.level=level||'intermediate';B.hist=[];B.dirty=false;B.version=1;B.edited=Date.now();B.fromLog=true;return true},progApply:ops=>{const before=snap();B.hist.push(before);applyOpsBoard(ops);B.days.forEach(d=>{if(d.tiles.length)d.rest=false});B.dirty=true;B.edited=Date.now();if($('#board'))paint();return before},progUndo:before=>{restore(before);if($('#board'))paint()},_oldAnalysis:()=>{analysisSheet.old=true;try{return analysisSheet()}finally{analysisSheet.old=false}}   /* vol16a QC hook: the pre-vol16 Analysis sheet (Below minimum zone labels) for contrast checks */,loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},flags14:()=>flags14(),mins:tiles=>MINS(tiles),get MSEL(){return MSEL},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
 })();

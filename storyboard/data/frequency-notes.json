@@ -42,7 +42,7 @@
    "polarity": "negative",
    "scope": "muscle",
    "text": "{Muscle}: {sets} sets on {day_name}, past about {limit} for one workout; extra sets add little.",
-   "when": "session_efficiency: r1(effective sets in one workout) > rules session_efficiency.limits_by_level[level][muscle]; {limit} = that same value (intermediate chest 10). Not the Efficient-goal trim target."
+   "when": "session_efficiency: r1(effective sets in one workout) > the Max growth session cap, rules.json rules[id=session_efficiency].limits_by_goal.max_growth[level][muscle]; {limit} = that same value (intermediate chest 10). Not the Efficient-goal trim target (limits_by_goal.efficient)."
   },
   {
    "id": "session_cap_ok",

@@ -61,10 +61,12 @@ const seRule=dt=>((dt.rules&&dt.rules.rules)||[]).find(r=>r.id==='session_effici
 // vol10 (vol10.builder_paths): the analysis goal. GOAL=null = no goal (vol9 fallback: limits_by_level, no goal targets).
 // session limits = rules[id=session_efficiency].limits_by_goal[goal][level][muscle] when a goal is set, else limits_by_level.
 let GOAL=null,TONE=null;const setGoal=g=>{GOAL=g||null};const setTone=t=>{TONE=t||null};const getGoal=()=>GOAL;const gOf=g=>g===undefined?GOAL:g;
-// vol16a(3) (Coach ruling): every user-facing session warning uses limits_by_level[level][muscle]. limits_by_goal[goal] is ONLY the
+// vol16a(3) (Coach ruling): every user-facing session warning uses ONE limit (lvLim, below). limits_by_goal[goal] is ONLY the
 // Make-more-efficient trim target (trimLim), used by logic/trim.js while TRIMMODE is on; it never drives a warning.
 let TRIMMODE=false;const setTrimMode=v=>{TRIMMODE=!!v};
-const lvLim=(dt,m,lv)=>{const r=seRule(dt),t=r&&r.limits_by_level&&r.limits_by_level[lv||CUR];return t&&t[m]!=null?t[m]:null};
+// vol16b (CoS): the ONE warning limit = the Max growth cap, rules[id=session_efficiency].limits_by_goal.max_growth[level][muscle]
+// (the cap 'Push for max growth' builds sessions up to; suggestion_buttons.push_for_max_growth.caps). limits_by_level = fallback only.
+const lvLim=(dt,m,lv)=>{const r=seRule(dt),L=lv||CUR,G=r&&r.limits_by_goal&&r.limits_by_goal.max_growth&&r.limits_by_goal.max_growth[L],t=G&&G[m]!=null?G:r&&r.limits_by_level&&r.limits_by_level[L];return t&&t[m]!=null?t[m]:null};
 const trimLim=(dt,m,lv,g)=>{const r=seRule(dt),L=lv||CUR,G=gOf(g),bg=G&&r&&r.limits_by_goal&&r.limits_by_goal[G],t=bg&&bg[L];return t&&t[m]!=null?t[m]:lvLim(dt,m,L)};
 const seLim=(dt,m,lv,g)=>TRIMMODE?trimLim(dt,m,lv,g):lvLim(dt,m,lv);
 // weekly targets by goal: rules[id=weekly_volume].targets_by_goal[goal][level][muscle] {min,target,upper}; curve % from volume-model goals[goal].weekly
@@ -151,7 +153,13 @@ function zoneOf(z,x){if(!(x>0))return 'none';if(x<z.min-1e-9)return 'below_min';
 // session time for the UI: rules.json session_length.by_level[level] (flag_min / warn_min / warm-up / rest); program-check parity stays in Python
 function sessP(dt,level){const SL=ctx(dt).RU.session_length,L=level&&SL.by_level&&SL.by_level[level];return L?{warmup_min:L.warmup_min,work_min_per_set:L.work_min_per_set,rest_min_by_type:L.rest_min_by_type,info_min:L.info_min!=null?L.info_min:L.flag_min,warn_min:L.warn_min}:SL}
 function sessionMinutes(dt,tiles,level){const SL=sessP(dt,level);let m=SL.warmup_min;for(const t of tiles)m+=t.sets*(SL.work_min_per_set+SL.rest_min_by_type[dt.EX[t.id].type]);return m}
-function eff(dt,tiles){const {T}=ctx(dt),v={};for(const m in T)v[m]=0;for(const t of tiles){const e=dt.EX[t.id];for(const [m,r] of Object.entries(e.muscles))if(r>=0.25&&m in v)v[m]+=t.sets*credit(dt,e,m,r,t.rir)}return v}
+// vol16b latency: eff() is pure in (dt, tile ids/sets/rir, the exercise objects); the deep-dive fix search calls it thousands of times on the
+// same days. Memoised per data object (exercise identity checked on every hit, so an edited custom exercise recomputes); callers get a copy.
+const EFFM=new WeakMap();
+function eff(dt,tiles){let M=EFFM.get(dt);if(!M){M=new Map();EFFM.set(dt,M)}let k='';for(const t of tiles)k+=t.id+'\u0001'+t.sets+'\u0001'+(t.rir==null?'':t.rir)+'\u0002';
+  const h=M.get(k);if(h&&h.ex.every((e,i)=>dt.EX[tiles[i].id]===e))return Object.assign({},h.v);
+  const {T}=ctx(dt),v={};for(const m in T)v[m]=0;for(const t of tiles){const e=dt.EX[t.id];for(const [m,r] of Object.entries(e.muscles))if(r>=0.25&&m in v)v[m]+=t.sets*credit(dt,e,m,r,t.rir)}
+  if(M.size>4000)M.clear();M.set(k,{v:Object.assign({},v),ex:tiles.map(t=>dt.EX[t.id])});return v}
 function slotCounts(dt,days){const {PJ}=ctx(dt),c={};for(const k in PJ.slots)c[k]=0;
   for(const d of days)for(const t of d.tiles){const e=dt.EX[t.id],hit=new Set();for(const s of e.patterns||[]){if(PJ.slots[s].kind==='compound'&&e.type==='isolation')continue;hit.add(s);(PJ.slots[s].counts_toward||[]).forEach(x=>hit.add(x))}hit.forEach(s=>c[s]+=1)}return c}
 function patternFlags(dt,days,level){const {PJ}=ctx(dt);if(!days.some(d=>d.tiles.length))return [];const c=slotCounts(dt,days),out=[];
