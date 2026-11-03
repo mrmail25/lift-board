@@ -57,6 +57,14 @@ function newFlags(dt,d0,d1,lv,carryFrom,carryTo){const A0=NI(PC().check(dt,d0,lv
 const apply=(d,ops)=>AN().applyOps(d,ops);
 const res=(dt,d,lv,m)=>{const Q=diveOf(dt,d,lv,m);const x=Q.sets.effective;return {eff:x,status:Q.sets.status,zone:zoneW(dt,lv,m,x).zone,days_hit:Q.frequency.days_hit,days:Q.frequency.days,stretch:Q.stretch.share,min:Q.sets.level_min}};
 const pill=(zone,txt)=>`<span class="fa-pill" style="background:${MR().STOPS(null)[zone]||'#C8CDD2'};color:${ZFG[zone]||'#1b1b1b'}">${esc(txt||ZL[zone])}</span>`;
+// vol16c: an exercise name in the deep dive is a link to its lean exercise page (custom exercises open cxDetail)
+const EXL=(id,label)=>`<button type="button" class="fa-exl" data-fa="exl" data-id="${esc(id)}">${esc(label||EXN(id))}</button>`;
+// names inside a suggestion's preview text: the ops' exercise ids, longest name first, each linked once
+const EXLT=(txt,ops)=>{let h=esc(txt||'');const ids=[...new Set((ops||[]).flatMap(o=>[o.id,o.from_id,o.to_id]).filter(Boolean))],E=RD().EX;const C=[];
+  for(const id of ids){const e=E[id]||{};for(const nm of new Set([EXN(id),e.name,e.short_name].filter(Boolean)))C.push([id,esc(nm)])}
+  C.sort((a,b)=>b[1].length-a[1].length);const done=new Set(),T=[];
+  for(const [id,nm] of C){if(done.has(id))continue;const i=h.indexOf(nm);if(i<0)continue;const tok=`\u0001${T.length}\u0001`;T.push(`<button type="button" class="fa-exl" data-fa="exl" data-id="${esc(id)}">${nm}</button>`);h=h.slice(0,i)+tok+h.slice(i+nm.length);done.add(id)}
+  return h.replace(/\u0001(\d+)\u0001/g,(_,k)=>T[+k])};
 const ftag=c=>c?`<span class="fa-ftag" style="background:${FTAG[c][0]};color:${FTAG[c][1]}">${c}</span>`:'';
 const dtag=L=>L?`<span class="fa-ftag" style="background:${FDAY[L][0]};color:${FDAY[L][1]}">${L}</span>`:'';
 const isBodyweightish=e=>['bodyweight','rings','suspension','band','bands'].includes(e.equipment);
@@ -189,7 +197,7 @@ function deepHtml(m,lazy){const dt=RD(),d=DAYS(),lv=LV(),SH=sheetOf(dt,d,lv),P=d
   h+=`<div class="card fa-c" id="deepdive-${m}-frequency"><div class="ch"><h2>Per workout</h2></div><p class="fl"><b>${F.days_hit} day${F.days_hit===1?'':'s'} with ${F.min_effective_per_day}+ sets</b> · ${spacingLine(F.days)}</p><div class="pw">`+ORD.map(dd=>{const v=by[dd];const hi=v!=null&&v>=F.min_effective_per_day;
     return `<div>${v>0?`<b class="${hi?'hi':'lo'} num">${f1(v)}</b><i class="${hi?'hi':''}" style="height:${Math.max(4,v/mx*70)}px"></i>`:`<i style="height:3px"></i>`}<s>${WD[dd]}</s></div>`}).join('')+`</div>`+(FN.length?`<div class="warn"><span aria-hidden="true">⚠︎</span><span>${esc(FN[0].text)}</span></div>`:'')+`</div>`;
   // where the sets come from
-  h+=`<div class="card fa-c" id="deepdive-${m}-sets"><div class="ch"><h2>Where the sets come from</h2><small>${f1(x)} effective</small></div><p class="sub">${contrib.length} exercise${contrib.length===1?'':'s'} · tag: ${FATIGUE_TAG_LABEL}</p>`+(contrib.length?contrib.flatMap(c=>c.days.map(y=>`<div class="row"><span class="gl ${c.type}" title="${c.type}" aria-hidden="true">${GLY[c.type]}</span><div class="grow"><div class="t1">${esc(c.disp)} ${c.fatigue?ftag(c.fatigue.cls):''}${dt.EX[c.id].custom?' <span class="fa-est">est.</span>':''}</div><div class="t2">${WD[y.day]} · ${y.sets} sets → ${f1(y.effective_sets)} effective</div></div><span class="sh num">${pc(c.share)}</span><button class="btn grey" data-fa="remove" data-day="${y.day}" data-id="${c.id}">Remove</button></div>`)).join(''):`<p class="sub">No exercise on the board trains ${mlow(m)} yet.</p>`)+`</div>`;
+  h+=`<div class="card fa-c" id="deepdive-${m}-sets"><div class="ch"><h2>Where the sets come from</h2><small>${f1(x)} effective</small></div><p class="sub">${contrib.length} exercise${contrib.length===1?'':'s'} · tag: ${FATIGUE_TAG_LABEL}</p>`+(contrib.length?contrib.flatMap(c=>c.days.map(y=>`<div class="row"><span class="gl ${c.type}" title="${c.type}" aria-hidden="true">${GLY[c.type]}</span><div class="grow"><div class="t1">${EXL(c.id,c.disp)} ${c.fatigue?ftag(c.fatigue.cls):''}${dt.EX[c.id].custom?' <span class="fa-est">est.</span>':''}</div><div class="t2">${WD[y.day]} · ${y.sets} sets → ${f1(y.effective_sets)} effective</div></div><span class="sh num">${pc(c.share)}</span><button class="btn grey" data-fa="remove" data-day="${y.day}" data-id="${c.id}">Remove</button></div>`)).join(''):`<p class="sub">No exercise on the board trains ${mlow(m)} yet.</p>`)+`</div>`;
   h+=loggedProgress(dt,m);
   // suggestions + swap ideas: the expensive part (each candidate is a trial board through the engine). vol16b: with lazy, the sheet paints
   // first with a placeholder and FA fills these two cards on the next frame (renderDD), so the tap never waits for them.
@@ -199,21 +207,21 @@ function deepHtml(m,lazy){const dt=RD(),d=DAYS(),lv=LV(),SH=sheetOf(dt,d,lv),P=d
   const sk=(dt.rules.pattern_gap_fix||{}).sets_by_kind||{},addDay=(P.suggestions.ranked_adds||{}).day,showAdd=staple&&addDay&&S.status!=='in_range'&&S.status!=='over'&&S.status!=='far_over';
   const resT=(o,r)=>o.op==='sets'?`${WD[o.day]} ${o.from}→${o.to} → ${f1(r.eff)} sets`:o.op==='add'?`${WD[o.day]} +${o.sets} → ${f1(r.eff)} sets over ${r.days_hit} day${r.days_hit===1?'':'s'}`:`→ ${f1(r.eff)} sets, ${ZL[r.zone]}`;
   if(MF.combo||MF.singles.length||showAdd){h+=`<div class="card fa-c" id="deepdive-${m}-fixes"><div class="ch"><h2>Suggestions</h2></div>`+
-    (MF.combo?(MF.combo.label=MF.combo.preview,`<div class="row"><div class="grow"><div class="t1">${MF.combo.ops.map(opShort).join(' and ')} → ${f1(MF.combo.r.eff)} sets, ${SW[MF.combo.r.status]||ZL[MF.combo.r.zone]}</div><div class="t2">${esc(MF.combo.preview)}</div></div>${fxBtn(MF.combo,'acc')}</div>`):'')+
-    MF.singles.map(f=>(f.label=f.preview,`<div class="row"><div class="grow"><div class="t1">${esc(f.preview)}</div><div class="t2">${resT(f.ops[0],f.r)}</div></div>${fxBtn(f,MF.combo||MF.singles.length>1?'grey':'acc')}</div>`)).join('')+
+    (MF.combo?(MF.combo.label=MF.combo.preview,`<div class="row"><div class="grow"><div class="t1">${MF.combo.ops.map(opShort).join(' and ')} → ${f1(MF.combo.r.eff)} sets, ${SW[MF.combo.r.status]||ZL[MF.combo.r.zone]}</div><div class="t2">${EXLT(MF.combo.preview,MF.combo.ops)}</div></div>${fxBtn(MF.combo,'acc')}</div>`):'')+
+    MF.singles.map(f=>(f.label=f.preview,`<div class="row"><div class="grow"><div class="t1">${EXLT(f.preview,f.ops)}</div><div class="t2">${resT(f.ops[0],f.r)}</div></div>${fxBtn(f,MF.combo||MF.singles.length>1?'grey':'acc')}</div>`)).join('')+
     (showAdd?(()=>{const n=dt.EX[staple].type==='isolation'?sk.isolation:sk.compound,f={ops:[{op:'add',day:addDay,id:staple,sets:n||2}],label:`Add ${EXN(staple)}, ${WD[addDay]} ${n||2} sets`};const nw=(()=>{try{return applyL(d,f.ops)}catch(e){return null}})();if(!nw||newFlags(dt,d,nw,lv).add.length)return '';
-      return `<button class="add" data-fa="apply" data-i="${(FX.set(++FXN,f),FXN)}"><span class="pl" aria-hidden="true">+</span><span><b>Add suggested</b><small>${esc(EXN(staple))} · ${WD[addDay]} · ${n||2} sets</small></span></button>`})():'')+`</div>`}
+      return `<div class="add fa-addrow"><span class="pl" aria-hidden="true">+</span><span><button type="button" class="fa-addb" data-fa="apply" data-i="${(FX.set(++FXN,f),FXN)}"><b>Add suggested</b></button><small>${EXL(staple)} · ${WD[addDay]} · ${n||2} sets</small></span></div>`})():'')+`</div>`}
   else h+=`<div class="card fa-c" id="deepdive-${m}-fixes"><div class="ch"><h2>Suggestions</h2></div><p class="sub">${S.status==='in_range'?`Nothing to fix: ${mlow(m)} is in range.`:`No change passes every check right now.`}</p></div>`;
   // swap ideas (hidden entirely when none pass); a swap-type suggestion becomes its exercise's row here
   const SI=swapIdeas(dt,d,lv,m,contrib);
   const swRow=s=>{s.label=`Swap ${EXN(SI.main.id)} → ${EXN(s.id)}`;const rs=s.lines.map(k=>fill(SWAP_REASONS[k],{muscle:mu,from:SI.main.fatigue?SI.main.fatigue.cls:'',to:s.cf?s.cf.cls:''})).join(' ');
-    return `<div class="row"><span class="gl ${s.e.type}" aria-hidden="true">${GLY[s.e.type]}</span><div class="grow"><div class="t1">${esc(EXN(s.id))} ${s.cf?ftag(s.cf.cls):''}</div><div class="rs">${rs}</div><div class="rr">${fill(SWAP_RESULT,{sets:f1(s.r.eff),zone:ZL[s.r.zone],day:WD[SI.main.days[0]],level:s.dayF||'–'})}</div></div>${fxBtn(s)}</div>`};
+    return `<div class="row"><span class="gl ${s.e.type}" aria-hidden="true">${GLY[s.e.type]}</span><div class="grow"><div class="t1">${EXL(s.id)} ${s.cf?ftag(s.cf.cls):''}</div><div class="rs">${rs}</div><div class="rr">${fill(SWAP_RESULT,{sets:f1(s.r.eff),zone:ZL[s.r.zone],day:WD[SI.main.days[0]],level:s.dayF||'–'})}</div></div>${fxBtn(s)}</div>`};
   // vol16a: the engine's own swap suggestions get the SAME checked reasons as the main-lift ideas; a row with no passing reason is dropped
   const sugSw=MF.swaps.map(f=>{const o=f.ops.find(q=>q.op==='swap');const R=swapReasons(dt,m,o.from_id,o.to_id);if(!R.lines.length)return '';f.label=`Swap ${EXN(o.from_id)} → ${EXN(o.to_id)}`;const b=fcls(dt,o.to_id);
     const stp=P.stretch.share!=null&&f.r.stretch!=null&&Math.abs(f.r.stretch-P.stretch.share)>1e-9?` · stretch share ${pc(P.stretch.share)} → ${pc(f.r.stretch)}`:'';
     const rs=R.lines.map(k=>fill(SWAP_REASONS[k],{muscle:mu,from:R.from?R.from.cls:'',to:R.to?R.to.cls:''})).join(' ');
-    return `<p class="sub fa-swfor">For ${esc(EXN(o.from_id))}</p><div class="row"><span class="gl ${dt.EX[o.to_id].type}" aria-hidden="true">${GLY[dt.EX[o.to_id].type]}</span><div class="grow"><div class="t1">${esc(EXN(o.to_id))} ${b?ftag(b.cls):''}</div><div class="rs">${rs}</div><div class="rr">→ ${f1(f.r.eff)} sets, ${ZL[f.r.zone]} · ${WD[o.day]} fatigue ${dayLevel(dt,applyL(d,f.ops).find(D=>D.day===o.day),lv)||'–'}${stp}</div></div>${fxBtn(f)}</div>`}).join('');
-  if((SI&&SI.shown.length)||sugSw){h+=`<div class="card fa-c" id="deepdive-${m}-swaps"><div class="ch"><h2>Swap ideas</h2></div>`+(SI&&SI.shown.length?`<p class="sub">For ${esc(SI.main.name)}, your main ${mu} lift</p>`+SI.shown.map(swRow).join('')+(SI.carried?`<p class="note">${esc(SI.carried)}</p>`:''):'')+sugSw+`</div>`}
+    return `<p class="sub fa-swfor">For ${EXL(o.from_id)}</p><div class="row"><span class="gl ${dt.EX[o.to_id].type}" aria-hidden="true">${GLY[dt.EX[o.to_id].type]}</span><div class="grow"><div class="t1">${EXL(o.to_id)} ${b?ftag(b.cls):''}</div><div class="rs">${rs}</div><div class="rr">→ ${f1(f.r.eff)} sets, ${ZL[f.r.zone]} · ${WD[o.day]} fatigue ${dayLevel(dt,applyL(d,f.ops).find(D=>D.day===o.day),lv)||'–'}${stp}</div></div>${fxBtn(f)}</div>`}).join('');
+  if((SI&&SI.shown.length)||sugSw){h+=`<div class="card fa-c" id="deepdive-${m}-swaps"><div class="ch"><h2>Swap ideas</h2></div>`+(SI&&SI.shown.length?`<p class="sub">For ${EXL(SI.main.id,SI.main.name)}, your main ${mu} lift</p>`+SI.shown.map(swRow).join('')+(SI.carried?`<p class="note">${esc(SI.carried)}</p>`:''):'')+sugSw+`</div>`}
   return h};
   const SUGPH=`<div class="fa-lazy" data-lazy="sug"><div class="card fa-c"><div class="ch"><h2>Suggestions</h2></div><p class="sub">Checking fixes…</p></div></div>`;
   h+=lazy?SUGPH:sugF();
@@ -246,7 +254,7 @@ function faHtml(){const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,lv),MU=Ob
   if(!ST.sel&&window.BOARD.MSEL&&A.muscles[window.BOARD.MSEL])ST.sel=window.BOARD.MSEL;if(!ST.sel||!A.muscles[ST.sel])ST.sel=MU.slice().sort((a,b)=>(A.muscles[b].min||0)-(A.muscles[a].min||0)||x(b)-x(a))[0]||'chest';const m=ST.sel,wk=zoneW(dt,lv,m,x(m));
   let h=appliedBar()+`<div class="fa">`;
   // map card
-  h+=`<div class="card fa-c" id="fa-map"><div class="ch"><h2>This week on your body</h2><small>tap a muscle for its deep dive</small></div><div class="fa-maps">${X.map('front',{},{})}${X.map('back',{},{})}</div>${MR().legend('weekly')}
+  h+=`<div class="card fa-c" id="fa-map"><div class="ch"><h2>This week on your body</h2><small>tap a muscle for its deep dive</small></div><div class="seg fa-side" role="group" aria-label="Body side">${['front','back'].map(sd=>`<button type="button" data-fa="side" data-s="${sd}" class="${(ST.side||'front')===sd?'on':''}" aria-pressed="${(ST.side||'front')===sd}">${sd==='front'?'Front':'Back'}</button>`).join('')}</div><div class="fa-maps big" data-side="${ST.side||'front'}">${X.map('front',{},{crop:1})}${X.map('back',{},{crop:1})}</div>${MR().legend('weekly')}
    <div class="mapsel"><span class="mv"><b>${esc(ML(m))}</b> · ${f1(x(m))} sets · ${esc(ZL[wk.zone])}</span></div></div>`;   // vol16b: no deep-dive chip; tapping the map opens the deep dive
   // weekly volume: one chart for the selected muscle, the muscle list is its selector
   const S=diveOf(dt,d,lv,m),XM=Math.max(30,Math.ceil(((MR().weeklyBp(dt,lv,m)||{}).red||25)*1.12));
@@ -289,7 +297,7 @@ function faHtml(){const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,lv),MU=Ob
   h+=det('flags','All flags',`${cp.pass||0} ✓ passing · ${nfix} ! to fix · ${nnote} ⓘ notes`,FL.map(f=>`<button class="fr" data-fa="pflag" data-id="${esc(f.id)}"><span class="ic s${f.sev}" aria-hidden="true">${f.sev>=2?'!':'ⓘ'}</span><span class="t">${esc(f.short||f.text)}</span><span class="cv" aria-hidden="true">›</span></button>`).join('')||'<p class="sub">No flags.</p>');
   return h+`</div>`}
 function paintMaps(root){if(!root)return;const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,lv);
-  $$('.fa-maps .mp',root).forEach(p=>{const k=p.dataset.mu;p.style.fill=A.muscles[k]?zoneW(dt,lv,k,weekX(A,k)).hex:'var(--map-off)';p.classList.toggle('msel',k===ST.sel);if(A.muscles[k]){p.setAttribute('data-fa','deep');p.setAttribute('role','button');p.setAttribute('aria-label',ML(k)+' deep dive')}else p.removeAttribute('data-fa');p.setAttribute('data-m',k)});
+  $$('.fa-maps .mp',root).forEach((p,i)=>{const k=p.dataset.mu;if(p.dataset.z==null)p.dataset.z=i;   /* vol16c: the art's own stacking order, kept for tap hit-testing after the selected outline is moved on top */p.style.fill=A.muscles[k]?zoneW(dt,lv,k,weekX(A,k)).hex:'var(--map-off)';p.classList.toggle('msel',k===ST.sel);if(A.muscles[k]){p.setAttribute('data-fa','deep');p.setAttribute('role','button');p.setAttribute('aria-label',ML(k)+' deep dive')}else p.removeAttribute('data-fa');p.setAttribute('data-m',k)});
   $$('.fa-maps .mp.msel',root).forEach(p=>p.parentNode.appendChild(p))}   // selected outline drawn on top
 
 // ---------- tap panels (Coach's table): insight + at most 2 fixes, each passing the no-new-flag check ----------
@@ -327,7 +335,7 @@ function panelData(kind,a){const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,
   return {title:'',insight:'',fixes:[]}}
 function panelHtml(kind,a){const P=panelData(kind,a);return {title:P.title,body:appliedBar()+`<div class="fa-pn"><p class="ins">${esc(P.insight)}</p>`+P.fixes.map(f=>`<div class="row"><div class="grow"><div class="t1">${esc(f.label)}</div>${f.sub?`<div class="t2">${esc(f.sub)}</div>`:''}</div>${fxBtn(f,'acc')}</div>`).join('')+`</div>`}}
 // ---------- sheets ----------
-const OPEN={fa:null,dd:null,pn:null};let RQ=0;
+const OPEN={fa:null,dd:null,pn:null,ex:null};let RQ=0;
 const keepScroll=(api,fn)=>{const y=api.body.scrollTop;fn();api.body.scrollTop=y};
 function fixChip(n,act,m){return n?`<button class="chip fixchip" data-fa="${act}"${m?` data-m="${m}"`:''}>${n} to fix ›</button>`:''}
 // ---------- vol16b: every section collapses (header tap / Enter / Space, chevron); state remembered in localStorage ----------
@@ -343,7 +351,7 @@ function renderDD(){const o=OPEN.dd;if(!o||o.closed)return;const lazy=!o.anchor,
   // vol16b: paint first, then fill Suggestions + Swap ideas (trial boards through the engine) on the next frame
   if(lazy)requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(()=>{if(OPEN.dd!==o||o.closed||o.tok!==tok)return;const el=o.body.querySelector('[data-lazy="sug"]');if(!el)return;const y=o.body.scrollTop;el.outerHTML=Rr.sug();secs(o.body,'dd');o.body.scrollTop=y},0)));const n=window.BOARD.flags14().filter(f=>f.muscle===o.m&&f.sev>=2).length;o.el.querySelector('.sh-head .r').innerHTML=fixChip(n,'mflags',o.m)}
 function renderPN(){const o=OPEN.pn;if(!o||o.closed)return;const P=panelHtml(o.kind,o.a);keepScroll(o,()=>{o.body.innerHTML=P.body})}
-function rerender(){FX.clear();memoClear();renderFA();renderDD();renderPN()}
+function rerender(){FX.clear();memoClear();renderFA();renderDD();renderPN();if(typeof renderEX==="function")renderEX()}
 const BACK='<button class="btn plain fa-back" data-fa="close" aria-label="Back">‹</button>';
 function open(opts){opts=opts||{};if(!OPEN.fa||OPEN.fa.closed){OPEN.fa=X.sheet({title:'Full analysis',cls:'tall grouped fa-sheet',left:BACK,right:'',onClose(){OPEN.fa=null;if(!OPEN.dd&&!OPEN.pn)APPL.length=0}});OPEN.fa.el.dataset.fa='fa';requestAnimationFrame(()=>OPEN.fa&&OPEN.fa.wrap.classList.add('open'))}
   if(opts.open)ST.open[opts.open]=true;if(opts.m)ST.sel=opts.m;renderFA();
@@ -357,12 +365,65 @@ function deep(m,anchor){if(OPEN.dd&&!OPEN.dd.closed)OPEN.dd.close();ST.sel=m;OPE
 function panel(kind,a){if(OPEN.pn&&!OPEN.pn.closed)OPEN.pn.close();const P=panelHtml(kind,a);OPEN.pn=X.sheet({title:P.title,cls:'fa-panel',right:'<button class="btn plain" data-fa="close">Done</button>',body:P.body,onClose(){OPEN.pn=null}});OPEN.pn.kind=kind;OPEN.pn.a=a;
   requestAnimationFrame(()=>OPEN.pn&&OPEN.pn.wrap.classList.add('open'));return OPEN.pn}
 function refresh(){if(!(OPEN.fa||OPEN.dd||OPEN.pn))return;cancelAnimationFrame(RQ);RQ=requestAnimationFrame(rerender)}
-const sheetOfEl=el=>{const s=el.closest('.sheet');return s&&[OPEN.pn,OPEN.dd,OPEN.fa].find(o=>o&&o.el===s)};
-document.addEventListener('click',e=>{const b=e.target.closest('[data-fa]');if(!b||!b.closest('.sheet'))return;const k=b.dataset.fa;if(k==='fa'||k==='dd')return;const host=sheetOfEl(b);e.preventDefault();
+const sheetOfEl=el=>{const s=el.closest('.sheet');return s&&[OPEN.ex,OPEN.pn,OPEN.dd,OPEN.fa].find(o=>o&&o.el===s)};
+// vol16c: lean exercise page (Coach's proposal, CoS-approved Nov 2, 2026), opened from an exercise name in the deep dive. Five rows only:
+// header (name, type icon + word, equipment); muscles worked (rating > 0, highest first, Main mover >= 0.75 / Helper 0.4-0.74 / Minor < 0.4,
+// Modeled, each opens that muscle's deep dive); fatigue tag (deep-dive colours, never red, Modeled); stretch row only for muscles whose
+// stretch.stretch_biased_for lists it ('Extra stretch for <Muscle>', never stretch_emphasis); on your board (days + sets, or Add).
+// Data: data/exercise-details.json (targets[].rating, fatigue.rating, stretch, equipment), loaded once through exdLoad with a 'Checking…'
+// placeholder. Fatigue band from fatigue.rating with Coach's bands; values outside them take the nearest band (0.8 -> Low, 114 exercises).
+// Hidden on purpose: Learn links, swap tags/scores, share-of-stimulus numbers, YouTube, description/setup/tip text.
+// Back closes it and shows the deep dive it was opened from. Custom exercises keep cxDetail.
+const FBANDS=[['Low',0.72,0.72],['Normal',1.0,1.2],['High',1.32,1.56]];
+const fband=v=>{if(v==null)return null;for(const [n,a,b] of FBANDS)if(v>=a-1e-9&&v<=b+1e-9)return n;return FBANDS.map(([n,a,b])=>[n,Math.min(Math.abs(v-a),Math.abs(v-b))]).sort((x,y)=>x[1]-y[1])[0][0]};
+const leanLvl=r=>r>=0.75?'Main mover':r>=0.4?'Helper':'Minor';
+const cap1=t=>t?String(t)[0].toUpperCase()+String(t).slice(1):'';
+function leanHtml(id,x){const dt=RD(),e=dt.EX[id]||{},d=DAYS();x=x||null;
+  const mus=x?(x.targets||[]).filter(t=>t.rating>0).map(t=>[t.muscle,t.rating]).sort((a,b)=>b[1]-a[1]||ML(a[0]).localeCompare(ML(b[0]))):null;
+  const fb=x?fband((x.fatigue||{}).rating):null,str=x?((x.stretch||{}).stretch_biased_for||[]):[];
+  const on=d.map(D=>({day:D.day,sets:(D.tiles||[]).filter(t=>t.id===id).reduce((a,t)=>a+(+t.sets||0),0)})).filter(x=>x.sets>0);
+  const tw=cap1(e.type);   // same word as the app's other exercise headers (Primary · Accessory · Isolation)
+  let h=`<div class="fa-exh"><span class="gl ${e.type}" aria-hidden="true">${GLY[e.type]||''}</span><div><h3>${esc(EXN(id))}</h3><p class="sub">${esc(tw)} · ${esc(cap1((x&&x.equipment)||e.equipment||e.eq||''))}</p></div></div>`;
+  if(!x)h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>Muscles worked</h2></div><p class="sub">Checking…</p></div><div class="card fa-c fa-exc"><div class="ch"><h2>Fatigue</h2></div><p class="sub">Checking…</p></div>`;
+  else{
+  h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>Muscles worked</h2></div>`+mus.map(([m,r])=>`<button type="button" class="fa-exm" data-fa="exm" data-m="${esc(m)}"><span class="t">${esc(ML(m))}</span><span class="lv lv${r>=0.75?3:r>=0.4?2:1}">${leanLvl(r)}<small class="md">Modeled</small></span><span class="cv" aria-hidden="true">›</span></button>`).join('')+`</div>`;
+  h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>Fatigue</h2><small>Modeled</small></div><p class="fa-exf">${fb?ftag(fb):'–'}<span>${fb==='High'?'Costs more recovery per set':fb==='Low'?'Costs little recovery per set':'Typical recovery cost per set'}</span></p>`+`</div>`+
+     (str.length?`<div class="card fa-c fa-exc"><div class="ch"><h2>Stretch</h2></div><p class="fa-exs">Extra stretch for ${str.map(m=>esc(ML(m))).join(', ')}</p></div>`:'')}
+  h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>On your board</h2></div>`+(on.length?`<p class="fa-exb"><b>${on.reduce((a,x)=>a+x.sets,0)} sets this week</b> · ${on.map(x=>`${WD[x.day]} ${x.sets} set${x.sets===1?'':'s'}`).join(', ')}</p>`:
+     `<div class="fa-exb0"><span>Not on your board</span><button type="button" class="btn accent fa-exadd" data-fa="exadd" data-id="${esc(id)}">Add</button></div>`)+`</div>`;
+  return h}
+function exLean(id){if(X.isCx&&X.isCx(id))return X.cxDetail(id);if(!RD().EX[id])return null;if(OPEN.ex&&!OPEN.ex.closed)OPEN.ex.close();
+  const D0=X.exdCache&&X.exdCache();   // already loaded: fill at once; else 'Checking…' until exercise-details.json (590 KB) lands
+  OPEN.ex=X.sheet({title:'',cls:'tall grouped fa-sheet fa-exsheet',left:BACK,right:'',body:leanHtml(id,D0&&D0[id]),onClose(){OPEN.ex=null}});const o=OPEN.ex;o.id=id;o.el.dataset.fa='ex';o.x=D0&&D0[id]||null;
+  requestAnimationFrame(()=>OPEN.ex&&OPEN.ex.wrap.classList.add('open'));
+  if(!o.x){const t0=performance.now();X.exdLoad().then(D=>{LEAN_T.push(Math.round(performance.now()-t0));if(o.closed)return;o.x=D[id]||{};o.body.innerHTML=leanHtml(id,o.x)})}return o}
+const LEAN_T=[];window.__leanT=LEAN_T;   // first-open load times (ms), read by the QC timing script
+function renderEX(){const o=OPEN.ex;if(!o||o.closed)return;o.body.innerHTML=leanHtml(o.id,o.x)}
+// Add from the lean page: the exercise's usual sets (rules pattern_gap_fix sets_by_kind) on the training day with the fewest sets; undo stays in the deep dive's list
+function leanAdd(id){const dt=RD(),e=dt.EX[id]||{},d=DAYS().filter(D=>!D.rest&&(D.tiles||[]).length);if(!d.length)return;const sk=((dt.rules||{}).pattern_gap_fix||{}).sets_by_kind||{};
+  const n=(e.type==='isolation'?sk.isolation:sk.compound)||3,tot=D=>(D.tiles||[]).reduce((a,t)=>a+(+t.sets||0),0),day=d.slice().sort((a,b)=>tot(a)-tot(b)||ORD.indexOf(a.day)-ORD.indexOf(b.day))[0].day;
+  FX.set(++FXN,{ops:[{op:'add',day,id,sets:n}],label:`Add ${EXN(id)}, ${WD[day]} ${n} sets`});doApply(FXN);renderEX();if(X.toast)X.toast(`Added ${EXN(id)} · ${WD[day]} · ${n} sets`)}
+// vol16c: tap-nearest-muscle on the big Full analysis map. A tap inside a muscle's shape picks it; otherwise the muscle whose outline is
+// nearest, if it is within NEAR px on screen (so every muscle, small ones included, has a tap zone at least 44 px across). Geometry comes
+// from the SVG paths themselves: isPointInFill for inside, and outline points sampled every few user units (cached per svg) for distance.
+const NEAR=22,MPTS=new WeakMap();
+const mapPts=svg=>{let P=MPTS.get(svg);if(P)return P;P=[];for(const el of svg.querySelectorAll('.mp[data-fa="deep"]')){let L=0;try{L=el.getTotalLength()}catch(x){}const n=Math.max(12,Math.ceil(L/6)),pts=[];for(let i=0;i<n;i++){const q=el.getPointAtLength(L*i/n);pts.push(q.x,q.y)}P.push({el,m:el.dataset.m,pts})}MPTS.set(svg,P);return P};
+function pickMuscle(svg,cx,cy){const ctm=svg.getScreenCTM();if(!ctm)return null;const inv=ctm.inverse(),pt=svg.createSVGPoint();pt.x=cx;pt.y=cy;const u=pt.matrixTransform(inv),sc=Math.hypot(ctm.a,ctm.b)||1;
+  const P=mapPts(svg),Q=P.slice().sort((a,b)=>(+b.el.dataset.z||0)-(+a.el.dataset.z||0));
+  for(const o of Q){try{if(o.el.isPointInFill(u))return o.m}catch(x){}}   // topmost shape in the art's own order wins (the selected outline is moved on top only for drawing)
+  let best=null,bd=NEAR/sc;for(const o of P){const a=o.pts;for(let i=0;i<a.length;i+=2){const d=Math.hypot(a[i]-u.x,a[i+1]-u.y);if(d<bd){bd=d;best=o.m}}}return best}
+document.addEventListener('click',e=>{const svg=e.target.closest&&e.target.closest('.fa-sheet .fa-maps.big svg');if(!svg)return;const tg=e.target.closest('.mp[data-fa="deep"]'),m=pickMuscle(svg,e.clientX,e.clientY)||(tg&&tg.dataset.m);   /* keyboard/synthetic clicks carry no point: fall back to the shape itself. fill only: the selected outline's thick stroke never steals a neighbour's tap */e.__mapPick=1;e.stopImmediatePropagation();e.preventDefault();if(!m)return;
+  ST.sel=m;if(OPEN.fa)paintMaps(OPEN.fa.body);deep(m)},true);
+if(window.SBX)window.SBX.pickMuscle=pickMuscle;   // test hook (tap test)
+document.addEventListener('click',e=>{if(e.__mapPick)return;const b=e.target.closest('[data-fa]');if(!b||!b.closest('.sheet'))return;const k=b.dataset.fa;if(k==='fa'||k==='dd')return;const host=sheetOfEl(b);e.preventDefault();
   if(k==='close'){if(host)host.close();return}
   if(k==='apply')return doApply(b.dataset.i);if(k==='undo')return doUndo(+b.dataset.i);
   if(k==='sec')return secToggle(b);
   if(k==='sel'){ST.sel=b.dataset.m;return renderFA()}
+  if(k==='exl')return exLean(b.dataset.id);
+  if(k==='exm'){const m=b.dataset.m;if(OPEN.ex)OPEN.ex.close();return deep(m)}
+  if(k==='exadd')return leanAdd(b.dataset.id);
+  if(k==='side'){ST.side=b.dataset.s;const r=b.closest('.card');if(r){r.querySelector('.fa-maps').dataset.side=ST.side;r.querySelectorAll('[data-fa="side"]').forEach(x=>{const on=x.dataset.s===ST.side;x.classList.toggle('on',on);x.setAttribute('aria-pressed',String(on))})}return}
   if(k==='grp'){ST.grp=b.dataset.g;return renderFA()}
   if(k==='deep')return deep(b.dataset.m);
   if(k==='tofix'){ST.open.flags=true;renderFA();const el=OPEN.fa.body.querySelector('[data-x="flags"]');if(el)el.scrollIntoView({block:'start'});return}
@@ -380,5 +441,5 @@ function prewarm(){if(X.RD&&X.RD.FULL===false)return;try{if(window.BOARD&&window
 (function wait(n){if(window.BOARD&&window.BOARD.days&&X.RD&&X.RD.EX&&X.RD.FULL!==false){idle(prewarm);return}if(n<600)setTimeout(()=>wait(n+1),250)})(0);
 // vol16b: late data (preset visuals, notes, weights) never feeds the engine memo (sheet/dive), so arrival only re-renders, no recompute
 const lateR=()=>{if(OPEN.fa||OPEN.dd||OPEN.pn){cancelAnimationFrame(RQ);RQ=requestAnimationFrame(()=>{FX.clear();renderFA();renderDD();renderPN()})}else idle(prewarm)};window.addEventListener('sb:dmp',lateR);window.addEventListener('sb:full',()=>idle(prewarm));   /* vol16b: prewarm only once the full files are in */window.addEventListener('sb:late',lateR);   // vol16b: frequency notes arrived after ready
-window.FA={open,deep,refresh,panel,prewarm,_x:{secs,memoClear,muscleFixes,swapIdeas,moveFixes,newFlags,typical,spacingLine,panelData,faHtml,deepHtml}};
+window.FA={open,deep,refresh,panel,prewarm,exLean,_x:{secs,memoClear,muscleFixes,swapIdeas,moveFixes,newFlags,typical,spacingLine,panelData,faHtml,deepHtml}};
 })();

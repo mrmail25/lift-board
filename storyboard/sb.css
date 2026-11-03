@@ -2108,3 +2108,43 @@ body.sb-wait{cursor:progress}
 .fa-sheet .fr,.fa-sheet .fr:first-child{padding:8px 0}
 .fa-sheet .nla,.fa-sheet .nla:first-child,.fa-sheet .nl a{padding:7px 0}
 .ghead.cath{padding-top:22px}
+
+/* vol16c: Week map + Full analysis sit in their own row under the map and stats, two equal columns across the card's full width */
+.bsum{grid-template-areas:"map stats" "btn btn" "leg leg" "flw flw"!important}
+.bsum .bbtns{grid-area:btn;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-width:0}
+.bsum .bbtns .wkbtn,.bsum .bbtns .anbtn{grid-column:auto;align-self:stretch;width:100%;min-width:0;min-height:40px;height:auto;margin:0;padding:6px 8px;justify-content:center;text-align:center;white-space:normal;font-size:14px;font-weight:700;border-radius:999px;box-sizing:border-box}
+.bsum .bbtns .wkbtn{border:1px solid var(--line-strong);background:var(--paper);color:var(--ink)}
+.bsum .bbtns .wkbtn.on{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.bsum .bbtns .anbtn{background:var(--accent-strong);color:#fff}
+/* vol16c: Full analysis body map, one big figure at a time (Front/Back toggle), cropped to the figure, about 3x the old size */
+.fa-sheet .fa-side{width:200px;margin:4px auto 8px}
+.fa-sheet .fa-side button{min-height:36px}
+.fa-sheet .fa-maps.big{display:flex;justify-content:center;gap:0;padding:4px 0}
+.fa-sheet .fa-maps.big .mmap{height:min(600px,72vh);width:auto;max-width:100%}
+.fa-sheet .fa-maps.big[data-side="front"] .mmap:nth-of-type(2),.fa-sheet .fa-maps.big[data-side="back"] .mmap:nth-of-type(1){display:none}
+.fa-sheet .fa-maps.big svg{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+/* vol16c: exercise names in the deep dive are links (32px tap target) to the lean exercise page */
+.fa-sheet .fa-exl{display:inline-flex;align-items:center;min-height:32px;margin:-6px 0;padding:0;border:0;background:none;font:inherit;font-weight:inherit;color:var(--accent-text);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-align:left;cursor:pointer;vertical-align:baseline}
+.fa-sheet .fa-exl:active{opacity:.6}
+.fa-sheet .t2 .fa-exl,.fa-sheet .sub .fa-exl,.fa-sheet .add small .fa-exl{margin:-8px 0}
+.fa-sheet .fa-addrow{position:relative;cursor:default}
+.fa-sheet .fa-addb{position:static;border:0;background:none;padding:0;margin:0;color:inherit;font:inherit;text-align:left;cursor:pointer;min-height:32px}
+.fa-sheet .fa-addb::after{content:"";position:absolute;inset:0;border-radius:12px}
+.fa-sheet .fa-addrow .fa-exl{position:relative;z-index:1}
+/* lean exercise page */
+.fa-exsheet .fa-exh{display:flex;align-items:center;gap:12px;padding:6px 4px 10px}
+.fa-exsheet .fa-exh h3{margin:0;font-size:20px;font-weight:700;color:var(--ink)}
+.fa-exsheet .fa-exh .sub{margin:2px 0 0}
+.fa-exsheet .fa-exm{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:4px 0;border:0;background:none;font:inherit;color:var(--ink);text-align:left;cursor:pointer}
+.fa-exsheet .fa-exm .t{flex:1;min-width:0;font-size:15px;font-weight:600;color:var(--accent-text);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.fa-exsheet .fa-exm .lv{font-size:13px;font-weight:600;color:var(--text-2)}
+.fa-exsheet .fa-exm .lv3{color:var(--ink)}
+.fa-exsheet .fa-exm .cv{color:var(--text-2);font-size:18px}
+.fa-exsheet .fa-exf{display:flex;align-items:center;gap:10px;margin:6px 0 2px;font-size:14px;color:var(--text-2)}
+.fa-exsheet .fa-exf .fa-ftag{font-size:13px;padding:3px 10px}
+.fa-exsheet .fa-exs{margin:10px 0 2px;font-size:14px;font-weight:600;color:var(--ink)}
+.fa-exsheet .fa-exb{margin:6px 0 2px;font-size:14px;color:var(--text-2)}.fa-exsheet .fa-exb b{color:var(--ink)}
+.fa-exsheet .fa-exb0{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;font-size:14px;color:var(--text-2)}
+.fa-exsheet .fa-exadd{min-height:40px;padding:0 20px}
+.fa-exsheet .fa-exm .lv{display:flex;flex-direction:column;align-items:flex-end;line-height:1.2}
+.fa-exsheet .fa-exm .lv .md{font-size:11.5px;font-weight:500;color:var(--text-2)}

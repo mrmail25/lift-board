@@ -278,7 +278,7 @@ X.V.build=()=>{if(!B.days.length){initBoard();cxRestorePlaced()}
   <div class="bname"><div class="bn">${nbName(B.name||'New routine')}</div>
    <div class="bacts"><button class="btn ink" data-b="push" aria-label="Push to Library">${X.I('up',2.2)}<span class="bl-l">Push to Library</span><span class="bl-s">Push</span></button><button class="btn accent" data-b="start" aria-label="Start training">${X.I('play')}<span class="bl-l">Start training</span><span class="bl-s">Start</span></button></div>
    <div class="bstate" id="bstate">${stateLine()}</div></div>
-  <div class="bsum"><div class="bsmap" id="bmap"></div><div class="bsr"><button class="chip wkbtn" id="wkbtn" data-b="mapweek" aria-pressed="true">Week map</button><div class="astrip" id="astrip"></div><button class="btn accent anbtn" data-b="analysis">Full analysis</button></div><div class="bmleg" id="bmleg"></div><div class="bmflw" id="bmflw"></div></div>
+  <div class="bsum"><div class="bsmap" id="bmap"></div><div class="bsr"><div class="astrip" id="astrip"></div></div><div class="bbtns"><button class="chip wkbtn" id="wkbtn" data-b="mapweek" aria-pressed="true">Week map</button><button class="btn accent anbtn" data-b="analysis">Full analysis</button></div><div class="bmleg" id="bmleg"></div><div class="bmflw" id="bmflw"></div></div>
   <div class="bstick">
    <div class="dstrip" id="dstrip">${WD.map((w,i)=>`<button data-jump="${i}" aria-label="Jump to ${WDL[i]}"><span>${w}</span><small class="dn"></small></button>`).join('')}</div>
    <div class="selbar" id="selbar"><span id="selt"></span><button class="btn plain" data-b="seldone">Done</button></div></div>
