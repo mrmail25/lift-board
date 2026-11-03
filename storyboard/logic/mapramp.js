@@ -39,8 +39,18 @@ function dayMuscle(dt,n,F,m,lv){n=r2(+n||0);F=r2(+F||0);if(!(n>=1)||!(F>0))retur
 function capZone(dt,c,n,m,lv){if(c.zone!=='red')return c;const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null);const L=PC&&PC.seLim?PC.seLim(dt,m,lv):null;if(L==null)return c;
   const over=PC.seOver?PC.seOver(n,L):Math.floor(n*10+0.5+1e-9)/10>L;if(over)return c;return {hex:STOPS(dt).yellow,zone:'yellow',capped:true}}
 // one workout's tiles [{id,sets,rir}] -> {muscle:{hex,zone}}
-function daily(dt,tiles,lv){const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null),o={};if(!PC||!tiles||!tiles.length)return o;
-  const E=PC.eff(dt,tiles),F=PC.fatMus(dt,tiles);for(const [m,v] of Object.entries(E)){if(!(v>0))continue;o[m]=dayMuscle(dt,v,F[m]||0,m,lv)}return o}
+// vol16b follow-up (CoS): with the day's one-workout warnings (warn = Set of muscles PCHECK.check flags session_efficiency on that day),
+// a cell is red EXACTLY where the warning fires: forced red there (bro-split/beginner/5 Chest Mon 9.0 > 8), capped at yellow anywhere else.
+// Without warn (callers that have no board), the old cap above applies.
+function daily(dt,tiles,lv,warn){const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null),o={};if(!PC||!tiles||!tiles.length)return o;
+  const E=PC.eff(dt,tiles),F=PC.fatMus(dt,tiles);for(const [m,v] of Object.entries(E)){if(!(v>0))continue;let c=dayMuscle(dt,v,F[m]||0,warn?null:m,lv);
+    if(warn){if(warn.has(m)){if(c.zone!=='red')c={hex:STOPS(dt).red,zone:'red',forced:true}}else if(c.zone==='red')c={hex:STOPS(dt).yellow,zone:'yellow',capped:true}}o[m]=c}return o}
+// {day: Set(muscles)} where the plan check's one-workout warning fires (session_efficiency rows, the same rows the per-workout note fires on; exempt single-day rows have their own id and stay out)
+const WBD=new Map();
+function warnByDay(dt,days,lv){const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null);if(!PC||!PC.check)return null;
+  const k=lv+'|'+JSON.stringify((days||[]).map(d=>[d.day,(d.tiles||[]).map(t=>[t.id,t.sets,t.rir])]));if(WBD.has(k))return WBD.get(k);
+  const o={};for(const d of days||[])o[d.day]=new Set();const R=PC.check(dt,days,lv),FL=Array.isArray(R&&R[0])&&Array.isArray(R[0][0])?R[0]:R;for(const f of FL)if(f[1]==='session_efficiency'&&o[f[2]])o[f[2]].add(f[3]);
+  WBD.set(k,o);if(WBD.size>40)WBD.delete(WBD.keys().next().value);return o}
 const fills=o=>{const r={};for(const [m,c] of Object.entries(o||{}))if(c&&c.zone!=='grey')r[m]=c.hex;else if(c)r[m]=c.hex;return r};
 const LABELS=['Under','Building','Best','Diminishing returns','No payoff'];   // vol16 (Coach/CoS): the ONE set of colour-bar labels
 // vol16: the legend is a labelled gradient bar (grey | light -> dark green | flat yellow | red), the same stops as the map
@@ -50,5 +60,5 @@ const DAYW={light_green:'building',dark_green:'around the best range',yellow:'pa
 const dayText=(dt,n,zone)=>{const DT=(RAMP(dt)||{}).day_text||{},W=Object.assign({},DAYW,DT.words||{});n=r2(+n||0);return !(n>=1)||zone==='grey'||!zone?'Under 1 hard set':`${(Math.floor(n*10+0.5+1e-9)/10).toFixed(1)} hard sets: ${W[zone]||''}`};
 const dayWords=(dt,tiles,lv)=>{const PC=typeof window!=='undefined'&&window.PCHECK||(typeof require==='function'?require('./progcheck.js'):null),o={};if(!PC||!tiles||!tiles.length)return o;
   const E=PC.eff(dt,tiles),F=PC.fatMus(dt,tiles);for(const [m,v] of Object.entries(E)){if(!(v>0))continue;o[m]=dayText(dt,v,dayMuscle(dt,v,F[m]||0,m,lv).zone)}return o};
-const API={capZone,dayText,dayWords,DAYW,colour,weekly,weeklyBp,daily,dayMuscle,dailyBp,fills,legend,LABELS,STOPS,mix};if(typeof module!=='undefined')module.exports=API;if(typeof window!=='undefined')window.MAPRAMP=API;
+const API={warnByDay,capZone,dayText,dayWords,DAYW,colour,weekly,weeklyBp,daily,dayMuscle,dailyBp,fills,legend,LABELS,STOPS,mix};if(typeof module!=='undefined')module.exports=API;if(typeof window!=='undefined')window.MAPRAMP=API;
 })();

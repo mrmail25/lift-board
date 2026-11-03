@@ -13,7 +13,7 @@ function notes(dt,days,level,templates){const T={};templates.forEach(t=>T[t.id]=
     return {id:tid,polarity:t.polarity,muscles,text:txt,link:{muscle:m0,anchor:m0?`deepdive-${m0}-`+(anchor||'frequency'):null}}};
   const [fl]=PC.check(dt,days,level),train=days.filter(d=>d.tiles.length);let out=[];if(!train.length)return out;
   const fmin=2,eff={};train.forEach(d=>eff[d.day]=PC.eff(dt,d.tiles));const FM=dt.rules.frequency_muscles,ORDER=PC.ORDER;
-  for(const m of FM){const hit=train.filter(d=>eff[d.day][m]>=fmin).map(d=>d.day);
+  for(const m of FM){const hit=train.filter(d=>Math.floor((eff[d.day][m]||0)*10+0.5+1e-9)/10>=fmin).map(d=>d.day);   // vol16b: same shown-value rule as the deep dive
     if(train.length>=2&&hit.length===1)out.push(N('freq_one_day',[m],null,{day_name:DAYN[hit[0]]}));else if(!hit.length)out.push(N('freq_none',[m]));else if(hit.length>=2)out.push(N('freq_two_plus',[m],null,{n:hit.length}))}
   for(const f of fl){if(f[1]==='consecutive_high_volume'){const nx=ORDER[ORDER.indexOf(f[2])+1];out.push(N('back_to_back',[f[3]],null,{day1:DAYN[f[2]],day2:DAYN[nx]}))}}
   /* vol16b (Coach ruling a): ONE number drives the plan check and this note. The per-workout note fires exactly where PCHECK.check emits
@@ -24,7 +24,7 @@ function notes(dt,days,level,templates){const T={};templates.forEach(t=>T[t.id]=
     out.push(N('crowded_session',[m],'session',{sets:fmtPy1(x),day_name:DAYN[day],limit:String(PC.seLim(dt,m,level))}))}
   if(train.length>=2&&FM.every(m=>Object.keys(eff).filter(d=>eff[d][m]>=fmin).length>=2)){out=out.filter(n=>n.id!=='freq_two_plus');out.push(N('freq_all_main_twice',[]))}
   if(!crowded)out.push(N('session_cap_ok',[]));
-  const imp=((dt.rules.check_priority||{}).importance||{}).muscle_weight||{};
+  const imp=((dt.rules.check_priority||(dt.CPW||{}).check_priority||{}).importance||{}).muscle_weight||{};   // vol16b: rules.json no longer carries check_priority; Coach's data/check-priority-weights.json (RD.CPW) does
   const key=n=>[n.polarity!=='negative'?1:0,n.muscles.length===0?1:0,n.muscles.length?-(imp[n.muscles[0]]||0):0,n.muscles[0]||'',n.id];
   const cmp=(a,b)=>{for(let k=0;k<a.length;k++){if(a[k]<b[k])return -1;if(a[k]>b[k])return 1}return 0};
   return out.map((n,i)=>[n,i]).sort((a,b)=>cmp(key(a[0]),key(b[0]))||a[1]-b[1]).map(x=>x[0])}

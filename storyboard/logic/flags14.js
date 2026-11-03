@@ -115,7 +115,13 @@ function build(ctx){const {dt,days,lv,A}=ctx,PC=PCm(),PO=POm(),C=PO.CONSTS(dt),o
   // ---- checker rules (fields from the check_program flag tuples, per flag_copy fields[].source)
   let fl=[];try{fl=PC.check(dt,D.map(d=>({day:d.day,tiles:d.tiles})),lv)[0]}catch(e){}
   const SH=RU(dt,'session_hard_sets'),SL=RU(dt,'session_length'),SLv=(SL.by_level||{})[lv]||SL,SPR=RU(dt,'spinal_load'),SE=RU(dt,'session_efficiency'),SPE=RU(dt,'sets_per_exercise').threshold||5,RP=RU(dt,'redundant_pattern'),MPL=((dt.rules||{}).movement_patterns||{}).labels||{};
-  const SB=(dt.rules||{}).stretch_biased||{},SLOT=((dt.PAT||dt.patterns||{}).slots)||{};
+  const SB=(dt.rules||{}).stretch_biased||{},SLOT=((dt.patterns||{}).slots)||((dt.PAT||{}).slots)||{};   // vol16b: dt.PAT is the exercise->pattern map (no .slots), so slot names never resolved
+  // vol16b: a pattern-gap slot named after a muscle ('Rear delts') read as if the muscle had no work ('Your week has no rear delts' at 3.1 sets).
+  // An isolation slot whose primary muscles already get sets says so with the real weekly number (same x as the weekly volume list).
+  const slotLow=sl=>{const S=SLOT[sl]||{},nm=String(S.name||String(sl).replace(/_/g,' ')).toLowerCase(),pm=(S.primary_muscles||[]).filter(m=>wk(m)>0);
+    if(S.kind!=='isolation'||!pm.length)return nm;const MNS=FC(dt).muscle_names||{};
+    const parts=pm.map(m=>{const MN=MNS[m]||{},n=String(MN.name||m.replace(/_/g,' ')).toLowerCase(),x=wk(m),lo=mn(m);return `${n} ${MN.get||'get'} ${n1(x)} hard sets a week${lo&&x<lo?` (under the ${n1(lo)} minimum)`:''}`});
+    return `${nm} exercise: ${parts.join(', ')}, all from other lifts`};
   for(const f of fl){const [sv,id]=f;
     if(id==='session_hard_sets'){const day=f[2],cap=(SH.warn_above||{})[lv];push(mk(dt,sv==='warn'?'session_hard_sets':'session_hard_sets_info',{id:`shs:${day}`,day,vals:{day:DN[day],day_sets:f[3],cap,over:f[3]-cap},section:'daily'}))}
     else if(id==='session_length'){const day=f[2],mins=Math.round(f[3]),wm=SLv.warn_min;push(mk(dt,sv==='warn'?'session_length':'session_length_info',{id:`len:${day}`,day,vals:{day:DN[day],minutes:mins,warn_min:wm,cut_sets:Math.ceil((mins-wm+0.01)/2.25)},section:'daily'}))}
@@ -135,7 +141,7 @@ function build(ctx){const {dt,days,lv,A}=ctx,PC=PCm(),PO=POm(),C=PO.CONSTS(dt),o
     else if(id==='low_frequency'){const m=f[2];push(mk(dt,'low_frequency',{id:`lowf:${m}`,muscle:m,vals:{n_days:`${f[3]} day${f[3]===1?'':'s'}`},section:'frequency'}))}
     else if(id==='recovery_gap_long'){const m=f[2];push(mk(dt,'recovery_gap_long',{id:`gap:${m}`,muscle:m,vals:{gap_days:Math.round(f[5]/24)},section:'frequency'}))}
     else if(id==='missing_stretch'){const m=f[2];if(typeof m!=='string')continue;push(mk(dt,'missing_stretch',{id:`str:${m}`,muscle:m,vals:{examples:(SB[m]||[]).slice(0,2).map(XS).join(' or ')},section:'balance'}))}
-    else if(id==='pattern_gap'&&f[0]==='warn'){const sl=f[2];push(mk(dt,'pattern_gap',{id:`pg:${sl}`,vals:{slot_lower:String((SLOT[sl]||{}).name||sl.replace(/_/g,' ')).toLowerCase(),examples:slotRecs(dt,sl,XS,lv)},section:'balance'}))}}
+    else if(id==='pattern_gap'&&f[0]==='warn'){const sl=f[2];push(mk(dt,'pattern_gap',{id:`pg:${sl}`,vals:{slot_lower:slotLow(sl),examples:slotRecs(dt,sl,XS,lv)},section:'balance'}))}}
   // ---- week: weekly_status (needs sets / optional low / 2-day by design / far over)
   for(const [m,w] of Object.entries(WS.muscles)){
     if(w.below==='needs_sets'){const short=w.min-w.x,p=addCand(dt,D,lv,m),c=p?(PC.eff(dt,[{id:p.id,sets:1}])[m]||0):0,k=p&&c>0?Math.max(1,Math.min(4,Math.ceil(short/c))):0,inB=p&&D.find(d=>d.day===p.day).tiles.find(t=>t.id===p.id);
@@ -150,7 +156,7 @@ function build(ctx){const {dt,days,lv,A}=ctx,PC=PCm(),PO=POm(),C=PO.CONSTS(dt),o
     else{const R=RU(dt,'push_pull_imbalance'),lo=R.min_ratio||0.75,hi=R.max_ratio||2,low=pu<ps*lo,gap=low?Math.ceil(ps*lo-pu-1e-9):Math.ceil(pu/hi-ps-1e-9);push(mk(dt,'push_pull_imbalance',{id:'pushpull',vals:{pull:pu,push:ps,gap,side:low?'rows or pulldowns':'presses'},section:'balance'}))}}
   const exOf=f=>{const m=/^(?:Add|Swap in|Swap to|Swap \S.*? for) (.+?)(?: on | to | \(|$)/.exec(f.preview||'');return m?m[1].replace(/\.$/,''):null};
   for(const s of (ctx.sugs||[])){const t=s.target||{},m=t.muscle,F=(s.fixes||[]),f0=F[0];if(!f0)continue;
-    if(s.source==='pattern_gap'&&t.flag){const sl=t.flag[2],ex=slotRecs(dt,sl,XS,lv)||F.slice(0,2).map(exOf).filter(Boolean).join(' or ');const old=out.find(x=>x.id===`pg:${sl}`);const o={id:`pg:${sl}`,vals:{slot_lower:String((SLOT[sl]||{}).name||String(sl).replace(/_/g,' ')).toLowerCase(),examples:ex},fix:{label:'Apply',days:f0.days},fixText:f0.preview+'.',section:'balance'};
+    if(s.source==='pattern_gap'&&t.flag){const sl=t.flag[2],ex=slotRecs(dt,sl,XS,lv)||F.slice(0,2).map(exOf).filter(Boolean).join(' or ');const old=out.find(x=>x.id===`pg:${sl}`);const o={id:`pg:${sl}`,vals:{slot_lower:slotLow(sl),examples:ex},fix:{label:'Apply',days:f0.days},fixText:f0.preview+'.',section:'balance'};
       if(old)out.splice(out.indexOf(old),1);push(mk(dt,'pattern_gap',o))}
     else if(s.source==='stretch_share'&&m){const old=out.find(x=>x.id===`str:${m}`);if(old){old.fix={label:'Apply',days:f0.days};old.fixText=f0.preview+'.'}}}
   const seen=new Set();return out.filter(f=>f&&(seen.has(f.id)?false:(seen.add(f.id),true)))}

@@ -69,7 +69,7 @@ const live=d=>d.filter(x=>x.tiles.length).map(x=>({day:x.day,tiles:x.tiles.map(t
 const applyL=(d,ops)=>live(apply(full7(d),ops));
 const effByDay=(dt,d,m)=>{const o={};for(const D of d){const e=PC().eff(dt,tiles0(D))[m]||0;if(e>0)o[D.day]=e}return o};
 const FMIN=dt=>dt.targets.analytics.frequency_min_effective;
-const hitDays=(dt,d,m)=>{const E=effByDay(dt,d,m),k=FMIN(dt);return ORD.filter(x=>(E[x]||0)>=k)};
+const hitDays=(dt,d,m)=>{const E=effByDay(dt,d,m),k=FMIN(dt);return ORD.filter(x=>Math.floor((E[x]||0)*10+0.5+1e-9)/10>=k)};   // vol16b: shown-value rule, = MUSCLEDIVE days_hit
 const gaps=days=>{const i=days.map(d=>ORD.indexOf(d));return i.map((v,j)=>j<i.length-1?i[j+1]-v:7-v+i[0])};
 const btb=days=>{const s=new Set(),i=days.map(d=>ORD.indexOf(d));for(const a of i)for(const b of i)if((a+1)%7===b)s.add(a+'-'+b);return s};
 // spacing line (days only): 'Mon and Thu, 3 days apart' / 'Thursday only, so 7 days between sessions'
@@ -256,7 +256,7 @@ function faHtml(){const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,lv),MU=Ob
      return `<div class="fa-mr${k===m?' on':''}"><button class="fa-ms" data-fa="sel" data-m="${k}" aria-pressed="${k===m}"><span class="nm">${esc(ML(k))}</span><span class="vb">${sw?`<i class="sw" style="left:${sw[0]/mx*100}%;width:${(sw[1]-sw[0])/mx*100}%"></i>`:''}<i class="v" style="width:${Math.min(100,x(k)/mx*100)}%;background:${z.hex}"></i></span><span class="num">${f1(x(k))}</span></button><button class="fa-go" data-fa="deep" data-m="${k}" aria-label="${esc(ML(k))} deep dive">›</button></div>`}).join('')+`</div></div>`;
   // muscle × day grid (cells tappable; the day-count column is not)
   // vol16b: all 7 days Mon–Sun; a rest day is an empty column
-  const LD=d.filter(D=>D.tiles.length),eff=LD.map(D=>PC().eff(dt,tiles0(D))),dly=LD.map(D=>MR().daily(dt,tiles0(D),lv)),FM=FMIN(dt);
+  const LD=d.filter(D=>D.tiles.length),eff=LD.map(D=>PC().eff(dt,tiles0(D))),WB=MR().warnByDay?MR().warnByDay(dt,d,lv):null,dly=LD.map(D=>MR().daily(dt,tiles0(D),lv,WB&&WB[D.day])),FM=FMIN(dt);
   const GM=MU.filter(k=>eff.some(e=>(e[k]||0)>0)),W7=ORD.map(day=>{const i=LD.findIndex(D=>D.day===day);return {day,i,D:i>=0?LD[i]:null}});
   h+=`<div class="card fa-c" id="fa-grid"><div class="ch"><h2>Muscle × day</h2><small>colour = that day's band</small></div><table class="fa-gt"><thead><tr><th></th>${W7.map(w=>`<th${w.D?'':' class="fa-rest"'}>${WD[w.day]}</th>`).join('')}<th>days</th></tr></thead><tbody>`+
    GM.map(k=>`<tr><th scope="row">${esc(ML(k))}</th>${W7.map(({day,i,D})=>{if(!D)return `<td class="fa-rest" aria-label="${WDL[day]} rest"></td>`;const v=eff[i][k]||0,c=dly[i][k];return v>0?`<td><button class="fa-cell" data-fa="pcell" data-m="${k}" data-day="${D.day}" style="background:${c.hex};color:${fgOn(c.hex)}" aria-label="${esc(ML(k))} ${WDL[D.day]} ${f1(v)} sets">${f1(v)}</button></td>`:`<td class="z">·</td>`}).join('')}<td class="dc">${diveOf(dt,d,lv,k).frequency.days_hit}</td></tr>`).join('')+`</tbody></table></div>`;
@@ -299,7 +299,7 @@ const MOVE_NONE=mu=>`No move passes every check: the new day stays below High, $
 function panelData(kind,a){const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,lv),m=a.m,mu=m&&mlow(m);
   if(kind==='pdot'){const P=diveOf(dt,d,lv,m),x=P.sets.effective,z=zoneW(dt,lv,m,x).zone;const fx=mfList(muscleFixes(dt,d,lv,m,P));
     return {title:ML(m),insight:`${f1(x)} sets this week, ${ZL[z]}. Minimum ${P.sets.level_min}, top of the range ${P.sets.max}. The next set adds about ${pc(P.curve.next_set)} (Modeled).`+(fx.length?'':` Nothing to change here.`),fixes:fx}}
-  if(kind==='pcell'){const D=d.find(q=>q.day===a.day),v=(PC().eff(dt,tiles0(D))[m])||0,c=MR().daily(dt,tiles0(D),lv)[m]||{zone:'grey'};
+  if(kind==='pcell'){const D=d.find(q=>q.day===a.day),v=(PC().eff(dt,tiles0(D))[m])||0,WB=MR().warnByDay?MR().warnByDay(dt,d,lv):null,c=MR().daily(dt,tiles0(D),lv,WB&&WB[D.day])[m]||{zone:'grey'};
     const prob=['yellow','red'].includes(c.zone)||dayLevel(dt,D,lv)==='High'||dayLevel(dt,D,lv)==='Extreme',mv=prob?moveFixes(dt,d,lv,m,a.day,2):moveFixes(dt,d,lv,m,a.day,2,null,true);
     const hd=hitDays(dt,d,m);let ins=`${ML(m)} on ${WDL[a.day]}: ${f1(v)} sets, ${ZL[c.zone]} for one session. ${ML(m)} trains on ${spacingLine(hd)}.`;
     if(!mv.length)ins+=' '+(prob?MOVE_NONE(mu):'Nothing to change.');return {title:`${ML(m)} · ${WDL[a.day]}`,insight:ins,fixes:mv.map(moveFix)}}
@@ -378,7 +378,7 @@ document.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;c
 const idle=f=>(window.requestIdleCallback?requestIdleCallback(f,{timeout:4000}):setTimeout(f,400));
 function prewarm(){try{if(window.BOARD&&window.BOARD.days&&X.RD&&X.RD.EX&&window.BOARD.days().length)faHtml()}catch(e){}try{X.eduWarm&&X.eduWarm()}catch(e){}}   /* + the Nurd Sh!t index and references (2 small files) */
 (function wait(n){if(window.BOARD&&window.BOARD.days&&X.RD&&X.RD.EX){idle(prewarm);return}if(n<600)setTimeout(()=>wait(n+1),250)})(0);
-window.addEventListener('sb:dmp',()=>{memoClear();if(OPEN.fa||OPEN.dd||OPEN.pn)refresh();else idle(prewarm)});
-window.addEventListener('sb:late',()=>{memoClear();if(OPEN.fa||OPEN.dd||OPEN.pn)refresh();else idle(prewarm)});   // vol16b: frequency notes arrived after ready
+// vol16b: late data (preset visuals, notes, weights) never feeds the engine memo (sheet/dive), so arrival only re-renders, no recompute
+const lateR=()=>{if(OPEN.fa||OPEN.dd||OPEN.pn){cancelAnimationFrame(RQ);RQ=requestAnimationFrame(()=>{FX.clear();renderFA();renderDD();renderPN()})}else idle(prewarm)};window.addEventListener('sb:dmp',lateR);window.addEventListener('sb:late',lateR);   // vol16b: frequency notes arrived after ready
 window.FA={open,deep,refresh,panel,prewarm,_x:{secs,memoClear,muscleFixes,swapIdeas,moveFixes,newFlags,typical,spacingLine,panelData,faHtml,deepHtml}};
 })();

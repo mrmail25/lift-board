@@ -39,7 +39,7 @@ function chooseDefaults(dt,tdays,level,goals,profile){const cur={};for(const d o
         if(!nonin(dt,board(),level,protect).length){pick=[i,k];break}cur[s.id]=old}if(pick)break}
     if(!pick){pick=[s.preset_exercise,rk.indexOf(s.preset_exercise)];cur[s.id]=pick[0]}used.add(pick[0]);out[s.id]=pick}
   return out}
-const find=(TJ,id)=>(TJ.templates||[]).find(t=>t.id===id);
+const find=(TJ,id)=>((TJ&&TJ.templates)||[]).find(t=>t.id===id);   // vol16b: TJ is null until templates.json arrives
 const API={ruleFor,eligible,fill,presetFill,legacyGroup,find,COMPOUND,ranked,chooseDefaults,band,nonin,DEFAULT_GOALS};
 if(isNode)module.exports=API;else root.TEMPLATES=API;
 })(typeof window!=='undefined'?window:this);

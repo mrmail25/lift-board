@@ -19,7 +19,7 @@ function deepdive(dt,days,level,baseline=null,goals=null,profile=null,only=null,
   const [fl,week]=PC.check(dt,days,level),bd=AN.breakdowns(dt,days).muscle,sheet=opt.sheet||AN.sheet(dt,days,level,baseline),chk=(dt.rules.stretch_check||{}).checked||{};
   const fmin=dt.targets.analytics.frequency_min_effective,labels=((dt.exl.muscle_short_labels||{}).muscles)||{},MR=((dt.targets.counting||{}).min_rating_to_count??0.25),MUS=dt.exl.muscles,BR=dt.rules.body_regions.muscles,out={};
   for(const m of Object.keys(dt.targets.targets)){if(only&&m!==only)continue;
-    const [lo,hi]=band(dt,m,level),x=week[m],k=dt.VM?null:dt.targets.curve.k_by_muscle[m][level],xd=curveX(dt,days,m),perDay=dayEff(dt,days,m),hit=Object.keys(perDay).filter(d=>perDay[d]>=fmin);
+    const [lo,hi]=band(dt,m,level),x=week[m],k=dt.VM?null:dt.targets.curve.k_by_muscle[m][level],xd=curveX(dt,days,m),perDay=dayEff(dt,days,m),hit=Object.keys(perDay).filter(d=>Math.floor(perDay[d]*10+0.5+1e-9)/10>=fmin);   // vol16b (CoS): a day counts on its shown value (r1), so Fri 1.95 shown '2' counts as a 2+ day
     const contrib=new Map();for(const d of days)for(const t of d.tiles){const r=dt.EX[t.id].muscles[m]||0;if(r<MR)continue;
       if(!contrib.has(t.id))contrib.set(t.id,{id:t.id,name:dt.EX[t.id].name,rating:r,sets:0,effective_sets:0,days:[]});const c=contrib.get(t.id);c.sets+=t.sets;const cr=PC.credit(dt,dt.EX[t.id],m,r,t.rir);c.effective_sets+=t.sets*cr;c.days.push({day:d.day,sets:t.sets,effective_sets:_r(t.sets*cr)})}
     const cl=[...contrib.values()].sort((a,b)=>(b.effective_sets-a.effective_sets)||(a.id<b.id?-1:a.id>b.id?1:0));for(const c of cl){c.effective_sets=_r(c.effective_sets);c.share=x?_r(c.effective_sets/x):0}

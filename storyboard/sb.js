@@ -112,13 +112,22 @@ const VOL=[['chest',16,10,20],['lats',14,10,18],['upper_back',12,10,18],['front_
 // amber when sets > max, red when sets > max * red_factor. No factor is hardcoded here: until the key loads, nothing is red.
 const VB={amber_above:'max',red_factor:null,src:null};
 // storyboard data loading: only the storyboard's own data/ folder; a fetch aborted by navigation (pagehide) is not an error
-const DATA='data/';let UNLOADING=false,RDP=null;addEventListener('pagehide',()=>{UNLOADING=true});addEventListener('pageshow',()=>{UNLOADING=false});
+const DATA='data/';let UNLOADING=false,RDP=null,TJP=null;addEventListener('pagehide',()=>{UNLOADING=true});addEventListener('pageshow',()=>{UNLOADING=false});
 // vol15: the app is ApeChit (one word). Coach's data still says 'Lift Board' in source lines and authors; rename on display only (his files stay as they are).
 const BRAND=v=>typeof v==='string'?v.replace(/\bLift ?Board\b/g,'ApeChit').replace(/\bApe[- ]Chit\b/g,'ApeChit'):Array.isArray(v)?v.map(BRAND):v&&typeof v==='object'?Object.fromEntries(Object.entries(v).map(([k,x])=>[k,BRAND(x)])):v;
-(()=>{const j0=Response.prototype.json;Response.prototype.json=function(){return j0.call(this).then(BRAND)}})();
+// vol16b latency: BRAND used to deep-copy every parsed JSON (exercises/rules/volume-model ~1.5 MB of objects, the whole tree walked at start-up).
+// Now the rename runs once on the raw text before JSON.parse, and only when the text names the old brand; same result on all 361 data files
+// (checked: BRAND(JSON.parse(t)) == JSON.parse(TBRAND(t))). No data key contains the brand, and escapes like \n before it keep the word boundary.
+const TBRAND=t=>/Lift ?Board|Ape[- ]Chit/.test(t)?t.replace(/(?<![A-Za-z0-9_]|\\[a-z])Lift ?Board\b/g,'ApeChit').replace(/(?<![A-Za-z0-9_]|\\[a-z])Ape[- ]Chit\b/g,'ApeChit'):t;
+(()=>{Response.prototype.json=function(){return this.text().then(t=>JSON.parse(TBRAND(t)))}})();
 // vol15: Learn shows Coach's citations as written (the vol13 LEARNFIX citation patch is dropped)
 const srcLine=n=>!n||!n.short?'':`<p class="ptsrc">Source: ${n.url?`<a href="${n.url}" target="_blank" rel="noopener">${n.short}</a>`:n.short}${n.type?` · ${n.type}`:''}</p>`;
-const getJ=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+// vol16b latency: 'no-store' re-downloaded every file on every visit; 'no-cache' revalidates (304 when unchanged), so data is never stale.
+// Start-up files come from data/min/ (tools/min-data.py: whitespace-free copies of Coach's verified files, same parse, md5s in
+// data/min/manifest.json); a missing min copy falls back to the original.
+const MIN=new Set(['exercises.json','rules.json','targets.json','patterns.json','splits.json','volume-model.json','splits-efficient-diff.json','splits-efficient.json','fatigue.json','custom-exercise-defaults.json','templates.json']);
+const getJ0=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
+const getJ=u=>{const n=u.startsWith(DATA)?u.slice(DATA.length):null;return n&&MIN.has(n)?getJ0(DATA+'min/'+n).then(j=>j||getJ0(u)):getJ0(u)};
 // vol16b: rules.json (463 KB) was fetched twice at start-up (loadVB + the ranking data); one shared request now (readers only copy from it)
 const RULESJ=new Map();const getJ1=u=>{if(!RULESJ.has(u))RULESJ.set(u,getJ(u));return RULESJ.get(u)};
 async function loadVB(){const u=DATA+'rules.json',j=await getJ1(u),b=j&&(j.volume_bands||(j.rules||{}).volume_bands);if(b&&typeof b.red_factor==='number'){Object.assign(VB,b,{src:u});return VB}if(!UNLOADING)console.warn('rules.json volume_bands missing: over-volume red disabled');return VB}
@@ -1764,17 +1773,20 @@ async function loadRank(){if(RD)return RD;if(RDP)return RDP;
   // progress-rules, evolution-rules, then day-metrics-slim.json (Coach's 2.46 MB slim preset visuals; replaces day-metrics-presets.json 4.8 MB).
   // Each arrival fires 'sb:late' (and 'sb:dmp' for the presets) so whatever is on screen repaints; every reader is null-guarded until then.
   async function lateLoad(R){const fire=n=>{try{window.dispatchEvent(new CustomEvent(n))}catch(e){}};
-    const L=[['templates-slim.json','TREF'],['frequency-notes.json','FN'],['progress-rules.json','PR2'],['evolution-rules.json','EVO']];
-    await Promise.all(L.map(([f,k])=>getJ(DATA+f).then(j=>{if(j)R[k]=j})));fire('sb:late');
+    TJP=getJ(DATA+(R.TJF||'templates.json')).then(j=>{R.TJ=j;fire('sb:tj');return j});await TJP;   // templates first: the template picker and slot trays read it
+    const L=[['templates-slim.json','TREF'],['check-priority-weights.json','CPW'],['frequency-notes.json','FN'],['progress-rules.json','PR2'],['evolution-rules.json','EVO']];
+    await Promise.all(L.map(([f,k])=>getJ(DATA+f).then(j=>{if(j)R[k]=j})));
+    // the demo log is only used while the user has no saved log; logLoad() picks it up on its next call, LOGV bump busts the Progress caches
+    const sl=await getJ(DATA+'sample-log.json');if(sl){R.SLOG=sl;let saved=null;try{saved=ld(LOG_K,null)}catch(e){}if(!saved&&LOGH&&!LOGH.sessions.length){LOGH=null;LOGV++}}fire('sb:late');
     const j=await getJ(DATA+'day-metrics-slim.json');if(j){R.DMP=j;fire('sb:dmp')}}
-  RDP=(async()=>{const opt=['templates.json','analysis-display.json','custom-exercise-defaults.json','sample-log.json'].map(n=>getJ(DATA+n));   // vol16b: only what the first screen (Plan) needs; the rest loads after ready (LATE below)
+  RDP=(async()=>{const opt=['analysis-display.json','custom-exercise-defaults.json'].map(n=>getJ(DATA+n));   // vol16b: templates.json (Plan never reads it before a template tap) and the rest load after ready (lateLoad)   // vol16b: only what the first screen (Plan) needs; the rest loads after ready (LATE below)
     const late=['volume-model.json','splits-efficient-diff.json','splits-efficient.json','fatigue.json'].map(n=>getJ(DATA+n));   // vol16b: fetched in parallel with the rest (were 4 sequential round trips)
     const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(n=>n==='rules.json'?getJ1(DATA+n):getJ(DATA+n)));
-    const [tj,disp,cxd,slog]=await Promise.all(opt);   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
+    const [disp,cxd]=await Promise.all(opt),slog=null;   // vol16b: sample-log.json (315 KB demo log) loads after ready (lateLoad)   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
     if(!(exercises&&rules&&targets&&patterns&&splits)){if(!UNLOADING)console.warn('ranking data missing: suggestions fall back to library order');return null}
     const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
     const R=RANK.makeData({exercises,rules,targets,patterns,splits});R.splits=splits;R.base=DATA;
-    R.TJ=tf==='templates.json'?tj:await getJ(DATA+tf);R.TREF=null;R.PR2=null;R.SLOG=slog;R.EVO=null;R.DISP=disp;R.FN=null;
+    R.TJ=null;R.TJF=tf;R.TREF=null;R.PR2=null;R.SLOG=slog;R.EVO=null;R.DISP=disp;R.FN=null;
     const [vm,tdiff,seff,fat]=await Promise.all(late);R.VM=vm;R.TRIMDIFF=tdiff;R.SPLITS_EFF=seff;R.FAT=fat;   // vol10b: Efficient presets
     // vol16b latency: preset visuals (day-metrics-slim.json, Coach's 2.46 MB slim copy) never block start-up: lateLoad fetches them after ready
     // Impact computes live until then and the 'typical' band waits; 'sb:dmp' re-renders on arrival.
@@ -1937,6 +1949,7 @@ const AFTER={logDay:afterLogDay,train:afterTrain,workout:afterWorkout,finish:aft
 let NAV=0;
 function go(h){if(location.hash===h)route();else location.hash=h}
 function route(){
+  if(RD&&!RD.TJ&&TJP&&/^#?build-(template|tray-slot|new)/.test(location.hash.slice(1))){TJP.then(()=>route());return}   // vol16b: templates.json is late
   let r=(location.hash||'#train').slice(1),def=ROUTES[r],arg=null;
   if(!def&&/^learn-ex-/.test(r)){def=['learnEx',''];arg=r.slice(9)}
   else if(!def&&/^learn-f-/.test(r)){def=['learnFund',''];arg=r.slice(8)}
@@ -2356,11 +2369,11 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={eduPrefetch:id=>eduPage(id).catch(()=>null),eduWarm:()=>eduLoad().catch(()=>null),   // vol16b: FA warms the deep dive's Nurd Sh!t article while idle
+window.SBX={tjReady:()=>RD&&RD.TJ?Promise.resolve(RD.TJ):new Promise(r=>addEventListener('sb:tj',()=>r(RD&&RD.TJ),{once:true})),eduPrefetch:id=>eduPage(id).catch(()=>null),eduWarm:()=>eduLoad().catch(()=>null),   // vol16b: FA warms the deep dive's Nurd Sh!t article while idle
 curveSvg,progHist,openPSheet,cmGet,cmSet,cmShown,progressData,apeFig,APE_FIG,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,gymProfile:()=>gymProfile(),logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
 // vol16b: late data (progress-rules / evolution-rules) arrived: repaint the screens that read it, keeping scroll; open sheets are left alone
-window.addEventListener('sb:late',()=>{try{if(['train','progress','ladder'].includes(S.scr)&&!SHEETS.length)rerenderProgress()}catch(e){}});
+window.addEventListener('sb:late',()=>{try{if(['train','progress','ladder','log'].includes(S.scr)&&!SHEETS.length)rerenderProgress()}catch(e){}});
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in
 })();

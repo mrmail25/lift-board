@@ -246,7 +246,7 @@ function paintImpact(){const el=$('#impc');if(el)el.innerHTML=impHtml()}
 // vol15: Plan map. Weekly by default (MAPRAMP weekly ramp). Tapping a day shows that day (daily ramp) with its flags underneath;
 // tapping the same day again, or the 'Week' chip, goes back to the week.
 const wkFills=A=>{const o={};for(const [m,v] of Object.entries(A.muscles)){const x=v.x!=null?v.x:v.raw;o[m]=MAPRAMP.weekly(RD(),B.level,m,Math.floor(x*100+0.5+1e-9)/100)}return MAPRAMP.fills(o)};   // x = r1(r2(weekly ES)), the displayed value
-const dayFills=d=>d&&d.tiles.length?MAPRAMP.fills(MAPRAMP.daily(RD(),tiles0(d),B.level)):{};
+const dayFills=d=>{if(!(d&&d.tiles.length))return {};const W=MAPRAMP.warnByDay&&MAPRAMP.warnByDay(RD(),B.days,B.level);return MAPRAMP.fills(MAPRAMP.daily(RD(),tiles0(d),B.level,W&&W[d.day]))};   // vol16b: red exactly where the one-workout warning fires
 let MFL='',MSEL=null;   // MSEL: the muscle tapped on the day map (its day wording shows under the caption)   // vol15 polish: the day's flags render full width under the map card row (#bmflw)
 function mapHtml(st,days){const day=MAPV.mode==='day',i=MAPV.day,d=days[i];const vm=day?dayFills(d):wkFills(st.A);
   const cap=day?`<b>${WDL[i]}</b> · ${isRest(d)?'Rest':dayLabel(d)}`:'<b>This week</b>';MLEG=MAPRAMP.legend(day?'day':'week');
@@ -657,7 +657,7 @@ function renderAnalysis(){if(!AN)return;const dt=RD(),{A,C,d}=stats(),R=dt.rules
   // vol9b: replaced by a face-value bar chart with Coach's per-session limit band (see perWorkout).
   const perWorkout=()=>{if(!dt.VM||!PC.sessZones(dt,cm))return '';
     // vol9b QC: face-value per-workout chart. One bar per training day = that day's effective sets for the muscle (Mon 9 sets drawn at 9);
-    // no discounted stimulus series. A light band past Coach's per-session limit (rules session_efficiency.limits_by_level[level][muscle]).
+    // no discounted stimulus series. A light band past Coach's per-session limit (PCHECK.seLim = rules session_efficiency.limits_by_goal.max_growth[level][muscle]).
     const L=PC.seLim(dt,cm,lv),EF=PC.seEff(dt,cm,lv),SE=PC.seRule(dt)||{},dd=d.filter(D=>D.tiles.length).map(D=>({day:D.day,s:PC.eff(dt,D.tiles)[cm]||0})).filter(o=>o.s>0);
     const mx=Math.max(0,...dd.map(o=>o.s)),N=Math.max(12,Math.ceil(((L||0)+4)/2)*2,Math.ceil((mx+1)/2)*2),W=320,RH=22,top=20,H=top+Math.max(1,dd.length)*RH+22,x0=34,px=q=>x0+Math.min(q,N)/N*(W-x0-8);
     const st=N>16?4:2,ticks=[];for(let q=0;q<=N;q+=st)ticks.push(q);
@@ -955,7 +955,7 @@ const TJT=()=>((RD().TJ||{}).templates||[]);
 function slotsBody(){const TT=TJT();if(!TT.length)return '<p class="foot">templates.json did not load.</p>';const sp=[...new Map(TT.map(t=>[t.split,t.split_name])).entries()];
   if(!sp.some(x=>x[0]===NS.split))NS.split=sp[0][0];let lvs=LEVELS.filter(l=>TT.some(t=>t.split===NS.split&&t.level===l));if(!lvs.includes(NS.level))NS.level=lvs[0];
   const ns=TT.filter(t=>t.split===NS.split&&t.level===NS.level).map(t=>String(t.days_per_week));if(!ns.includes(NS.n))NS.n=ns[0];
-  const t=TT.find(x=>x.id===`${NS.split}/${NS.level}/${NS.n}`),vx=((RD().TJ.volume_exceptions||{})[t.id])||{},ns2=sum(t.days.map(d=>d.slots.length));
+  const t=TT.find(x=>x.id===`${NS.split}/${NS.level}/${NS.n}`),vx=(((RD().TJ||{}).volume_exceptions||{})[t.id])||{},ns2=sum(t.days.map(d=>d.slots.length));
   return `<div class="nwv"><button class="btn plain nwback" data-b="nwback">‹ New</button>
    <div class="ghead">Split</div><div class="chips wrap">${sp.map(([id,n])=>`<button class="chip ${id===NS.split?'on':''}" data-ns="split" data-v="${id}">${n}</button>`).join('')}</div>
    <div class="ghead">Level</div><div class="pad0"><div class="seg">${LEVELS.map(l=>`<button class="${l===NS.level?'on':''} ${lvs.includes(l)?'':'off'}" data-ns="level" data-v="${l}" ${lvs.includes(l)?'':'disabled'}>${l[0].toUpperCase()+l.slice(1)}</button>`).join('')}</div></div>
@@ -987,7 +987,8 @@ function newBody(view){const SP=presetSplits(),PT=RD().patterns.templates;if(vie
     <button class="row" data-b="nwprev"><span class="ico gr">${X.I('build',1.8)}</span><div class="grow"><div class="t1">Prebuilt routine</div><div class="t2">A full routine for the split, level and days</div></div>${X.CHEV}</button>
     <button class="row" data-b="nwlibv"><span class="ico gr">${X.I('book',1.8)}</span><div class="grow"><div class="t1">From your library</div><div class="t2">Duplicate a routine and edit the copy</div></div>${X.CHEV}</button></div>
     <p class="foot">Your current draft is kept in Undo until you leave Plan.</p></div>`}
-function newSheet(view){NW=X.sheet({title:'New routine',cls:'grouped',right:'<button class="btn plain" data-b="nwclose">Cancel</button>',body:newBody(view),onClose(){NW=null}});NW.v=view;return NW}
+function newSheet(view){if(!RD().TJ&&X.tjReady){X.tjReady().then(()=>newSheet(view));return}   // vol16b: templates.json loads after ready
+  NW=X.sheet({title:'New routine',cls:'grouped',right:'<button class="btn plain" data-b="nwclose">Cancel</button>',body:newBody(view),onClose(){NW=null}});NW.v=view;return NW}
 const nwView=v=>{if(NW){NW.v=v;NW.body.innerHTML=newBody(v)}};
 function startFrom(kind,arg){if(NW)NW.close();
   if(kind!=='slots')B.tpl=null;
@@ -1097,7 +1098,8 @@ Object.assign(X.ROUTES,{
  'build-tray-filter':['build','build',0,0,()=>{Object.assign(TFB,{mus:null,pat:'vertical_pull',eq:null})},()=>traySheet('thu')],
 });
 window.addEventListener('sb:dmp',()=>{try{if($('#board'))paint()}catch(e){}});
-window.addEventListener('sb:late',()=>{try{if($('#board'))paint()}catch(e){}});   // vol16b: frequency notes / slot eligibility arrived   // vol16b: precomputed preset visuals arrived after start-up
+window.addEventListener('sb:late',()=>{try{if($('#board'))paint()}catch(e){}});
+window.addEventListener('sb:tj',()=>{try{if($('#board'))paint();refreshTray()}catch(e){}});   // vol16b: templates.json arrived   // vol16b: frequency notes / slot eligibility arrived   // vol16b: precomputed preset visuals arrived after start-up
 window.BOARD={removeExercise:id=>{B.days.forEach(d=>{d.tiles=d.tiles.filter(t=>t.id!==id)});B.hist=B.hist.filter(h=>!h.includes(`"${id}"`));B.sel.clear();if($('#board'))paint();else cxSavePlaced();refreshTray()},
   countExercise:id=>sum(B.days.map(d=>d.tiles.filter(t=>t.id===id).length)),repaint:()=>{if($('#board'))paint();refreshTray()},fmt:{bfmt:(...a)=>bfmt(...a),bpct:(...a)=>bpct(...a)},loadPreset:id=>{const [sp,lv,n]=id.split('/'),s=presetSplits().find(x=>x.id===sp);loadDays(s.levels[lv][n],`${s.name} · ${n} days`);B.level=lv;B.hist=[];PCAP=null;APPLIED=[];X.render()},applyOps:ops=>{applyOpsBoard(ops);paint()},get pcheck(){return PCI},get detail(){return BD.detail},fracLine,muscleShort,get tpl(){return B.tpl},slots:()=>B.days.map(d=>({day:d.day,slots:(d.slots||[]).map(s=>s.sid)})),rankBoard,fillDefaults,ensurePlan:(days,name,level)=>{if(B.days.length)return false;loadDays(days,name);B.level=level||'intermediate';B.hist=[];B.dirty=false;B.version=1;B.edited=Date.now();B.fromLog=true;return true},progApply:ops=>{const before=snap();B.hist.push(before);applyOpsBoard(ops);B.days.forEach(d=>{if(d.tiles.length)d.rest=false});B.dirty=true;B.edited=Date.now();if($('#board'))paint();return before},progUndo:before=>{restore(before);if($('#board'))paint()},_oldAnalysis:()=>{analysisSheet.old=true;try{return analysisSheet()}finally{analysisSheet.old=false}}   /* vol16a QC hook: the pre-vol16 Analysis sheet (Below minimum zone labels) for contrast checks */,loadTemplate:id=>{loadTemplate(TP().find(RD().TJ,id));B.hist=[];paint()},get tray(){return {slot:TFB.slot,only:TFB.only}},get map(){return MAPV},get applied(){return APPLIED},flags14:()=>flags14(),mins:tiles=>MINS(tiles),get MSEL(){return MSEL},get state(){return B},days:()=>checkDays(),stats:()=>stats(),reset:()=>{initBoard();X.render()},sig:()=>JSON.stringify(B.days.map(d=>d.tiles.map(t=>[t.id,t.sets]))),days7:()=>B.days.map(d=>({day:d.day,label:d.label,rest:isRest(d),n:d.tiles.length})),undo};
 })();

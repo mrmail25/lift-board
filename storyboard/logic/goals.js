@@ -1,6 +1,6 @@
 /* vol10 analysis goal ('Efficient' / 'Max growth'), wired per volume-model.json vol10.builder_paths:
    options + labels = rules.json goals; weekly targets = rules[id=weekly_volume].targets_by_goal[goal][level][muscle] (PC.goalTarget);
-   session limits = rules[id=session_efficiency].limits_by_goal[goal][level][muscle] (PC.seLim; limits_by_level = the vol9 fallback
+   session limits = rules[id=session_efficiency].limits_by_goal[goal][level][muscle] (PC.seLim; vol16b: seLim = limits_by_goal.max_growth only; limits_by_level unused
    when no goal is set). Zones are the same for both goals. The goal lives in PCHECK (setGoal) so every check, warning and day metric
    follows it live; sync() is called from the board's RD().
    Initial goal = rules.json goals.default (vol10b builder_paths.default_goal; currently 'efficient'); a pick is saved on this device.
