@@ -1735,7 +1735,7 @@ function exAbout(e){   // e: the exercises.json record (RD.EX), not the built-in
 function exDetail(id,o={}){if(isCx(id))return cxDetail(id,o);const e=EX[id];if(!e)return null;
   const s=sheet({title:'',cls:'grouped tall xdet',right:'<button class="btn plain" data-x="close">Done</button>',
     body:`<div class="xd" data-id="${id}"><div class="exi-h">${gl(id)}<div><h3>${exName(id)}</h3><p class="sub">${(e.type||' ')[0].toUpperCase()+(e.type||'').slice(1)} · ${e.eq||''}</p></div></div>${exAbout((RD&&RD.EX&&RD.EX[id])||{})}<div id="xdv"></div><div id="xdb"><p class="foot">Loading…</p></div>
-     <div class="pad two">${e.learn!==false?`<button class="btn grey" data-x="learn" data-go="#learn-ex-${id}">${I('book',1.8)} Nurd Sh!t</button>`:''}${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:''}</div></div>`});
+     <div class="pad two">${(false/* vol16d: Learn exercise pages on hold, Nurd Sh!t hidden in the popup */&&e.learn!==false)?`<button class="btn grey" data-x="learn" data-go="#learn-ex-${id}">${I('book',1.8)} Nurd Sh!t</button>`:''}${o.onAdd?`<button class="btn accent" data-x="add">${I('plus',2)} ${o.addLabel||'Add'}</button>`:''}</div></div>`});
   exdLoad().then(D=>{const d=D[id],b=$('#xdb',s.el);if(!b)return;b.innerHTML=d?exDetailBody(id,d):'<p class="foot">No detail data for this exercise.</p>';
     const lb=$('[data-x=learn]',s.el);if(lb&&d&&!(d.learn||{}).authored)lb.innerHTML=`${I('book',1.8)} Nurd Sh!t (draft)`});
   Promise.all([xvLoad(),wokLoad()]).then(()=>{if(s.closed||!xvOf(id)||!WOK.has(id))return;const h=$('.exi-h',s.el),v=$('#xdv',s.el);if(!h||!v||$('.xwatch',s.el))return;
