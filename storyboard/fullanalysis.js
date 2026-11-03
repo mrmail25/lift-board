@@ -57,7 +57,7 @@ function newFlags(dt,d0,d1,lv,carryFrom,carryTo){const A0=NI(PC().check(dt,d0,lv
 const apply=(d,ops)=>AN().applyOps(d,ops);
 const res=(dt,d,lv,m)=>{const Q=diveOf(dt,d,lv,m);const x=Q.sets.effective;return {eff:x,status:Q.sets.status,zone:zoneW(dt,lv,m,x).zone,days_hit:Q.frequency.days_hit,days:Q.frequency.days,stretch:Q.stretch.share,min:Q.sets.level_min}};
 const pill=(zone,txt)=>`<span class="fa-pill" style="background:${MR().STOPS(null)[zone]||'#C8CDD2'};color:${ZFG[zone]||'#1b1b1b'}">${esc(txt||ZL[zone])}</span>`;
-// vol16c: an exercise name in the deep dive is a link to its lean exercise page (custom exercises open cxDetail)
+// vol16d: an exercise name in the deep dive is plain text with a small chevron; tapping it opens the existing exercise popup (exDetail; custom exercises open cxDetail)
 const EXL=(id,label)=>`<button type="button" class="fa-exl" data-fa="exl" data-id="${esc(id)}">${esc(label||EXN(id))}</button>`;
 // names inside a suggestion's preview text: the ops' exercise ids, longest name first, each linked once
 const EXLT=(txt,ops)=>{let h=esc(txt||'');const ids=[...new Set((ops||[]).flatMap(o=>[o.id,o.from_id,o.to_id]).filter(Boolean))],E=RD().EX;const C=[];
@@ -254,7 +254,7 @@ function faHtml(){const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,lv),MU=Ob
   if(!ST.sel&&window.BOARD.MSEL&&A.muscles[window.BOARD.MSEL])ST.sel=window.BOARD.MSEL;if(!ST.sel||!A.muscles[ST.sel])ST.sel=MU.slice().sort((a,b)=>(A.muscles[b].min||0)-(A.muscles[a].min||0)||x(b)-x(a))[0]||'chest';const m=ST.sel,wk=zoneW(dt,lv,m,x(m));
   let h=appliedBar()+`<div class="fa">`;
   // map card
-  h+=`<div class="card fa-c" id="fa-map"><div class="ch"><h2>This week on your body</h2><small>tap a muscle for its deep dive</small></div><div class="seg fa-side" role="group" aria-label="Body side">${['front','back'].map(sd=>`<button type="button" data-fa="side" data-s="${sd}" class="${(ST.side||'front')===sd?'on':''}" aria-pressed="${(ST.side||'front')===sd}">${sd==='front'?'Front':'Back'}</button>`).join('')}</div><div class="fa-maps big" data-side="${ST.side||'front'}">${X.map('front',{},{crop:1})}${X.map('back',{},{crop:1})}</div>${MR().legend('weekly')}
+  h+=`<div class="card fa-c" id="fa-map"><div class="ch"><h2>This week on your body</h2><small>tap a muscle for its deep dive</small></div><div class="fa-maps big">${X.map('front',{},{crop:1})}${X.map('back',{},{crop:1})}</div>${MR().legend('weekly')}
    <div class="mapsel"><span class="mv"><b>${esc(ML(m))}</b> · ${f1(x(m))} sets · ${esc(ZL[wk.zone])}</span></div></div>`;   // vol16b: no deep-dive chip; tapping the map opens the deep dive
   // weekly volume: one chart for the selected muscle, the muscle list is its selector
   const S=diveOf(dt,d,lv,m),XM=Math.max(30,Math.ceil(((MR().weeklyBp(dt,lv,m)||{}).red||25)*1.12));
@@ -335,7 +335,7 @@ function panelData(kind,a){const dt=RD(),d=DAYS(),lv=LV(),A=PC().analytics(dt,d,
   return {title:'',insight:'',fixes:[]}}
 function panelHtml(kind,a){const P=panelData(kind,a);return {title:P.title,body:appliedBar()+`<div class="fa-pn"><p class="ins">${esc(P.insight)}</p>`+P.fixes.map(f=>`<div class="row"><div class="grow"><div class="t1">${esc(f.label)}</div>${f.sub?`<div class="t2">${esc(f.sub)}</div>`:''}</div>${fxBtn(f,'acc')}</div>`).join('')+`</div>`}}
 // ---------- sheets ----------
-const OPEN={fa:null,dd:null,pn:null,ex:null};let RQ=0;
+const OPEN={fa:null,dd:null,pn:null};let RQ=0;
 const keepScroll=(api,fn)=>{const y=api.body.scrollTop;fn();api.body.scrollTop=y};
 function fixChip(n,act,m){return n?`<button class="chip fixchip" data-fa="${act}"${m?` data-m="${m}"`:''}>${n} to fix ›</button>`:''}
 // ---------- vol16b: every section collapses (header tap / Enter / Space, chevron); state remembered in localStorage ----------
@@ -351,7 +351,7 @@ function renderDD(){const o=OPEN.dd;if(!o||o.closed)return;const lazy=!o.anchor,
   // vol16b: paint first, then fill Suggestions + Swap ideas (trial boards through the engine) on the next frame
   if(lazy)requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(()=>{if(OPEN.dd!==o||o.closed||o.tok!==tok)return;const el=o.body.querySelector('[data-lazy="sug"]');if(!el)return;const y=o.body.scrollTop;el.outerHTML=Rr.sug();secs(o.body,'dd');o.body.scrollTop=y},0)));const n=window.BOARD.flags14().filter(f=>f.muscle===o.m&&f.sev>=2).length;o.el.querySelector('.sh-head .r').innerHTML=fixChip(n,'mflags',o.m)}
 function renderPN(){const o=OPEN.pn;if(!o||o.closed)return;const P=panelHtml(o.kind,o.a);keepScroll(o,()=>{o.body.innerHTML=P.body})}
-function rerender(){FX.clear();memoClear();renderFA();renderDD();renderPN();if(typeof renderEX==="function")renderEX()}
+function rerender(){FX.clear();memoClear();renderFA();renderDD();renderPN();}
 const BACK='<button class="btn plain fa-back" data-fa="close" aria-label="Back">‹</button>';
 function open(opts){opts=opts||{};if(!OPEN.fa||OPEN.fa.closed){OPEN.fa=X.sheet({title:'Full analysis',cls:'tall grouped fa-sheet',left:BACK,right:'',onClose(){OPEN.fa=null;if(!OPEN.dd&&!OPEN.pn)APPL.length=0}});OPEN.fa.el.dataset.fa='fa';requestAnimationFrame(()=>OPEN.fa&&OPEN.fa.wrap.classList.add('open'))}
   if(opts.open)ST.open[opts.open]=true;if(opts.m)ST.sel=opts.m;renderFA();
@@ -365,40 +365,7 @@ function deep(m,anchor){if(OPEN.dd&&!OPEN.dd.closed)OPEN.dd.close();ST.sel=m;OPE
 function panel(kind,a){if(OPEN.pn&&!OPEN.pn.closed)OPEN.pn.close();const P=panelHtml(kind,a);OPEN.pn=X.sheet({title:P.title,cls:'fa-panel',right:'<button class="btn plain" data-fa="close">Done</button>',body:P.body,onClose(){OPEN.pn=null}});OPEN.pn.kind=kind;OPEN.pn.a=a;
   requestAnimationFrame(()=>OPEN.pn&&OPEN.pn.wrap.classList.add('open'));return OPEN.pn}
 function refresh(){if(!(OPEN.fa||OPEN.dd||OPEN.pn))return;cancelAnimationFrame(RQ);RQ=requestAnimationFrame(rerender)}
-const sheetOfEl=el=>{const s=el.closest('.sheet');return s&&[OPEN.ex,OPEN.pn,OPEN.dd,OPEN.fa].find(o=>o&&o.el===s)};
-// vol16c: lean exercise page (Coach's proposal, CoS-approved Nov 2, 2026), opened from an exercise name in the deep dive. Five rows only:
-// header (name, type icon + word, equipment); muscles worked (rating > 0, highest first, Main mover >= 0.75 / Helper 0.4-0.74 / Minor < 0.4,
-// Modeled, each opens that muscle's deep dive); fatigue tag (deep-dive colours, never red, Modeled); stretch row only for muscles whose
-// stretch.stretch_biased_for lists it ('Extra stretch for <Muscle>', never stretch_emphasis); on your board (days + sets, or Add).
-// Data: only what the app already has in memory, so it opens at once with no fetch: exercises.json muscles / type / equipment (all in
-// Coach's first-screen slim too), rules.json stretch_biased (in the rules slim), and the deep dive's own fatigue tag fcls() on
-// fatigue.json fatigue_per_set (Coach's 0.72 / 1.0-1.2 / 1.32-1.56 bands are exactly its values). Parity with exercise-details.json
-// (targets[].rating, stretch.stretch_biased_for) checked for all 247 exercises on Nov 3, 2026: 0 differences.
-// Hidden on purpose: Learn links, swap tags/scores, share-of-stimulus numbers, YouTube, description/setup/tip text.
-// Back closes it and shows the deep dive it was opened from. Custom exercises keep cxDetail.
-const leanLvl=r=>r>=0.75?'Main mover':r>=0.4?'Helper':'Minor';
-const cap1=t=>t?String(t)[0].toUpperCase()+String(t).slice(1):'';
-function leanHtml(id){const dt=RD(),e=dt.EX[id]||{},d=DAYS();
-  const mus=Object.entries(e.muscles||{}).filter(([,r])=>r>0).sort((a,b)=>b[1]-a[1]||ML(a[0]).localeCompare(ML(b[0])));
-  const fc=fcls(dt,id),fb=fc?fc.cls:null;   // the deep-dive tag's own value (fatigue.json fatigue_per_set) and function, so the two always agree
-  const SB=(dt.rules||{}).stretch_biased||{},str=Object.keys(SB).filter(m=>(SB[m]||[]).includes(id));
-  const on=d.map(D=>({day:D.day,sets:(D.tiles||[]).filter(t=>t.id===id).reduce((a,t)=>a+(+t.sets||0),0)})).filter(x=>x.sets>0);
-  const tw=cap1(e.type);   // same word as the app's other exercise headers (Primary · Accessory · Isolation)
-  let h=`<div class="fa-exh"><span class="gl ${e.type}" aria-hidden="true">${GLY[e.type]||''}</span><div><h3>${esc(EXN(id))}</h3><p class="sub">${esc(tw)} · ${esc(cap1(e.equipment||e.eq||''))}</p></div></div>`;
-  h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>Muscles worked</h2></div>`+mus.map(([m,r])=>`<button type="button" class="fa-exm" data-fa="exm" data-m="${esc(m)}"><span class="t">${esc(ML(m))}</span><span class="lv lv${r>=0.75?3:r>=0.4?2:1}">${leanLvl(r)}<small class="md">Modeled</small></span><span class="cv" aria-hidden="true">›</span></button>`).join('')+`</div>`;
-  h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>Fatigue</h2><small>Modeled</small></div><p class="fa-exf">${fb?ftag(fb):'–'}<span>${fb==='High'?'Costs more recovery per set':fb==='Low'?'Costs little recovery per set':'Typical recovery cost per set'}</span></p>`+`</div>`+
-     (str.length?`<div class="card fa-c fa-exc"><div class="ch"><h2>Stretch</h2></div><p class="fa-exs">Extra stretch for ${str.map(m=>esc(ML(m))).join(', ')}</p></div>`:'');
-  h+=`<div class="card fa-c fa-exc"><div class="ch"><h2>On your board</h2></div>`+(on.length?`<p class="fa-exb"><b>${on.reduce((a,x)=>a+x.sets,0)} sets this week</b> · ${on.map(x=>`${WD[x.day]} ${x.sets} set${x.sets===1?'':'s'}`).join(', ')}</p>`:
-     `<div class="fa-exb0"><span>Not on your board</span><button type="button" class="btn accent fa-exadd" data-fa="exadd" data-id="${esc(id)}">Add</button></div>`)+`</div>`;
-  return h}
-function exLean(id){if(X.isCx&&X.isCx(id))return X.cxDetail(id);if(!RD().EX[id])return null;if(OPEN.ex&&!OPEN.ex.closed)OPEN.ex.close();
-  OPEN.ex=X.sheet({title:'',cls:'tall grouped fa-sheet fa-exsheet',left:BACK,right:'',body:leanHtml(id),onClose(){OPEN.ex=null}});const o=OPEN.ex;o.id=id;o.el.dataset.fa='ex';
-  requestAnimationFrame(()=>OPEN.ex&&OPEN.ex.wrap.classList.add('open'));return o}
-function renderEX(){const o=OPEN.ex;if(!o||o.closed)return;o.body.innerHTML=leanHtml(o.id)}
-// Add from the lean page: the exercise's usual sets (rules pattern_gap_fix sets_by_kind) on the training day with the fewest sets; undo stays in the deep dive's list
-function leanAdd(id){const dt=RD(),e=dt.EX[id]||{},d=DAYS().filter(D=>!D.rest&&(D.tiles||[]).length);if(!d.length)return;const sk=((dt.rules||{}).pattern_gap_fix||{}).sets_by_kind||{};
-  const n=(e.type==='isolation'?sk.isolation:sk.compound)||3,tot=D=>(D.tiles||[]).reduce((a,t)=>a+(+t.sets||0),0),day=d.slice().sort((a,b)=>tot(a)-tot(b)||ORD.indexOf(a.day)-ORD.indexOf(b.day))[0].day;
-  FX.set(++FXN,{ops:[{op:'add',day,id,sets:n}],label:`Add ${EXN(id)}, ${WD[day]} ${n} sets`});doApply(FXN);renderEX();if(X.toast)X.toast(`Added ${EXN(id)} · ${WD[day]} · ${n} sets`)}
+const sheetOfEl=el=>{const s=el.closest('.sheet');return s&&[OPEN.pn,OPEN.dd,OPEN.fa].find(o=>o&&o.el===s)};
 // vol16c: tap-nearest-muscle on the big Full analysis map. A tap inside a muscle's shape picks it; otherwise the muscle whose outline is
 // nearest, if it is within NEAR px on screen (so every muscle, small ones included, has a tap zone at least 44 px across). Geometry comes
 // from the SVG paths themselves: isPointInFill for inside, and outline points sampled every few user units (cached per svg) for distance.
@@ -416,10 +383,7 @@ document.addEventListener('click',e=>{if(e.__mapPick)return;const b=e.target.clo
   if(k==='apply')return doApply(b.dataset.i);if(k==='undo')return doUndo(+b.dataset.i);
   if(k==='sec')return secToggle(b);
   if(k==='sel'){ST.sel=b.dataset.m;return renderFA()}
-  if(k==='exl')return exLean(b.dataset.id);
-  if(k==='exm'){const m=b.dataset.m;if(OPEN.ex)OPEN.ex.close();return deep(m)}
-  if(k==='exadd')return leanAdd(b.dataset.id);
-  if(k==='side'){ST.side=b.dataset.s;const r=b.closest('.card');if(r){r.querySelector('.fa-maps').dataset.side=ST.side;r.querySelectorAll('[data-fa="side"]').forEach(x=>{const on=x.dataset.s===ST.side;x.classList.toggle('on',on);x.setAttribute('aria-pressed',String(on))})}return}
+  if(k==='exl')return X.exDetail&&X.exDetail(b.dataset.id,{});   // vol16d: an exercise name opens the app's existing exercise popup
   if(k==='grp'){ST.grp=b.dataset.g;return renderFA()}
   if(k==='deep')return deep(b.dataset.m);
   if(k==='tofix'){ST.open.flags=true;renderFA();const el=OPEN.fa.body.querySelector('[data-x="flags"]');if(el)el.scrollIntoView({block:'start'});return}
@@ -437,5 +401,5 @@ function prewarm(){if(X.RD&&X.RD.FULL===false)return;try{if(window.BOARD&&window
 (function wait(n){if(window.BOARD&&window.BOARD.days&&X.RD&&X.RD.EX&&X.RD.FULL!==false){idle(prewarm);return}if(n<600)setTimeout(()=>wait(n+1),250)})(0);
 // vol16b: late data (preset visuals, notes, weights) never feeds the engine memo (sheet/dive), so arrival only re-renders, no recompute
 const lateR=()=>{if(OPEN.fa||OPEN.dd||OPEN.pn){cancelAnimationFrame(RQ);RQ=requestAnimationFrame(()=>{FX.clear();renderFA();renderDD();renderPN()})}else idle(prewarm)};window.addEventListener('sb:dmp',lateR);window.addEventListener('sb:full',()=>idle(prewarm));   /* vol16b: prewarm only once the full files are in */window.addEventListener('sb:late',lateR);   // vol16b: frequency notes arrived after ready
-window.FA={open,deep,refresh,panel,prewarm,exLean,_x:{secs,memoClear,muscleFixes,swapIdeas,moveFixes,newFlags,typical,spacingLine,panelData,faHtml,deepHtml}};
+window.FA={open,deep,refresh,panel,prewarm,_x:{secs,memoClear,muscleFixes,swapIdeas,moveFixes,newFlags,typical,spacingLine,panelData,faHtml,deepHtml}};
 })();

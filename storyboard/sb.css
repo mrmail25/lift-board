@@ -2024,9 +2024,6 @@ details.fa-x .bd{padding-bottom:14px}
 /* ---- Plan page (vol16) ---- */
 .bsum{grid-template-areas:"map stats" "leg leg" "flw flw"!important;grid-template-columns:auto minmax(0,1fr)!important;grid-template-rows:auto!important}
 .bsum .bsmap{grid-area:map!important}.bsum .bsr{grid-area:stats!important;justify-content:center}.bsum .bmleg{grid-area:leg;display:block!important;min-width:0}.bsum .bmflw{grid-area:flw!important}
-.bsr .wkbtn{align-self:flex-start;border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);font-weight:600;font-size:13px;min-height:32px;padding:0 12px}
-.bsr .wkbtn.on{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
-.bsum .bsr .anbtn{grid-column:auto;width:auto;align-self:flex-start;min-height:36px;height:auto;margin:0;padding:6px 14px;font-size:14px;font-weight:700;background:var(--accent-strong);color:#fff}
 .mrbar2{display:block;width:100%}.mrbar2 .gb{display:block;height:10px;border-radius:5px}
 .mrbar2 .lb{display:flex;justify-content:space-between;gap:0;margin-top:4px;font-size:11px;line-height:1.2;color:var(--text-2)}.mrbar2 .lb span{text-align:center;min-width:0}.mrbar2 .lb span:nth-child(1){flex:0 0 16%}.mrbar2 .lb span:nth-child(2){flex:0 0 21%}.mrbar2 .lb span:nth-child(3){flex:0 0 21%}.mrbar2 .lb span:nth-child(4){flex:0 0 22%}.mrbar2 .lb span:nth-child(5){flex:0 0 20%}.mrbar2 .lb span:first-child{text-align:left}.mrbar2 .lb span:last-child{text-align:right}
 .fa-sheet .mrbar2{margin-top:10px}
@@ -2109,42 +2106,30 @@ body.sb-wait{cursor:progress}
 .fa-sheet .nla,.fa-sheet .nla:first-child,.fa-sheet .nl a{padding:7px 0}
 .ghead.cath{padding-top:22px}
 
-/* vol16c: Week map + Full analysis sit in their own row under the map and stats, two equal columns across the card's full width */
-.bsum{grid-template-areas:"map stats" "btn btn" "leg leg" "flw flw"!important}
-.bsum .bbtns{grid-area:btn;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-width:0}
-.bsum .bbtns .wkbtn,.bsum .bbtns .anbtn{grid-column:auto;align-self:stretch;width:100%;min-width:0;min-height:40px;height:auto;margin:0;padding:6px 8px;justify-content:center;text-align:center;white-space:normal;font-size:14px;font-weight:700;border-radius:999px;box-sizing:border-box}
-.bsum .bbtns .wkbtn{border:1px solid var(--line-strong);background:var(--paper);color:var(--ink)}
-.bsum .bbtns .wkbtn.on{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
-.bsum .bbtns .anbtn{background:var(--accent-strong);color:#fff}
-/* vol16c: Full analysis body map, one big figure at a time (Front/Back toggle), cropped to the figure, about 3x the old size */
-.fa-sheet .fa-side{width:200px;margin:4px auto 8px}
-.fa-sheet .fa-side button{min-height:36px}
-.fa-sheet .fa-maps.big{display:flex;justify-content:center;gap:0;padding:4px 0}
-.fa-sheet .fa-maps.big .mmap{height:min(600px,72vh);width:auto;max-width:100%}
-.fa-sheet .fa-maps.big[data-side="front"] .mmap:nth-of-type(2),.fa-sheet .fa-maps.big[data-side="back"] .mmap:nth-of-type(1){display:none}
+/* vol16d: Week | Day toggle and Full analysis sit in the right column under the stats; the stats, toggle and button are centred */
+.bsum .bsr{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-width:0}
+.bsum .bsr .astrip{align-items:center}.bsum .bsr .ast{justify-content:center}
+.bsum .bbtns{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0}
+.bsum .bmseg{width:132px;flex:none}.bsum .bmseg button{height:30px;font-size:13px;color:var(--text-2)}.bsum .bmseg button.on{color:var(--ink)}
+.bsum .bsr .anbtn{width:auto;height:auto;align-self:center;min-height:36px;padding:6px 16px;font-size:14px;font-weight:700;border-radius:999px;background:var(--accent-strong);color:#fff}
+/* vol16d: Full analysis body map, front and back side by side across the full width (no toggle); taps pick the nearest muscle */
+.fa-sheet .fa-maps.big{display:flex;justify-content:space-between;gap:4px;padding:4px 0}
+.fa-sheet .fa-maps.big .mmap{display:block;width:calc(50% - 2px);height:auto;max-width:none}
 .fa-sheet .fa-maps.big svg{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-/* vol16c: exercise names in the deep dive are links (32px tap target) to the lean exercise page */
-.fa-sheet .fa-exl{display:inline-flex;align-items:center;min-height:32px;margin:-6px 0;padding:0;border:0;background:none;font:inherit;font-weight:inherit;color:var(--accent-text);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-align:left;cursor:pointer;vertical-align:baseline}
+/* vol16d: exercise names in the deep dive: plain text in the normal text colour with a small chevron, 32px tap target, open the exercise popup */
+.fa-sheet .fa-exl{display:inline-flex;align-items:center;min-height:32px;margin:-6px 0;padding:0;border:0;background:none;font:inherit;font-weight:inherit;color:var(--ink);text-decoration:none;text-align:left;cursor:pointer;vertical-align:baseline}
+.fa-sheet .fa-exl::after{content:"\203A";margin-left:4px;color:var(--text-2);font-weight:600;font-size:1.05em;line-height:1}
 .fa-sheet .fa-exl:active{opacity:.6}
 .fa-sheet .t2 .fa-exl,.fa-sheet .sub .fa-exl,.fa-sheet .add small .fa-exl{margin:-8px 0}
 .fa-sheet .fa-addrow{position:relative;cursor:default}
 .fa-sheet .fa-addb{position:static;border:0;background:none;padding:0;margin:0;color:inherit;font:inherit;text-align:left;cursor:pointer;min-height:32px}
 .fa-sheet .fa-addb::after{content:"";position:absolute;inset:0;border-radius:12px}
 .fa-sheet .fa-addrow .fa-exl{position:relative;z-index:1}
-/* lean exercise page */
-.fa-exsheet .fa-exh{display:flex;align-items:center;gap:12px;padding:6px 4px 10px}
-.fa-exsheet .fa-exh h3{margin:0;font-size:20px;font-weight:700;color:var(--ink)}
-.fa-exsheet .fa-exh .sub{margin:2px 0 0}
-.fa-exsheet .fa-exm{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:4px 0;border:0;background:none;font:inherit;color:var(--ink);text-align:left;cursor:pointer}
-.fa-exsheet .fa-exm .t{flex:1;min-width:0;font-size:15px;font-weight:600;color:var(--accent-text);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
-.fa-exsheet .fa-exm .lv{font-size:13px;font-weight:600;color:var(--text-2)}
-.fa-exsheet .fa-exm .lv3{color:var(--ink)}
-.fa-exsheet .fa-exm .cv{color:var(--text-2);font-size:18px}
-.fa-exsheet .fa-exf{display:flex;align-items:center;gap:10px;margin:6px 0 2px;font-size:14px;color:var(--text-2)}
-.fa-exsheet .fa-exf .fa-ftag{font-size:13px;padding:3px 10px}
-.fa-exsheet .fa-exs{margin:10px 0 2px;font-size:14px;font-weight:600;color:var(--ink)}
-.fa-exsheet .fa-exb{margin:6px 0 2px;font-size:14px;color:var(--text-2)}.fa-exsheet .fa-exb b{color:var(--ink)}
-.fa-exsheet .fa-exb0{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;font-size:14px;color:var(--text-2)}
-.fa-exsheet .fa-exadd{min-height:40px;padding:0 20px}
-.fa-exsheet .fa-exm .lv{display:flex;flex-direction:column;align-items:flex-end;line-height:1.2}
-.fa-exsheet .fa-exm .lv .md{font-size:11.5px;font-weight:500;color:var(--text-2)}
+
+/* vol16d: exercise popup: description, how-to and tip from exercises.json; the technique video plays inline */
+.xd .xab{margin:2px 0 8px;padding:12px 14px;background:var(--paper);border-radius:var(--r-md,12px)}
+.xd .xab p{margin:0;font-size:15px;line-height:1.4;color:var(--ink)}
+.xd .xab-h,.xd .xab-t{margin-top:12px}
+.xd .xab-k{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:4px}
+.xd .xab ul{margin:6px 0 0;padding-left:20px}.xd .xab li{font-size:15px;line-height:1.4;color:var(--ink);margin:2px 0}
+.xd #xdv .xvid{margin:8px 0 10px}
