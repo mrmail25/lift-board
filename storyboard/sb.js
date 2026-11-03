@@ -127,7 +127,11 @@ const srcLine=n=>!n||!n.short?'':`<p class="ptsrc">Source: ${n.url?`<a href="${n
 // data/min/manifest.json); a missing min copy falls back to the original.
 const MIN=new Set(['exercises.json','rules.json','targets.json','patterns.json','splits.json','volume-model.json','splits-efficient-diff.json','splits-efficient.json','fatigue.json','custom-exercise-defaults.json','templates.json']);
 const getJ0=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
-const getJ=u=>{const n=u.startsWith(DATA)?u.slice(DATA.length):null;return n&&MIN.has(n)?getJ0(DATA+'min/'+n).then(j=>j||getJ0(u)):getJ0(u)};
+const getJF=u=>{const n=u.startsWith(DATA)?u.slice(DATA.length):null;return n&&MIN.has(n)?getJ0(DATA+'min/'+n).then(j=>j||getJ0(u)):getJ0(u)};
+// vol16b: Coach's first-screen slims (data/first-screen/, whole sections only) are fetched first for these three; the full file follows after
+// first paint (upgradeFull). SLIMOBJ marks a parsed slim so the app knows an upgrade is still due; a missing slim falls back to min/ then the original.
+const SLIM=new Set(['exercises.json','rules.json','volume-model.json']),SLIMOBJ=new WeakSet();
+const getJ=u=>{const n=u.startsWith(DATA)?u.slice(DATA.length):null;if(n&&SLIM.has(n))return getJ0(DATA+'first-screen/'+n).then(j=>{if(j){SLIMOBJ.add(j);return j}return getJF(u)});return getJF(u)};
 // vol16b: rules.json (463 KB) was fetched twice at start-up (loadVB + the ranking data); one shared request now (readers only copy from it)
 const RULESJ=new Map();const getJ1=u=>{if(!RULESJ.has(u))RULESJ.set(u,getJ(u));return RULESJ.get(u)};
 async function loadVB(){const u=DATA+'rules.json',j=await getJ1(u),b=j&&(j.volume_bands||(j.rules||{}).volume_bands);if(b&&typeof b.red_factor==='number'){Object.assign(VB,b,{src:u});return VB}if(!UNLOADING)console.warn('rules.json volume_bands missing: over-volume red disabled');return VB}
@@ -1772,8 +1776,18 @@ async function loadRank(){if(RD)return RD;if(RDP)return RDP;
   // templates-slim.json (Coach's slot eligibility, 151 KB; replaces templates-reference.json 1.7 MB, identical eligible lists), frequency-notes,
   // progress-rules, evolution-rules, then day-metrics-slim.json (Coach's 2.46 MB slim preset visuals; replaces day-metrics-presets.json 4.8 MB).
   // Each arrival fires 'sb:late' (and 'sb:dmp' for the presets) so whatever is on screen repaints; every reader is null-guarded until then.
+  // vol16b: full exercises / rules / volume-model after first paint. Slims keep whole sections with identical values, so the upgrade only ADDS
+  // what the slim left out, in place (same objects: custom-exercise registration, memo keys and anything holding RD stay valid).
+  async function upgradeFull(R){const need=[['exercises.json',R.exl],['rules.json',R.rules],['volume-model.json',R.VM]].filter(([,o])=>o&&SLIMOBJ.has(o));
+    if(need.length){let got=await Promise.all(need.map(([n])=>getJF(DATA+n)));if(got.some(x=>!x)){await new Promise(r=>setTimeout(r,3000));got=await Promise.all(need.map(([n],k)=>got[k]||getJF(DATA+n)))}   // one retry
+      need.forEach(([n,o],k)=>{const F=got[k];if(!F)return;
+        if(n==='exercises.json'){for(const e of F.exercises||[]){const x=R.EX[e.id];if(x&&!x.custom){for(const f in e)if(!(f in x))x[f]=e[f]}}for(const k2 in F)if(!(k2 in o))o[k2]=F[k2]}
+        else for(const k2 in F)if(!(k2 in o))o[k2]=F[k2];SLIMOBJ.delete(o)})}
+    const ok=!(SLIMOBJ.has(R.exl)||SLIMOBJ.has(R.rules)||(R.VM&&SLIMOBJ.has(R.VM)));if(!ok&&!UNLOADING)console.warn('full data files did not load: staying on the first-screen slims');
+    R.FULL=true;R.FULL_OK=ok;try{window.dispatchEvent(new CustomEvent('sb:full'))}catch(e){}}   // the gate opens either way (degraded beats frozen)
   async function lateLoad(R){const fire=n=>{try{window.dispatchEvent(new CustomEvent(n))}catch(e){}};
-    TJP=getJ(DATA+(R.TJF||'templates.json')).then(j=>{R.TJ=j;fire('sb:tj');return j});await TJP;   // templates first: the template picker and slot trays read it
+    TJP=getJ(DATA+(R.TJF||'templates.json')).then(j=>{R.TJ=j;fire('sb:tj');return j});   // set before the full files so template routes can wait on it
+    await upgradeFull(R);await TJP;   // templates first: the template picker and slot trays read it
     const L=[['templates-slim.json','TREF'],['check-priority-weights.json','CPW'],['frequency-notes.json','FN'],['progress-rules.json','PR2'],['evolution-rules.json','EVO']];
     await Promise.all(L.map(([f,k])=>getJ(DATA+f).then(j=>{if(j)R[k]=j})));
     // the demo log is only used while the user has no saved log; logLoad() picks it up on its next call, LOGV bump busts the Progress caches
@@ -1790,7 +1804,7 @@ async function loadRank(){if(RD)return RD;if(RDP)return RDP;
     const [vm,tdiff,seff,fat]=await Promise.all(late);R.VM=vm;R.TRIMDIFF=tdiff;R.SPLITS_EFF=seff;R.FAT=fat;   // vol10b: Efficient presets
     // vol16b latency: preset visuals (day-metrics-slim.json, Coach's 2.46 MB slim copy) never block start-up: lateLoad fetches them after ready
     // Impact computes live until then and the 'typical' band waits; 'sb:dmp' re-renders on arrival.
-    R.DMP=null;setTimeout(()=>lateLoad(R),0); // vol11: per-exercise fatigue; precomputed preset visuals   // vol10b: Coach's per-preset Efficient trims   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
+    R.DMP=null;R.FULL=!(SLIMOBJ.has(exercises)||SLIMOBJ.has(rules)||(R.VM&&SLIMOBJ.has(R.VM)));setTimeout(()=>lateLoad(R),0); // vol11: per-exercise fatigue; precomputed preset visuals   // vol10b: Coach's per-preset Efficient trims   // vol2: Coach's volume model (credit, curve, recovery hours, swaps); null = the old maths
     try{await cxLoad(R,exercises,rules,cxd)}catch(x){console.warn('custom exercises not loaded',x)}   // custom exercises: defaults loader + registration (before anything reads RD)
     RD=R;return RD})();
   const r=await RDP;RDP=null;return r}
@@ -1949,6 +1963,7 @@ const AFTER={logDay:afterLogDay,train:afterTrain,workout:afterWorkout,finish:aft
 let NAV=0;
 function go(h){if(location.hash===h)route();else location.hash=h}
 function route(){
+  if(RD&&!RD.FULL){const r0=(location.hash||'#train').slice(1);if(r0!=='build'){const v=$('#view');if(v&&!v.innerHTML.trim())v.innerHTML='<p class="foot" style="padding:32px 20px">Loading…</p>';fullP().then(()=>route());return}}   // vol16b: other screens need the full files
   if(RD&&!RD.TJ&&TJP&&/^#?build-(template|tray-slot|new)/.test(location.hash.slice(1))){TJP.then(()=>route());return}   // vol16b: templates.json is late
   let r=(location.hash||'#train').slice(1),def=ROUTES[r],arg=null;
   if(!def&&/^learn-ex-/.test(r)){def=['learnEx',''];arg=r.slice(9)}
@@ -2369,10 +2384,16 @@ async function cxDetail(id,o={}){const e=RD.EX[id];if(!e)return null;await cxBan
     if(ev.target.closest('[data-x=cxdel]')){const n=(window.BOARD&&BOARD.countExercise)?BOARD.countExercise(id):0;
       return confirmSheet(`Delete “${esc(e.name)}”?`,`It is removed from your exercises${n?` and from ${n} place${n>1?'s':''} on the board`:''}, with its photo and video. This can’t be undone.`,'Delete exercise',()=>{s.close();cxDelete(id);toast('Exercise deleted')})}
     const g=ev.target.closest('[data-go]');if(g){ev.preventDefault();ev.stopPropagation();const h=g.dataset.go;closeAll();go(h)}});return s}
-window.SBX={tjReady:()=>RD&&RD.TJ?Promise.resolve(RD.TJ):new Promise(r=>addEventListener('sb:tj',()=>r(RD&&RD.TJ),{once:true})),eduPrefetch:id=>eduPage(id).catch(()=>null),eduWarm:()=>eduLoad().catch(()=>null),   // vol16b: FA warms the deep dive's Nurd Sh!t article while idle
+window.SBX={fullReady:()=>fullP(),tjReady:()=>RD&&RD.TJ?Promise.resolve(RD.TJ):new Promise(r=>addEventListener('sb:tj',()=>r(RD&&RD.TJ),{once:true})),eduPrefetch:id=>eduPage(id).catch(()=>null),eduWarm:()=>eduLoad().catch(()=>null),   // vol16b: FA warms the deep dive's Nurd Sh!t article while idle
 curveSvg,progHist,openPSheet,cmGet,cmSet,cmShown,progressData,apeFig,APE_FIG,ladderData,ladderFor,ladSettings,ladSet,ladPersist,logExport,logImport,mlGet,mlSet,newExSheet,cxDetail,cxL,isCx,cxList,cxDelete,cxExport,cxImport,cxMedia,cxPhoto,cxStore,get CXM_OK(){return CXM_OK},get CX(){return CX},cxPlacedKey:CXPL,devClean,qMatch,fold,esc,BAND,hlLevel,exDetailBody,gymProfile:()=>gymProfile(),logApi:{load:()=>logLoad(),get h(){return LOGH},get pr(){return LPR},LOGS,LOG_K,LSO:'apechit.sb.wkOrder'},cvt,uTxt,setTheme,getTheme,isDark,progressData,trainDeload,progApply,progUndo,pview:()=>pview(progressData()),openPSheet,get PSH(){return PSH},get PROG(){return PROG},get LOGV(){return LOGV},V,AFTER,ROUTES,ROUTINES,S,sheet,closeAll,toast,go,render,swapSheet,bindSwipes,I,header,bookBtn,gearBtn,CHEV,gl,GLY,EX,ML,exNameP,exSub,whyR,starBtn,isFav,map,vStat,volFill,IN_DARK,kchip,itemDef,explainSheet,ibtn,learnGo,exDetail,exdLoad,sortHtml,sortIds,sortMode,sortNote,SORTS,VB,VFILL,VLAB,volLegend,filterHtml,passF,movePat,mpDefs,startWorkout,
   get RD(){return RD},get WK(){return WK},get FIN(){return FIN},prefs:()=>prefs(),setSC:o=>{SC=Object.assign({board:BOARDS.ppl,day:'fri',cands:null,note:''},o)},get SC(){return SC},get NAV(){return NAV}};
 window.addEventListener('hashchange',route);
+// vol16b: until the full files land (RD.FULL), only the first screen is painted from the slims. A tap there is held (thin 'Loading…' bar) and
+// replayed on the same element once they arrive, so no handler ever runs on a slim. Navigation to another screen waits the same way.
+const fullP=()=>RD&&RD.FULL?Promise.resolve():new Promise(r=>addEventListener('sb:full',()=>r(),{once:true}));
+let HELD=null;document.addEventListener('click',e=>{if(!RD||RD.FULL||e.__replay)return;const t=e.target.closest('button,a,[data-act],[data-b],[data-go],[data-fa],summary,label,input,select,.tile,.row');if(!t)return;
+  e.preventDefault();e.stopImmediatePropagation();const first=!HELD;HELD=t;document.body.classList.add('sb-wait');
+  if(first)fullP().then(()=>{document.body.classList.remove('sb-wait');const el=HELD;HELD=null;if(el&&el.isConnected){const ev=new MouseEvent('click',{bubbles:true,cancelable:true,view:window});ev.__replay=true;el.dispatchEvent(ev)}})},true);
 // vol16b: late data (progress-rules / evolution-rules) arrived: repaint the screens that read it, keeping scroll; open sheets are left alone
 window.addEventListener('sb:late',()=>{try{if(['train','progress','ladder','log'].includes(S.scr)&&!SHEETS.length)rerenderProgress()}catch(e){}});
 Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in

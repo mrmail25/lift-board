@@ -376,9 +376,9 @@ document.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;c
 // vol16b latency: warm the engine memo for the current board while the app is idle, so the first Full analysis open is a cache hit;
 // day-metrics-presets.json now arrives after the app is ready (sb.js), so re-render when it lands.
 const idle=f=>(window.requestIdleCallback?requestIdleCallback(f,{timeout:4000}):setTimeout(f,400));
-function prewarm(){try{if(window.BOARD&&window.BOARD.days&&X.RD&&X.RD.EX&&window.BOARD.days().length)faHtml()}catch(e){}try{X.eduWarm&&X.eduWarm()}catch(e){}}   /* + the Nurd Sh!t index and references (2 small files) */
-(function wait(n){if(window.BOARD&&window.BOARD.days&&X.RD&&X.RD.EX){idle(prewarm);return}if(n<600)setTimeout(()=>wait(n+1),250)})(0);
+function prewarm(){if(X.RD&&X.RD.FULL===false)return;try{if(window.BOARD&&window.BOARD.days&&X.RD&&X.RD.EX&&window.BOARD.days().length)faHtml()}catch(e){}try{X.eduWarm&&X.eduWarm()}catch(e){}}   /* + the Nurd Sh!t index and references (2 small files) */
+(function wait(n){if(window.BOARD&&window.BOARD.days&&X.RD&&X.RD.EX&&X.RD.FULL!==false){idle(prewarm);return}if(n<600)setTimeout(()=>wait(n+1),250)})(0);
 // vol16b: late data (preset visuals, notes, weights) never feeds the engine memo (sheet/dive), so arrival only re-renders, no recompute
-const lateR=()=>{if(OPEN.fa||OPEN.dd||OPEN.pn){cancelAnimationFrame(RQ);RQ=requestAnimationFrame(()=>{FX.clear();renderFA();renderDD();renderPN()})}else idle(prewarm)};window.addEventListener('sb:dmp',lateR);window.addEventListener('sb:late',lateR);   // vol16b: frequency notes arrived after ready
+const lateR=()=>{if(OPEN.fa||OPEN.dd||OPEN.pn){cancelAnimationFrame(RQ);RQ=requestAnimationFrame(()=>{FX.clear();renderFA();renderDD();renderPN()})}else idle(prewarm)};window.addEventListener('sb:dmp',lateR);window.addEventListener('sb:full',()=>idle(prewarm));   /* vol16b: prewarm only once the full files are in */window.addEventListener('sb:late',lateR);   // vol16b: frequency notes arrived after ready
 window.FA={open,deep,refresh,panel,prewarm,_x:{secs,memoClear,muscleFixes,swapIdeas,moveFixes,newFlags,typical,spacingLine,panelData,faHtml,deepHtml}};
 })();

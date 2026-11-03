@@ -2089,3 +2089,8 @@ html[data-theme=dark] .fa-sheet .sr .sb .h,html[data-theme=dark] .fa-sheet .k .h
 @media (prefers-color-scheme:dark){html:not([data-theme=light]) .fa-sheet .sr .sb .d,html:not([data-theme=light]) .fa-sheet .k .dk{background:#4CB572}
  html:not([data-theme=light]) .fa-sheet .sr .sb .h,html:not([data-theme=light]) .fa-sheet .k .hk{background:repeating-linear-gradient(135deg,#4CB572 0 2px,#24452F 2px 5px)}}
 details.fa-x>summary .cv,.fa-sheet .card.fa-c>.ch .scv{display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;flex:none}   /* rotation stays inside the header box */
+/* vol16b: a tap made before the full data files land is held and replayed; this thin bar says so */
+body.sb-wait::before{content:"";position:fixed;left:0;top:0;height:3px;width:100%;z-index:9999;background:linear-gradient(90deg,transparent,var(--accent,#c0392b),transparent);background-size:50% 100%;background-repeat:no-repeat;animation:sbwait 1s linear infinite}
+body.sb-wait{cursor:progress}
+@keyframes sbwait{from{background-position:-50% 0}to{background-position:150% 0}}
+@media (prefers-reduced-motion:reduce){body.sb-wait::before{animation:none;background:var(--accent,#c0392b);opacity:.6}}

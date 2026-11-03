@@ -15,7 +15,7 @@ function curveX(dt,days,m){const sd=dt.targets.curve.session_discount;let x=0;fo
 function status(dt,m,x,level){const [lo]=band(dt,m,level),c=PC._x.col(dt,m,x,level);if(c==='G')return 'in_range';return c==='A'?(x<lo?'under':'over'):(x<lo?'far_under':'far_over')}
 // one muscle (or every muscle with m == null): {id, label, short_label, anchor, sets, curve, frequency, stretch, one_side_share,
 // recovery_cost, stimulus_per_fatigue, fatigue, contributors, suggestions:{apply, ranked_adds}}
-function deepdive(dt,days,level,baseline=null,goals=null,profile=null,only=null,opt={}){goals=goals||DEFAULT_GOALS;profile=profile||dt.rules.equipment_items.example_profiles.commercial;
+function deepdive(dt,days,level,baseline=null,goals=null,profile=null,only=null,opt={}){goals=goals||DEFAULT_GOALS;profile=profile||(((dt.rules.equipment_items||{}).example_profiles||{}).commercial)||null;   /* vol16b: absent from the first-screen rules slim */
   const [fl,week]=PC.check(dt,days,level),bd=AN.breakdowns(dt,days).muscle,sheet=opt.sheet||AN.sheet(dt,days,level,baseline),chk=(dt.rules.stretch_check||{}).checked||{};
   const fmin=dt.targets.analytics.frequency_min_effective,labels=((dt.exl.muscle_short_labels||{}).muscles)||{},MR=((dt.targets.counting||{}).min_rating_to_count??0.25),MUS=dt.exl.muscles,BR=dt.rules.body_regions.muscles,out={};
   for(const m of Object.keys(dt.targets.targets)){if(only&&m!==only)continue;

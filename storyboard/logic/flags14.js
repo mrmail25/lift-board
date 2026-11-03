@@ -93,7 +93,19 @@ function stapleFor(dt,m){const S=(dt.rules||{}).staples||((dt.VM||{}).vol15||{})
   return S.find(id=>((dt.EX[id]||{}).muscles||{})[m]>=0.75)||null}
 // slot_recommendations: {slot:[ids] | {examples:[ids]}} -> the first two short names; '' until Coach's data lands.
 function slotRecs(dt,sl,XS,lv){const R0=(dt.rules||{}).slot_recommendations||((dt.VM||{}).vol15||{}).slot_recommendations,R=R0&&(R0.by_slot||R0);let L=R&&R[sl];if(L&&!Array.isArray(L)&&lv&&L[lv])L=L[lv];const ids=Array.isArray(L)?L:L&&(L.examples||L.exercises)||[];return ids.slice(0,2).map(x=>XS(typeof x==='string'?x:x.id)).filter(Boolean).join(' or ')}
+// vol16b (Coach rule): a muscle with no DIRECT exercise on the board (no tile rated >= 0.75 for it in exercises.json muscles[m]) gets an
+// added exercise rated >= 0.75 for it (rules.json staples[m], first one rated >= 0.75: rear delts -> Reverse Pec Deck), never more sets of a
+// compound that only grazes it (was Lat Pulldown at 0.3). Day: a training day that already works the muscle's body region
+// (rules.body_regions.muscles), fewest effective sets of the muscle there, then week order (= the deep dive's add-day rule).
+const DIRECT=0.75;
+const hasDirect=(dt,D,m)=>D.some(d=>d.tiles.some(t=>(((dt.EX[t.id]||{}).muscles||{})[m]||0)>=DIRECT));
+function stapleDirect(dt,m){const S=(dt.rules||{}).staples||((dt.VM||{}).vol15||{}).staples;if(!S)return null;const L=Array.isArray(S)?S:(S[m]||(S.by_muscle||{})[m]||[]);
+  for(const x of L){const id=typeof x==='string'?x:x&&x.id;if(id&&dt.EX[id]&&((dt.EX[id].muscles||{})[m]||0)>=DIRECT)return id}return null}
+function directDay(dt,D,m){const PC=PCm(),BR=((dt.rules||{}).body_regions||{}).muscles||{},MUS=dt.exl&&dt.exl.muscles,reg=BR[m],RK=typeof RANK!=='undefined'?RANK:(isNode?require('./rank.js'):root.RANK);
+  const T=D.filter(d=>d.tiles.length),same=reg?T.filter(d=>d.tiles.some(t=>BR[RK.primaryMuscle(dt.EX[t.id],MUS)]===reg)):[],pool=same.length?same:T;
+  return pool.map((d,i)=>({day:d.day,n:PC.eff(dt,d.tiles)[m]||0,i})).sort((a,b)=>a.n-b.n||a.i-b.i)[0]||null}
 function addCand(dt,D,lv,m){const PC=PCm();const CAP=(RU(dt,'session_efficiency').display_limits||{})[lv]||{},c=[];
+  if(!hasDirect(dt,D,m)){const id=stapleDirect(dt,m),dd=id&&directDay(dt,D,m);if(id&&dd)return {id,day:dd.day,src:'direct'}}
   for(const d of D){const E=PC.eff(dt,d.tiles);d.tiles.forEach((t,i)=>{if(t.sets>=5)return;const E1=PC.eff(dt,[{id:t.id,sets:1,rir:t.rir}]);if(!((E1[m]||0)>0))return;
     if(Object.entries(E1).some(([mm,v])=>v>0&&CAP[mm]!=null&&r1((E[mm]||0)+v)>CAP[mm]+1e-9))return;c.push({id:t.id,day:d.day,dayN:E[m]||0,c:E1[m],f:(PC.fatMus(dt,[{id:t.id,sets:1}])[m]||0),i})})}
   c.sort((a,b)=>(b.c>=0.75)-(a.c>=0.75)||a.dayN-b.dayN||b.c-a.c||a.f-b.f||a.i-b.i||a.id.localeCompare(b.id));if(c[0])return Object.assign(c[0],{src:'push'});
@@ -159,6 +171,10 @@ function build(ctx){const {dt,days,lv,A}=ctx,PC=PCm(),PO=POm(),C=PO.CONSTS(dt),o
     if(s.source==='pattern_gap'&&t.flag){const sl=t.flag[2],ex=slotRecs(dt,sl,XS,lv)||F.slice(0,2).map(exOf).filter(Boolean).join(' or ');const old=out.find(x=>x.id===`pg:${sl}`);const o={id:`pg:${sl}`,vals:{slot_lower:slotLow(sl),examples:ex},fix:{label:'Apply',days:f0.days},fixText:f0.preview+'.',section:'balance'};
       if(old)out.splice(out.indexOf(old),1);push(mk(dt,'pattern_gap',o))}
     else if(s.source==='stretch_share'&&m){const old=out.find(x=>x.id===`str:${m}`);if(old){old.fix={label:'Apply',days:f0.days};old.fixText=f0.preview+'.'}}}
+  // vol16b (Coach): an under-minimum item and a no-direct-exercise (pattern gap) item for the same muscle are ONE item: the under-minimum
+  // line (its fix already adds the direct exercise, see addCand) absorbs the slot gap whose primary_muscles include that muscle.
+  for(const u of out.filter(f=>f&&f.kind==='weekly_needs_sets'&&f.muscle)){const pg=out.filter(f=>f&&f.kind==='pattern_gap'&&/^pg:/.test(f.id)&&((SLOT[f.id.slice(3)]||{}).primary_muscles||[]).includes(u.muscle));
+    for(const g of pg){out.splice(out.indexOf(g),1);(u.merged=u.merged||[]).push(g.id)}}
   const seen=new Set();return out.filter(f=>f&&(seen.has(f.id)?false:(seen.add(f.id),true)))}
 // ranking (flag_copy.ranking): higher score, then warn before info, then day mon..sun, then muscle A-Z
 const ord=(a,b)=>b.score-a.score||(a.severity==='warn'?0:1)-(b.severity==='warn'?0:1)||ORDER.indexOf(a.day||'mon')-ORDER.indexOf(b.day||'mon')||String(a.muscle||'').localeCompare(String(b.muscle||''));

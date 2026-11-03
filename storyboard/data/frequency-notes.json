@@ -611,18 +611,6 @@
     "id": "freq_one_day",
     "polarity": "negative",
     "muscles": [
-     "upper_back"
-    ],
-    "text": "Upper back: only Wednesday this week; a second day would make its sets easier to do well.",
-    "link": {
-     "muscle": "upper_back",
-     "anchor": "deepdive-upper_back-frequency"
-    }
-   },
-   {
-    "id": "freq_one_day",
-    "polarity": "negative",
-    "muscles": [
      "calves"
     ],
     "text": "Calves: only Wednesday this week; a second day would make its sets easier to do well.",
@@ -677,6 +665,18 @@
     "link": {
      "muscle": "quads",
      "anchor": "deepdive-quads-frequency"
+    }
+   },
+   {
+    "id": "freq_two_plus",
+    "polarity": "positive",
+    "muscles": [
+     "upper_back"
+    ],
+    "text": "Upper back: trained on 2 days, so its sets are spread out.",
+    "link": {
+     "muscle": "upper_back",
+     "anchor": "deepdive-upper_back-frequency"
     }
    },
    {
