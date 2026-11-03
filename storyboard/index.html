@@ -10,7 +10,10 @@
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="noindex">
 <title>ApeChit · Storyboard</title>
-<link rel="icon" href="assets/logo/icon-black-v3.png">
+<!-- vol16b QC: the tab icon (83 KB) is added once the full data is in (sb:full, or 30 s at most), so it doesn't share bandwidth with the
+     first-screen files on a slow link. apple-touch-icon stays in the markup (browsers only fetch it when the page is added to a home screen). -->
+<link rel="icon" id="sbicon" href="data:,"><!-- empty placeholder so the browser doesn't ask for /favicon.ico meanwhile -->
+<script>(function(){var d=false;function f(){if(d)return;d=true;var l=document.getElementById('sbicon');l.href='assets/logo/icon-black-v3.png'}addEventListener('sb:full',f,{once:true});setTimeout(f,30000)})()</script>
 <link rel="apple-touch-icon" href="assets/logo/icon-black-v3.png">
 <!-- theme override before first paint (Settings › Appearance; localStorage apechit.sb.theme = system | light | dark) -->
 <script>try{var t=localStorage.getItem('apechit.sb.theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>

@@ -67,5 +67,22 @@
    "src_bytes": 470699,
    "min_bytes": 224350
   }
+ },
+ "rest": {
+  "exercises.json": {
+   "slim_md5": "0fae8a80fe7ada3c7a9c6ddbeef3a478",
+   "rest_md5": "f8583bd3a389639756081f28a7d2a603",
+   "rest_bytes": 269920
+  },
+  "rules.json": {
+   "slim_md5": "66da4a91dd79d8da48cfbb2fb7754c18",
+   "rest_md5": "fe863329a2a736b856acb45497497f7a",
+   "rest_bytes": 95749
+  },
+  "volume-model.json": {
+   "slim_md5": "b6148442f841626165e7ddcdc6feef96",
+   "rest_md5": "5df61bf59ef35bd3344675a47985a638",
+   "rest_bytes": 185344
+  }
  }
 }

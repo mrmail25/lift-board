@@ -2094,3 +2094,17 @@ body.sb-wait::before{content:"";position:fixed;left:0;top:0;height:3px;width:100
 body.sb-wait{cursor:progress}
 @keyframes sbwait{from{background-position:-50% 0}to{background-position:150% 0}}
 @media (prefers-reduced-motion:reduce){body.sb-wait::before{animation:none;background:var(--accent,#c0392b);opacity:.6}}
+
+/* vol16b QC no-dividers (Nov 2, 2026): Mr Dude wants no divider lines between rows anywhere. Every row separator in this file is switched
+   off here (same selectors, so equal specificity, later wins) and rows keep their padding (a little more where the line used to do the work).
+   Kept on purpose, not row dividers: card outlines (box-shadow 0 0 0 .5px), the tab bar's top edge (.tabs), the sticky section header edge
+   (.asech, shows where scrolled rows slide under it), the target line in sparklines (.spark>b) and the dashed legend key (.pwleg .pwk2). */
+.row+.row::before,.swipe+.swipe::before{border-top:0}
+.day li,.cal-f,.head,.bias,.act2,.best,.cue2,.relr,.band+.band,.pt,.myth,.alt2,.fxr,.ghead.cath,.pcr,.pcfoot,.pcap,.ash,.ckr,.sgr,.nrow,
+.nxadd+.nxadd,.papl,.povmorel,.wmr,.dmsr,.fa-mr,.fa-sheet .row,.fa-panel .row,.fa-sheet .nl a,.fa-panel .nl a,.fa-sheet .cit,.fa-panel .cit,
+.fa-sheet .kv,.fa-sheet .nla,.fa-sheet .fr{border-top:0}
+.pr,.cmp,.pth,.pmr,.pshmh,.mrow,.mrow.mrh,.rhr,.mgo,.vr13,.vrx,.fl14,.pr14{border-bottom:0}
+.fa-sheet .row,.fa-panel .row,.fa-sheet .row:first-of-type{padding:7px 0}
+.fa-sheet .fr,.fa-sheet .fr:first-child{padding:8px 0}
+.fa-sheet .nla,.fa-sheet .nla:first-child,.fa-sheet .nl a{padding:7px 0}
+.ghead.cath{padding-top:22px}

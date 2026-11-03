@@ -16,4 +16,46 @@ for f in FILES:
     open(os.path.join(D, 'min', f), 'wb').write(out)
     man['files'][f] = {'src_md5': md5(src), 'min_md5': md5(out), 'src_bytes': len(src), 'min_bytes': len(out)}
     print(f'{f:32s} {len(src):>8d} -> {len(out):>8d}  src {md5(src)}')
+# vol16b QC: data/rest/<f> = the full file MINUS Coach's first-screen slim (data/first-screen/<f>), so the after-paint upgrade downloads only
+# what the slim left out (not the slim's bytes twice). Stops if a slim is not a strict subset of its full file (kept sections must be identical)
+# or if slim + rest does not rebuild the full file exactly. The app merges with the same rule (sb.js upgradeFull).
+def rest_of(name, full, slim):
+    bad = [k for k in slim if k not in full or (k != 'exercises' and slim[k] != full[k])]
+    if name != 'exercises.json' and bad: sys.exit(f'STOP: {name} slim section(s) differ from the full file: {bad[:5]}')
+    out = {k: v for k, v in full.items() if k not in slim}
+    if name == 'exercises.json':
+        if [e['id'] for e in slim['exercises']] != [e['id'] for e in full['exercises']]: sys.exit('STOP: exercises slim ids/order differ')
+        rx = []
+        for se, fe in zip(slim['exercises'], full['exercises']):
+            if any(k not in fe or fe[k] != se[k] for k in se): sys.exit(f"STOP: exercises slim field differs for {se['id']}")
+            extra = {k: v for k, v in fe.items() if k not in se}
+            if extra: rx.append(dict(id=fe['id'], **extra))
+        out['exercises'] = rx
+        if [k for k in slim if k not in full or (k != 'exercises' and slim[k] != full[k])]: sys.exit('STOP: exercises slim top-level differs')
+    return out
+def merge(name, slim, rest):
+    m = json.loads(json.dumps(slim))
+    if name == 'exercises.json':
+        by = {e['id']: e for e in m['exercises']}
+        for x in rest.get('exercises', []):
+            e = by[x['id']]
+            for k, v in x.items():
+                if k not in e: e[k] = v
+        for k, v in rest.items():
+            if k != 'exercises' and k not in m: m[k] = v
+    else:
+        for k, v in rest.items():
+            if k not in m: m[k] = v
+    return m
+os.makedirs(os.path.join(D, 'rest'), exist_ok=True)
+man['rest'] = {}
+for f in ['exercises.json', 'rules.json', 'volume-model.json']:
+    sp = os.path.join(D, 'first-screen', f)
+    if not os.path.exists(sp): continue
+    full = json.loads(open(os.path.join(D, f), 'rb').read()); sb = open(sp, 'rb').read(); slim = json.loads(sb)
+    rest = rest_of(f, full, slim); out = json.dumps(rest, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
+    if merge(f, slim, json.loads(out)) != full: sys.exit(f'STOP: {f} slim + rest does not rebuild the full file')
+    open(os.path.join(D, 'rest', f), 'wb').write(out)
+    man['rest'][f] = {'slim_md5': md5(sb), 'rest_md5': md5(out), 'rest_bytes': len(out)}
+    print(f'rest/{f:27s} {len(out):>8d}  slim {md5(sb)}')
 open(os.path.join(D, 'min', 'manifest.json'), 'w').write(json.dumps(man, indent=1))

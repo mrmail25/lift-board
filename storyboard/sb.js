@@ -126,12 +126,17 @@ const srcLine=n=>!n||!n.short?'':`<p class="ptsrc">Source: ${n.url?`<a href="${n
 // Start-up files come from data/min/ (tools/min-data.py: whitespace-free copies of Coach's verified files, same parse, md5s in
 // data/min/manifest.json); a missing min copy falls back to the original.
 const MIN=new Set(['exercises.json','rules.json','targets.json','patterns.json','splits.json','volume-model.json','splits-efficient-diff.json','splits-efficient.json','fatigue.json','custom-exercise-defaults.json','templates.json']);
-const getJ0=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
-const getJF=u=>{const n=u.startsWith(DATA)?u.slice(DATA.length):null;return n&&MIN.has(n)?getJ0(DATA+'min/'+n).then(j=>j||getJ0(u)):getJ0(u)};
+const getJ0=(u,pr)=>fetch(u,{cache:'no-cache',priority:pr||'auto'}).then(r=>r.ok?r.json():null).catch(()=>null);
+const getJF=(u,pr)=>{const n=u.startsWith(DATA)?u.slice(DATA.length):null;return n&&MIN.has(n)?getJ0(DATA+'min/'+n,pr).then(j=>j||getJ0(u,pr)):getJ0(u,pr)};
 // vol16b: Coach's first-screen slims (data/first-screen/, whole sections only) are fetched first for these three; the full file follows after
 // first paint (upgradeFull). SLIMOBJ marks a parsed slim so the app knows an upgrade is still due; a missing slim falls back to min/ then the original.
 const SLIM=new Set(['exercises.json','rules.json','volume-model.json']),SLIMOBJ=new WeakSet();
-const getJ=u=>{const n=u.startsWith(DATA)?u.slice(DATA.length):null;if(n&&SLIM.has(n))return getJ0(DATA+'first-screen/'+n).then(j=>{if(j){SLIMOBJ.add(j);return j}return getJF(u)});return getJF(u)};
+// vol16b QC: the full files are fetched at low fetch priority while the start-up runs (prefetchFull below), so taps can go live as soon as the
+// first screen is painted; the slims and other start-up files keep normal/high priority.
+// vol16b QC: the upgrade downloads data/rest/<f> (the full file minus the slim, built and verified by tools/min-data.py), not the whole file
+// again; a missing rest file falls back to the full file. Fetched at low priority the moment the start-up files are in (not after first paint).
+const FULLPRE={};const prefetchFull=()=>{for(const n of SLIM)if(!FULLPRE[n])FULLPRE[n]=getJ0(DATA+'rest/'+n,'low').then(j=>j||getJF(DATA+n,'low'))};
+const getJ=u=>{const n=u.startsWith(DATA)?u.slice(DATA.length):null;if(n&&SLIM.has(n))return getJ0(DATA+'first-screen/'+n,'high').then(j=>{if(j){SLIMOBJ.add(j);return j}return getJF(u)});return getJF(u)};
 // vol16b: rules.json (463 KB) was fetched twice at start-up (loadVB + the ranking data); one shared request now (readers only copy from it)
 const RULESJ=new Map();const getJ1=u=>{if(!RULESJ.has(u))RULESJ.set(u,getJ(u));return RULESJ.get(u)};
 async function loadVB(){const u=DATA+'rules.json',j=await getJ1(u),b=j&&(j.volume_bands||(j.rules||{}).volume_bands);if(b&&typeof b.red_factor==='number'){Object.assign(VB,b,{src:u});return VB}if(!UNLOADING)console.warn('rules.json volume_bands missing: over-volume red disabled');return VB}
@@ -920,7 +925,10 @@ const APE_SRCS=[...new Set(Object.values(APE_FIG).map(f=>f.src))];
 // on the finish screen's rank-up tile, 58e/f). Re-spelling the same URL (assets/... <-> ./assets/...) makes WebKit resolve the mask again
 // from its cache and paint it, with no flash. Run when each art file loads and shortly after every render.
 const afmKick=()=>$$('.afm').forEach(m=>{const v=m.style.getPropertyValue('--afsrc');if(v)m.style.setProperty('--afsrc',v.includes('url(./')?v.replace('url(./','url('):v.replace('url(','url(./'))});
-if(typeof Image!=='undefined')APE_SRCS.forEach(s=>{const im=new Image();im.decoding='async';im.onload=()=>requestAnimationFrame(afmKick);im.src=`assets/ladder/${s}.svg`});
+// vol16b QC: on a Plan or Train start-up the preload waits for the full data (sb:full), so its 117 KB doesn't share bandwidth with the first-screen
+// files; any other start route (Ladder, Progress, a deep link) preloads at once as before. afmKick still repaints when an art file lands late.
+const apePre=()=>{if(apePre.done)return;apePre.done=1;APE_SRCS.forEach(s=>{const im=new Image();im.decoding='async';im.onload=()=>requestAnimationFrame(afmKick);im.src=`assets/ladder/${s}.svg`})};
+if(typeof Image!=='undefined'){const h0=(location.hash||'').replace(/^#\/?/,'').split(/[/?]/)[0];if(h0&&h0!=='build'&&h0!=='train')apePre();else{addEventListener('sb:full',apePre,{once:true});setTimeout(apePre,30000)}}
 function apeFig(k,cls=''){const id=typeof k==='string'?k:APE_ORDER[Math.max(0,Math.min(6,k|0))],f=APE_FIG[id]||APE_FIG.prime,x=!!f.x;
   return `<i class="afig${x?' afx':''} ${cls}" data-afig="${id}" data-afsrc="${f.src}" aria-hidden="true"><i class="afm" style="--afsrc:url(assets/ladder/${f.src}.svg)"></i></i>`}
 // inline SVG (same path as assets/ladder/lock.svg) so it never waits on a mask load; the box is the lock's left half, the gradient runs
@@ -1779,15 +1787,16 @@ async function loadRank(){if(RD)return RD;if(RDP)return RDP;
   // vol16b: full exercises / rules / volume-model after first paint. Slims keep whole sections with identical values, so the upgrade only ADDS
   // what the slim left out, in place (same objects: custom-exercise registration, memo keys and anything holding RD stay valid).
   async function upgradeFull(R){const need=[['exercises.json',R.exl],['rules.json',R.rules],['volume-model.json',R.VM]].filter(([,o])=>o&&SLIMOBJ.has(o));
-    if(need.length){let got=await Promise.all(need.map(([n])=>getJF(DATA+n)));if(got.some(x=>!x)){await new Promise(r=>setTimeout(r,3000));got=await Promise.all(need.map(([n],k)=>got[k]||getJF(DATA+n)))}   // one retry
+    if(need.length){let got=await Promise.all(need.map(([n])=>FULLPRE[n]||getJF(DATA+n,'low')));if(got.some(x=>!x)){await new Promise(r=>setTimeout(r,3000));got=await Promise.all(need.map(([n],k)=>got[k]||getJF(DATA+n)))}   // one retry
       need.forEach(([n,o],k)=>{const F=got[k];if(!F)return;
         if(n==='exercises.json'){for(const e of F.exercises||[]){const x=R.EX[e.id];if(x&&!x.custom){for(const f in e)if(!(f in x))x[f]=e[f]}}for(const k2 in F)if(!(k2 in o))o[k2]=F[k2]}
         else for(const k2 in F)if(!(k2 in o))o[k2]=F[k2];SLIMOBJ.delete(o)})}
     const ok=!(SLIMOBJ.has(R.exl)||SLIMOBJ.has(R.rules)||(R.VM&&SLIMOBJ.has(R.VM)));if(!ok&&!UNLOADING)console.warn('full data files did not load: staying on the first-screen slims');
     R.FULL=true;R.FULL_OK=ok;try{window.dispatchEvent(new CustomEvent('sb:full'))}catch(e){}}   // the gate opens either way (degraded beats frozen)
   async function lateLoad(R){const fire=n=>{try{window.dispatchEvent(new CustomEvent(n))}catch(e){}};
-    TJP=getJ(DATA+(R.TJF||'templates.json')).then(j=>{R.TJ=j;fire('sb:tj');return j});   // set before the full files so template routes can wait on it
-    await upgradeFull(R);await TJP;   // templates first: the template picker and slot trays read it
+    const upP=upgradeFull(R);   // vol16b QC: templates queue behind the full-file rest so they don't share its bandwidth (taps go live first)
+    TJP=upP.then(()=>getJ(DATA+(R.TJF||'templates.json'))).then(j=>{R.TJ=j;fire('sb:tj');return j});   // set before the full files so template routes can wait on it
+    await upP;await TJP;   // templates first: the template picker and slot trays read it
     const L=[['templates-slim.json','TREF'],['check-priority-weights.json','CPW'],['frequency-notes.json','FN'],['progress-rules.json','PR2'],['evolution-rules.json','EVO']];
     await Promise.all(L.map(([f,k])=>getJ(DATA+f).then(j=>{if(j)R[k]=j})));
     // the demo log is only used while the user has no saved log; logLoad() picks it up on its next call, LOGV bump busts the Progress caches
@@ -1796,6 +1805,7 @@ async function loadRank(){if(RD)return RD;if(RDP)return RDP;
   RDP=(async()=>{const opt=['analysis-display.json','custom-exercise-defaults.json'].map(n=>getJ(DATA+n));   // vol16b: templates.json (Plan never reads it before a template tap) and the rest load after ready (lateLoad)   // vol16b: only what the first screen (Plan) needs; the rest loads after ready (LATE below)
     const late=['volume-model.json','splits-efficient-diff.json','splits-efficient.json','fatigue.json'].map(n=>getJ(DATA+n));   // vol16b: fetched in parallel with the rest (were 4 sequential round trips)
     const [exercises,rules,targets,patterns,splits]=await Promise.all(['exercises.json','rules.json','targets.json','patterns.json','splits.json'].map(n=>n==='rules.json'?getJ1(DATA+n):getJ(DATA+n)));
+    prefetchFull();   // the rest of the full files, in parallel with the remaining start-up work
     const [disp,cxd]=await Promise.all(opt),slog=null;   // vol16b: sample-log.json (315 KB demo log) loads after ready (lateLoad)   // custom-exercise defaults fetched with the rest, so a reload never aborts it mid-chain
     if(!(exercises&&rules&&targets&&patterns&&splits)){if(!UNLOADING)console.warn('ranking data missing: suggestions fall back to library order');return null}
     const tf=(((rules.templates||{}).file)||'templates.json').replace(/^data\//,'');
@@ -1963,7 +1973,7 @@ const AFTER={logDay:afterLogDay,train:afterTrain,workout:afterWorkout,finish:aft
 let NAV=0;
 function go(h){if(location.hash===h)route();else location.hash=h}
 function route(){
-  if(RD&&!RD.FULL){const r0=(location.hash||'#train').slice(1);if(r0!=='build'){const v=$('#view');if(v&&!v.innerHTML.trim())v.innerHTML='<p class="foot" style="padding:32px 20px">Loading…</p>';fullP().then(()=>route());return}}   // vol16b: other screens need the full files
+  if(RD&&!RD.FULL){const r0=(location.hash||'#train').slice(1);if(r0!=='build'&&r0!=='train'){const v=$('#view');if(v&&!v.innerHTML.trim())v.innerHTML='<p class="foot" style="padding:32px 20px">Loading…</p>';fullP().then(()=>route());return}}   // vol16b: Plan and Train paint from the slims (Coach's rules slim carries rules.progress); other screens wait for the full files
   if(RD&&!RD.TJ&&TJP&&/^#?build-(template|tray-slot|new)/.test(location.hash.slice(1))){TJP.then(()=>route());return}   // vol16b: templates.json is late
   let r=(location.hash||'#train').slice(1),def=ROUTES[r],arg=null;
   if(!def&&/^learn-ex-/.test(r)){def=['learnEx',''];arg=r.slice(9)}
