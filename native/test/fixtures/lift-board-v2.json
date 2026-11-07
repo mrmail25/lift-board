@@ -1,0 +1,88 @@
+{
+  "app": "lift-board",
+  "version": 2,
+  "coachNote": "keep this",
+  "days": [
+    [{"id": "barbell-bench-press", "sets": 3, "note": "board tile"}],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "labels": ["Push", "", "", "", "", "", ""],
+  "loaded": "my:sp1",
+  "mySplits": [
+    {
+      "id": "sp1",
+      "name": "My upper lower",
+      "days": [[{"id": "back-squat", "sets": 4}], [], [], [], [], [], []],
+      "labels": ["Legs", "", "", "", "", "", ""],
+      "saved": "2026-01-02T00:00:00.000Z"
+    },
+    {"id": "bad", "name": "Short split", "days": []}
+  ],
+  "customExercises": [
+    {
+      "id": "custom-press",
+      "name": "My press",
+      "ratings": {"chest": 1},
+      "photo": "data:image/png;base64,AAAA"
+    }
+  ],
+  "youtube": {"custom-press": "https://youtu.be/abcdefghijk"},
+  "analytics": {"sleep": 7},
+  "logs": {
+    "schema": 2,
+    "sessions": [
+      {
+        "id": "s-web",
+        "schema": 2,
+        "status": "completed",
+        "startedAt": "2026-11-03T16:00:00.000Z",
+        "endedAt": "2026-11-03T17:00:00.000Z",
+        "unit": "lb",
+        "label": "Upper A",
+        "notes": "solid",
+        "coachOnly": "field stays"
+      },
+      {
+        "id": "s-old",
+        "schema": 2,
+        "status": "completed",
+        "startedAt": "2020-01-05T12:00:00.000Z",
+        "unit": "lb",
+        "label": "Old day",
+        "notes": ""
+      }
+    ],
+    "entries": [
+      {"id": "e-web", "sessionId": "s-web", "order": 0, "exerciseId": "barbell-bench-press", "nameSnapshot": "Barbell Bench Press", "notes": "", "skipped": false},
+      {"id": "e-old", "sessionId": "s-old", "order": 0, "exerciseId": "pull-up", "nameSnapshot": "Pull-Up", "notes": "", "skipped": false}
+    ],
+    "sets": [
+      {"id": "t1", "entryId": "e-web", "sessionId": "s-web", "idx": 0, "kind": "working", "load": 185, "reps": 5, "rir": 2, "done": true, "tag": "smooth"},
+      {"id": "t2", "entryId": "e-web", "sessionId": "s-web", "idx": 1, "kind": "working", "load": 185, "reps": 5, "rir": 1, "done": true},
+      {"id": "t-old", "entryId": "e-old", "sessionId": "s-old", "idx": 0, "kind": "working", "load": 100, "reps": 8, "done": true}
+    ],
+    "prs": [{"setId": "t1", "exerciseId": "barbell-bench-press", "kind": "weight", "sessionId": "s-web", "value": 185}],
+    "settings": {"unit": "lb", "hardRIR": 3},
+    "bodyweights": [{"date": "2026-11-01", "value": 180, "unit": "lb"}],
+    "exNotes": {"barbell-bench-press": "pause on chest"},
+    "routines": [
+      {
+        "id": "pub1",
+        "name": "Published",
+        "version": 1,
+        "publishedAt": "2026-10-01T00:00:00.000Z",
+        "source": "board",
+        "days": [[{"id": "pull-up", "sets": 3}], [], [], [], [], [], []],
+        "labels": ["Pull", "", "", "", "", "", ""]
+      }
+    ],
+    "deloads": [{"start": "2026-08-01"}],
+    "decimalFix": {"shown": false, "sets": {}},
+    "readiness": []
+  }
+}

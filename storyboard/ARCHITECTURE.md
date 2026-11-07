@@ -67,4 +67,6 @@ No threshold, label or weight is a literal in TypeScript. Tests rewrite a key (f
 Releases: run Jest (must be green), then the Maestro flows on both platforms, then the build. Data-only changes can go out as an EAS Update.
 
 ## Not in scope yet
-No app code has been written. Accounts, cloud sync and Apple Health/Google Fit wait for a separate decision.
+Accounts, cloud sync, and Apple Health wait for a separate decision. Optional iCloud backup is undecided and is not implemented.
+
+The first native foundation lives in `native/` (Expo, React Native, SQLite). See `native/README.md`. The web storyboard and the legacy site stay as they are.
