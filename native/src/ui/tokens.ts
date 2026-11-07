@@ -1,0 +1,36 @@
+/** Light and dark values copied from storyboard/tokens.css. Screens read this module only. */
+export const light = {
+  ink: '#000000',
+  text2: '#5E5E63',
+  text3: '#68686D',
+  paper: '#FFFFFF',
+  bg: '#F2F2F4',
+  fill: '#E9E9EC',
+  line: 'rgba(0,0,0,0.09)',
+  chrome: '#F9F9FA',
+  accent: '#E8430C',
+  accentPress: '#C2380A',
+  onInk: '#FFFFFF',
+  danger: '#E5242B',
+  tabOff: '#5E5E63',
+  surfaceInk: '#000000',
+  onSurface: '#FFFFFF',
+};
+export const dark = {
+  ink: '#F2F2F4',
+  text2: '#A1A1A8',
+  text3: '#8E8E93',
+  paper: '#1C1C1E',
+  bg: '#000000',
+  fill: '#2C2C2E',
+  line: 'rgba(255,255,255,0.12)',
+  chrome: '#18181A',
+  accent: '#F0541A',
+  accentPress: '#FF8257',
+  onInk: '#000000',
+  danger: '#FF453A',
+  tabOff: '#8E8E93',
+  surfaceInk: '#2C2C2E',
+  onSurface: '#F2F2F4',
+};
+export type Theme = typeof light;

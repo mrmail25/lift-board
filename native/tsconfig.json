@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "types": ["jest", "node"]
+  },
+  "include": ["app", "src", "test", "app.json"]
+}
