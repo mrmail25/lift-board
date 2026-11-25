@@ -1,0 +1,17 @@
+{
+  "name": "ApeChit",
+  "short_name": "ApeChit",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#E8590C",
+  "theme_color": "#F2F2F4",
+  "icons": [
+    {
+      "src": "assets/logo/icon-orange.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
