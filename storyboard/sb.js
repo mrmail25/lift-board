@@ -91,15 +91,13 @@ function startWorkout(title,list,o={}){const prev={};WK0.ex.forEach(x=>prev[x.id
   WK.title=title;WK.sub=o.sub||'';WK.ref=o.ref||null;WK.empty=!!o.empty;WK.notes={};WK.rest={left:0,total:180};
   WK.ex=list.map(e=>{const p=prev[e.id],eq=((EX[e.id]||{}).eq)||'';const ps=p?p.sets.filter(s=>!s.warm).map(s=>s.p):[];
     return {id:e.id,bar:/barbell|trap bar|smith/.test(eq)||/ez-bar/.test(e.id),cue:p?p.cue:'',sets:Array.from({length:e.sets||e.s||3},(_,i)=>({p:ps[i]||ps[ps.length-1]||''}))}});
-  applyOrder();resetClock(0);S.live=true;S.demo=false;S.session=true;startTick()} // restart the 1 s tick so the display lands on whole seconds from 0:00
+  applyOrder();resetClock(0);S.live=true;S.demo=false;S.session=true;startTick();saveLive()} // restart the 1 s tick so the display lands on whole seconds from 0:00
 const setsDone=()=>WK.ex.reduce((a,x)=>a+x.sets.filter(s=>s.done).length,0),setsAll=()=>WK.ex.reduce((a,x)=>a+x.sets.length,0);
 const clockTime=t=>{const d=new Date(t);let h=d.getHours(),m=d.getMinutes();const ap=h>=12?'PM':'AM';h=h%12||12;return `${h}:${String(m).padStart(2,'0')} ${ap}`};
-const LOGS={ // Oct 2026, day -> workout
- 1:{n:'Upper A',min:57,sets:18,vol:'20,880',pr:0},2:{n:'Lower A',min:54,sets:16,vol:'27,340',pr:1},5:{n:'Upper B',min:55,sets:16,vol:'14,920',pr:0},
- 6:{n:'Lower B',min:51,sets:15,vol:'25,610',pr:0},8:{n:'Upper A',min:59,sets:18,vol:'21,060',pr:1},9:{n:'Lower A',min:53,sets:16,vol:'27,900',pr:0},
- 12:{n:'Upper B',min:56,sets:16,vol:'15,180',pr:0},13:{n:'Lower B',min:50,sets:15,vol:'26,050',pr:0},15:{n:'Upper A',min:58,sets:18,vol:'21,450',pr:2},
- 16:{n:'Lower A',min:55,sets:16,vol:'28,120',pr:1},19:{n:'Upper B',min:57,sets:16,vol:'15,400',pr:0},20:{n:'Lower B',min:52,sets:15,vol:'26,300',pr:0}};
-const TODAY=24; // the storyboard's today: Sat Oct 24, 2026 (as_of of the shared sample log)
+const LOGS={}; // day-of-month -> workout, filled from the saved log for the month on screen
+function ymd(d){const p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`}
+function monthPrefix(){return `${S.year}-${String(S.month+1).padStart(2,'0')}`}
+function todayNum(){const n=new Date();return S.year===n.getFullYear()&&S.month===n.getMonth()?n.getDate():0}
 // Coach's real swap-tag wording (data/rules.json swap_tags), hardcoded examples
 const SWAPS={
  'barbell-bench-press':[{id:'dumbbell-bench-press',tags:['More stretch emphasis','Lower loading potential']},{id:'machine-chest-press',tags:['More stable','Less systemic fatigue','Lower loading potential']}],
@@ -151,7 +149,7 @@ const UNIT_K='apechit.sb.unit',KG_LB=2.20462262;
 // Light/Dark set html[data-theme], which tokens.css uses to override the system choice. index.html applies it before first paint.
 const THEME_K='apechit.sb.theme',THEMES=['system','light','dark'];
 const getTheme=()=>{try{const t=localStorage.getItem(THEME_K);return THEMES.includes(t)?t:'system'}catch(e){return 'system'}};
-function setTheme(t){t=THEMES.includes(t)?t:'system';try{localStorage.setItem(THEME_K,t)}catch(e){}const h=document.documentElement;if(t==='system')h.removeAttribute('data-theme');else h.setAttribute('data-theme',t);return t}
+function setTheme(t){t=THEMES.includes(t)?t:'system';try{localStorage.setItem(THEME_K,t)}catch(e){}const h=document.documentElement;if(t==='system')h.removeAttribute('data-theme');else h.setAttribute('data-theme',t);touchSettings();return t}
 // Units everywhere (round 2, CoS): fixture loads are lb. In kg they are converted and rounded to that equipment's kg step
 // (rules.json logger.load_step.kg[equipment], e.g. barbell 2.5, dumbbell 2); kg typed by the user stays as typed (sets remember s.wu).
 const eqOf=id=>((typeof RD!=='undefined'&&RD&&RD.EX[id])||{}).equipment||'default';
@@ -162,7 +160,7 @@ const uw=(v,id,from='lb')=>cvt(v,from,S.unit,id);                       // one l
 const uP=(p,id)=>p?String(p).replace(/(\d+(?:\.\d+)?)(?= ×)/g,m=>uw(m,id)):p;   // "225 × 8" -> "102.5 × 8"
 const uTxt=(t,id)=>S.unit==='lb'||!t?t:String(t).replace(/([+−-]?)(\d[\d,]*(?:\.\d+)?) lb\b/g,(m,sg,n)=>{const v=+n.replace(/,/g,'');return sg+(v>=1000?Math.round(v/KG_LB).toLocaleString('en-US'):uw(v,id))+' kg'}).replace(/(\d+(?:\.\d+)?)(?= ×)/g,m=>uw(m,id));
 const isDark=()=>{const t=document.documentElement.getAttribute('data-theme');return t?t==='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)};
-const S={tab:'train',route:'train',session:false,pick:null,day:{},buildDay:0,unit:(()=>{try{return localStorage.getItem('apechit.sb.unit')==='kg'?'kg':'lb'}catch(e){return 'lb'}})(),bar:'Olympic',plate:225,logSel:15,month:9,year:2026,split:1};
+const S={tab:'train',route:'train',session:false,pick:null,day:{},buildDay:0,unit:(()=>{try{return localStorage.getItem('apechit.sb.unit')==='kg'?'kg':'lb'}catch(e){return 'lb'}})(),bar:'Olympic',plate:225,logSel:(()=>{try{return new Date().getDate()}catch(e){return 1}})(),month:(()=>{try{return new Date().getMonth()}catch(e){return 0}})(),year:(()=>{try{return new Date().getFullYear()}catch(e){return 2026}})(),split:1};
 const fmt=s=>{s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')};
 let tick=null;
 function startTick(){clearInterval(tick);tick=setInterval(()=>{if(WK.rest.left>0)WK.rest.left--;paintTime()},1000)}
@@ -273,7 +271,7 @@ function trashSheet(){
     <p>${WK.title} · ${Math.round(WK.elapsed/60)} min · ${setsDone()} set${setsDone()===1?'':'s'} logged. Discarding deletes it; nothing is saved to your Log.</p>
     <button class="btn block danger-fill" data-x="discard">Discard workout</button><button class="btn block grey" data-x="resume">Resume workout</button></div>`});
   s.el.addEventListener('click',e=>{const a=e.target.closest('[data-x]');if(!a)return;s.close();
-    if(a.dataset.x==='discard'){S.session=false;S.live=false;S.demo=false;renderBar();toast('Workout discarded')}else go('#workout')});
+    if(a.dataset.x==='discard'){S.session=false;S.live=false;S.demo=false;if(window.APE)APE.put('session',null);renderBar();toast('Workout discarded')}else go('#workout')});
   return s;
 }
 function confirmSheet(t,p,btn,fn){const c=sheet({body:`<div class="act-sheet"><h3>${t}</h3><p>${p}</p><button class="btn block danger-fill" data-x="1">${btn}</button><button class="btn block grey" data-x="0">Cancel</button></div>`});
@@ -308,7 +306,7 @@ function routineCard(r,mode){
 V.train=()=>{
   const act=ROUTINES.find(r=>r.active),pick=S.pick&&S.pick!==act.id?S.pick:null;
   return header('Train',bookBtn)+
-  `<div class="hello sub">Saturday, October 24</div>${trainDeloadHtml()}
+  `<div class="hello sub">${new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</div>${trainDeloadHtml()}
    <div class="rts">${routineCard(act,pick?'closed':'open')}</div>
    <div class="sec"><h2>Library</h2><span class="more">${ROUTINES.length-1} published</span></div>
    <div class="rts lib">${ROUTINES.filter(r=>!r.active).map(r=>routineCard(r,r.id===pick?'open':'closed')).join('')}</div>
@@ -373,7 +371,7 @@ function renderWk(){const x=$('#wkx');if(!x)return;x.innerHTML=WK.ex.map(exBlock
 function renderEx(xi){const old=$(`.exb[data-xi="${xi}"]`);if(!old)return renderWk();const t=document.createElement('div');t.innerHTML=exBlock(WK.ex[xi],xi);old.replaceWith(t.firstElementChild);bindSwipes($(`.exb[data-xi="${xi}"]`));renderBar()}
 // keep typed values in the workout model, so a re-render (delete, undo, swap) never loses them
 function syncField(f){const r=f.closest('.srow');if(!r||r.dataset.xi==null)return;const s=((WK.ex[+r.dataset.xi]||{}).sets||[])[+r.dataset.si];if(!s)return;
-  if(f.dataset.kind==='w'){s.wv=f.value;s.wu=S.unit;s.wauto=f.classList.contains('auto')}else s.rv=f.value}
+  if(f.dataset.kind==='w'){s.wv=f.value;s.wu=S.unit;s.wauto=f.classList.contains('auto')}else s.rv=f.value;saveLive()}
 const DEL={
  set(row){const xi=+row.dataset.xi,si=+row.dataset.si,ex=WK.ex[xi];if(!ex)return;const [s]=ex.sets.splice(si,1);
    const lab=s.warm?'Warm-up set':'Set '+(ex.sets.slice(0,si).filter(x=>!x.warm).length+1);
@@ -438,9 +436,10 @@ function wSwap(xi){const ex=WK.ex[xi];if(!ex)return;const old=ex.id;
 // log (LOGH): the session is appended to a copy of the log, then Coach's PR rules (PRS.detect), the e1RM overlay chart, the
 // session body map (sesMus) and the comparisons run on that copy. No canned praise: every line is a number from the logs.
 // A cold-loaded #finish shows the demo workout completed as last time's targets (the bench sets as already entered).
-const FIN_DAY='2026-10-24'; // the storyboard's "today" (Sat, Oct 24; the shared sample log runs to Fri Oct 23)
+const FIN_DAY=ymd(new Date()); // phone calendar day, used only by cold demo routes
 let FIN=null;
-const isoLocal=t=>{const d=new Date(t),p=n=>String(n).padStart(2,'0');return `${FIN_DAY}T${p(d.getHours())}:${p(d.getMinutes())}:00-07:00`};
+const isoLocal=t=>{const d=new Date(t),p=n=>String(n).padStart(2,'0');const off=-d.getTimezoneOffset(),sg=off>=0?'+':'-',a=Math.abs(off);
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}:00${sg}${p(Math.floor(a/60))}:${p(a%60)}`};
 function finDemoSets(){WK0.ex.forEach(x=>{const w=WK.ex.find(e=>e.id===x.id);if(!w)return;
   w.sets.forEach((s,i)=>{if(s.done)return;const m=/^(\d+(?:\.\d+)?)\s*×\s*(\d+)/.exec(s.p||'');if(!m)return;Object.assign(s,{done:true,wv:m[1],rv:m[2]})})})}
 // base (demo only): a function of the saved log giving the history this session lands on (e.g. #finish-plates2: a log before the first 225 bench)
@@ -478,7 +477,35 @@ function finStats(){const F=FIN,H=F.X,u=S.unit,W=F.sets.filter(x=>x.kind==='work
   return {vol,sets:W.length,lastVol,same,cmp,P,streak,thisWeek,plan,total:prev.length+1}}
 const fmtVol=v=>Math.round(v).toLocaleString('en-US');
 const dayLong=iso=>{const d=new Date(iso.slice(0,10)+'T12:00:00');return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})};
-V.finish=()=>{if(!FIN)FIN=finBuild(true);const F=FIN,T=finStats(),u=S.unit,nPR=Object.keys(T.P).length,up=T.cmp.filter(c=>c.c==='up').length,dn=T.cmp.filter(c=>c.c==='down').length,cmpN=T.cmp.filter(c=>!c.first).length;
+function liveSnap(){const rest=Object.assign({},WK.rest||{left:0,total:180});if(rest.left>0)rest.until=Date.now()+rest.left*1000;return {title:WK.title,sub:WK.sub,ref:WK.ref,notes:WK.notes,rest:rest,restLab:WK.restLab,empty:!!WK.empty,ex:JSON.parse(JSON.stringify(WK.ex)),clk:{start:CLK.start,pausedAt:CLK.pausedAt,pausedMs:CLK.pausedMs}}}
+function applyLive(s){if(!s||!Array.isArray(s.ex))return;WK.title=s.title;WK.sub=s.sub||'';WK.ref=s.ref||null;WK.notes=s.notes||{};const rest=s.rest||{left:0,total:180};if(rest.until)rest.left=Math.max(0,Math.ceil((rest.until-Date.now())/1000));WK.rest=rest;WK.restLab=s.restLab||'';WK.empty=!!s.empty;WK.ex=s.ex;if(s.clk){CLK.start=s.clk.start;CLK.pausedAt=s.clk.pausedAt;CLK.pausedMs=s.clk.pausedMs||0}S.live=true;S.demo=false;S.session=true}
+function saveLive(){if(!window.APE)return;APE.schedule('session',S.live?liveSnap():null)}
+function routineState(){const active=ROUTINES.find(r=>r.active);return {active:active&&active.id,next:Object.fromEntries(ROUTINES.map(r=>[r.id,r.next||0])),day:S.day,extra:ROUTINES.filter(r=>r.imported)}}
+function applyRoutines(st){if(!st)return;if(Array.isArray(st.extra))st.extra.forEach(r=>{if(r&&r.id&&!ROUTINES.some(x=>x.id===r.id))ROUTINES.push(r)});if(st.active){ROUTINES.forEach(r=>{r.active=r.id===st.active});ROUTINES.sort((a,b)=>b.active-a.active)}if(st.next)ROUTINES.forEach(r=>{if(st.next[r.id]!=null)r.next=st.next[r.id]});if(st.day)S.day=st.day}
+function persistRoutines(){if(window.APE)APE.schedule('routines',routineState())}
+function commitFinish(){if(!FIN||FIN.cold||FIN.committed)return;const sid='w'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),H=logLoad();
+  const ses=Object.assign({},FIN.ses,{id:sid}),map={};const ents=FIN.ents.map((e,i)=>{const id=sid+'-e'+i;map[e.id]=id;return Object.assign({},e,{id,sessionId:sid})});
+  const sets=FIN.sets.map((t,i)=>Object.assign({},t,{id:sid+'-t'+i,entryId:map[t.entryId]||t.entryId}));
+  H.sessions.push(ses);H.entries.push(...ents);H.sets.push(...sets);FIN.committed=true;logSave();S.live=false;S.session=false;if(window.APE)APE.put('session',null)}
+function gatherSettings(){const o={},keys=['apechit.sb.unit','apechit.sb.theme','apechit.sb.effortScale','apechit.sb.favs','apechit.sb.goals','apechit.sb.bias','apechit.sb.gym','apechit.sb.equip','apechit.sb.wkOrder'];keys.forEach(k=>{try{const v=localStorage.getItem(k);if(v!=null)o[k]=v}catch(e){}});return o}
+function touchSettings(){if(window.APE)APE.schedule('settings',gatherSettings())}
+function applyBag(bag){if(!bag)return;if(bag.settings){for(const [k,v] of Object.entries(bag.settings)){try{if(typeof v==='string')localStorage.setItem(k,v)}catch(e){}}const u=bag.settings['apechit.sb.unit'];if(u==='kg'||u==='lb')S.unit=u;setTheme(getTheme());try{FAV=ld(LSK.fav,FAV);GOALS=ld(LSK.goals,GOALS);BIAS=ld(LSK.bias,BIAS)}catch(e){}}
+  if(bag.log&&!(bag.log.meta&&bag.log.meta.kind==='sample'))LOGH=bag.log;if(bag.plan)window.APE_PLAN=bag.plan;if(bag.session)applyLive(bag.session);if(bag.routines)applyRoutines(bag.routines);
+  if(Array.isArray(bag.customExercises)&&bag.customExercises.length){try{if(!localStorage.getItem(CXK))localStorage.setItem(CXK,JSON.stringify(bag.customExercises))}catch(e){}}}
+async function doBackup(){const state={log:logLoad(),session:S.live?liveSnap():null,plan:window.APE_PLAN||(window.BOARD&&BOARD.exportPlan?BOARD.exportPlan():null),routines:routineState(),settings:gatherSettings(),customExercises:typeof cxList==='function'?cxList():[]};
+  const file=APE.buildBackup(state,new Date());const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(file)],{type:'application/json'}));a.download='apechit-backup.json';a.click();toast('Backup saved')}
+async function doRestore(file){let raw;try{raw=JSON.parse(await file.text())}catch(e){toast('That file is not JSON. Nothing was changed.');return}
+  if(raw&&raw.kind==='apechit.backup'){const chk=APE.validateBackup(raw);if(!chk.ok){toast(chk.message||'Nothing was changed.');return}
+    if(!confirm('Replace the workouts, plan, and settings on this phone with this backup?'))return;const res=await APE.restoreNow(raw);if(!res.ok){toast(res.message||'Nothing was changed.');return}
+    applyBag(res.data);if(res.data.plan&&window.BOARD&&BOARD.importPlan)BOARD.importPlan(res.data.plan);toast('Backup restored');render();return}
+  if(raw&&(raw.app==='lift-board'||Array.isArray(raw.sessions)||(raw.logs&&Array.isArray(raw.logs.sessions)))){const res=APE.importLiftBoard(raw,logLoad());if(!res.ok){toast(res.message||'Nothing was changed.');return}
+    if(!confirm('Add the workouts from this Lift Board file? What is already on this phone stays.'))return;LOGH=res.log;logSave();
+    if(res.plan&&window.BOARD&&BOARD.importPlan)BOARD.importPlan(res.plan);
+    if(res.routines&&res.routines.length){const st=routineState();st.extra=(st.extra||[]).concat(res.routines.filter(r=>!ROUTINES.some(x=>x.id===r.id)));applyRoutines(st);persistRoutines()}
+    if(res.customExercises&&res.customExercises.length){const L=cxList();res.customExercises.forEach(c=>{if(c&&c.id&&!L.some(x=>x.id===c.id))L.push(c)});try{localStorage.setItem(CXK,JSON.stringify(L))}catch(e){}if(window.CUSTOMEX&&RD){CUSTOMEX.register(RD,L);L.forEach(cxMock)}if(window.APE)APE.put('customExercises',L)}
+    toast('Lift Board file added');render();return}
+  toast('This file is not an ApeChit or Lift Board backup. Nothing was changed.')}
+V.finish=()=>{commitFinish();if(!FIN)FIN=finBuild(true);const F=FIN,T=finStats(),u=S.unit,nPR=Object.keys(T.P).length,up=T.cmp.filter(c=>c.c==='up').length,dn=T.cmp.filter(c=>c.c==='down').length,cmpN=T.cmp.filter(c=>!c.first).length;
   const vp=T.lastVol?(T.vol-T.lastVol)/T.lastVol*100:null,vm=withFin(()=>sesMus(F.ses.id)),role=withFin(()=>sesRole(F.ses.id)),rvm=Object.fromEntries(Object.entries(role).map(([m,k])=>[m,HLV[k]])),mw=Object.entries(vm).sort((a,b)=>b[1]-a[1]);
   // facts only, in this order; each line is skipped when its number is not there
   const facts=[nPR?`${nPR} lift${nPR>1?'s':''} with a PR today.`:'',
@@ -612,9 +639,9 @@ function traySheet(){
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const WD=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 function cal(){
-  const first=(new Date(S.year,S.month,1).getDay()+6)%7,n=new Date(S.year,S.month+1,0).getDate(),oct=S.month===9&&S.year===2026;
+  const first=(new Date(S.year,S.month,1).getDay()+6)%7,n=new Date(S.year,S.month+1,0).getDate(),oct=true,today=todayNum();
   let c='';for(let i=0;i<first;i++)c+='<span></span>';
-  for(let d=1;d<=n;d++){const w=oct&&LOGS[d];c+=`<button class="cd ${w?'has':''} ${oct&&d===TODAY?'today':''} ${oct&&d===S.logSel?'sel':''}" data-act="day" data-d="${d}"><span>${d}</span><i></i></button>`}
+  for(let d=1;d<=n;d++){const w=LOGS[d];c+=`<button class="cd ${w?'has':''} ${d===today?'today':''} ${d===S.logSel?'sel':''}" data-act="day" data-d="${d}"><span>${d}</span><i></i></button>`}
   return `<div class="cal card"><div class="cal-h"><button class="my" data-act="month">${MONTHS[S.month]} ${S.year}${I('chevR',2.4)}</button>
     <div class="cal-nav"><button class="ibtn flat" data-act="mprev" aria-label="Previous month">${I('chevL',2.2)}</button><button class="ibtn flat" data-act="mnext" aria-label="Next month">${I('chevR',2.2)}</button></div></div>
     <div class="cal-w">${'MTWTFSS'.split('').map(x=>`<span>${x}</span>`).join('')}</div><div class="cal-g">${c}</div>
@@ -626,17 +653,17 @@ function cal(){
 // the v1 key (the old generated October fixture) is dropped on first load (reset, its shape is not the shared log's).
 // PRs = logic/prs.js (port of Coach's prs.py detect_prs, diffed in test/prs.diff.js) over the whole history, recomputed after every edit.
 const LOG_K='apechit.sb.log.v2',LOG_K1='apechit.sb.log.v1';
-const isoPlus=(st,min)=>new Date(Date.parse(st)+min*6e4-7*36e5).toISOString().slice(0,16)+':00-07:00'; // Oct 2026 is PDT (UTC-7)
+const isoPlus=(st,min)=>isoLocal(new Date(Date.parse(st)+min*6e4));
 const entSid=H=>new Map((H.entries||[]).map(e=>[e.id,e.sessionId])),setSid=(H,x)=>(H.entries.find(e=>e.id===x.entryId)||{}).sessionId;
 let LOGH=null,LPR={},LOGV=0;   // LOGV: bumped on every saved edit (Progress cache key)
-function sampleLog(){const H=RD&&RD.SLOG;return H?JSON.parse(JSON.stringify(H)):{schema:2,settings:{unit:'lb'},sessions:[],entries:[],sets:[],bodyweights:[]}}
-function logLoad(){if(!LOGH){try{localStorage.removeItem(LOG_K1)}catch(e){}const s=ld(LOG_K,null);LOGH=s&&s.schema===2&&Array.isArray(s.sessions)&&Array.isArray(s.sets)&&Array.isArray(s.entries)?s:sampleLog()}
-  if(!LOGH.sessions.length&&RD&&RD.SLOG&&!ld(LOG_K,null))LOGH=sampleLog();logDerive();return LOGH}
-const logSave=()=>{sv(LOG_K,LOGH);LOGV++;logDerive()};
+function emptyLog(){return {schema:2,settings:{unit:S.unit||'lb'},sessions:[],entries:[],sets:[],bodyweights:[],prs:[]}}
+function logLoad(){if(!LOGH){try{localStorage.removeItem(LOG_K1)}catch(e){}const s=ld(LOG_K,null);LOGH=s&&s.schema===2&&!((s.meta||{}).kind==='sample')&&Array.isArray(s.sessions)&&Array.isArray(s.sets)&&Array.isArray(s.entries)?s:emptyLog()}
+  logDerive();return LOGH}
+const logSave=()=>{sv(LOG_K,LOGH);LOGV++;logDerive();if(window.APE)APE.put('log',LOGH)};
 const sesDay=s=>+s.startedAt.slice(8,10),sesOf=sid=>LOGH.sessions.find(s=>s.id===sid),entsOf=sid=>LOGH.entries.filter(e=>e.sessionId===sid).sort((a,b)=>a.order-b.order);
 const setsOfE=eid=>LOGH.sets.filter(x=>x.entryId===eid).sort((a,b)=>a.idx-b.idx),exOfE=eid=>(LOGH.entries.find(e=>e.id===eid)||{}).exerciseId;
 function logDerive(){LPR=(RD&&window.PRS)?PRS.detect(RD,LOGH,{aliases:{}}):{};for(const k of Object.keys(LOGS))delete LOGS[k];const eS=entSid(LOGH);
-  for(const s of LOGH.sessions){if(s.status!=='completed'||!String(s.startedAt).startsWith('2026-10'))continue;const xs=LOGH.sets.filter(x=>eS.get(x.entryId)===s.id&&x.kind==='working'&&x.done);
+  const pref=monthPrefix();for(const s of LOGH.sessions){if(s.status!=='completed'||!String(s.startedAt).startsWith(pref))continue;const xs=LOGH.sets.filter(x=>eS.get(x.entryId)===s.id&&x.kind==='working'&&x.done);
     LOGS[sesDay(s)]={sid:s.id,n:s.label,min:Math.round((Date.parse(s.endedAt)-Date.parse(s.startedAt))/6e4),sets:xs.length,volU:s.unit,vol:xs.reduce((a,x)=>a+(+x.load||0)*x.reps,0),pr:Object.keys(LPR[s.id]||{}).length}}}
 const volTxt=w=>{const v=w.volU===S.unit?w.vol:w.volU==='lb'?w.vol/KG_LB:w.vol*KG_LB;return `${Math.round(v).toLocaleString('en-US')} ${S.unit}`};
 // sets per muscle in one session: the same effective-set model as Build's Day map (progcheck analytics), shaded with the same ramp
@@ -659,7 +686,7 @@ function mmSyms(){if($('#mmsyms')||!window.MM)return;const d=document.createElem
 function miniMap(vol){mmSyms();const st=Object.entries(vol).map(([m,v])=>`--mm-${m}:${v}`).join(';');
   return `<span class="lmini" style="${st}" data-mus="${Object.keys(vol).join(' ')}" aria-hidden="true">${['front','back'].map(s=>`<svg viewBox="${(window.MM&&MM[s].vb)||'0 0 1024 1536'}"><use href="#mm-${s}"/></svg>`).join('')}</span>`}
 const calFoot=oct=>{if(!oct)return '0 workouts';const W=Object.values(LOGS),m=W.reduce((a,w)=>a+w.min,0);return `${W.length} workout${W.length===1?'':'s'} · ${Math.floor(m/60)} h ${String(m%60).padStart(2,'0')} m`};
-const logRow=d=>{const w=LOGS[d],dt=new Date(2026,9,d),s=sesOf(w.sid),nt=(s&&s.notes)||'';return `<div class="swipe" data-d="${d}"><button class="del">Delete</button><div class="in">
+const logRow=d=>{const w=LOGS[d],dt=new Date(S.year,S.month,d),s=sesOf(w.sid),nt=(s&&s.notes)||'';return `<div class="swipe" data-d="${d}"><button class="del">Delete</button><div class="in">
   <button class="row lrow" data-go="#log-d${d}" data-d="${d}"><div class="ld"><span>${WD[(dt.getDay()+6)%7]}</span><b>${d}</b></div>
    <div class="grow"><div class="t1">${esc(w.n)}${w.pr?` <span class="badge">${w.pr} PR</span>`:''}</div><div class="t2 num">${w.min} min · ${w.sets} sets · ${volTxt(w)}</div>${nt?`<div class="t3 lnote">${esc(nt)}</div>`:''}</div>${miniMap(sesRamp(w.sid))}${CHEV}</button></div></div>`};
 // ---- Log detail (#log-d<day>): PR badges, body map, e1RM overlay chart, Edit
@@ -671,7 +698,7 @@ const kgShow=kg=>S.unit==='kg'?kg:kg*KG_LB;
 // Progress and Log charts), effective load as prs.py flatten (bodyweight share included)
 const E1MAX=()=>(RD&&RD.PR2&&RD.PR2.e1rm.max_reps)||12;
 function e1Table(){const fl=PROGRESS.flatten(Object.assign({},RD,{_lr:undefined,aliases:{}}),LOGH),out=[];
-  for(const q of fl){const b={};for(const x of q.sets){const v=PRS.e1rmSet(RD,x.load_kg,x.reps,x.kind,E1MAX());if(v!=null)b[x.ex]=Math.max(b[x.ex]||0,v)}out.push({sid:q.s.id,day:sesDay(q.s),oct:String(q.s.startedAt).startsWith('2026-10'),best:b})}return out}
+  const pref=monthPrefix();for(const q of fl){const b={};for(const x of q.sets){const v=PRS.e1rmSet(RD,x.load_kg,x.reps,x.kind,E1MAX());if(v!=null)b[x.ex]=Math.max(b[x.ex]||0,v)}out.push({sid:q.s.id,day:sesDay(q.s),oct:String(q.s.startedAt).startsWith(pref),best:b})}return out}
 function e1Chart(sid){if(!RD||!window.PRS||!window.PROGRESS)return '<p class="foot">Chart needs the logger rules.</p>';
   const TA=e1Table(),T=TA.filter(t=>t.oct),vi=T.findIndex(t=>t.sid===sid),ai=TA.findIndex(t=>t.sid===sid);if(vi<0)return '';/* October view (the Log's month); previous best from the whole log */const exs=Object.keys(T[vi].best);if(!exs.length)return '<p class="foot">No sets of ${E1MAX()} reps or fewer with load in this workout.</p>';
   const W=340,H=176,pl=34,pr=10,pt=10,pb=22,days=T.map(t=>t.day),x0=Math.min(...days),x1=Math.max(...days),X=d=>pl+(x1>x0?(d-x0)/(x1-x0):.5)*(W-pl-pr);
@@ -706,7 +733,8 @@ function editSheet(d){logLoad();
   if(!w){const a=sheet({title:lbl,body:`<div class="nolog"><div class="nl-ico">${I('log',1.6)}</div><h3>No workout logged</h3><p class="sub">Forgot to log it? Add it now and it counts toward that week.</p>
     <div class="pad"><button class="btn accent block" data-x="add">${I('plus',2)} Add workout for ${lbl}</button></div>
     <div class="ghead">Or copy a routine day</div><div class="group">${ROUTINES[0].days.map(x=>`<button class="row" data-x="add"><div class="grow"><div class="t1">${x.n}</div><div class="t2">${x.ex.length} exercises · ${setsOf(x)} sets</div></div>${CHEV}</button>`).join('')}</div></div>`});
-    a.el.addEventListener('click',e=>{if(e.target.closest('[data-x=add]')){a.close();setTimeout(()=>editSheet(15),380)}});return a}
+    a.el.addEventListener('click',e=>{if(e.target.closest('[data-x=add]')){a.close();const date=`${S.year}-${String(S.month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,sid='w'+Date.now().toString(36),H=logLoad();
+      H.sessions.push({id:sid,schema:2,status:'completed',date:date,startedAt:date+'T12:00:00',endedAt:date+'T12:30:00',unit:S.unit,label:'Workout',notes:''});logSave();setTimeout(()=>editSheet(d),380)}});return a}
   const s=sesOf(w.sid);
   const srow=(i,x,id)=>`<div class="swipe"><button class="del">Delete</button><div class="in"><div class="row er" data-kind="${x.kind}" data-rir="${EFF().clampRir(x.rir)??''}"><span class="sn">${x.kind==='warmup'?'W':i}</span>
         <input class="fld" data-kind="w" readonly inputmode="none" value="${x.load===''?'':showLoad(x.load,s.unit,id)}" placeholder="—" aria-label="Weight (${S.unit})"><span class="x">${S.unit}</span><span class="x">×</span><input class="fld" data-kind="r" readonly inputmode="none" value="${x.reps===''?'':x.reps}" placeholder="—" aria-label="Reps"><span class="x">reps</span></div></div></div>`;
@@ -714,7 +742,7 @@ function editSheet(d){logLoad();
   const sh=sheet({title:'Edit workout',cls:'tall grouped',left:`<button class="btn plain" data-x="close">Cancel</button>`,right:`<button class="btn plain strong" data-x="save">Save</button>`,
     body:`<div class="group">
       <div class="row"><div class="grow t1">Name</div><span class="val">${esc(s.label)}</span></div>
-      <label class="row"><div class="grow t1">Date</div><input class="pill ein" type="date" id="ed-date" value="${s.startedAt.slice(0,10)}" min="2026-10-01" max="2026-10-${String(TODAY).padStart(2,'0')}"></label>
+      <label class="row"><div class="grow t1">Date</div><input class="pill ein" type="date" id="ed-date" value="${s.startedAt.slice(0,10)}" min="2000-01-01" max="${ymd(new Date())}"></label>
       <label class="row"><div class="grow t1">Started</div><input class="pill ein" type="time" id="ed-time" value="${s.startedAt.slice(11,16)}"></label>
       <label class="row"><div class="grow t1">Duration</div><span class="pill num"><input class="ein emin" id="ed-min" type="number" inputmode="numeric" min="1" max="300" value="${w.min}"> min</span></label></div>
       <div class="ghead">Session notes</div><div class="group"><textarea class="ednotes" id="ed-notes" rows="3" placeholder="How did it go?">${esc(s.notes||'')}</textarea></div>
@@ -734,27 +762,27 @@ function editSheet(d){logLoad();
 // Save: date (Oct 1 – today, one workout per day), start time, duration, notes, every set's weight and reps. Weights are typed in
 // the display unit, so the session is stored in that unit from now on. Then PRs are recomputed over the whole history.
 function saveEdit(s,el){const date=$('#ed-date',el).value,tm=$('#ed-time',el).value,min=Math.round(+$('#ed-min',el).value||0),notes=$('#ed-notes',el).value.trim();
-  if(!/^2026-10-\d\d$/.test(date)||+date.slice(8)<1||+date.slice(8)>TODAY){toast(`Pick a day from Oct 1 to Oct ${TODAY}`);return 0}
-  const nd=+date.slice(8);if(nd!==sesDay(s)&&LOGS[nd]){toast(`Oct ${nd} already has a workout`);return 0}
+  const today=ymd(new Date());if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||date<'2000-01-01'||date>today){toast('Pick a date up to today');return 0}
+  const nd=+date.slice(8);if(String(s.startedAt).slice(0,10)!==date&&LOGH.sessions.some(x=>x.id!==s.id&&String(x.startedAt).slice(0,10)===date)){toast('That day already has a workout');return 0}
   if(!/^\d\d:\d\d$/.test(tm)){toast('Pick a start time');return 0}if(!(min>=1&&min<=300)){toast('Duration: 1 to 300 min');return 0}
-  const st=`${date}T${tm}:00-07:00`;s.date=s.startedAt=st;s.endedAt=isoPlus(st,min);s.notes=notes;s.unit=S.unit;
+  const st=isoLocal(new Date(date+'T'+tm+':00'));s.date=s.startedAt=st;s.endedAt=isoPlus(st,min);s.notes=notes;s.unit=S.unit;
   for(const g of $$('.eset',el)){const eid=g.dataset.eid;LOGH.sets=LOGH.sets.filter(x=>x.entryId!==eid);let idx=0;
     for(const r of $$('.row.er',g)){const sw=r.closest('.swipe');if(!sw||!sw.isConnected||sw.style.height==='0px')continue;const wv=$('[data-kind=w]',r).value,rv=$('[data-kind=r]',r).value;if(wv===''&&rv==='')continue;
       LOGH.sets.push({id:`${eid}-x${idx}`,entryId:eid,idx:idx++,kind:r.dataset.kind||'working',load:wv===''?0:+wv,reps:Math.trunc(+rv||0),rir:EFF().clampRir(r.dataset.rir),done:true})}}
   logSave();const n=Object.values(LPR[s.id]||{}).reduce((a,t)=>a+Object.keys(t).length,0);toast(`Saved · PRs recalculated (${n} in this workout)`);return nd}
-V.log=()=>(logLoad(),'')+header('Log',`<button class="ibtn" data-act="day" data-d="${TODAY}" aria-label="Add workout">${I('plus',2)}</button>`)+cal()+
-  `<div class="sec"><h2>${MONTHS[S.month]}</h2><span class="more num">${S.month===9&&S.year===2026?Object.keys(LOGS).length:0} workouts</span></div>
-   ${S.month===9&&S.year===2026?`<div class="group">${Object.keys(LOGS).map(Number).sort((a,b)=>b-a).map(logRow).join('')}</div>`:'<div class="card emptyc sub">No workouts this month.</div>'}
+V.log=()=>(logLoad(),'')+header('Log',`<button class="ibtn" data-act="day" data-d="${todayNum()||1}" aria-label="Add workout">${I('plus',2)}</button>`)+cal()+
+  `<div class="sec"><h2>${MONTHS[S.month]}</h2><span class="more num">${Object.keys(LOGS).length} workouts</span></div>
+   ${Object.keys(LOGS).length?`<div class="group">${Object.keys(LOGS).map(Number).sort((a,b)=>b-a).map(logRow).join('')}</div>`:'<div class="card emptyc sub">No workouts this month.</div>'}
    <p class="foot">Swipe left on a workout to delete it. Tap any day to add one after the fact.</p>`;
 function afterLog(){bindSwipes($('#view'))}
 function monthSheet(){
   const s=sheet({title:'Go to month',right:`<button class="btn plain" data-x="close">Done</button>`,body:`
-    <div class="pad"><div class="seg yrs">${[2024,2025,2026].map(y=>`<button class="${y===S.year?'on':''}" data-y="${y}">${y}</button>`).join('')}</div></div>
-    <div class="mgrid">${MONTHS.map((m,i)=>`<button class="mm ${i===S.month?'on':''} ${S.year===2026&&i>9?'fut':''}" data-m="${i}">${m.slice(0,3)}${S.year===2026&&i<=9&&i>=7?'<i></i>':''}</button>`).join('')}</div>
+    <div class="pad"><div class="seg yrs">${[new Date().getFullYear()-1,new Date().getFullYear(),new Date().getFullYear()+1].map(y=>`<button class="${y===S.year?'on':''}" data-y="${y}">${y}</button>`).join('')}</div></div>
+    <div class="mgrid">${MONTHS.map((m,i)=>{const n=new Date(),fut=S.year>n.getFullYear()||(S.year===n.getFullYear()&&i>n.getMonth()),has=LOGH&&LOGH.sessions.some(s=>String(s.startedAt||'').startsWith(S.year+'-'+String(i+1).padStart(2,'0')));return `<button class="mm ${i===S.month?'on':''} ${fut?'fut':''}" data-m="${i}">${m.slice(0,3)}${has?'<i></i>':''}</button>`}).join('')}</div>
     <div class="pad"><button class="btn grey block" data-m="9" data-today="1">Jump to today</button></div>`});
   s.el.addEventListener('click',e=>{const y=e.target.closest('[data-y]'),m=e.target.closest('[data-m]');
     if(y){S.year=+y.dataset.y;$$('[data-y]',s.el).forEach(c=>c.classList.toggle('on',c===y))}
-    if(m){S.month=+m.dataset.m;if(m.dataset.today)S.year=2026;s.close();render()}if(e.target.closest('[data-x=close]')){s.close();render()}});
+    if(m){S.month=+m.dataset.m;if(m.dataset.today){const n=new Date();S.year=n.getFullYear();S.month=n.getMonth()}s.close();render()}if(e.target.closest('[data-x=close]')){s.close();render()}});
   return s;
 }
 
@@ -1132,7 +1160,7 @@ V.settings=()=>`<div class="nav"><div class="l"><button class="back" data-go="#b
    <div class="row" id="effrow"><div class="grow"><div class="t1">Show effort as RPE</div><div class="t2">${effMode()==='rpe'?'RPE 10 to ≤6 on each set':'Reps in reserve (RIR) 0 to 4+ on each set'}. Saved the same way either way.</div></div>${tg(effMode()==='rpe','rpe')}</div>
    <div class="row"><div class="grow"><div class="t1">Ape humor</div><div class="t2">Jokes on the finish screen</div></div>${tg(1,'humor')}</div></div>
   <div class="ghead">Data</div>
-  <div class="group"><button class="row"><div class="grow t1 acc">Back up to file</div></button><button class="row"><div class="grow t1 acc">Restore from file</div></button></div>
+  <div class="group"><button class="row" data-act="backup"><div class="grow t1 acc">Back up to file</div></button><button class="row" data-act="restore"><div class="grow t1 acc">Restore from file</div></button><input id="restore-file" type="file" accept="application/json,.json" hidden></div>
   <p class="foot">Backups include routines, logs, gyms and settings. Your data stays on this device until you back it up.</p>
   <div class="group" style="margin-top:22px"><button class="row" data-go="#style"><span class="ico logo-tile"></span><div class="grow"><div class="t1">ApeChit style guide</div><div class="t2">Storyboard · logo v3, pending approval</div></div>${CHEV}</button></div>`;
 
@@ -1197,7 +1225,7 @@ const volMap=()=>{const o={};[...VOL,...VOL_X].forEach(([m,n,lo,hi])=>o[m]=volFi
 // follows (PHUL intermediate 4-day); a board he already has stays as it is. Apply (only where fix.apply_edits_board) edits that
 // board, with Undo; rep-range and deload fixes are text only. Screens: #progress, #progress-m-<muscle>, #progress-l-<lift>.
 const shortEx=id=>(EX[id]&&EX[id].short_name)||(RD&&RD.EX[id]&&(RD.EX[id].short_name||RD.EX[id].name))||exNameP(id);
-const AS_OF='2026-10-24',PROG={sort:'default',view:null,vsig:null,sig:null,res:null,tsig:null,tres:null,applied:null,all:false,empty:false};
+const AS_OF=ymd(new Date()),PROG={sort:'default',view:null,vsig:null,sig:null,res:null,tsig:null,tres:null,applied:null,all:false,empty:false};
 const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],fmtD=d=>`${MON3[+d.slice(5,7)-1]} ${+d.slice(8,10)}`;
 const DSH3={mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'};
 // Main lift picker (prog2 / progress5): your pick per muscle is saved in the log itself, history.settings.mainLiftPins (stored in
@@ -1765,7 +1793,7 @@ const utRow=u=>`<div class="row utn" data-ut="${u.id}"><div class="grow"><div cl
 // ---------------------------------------------------------------- favorites, profile (goals + bias), mock ranking "why" lines
 // Mock state in localStorage. In the rebuild, ranking + reasons come from ONE logic/rank.js (port of Coach's tools/rank.py).
 const LSK={fav:'apechit.sb.favs',goals:'apechit.sb.goals',bias:'apechit.sb.bias'};
-const ld=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const ld=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}touchSettings();};
 let FAV=ld(LSK.fav,['cable-lateral-raise','incline-dumbbell-curl','pull-up','romanian-deadlift','seated-cable-row']);
 let GOALS=ld(LSK.goals,['muscle_size','joint_friendly']),BIAS=ld(LSK.bias,['side_delts','lats']);
 const isFav=id=>FAV.includes(id);
@@ -2029,10 +2057,11 @@ document.addEventListener('click',e=>{
     if(k==='start'){const r=ROUTINES.find(x=>x.id===id)||ROUTINES[0],di=S.day[r.id]??(r.active?r.next:0),d=r.days[di];
       startWorkout(d.n,d.ex,{sub:`${r.name} · Day ${di+1}`,ref:{rid:r.id,di}});return go('#workout')}
     if(k==='sundo'){const f=SUF;hideSnack();if(f)f();return}
+    if(k==='backup'){doBackup();return}if(k==='restore'){const i=$('#restore-file');if(i)i.click();return}
     if(k==='theme'){const t=setTheme(a.dataset.v);$$('#themeseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===t));return}
-    if(k==='unit'){S.unit=a.dataset.v==='kg'?'kg':'lb';try{localStorage.setItem(UNIT_K,S.unit)}catch(x){}$$('#unitseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===S.unit));return toast(`Units: ${S.unit}`)}
+    if(k==='unit'){S.unit=a.dataset.v==='kg'?'kg':'lb';try{localStorage.setItem(UNIT_K,S.unit)}catch(x){}touchSettings();$$('#unitseg button').forEach(b=>b.classList.toggle('on',b.dataset.v===S.unit));return toast(`Units: ${S.unit}`)}
     if(k==='notes')return notesSheet(+a.dataset.xi);if(k==='exmenu')return exMenu(+a.dataset.xi);if(k==='wswap')return wSwap(+a.dataset.xi);
-    if(k==='activate'){const r=ROUTINES.find(x=>x.id===id);ROUTINES.forEach(x=>x.active=false);r.active=true;r.next=0;S.pick=null;ROUTINES.sort((x,y)=>y.active-x.active);render();return toast(`${r.name} is now active`)}
+    if(k==='activate'){const r=ROUTINES.find(x=>x.id===id);ROUTINES.forEach(x=>x.active=false);r.active=true;r.next=0;S.pick=null;ROUTINES.sort((x,y)=>y.active-x.active);persistRoutines();render();return toast(`${r.name} is now active`)}
     if(k==='minimize'){S.session=true;return go('#train')}
     if(k==='clock')return clockSheet();if(k==='plates')return plateSheet(a.dataset.xi!=null?+a.dataset.xi:0);if(k==='swap')return swapSheet(id);if(k==='tray')return traySheet();if(k==='equip')return equipSheet();
     if(k==='info'||k==='exinfo')return go('#learn-ex-'+id);if(k==='fav'){e.stopPropagation();return toggleFav(id)}if(k==='back')return NAV>1?history.back():go('#train');
@@ -2053,7 +2082,7 @@ document.addEventListener('click',e=>{
     if(k==='mprev'||k==='mnext'){S.month+=k==='mnext'?1:-1;if(S.month<0){S.month=11;S.year--}if(S.month>11){S.month=0;S.year++}return render()}
     if(k==='add')return toast('Added to workout');if(k==='push')return toast('Pushed to Library · v4');
     if(k==='tg'){a.classList.toggle('on');a.setAttribute('aria-checked',a.classList.contains('on'));
-      if(a.id==='rpe'){const on=a.classList.contains('on');try{localStorage.setItem(EFF_K,on?'rpe':'rir')}catch(e){}const t=$('#effrow .t2');if(t)t.textContent=`${on?'RPE 10 to ≤6 on each set':'Reps in reserve (RIR) 0 to 4+ on each set'}. Saved the same way either way.`}return}
+      if(a.id==='rpe'){const on=a.classList.contains('on');try{localStorage.setItem(EFF_K,on?'rpe':'rir')}catch(e){}touchSettings();const t=$('#effrow .t2');if(t)t.textContent=`${on?'RPE 10 to ≤6 on each set':'Reps in reserve (RIR) 0 to 4+ on each set'}. Saved the same way either way.`}return}
     if(k==='demo-sheet')return sheet({title:'Shared sheet',body:'<p class="foot" style="padding:4px 20px 30px">Every popup is this one component: grab handle, swipe down or tap outside to close.</p>'});
   }
   if(g){e.preventDefault();return go(g.dataset.go)}
@@ -2063,7 +2092,10 @@ document.addEventListener('click',e=>{
   const lv=e.target.closest('[data-lv]');if(lv){$$('[data-lv]').forEach(b=>b.classList.toggle('on',b===lv));$('#lvtx').textContent=LV[lv.dataset.lv];return}
   const wd=e.target.closest('.wd');if(wd&&!e.target.closest('.lbl')){const i=[0,1,3,4].indexOf(+wd.dataset.wd);if(i>=0){S.buildDay=i;render()}return}
   if(KP&&!e.target.closest('.sheet'))KP.close(); // tapping away from fields closes the keypad
+  if(S.live)saveLive();
 });
+document.addEventListener('change',e=>{const i=e.target&&e.target.id==='restore-file'?e.target:null;if(!i||!i.files||!i.files[0])return;const f=i.files[0];i.value='';doRestore(f)});
+addEventListener('pagehide',()=>{try{if(S.live)APE.put('session',liveSnap())}catch(e){}});
 window.SB={sheet,S,WK,CLK,ROUTINES,closeAll,startWorkout,gymPlates,plateCalc,movePat,mpDefs,eqDefs,passF,get sheets(){return SHEETS},get keypad(){return KP}};
 // internals for board.js (the Build whiteboard): same sheet, swap sheet, ranking scenario, muscle map, volume_bands
 // ------------------------------------------------------------- no developer text in the UI (batch C)
@@ -2133,7 +2165,7 @@ function cxUnmock(id){delete EX[id];delete HAY[id];const k=EXL.findIndex(x=>x[0]
 async function cxLoad(R,exercises,rules,d0){const d=d0!==undefined?d0:await getJ(DATA+'custom-exercise-defaults.json');if(!d||!window.CUSTOMEX)return;
   R.CXD=d;CX=CUSTOMEX.make(d,exercises,rules);const L=cxList();CUSTOMEX.register(R,L);L.forEach(cxMock);if(MX())await cxMediaLoad(L)}
 // media: undefined = leave as is; photo null = delete; video null = delete; video {blob,type,size,dur} = replace; trim {start,end} = set
-async function cxStore(rec,media={}){const L=cxList(),k=L.findIndex(x=>x.id===rec.id);if(k>=0)L[k]=rec;else L.push(rec);localStorage.setItem(CXK,JSON.stringify(L));
+async function cxStore(rec,media={}){const L=cxList(),k=L.findIndex(x=>x.id===rec.id);if(k>=0)L[k]=rec;else L.push(rec);localStorage.setItem(CXK,JSON.stringify(L));if(window.APE)APE.put('customExercises',L);
   CUSTOMEX.register(RD,[rec]);cxMock(rec);const res={photoOk:true,videoOk:true};
   const touched=media.photo!==undefined||media.video!==undefined||media.trim!==undefined;if(!touched)return res;
   if(!CXM_OK){ // no IndexedDB: photo in localStorage as before, no video
@@ -2149,7 +2181,7 @@ async function cxStore(rec,media={}){const L=cxList(),k=L.findIndex(x=>x.id===re
     res.videoOk=!media.video;const r2=Object.assign({},CXM[rec.id]||{id:rec.id});if(media.photo!==undefined)r2.photo=media.photo||null;
     try{await put(r2)}catch(x){res.photoOk=media.photo===undefined}}
   return res}
-function cxDelete(id){const L=cxList().filter(x=>x.id!==id);sv(CXK,L);try{localStorage.removeItem(CXP+id)}catch(e){}
+function cxDelete(id){const L=cxList().filter(x=>x.id!==id);sv(CXK,L);if(window.APE)APE.put('customExercises',L);try{localStorage.removeItem(CXP+id)}catch(e){}
   cxDropURL(id);delete CXM[id];if(MX()&&CXM_OK)MX().idbDel(id).catch(()=>{});
   sv(CXGONE,[...new Set([...ld(CXGONE,[]),id])]);  // never reuse an id after delete (history keys on it)
   CUSTOMEX.unregister(RD,id);cxUnmock(id);if(window.BOARD&&BOARD.removeExercise)BOARD.removeExercise(id)}
@@ -2420,5 +2452,5 @@ let HELD=null;document.addEventListener('click',e=>{if(!RD||RD.FULL||e.__replay)
   if(first)fullP().then(()=>{document.body.classList.remove('sb-wait');const el=HELD;HELD=null;if(el&&el.isConnected){const ev=new MouseEvent('click',{bubbles:true,cancelable:true,view:window});ev.__replay=true;el.dispatchEvent(ev)}})},true);
 // vol16b: late data (progress-rules / evolution-rules) arrived: repaint the screens that read it, keeping scroll; open sheets are left alone
 window.addEventListener('sb:late',()=>{try{if(['train','progress','ladder','log'].includes(S.scr)&&!SHEETS.length)rerenderProgress()}catch(e){}});
-Promise.all([loadVB(),loadRank()]).finally(()=>{startTick();route()}); // first paint after rules.json (volume_bands, ranking) is in
+(window.APE?APE.boot().then(applyBag).catch(()=>{}):Promise.resolve()).then(()=>Promise.all([loadVB(),loadRank()])).finally(()=>{startTick();route()}); // durable store first, then rules.json, then first paint
 })();
